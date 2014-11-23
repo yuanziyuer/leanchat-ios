@@ -18,5 +18,7 @@ static NSString *kRemoveFriendFnName=@"removeFriend";
 +(void)agreeAddRequestWithId:(NSString*)objectId callback:(AVIdResultBlock)callback;
 +(void)saveChatGroupWithId:(NSString*)groupId name:(NSString*)name callback:(AVIdResultBlock)callback;
 -(NSString*)getAvatarUrlOfAVUser:(AVUser*)user;
++(id)signWithPeerId:(NSString*)peerId watchedPeerIds:(NSArray*)watchPeerIds;
++(id)groupSignWithPeerId:(NSString*)peerId groupId:(NSString*)groupId groupPeerIds:(NSArray*)groupPeerIds action:(NSString*)action;
 
 @end

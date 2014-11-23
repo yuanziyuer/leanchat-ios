@@ -73,7 +73,7 @@
 
 -(void)btnClicked:(UIButton*)button{
     if(isFriend){
-        CDChatRoomController *controller = [CDChatRoomController messagesViewController];
+        CDChatRoomController *controller = [[CDChatRoomController alloc] init];
         controller.chatUser = self.user;
         controller.type = CDMsgRoomTypeSingle;
         UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:controller];

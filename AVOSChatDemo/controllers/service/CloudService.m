@@ -35,4 +35,14 @@
     [AVCloud callFunctionInBackground:@"saveChatGroup" withParameters:dict block:callback];
 }
 
++(id)signWithPeerId:(NSString*)peerId watchedPeerIds:(NSArray*)watchPeerIds{
+    NSDictionary* dict=@{@"self_id":peerId,@"watch_ids":watchPeerIds};
+    return [AVCloud callFunction:@"sign" withParameters:dict];
+}
+
++(id)groupSignWithPeerId:(NSString*)peerId groupId:(NSString*)groupId groupPeerIds:(NSArray*)groupPeerIds action:(NSString*)action{
+    NSDictionary* dict=@{@"self_id":peerId,@"group_id":groupId,@"group_peer_ids":groupPeerIds,@"action":action};
+    return [AVCloud callFunction:@"group_sign" withParameters:dict];
+}
+
 @end

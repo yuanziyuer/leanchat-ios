@@ -14,6 +14,7 @@
 #import "ChatRoom.h"
 #import "CDImageTwoLabelTableCell.h"
 #import "Utils.h"
+#import "CloudService.h"
 
 enum : NSUInteger {
     kTagNameLabel = 10000,

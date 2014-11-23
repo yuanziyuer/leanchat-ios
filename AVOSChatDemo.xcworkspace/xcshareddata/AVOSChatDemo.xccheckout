@@ -10,7 +10,7 @@
 	<string>AVOSChatDemo</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>4F2E69D5DA52913D2191A8578615BD7A5F616C9F</key>
+		<key>3FB232A6DFBF51988CE8982F113F876CD542B7BC</key>
 		<string>github.com:leancloud/leanchat-ios.git</string>
 		<key>8ACFE5037BBA7C3DB34C943CA65881B264CE6E1A</key>
 		<string>github.com:avoscloud/avoscloud-demo.git</string>
@@ -19,7 +19,7 @@
 	<string>AVOSChatDemo.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>4F2E69D5DA52913D2191A8578615BD7A5F616C9F</key>
+		<key>3FB232A6DFBF51988CE8982F113F876CD542B7BC</key>
 		<string>..</string>
 		<key>8ACFE5037BBA7C3DB34C943CA65881B264CE6E1A</key>
 		<string>../..</string>
@@ -29,7 +29,7 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>4F2E69D5DA52913D2191A8578615BD7A5F616C9F</string>
+	<string>3FB232A6DFBF51988CE8982F113F876CD542B7BC</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
@@ -44,7 +44,7 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>4F2E69D5DA52913D2191A8578615BD7A5F616C9F</string>
+			<string>3FB232A6DFBF51988CE8982F113F876CD542B7BC</string>
 			<key>IDESourceControlWCCName</key>
 			<string>leanchat-ios</string>
 		</dict>

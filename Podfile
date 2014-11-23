@@ -4,7 +4,7 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
 target 'AVOSChatDemo' do
-  pod 'JSQMessagesViewController'
+  pod 'MessageDisplayKit'
 	pod 'AVOSCloud'
 	pod 'AVOSCloudUI'
 	pod 'SDWebImage'
