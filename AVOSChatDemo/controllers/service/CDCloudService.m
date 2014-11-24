@@ -36,12 +36,19 @@
 }
 
 +(id)signWithPeerId:(NSString*)peerId watchedPeerIds:(NSArray*)watchPeerIds{
-    NSDictionary* dict=@{@"self_id":peerId,@"watch_ids":watchPeerIds};
+    NSMutableDictionary *dict=[[NSMutableDictionary alloc] init];
+    [dict setObject:peerId forKey:@"self_id"];
+    if(watchPeerIds!=nil){
+        [dict setObject:watchPeerIds forKey:@"watch_ids"];
+    }
     return [AVCloud callFunction:@"sign" withParameters:dict];
 }
 
 +(id)groupSignWithPeerId:(NSString*)peerId groupId:(NSString*)groupId groupPeerIds:(NSArray*)groupPeerIds action:(NSString*)action{
-    NSDictionary* dict=@{@"self_id":peerId,@"group_id":groupId,@"group_peer_ids":groupPeerIds,@"action":action};
+    NSMutableDictionary* dict=[@{@"self_id":peerId,@"group_id":groupId,@"action":action} mutableCopy];
+    if(groupPeerIds!=nil){
+        [dict setObject:groupPeerIds forKey:@"group_peer_ids"];
+    }
     return [AVCloud callFunction:@"group_sign" withParameters:dict];
 }
 

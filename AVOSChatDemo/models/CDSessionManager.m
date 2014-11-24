@@ -599,14 +599,15 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
 
 #pragma signature
 
-//- (AVSignature *)signatureForPeerWithPeerId:(NSString *)peerId watchedPeerIds:(NSArray *)watchedPeerIds action:(NSString *)action{
-//    NSDictionary* result=[CloudService signWithPeerId:peerId watchedPeerIds:watchedPeerIds];
-//    return [self getAVSignatureWithParams:result peerIds:watchedPeerIds];
-//}
+- (AVSignature *)signatureForPeerWithPeerId:(NSString *)peerId watchedPeerIds:(NSArray *)watchedPeerIds action:(NSString *)action{
+    NSDictionary* result=[CDCloudService signWithPeerId:peerId watchedPeerIds:watchedPeerIds];
+    return [self getAVSignatureWithParams:result peerIds:watchedPeerIds];
+}
 
 -(AVSignature*)getAVSignatureWithParams:(NSDictionary*) fields peerIds:(NSArray*)peerIds{
     AVSignature* avSignature=[[AVSignature alloc] init];
-    long timestamp=[fields objectForKey:@"timestamp"];
+    NSNumber* timestampNum=[fields objectForKey:@"timestamp"];
+    long timestamp=[timestampNum longValue];
     NSString* nonce=[fields objectForKey:@"nonce"];
     NSString* signature=[fields objectForKey:@"signature"];
     
@@ -617,9 +618,9 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     return avSignature;
 }
 
-//-(AVSignature*)signatureForGroupWithPeerId:(NSString *)peerId groupId:(NSString *)groupId groupPeerIds:(NSArray *)groupPeerIds action:(NSString *)action{
-//    NSDictionary* result=[CloudService groupSignWithPeerId:peerId groupId:groupId groupPeerIds:groupPeerIds action:action];
-//    return [self getAVSignatureWithParams:result peerIds:groupPeerIds];
-//}
+-(AVSignature*)signatureForGroupWithPeerId:(NSString *)peerId groupId:(NSString *)groupId groupPeerIds:(NSArray *)groupPeerIds action:(NSString *)action{
+    NSDictionary* result=[CDCloudService groupSignWithPeerId:peerId groupId:groupId groupPeerIds:groupPeerIds action:action];
+    return [self getAVSignatureWithParams:result peerIds:groupPeerIds];
+}
 
 @end
