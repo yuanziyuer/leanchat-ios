@@ -1,3 +1,5 @@
+[LeanCloud 镜像下载地址](https://download.leancloud.cn/demo/)
+
 ![image](https://raw.githubusercontent.com/lzwjava/plan/master/leanchat-ios/shot.png)
 
 ![image](https://raw.githubusercontent.com/lzwjava/plan/master/leanchat-ios/contact.png)
