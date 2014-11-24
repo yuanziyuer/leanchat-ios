@@ -23,6 +23,7 @@ enum : NSUInteger {
 @interface CDChatListController ()  {
     CDPopMenu *_popMenu;
     CDSessionManager* sessionManager;
+    NSMutableArray *chatRooms;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -48,6 +49,7 @@ static NSString *cellIdentifier = @"ContactCell";
     self.tableView.dataSource=self;
     self.tableView.delegate=self;
     [self.tableView registerNib:[UINib nibWithNibName:nibName bundle:nil] forCellReuseIdentifier:cellIdentifier];
+    chatRooms=[[NSMutableArray alloc] init];
     sessionManager=[CDSessionManager sharedInstance];
 }
 
@@ -71,6 +73,7 @@ static NSString *cellIdentifier = @"ContactCell";
     [sessionManager findConversationsWithCallback:^(NSArray *objects, NSError *error) {
         [CDUtils hideNetworkIndicator];
         [CDUtils filterError:error callback:^{
+            chatRooms=[objects mutableCopy];
             [self.tableView reloadData];
         }];
     }];
@@ -92,12 +95,12 @@ static NSString *cellIdentifier = @"ContactCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[sessionManager chatRooms] count];
+    return [chatRooms count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CDImageTwoLabelTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    CDChatRoom *chatRoom = [[[CDSessionManager sharedInstance] chatRooms] objectAtIndex:indexPath.row];
+    CDChatRoom *chatRoom = [chatRooms objectAtIndex:indexPath.row];
     CDMsgRoomType type=[chatRoom roomType];
     NSMutableString *nameString = [[NSMutableString alloc] init];
     if (type == CDMsgRoomTypeGroup) {
@@ -114,7 +117,7 @@ static NSString *cellIdentifier = @"ContactCell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    CDChatRoom *chatRoom = [[[CDSessionManager sharedInstance] chatRooms] objectAtIndex:indexPath.row];
+    CDChatRoom *chatRoom = [chatRooms objectAtIndex:indexPath.row];
     CDMsgRoomType type = chatRoom.roomType;
     CDChatRoomController *controller = [[CDChatRoomController alloc] init];
     controller.type = type;

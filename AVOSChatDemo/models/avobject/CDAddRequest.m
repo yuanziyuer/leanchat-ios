@@ -15,7 +15,7 @@
 @dynamic status;
 
 +(NSString *)parseClassName{
-    return @"CDAddRequest";
+    return @"AddRequest";
 }
 
 

@@ -17,7 +17,13 @@
     //    //设置缓存有效期
     //    query.maxCacheAge = 4 * 3600;
     AVQuery *q=[relation query];
-    q.cachePolicy=kAVCachePolicyNetworkElseCache;
+    q.maxCacheAge=60;
+    q.cachePolicy=kAVCachePolicyCacheElseNetwork;
+    if([q hasCachedResult]){
+        NSLog(@"has cached results");
+    }else{
+        NSLog(@"don't have cache");
+    }
     [q findObjectsInBackgroundWithBlock:block];
 }
 

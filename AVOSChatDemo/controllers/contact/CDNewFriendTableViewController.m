@@ -43,12 +43,10 @@
     UIActivityIndicatorView* indicator=[CDUtils showIndicatorAtView:self.view];
     [CDAddRequestService findAddRequestsWtihCallback:^(NSArray *objects, NSError *error) {
         [indicator stopAnimating];
-        if(error){
-            [CDUtils alert:[error description]];
-        }else{
+        [CDUtils filterError:error callback:^{
             addRequests=objects;
             [self.tableView reloadData];
-        }
+        }];
     }];
 }
 

@@ -17,9 +17,7 @@
 @property NSMutableArray* friends;
 
 #pragma conversation
-- (NSArray *)chatRooms;
 -(void)findConversationsWithCallback:(AVArrayResultBlock)callback;
-
 
 #pragma session
 - (void)watchPeerId:(NSString *)peerId;

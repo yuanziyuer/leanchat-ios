@@ -18,7 +18,6 @@
 @interface CDSessionManager () {
     FMDatabase *_database;
     AVSession *_session;
-    NSMutableArray *_chatRooms;
     NSMutableDictionary *_cachedUsers;
     NSMutableDictionary *cachedChatGroups;
 }
@@ -59,7 +58,6 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
 
 - (instancetype)init {
     if ((self = [super init])) {
-        _chatRooms = [[NSMutableArray alloc] init];
         _cachedUsers=[[NSMutableDictionary alloc] init];
         cachedChatGroups=[[NSMutableDictionary alloc] init];
         
@@ -111,12 +109,16 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
             [uncachedUserIds addObject:userId];
         }
     }
-    [CDUserService findUsersByIds:[[NSMutableArray alloc] initWithArray:[uncachedUserIds allObjects]] callback:^(NSArray *objects, NSError *error) {
-        if(objects){
-            [self registerUsers:objects];
-        }
-        callback(objects,error);
-    }];
+    if([uncachedUserIds count]>0){
+        [CDUserService findUsersByIds:[[NSMutableArray alloc] initWithArray:[uncachedUserIds allObjects]] callback:^(NSArray *objects, NSError *error) {
+            if(objects){
+                [self registerUsers:objects];
+            }
+            callback(objects,error);
+        }];
+    }else{
+        callback([[NSMutableArray alloc] init],nil);
+    }
 }
 
 -(void)findConversationsWithCallback:(AVArrayResultBlock)callback{
@@ -127,7 +129,7 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
         if(error){
             callback(objects,error);
         }else{
-            [_chatRooms removeAllObjects];
+            NSMutableArray *chatRooms=[[NSMutableArray alloc] init];
             NSMutableSet *userIds=[[NSMutableSet alloc] init];
             NSMutableSet *groupIds=[[NSMutableSet alloc] init];
             for(CDMsg* msg in msgs){
@@ -156,9 +158,9 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
                                     chatRoom.chatGroup=[self lookupChatGroupById:otherId];
                                 }
                                 chatRoom.latestMsg=msg;
-                                [_chatRooms addObject:chatRoom];
+                                [chatRooms addObject:chatRoom];
                             }
-                            callback(_chatRooms,error);
+                            callback(chatRooms,error);
                         }];
                     }];
                 }];
@@ -170,13 +172,8 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
 
 - (void)clearData {
     //[_database executeUpdate:@"DROP TABLE IF EXISTS messages"];
-    [_chatRooms removeAllObjects];
     [_session close];
     initialized = NO;
-}
-
-- (NSArray *)chatRooms {
-    return _chatRooms;
 }
 
 - (void)watchPeerId:(NSString *)peerId {
@@ -587,14 +584,18 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
 }
 
 -(void)cacheChatGroupsWithIds:(NSMutableSet*)groupIds withCallback:(AVArrayResultBlock)callback{
-    [CDGroupService findGroupsWithCallback:^(NSArray *objects, NSError *error) {
-        [CDUtils filterError:error callback:^{
-            for(CDChatGroup* chatGroup in objects){
-                [self registerChatGroup:chatGroup];
-            }
-            callback(objects,error);
+    if([groupIds count]>0){
+        [CDGroupService findGroupsByIds:groupIds withCallback:^(NSArray *objects, NSError *error) {
+            [CDUtils filterError:error callback:^{
+                for(CDChatGroup* chatGroup in objects){
+                    [self registerChatGroup:chatGroup];
+                }
+                callback(objects,error);
+            }];
         }];
-    }];
+    }else{
+        callback([[NSMutableArray alloc] init],nil);
+    }
 }
 
 #pragma signature

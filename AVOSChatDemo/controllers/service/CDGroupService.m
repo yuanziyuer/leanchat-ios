@@ -26,6 +26,7 @@
         AVQuery* q=[CDChatGroup query];
         [q whereKey:@"objectId" containedIn:[groupIds allObjects]];
         [q includeKey:@"owner"];
+        [q setCachePolicy:kAVCachePolicyNetworkElseCache];
         [q findObjectsInBackgroundWithBlock:callback];
     }else{
         callback([[NSMutableArray alloc] init],nil);

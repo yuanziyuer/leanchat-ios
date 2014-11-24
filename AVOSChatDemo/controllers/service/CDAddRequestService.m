@@ -16,6 +16,7 @@
     [q includeKey:@"fromUser"];
     [q whereKey:@"toUser" equalTo:curUser];
     [q orderByDescending:@"createdAt"];
+    [q setCachePolicy:kAVCachePolicyNetworkElseCache];
     [q findObjectsInBackgroundWithBlock:callback];
 }
 @end
