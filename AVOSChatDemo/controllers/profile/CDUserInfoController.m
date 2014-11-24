@@ -7,9 +7,9 @@
 //
 
 #import "CDUserInfoController.h"
-#import "AddRequestService.h"
+#import "CDAddRequestService.h"
 #import "CDChatRoomController.h"
-#import "CloudService.h"
+#import "CDCloudService.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface CDUserInfoController (){
@@ -79,7 +79,7 @@
         UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:controller];
         [self presentViewController:nav animated:YES completion:nil];
     }else{
-        [CloudService tryCreateAddRequestWithToUser:_user callback:^(id object, NSError *error) {
+        [CDCloudService tryCreateAddRequestWithToUser:_user callback:^(id object, NSError *error) {
             NSString *info;
             if(error==nil){
                 info=@"请求成功";

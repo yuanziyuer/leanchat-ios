@@ -8,9 +8,9 @@
 
 #import "CDGroupDetailController.h"
 #import "CDImageLabelCollectionCell.h"
-#import "UserService.h"
+#import "CDUserService.h"
 #import "CDSessionManager.h"
-#import "Utils.h"
+#import "CDUtils.h"
 #import "CDChatRoomController.h"
 #import "CDGroupAddMemberController.h"
 #import "CDCommonDefine.h"
@@ -95,7 +95,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 
 -(void)initWithMemberIds:(NSArray*)userIds{
     [sessionManager cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
-        [Utils filterError:error callback:^{
+        [CDUtils filterError:error callback:^{
             groupMembers=self.chatGroup.m;
             [self.collectionView reloadData];
         }];
@@ -104,7 +104,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 
 -(void)refreshChatGroup{
     [self.chatGroup fetchInBackgroundWithBlock:^(AVObject *object, NSError *error) {
-        [Utils filterError:error callback:^{
+        [CDUtils filterError:error callback:^{
             [self initWithMemberIds:self.chatGroup.m];
         }];
     }];
@@ -155,7 +155,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     UILabel* label=(UILabel*)[cell viewWithTag:labelTag];
     UIImageView* imageView=(UIImageView*)[cell viewWithTag:imageTag];
     
-    [UserService displayAvatarOfUser:user avatarView:imageView];
+    [CDUserService displayAvatarOfUser:user avatarView:imageView];
     label.text=user.username;
     return cell;
 }

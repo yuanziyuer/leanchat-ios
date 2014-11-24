@@ -7,8 +7,8 @@
 //
 
 #import "CDGroupTableViewController.h"
-#import "ChatGroup.h"
-#import "GroupService.h"
+#import "CDChatGroup.h"
+#import "CDGroupService.h"
 #import "CDChatRoomController.h"
 #import "CDNewGroupViewController.h"
 #import "CDImageLabelTableCell.h"
@@ -44,7 +44,7 @@ static NSString* cellIndentifier=@"cell";
 }
 
 -(void)refresh{
-    [GroupService findGroupsWithCallback:^(NSArray *objects, NSError *error) {
+    [CDGroupService findGroupsWithCallback:^(NSArray *objects, NSError *error) {
         chatGroups=objects;
         [self.tableView reloadData];
     }];
@@ -78,7 +78,7 @@ static NSString* cellIndentifier=@"cell";
     if(cell==nil){
         cell=[[CDImageLabelTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
-    ChatGroup* chatGroup=[chatGroups objectAtIndex:indexPath.row];
+    CDChatGroup* chatGroup=[chatGroups objectAtIndex:indexPath.row];
     cell.myLabel.text=[chatGroup getTitle];
     [cell.myImageView setImage:groupImage];
     // Configure the cell...
@@ -125,7 +125,7 @@ static NSString* cellIndentifier=@"cell";
 
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    ChatGroup* chatGroup=[chatGroups objectAtIndex:indexPath.row];
+    CDChatGroup* chatGroup=[chatGroups objectAtIndex:indexPath.row];
     CDChatRoomController * controlloer=[[CDChatRoomController alloc] init];
     [controlloer setType:CDMsgRoomTypeGroup];
     [controlloer setChatGroup:chatGroup];

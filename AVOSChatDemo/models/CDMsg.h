@@ -16,10 +16,9 @@ typedef enum : NSUInteger {
 
 typedef enum : NSUInteger{
     CDMsgTypeText=0,
-    CDMsgTypeResponse=1,
-    CDMsgTypeImage=2,
-    CDMsgTypeAudio=3,
-    CDMsgTypeLocation=4,
+    CDMsgTypeImage=1,
+    CDMsgTypeAudio=2,
+    CDMsgTypeLocation=3,
 }CDMsgType;
 
 typedef enum : NSUInteger{
@@ -40,7 +39,7 @@ typedef enum : NSUInteger{
 #define ROOM_TYPE @"roomType"
 #define STATUS @"status"
 
-@interface Msg : NSObject{
+@interface CDMsg : NSObject{
 }
 
 @property NSString* fromPeerId;
@@ -55,8 +54,7 @@ typedef enum : NSUInteger{
 @property CDMsgStatus status;
 @property CDMsgType type;
 
-+(Msg*)createMsg:(NSString*) objectId fromPeerId:(NSString*)fromPeerId toPeerId:(NSString*)toPeerId timestamp:(int64_t)timestamp content:(NSString*)content type:(CDMsgType)type status:(CDMsgStatus)status roomType:(CDMsgRoomType)roomType convid:(NSString*)convid;
-+(Msg*)fromAVMessage:(AVMessage *)avMsg;
++(CDMsg*)fromAVMessage:(AVMessage *)avMsg;
 -(NSString *)toMessagePayload;
 -(NSString*)getOtherId;
 -(NSDictionary*)toDatabaseDict;

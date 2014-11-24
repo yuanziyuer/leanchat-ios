@@ -10,7 +10,7 @@
 
 typedef void (^CDBlock)();
 
-@interface Utils : NSObject
+@interface CDUtils : NSObject
 
 +(void)alert:(NSString*)msg;
 +(NSString*)md5OfString:(NSString*)s;

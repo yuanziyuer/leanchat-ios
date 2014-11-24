@@ -7,14 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Msg.h"
-#import "ChatGroup.h"
+#import "CDMsg.h"
+#import "CDChatGroup.h"
 
-@interface ChatRoom : NSObject
+@interface CDChatRoom : NSObject
 
 @property CDMsgRoomType roomType;
-@property ChatGroup* chatGroup;
+@property CDChatGroup* chatGroup;
 @property AVUser* chatUser;
-@property Msg* latestMsg;
+@property CDMsg* latestMsg;
 
 @end

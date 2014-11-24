@@ -6,10 +6,10 @@
 //  Copyright (c) 2014年 AVOS. All rights reserved.
 //
 
-#import "UserService.h"
+#import "CDUserService.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
-@implementation UserService
+@implementation CDUserService
 
 +(void)findFriendsWithCallback:(AVArrayResultBlock )block{
     AVUser *user=[AVUser currentUser];

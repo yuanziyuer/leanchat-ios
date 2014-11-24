@@ -6,16 +6,16 @@
 //  Copyright (c) 2014年 AVOS. All rights reserved.
 //
 
-#import "AddRequest.h"
+#import "CDAddRequest.h"
 
-@implementation AddRequest
+@implementation CDAddRequest
 
 @dynamic fromUser;
 @dynamic toUser;
 @dynamic status;
 
 +(NSString *)parseClassName{
-    return @"AddRequest";
+    return @"CDAddRequest";
 }
 
 

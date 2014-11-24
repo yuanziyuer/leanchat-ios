@@ -7,11 +7,11 @@
 //
 
 #import "CDNewFriendTableViewController.h"
-#import "AddRequestService.h"
+#import "CDAddRequestService.h"
 #import "CDLabelButtonTableCell.h"
-#import "CloudService.h"
-#import "Utils.h"
-#import "Utils.h"
+#import "CDCloudService.h"
+#import "CDUtils.h"
+#import "CDUtils.h"
 
 @interface CDNewFriendTableViewController (){
     NSArray *addRequests;
@@ -40,11 +40,11 @@
 }
 
 -(void)refresh{
-    UIActivityIndicatorView* indicator=[Utils showIndicatorAtView:self.view];
-    [AddRequestService findAddRequestsWtihCallback:^(NSArray *objects, NSError *error) {
+    UIActivityIndicatorView* indicator=[CDUtils showIndicatorAtView:self.view];
+    [CDAddRequestService findAddRequestsWtihCallback:^(NSArray *objects, NSError *error) {
         [indicator stopAnimating];
         if(error){
-            [Utils alert:[error description]];
+            [CDUtils alert:[error description]];
         }else{
             addRequests=objects;
             [self.tableView reloadData];
@@ -79,7 +79,7 @@
         [tableView registerNib:[UINib nibWithNibName:@"CDLabelButtonTableCell" bundle:nil]forCellReuseIdentifier:@"cell"];
     }
     CDLabelButtonTableCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell" ];
-    AddRequest* addRequest=[addRequests objectAtIndex:indexPath.row];
+    CDAddRequest* addRequest=[addRequests objectAtIndex:indexPath.row];
     cell.nameLabel.text=addRequest.fromUser.username;
     if(addRequest.status==kAddRequestStatusWait){
         cell.actionBtn.enabled=true;
@@ -98,12 +98,12 @@
 
 -(void)actionBtnClicked:(id)sender{
     UIButton *btn=(UIButton*)sender;
-    AddRequest* addRequest=[addRequests objectAtIndex:btn.tag];
-    [CloudService agreeAddRequestWithId:addRequest.objectId callback:^(id object, NSError *error) {
+    CDAddRequest* addRequest=[addRequests objectAtIndex:btn.tag];
+    [CDCloudService agreeAddRequestWithId:addRequest.objectId callback:^(id object, NSError *error) {
         if(error){
-            [Utils alert:[error localizedDescription]];
+            [CDUtils alert:[error localizedDescription]];
         }else{
-            [Utils alert:@"添加成功"];
+            [CDUtils alert:@"添加成功"];
             [self refresh];
         }
     }];

@@ -11,7 +11,7 @@
 #import "CDChatDetailController.h"
 #import "QBImagePickerController.h"
 #import "UIImage+Resize.h"
-#import "Utils.h"
+#import "CDUtils.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "CDGroupDetailController.h"
 #import "CDGroupAddMemberController.h"
@@ -61,7 +61,7 @@
     
     if(self.type==CDMsgRoomTypeGroup){
         UIImage* peopleImage=[UIImage imageNamed:@"chat_menu_people"];
-        UIImage* _peopleImage=[Utils imageWithImage:peopleImage scaledToSize:CGSizeMake(25, 25)];
+        UIImage* _peopleImage=[CDUtils imageWithImage:peopleImage scaledToSize:CGSizeMake(25, 25)];
         UIBarButtonItem* item=[[UIBarButtonItem alloc] initWithImage:_peopleImage style:UIBarButtonItemStyleDone target:self action:@selector(goChatGroupDetail:)];
         self.navigationItem.rightBarButtonItem=item;
     }
@@ -143,7 +143,9 @@
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
--(UIImage*)getImageByMsg:(Msg*)msg{
+#pragma mark message data
+
+-(UIImage*)getImageByMsg:(CDMsg*)msg{
     if(msg.type==CDMsgTypeImage){
         UIImage* image = [_loadedData objectForKey:msg.objectId];
         if (image) {
@@ -165,98 +167,20 @@
     return nil;
 }
 
--(UIImage*)getAvatarByMsg:(Msg*)msg{
-    __block UIImage* avatar=[_loadedData objectForKey:msg.fromPeerId];
-    if(avatar){
-        return avatar;
-    }else{
-        AVUser* user=[sessionManager lookupUser:msg.fromPeerId];
-        SDWebImageManager* man=[SDWebImageManager sharedManager];
-        AVFile* avatarFile=[user objectForKey:@"avatar"];
-        [man downloadImageWithURL:[NSURL URLWithString:[avatarFile url]] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-            if(error){
-                [Utils alertError:error];
-            }else{
-                [_loadedData setObject:image forKey:msg.fromPeerId];
-            }
-            avatar=image;
-        }];
-    }
-    if(avatar==nil){
-        avatar=[UIImage imageNamed:@"default_user_avatar"];
-    }
-    return avatar;
-}
-
-- (void)goChatGroupDetail:(id)sender {
-//    CDGroupDetailController *controller=[[CDGroupDetailController alloc] init];
-//    controller.chatGroup=self.chatGroup;
-//    [self.navigationController pushViewController: controller animated:YES];
-
-    UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
-    [flow setItemSize:CGSizeMake(240, 240)];
-    [flow setScrollDirection:UICollectionViewScrollDirectionVertical];
-    
-    CDGroupDetailController* controller=[[CDGroupDetailController alloc] initWithNibName:@"CDGroupDetailController" bundle:nil];
-    controller.chatGroup=self.chatGroup;
-    [self.navigationController pushViewController:controller animated:YES];
-}
-
-#pragma mark - Messages view delegate
-
-- (void)messageUpdated:(NSNotification *)notification {
-    NSString* convid=[CDSessionManager getConvidOfRoomType:self.type otherId:self.chatUser.objectId groupId:self.group.groupId];
-    NSMutableArray *msgs  = [[sessionManager getMsgsForConvid:convid] mutableCopy];
-    //UIApplication* app=[UIApplication sharedApplication];
-    //app.networkActivityIndicatorVisible=YES;
-    //[[self.toolbarItems objectAtIndex:0] addSubview:view];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        for(Msg* msg in msgs){
-            [self getAvatarByMsg:msg];
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //app.networkActivityIndicatorVisible=NO;
-            //[indicator removeFromSuperview];
-            self.messages=[[NSMutableArray alloc] init];
-            for(Msg* msg in msgs){
-                [self.messages addObject:[self getXHMessageByMsg:msg]];
-            }
-            [self.messageTableView reloadData];
-            [self scrollToBottomAnimated:YES];
-        });
-    });
-}
-
-- (void)sendAttachmentWithObjectId:(NSString *)objectId{
-    [sessionManager sendAttachmentWithObjectId:objectId type:CDMsgTypeImage toPeerId:self.chatUser.objectId group:self.group];
-}
-
--(void)sendImage:(UIImage*)image{
-    UIImage *scaledImage = [image resizedImageToFitInSize:CGSizeMake(1080, 1920) scaleIfSmaller:NO];
-    NSData *imageData = UIImageJPEGRepresentation(scaledImage, 0.6);
-    
-    NSString* objectId=[CDSessionManager uuid];
-    NSString* path=[CDSessionManager getPathByObjectId:objectId];
-    NSError* error;
-    [imageData writeToFile:path options:NSDataWritingAtomic error:&error];
-    NSLog(@" save path=%@",path);
-    if(error==nil){
-        [self sendAttachmentWithObjectId:objectId];
-    }else{
-        [Utils alert:@"write image to file error"];
-    }
-}
-
-#pragma mark - Actions
-
--(XHMessage*)getXHMessageByMsg:(Msg*)msg{
+-(XHMessage*)getXHMessageByMsg:(CDMsg*)msg{
     AVUser* fromUser=[sessionManager lookupUser:msg.fromPeerId];
     AVUser* curUser=[AVUser currentUser];
     XHMessage* xhMessage;
     if(msg.type==CDMsgTypeText){
         xhMessage=[[XHMessage alloc] initWithText:msg.content sender:fromUser.username timestamp:[msg getTimestampDate]];
     }else if(msg.type==CDMsgTypeAudio){
-        xhMessage=[[XHMessage alloc] initWithVoicePath:nil voiceUrl:msg.content voiceDuration:nil sender:fromUser.username timestamp:[msg getTimestampDate]];
+        NSString* objectId=msg.objectId;
+        NSString* path=[CDSessionManager getPathByObjectId:objectId];
+        NSDictionary* fileAttrs=[[NSFileManager defaultManager] fileAttributesAtPath:path traverseLink:YES];
+        unsigned long long size=[fileAttrs fileSize];
+        int oneSecSize=15000;
+        int duration=(int)(size*1.0f/oneSecSize+1);
+        xhMessage=[[XHMessage alloc] initWithVoicePath:path voiceUrl:msg.content voiceDuration:[NSString stringWithFormat:@"%d",duration] sender:fromUser.username timestamp:[msg getTimestampDate]];
     }else if(msg.type==CDMsgTypeLocation){
         NSArray* parts=[msg.content componentsSeparatedByString:@"&"];
         double latitude=[[parts objectAtIndex:1] doubleValue];
@@ -275,6 +199,94 @@
     }
     return xhMessage;
 }
+
+-(UIImage*)getAvatarByMsg:(CDMsg*)msg{
+    __block UIImage* avatar=[_loadedData objectForKey:msg.fromPeerId];
+    if(avatar){
+        return avatar;
+    }else{
+        AVUser* user=[sessionManager lookupUser:msg.fromPeerId];
+        SDWebImageManager* man=[SDWebImageManager sharedManager];
+        AVFile* avatarFile=[user objectForKey:@"avatar"];
+        [man downloadImageWithURL:[NSURL URLWithString:[avatarFile url]] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+            if(error){
+                [CDUtils alertError:error];
+            }else{
+                [_loadedData setObject:image forKey:msg.fromPeerId];
+            }
+            avatar=image;
+        }];
+    }
+    if(avatar==nil){
+        avatar=[UIImage imageNamed:@"default_user_avatar"];
+    }
+    return avatar;
+}
+
+#pragma mark next controller
+
+- (void)goChatGroupDetail:(id)sender {
+//    CDGroupDetailController *controller=[[CDGroupDetailController alloc] init];
+//    controller.chatGroup=self.chatGroup;
+//    [self.navigationController pushViewController: controller animated:YES];
+
+    UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
+    [flow setItemSize:CGSizeMake(240, 240)];
+    [flow setScrollDirection:UICollectionViewScrollDirectionVertical];
+    
+    CDGroupDetailController* controller=[[CDGroupDetailController alloc] initWithNibName:@"CDGroupDetailController" bundle:nil];
+    controller.chatGroup=self.chatGroup;
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+#pragma mark messageUpdated
+
+- (void)messageUpdated:(NSNotification *)notification {
+    NSString* convid=[CDSessionManager getConvidOfRoomType:self.type otherId:self.chatUser.objectId groupId:self.group.groupId];
+    NSMutableArray *msgs  = [[sessionManager getMsgsForConvid:convid] mutableCopy];
+    //UIApplication* app=[UIApplication sharedApplication];
+    //app.networkActivityIndicatorVisible=YES;
+    //[[self.toolbarItems objectAtIndex:0] addSubview:view];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for(CDMsg* msg in msgs){
+            [self getAvatarByMsg:msg];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //app.networkActivityIndicatorVisible=NO;
+            //[indicator removeFromSuperview];
+            self.messages=[[NSMutableArray alloc] init];
+            for(CDMsg* msg in msgs){
+                [self.messages addObject:[self getXHMessageByMsg:msg]];
+            }
+            [self.messageTableView reloadData];
+            [self scrollToBottomAnimated:YES];
+        });
+    });
+}
+
+#pragma send message
+
+- (void)sendAttachmentWithObjectId:(NSString *)objectId type:(CDMsgType)type{
+    [sessionManager sendAttachmentWithObjectId:objectId type:type toPeerId:self.chatUser.objectId group:self.group];
+}
+
+-(void)sendImage:(UIImage*)image{
+    UIImage *scaledImage = [image resizedImageToFitInSize:CGSizeMake(1080, 1920) scaleIfSmaller:NO];
+    NSData *imageData = UIImageJPEGRepresentation(scaledImage, 0.6);
+    
+    NSString* objectId=[CDSessionManager uuid];
+    NSString* path=[CDSessionManager getPathByObjectId:objectId];
+    NSError* error;
+    [imageData writeToFile:path options:NSDataWritingAtomic error:&error];
+    NSLog(@" save path=%@",path);
+    if(error==nil){
+        [self sendAttachmentWithObjectId:objectId type:CDMsgTypeImage];
+    }else{
+        [CDUtils alert:@"write image to file error"];
+    }
+}
+
+#pragma mark - LifeCycle
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -468,6 +480,15 @@
  *  @param date             发送时间
  */
 - (void)didSendVoice:(NSString *)voicePath voiceDuration:(NSString *)voiceDuration fromSender:(NSString *)sender onDate:(NSDate *)date {
+    NSString* objectId=[CDSessionManager uuid];
+    NSString* path=[CDSessionManager getPathByObjectId:objectId];
+    NSError* error;
+    [[NSFileManager defaultManager] copyItemAtPath:voicePath toPath:path error:&error];
+    if(error==nil){
+        [self sendAttachmentWithObjectId:objectId type:CDMsgTypeAudio];
+    }else{
+        [CDUtils alertError:error];
+    }
     [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeVoice];
 }
 

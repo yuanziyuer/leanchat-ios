@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "CDCommon.h"
-#import "Msg.h"
-#import "ChatGroup.h"
+#import "CDMsg.h"
+#import "CDChatGroup.h"
 
 @interface CDSessionManager : NSObject <AVSessionDelegate, AVSignatureDelegate, AVGroupDelegate>
 + (instancetype)sharedInstance;
@@ -45,9 +45,9 @@
 #pragma group
 - (AVGroup *)joinGroupById:(NSString *)groupId;
 - (void)saveNewGroupWithName:(NSString*)name withCallback:(AVGroupResultBlock)callback ;
--(void)inviteMembersToGroup:(ChatGroup*) chatGroup userIds:(NSArray*)userIds;
--(void)kickMemberFromGroup:(ChatGroup*)chatGroup userId:(NSString*)userId;
--(void)quitFromGroup:(ChatGroup*)chatGroup;
+-(void)inviteMembersToGroup:(CDChatGroup*) chatGroup userIds:(NSArray*)userIds;
+-(void)kickMemberFromGroup:(CDChatGroup*)chatGroup userId:(NSString*)userId;
+-(void)quitFromGroup:(CDChatGroup*)chatGroup;
 
 #pragma user cache
 - (void)registerUsers:(NSArray*)users;

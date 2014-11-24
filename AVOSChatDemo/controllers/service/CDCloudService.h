@@ -11,13 +11,12 @@
 static NSString *kAddFriendFnName=@"addFriend";
 static NSString *kRemoveFriendFnName=@"removeFriend";
 
-@interface CloudService : NSObject
+@interface CDCloudService : NSObject
 
 +(void)callCloudRelationFnWithFromUser:(AVUser*)fromUser toUser:(AVUser*)toUser action:(NSString*)action callback:(AVIdResultBlock)callback;
 +(void)tryCreateAddRequestWithToUser:(AVUser*)toUser callback:(AVIdResultBlock)callback;
 +(void)agreeAddRequestWithId:(NSString*)objectId callback:(AVIdResultBlock)callback;
 +(void)saveChatGroupWithId:(NSString*)groupId name:(NSString*)name callback:(AVIdResultBlock)callback;
--(NSString*)getAvatarUrlOfAVUser:(AVUser*)user;
 +(id)signWithPeerId:(NSString*)peerId watchedPeerIds:(NSArray*)watchPeerIds;
 +(id)groupSignWithPeerId:(NSString*)peerId groupId:(NSString*)groupId groupPeerIds:(NSArray*)groupPeerIds action:(NSString*)action;
 

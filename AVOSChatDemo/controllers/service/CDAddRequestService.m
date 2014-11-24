@@ -6,13 +6,13 @@
 //  Copyright (c) 2014年 AVOS. All rights reserved.
 //
 
-#import "AddRequestService.h"
+#import "CDAddRequestService.h"
 
-@implementation AddRequestService
+@implementation CDAddRequestService
 
 +(void)findAddRequestsWtihCallback:(AVArrayResultBlock)callback{
     AVUser* curUser=[AVUser currentUser];
-    AVQuery *q=[AddRequest query];
+    AVQuery *q=[CDAddRequest query];
     [q includeKey:@"fromUser"];
     [q whereKey:@"toUser" equalTo:curUser];
     [q orderByDescending:@"createdAt"];

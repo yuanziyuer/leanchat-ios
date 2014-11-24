@@ -7,7 +7,7 @@
 //
 
 #import "CDImageLabelTableCell.h"
-#import "Utils.h"
+#import "CDUtils.h"
 
 @implementation CDImageLabelTableCell
 

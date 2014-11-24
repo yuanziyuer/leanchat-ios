@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "CDCommon.h"
-#import "ChatGroup.h"
+#import "CDChatGroup.h"
 
 @interface CDGroupDetailController : UICollectionViewController<UIGestureRecognizerDelegate,UIAlertViewDelegate>
 
-@property ChatGroup* chatGroup;
+@property CDChatGroup* chatGroup;
 
 @end

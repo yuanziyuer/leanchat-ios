@@ -9,7 +9,7 @@
 #import "CDGroupAddMemberController.h"
 #import "CDImageLabelTableCell.h"
 #import "CDSessionManager.h"
-#import "UserService.h"
+#import "CDUserService.h"
 
 @interface CDGroupAddMemberController (){
     CDSessionManager *sessionManager;
@@ -92,7 +92,7 @@ static NSString* reuseIdentifier=@"Cell";
     }
     NSString* userId=[potentialIds objectAtIndex:indexPath.row];
     AVUser* user=[sessionManager lookupUser:userId];
-    [UserService displayAvatarOfUser:user avatarView:cell.myImageView];
+    [CDUserService displayAvatarOfUser:user avatarView:cell.myImageView];
     cell.myLabel.text=user.username;
     if([selected[indexPath.row] boolValue]){
         cell.accessoryType=UITableViewCellAccessoryCheckmark;

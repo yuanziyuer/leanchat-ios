@@ -6,14 +6,14 @@
 //  Copyright (c) 2014年 AVOS. All rights reserved.
 //
 
-#import "GroupService.h"
-#import "ChatGroup.h"
+#import "CDGroupService.h"
+#import "CDChatGroup.h"
 
-@implementation GroupService
+@implementation CDGroupService
 
 +(void)findGroupsWithCallback:(AVArrayResultBlock)callback{
     AVUser* user=[AVUser currentUser];
-    AVQuery* q=[ChatGroup query];
+    AVQuery* q=[CDChatGroup query];
     [q includeKey:@"owner"];
     [q setCachePolicy:kAVCachePolicyNetworkElseCache];
     [q whereKey:@"m" equalTo:user.objectId];
@@ -23,7 +23,7 @@
 
 +(void)findGroupsByIds:(NSMutableSet*)groupIds withCallback:(AVArrayResultBlock)callback{
     if(groupIds.count>0){
-        AVQuery* q=[ChatGroup query];
+        AVQuery* q=[CDChatGroup query];
         [q whereKey:@"objectId" containedIn:[groupIds allObjects]];
         [q includeKey:@"owner"];
         [q findObjectsInBackgroundWithBlock:callback];

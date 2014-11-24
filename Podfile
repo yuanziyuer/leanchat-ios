@@ -3,10 +3,8 @@
 
 source 'https://github.com/CocoaPods/Specs.git'
 
-target 'AVOSChatDemo' do
-  pod 'MessageDisplayKit'
-	pod 'AVOSCloud'
-	pod 'AVOSCloudUI'
-	pod 'SDWebImage'
-end
+pod 'MessageDisplayKit'
+pod 'AVOSCloud'
+pod 'AVOSCloudUI'
+pod 'SDWebImage'
 

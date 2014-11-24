@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AddRequest.h"
+#import "CDAddRequest.h"
 
-@interface AddRequestService : NSObject
+@interface CDAddRequestService : NSObject
 
 +(void)findAddRequestsWtihCallback:(AVArrayResultBlock)callback;
 

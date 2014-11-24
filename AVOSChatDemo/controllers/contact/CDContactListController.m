@@ -8,7 +8,7 @@
 
 #import "CDContactListController.h"
 #import "CDCommon.h"
-#import "UserService.h"
+#import "CDUserService.h"
 #import "CDAddFriendController.h"
 #import "CDBaseNavigationController.h"
 #import "CDNewFriendTableViewController.h"
@@ -16,7 +16,7 @@
 #import "CDSessionManager.h"
 #import "CDImageLabelTableCell.h"
 #import "CDGroupTableViewController.h"
-#import "Utils.h"
+#import "CDUtils.h"
 
 enum : NSUInteger {
     kTagNameLabel = 10000,
@@ -81,9 +81,9 @@ enum : NSUInteger {
 }
 
 - (void)startFetchUserList {
-    [Utils showNetworkIndicator];
-    [UserService findFriendsWithCallback:^(NSArray *objects, NSError *error) {
-        [Utils hideNetworkIndicator];
+    [CDUtils showNetworkIndicator];
+    [CDUserService findFriendsWithCallback:^(NSArray *objects, NSError *error) {
+        [CDUtils hideNetworkIndicator];
         if (objects) {
             self.users = [objects mutableCopy];
             CDSessionManager* sessionMan=[CDSessionManager sharedInstance];
@@ -118,7 +118,7 @@ enum : NSUInteger {
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     CDImageLabelTableCell* tableCell=(CDImageLabelTableCell*)cell;
     AVUser *user = [self.users objectAtIndex:indexPath.row];
-    [UserService displayAvatarOfUser:user avatarView:tableCell.myImageView];
+    [CDUserService displayAvatarOfUser:user avatarView:tableCell.myImageView];
     tableCell.myLabel.text = user.username;
 }
 

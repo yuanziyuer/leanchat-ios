@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 AVOS. All rights reserved.
 //
 
-#import "ChatGroup.h"
+#import "CDChatGroup.h"
 
-@implementation ChatGroup
+@implementation CDChatGroup
 
 @dynamic owner;
 @dynamic name;

@@ -6,11 +6,11 @@
 //  Copyright (c) 2014年 AVOS. All rights reserved.
 //
 
-#import "Utils.h"
+#import "CDUtils.h"
 #import "CDCommonDefine.h"
 #import <CommonCrypto/CommonDigest.h>
 
-@implementation Utils
+@implementation CDUtils
 +(void)alert:(NSString*)msg{
     UIAlertView *alertView=[[UIAlertView alloc]
                              initWithTitle:nil message:msg delegate:nil
@@ -19,7 +19,7 @@
 }
 
 +(void)alertError:(NSError*)error{
-    [Utils alert:[error localizedDescription]];
+    [CDUtils alert:[error localizedDescription]];
 }
 
 +(NSString*)md5OfString:(NSString*)s{
@@ -68,7 +68,7 @@
 
 +(void)filterError:(NSError*)error callback:(CDBlock)callback{
     if(error){
-        [Utils alertError:error];
+        [CDUtils alertError:error];
     }else{
         callback();
     }

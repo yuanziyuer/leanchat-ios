@@ -15,15 +15,15 @@
 #import "CDContactListController.h"
 #import "CDProfileController.h"
 #import "CDSessionManager.h"
-#import "ChatGroup.h"
+#import "CDChatGroup.h"
 
 @implementation CDAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    [AddRequest registerSubclass];
-    [ChatGroup registerSubclass];
+    [CDAddRequest registerSubclass];
+    [CDChatGroup registerSubclass];
 #if USE_US
     [AVOSCloud useAVCloudUS];
 #endif

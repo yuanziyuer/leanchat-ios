@@ -8,9 +8,10 @@
 
 #import "CDCommon.h"
 #import "CDSessionManager.h"
-#import "ChatGroup.h"
+#import "CDChatGroup.h"
 
 #import "XHMessageTableViewController.h"
+
 
 @class CDChatRoomController;
 
@@ -19,7 +20,7 @@
 
 @property (nonatomic, strong) AVUser *chatUser;
 @property (nonatomic) CDMsgRoomType type;
-@property (nonatomic,strong) ChatGroup* chatGroup;
+@property (nonatomic,strong) CDChatGroup* chatGroup;
 
 @property (nonatomic, strong) AVGroup *group;
 

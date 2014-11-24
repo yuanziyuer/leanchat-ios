@@ -11,7 +11,7 @@
 
 #import <AVOSCloud/AVOSCloud.h>
 #import "CDCommonDefine.h"
-#import "UserService.h"
-#import "AddRequest.h"
+#import "CDUserService.h"
+#import "CDAddRequest.h"
 
 #endif

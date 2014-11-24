@@ -10,7 +10,7 @@
 #define kAddRequestStatusWait 0
 #define kAddRequestStatusDone 1
 
-@interface AddRequest : AVObject<AVSubclassing>
+@interface CDAddRequest : AVObject<AVSubclassing>
 
 @property AVUser *fromUser;
 @property AVUser *toUser;

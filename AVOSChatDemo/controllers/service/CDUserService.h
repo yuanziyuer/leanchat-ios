@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "CDCommon.h"
 
-@interface UserService : NSObject
+@interface CDUserService : NSObject
 +(void)findFriendsWithCallback:(AVArrayResultBlock)callback;
 +(void)findUsersByPartname:(NSString*)partName withBlock:(AVArrayResultBlock)block;
 +(NSString*)getPeerIdOfUser:(AVUser*)user;

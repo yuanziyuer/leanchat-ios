@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <AVOSCloud/AVOSCloud.h>
 
-@interface GroupService : NSObject
+@interface CDGroupService : NSObject
 
 +(void)findGroupsWithCallback:(AVArrayResultBlock)callback;
 

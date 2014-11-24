@@ -11,10 +11,10 @@
 #import "CDChatRoomController.h"
 #import "CDPopMenu.h"
 #import "CDChatConfirmController.h"
-#import "ChatRoom.h"
+#import "CDChatRoom.h"
 #import "CDImageTwoLabelTableCell.h"
-#import "Utils.h"
-#import "CloudService.h"
+#import "CDUtils.h"
+#import "CDCloudService.h"
 
 enum : NSUInteger {
     kTagNameLabel = 10000,
@@ -67,10 +67,10 @@ static NSString *cellIdentifier = @"ContactCell";
 }
 
 -(void)refresh{
-    [Utils showNetworkIndicator];
+    [CDUtils showNetworkIndicator];
     [sessionManager findConversationsWithCallback:^(NSArray *objects, NSError *error) {
-        [Utils hideNetworkIndicator];
-        [Utils filterError:error callback:^{
+        [CDUtils hideNetworkIndicator];
+        [CDUtils filterError:error callback:^{
             [self.tableView reloadData];
         }];
     }];
@@ -97,7 +97,7 @@ static NSString *cellIdentifier = @"ContactCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CDImageTwoLabelTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    ChatRoom *chatRoom = [[[CDSessionManager sharedInstance] chatRooms] objectAtIndex:indexPath.row];
+    CDChatRoom *chatRoom = [[[CDSessionManager sharedInstance] chatRooms] objectAtIndex:indexPath.row];
     CDMsgRoomType type=[chatRoom roomType];
     NSMutableString *nameString = [[NSMutableString alloc] init];
     if (type == CDMsgRoomTypeGroup) {
@@ -105,7 +105,7 @@ static NSString *cellIdentifier = @"ContactCell";
         [nameString appendFormat:@"%@", groupName];
         [cell.myImageView setImage:[UIImage imageNamed:@"group_icon"]];
     } else {
-        [UserService displayAvatarOfUser:chatRoom.chatUser avatarView:cell.myImageView];
+        [CDUserService displayAvatarOfUser:chatRoom.chatUser avatarView:cell.myImageView];
         [nameString appendFormat:@"%@", chatRoom.chatUser.username];
     }
     cell.topLabel.text=nameString;
@@ -114,7 +114,7 @@ static NSString *cellIdentifier = @"ContactCell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    ChatRoom *chatRoom = [[[CDSessionManager sharedInstance] chatRooms] objectAtIndex:indexPath.row];
+    CDChatRoom *chatRoom = [[[CDSessionManager sharedInstance] chatRooms] objectAtIndex:indexPath.row];
     CDMsgRoomType type = chatRoom.roomType;
     CDChatRoomController *controller = [[CDChatRoomController alloc] init];
     controller.type = type;

@@ -6,10 +6,10 @@
 //  Copyright (c) 2014年 AVOS. All rights reserved.
 //
 
-#import "CloudService.h"
-#import "UserService.h"
+#import "CDCloudService.h"
+#import "CDUserService.h"
 
-@implementation CloudService
+@implementation CDCloudService
 
 +(void)callCloudRelationFnWithFromUser:(AVUser*)fromUser toUser:(AVUser*)toUser action:(NSString*)action callback:(AVIdResultBlock)callback{
     NSDictionary *dict=@{@"fromUserId":fromUser.objectId,@"toUserId":toUser.objectId};
