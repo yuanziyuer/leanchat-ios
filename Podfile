@@ -4,7 +4,6 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
 pod 'MessageDisplayKit'
-pod 'AVOSCloud'
-pod 'AVOSCloudUI'
 pod 'SDWebImage'
+pod 'AVOSCloud'
 
