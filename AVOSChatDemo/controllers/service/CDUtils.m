@@ -74,6 +74,14 @@
     }
 }
 
++(void)logError:(NSError*)error callback:(CDBlock)callback{
+    if(error){
+        NSLog(@"%@",[error localizedDescription]);
+    }else{
+        callback();
+    }
+}
+
 +(NSMutableArray*)setToArray:(NSMutableSet*)set{
     return [[NSMutableArray alloc] initWithArray:[set allObjects]];
 }

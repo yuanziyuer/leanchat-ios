@@ -177,11 +177,23 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
 }
 
 - (void)watchPeerId:(NSString *)peerId {
-    [_session watchPeerIds:@[peerId]];
+    if([_session peerIdIsWatching:peerId]){
+        NSLog(@"watched");
+    }else{
+        NSLog(@"unwatch");
+    }
+    [_session watchPeerIds:@[peerId] callback:^(BOOL succeeded, NSError *error) {
+        [CDUtils logError:error callback:^{
+            NSLog(@"watch succeed peerId=%@",peerId);
+        }];
+    }];
 }
 
 -(void)unwatchPeerId:(NSString*)peerId{
-    [_session unwatchPeerIds:@[peerId]];
+    [_session unwatchPeerIds:@[peerId] callback:^(BOOL succeeded, NSError *error) {
+        [CDUtils filterError:error callback:^{
+        }];
+    }];
 }
 
 -(AVGroup*)getGroupById:(NSString*)groupId{
@@ -478,7 +490,7 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     [self notifyMessageUpdate];
 }
 
-#pragma session delegate
+#pragma mark - session delegate
 - (void)session:(AVSession *)session didReceiveMessage:(AVMessage *)message {
     [self didReceiveAVMessage:message group:nil];
 }
@@ -496,7 +508,7 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
 }
 
 - (void)session:(AVSession *)session didReceiveStatus:(AVPeerStatus)status peerIds:(NSArray *)peerIds {
-    NSLog(@"%s", __PRETTY_FUNCTION__); 
+    NSLog(@"%s", __PRETTY_FUNCTION__);
     NSLog(@"session:%@ peerIds:%@ status:%@", session.peerId, peerIds, status==AVPeerStatusOffline?@"offline":@"online");
 }
 
@@ -535,7 +547,7 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     NSLog(@"group:%@ message:%@ success:%d", group.groupId, message, success);
 }
 
-#pragma end of interface
+#pragma mark end of interface
 
 - (void)registerUsers:(NSArray*)users{
     for(int i=0;i<users.count;i++){
@@ -555,7 +567,7 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     return user.objectId;
 }
 
-#pragma group
+#pragma mark - group
 -(void)inviteMembersToGroup:(CDChatGroup*) chatGroup userIds:(NSArray*)userIds{
     AVGroup* group=[self getGroupById:chatGroup.objectId];
     [group invitePeerIds:userIds];
@@ -573,7 +585,7 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     [group quit];
 }
 
-#pragma group cache
+#pragma mark - group cache
 
 -(CDChatGroup*)lookupChatGroupById:(NSString*)groupId{
     return [cachedChatGroups valueForKey:groupId];
@@ -598,30 +610,33 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     }
 }
 
-#pragma signature
+#pragma mark - signature
 
-- (AVSignature *)signatureForPeerWithPeerId:(NSString *)peerId watchedPeerIds:(NSArray *)watchedPeerIds action:(NSString *)action{
-    NSDictionary* result=[CDCloudService signWithPeerId:peerId watchedPeerIds:watchedPeerIds];
-    return [self getAVSignatureWithParams:result peerIds:watchedPeerIds];
-}
-
--(AVSignature*)getAVSignatureWithParams:(NSDictionary*) fields peerIds:(NSArray*)peerIds{
-    AVSignature* avSignature=[[AVSignature alloc] init];
-    NSNumber* timestampNum=[fields objectForKey:@"timestamp"];
-    long timestamp=[timestampNum longValue];
-    NSString* nonce=[fields objectForKey:@"nonce"];
-    NSString* signature=[fields objectForKey:@"signature"];
-    
-    [avSignature setTimestamp:timestamp];
-    [avSignature setNonce:nonce];
-    [avSignature setSignature:signature];;
-    [avSignature setSignedPeerIds:[peerIds copy]];
-    return avSignature;
-}
-
--(AVSignature*)signatureForGroupWithPeerId:(NSString *)peerId groupId:(NSString *)groupId groupPeerIds:(NSArray *)groupPeerIds action:(NSString *)action{
-    NSDictionary* result=[CDCloudService groupSignWithPeerId:peerId groupId:groupId groupPeerIds:groupPeerIds action:action];
-    return [self getAVSignatureWithParams:result peerIds:groupPeerIds];
-}
+//- (AVSignature *)signatureForPeerWithPeerId:(NSString *)peerId watchedPeerIds:(NSArray *)watchedPeerIds action:(NSString *)action{
+//    if(watchedPeerIds==nil){
+//        watchedPeerIds=[[NSMutableArray alloc] init];
+//    }
+//    NSDictionary* result=[CDCloudService signWithPeerId:peerId watchedPeerIds:watchedPeerIds];
+//    return [self getAVSignatureWithParams:result peerIds:watchedPeerIds];
+//}
+//
+//-(AVSignature*)getAVSignatureWithParams:(NSDictionary*) fields peerIds:(NSArray*)peerIds{
+//    AVSignature* avSignature=[[AVSignature alloc] init];
+//    NSNumber* timestampNum=[fields objectForKey:@"timestamp"];
+//    long timestamp=[timestampNum longValue];
+//    NSString* nonce=[fields objectForKey:@"nonce"];
+//    NSString* signature=[fields objectForKey:@"signature"];
+//    
+//    [avSignature setTimestamp:timestamp];
+//    [avSignature setNonce:nonce];
+//    [avSignature setSignature:signature];;
+//    [avSignature setSignedPeerIds:[peerIds copy]];
+//    return avSignature;
+//}
+//
+//-(AVSignature*)signatureForGroupWithPeerId:(NSString *)peerId groupId:(NSString *)groupId groupPeerIds:(NSArray *)groupPeerIds action:(NSString *)action{
+//    NSDictionary* result=[CDCloudService groupSignWithPeerId:peerId groupId:groupId groupPeerIds:groupPeerIds action:action];
+//    return [self getAVSignatureWithParams:result peerIds:groupPeerIds];
+//}
 
 @end

@@ -67,7 +67,7 @@
     }
     
     if(self.type==CDMsgRoomTypeSingle){
-        [sessionManager watchPeerId:self.chatUser.objectId];
+        [sessionManager watchPeerId:self.chatUser.objectId ];
     }else{
         _group=[sessionManager joinGroupById:_chatGroup.objectId];
     }
@@ -126,15 +126,12 @@
     [super viewDidDisappear:animated];
     NSNotificationCenter* center=[NSNotificationCenter defaultCenter];
     [center removeObserver:self name:NOTIFICATION_MESSAGE_UPDATED object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-}
-
--(void)dealloc{
     if(self.type==CDMsgRoomTypeSingle){
         [sessionManager unwatchPeerId:self.chatUser.objectId];
     }
+}
+
+-(void)dealloc{
     self.emotionManagers = nil;
     [[XHAudioPlayerHelper shareInstance] setDelegate:nil];
 }

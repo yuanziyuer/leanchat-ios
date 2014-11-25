@@ -23,10 +23,12 @@ typedef void (^CDBlock)();
 
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 +(void)filterError:(NSError*)error callback:(CDBlock)callback;
++(void)logError:(NSError*)error callback:(CDBlock)callbak;
 
 +(NSMutableArray*)setToArray:(NSMutableSet*)set;
 
 +(void)setCellMarginsZero:(UITableViewCell*)cell;
 +(void)setTableViewMarginsZero:(UITableView*)view;
+
 
 @end

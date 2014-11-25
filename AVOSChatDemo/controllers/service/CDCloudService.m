@@ -36,11 +36,12 @@
 }
 
 +(id)signWithPeerId:(NSString*)peerId watchedPeerIds:(NSArray*)watchPeerIds{
+    if(watchPeerIds==nil){
+        watchPeerIds=[[NSMutableArray alloc] init];
+    }
     NSMutableDictionary *dict=[[NSMutableDictionary alloc] init];
     [dict setObject:peerId forKey:@"self_id"];
-    if(watchPeerIds!=nil){
-        [dict setObject:watchPeerIds forKey:@"watch_ids"];
-    }
+    [dict setObject:watchPeerIds forKey:@"watch_ids"];
     return [AVCloud callFunction:@"sign" withParameters:dict];
 }
 
