@@ -126,14 +126,14 @@
     [super viewDidDisappear:animated];
     NSNotificationCenter* center=[NSNotificationCenter defaultCenter];
     [center removeObserver:self name:NOTIFICATION_MESSAGE_UPDATED object:nil];
-    if(self.type==CDMsgRoomTypeSingle){
-        [sessionManager unwatchPeerId:self.chatUser.objectId];
-    }
 }
 
 -(void)dealloc{
     self.emotionManagers = nil;
     [[XHAudioPlayerHelper shareInstance] setDelegate:nil];
+    if(self.type==CDMsgRoomTypeSingle){
+        [sessionManager unwatchPeerId:self.chatUser.objectId];
+    }
 }
 
 -(void)backPressed:(id)sender{
