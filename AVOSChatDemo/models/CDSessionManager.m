@@ -177,11 +177,7 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
 }
 
 - (void)watchPeerId:(NSString *)peerId {
-    if([_session peerIdIsWatching:peerId]){
-        NSLog(@"watched");
-    }else{
-        NSLog(@"unwatch");
-    }
+    NSLog(@"unwatch");
     [_session watchPeerIds:@[peerId] callback:^(BOOL succeeded, NSError *error) {
         [CDUtils logError:error callback:^{
             NSLog(@"watch succeed peerId=%@",peerId);
@@ -190,6 +186,7 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
 }
 
 -(void)unwatchPeerId:(NSString*)peerId{
+    NSLog(@"%s",__PRETTY_FUNCTION__);
     [_session unwatchPeerIds:@[peerId] callback:^(BOOL succeeded, NSError *error) {
         NSLog(@"unwatch callback");
         [CDUtils logError:error callback:^{

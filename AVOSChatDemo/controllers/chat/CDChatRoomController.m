@@ -18,6 +18,7 @@
 #import "XHDisplayTextViewController.h"
 #import "XHDisplayMediaViewController.h"
 #import "XHDisplayLocationViewController.h"
+#import "CDEmotionUtils.h"
 
 #import "XHContactDetailTableViewController.h"
 
@@ -93,27 +94,15 @@
         XHShareMenuItem *shareMenuItem = [[XHShareMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:plugIcon] title:[plugTitle objectAtIndex:[plugIcons indexOfObject:plugIcon]]];
         [shareMenuItems addObject:shareMenuItem];
     }
-    
-    NSMutableArray *emotionManagers = [NSMutableArray array];
-    for (NSInteger i = 0; i < 10; i ++) {
-        XHEmotionManager *emotionManager = [[XHEmotionManager alloc] init];
-        emotionManager.emotionName = [NSString stringWithFormat:@"表情%ld", (long)i];
-        NSMutableArray *emotions = [NSMutableArray array];
-        for (NSInteger j = 0; j < 18; j ++) {
-            XHEmotion *emotion = [[XHEmotion alloc] init];
-            NSString *imageName = [NSString stringWithFormat:@"section%ld_emotion%ld", (long)i , (long)j % 16];
-            emotion.emotionPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"emotion%ld.gif", (long)j] ofType:@""];
-            emotion.emotionConverPhoto = [UIImage imageNamed:imageName];
-            [emotions addObject:emotion];
-        }
-        emotionManager.emotions = emotions;
-        
-        [emotionManagers addObject:emotionManager];
-    }
+   
+    _emotionManagers=[CDEmotionUtils getEmotionManagers];
+    self.emotionManagerView.isShowEmotionStoreButton=NO;
     [self.emotionManagerView reloadData];
     
     self.shareMenuItems = shareMenuItems;
     [self.shareMenuView reloadData];
+    
+
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -268,8 +257,7 @@
 }
 
 -(void)sendImage:(UIImage*)image{
-    UIImage *scaledImage = [image resizedImageToFitInSize:CGSizeMake(1080, 1920) scaleIfSmaller:NO];
-    NSData *imageData = UIImageJPEGRepresentation(scaledImage, 0.6);
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.6);
     
     NSString* objectId=[CDSessionManager uuid];
     NSString* path=[CDSessionManager getPathByObjectId:objectId];
@@ -496,7 +484,14 @@
  *  @param sender   发送者的名字
  *  @param date     发送时间
  */
-- (void)didSendEmotion:(NSString *)emotionPath fromSender:(NSString *)sender onDate:(NSDate *)date {
+- (void)didSendEmotion:(NSString *)emotion fromSender:(NSString *)sender onDate:(NSDate *)date {
+    UITextView *textView=self.messageInputView.inputTextView;
+    NSRange range=[textView selectedRange];
+    NSMutableString* str=[[NSMutableString alloc] initWithString:textView.text];
+    [str deleteCharactersInRange:range];
+    [str insertString:emotion atIndex:range.location];
+    textView.text=str;
+    textView.selectedRange=NSMakeRange(range.location+emotion.length, 0);
     [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeEmotion];
 }
 
