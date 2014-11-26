@@ -7,17 +7,18 @@
 //
 
 #import "CDUserService.h"
+#import "CDUtils.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @implementation CDUserService
 
-+(void)findFriendsWithCallback:(AVArrayResultBlock )block{
++(void)findFriendsIsNetworkOnly:(BOOL)networkOnly callback:(AVArrayResultBlock)block{
     AVUser *user=[AVUser currentUser];
     AVRelation *relation=[user relationforKey:@"friends"];
     //    //设置缓存有效期
     //    query.maxCacheAge = 4 * 3600;
     AVQuery *q=[relation query];
-    q.cachePolicy=kAVCachePolicyNetworkElseCache;
+    [CDUtils setPolicyOfAVQuery:q isNetwokOnly:networkOnly];
     if([q hasCachedResult]){
         NSLog(@"has cached results");
     }else{

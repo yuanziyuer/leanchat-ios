@@ -54,9 +54,14 @@ enum : NSUInteger {
     
     singleTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goGroup:)];
     [self.groupView addGestureRecognizer:singleTap];
+    
     //[self.myNewFriendView addGestureRecognizer:singleTap];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:CD_FRIENDS_UPDATE object:nil];
-    [self refresh];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh:) name:CD_FRIENDS_UPDATE object:nil];
+    [self refresh:nil];
+    
+    UIRefreshControl* refreshControl=[[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -87,9 +92,11 @@ enum : NSUInteger {
     [[self navigationController] pushViewController:controller animated:YES];
 }
 
--(void)refresh{
+-(void)refresh:(UIRefreshControl*)refreshControl{
+    BOOL networkOnly= refreshControl!=nil;
     [CDUtils showNetworkIndicator];
-    [CDUserService findFriendsWithCallback:^(NSArray *objects, NSError *error) {
+    [CDUserService findFriendsIsNetworkOnly:networkOnly callback:^(NSArray *objects, NSError *error) {
+        [refreshControl endRefreshing];
         [CDUtils hideNetworkIndicator];
         [CDUtils filterError:error callback:^{
             self.users = [objects mutableCopy];

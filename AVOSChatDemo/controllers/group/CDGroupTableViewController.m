@@ -37,15 +37,16 @@ static NSString* cellIndentifier=@"cell";
     UINib* nib=[UINib nibWithNibName:nibName bundle:nil];;
     [self.tableView registerNib:nib forCellReuseIdentifier:cellIndentifier];
     groupImage=[UIImage imageNamed:@"group_icon"];
-    [self refresh];
+    [self refresh:nil];
+    
+    UIRefreshControl* refreshControl=[[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl=refreshControl;
 }
 
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-}
-
--(void)refresh{
+-(void)refresh:(UIRefreshControl*)refreshControl{
     [CDGroupService findGroupsWithCallback:^(NSArray *objects, NSError *error) {
+        [refreshControl endRefreshing];
         chatGroups=objects;
         [self.tableView reloadData];
     }];

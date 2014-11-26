@@ -32,18 +32,28 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     //[self.tableView setDataSource:self];
     //[self.tableView setDelegate:self];
+    UIRefreshControl* refreshControl=[[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl=refreshControl;
     self.title=@"新的朋友";
+    [self refresh:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self refresh];
 }
 
--(void)refresh{
+-(void)refresh:(id)sender{
+    BOOL onlyNetwork;
+    if(sender==nil){
+        onlyNetwork=NO;
+    }else{
+        onlyNetwork=YES;
+    }
     UIActivityIndicatorView* indicator=[CDUtils showIndicatorAtView:self.view];
-    [CDAddRequestService findAddRequestsWtihCallback:^(NSArray *objects, NSError *error) {
+    [CDAddRequestService findAddRequestsOnlyByNetwork:onlyNetwork withCallback:^(NSArray *objects, NSError *error) {
         [indicator stopAnimating];
+        [self.refreshControl endRefreshing];
         [CDUtils filterError:error callback:^{
             addRequests=objects;
             [self.tableView reloadData];
@@ -103,7 +113,7 @@
             [CDUtils alert:[error localizedDescription]];
         }else{
             [CDUtils alert:@"添加成功"];
-            [self refresh];
+            [self refresh:sender];
             [[NSNotificationCenter defaultCenter] postNotificationName:CD_FRIENDS_UPDATE object:nil];
         }
     }];

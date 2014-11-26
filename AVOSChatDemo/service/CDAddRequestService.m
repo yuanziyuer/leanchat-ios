@@ -7,16 +7,17 @@
 //
 
 #import "CDAddRequestService.h"
+#import "CDUtils.h"
 
 @implementation CDAddRequestService
 
-+(void)findAddRequestsWtihCallback:(AVArrayResultBlock)callback{
++(void)findAddRequestsOnlyByNetwork:(BOOL)onlyNetwork withCallback:(AVArrayResultBlock)callback{
     AVUser* curUser=[AVUser currentUser];
     AVQuery *q=[CDAddRequest query];
     [q includeKey:@"fromUser"];
     [q whereKey:@"toUser" equalTo:curUser];
     [q orderByDescending:@"createdAt"];
-    [q setCachePolicy:kAVCachePolicyNetworkElseCache];
+    [CDUtils setPolicyOfAVQuery:q isNetwokOnly:onlyNetwork];
     [q findObjectsInBackgroundWithBlock:callback];
 }
 @end

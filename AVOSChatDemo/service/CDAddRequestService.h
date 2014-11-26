@@ -11,6 +11,6 @@
 
 @interface CDAddRequestService : NSObject
 
-+(void)findAddRequestsWtihCallback:(AVArrayResultBlock)callback;
++(void)findAddRequestsOnlyByNetwork:(BOOL)onlyNetwork withCallback:(AVArrayResultBlock)callback;
 
 @end

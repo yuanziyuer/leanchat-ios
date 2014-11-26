@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AVOSCloud/AVOSCloud.h>
 
 typedef void (^CDBlock)();
 
@@ -30,5 +31,8 @@ typedef void (^CDBlock)();
 +(void)setCellMarginsZero:(UITableViewCell*)cell;
 +(void)setTableViewMarginsZero:(UITableView*)view;
 
+#pragma mark - AVUtils
+
++(void)setPolicyOfAVQuery:(AVQuery*)query isNetwokOnly:(BOOL)onlyNetwork;
 
 @end

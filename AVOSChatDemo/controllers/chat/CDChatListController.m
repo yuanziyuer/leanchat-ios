@@ -51,26 +51,18 @@ static NSString *cellIdentifier = @"ContactCell";
     [self.tableView registerNib:[UINib nibWithNibName:nibName bundle:nil] forCellReuseIdentifier:cellIdentifier];
     chatRooms=[[NSMutableArray alloc] init];
     sessionManager=[CDSessionManager sharedInstance];
+    [self refresh:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh:) name:NOTIFICATION_MESSAGE_UPDATED object:nil];
+    
+    UIRefreshControl* refreshControl=[[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
 }
 
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    [self refresh];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageUpdated) name:NOTIFICATION_MESSAGE_UPDATED object:nil];
-}
-
--(void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_MESSAGE_UPDATED object:nil];
-}
-
--(void)messageUpdated{
-    [self refresh];
-}
-
--(void)refresh{
+-(void)refresh:(UIRefreshControl*)refreshControl{
     [CDUtils showNetworkIndicator];
     [sessionManager findConversationsWithCallback:^(NSArray *objects, NSError *error) {
+        [refreshControl endRefreshing];
         [CDUtils hideNetworkIndicator];
         [CDUtils filterError:error callback:^{
             chatRooms=[objects mutableCopy];
@@ -82,6 +74,11 @@ static NSString *cellIdentifier = @"ContactCell";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_MESSAGE_UPDATED object:nil];
 }
 
 - (void)showMenuOnView:(UIBarButtonItem *)buttonItem {
@@ -192,4 +189,5 @@ static NSString *cellIdentifier = @"ContactCell";
     }];
     // [self dismissViewControllerAnimated:NO completion:nil];
 }
+
 @end

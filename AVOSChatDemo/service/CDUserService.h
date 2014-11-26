@@ -10,9 +10,15 @@
 #import "CDCommon.h"
 
 @interface CDUserService : NSObject
-+(void)findFriendsWithCallback:(AVArrayResultBlock)callback;
+
++(void)findFriendsIsNetworkOnly:(BOOL)networkOnly callback:(AVArrayResultBlock)block;
+
 +(void)findUsersByPartname:(NSString*)partName withBlock:(AVArrayResultBlock)block;
+
 +(NSString*)getPeerIdOfUser:(AVUser*)user;
+
 +(void)findUsersByIds:(NSArray*)userIds callback:(AVArrayResultBlock)callback;
+
 +(void)displayAvatarOfUser:(AVUser*)user avatarView:(UIImageView*)avatarView;
+
 @end
