@@ -37,10 +37,11 @@ static NSString* cellIndentifier=@"cell";
     UINib* nib=[UINib nibWithNibName:nibName bundle:nil];;
     [self.tableView registerNib:nib forCellReuseIdentifier:cellIndentifier];
     groupImage=[UIImage imageNamed:@"group_icon"];
+    [self refresh];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    [self refresh];
+    [super viewDidAppear:animated];
 }
 
 -(void)refresh{

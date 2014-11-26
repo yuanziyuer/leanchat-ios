@@ -12,7 +12,7 @@
 @implementation CDEmotionUtils
 
 +(NSArray*)getEmotionManagers{
-    NSString* emotionChars=@"😄😃😊☺️😍😘😚😗😜😝😛😳😁😌😒😞😣😢😂😭😪😥😰😅😓😩😫😨😱😠😡😤😖😆😋😷😎😴😵😲😏😬";
+    NSString* emotionChars=@"😄😃😊☺️😍😘😚😗😜😝😛😳😁😌😒😞😣😢😂😭😪😥😰😅😓😩😫😨😱😠😡😤😖😆😋😷😎😴😵😲😏😬😐";
     NSMutableArray *emotionManagers = [NSMutableArray array];
     for (NSInteger i = 0; i < 1; i ++) {
         XHEmotionManager *emotionManager = [[XHEmotionManager alloc] init];
@@ -21,7 +21,6 @@
         for (NSInteger j = 0; j < [emotionChars length]/2; j ++) {
             XHTextEmotion* textEmotion=[[XHTextEmotion alloc] init];
             NSString* emotion=[emotionChars substringWithRange:NSMakeRange(j*2, 2)];
-            NSLog(@"%@",emotion);
             textEmotion.emotion=[emotion copy];
             [emotions addObject:textEmotion];
         }

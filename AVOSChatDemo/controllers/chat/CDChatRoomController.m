@@ -101,8 +101,6 @@
     
     self.shareMenuItems = shareMenuItems;
     [self.shareMenuView reloadData];
-    
-
 }
 
 - (void)viewDidAppear:(BOOL)animated{

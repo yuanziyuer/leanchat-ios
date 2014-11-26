@@ -31,6 +31,8 @@ enum : NSUInteger {
 @end
 
 @implementation CDContactListController
+
+#pragma mark - Life Cycle
 - (instancetype)init {
     if ((self = [super init])) {
         self.title = @"联系人";
@@ -53,6 +55,21 @@ enum : NSUInteger {
     singleTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goGroup:)];
     [self.groupView addGestureRecognizer:singleTap];
     //[self.myNewFriendView addGestureRecognizer:singleTap];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:CD_FRIENDS_UPDATE object:nil];
+    [self refresh];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:CD_FRIENDS_UPDATE object:nil];
 }
 
 -(void)goNewFriend:(id)sender{
@@ -70,29 +87,17 @@ enum : NSUInteger {
     [[self navigationController] pushViewController:controller animated:YES];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self startFetchUserList];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)startFetchUserList {
+-(void)refresh{
     [CDUtils showNetworkIndicator];
     [CDUserService findFriendsWithCallback:^(NSArray *objects, NSError *error) {
         [CDUtils hideNetworkIndicator];
-        if (objects) {
+        [CDUtils filterError:error callback:^{
             self.users = [objects mutableCopy];
             CDSessionManager* sessionMan=[CDSessionManager sharedInstance];
             [sessionMan registerUsers:self.users];
             [sessionMan setFriends:self.users];
             [self.tableView reloadData];
-        } else {
-            NSLog(@"error:%@", error);
-        }
+        }];
     }];
 }
 
@@ -112,6 +117,7 @@ enum : NSUInteger {
           forCellReuseIdentifier:cellIdentifier];
     }
     CDImageLabelTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
     return cell;
 }
 

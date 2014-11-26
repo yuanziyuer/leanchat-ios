@@ -12,6 +12,7 @@
 #import "CDCloudService.h"
 #import "CDUtils.h"
 #import "CDUtils.h"
+#import "CDContactListController.h"
 
 @interface CDNewFriendTableViewController (){
     NSArray *addRequests;
@@ -103,6 +104,7 @@
         }else{
             [CDUtils alert:@"添加成功"];
             [self refresh];
+            [[NSNotificationCenter defaultCenter] postNotificationName:CD_FRIENDS_UPDATE object:nil];
         }
     }];
 }

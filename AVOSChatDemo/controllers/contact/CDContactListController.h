@@ -7,6 +7,7 @@
 //
 
 #import "CDBaseTableController.h"
+#define CD_FRIENDS_UPDATE @"CDFriendsUpdate"
 
 @interface CDContactListController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 

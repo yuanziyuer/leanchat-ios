@@ -14,6 +14,8 @@
 		<string>github.com:leancloud/leanchat-ios.git</string>
 		<key>8ACFE5037BBA7C3DB34C943CA65881B264CE6E1A</key>
 		<string>github.com:avoscloud/avoscloud-demo.git</string>
+		<key>D1F9F70025FA660182F75266D3D4F5D7ECED2B2C</key>
+		<string>github.com:leancloud/iOS-sdk.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>LeanChat.xcworkspace</string>
@@ -23,6 +25,8 @@
 		<string>..</string>
 		<key>8ACFE5037BBA7C3DB34C943CA65881B264CE6E1A</key>
 		<string>../..</string>
+		<key>D1F9F70025FA660182F75266D3D4F5D7ECED2B2C</key>
+		<string>../../../../clojure/iOS-sdk</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>github.com:leancloud/leanchat-ios.git</string>
@@ -39,6 +43,14 @@
 			<string>8ACFE5037BBA7C3DB34C943CA65881B264CE6E1A</string>
 			<key>IDESourceControlWCCName</key>
 			<string></string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D1F9F70025FA660182F75266D3D4F5D7ECED2B2C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>iOS-sdk</string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
