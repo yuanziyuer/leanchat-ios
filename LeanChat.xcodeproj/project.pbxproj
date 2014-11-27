@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7029AE721A2708BF004832F9 /* CDAddFriendController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7029AE6F1A2708BF004832F9 /* CDAddFriendController.xib */; };
+		7029AE731A2708BF004832F9 /* CDAddFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7029AE701A2708BF004832F9 /* CDAddFriendController.m */; };
 		70A066311A24A3A2004DA201 /* NSString+MessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A064741A24A3A2004DA201 /* NSString+MessageInputView.m */; };
 		70A066321A24A3A2004DA201 /* NSString+XHDiskSizeTransfrom.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A064761A24A3A2004DA201 /* NSString+XHDiskSizeTransfrom.m */; };
 		70A066331A24A3A2004DA201 /* NSString+XHMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A064781A24A3A2004DA201 /* NSString+XHMD5.m */; };
@@ -258,8 +260,6 @@
 		70D4C6151A237C1E001A655D /* CDContactListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70D4C5581A237C1E001A655D /* CDContactListController.xib */; };
 		70D4C6161A237C1E001A655D /* CDNewFriendTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D4C55A1A237C1E001A655D /* CDNewFriendTableViewController.m */; };
 		70D4C6171A237C1E001A655D /* CDNewFriendTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70D4C55B1A237C1E001A655D /* CDNewFriendTableViewController.xib */; };
-		70D4C6191A237C1E001A655D /* CDAddFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D4C55F1A237C1E001A655D /* CDAddFriendController.m */; };
-		70D4C61A1A237C1E001A655D /* CDAddFriendController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70D4C5601A237C1E001A655D /* CDAddFriendController.xib */; };
 		70D4C61B1A237C1E001A655D /* CDLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D4C5621A237C1E001A655D /* CDLoginController.m */; };
 		70D4C61C1A237C1E001A655D /* CDRegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D4C5641A237C1E001A655D /* CDRegisterController.m */; };
 		70D4C61D1A237C1E001A655D /* CDGroupAddMemberController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D4C5671A237C1E001A655D /* CDGroupAddMemberController.m */; };
@@ -393,7 +393,6 @@
 		70E47DFB1A245E1200DE60FE /* CDGroupService.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E47DF11A245E1200DE60FE /* CDGroupService.m */; };
 		70E47DFC1A245E1200DE60FE /* CDUserService.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E47DF31A245E1200DE60FE /* CDUserService.m */; };
 		70E47DFD1A245E1200DE60FE /* CDUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E47DF51A245E1200DE60FE /* CDUtils.m */; };
-		70E47DFE1A245E1200DE60FE /* ConvertToCommonEmoticonsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E47DF71A245E1200DE60FE /* ConvertToCommonEmoticonsHelper.m */; };
 		70E47E271A24656D00DE60FE /* 1f600.png in Resources */ = {isa = PBXBuildFile; fileRef = 70E47DFF1A24656D00DE60FE /* 1f600.png */; };
 		70E47E281A24656D00DE60FE /* 1f601.png in Resources */ = {isa = PBXBuildFile; fileRef = 70E47E001A24656D00DE60FE /* 1f601.png */; };
 		70E47E291A24656D00DE60FE /* 1f602.png in Resources */ = {isa = PBXBuildFile; fileRef = 70E47E011A24656D00DE60FE /* 1f602.png */; };
@@ -476,6 +475,9 @@
 		1AE56C31C63DFD24A31AC420 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		4D569F4B827DF50C11F64070 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CEDD32E8213E54F4209381A /* libPods-LeanChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LeanChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7029AE6F1A2708BF004832F9 /* CDAddFriendController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDAddFriendController.xib; sourceTree = "<group>"; };
+		7029AE701A2708BF004832F9 /* CDAddFriendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAddFriendController.m; sourceTree = "<group>"; };
+		7029AE711A2708BF004832F9 /* CDAddFriendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAddFriendController.h; sourceTree = "<group>"; };
 		70A064731A24A3A2004DA201 /* NSString+MessageInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MessageInputView.h"; sourceTree = "<group>"; };
 		70A064741A24A3A2004DA201 /* NSString+MessageInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MessageInputView.m"; sourceTree = "<group>"; };
 		70A064751A24A3A2004DA201 /* NSString+XHDiskSizeTransfrom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XHDiskSizeTransfrom.h"; sourceTree = "<group>"; };
@@ -887,9 +889,6 @@
 		70D4C5591A237C1E001A655D /* CDNewFriendTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDNewFriendTableViewController.h; sourceTree = "<group>"; };
 		70D4C55A1A237C1E001A655D /* CDNewFriendTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDNewFriendTableViewController.m; sourceTree = "<group>"; };
 		70D4C55B1A237C1E001A655D /* CDNewFriendTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDNewFriendTableViewController.xib; sourceTree = "<group>"; };
-		70D4C55E1A237C1E001A655D /* CDAddFriendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAddFriendController.h; sourceTree = "<group>"; };
-		70D4C55F1A237C1E001A655D /* CDAddFriendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAddFriendController.m; sourceTree = "<group>"; };
-		70D4C5601A237C1E001A655D /* CDAddFriendController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDAddFriendController.xib; sourceTree = "<group>"; };
 		70D4C5611A237C1E001A655D /* CDLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDLoginController.h; sourceTree = "<group>"; };
 		70D4C5621A237C1E001A655D /* CDLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDLoginController.m; sourceTree = "<group>"; };
 		70D4C5631A237C1E001A655D /* CDRegisterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDRegisterController.h; sourceTree = "<group>"; };
@@ -1077,8 +1076,6 @@
 		70E47DF31A245E1200DE60FE /* CDUserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUserService.m; sourceTree = "<group>"; };
 		70E47DF41A245E1200DE60FE /* CDUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUtils.h; sourceTree = "<group>"; };
 		70E47DF51A245E1200DE60FE /* CDUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUtils.m; sourceTree = "<group>"; };
-		70E47DF61A245E1200DE60FE /* ConvertToCommonEmoticonsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConvertToCommonEmoticonsHelper.h; sourceTree = "<group>"; };
-		70E47DF71A245E1200DE60FE /* ConvertToCommonEmoticonsHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConvertToCommonEmoticonsHelper.m; sourceTree = "<group>"; };
 		70E47DFF1A24656D00DE60FE /* 1f600.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1f600.png; sourceTree = "<group>"; };
 		70E47E001A24656D00DE60FE /* 1f601.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1f601.png; sourceTree = "<group>"; };
 		70E47E011A24656D00DE60FE /* 1f602.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1f602.png; sourceTree = "<group>"; };
@@ -2192,6 +2189,9 @@
 		70D4C5551A237C1E001A655D /* contact */ = {
 			isa = PBXGroup;
 			children = (
+				7029AE6F1A2708BF004832F9 /* CDAddFriendController.xib */,
+				7029AE701A2708BF004832F9 /* CDAddFriendController.m */,
+				7029AE711A2708BF004832F9 /* CDAddFriendController.h */,
 				70D4C5561A237C1E001A655D /* CDContactListController.h */,
 				70D4C5571A237C1E001A655D /* CDContactListController.m */,
 				70D4C5581A237C1E001A655D /* CDContactListController.xib */,
@@ -2205,9 +2205,6 @@
 		70D4C55C1A237C1E001A655D /* entry */ = {
 			isa = PBXGroup;
 			children = (
-				70D4C55E1A237C1E001A655D /* CDAddFriendController.h */,
-				70D4C55F1A237C1E001A655D /* CDAddFriendController.m */,
-				70D4C5601A237C1E001A655D /* CDAddFriendController.xib */,
 				70D4C5611A237C1E001A655D /* CDLoginController.h */,
 				70D4C5621A237C1E001A655D /* CDLoginController.m */,
 				70D4C5631A237C1E001A655D /* CDRegisterController.h */,
@@ -2624,8 +2621,6 @@
 				70E47DF31A245E1200DE60FE /* CDUserService.m */,
 				70E47DF41A245E1200DE60FE /* CDUtils.h */,
 				70E47DF51A245E1200DE60FE /* CDUtils.m */,
-				70E47DF61A245E1200DE60FE /* ConvertToCommonEmoticonsHelper.h */,
-				70E47DF71A245E1200DE60FE /* ConvertToCommonEmoticonsHelper.m */,
 				70A067271A24D394004DA201 /* CDEmotionUtils.h */,
 				70A067281A24D394004DA201 /* CDEmotionUtils.m */,
 			);
@@ -2754,7 +2749,6 @@
 				70A066D01A24A3A2004DA201 /* face_HL@2x.png in Resources */,
 				70E47E761A24686900DE60FE /* 1f62c.png in Resources */,
 				70D4C6301A237C1E001A655D /* LeanChat-Info.plist in Resources */,
-				70D4C61A1A237C1E001A655D /* CDAddFriendController.xib in Resources */,
 				70E47E7C1A24686900DE60FE /* 1f63c.png in Resources */,
 				70E47E2D1A24656D00DE60FE /* 1f606.png in Resources */,
 				70D4C64C1A237C1E001A655D /* ok@2x.png in Resources */,
@@ -2825,6 +2819,7 @@
 				70A066D51A24A3A2004DA201 /* input-bar-flat@2x.png in Resources */,
 				70D4C62F1A237C1E001A655D /* Images.xcassets in Resources */,
 				70A067191A24A3A2004DA201 /* weChatBubble_Sending_Cavern@2x.png in Resources */,
+				7029AE721A2708BF004832F9 /* CDAddFriendController.xib in Resources */,
 				70D4C6451A237C1E001A655D /* bottom_bar_selected@2x.png in Resources */,
 				70E47E2C1A24656D00DE60FE /* 1f605.png in Resources */,
 				70E47DC21A2457CC00DE60FE /* ue107.png in Resources */,
@@ -3082,7 +3077,6 @@
 				70A066B61A24A3A2004DA201 /* XHNewsContainerView.m in Sources */,
 				70D4C6591A237C1E001A655D /* FMDatabase.m in Sources */,
 				70A066AF1A24A3A2004DA201 /* XHVoiceRecordHUD.m in Sources */,
-				70D4C6191A237C1E001A655D /* CDAddFriendController.m in Sources */,
 				70A066821A24A3A2004DA201 /* UIView+Convenience.m in Sources */,
 				70E47DF81A245E1200DE60FE /* CDAddRequestService.m in Sources */,
 				70A0664B1A24A3A2004DA201 /* XHBaseViewController.m in Sources */,
@@ -3107,6 +3101,7 @@
 				70A066461A24A3A2004DA201 /* XHBaseNavigationController.m in Sources */,
 				70A0667A1A24A3A2004DA201 /* MultiSelectedPanel.m in Sources */,
 				70D4C60F1A237C1E001A655D /* CDChatConfirmController.m in Sources */,
+				7029AE731A2708BF004832F9 /* CDAddFriendController.m in Sources */,
 				70A0666C1A24A3A2004DA201 /* XHVideoOutputSampleBufferFactory.m in Sources */,
 				70A067201A24B826004DA201 /* XHTextEmotion.m in Sources */,
 				70A066581A24A3A2004DA201 /* XHDisplayTextViewController.m in Sources */,
@@ -3187,7 +3182,6 @@
 				70D4C6101A237C1E001A655D /* CDChatDetailController.mm in Sources */,
 				70A066711A24A3A2004DA201 /* XHEmotionManager.m in Sources */,
 				70A0667D1A24A3A2004DA201 /* MultiSelectSearchResultTableViewCell.m in Sources */,
-				70E47DFE1A245E1200DE60FE /* ConvertToCommonEmoticonsHelper.m in Sources */,
 				70A0668B1A24A3A2004DA201 /* SETextGeometry.m in Sources */,
 				70A066911A24A3A2004DA201 /* SETextSelectionView.m in Sources */,
 				70A0669A1A24A3A2004DA201 /* XHAlbumPhotoCollectionViewCell.m in Sources */,

@@ -11,6 +11,7 @@
 #import "CDBaseNavigationController.h"
 #import "CDUserInfoController.h"
 #import "CDImageLabelTableCell.h"
+#import "CDUtils.h"
 
 @interface CDAddFriendController (){
     NSArray *users;
@@ -36,10 +37,12 @@ static NSString* cellIndentifier=@"cellIndentifier";
 
 -(void)searchUser:(NSString *)name{
     [CDUserService findUsersByPartname:name withBlock:^(NSArray *objects, NSError *error) {
-        if(objects){
-            users=objects;
-            [_tableView reloadData];
-        }
+        [CDUtils filterError:error callback:^{
+            if(objects){
+                users=objects;
+                [_tableView reloadData];
+            }
+        }];
     }];
 }
 
