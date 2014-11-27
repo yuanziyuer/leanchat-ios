@@ -28,11 +28,16 @@ typedef void (^CDBlock)();
 
 +(NSMutableArray*)setToArray:(NSMutableSet*)set;
 
+#pragma mark - view utils
 +(void)setCellMarginsZero:(UITableViewCell*)cell;
 +(void)setTableViewMarginsZero:(UITableView*)view;
++(void)stopRefreshControl:(UIRefreshControl*)refreshControl;
 
 #pragma mark - AVUtils
 
 +(void)setPolicyOfAVQuery:(AVQuery*)query isNetwokOnly:(BOOL)onlyNetwork;
+
+
+
 
 @end

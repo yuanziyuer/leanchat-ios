@@ -193,12 +193,10 @@
         SDWebImageManager* man=[SDWebImageManager sharedManager];
         AVFile* avatarFile=[user objectForKey:@"avatar"];
         [man downloadImageWithURL:[NSURL URLWithString:[avatarFile url]] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-            if(error){
-                [CDUtils alertError:error];
-            }else{
+            [CDUtils logError:error callback:^{
                 [_loadedData setObject:image forKey:msg.fromPeerId];
-            }
-            avatar=image;
+                avatar=image;
+            }];
         }];
     }
     if(avatar==nil){
@@ -235,16 +233,24 @@
         for(CDMsg* msg in msgs){
             [self getAvatarByMsg:msg];
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //app.networkActivityIndicatorVisible=NO;
-            //[indicator removeFromSuperview];
-            self.messages=[[NSMutableArray alloc] init];
-            for(CDMsg* msg in msgs){
-                [self.messages addObject:[self getXHMessageByMsg:msg]];
-            }
-            [self.messageTableView reloadData];
-            [self scrollToBottomAnimated:YES];
-        });
+        NSMutableArray* userIds=[[NSMutableArray alloc] init];
+        for(CDMsg* msg in msgs){
+            [userIds addObject:msg.fromPeerId];
+        }
+        [sessionManager cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
+            [CDUtils filterError:error callback:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    //app.networkActivityIndicatorVisible=NO;
+                    //[indicator removeFromSuperview];
+                    self.messages=[[NSMutableArray alloc] init];
+                    for(CDMsg* msg in msgs){
+                        [self.messages addObject:[self getXHMessageByMsg:msg]];
+                    }
+                    [self.messageTableView reloadData];
+                    [self scrollToBottomAnimated:YES];
+                });
+            }];
+        }];
     });
 }
 

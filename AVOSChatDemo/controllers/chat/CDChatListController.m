@@ -62,7 +62,7 @@ static NSString *cellIdentifier = @"ContactCell";
 -(void)refresh:(UIRefreshControl*)refreshControl{
     [CDUtils showNetworkIndicator];
     [sessionManager findConversationsWithCallback:^(NSArray *objects, NSError *error) {
-        [refreshControl endRefreshing];
+        [CDUtils stopRefreshControl:refreshControl];
         [CDUtils hideNetworkIndicator];
         [CDUtils filterError:error callback:^{
             chatRooms=[objects mutableCopy];

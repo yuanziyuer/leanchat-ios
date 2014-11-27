@@ -108,4 +108,11 @@
     [query setCachePolicy:onlyNetwork ? kAVCachePolicyNetworkOnly : kAVCachePolicyNetworkElseCache];
 }
 
++(void)stopRefreshControl:(UIRefreshControl*)refreshControl{
+    if(refreshControl!=nil && [[refreshControl class] isSubclassOfClass:[UIRefreshControl class]]){
+        [refreshControl endRefreshing];
+    }
+}
+
+
 @end
