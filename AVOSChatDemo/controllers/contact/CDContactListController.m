@@ -98,13 +98,19 @@ enum : NSUInteger {
     [CDUserService findFriendsIsNetworkOnly:networkOnly callback:^(NSArray *objects, NSError *error) {
         [CDUtils stopRefreshControl:refreshControl];
         [CDUtils hideNetworkIndicator];
-        [CDUtils filterError:error callback:^{
+        CDBlock callback=^{
             self.users = [objects mutableCopy];
             CDSessionManager* sessionMan=[CDSessionManager sharedInstance];
             [sessionMan registerUsers:self.users];
             [sessionMan setFriends:self.users];
             [self.tableView reloadData];
-        }];
+        };
+        if(error && error.code==kAVErrorCacheMiss){
+            // for the first start
+            callback();
+        }else{
+            [CDUtils filterError:error callback:callback];
+        }
     }];
 }
 

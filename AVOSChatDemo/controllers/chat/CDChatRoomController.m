@@ -532,7 +532,14 @@
  *  @param indexPath 目标Cell所在位置IndexPath
  */
 - (void)configureCell:(XHMessageTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    
+    if([self shouldDisplayTimestampForRowAtIndexPath:indexPath]){
+        XHMessage* msg=[self.messages objectAtIndex:indexPath.row];
+        NSDate* ts=msg.timestamp;
+        NSDateFormatter* dateFormatter=[[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"M-d h:m"];
+        NSString* str=[dateFormatter stringFromDate:ts];
+        cell.timestampLabel.text=str;
+    }
 }
 
 /**

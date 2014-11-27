@@ -26,7 +26,7 @@
 		<key>8ACFE5037BBA7C3DB34C943CA65881B264CE6E1A</key>
 		<string>../..</string>
 		<key>D1F9F70025FA660182F75266D3D4F5D7ECED2B2C</key>
-		<string>../../../../clojure/iOS-sdk</string>
+		<string>../../clojure/iOS-sdk</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>github.com:leancloud/leanchat-ios.git</string>

@@ -10,6 +10,7 @@
 #import "CDCommon.h"
 #import "CDTextField.h"
 #import "CDAppDelegate.h"
+#import "CDUtils.h"
 
 @interface CDRegisterController () <UITextFieldDelegate> {
     CGPoint _originOffset;
@@ -144,24 +145,22 @@
     AVUser *user = [AVUser user];
     user.username = self.usernameField.text;
     user.password = self.passwordField.text;
-    
+    [user setFetchWhenSave:YES];
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error) {
-            //Register success
-            NSLog(@"Register success");
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:KEY_ISLOGINED];
-            [[NSUserDefaults standardUserDefaults] setObject:self.usernameField.text forKey:KEY_USERNAME];
-            [self dismissViewControllerAnimated:NO completion:^{
-                
+        [CDUtils filterError:error callback:^{
+            // retrive relation, gender , gender
+            [user refreshInBackgroundWithBlock:^(AVObject *object, NSError *error) {
+                [CDUtils filterError:error callback:^{
+                    NSLog(@"Register success");
+                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:KEY_ISLOGINED];
+                    [[NSUserDefaults standardUserDefaults] setObject:self.usernameField.text forKey:KEY_USERNAME];
+                    [self dismissViewControllerAnimated:NO completion:^{
+                        CDAppDelegate *delegate = (CDAppDelegate *)[UIApplication sharedApplication].delegate;
+                        [delegate toMain];
+                    }];
+                }];
             }];
-            CDAppDelegate *delegate = (CDAppDelegate *)[UIApplication sharedApplication].delegate;
-            [delegate toMain];
-        } else {
-            //Something bad has ocurred
-            NSString *errorString = [[error userInfo] objectForKey:@"error"];
-            UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorString delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            [errorAlertView show];
-        }
+        }];
     }];
     
     

@@ -3352,6 +3352,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
+				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
@@ -3370,7 +3371,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				PRODUCT_NAME = LeanChat;
-				PROVISIONING_PROFILE = "fb2dce67-44f6-4edf-ad68-892643b92841";
+				PROVISIONING_PROFILE = "4c127298-2786-459d-ab9d-aebea62709fd";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -3384,7 +3385,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
@@ -3403,7 +3404,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				PRODUCT_NAME = LeanChat;
-				PROVISIONING_PROFILE = "fb2dce67-44f6-4edf-ad68-892643b92841";
+				PROVISIONING_PROFILE = "4c127298-2786-459d-ab9d-aebea62709fd";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

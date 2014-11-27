@@ -38,6 +38,7 @@
     [q whereKey:@"username" containsString:partName];
     AVUser *curUser=[AVUser currentUser];
     [q whereKey:@"objectId" notEqualTo:curUser.objectId];
+    [q orderByDescending:@"updatedAt"];
     [q findObjectsInBackgroundWithBlock:block];
 }
 
