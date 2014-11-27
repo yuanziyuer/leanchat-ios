@@ -101,8 +101,7 @@ static NSString *cellIdentifier = @"ContactCell";
     CDMsgRoomType type=[chatRoom roomType];
     NSMutableString *nameString = [[NSMutableString alloc] init];
     if (type == CDMsgRoomTypeGroup) {
-        NSString* groupName=chatRoom.chatGroup.name;
-        [nameString appendFormat:@"%@", groupName];
+        [nameString appendFormat:@"%@", [chatRoom.chatGroup getTitle]];
         [cell.myImageView setImage:[UIImage imageNamed:@"group_icon"]];
     } else {
         [CDUserService displayAvatarOfUser:chatRoom.chatUser avatarView:cell.myImageView];

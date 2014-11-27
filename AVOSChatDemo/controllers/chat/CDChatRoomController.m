@@ -37,7 +37,7 @@
 
 @implementation CDChatRoomController
 
-#pragma mark - View lifecycle
+#pragma mark - lifecycle
 
 /**
  *  Override point for customization.
@@ -127,7 +127,7 @@
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark message data
+#pragma mark - message data
 
 -(UIImage*)getImageByMsg:(CDMsg*)msg{
     if(msg.type==CDMsgTypeImage){
@@ -205,7 +205,7 @@
     return avatar;
 }
 
-#pragma mark next controller
+#pragma mark - next controller
 
 - (void)goChatGroupDetail:(id)sender {
 //    CDGroupDetailController *controller=[[CDGroupDetailController alloc] init];
@@ -221,7 +221,7 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
-#pragma mark messageUpdated
+#pragma mark - messageUpdated
 
 - (void)messageUpdated:(NSNotification *)notification {
     NSString* convid=[CDSessionManager getConvidOfRoomType:self.type otherId:self.chatUser.objectId groupId:self.group.groupId];
@@ -254,7 +254,7 @@
     });
 }
 
-#pragma send message
+#pragma mark - send message
 
 - (void)sendAttachmentWithObjectId:(NSString *)objectId type:(CDMsgType)type{
     [sessionManager sendAttachmentWithObjectId:objectId type:type toPeerId:self.chatUser.objectId group:self.group];
