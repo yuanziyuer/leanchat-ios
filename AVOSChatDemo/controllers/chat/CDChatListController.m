@@ -51,12 +51,16 @@ static NSString *cellIdentifier = @"ContactCell";
     [self.tableView registerNib:[UINib nibWithNibName:nibName bundle:nil] forCellReuseIdentifier:cellIdentifier];
     chatRooms=[[NSMutableArray alloc] init];
     sessionManager=[CDSessionManager sharedInstance];
-    [self refresh:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh:) name:NOTIFICATION_MESSAGE_UPDATED object:nil];
     
     UIRefreshControl* refreshControl=[[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refreshControl];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self refresh:nil];
 }
 
 -(void)refresh:(UIRefreshControl*)refreshControl{
@@ -109,6 +113,7 @@ static NSString *cellIdentifier = @"ContactCell";
     }
     cell.topLabel.text=nameString;
     cell.bottomLabel.text=[chatRoom.latestMsg getMsgDesc];
+    cell.unreadCount=chatRoom.unreadCount;
     return cell;
 }
 

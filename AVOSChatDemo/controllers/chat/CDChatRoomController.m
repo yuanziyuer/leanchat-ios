@@ -158,6 +158,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 }
 
 -(XHMessage*)getXHMessageByMsg:(CDMsg*)msg{
+    NSLog(@"ReadStaus=%@",[msg getReadStatusDesc]);
     AVUser* fromUser=[sessionManager lookupUser:msg.fromPeerId];
     AVUser* curUser=[AVUser currentUser];
     XHMessage* xhMessage;
@@ -259,6 +260,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         }
         NSString* convid=[CDSessionManager getConvidOfRoomType:self.type otherId:self.chatUser.objectId groupId:self.group.groupId];
         NSMutableArray *msgs  = [[sessionManager getMsgsWithConvid:convid maxTimestamp:timestamp limit:limit] mutableCopy];
+        [sessionManager markHaveReadOfMsgs:msgs];
         for(CDMsg* msg in msgs){
             [self getAvatarByMsg:msg];
         }

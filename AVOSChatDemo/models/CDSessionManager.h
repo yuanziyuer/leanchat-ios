@@ -40,6 +40,10 @@
 
 -(int64_t)getMaxTimetstamp;
 
+#pragma mark - database
+-(void)upgradeToAddField;
+-(void)markHaveReadOfMsgs:(NSArray*)msgs;
+
 #pragma mark - histroy
 - (void)getHistoryMessagesForPeerId:(NSString *)peerId callback:(AVArrayResultBlock)callback;
 - (void)getHistoryMessagesForGroup:(NSString *)groupId callback:(AVArrayResultBlock)callback;

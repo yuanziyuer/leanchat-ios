@@ -16,5 +16,6 @@
 @property CDChatGroup* chatGroup;
 @property AVUser* chatUser;
 @property CDMsg* latestMsg;
+@property NSInteger unreadCount;
 
 @end

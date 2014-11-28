@@ -16,6 +16,7 @@
 #import "CDProfileController.h"
 #import "CDSessionManager.h"
 #import "CDChatGroup.h"
+#import "CDUpgradeService.h"
 
 @implementation CDAppDelegate
 
@@ -150,9 +151,17 @@
     tab.selectedIndex=0;
     
     self.window.rootViewController = tab;
-    [[CDSessionManager sharedInstance] registerUser:[AVUser currentUser]];
+    
+    CDSessionManager* man=[CDSessionManager sharedInstance];
+    [CDUpgradeService upgradeWithBlock:^(BOOL upgrade, NSString *oldVersion, NSString *newVersion) {
+                NSLog(@"upgrade =%@ oldVersion=%@ newVersion=%@",upgrade? @"YES":@"NO",oldVersion,newVersion);
+        if(upgrade && [newVersion isEqualToString:@"1.0.8"]){
+            [man upgradeToAddField];
+        }
+    }];
+    [man registerUser:[AVUser currentUser]];
     if([AVUser currentUser]){
-        [[CDSessionManager sharedInstance] openSession];
+        [man openSession];
     }
 }
 

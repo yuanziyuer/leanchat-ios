@@ -22,6 +22,7 @@
 @synthesize type;
 @synthesize roomType;
 @synthesize status;
+@synthesize readStatus;
 
 -(NSDictionary*)toMessagePayloadDict{
     if(content==nil || objectId==nil){
@@ -34,6 +35,7 @@
     NSMutableDictionary *dict=[[self toMessagePayloadDict] mutableCopy];
     [dict setValue:@(status) forKey:STATUS];
     [dict setValue:@(roomType) forKey:ROOM_TYPE];
+    [dict setValue:@(readStatus) forKey:READ_STATUS];
     [dict setValue:convid forKey:CONV_ID];
     [dict setValue:[[NSNumber numberWithLongLong:timestamp] stringValue] forKey:TIMESTAMP];
     [dict setValue:fromPeerId forKey:FROM_PEER_ID];
@@ -108,6 +110,16 @@
 
     }
     [NSException raise:@"invalid status" format:nil];
+}
+
+-(NSString*)getReadStatusDesc{
+    switch (readStatus) {
+        case CDMsgReadStatusHaveRead:
+            return @"已读";
+        case CDMsgReadStatusUnread:
+            return @"未读";
+    }
+    [NSException raise:@"invalid read status" format:nil];
 }
 
 -(BOOL)fromMe{

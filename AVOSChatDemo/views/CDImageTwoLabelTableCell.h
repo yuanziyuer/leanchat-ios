@@ -12,5 +12,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *myImageView;
 @property (weak, nonatomic) IBOutlet UILabel *topLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bottomLabel;
+@property (weak, nonatomic) IBOutlet UILabel *unreadLabel;
+@property (nonatomic) NSInteger unreadCount;
 
 @end

@@ -28,7 +28,8 @@
 
 static id instance = nil;
 static BOOL initialized = NO;
-static NSString *messagesTableSQL=@"create table if not exists messages (id integer primary key, objectId varchar(63) unique not null,ownerId varchar(255) not null,fromPeerId varchar(255) not null, convid varchar(255) not null,toPeerId varchar(255),content varchar(1023) ,status integer,type integer,roomType integer,timestamp varchar(63) not null)";
+
+static NSString *messagesTableSQL=@"create table if not exists messages (id integer primary key, objectId varchar(63) unique not null,ownerId varchar(255) not null,fromPeerId varchar(255) not null, convid varchar(255) not null,toPeerId varchar(255),content varchar(1023) ,status integer,type integer,roomType integer,readStatus integer default 1,timestamp varchar(63) not null)";
 
 @implementation CDSessionManager
 
@@ -76,12 +77,24 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
 
 //if type is image ,message is attment.objectId
 
-- (void)commonInit {
+-(void)createTable{
     if (![_database tableExists:@"messages"]) {
         [_database executeUpdate:messagesTableSQL];
     }
+}
+
+-(void)upgradeToAddField{
+    NSLog(@"%s",__PRETTY_FUNCTION__);
+    [_database executeStatements:@"drop table if exists messages"];
+    [self createTable];
+}
+
+- (void)commonInit {
+    [self createTable];
     initialized = YES;
 }
+
+#pragma mark - session
 
 -(void)openSession{
     [_session openWithPeerId:[AVUser currentUser].objectId];
@@ -91,90 +104,13 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     [_session close];
 }
 
--(void)cacheMsgs:(NSArray*)msgs withCallback:(AVArrayResultBlock)callback{
-    NSMutableSet* userIds=[[NSMutableSet alloc] init];
-    for(CDMsg* msg in msgs){
-        NSString* otherId=[msg getOtherId];
-        if(msg.roomType==CDMsgRoomTypeSingle){
-            [userIds addObject:otherId];
-        }
-    }
-    [self cacheUsersWithIds:[NSMutableArray arrayWithArray:[userIds allObjects]] callback:callback];
-}
-
--(void)cacheUsersWithIds:(NSMutableArray*)userIds callback:(AVArrayResultBlock)callback{
-    NSMutableSet* uncachedUserIds=[[NSMutableSet alloc] init];
-    for(NSString* userId in userIds){
-        if([self lookupUser:userId]==nil){
-            [uncachedUserIds addObject:userId];
-        }
-    }
-    if([uncachedUserIds count]>0){
-        [CDUserService findUsersByIds:[[NSMutableArray alloc] initWithArray:[uncachedUserIds allObjects]] callback:^(NSArray *objects, NSError *error) {
-            if(objects){
-                [self registerUsers:objects];
-            }
-            callback(objects,error);
-        }];
-    }else{
-        callback([[NSMutableArray alloc] init],nil);
-    }
-}
-
--(void)findConversationsWithCallback:(AVArrayResultBlock)callback{
-    AVUser* user=[AVUser currentUser];
-    FMResultSet *rs = [_database executeQuery:@"select * from messages where ownerId=? group by convid order by timestamp desc" withArgumentsInArray:@[user.objectId]];
-    NSArray *msgs=[self getMsgsByResultSet:rs];
-    [self cacheMsgs:msgs withCallback:^(NSArray *objects, NSError *error) {
-        if(error){
-            callback(objects,error);
-        }else{
-            NSMutableArray *chatRooms=[[NSMutableArray alloc] init];
-            NSMutableSet *userIds=[[NSMutableSet alloc] init];
-            NSMutableSet *groupIds=[[NSMutableSet alloc] init];
-            for(CDMsg* msg in msgs){
-                NSString* otherId=[msg getOtherId];
-                if(msg.roomType==CDMsgRoomTypeSingle){
-                    if([self lookupUser:otherId]==NO){
-                        [userIds addObject:otherId];
-                    }
-                }else{
-                    if([self lookupChatGroupById:otherId]==NO){
-                        [groupIds addObject:otherId];
-                    }
-                }
-            }
-            [self cacheUsersWithIds:[CDUtils setToArray:userIds] callback:^(NSArray *objects, NSError *error) {
-                [CDUtils filterError:error callback:^{
-                    [self cacheChatGroupsWithIds:groupIds withCallback:^(NSArray *objects, NSError *error) {
-                        [CDUtils filterError:error callback:^{
-                            for(CDMsg* msg in msgs){
-                                CDChatRoom* chatRoom=[[CDChatRoom alloc] init];
-                                chatRoom.roomType=msg.roomType;
-                                NSString* otherId=[msg getOtherId];
-                                if(msg.roomType==CDMsgRoomTypeSingle){
-                                    chatRoom.chatUser=[self lookupUser:otherId];;
-                                }else{
-                                    chatRoom.chatGroup=[self lookupChatGroupById:otherId];
-                                }
-                                chatRoom.latestMsg=msg;
-                                [chatRooms addObject:chatRoom];
-                            }
-                            callback(chatRooms,error);
-                        }];
-                    }];
-                }];
-            }];
-            
-        }
-    }];
-}
-
 - (void)clearData {
     //[_database executeUpdate:@"DROP TABLE IF EXISTS messages"];
     [_session close];
     initialized = NO;
 }
+
+#pragma mark - single chat
 
 - (void)watchPeerId:(NSString *)peerId {
     NSLog(@"unwatch");
@@ -195,33 +131,50 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     }];
 }
 
--(AVGroup*)getGroupById:(NSString*)groupId{
-    return [AVGroup getGroupWithGroupId:groupId session:_session];
+#pragma mark - conversation
+
+- (void)exMainQueue:(void (^)())queue {
+    dispatch_async(dispatch_get_main_queue(), queue);
 }
 
-- (AVGroup *)joinGroupById:(NSString *)groupId {
-    AVGroup *group = [self getGroupById:groupId];
-    group.delegate = self;
-    [group join];
-    return group;
-}
-
-- (void)saveNewGroupWithName:(NSString*)name withCallback:(AVGroupResultBlock)callback {
-    [AVGroup createGroupWithSession:_session groupDelegate:self callback:^(AVGroup *group, NSError *error) {
-        if(error==nil){
-            [CDCloudService saveChatGroupWithId:group.groupId name:name callback:^(id object, NSError *error) {
-                callback(group,error);
-            }];
-        }else{
-            callback(group,error);
-        }
-    }];
-}
-
--(CDMsg*)insertMsgToDB:(CDMsg*)msg{
-    NSDictionary *dict=[msg toDatabaseDict];
-    [_database executeUpdate:@"insert into messages (objectId,ownerId , fromPeerId, toPeerId, content,convid,status,type,roomType,timestamp) values (:objectId,:ownerId,:fromPeerId,:toPeerId,:content,:convid,:status,:type,:roomType,:timestamp)" withParameterDictionary:dict];
-    return msg;
+-(void)findConversationsWithCallback:(AVArrayResultBlock)callback{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        AVUser* user=[AVUser currentUser];
+        FMResultSet *rs = [_database executeQuery:@"select * from messages where ownerId=? group by convid order by timestamp desc" withArgumentsInArray:@[user.objectId]];
+        NSArray *msgs=[self getMsgsByResultSet:rs];
+        [self cacheMsgs:msgs withCallback:^(NSArray *objects, NSError *error) {
+            if(error){
+                [self exMainQueue:^{
+                        callback(nil,error);
+                }];
+            }else{
+                NSMutableArray *chatRooms=[[NSMutableArray alloc] init];
+                for(CDMsg* msg in msgs){
+                    CDChatRoom* chatRoom=[[CDChatRoom alloc] init];
+                    chatRoom.roomType=msg.roomType;
+                    FMResultSet * countResult=[_database executeQuery:@"select count(*) from messages where convid=? and readStatus=?" withArgumentsInArray:@[msg.convid,@(CDMsgReadStatusUnread)]];
+                    NSInteger count=0;
+                    if([countResult next]){
+                        count=[countResult intForColumnIndex:0];
+                    }
+                    [countResult close];
+                    chatRoom.unreadCount=count;
+                    
+                    NSString* otherId=[msg getOtherId];
+                    if(msg.roomType==CDMsgRoomTypeSingle){
+                        chatRoom.chatUser=[self lookupUser:otherId];;
+                    }else{
+                        chatRoom.chatGroup=[self lookupChatGroupById:otherId];
+                    }
+                    chatRoom.latestMsg=msg;
+                    [chatRooms addObject:chatRoom];
+                }
+                [self exMainQueue:^{
+                    callback(chatRooms,error);
+                }];
+            }
+        }];
+    });
 }
 
 +(NSString*)convidOfSelfId:(NSString*)myId andOtherId:(NSString*)otherId{
@@ -259,6 +212,8 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     }
 }
 
+#pragma mark - send message
+
 -(CDMsg*)createAndSendMsgWithObjectId:(NSString*)objectId type:(CDMsgType)type content:(NSString*)content toPeerId:(NSString*)toPeerId group:(AVGroup*)group{
     CDMsg* msg=[[CDMsg alloc] init];
     msg.toPeerId=toPeerId;
@@ -276,6 +231,7 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
         msg.roomType=CDMsgRoomTypeGroup;
         msg.toPeerId=@"";
     }
+    msg.readStatus=CDMsgReadStatusHaveRead;
     msg.convid=[CDSessionManager getConvidOfRoomType:msg.roomType otherId:msg.toPeerId groupId:group.groupId];
     msg.objectId=objectId;
     msg.type=type;
@@ -360,6 +316,14 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_MESSAGE_UPDATED object:nil userInfo:nil];
 }
 
+#pragma mark - messages database
+
+-(CDMsg*)insertMsgToDB:(CDMsg*)msg{
+    NSDictionary *dict=[msg toDatabaseDict];
+    [_database executeUpdate:@"insert into messages (objectId,ownerId , fromPeerId, toPeerId, content,convid,status,type,roomType,readStatus,timestamp) values (:objectId,:ownerId,:fromPeerId,:toPeerId,:content,:convid,:status,:type,:roomType,:readStatus,:timestamp)" withParameterDictionary:dict];
+    return msg;
+}
+
 - (NSMutableArray*)getMsgsForConvid:(NSString*)convid{
     FMResultSet * rs=[_database executeQuery:@"select * from messages where convid=? order by timestamp" withArgumentsInArray:@[convid]];
     return [self getMsgsByResultSet:rs];
@@ -405,6 +369,7 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     CDMsgRoomType roomType=[rs intForColumn:ROOM_TYPE];
     CDMsgType type=[rs intForColumn:TYPE];
     CDMsgStatus status=[rs intForColumn:STATUS];
+    CDMsgReadStaus readStatus=[rs intForColumn:READ_STATUS];
     
     CDMsg* msg=[[CDMsg alloc] init];
     msg.fromPeerId=fromid;
@@ -416,6 +381,7 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     msg.status=status;
     msg.roomType=roomType;
     msg.convid=convid;
+    msg.readStatus=readStatus;
     return msg;
 }
 
@@ -425,13 +391,22 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
         CDMsg *msg=[self getMsgByResultSet :rs];
         [result addObject:msg];
     }
+    [rs close];
     return result;
 }
 
-- (NSArray *)getMsgesForGroup:(NSString *)groupId {
-    FMResultSet *rs = [_database executeQuery:@"select fromid, toid, type, message,  time from messages where toid=?" withArgumentsInArray:@[groupId]];
-    return [self getMsgsByResultSet:rs];
+-(void)markHaveReadOfMsgs:(NSArray*)msgs{
+    [_database beginTransaction];
+    for(CDMsg* msg in msgs){
+        if(msg.readStatus==CDMsgReadStatusUnread){
+            msg.readStatus=CDMsgReadStatusHaveRead;
+            [_database executeUpdate:@"update messages set readStatus=? where objectId=?" withArgumentsInArray:@[@(CDMsgReadStatusHaveRead),msg.objectId]];
+        }
+    }
+    [_database commit];
 }
+
+#pragma mark - history message
 
 - (void)getHistoryMessagesForPeerId:(NSString *)peerId callback:(AVArrayResultBlock)callback {
     AVHistoryMessageQuery *query = [AVHistoryMessageQuery queryWithFirstPeerId:_session.peerId secondPeerId:peerId];
@@ -446,21 +421,21 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
         callback(objects, error);
     }];
 }
-#pragma mark - AVSessionDelegate
-- (void)sessionOpened:(AVSession *)session {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-    NSLog(@"session:%@", session.peerId);
+
+#pragma mark - comman message handle
+
+-(void)messageSendFinish:(AVMessage*)avMsg group:(AVGroup*)group{
+    CDMsg* msg=[CDMsg fromAVMessage:avMsg];
+    [self updateMsgWithId:msg.objectId status:CDMsgStatusSendSucceed];
+    [self notifyMessageUpdate];
 }
 
-- (void)sessionPaused:(AVSession *)session {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-    NSLog(@"session:%@", session.peerId);
+-(void)messageSendFailure:(AVMessage*)avMsg group:(AVGroup*)group{
+    NSString* objectId=[CDMsg getObjectIdByAVMessage:avMsg];
+    [self updateMsgWithId:objectId status:CDMsgStatusSendFailed];
+    [self notifyMessageUpdate];
 }
 
-- (void)sessionResumed:(AVSession *)session {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-    NSLog(@"session:%@", session.peerId);
-}
 
 -(void)didReceiveAVMessage:(AVMessage*)avMsg group:(AVGroup*)group{
     NSLog(@"%s",__PRETTY_FUNCTION__);
@@ -474,6 +449,7 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
         msg.convid=[CDSessionManager convidOfSelfId:[AVUser currentUser].objectId andOtherId:avMsg.fromPeerId];
     }
     msg.status=CDMsgStatusSendReceived;
+    msg.readStatus=CDMsgReadStatusUnread;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         if(msg.type==CDMsgTypeImage || msg.type==CDMsgTypeAudio){
             NSString* path=[CDSessionManager getPathByObjectId:msg.objectId];
@@ -506,19 +482,22 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     [_database executeUpdate:@"update messages set status=? where objectId=?" withArgumentsInArray:@[@(status),objectId]];
 }
 
--(void)messageSendFinish:(AVMessage*)avMsg group:(AVGroup*)group{
-    CDMsg* msg=[CDMsg fromAVMessage:avMsg];
-    [self updateMsgWithId:msg.objectId status:CDMsgStatusSendSucceed];
-    [self notifyMessageUpdate];
+#pragma mark - AVSessionDelegate
+- (void)sessionOpened:(AVSession *)session {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    NSLog(@"session:%@", session.peerId);
 }
 
--(void)messageSendFailure:(AVMessage*)avMsg group:(AVGroup*)group{
-    NSString* objectId=[CDMsg getObjectIdByAVMessage:avMsg];
-    [self updateMsgWithId:objectId status:CDMsgStatusSendFailed];
-    [self notifyMessageUpdate];
+- (void)sessionPaused:(AVSession *)session {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    NSLog(@"session:%@", session.peerId);
 }
 
-#pragma mark - session delegate
+- (void)sessionResumed:(AVSession *)session {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    NSLog(@"session:%@", session.peerId);
+}
+
 - (void)session:(AVSession *)session didReceiveMessage:(AVMessage *)message {
     [self didReceiveAVMessage:message group:nil];
 }
@@ -545,7 +524,9 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     NSLog(@"session:%@ error:%@", session.peerId, error);
 }
 
+
 #pragma mark - AVGroupDelegate
+
 - (void)group:(AVGroup *)group didReceiveMessage:(AVMessage *)message {
     [self didReceiveAVMessage:message group:group];
     //[[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SESSION_UPDATED object:group.session userInfo:nil];
@@ -575,27 +556,14 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     NSLog(@"group:%@ message:%@ success:%d", group.groupId, message, success);
 }
 
-#pragma mark end of interface
-
-- (void)registerUsers:(NSArray*)users{
-    for(int i=0;i<users.count;i++){
-        [self registerUser:[users objectAtIndex:i]];
-    }
-}
-
--(void) registerUser:(AVUser*)user{
-    [_cachedUsers setObject:user forKey:user.objectId];
-}
-
--(AVUser *)lookupUser:(NSString*)userId{
-    return [_cachedUsers valueForKey:userId];
-}
+#pragma mark - end of interface
 
 -(NSString*)getPeerId:(AVUser*)user{
     return user.objectId;
 }
 
 #pragma mark - group
+
 -(void)inviteMembersToGroup:(CDChatGroup*) chatGroup userIds:(NSArray*)userIds{
     AVGroup* group=[self getGroupById:chatGroup.objectId];
     [group invitePeerIds:userIds];
@@ -611,6 +579,87 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
 -(void)quitFromGroup:(CDChatGroup*)chatGroup{
     AVGroup* group=[self getGroupById:chatGroup.objectId];
     [group quit];
+}
+
+-(AVGroup*)getGroupById:(NSString*)groupId{
+    return [AVGroup getGroupWithGroupId:groupId session:_session];
+}
+
+- (AVGroup *)joinGroupById:(NSString *)groupId {
+    AVGroup *group = [self getGroupById:groupId];
+    group.delegate = self;
+    [group join];
+    return group;
+}
+
+- (void)saveNewGroupWithName:(NSString*)name withCallback:(AVGroupResultBlock)callback {
+    [AVGroup createGroupWithSession:_session groupDelegate:self callback:^(AVGroup *group, NSError *error) {
+        if(error==nil){
+            [CDCloudService saveChatGroupWithId:group.groupId name:name callback:^(id object, NSError *error) {
+                callback(group,error);
+            }];
+        }else{
+            callback(group,error);
+        }
+    }];
+}
+
+#pragma mark - cache
+
+-(void)cacheMsgs:(NSArray*)msgs withCallback:(AVArrayResultBlock)callback{
+    NSMutableSet* userIds=[[NSMutableSet alloc] init];
+    NSMutableSet* groupIds=[[NSMutableSet alloc] init];
+    for(CDMsg* msg in msgs){
+        if(msg.roomType==CDMsgRoomTypeSingle){
+            [userIds addObject:msg.fromPeerId];
+            [userIds addObject:msg.toPeerId];
+        }else{
+            [userIds addObject:msg.fromPeerId];
+            [groupIds addObject:msg.convid];
+        }
+    }
+    [self cacheUsersWithIds:[NSMutableArray arrayWithArray:[userIds allObjects]] callback:^(NSArray *objects, NSError *error) {
+        if(error){
+            callback(objects,error);
+        }else{
+            [self cacheChatGroupsWithIds:groupIds withCallback:callback];
+        }
+    }];
+}
+
+-(void)cacheUsersWithIds:(NSMutableArray*)userIds callback:(AVArrayResultBlock)callback{
+    NSMutableSet* uncachedUserIds=[[NSMutableSet alloc] init];
+    for(NSString* userId in userIds){
+        if([self lookupUser:userId]==nil){
+            [uncachedUserIds addObject:userId];
+        }
+    }
+    if([uncachedUserIds count]>0){
+        [CDUserService findUsersByIds:[[NSMutableArray alloc] initWithArray:[uncachedUserIds allObjects]] callback:^(NSArray *objects, NSError *error) {
+            if(objects){
+                [self registerUsers:objects];
+            }
+            callback(objects,error);
+        }];
+    }else{
+        callback([[NSMutableArray alloc] init],nil);
+    }
+}
+
+#pragma mark - user cache
+
+- (void)registerUsers:(NSArray*)users{
+    for(int i=0;i<users.count;i++){
+        [self registerUser:[users objectAtIndex:i]];
+    }
+}
+
+-(void) registerUser:(AVUser*)user{
+    [_cachedUsers setObject:user forKey:user.objectId];
+}
+
+-(AVUser *)lookupUser:(NSString*)userId{
+    return [_cachedUsers valueForKey:userId];
 }
 
 #pragma mark - group cache

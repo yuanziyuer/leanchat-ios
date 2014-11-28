@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		701641471A2868FE006D1074 /* CDUpgradeService.m in Sources */ = {isa = PBXBuildFile; fileRef = 701641461A2868FE006D1074 /* CDUpgradeService.m */; };
 		7029AE721A2708BF004832F9 /* CDAddFriendController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7029AE6F1A2708BF004832F9 /* CDAddFriendController.xib */; };
 		7029AE731A2708BF004832F9 /* CDAddFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7029AE701A2708BF004832F9 /* CDAddFriendController.m */; };
 		70A066311A24A3A2004DA201 /* NSString+MessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A064741A24A3A2004DA201 /* NSString+MessageInputView.m */; };
@@ -475,6 +476,8 @@
 		1AE56C31C63DFD24A31AC420 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		4D569F4B827DF50C11F64070 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CEDD32E8213E54F4209381A /* libPods-LeanChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LeanChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		701641451A2868FE006D1074 /* CDUpgradeService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUpgradeService.h; sourceTree = "<group>"; };
+		701641461A2868FE006D1074 /* CDUpgradeService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUpgradeService.m; sourceTree = "<group>"; };
 		7029AE6F1A2708BF004832F9 /* CDAddFriendController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDAddFriendController.xib; sourceTree = "<group>"; };
 		7029AE701A2708BF004832F9 /* CDAddFriendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAddFriendController.m; sourceTree = "<group>"; };
 		7029AE711A2708BF004832F9 /* CDAddFriendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAddFriendController.h; sourceTree = "<group>"; };
@@ -2623,6 +2626,8 @@
 				70E47DF51A245E1200DE60FE /* CDUtils.m */,
 				70A067271A24D394004DA201 /* CDEmotionUtils.h */,
 				70A067281A24D394004DA201 /* CDEmotionUtils.m */,
+				701641451A2868FE006D1074 /* CDUpgradeService.h */,
+				701641461A2868FE006D1074 /* CDUpgradeService.m */,
 			);
 			path = service;
 			sourceTree = "<group>";
@@ -3078,6 +3083,7 @@
 				70D4C6591A237C1E001A655D /* FMDatabase.m in Sources */,
 				70A066AF1A24A3A2004DA201 /* XHVoiceRecordHUD.m in Sources */,
 				70A066821A24A3A2004DA201 /* UIView+Convenience.m in Sources */,
+				701641471A2868FE006D1074 /* CDUpgradeService.m in Sources */,
 				70E47DF81A245E1200DE60FE /* CDAddRequestService.m in Sources */,
 				70A0664B1A24A3A2004DA201 /* XHBaseViewController.m in Sources */,
 				70A066631A24A3A2004DA201 /* XHProfileTableViewController.m in Sources */,
