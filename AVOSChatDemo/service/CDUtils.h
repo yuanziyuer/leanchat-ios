@@ -26,7 +26,9 @@ typedef void (^CDBlock)();
 +(void)filterError:(NSError*)error callback:(CDBlock)callback;
 +(void)logError:(NSError*)error callback:(CDBlock)callbak;
 
+#pragma mark - collection utils
 +(NSMutableArray*)setToArray:(NSMutableSet*)set;
++(NSArray*)reverseArray:(NSArray*)originArray;
 
 #pragma mark - view utils
 +(void)setCellMarginsZero:(UITableViewCell*)cell;

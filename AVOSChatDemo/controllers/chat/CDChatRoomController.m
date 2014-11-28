@@ -24,6 +24,10 @@
 
 #import "XHAudioPlayerHelper.h"
 
+#define ONE_PAGE_SIZE 20
+
+typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
+
 @interface CDChatRoomController () <UINavigationControllerDelegate> {
     NSMutableDictionary *_loadedData;
     CDSessionManager* sessionManager;
@@ -224,33 +228,57 @@
 #pragma mark - messageUpdated
 
 - (void)messageUpdated:(NSNotification *)notification {
-    NSString* convid=[CDSessionManager getConvidOfRoomType:self.type otherId:self.chatUser.objectId groupId:self.group.groupId];
-    NSMutableArray *msgs  = [[sessionManager getMsgsForConvid:convid] mutableCopy];
-    //UIApplication* app=[UIApplication sharedApplication];
-    //app.networkActivityIndicatorVisible=YES;
-    //[[self.toolbarItems objectAtIndex:0] addSubview:view];
+    [self loadMsgsIsLoadMore:NO];
+}
+
+-(void)loadMsgsIsLoadMore:(BOOL)isLoadMore{
+    if(isLoadMore){
+        self.loadingMoreMessage=YES;
+    }
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        int64_t timestamp;
+        int limit;
+        if(isLoadMore==NO){
+            timestamp=[sessionManager getMaxTimetstamp];
+            int count=[self.messages count];
+            if(count>ONE_PAGE_SIZE){
+                limit=count;
+            }else{
+                limit=ONE_PAGE_SIZE;
+            }
+        }else{
+            XHMessage* firstMessage=[self.messages objectAtIndex:0];
+            NSDate* date=firstMessage.timestamp;
+            timestamp=[date timeIntervalSince1970]*1000;
+            limit=ONE_PAGE_SIZE;
+        }
+        NSString* convid=[CDSessionManager getConvidOfRoomType:self.type otherId:self.chatUser.objectId groupId:self.group.groupId];
+        NSMutableArray *msgs  = [[sessionManager getMsgsWithConvid:convid maxTimestamp:timestamp limit:limit] mutableCopy];
         for(CDMsg* msg in msgs){
             [self getAvatarByMsg:msg];
         }
-        NSMutableArray* userIds=[[NSMutableArray alloc] init];
-        for(CDMsg* msg in msgs){
-            [userIds addObject:msg.fromPeerId];
-        }
-        [sessionManager cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
-            [CDUtils filterError:error callback:^{
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    //app.networkActivityIndicatorVisible=NO;
-                    //[indicator removeFromSuperview];
-                    self.messages=[[NSMutableArray alloc] init];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSMutableArray* userIds=[[NSMutableArray alloc] init];
+            for(CDMsg* msg in msgs){
+                [userIds addObject:msg.fromPeerId];
+            }
+            [sessionManager cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
+                [CDUtils filterError:error callback:^{
+                    NSMutableArray* messages=[[NSMutableArray alloc] init];
                     for(CDMsg* msg in msgs){
-                        [self.messages addObject:[self getXHMessageByMsg:msg]];
+                        [messages addObject:[self getXHMessageByMsg:msg]];
                     }
-                    [self.messageTableView reloadData];
-                    [self scrollToBottomAnimated:YES];
-                });
+                    if(isLoadMore==NO){
+                        self.messages=messages;
+                        [self.messageTableView reloadData];
+                        [self scrollToBottomAnimated:NO];
+                    }else{
+                        [self insertOldMessages:messages];
+                        self.loadingMoreMessage=NO;
+                    }
+                }];
             }];
-        }];
+        });
     });
 }
 
@@ -411,17 +439,10 @@
 
 - (void)loadMoreMessagesScrollTotop {
     if (!self.loadingMoreMessage) {
-        self.loadingMoreMessage = YES;
-        
-        WEAKSELF
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSMutableArray *messages = [[NSMutableArray alloc] init];
-            sleep(2);
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf insertOldMessages:messages];
-                weakSelf.loadingMoreMessage = NO;
-            });
-        });
+        self.loadingMoreMessage=YES;
+        [self loadMsgsIsLoadMore:YES];
+    }else{
+        NSLog(@"is loading message");
     }
 }
 
@@ -548,7 +569,7 @@
  *  @return 返回YES or NO
  */
 - (BOOL)shouldPreventScrollToBottomWhileUserScrolling {
-    return YES;
+    return NO;
 }
 
 -(void)didSelecteShareMenuItem:(XHShareMenuItem *)shareMenuItem atIndex:(NSInteger)index{

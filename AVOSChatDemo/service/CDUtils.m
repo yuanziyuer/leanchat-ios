@@ -114,5 +114,14 @@
     }
 }
 
++(NSArray*)reverseArray:(NSArray*)originArray{
+    NSMutableArray* array=[NSMutableArray arrayWithCapacity:[originArray count]];
+    NSEnumerator* enumerator=[originArray reverseObjectEnumerator];
+    for(id element in enumerator){
+        [array addObject:element];
+    }
+    return array;
+}
+
 
 @end

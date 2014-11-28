@@ -30,11 +30,15 @@
 - (void)sendAttachmentWithObjectId:(NSString*)objectId type:(CDMsgType)type toPeerId:(NSString *)toPeerId group:(AVGroup*)group;
 
 - (NSArray*)getMsgsForConvid:(NSString*)convid;
+-(NSArray*)getMsgsWithConvid:(NSString*)convid maxTimestamp:(int64_t)timestamp limit:(int)limit;
+
 +(NSString*)getConvidOfRoomType:(CDMsgRoomType)roomType otherId:(NSString*)otherId groupId:(NSString*)groupId;
 - (void)clearData;
 +(NSString*)convidOfSelfId:(NSString*)myId andOtherId:(NSString*)otherId;
 +(NSString*)getPathByObjectId:(NSString*)objectId;
 +(NSString*)uuid;
+
+-(int64_t)getMaxTimetstamp;
 
 #pragma mark - histroy
 - (void)getHistoryMessagesForPeerId:(NSString *)peerId callback:(AVArrayResultBlock)callback;

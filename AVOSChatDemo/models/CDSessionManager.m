@@ -365,6 +365,35 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     return [self getMsgsByResultSet:rs];
 }
 
+-(NSArray*)getMsgsWithConvid:(NSString*)convid maxTimestamp:(int64_t)timestamp limit:(int)limit{
+    NSString* timestampStr=[[NSNumber numberWithLongLong:timestamp] stringValue];
+    FMResultSet* rs=[_database executeQuery:@"select * from messages where convid=? and timestamp<? order by timestamp desc limit ?" withArgumentsInArray:@[convid,timestampStr,@(limit)]];
+    NSMutableArray* msgs=[self getMsgsByResultSet:rs];
+    return [CDUtils reverseArray:msgs];
+}
+
+-(int64_t)getMaxTimestampFromDB{
+    FMResultSet* rs=[_database executeQuery:@"select * from messages order by timestamp desc limit 1"];
+    NSArray* array=[self getMsgsByResultSet:rs];
+    if([array count]>0){
+        CDMsg* msg=[array firstObject];
+        return msg.timestamp;
+    }else{
+        return -1;
+    }
+}
+
+-(int64_t)getMaxTimetstamp{
+    int64_t timestamp=[self getMaxTimestampFromDB];
+    if(timestamp!=-1){
+        return timestamp+1;
+    }else{
+        NSDate* now=[NSDate date];
+        int sec=[now timeIntervalSince1970]+10;
+        return  (int64_t)sec*1000;
+    }
+}
+
 -(CDMsg* )getMsgByResultSet:(FMResultSet*)rs{
     NSString *fromid = [rs stringForColumn:FROM_PEER_ID];
     NSString *toid = [rs stringForColumn:TO_PEER_ID];
