@@ -158,7 +158,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 }
 
 -(XHMessage*)getXHMessageByMsg:(CDMsg*)msg{
-    NSLog(@"ReadStaus=%@",[msg getReadStatusDesc]);
     AVUser* fromUser=[sessionManager lookupUser:msg.fromPeerId];
     AVUser* curUser=[AVUser currentUser];
     XHMessage* xhMessage;
