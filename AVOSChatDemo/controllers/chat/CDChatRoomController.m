@@ -31,6 +31,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 @interface CDChatRoomController () <UINavigationControllerDelegate> {
     NSMutableDictionary *_loadedData;
     CDSessionManager* sessionManager;
+    BOOL isLoadingMsg;
 }
 
 @property (nonatomic, strong) XHMessageTableViewCell *currentSelectedCell;
@@ -105,6 +106,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     
     self.shareMenuItems = shareMenuItems;
     [self.shareMenuView reloadData];
+    isLoadingMsg=NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -232,9 +234,12 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 }
 
 -(void)loadMsgsIsLoadMore:(BOOL)isLoadMore{
-    if(isLoadMore){
-        self.loadingMoreMessage=YES;
+    if(isLoadingMsg){
+        NSLog(@"loading msg and return");
+        return ;
     }
+    isLoadingMsg=YES;
+    NSLog(@"%s",__PRETTY_FUNCTION__);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         int64_t timestamp;
         int limit;
@@ -263,7 +268,9 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
                 [userIds addObject:msg.fromPeerId];
             }
             [sessionManager cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
-                [CDUtils filterError:error callback:^{
+                if(error){
+                    [CDUtils alertError:error];
+                }else{
                     NSMutableArray* messages=[[NSMutableArray alloc] init];
                     for(CDMsg* msg in msgs){
                         [messages addObject:[self getXHMessageByMsg:msg]];
@@ -274,9 +281,12 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
                         [self scrollToBottomAnimated:NO];
                     }else{
                         [self insertOldMessages:messages];
-                        self.loadingMoreMessage=NO;
                     }
-                }];
+                }
+                // when fast scrolling at top, insertOldMessages is doing works in tableview , so delay 0.5s to permit loading msgs
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                    isLoadingMsg=NO;
+                });
             }];
         });
     });
@@ -438,12 +448,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 }
 
 - (void)loadMoreMessagesScrollTotop {
-    if (!self.loadingMoreMessage) {
-        self.loadingMoreMessage=YES;
-        [self loadMsgsIsLoadMore:YES];
-    }else{
-        NSLog(@"is loading message");
-    }
+    [self loadMsgsIsLoadMore:YES];
 }
 
 /**
