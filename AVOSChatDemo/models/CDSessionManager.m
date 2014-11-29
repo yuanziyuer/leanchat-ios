@@ -133,19 +133,15 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
 
 #pragma mark - conversation
 
-- (void)exMainQueue:(void (^)())queue {
-    dispatch_async(dispatch_get_main_queue(), queue);
-}
-
 -(void)findConversationsWithCallback:(AVArrayResultBlock)callback{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    [CDUtils runInGlobalQueue:^{
         AVUser* user=[AVUser currentUser];
         FMResultSet *rs = [_database executeQuery:@"select * from messages where ownerId=? group by convid order by timestamp desc" withArgumentsInArray:@[user.objectId]];
         NSArray *msgs=[self getMsgsByResultSet:rs];
         [self cacheMsgs:msgs withCallback:^(NSArray *objects, NSError *error) {
             if(error){
-                [self exMainQueue:^{
-                        callback(nil,error);
+                [CDUtils runInMainQueue:^{
+                    callback(nil,error);
                 }];
             }else{
                 NSMutableArray *chatRooms=[[NSMutableArray alloc] init];
@@ -169,12 +165,12 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
                     chatRoom.latestMsg=msg;
                     [chatRooms addObject:chatRoom];
                 }
-                [self exMainQueue:^{
+                [CDUtils runInMainQueue:^{
                     callback(chatRooms,error);
                 }];
             }
         }];
-    });
+    }];
 }
 
 +(NSString*)convidOfSelfId:(NSString*)myId andOtherId:(NSString*)otherId{
@@ -410,16 +406,12 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
 
 - (void)getHistoryMessagesForPeerId:(NSString *)peerId callback:(AVArrayResultBlock)callback {
     AVHistoryMessageQuery *query = [AVHistoryMessageQuery queryWithFirstPeerId:_session.peerId secondPeerId:peerId];
-    [query findInBackgroundWithCallback:^(NSArray *objects, NSError *error) {
-        callback(objects, error);
-    }];
+    [query findInBackgroundWithCallback:callback];
 }
 
 - (void)getHistoryMessagesForGroup:(NSString *)groupId callback:(AVArrayResultBlock)callback {
     AVHistoryMessageQuery *query = [AVHistoryMessageQuery queryWithGroupId:groupId];
-    [query findInBackgroundWithCallback:^(NSArray *objects, NSError *error) {
-        callback(objects, error);
-    }];
+    [query findInBackgroundWithCallback:callback];
 }
 
 #pragma mark - comman message handle
@@ -435,7 +427,6 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     [self updateMsgWithId:objectId status:CDMsgStatusSendFailed];
     [self notifyMessageUpdate];
 }
-
 
 -(void)didReceiveAVMessage:(AVMessage*)avMsg group:(AVGroup*)group{
     NSLog(@"%s",__PRETTY_FUNCTION__);

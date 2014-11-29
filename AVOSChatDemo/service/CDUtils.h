@@ -39,7 +39,9 @@ typedef void (^CDBlock)();
 
 +(void)setPolicyOfAVQuery:(AVQuery*)query isNetwokOnly:(BOOL)onlyNetwork;
 
-
+#pragma mark - async
++(void)runInGlobalQueue:(void (^)())queue;
++(void)runInMainQueue:(void (^)())queue;
 
 
 @end

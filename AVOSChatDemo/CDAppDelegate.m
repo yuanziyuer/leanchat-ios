@@ -17,6 +17,7 @@
 #import "CDSessionManager.h"
 #import "CDChatGroup.h"
 #import "CDUpgradeService.h"
+#import "CDUtils.h"
 
 @implementation CDAppDelegate
 

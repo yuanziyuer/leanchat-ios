@@ -123,5 +123,12 @@
     return array;
 }
 
++(void)runInMainQueue:(void (^)())queue{
+    dispatch_async(dispatch_get_main_queue(), queue);
+}
+
++(void)runInGlobalQueue:(void (^)())queue{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), queue);
+}
 
 @end
