@@ -41,11 +41,11 @@
     switch (mediaType) {
         case XHBubbleMessageMediaTypePhoto:
         case XHBubbleMessageMediaTypeVideo:
-            messageTypeString = [messageTypeString stringByAppendingString:@"_Solid"];
+            messageTypeString = [messageTypeString stringByAppendingString:@"_LeanChat"];
             break;
         case XHBubbleMessageMediaTypeText:
         case XHBubbleMessageMediaTypeVoice:
-            messageTypeString = [messageTypeString stringByAppendingString:@"_Solid"];
+            messageTypeString = [messageTypeString stringByAppendingString:@"_LeanChat"];
             break;
         default:
             break;

@@ -186,6 +186,7 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     return [CDUtils md5OfString:result];
 }
 
+
 +(NSString*)uuid{
     NSString *chars=@"abcdefghijklmnopgrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     assert(chars.length==62);
@@ -392,6 +393,16 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
 }
 
 -(void)markHaveReadOfMsgs:(NSArray*)msgs{
+    BOOL hasUnread=NO;
+    for(CDMsg* msg in msgs){
+        if(msg.readStatus==CDMsgReadStatusUnread){
+            hasUnread=YES;
+            break;
+        }
+    }
+    if(!hasUnread){
+        return;
+    }
     [_database beginTransaction];
     for(CDMsg* msg in msgs){
         if(msg.readStatus==CDMsgReadStatusUnread){

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		701641471A2868FE006D1074 /* CDUpgradeService.m in Sources */ = {isa = PBXBuildFile; fileRef = 701641461A2868FE006D1074 /* CDUpgradeService.m */; };
+		7016414A1A2B689A006D1074 /* weChatBubble_Receiving_LeanChat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 701641481A2B689A006D1074 /* weChatBubble_Receiving_LeanChat@2x.png */; };
+		7016414B1A2B689A006D1074 /* weChatBubble_Sending_LeanChat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 701641491A2B689A006D1074 /* weChatBubble_Sending_LeanChat@2x.png */; };
 		7029AE721A2708BF004832F9 /* CDAddFriendController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7029AE6F1A2708BF004832F9 /* CDAddFriendController.xib */; };
 		7029AE731A2708BF004832F9 /* CDAddFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7029AE701A2708BF004832F9 /* CDAddFriendController.m */; };
 		70A066311A24A3A2004DA201 /* NSString+MessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A064741A24A3A2004DA201 /* NSString+MessageInputView.m */; };
@@ -478,6 +480,8 @@
 		5CEDD32E8213E54F4209381A /* libPods-LeanChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LeanChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		701641451A2868FE006D1074 /* CDUpgradeService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUpgradeService.h; sourceTree = "<group>"; };
 		701641461A2868FE006D1074 /* CDUpgradeService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUpgradeService.m; sourceTree = "<group>"; };
+		701641481A2B689A006D1074 /* weChatBubble_Receiving_LeanChat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "weChatBubble_Receiving_LeanChat@2x.png"; path = "../../../../../../../Downloads/LeanChat/Sketch Exports/weChatBubble_Receiving_LeanChat@2x.png"; sourceTree = "<group>"; };
+		701641491A2B689A006D1074 /* weChatBubble_Sending_LeanChat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "weChatBubble_Sending_LeanChat@2x.png"; path = "../../../../../../../Downloads/LeanChat/Sketch Exports/weChatBubble_Sending_LeanChat@2x.png"; sourceTree = "<group>"; };
 		7029AE6F1A2708BF004832F9 /* CDAddFriendController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDAddFriendController.xib; sourceTree = "<group>"; };
 		7029AE701A2708BF004832F9 /* CDAddFriendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAddFriendController.m; sourceTree = "<group>"; };
 		7029AE711A2708BF004832F9 /* CDAddFriendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAddFriendController.h; sourceTree = "<group>"; };
@@ -2043,9 +2047,8 @@
 				70A065DF1A24A3A2004DA201 /* contacts_add_scan@2x.png */,
 				70A065E01A24A3A2004DA201 /* contacts_add_voip@2x.png */,
 				70A065E11A24A3A2004DA201 /* ContactsPanelDotRect@2x.png */,
-				70A065E21A24A3A2004DA201 /* MessageDisplayKitString.strings */,
-				70A065E41A24A3A2004DA201 /* face@2x.png */,
 				70A065E51A24A3A2004DA201 /* face_HL@2x.png */,
+				70A065E41A24A3A2004DA201 /* face@2x.png */,
 				70A065E61A24A3A2004DA201 /* Fav_Cell_Loc@2x.png */,
 				70A065E71A24A3A2004DA201 /* input-bar-background.png */,
 				70A065E81A24A3A2004DA201 /* input-bar-background@2x.png */,
@@ -2053,22 +2056,23 @@
 				70A065EA1A24A3A2004DA201 /* input-bar-flat@2x.png */,
 				70A065EB1A24A3A2004DA201 /* input-field-cover.png */,
 				70A065EC1A24A3A2004DA201 /* input-field-cover@2x.png */,
-				70A065ED1A24A3A2004DA201 /* keyborad@2x.png */,
 				70A065EE1A24A3A2004DA201 /* keyborad_HL@2x.png */,
+				70A065ED1A24A3A2004DA201 /* keyborad@2x.png */,
+				70A065E21A24A3A2004DA201 /* MessageDisplayKitString.strings */,
 				70A065EF1A24A3A2004DA201 /* MessageVideoPlay@2x.png */,
 				70A065F01A24A3A2004DA201 /* MoreFunctionFrame@2x.png */,
 				70A065F11A24A3A2004DA201 /* msg_chat_voice_unread.png */,
 				70A065F21A24A3A2004DA201 /* msg_chat_voice_unread@2x.png */,
-				70A065F31A24A3A2004DA201 /* multiMedia@2x.png */,
 				70A065F41A24A3A2004DA201 /* multiMedia_HL@2x.png */,
+				70A065F31A24A3A2004DA201 /* multiMedia@2x.png */,
 				70A065F51A24A3A2004DA201 /* MultiSelectedPanelBkg@2x.png */,
 				70A065F61A24A3A2004DA201 /* MultiSelectedPanelConfirmBtnbKG@2x.png */,
 				70A065F71A24A3A2004DA201 /* placeholderImage@2x.png */,
+				70A065FC1A24A3A2004DA201 /* ReceiverVoiceNodePlaying@2x.png */,
 				70A065F81A24A3A2004DA201 /* ReceiverVoiceNodePlaying000@2x.png */,
 				70A065F91A24A3A2004DA201 /* ReceiverVoiceNodePlaying001@2x.png */,
 				70A065FA1A24A3A2004DA201 /* ReceiverVoiceNodePlaying002@2x.png */,
 				70A065FB1A24A3A2004DA201 /* ReceiverVoiceNodePlaying003@2x.png */,
-				70A065FC1A24A3A2004DA201 /* ReceiverVoiceNodePlaying@2x.png */,
 				70A065FD1A24A3A2004DA201 /* RecordCancel@2x.png */,
 				70A065FE1A24A3A2004DA201 /* RecordingBkg@2x.png */,
 				70A065FF1A24A3A2004DA201 /* RecordingSignal001@2x.png */,
@@ -2082,12 +2086,6 @@
 				70A066071A24A3A2004DA201 /* SearchIcon@2x.png */,
 				70A066081A24A3A2004DA201 /* SECoreTextView.bundle */,
 				70A066091A24A3A2004DA201 /* section0_emotion0@2x.png */,
-				70A0660A1A24A3A2004DA201 /* section0_emotion10@2x.png */,
-				70A0660B1A24A3A2004DA201 /* section0_emotion11@2x.png */,
-				70A0660C1A24A3A2004DA201 /* section0_emotion12@2x.png */,
-				70A0660D1A24A3A2004DA201 /* section0_emotion13@2x.png */,
-				70A0660E1A24A3A2004DA201 /* section0_emotion14@2x.png */,
-				70A0660F1A24A3A2004DA201 /* section0_emotion15@2x.png */,
 				70A066101A24A3A2004DA201 /* section0_emotion1@2x.png */,
 				70A066111A24A3A2004DA201 /* section0_emotion2@2x.png */,
 				70A066121A24A3A2004DA201 /* section0_emotion3@2x.png */,
@@ -2097,11 +2095,17 @@
 				70A066161A24A3A2004DA201 /* section0_emotion7@2x.png */,
 				70A066171A24A3A2004DA201 /* section0_emotion8@2x.png */,
 				70A066181A24A3A2004DA201 /* section0_emotion9@2x.png */,
+				70A0660A1A24A3A2004DA201 /* section0_emotion10@2x.png */,
+				70A0660B1A24A3A2004DA201 /* section0_emotion11@2x.png */,
+				70A0660C1A24A3A2004DA201 /* section0_emotion12@2x.png */,
+				70A0660D1A24A3A2004DA201 /* section0_emotion13@2x.png */,
+				70A0660E1A24A3A2004DA201 /* section0_emotion14@2x.png */,
+				70A0660F1A24A3A2004DA201 /* section0_emotion15@2x.png */,
+				70A0661D1A24A3A2004DA201 /* SenderVoiceNodePlaying@2x.png */,
 				70A066191A24A3A2004DA201 /* SenderVoiceNodePlaying000@2x.png */,
 				70A0661A1A24A3A2004DA201 /* SenderVoiceNodePlaying001@2x.png */,
 				70A0661B1A24A3A2004DA201 /* SenderVoiceNodePlaying002@2x.png */,
 				70A0661C1A24A3A2004DA201 /* SenderVoiceNodePlaying003@2x.png */,
-				70A0661D1A24A3A2004DA201 /* SenderVoiceNodePlaying@2x.png */,
 				70A0661E1A24A3A2004DA201 /* sharemore_friendcard@2x.png */,
 				70A0661F1A24A3A2004DA201 /* sharemore_location@2x.png */,
 				70A066201A24A3A2004DA201 /* sharemore_myfav@2x.png */,
@@ -2112,10 +2116,12 @@
 				70A066251A24A3A2004DA201 /* sharemore_voiceinput@2x.png */,
 				70A066261A24A3A2004DA201 /* sharemore_voipvoice@2x.png */,
 				70A066271A24A3A2004DA201 /* sharemore_wxtalk@2x.png */,
-				70A066281A24A3A2004DA201 /* voice@2x.png */,
 				70A066291A24A3A2004DA201 /* voice_HL@2x.png */,
+				70A066281A24A3A2004DA201 /* voice@2x.png */,
 				70A0662A1A24A3A2004DA201 /* VoiceBtn_Black@2x.png */,
 				70A0662B1A24A3A2004DA201 /* VoiceBtn_BlackHL@2x.png */,
+				701641481A2B689A006D1074 /* weChatBubble_Receiving_LeanChat@2x.png */,
+				701641491A2B689A006D1074 /* weChatBubble_Sending_LeanChat@2x.png */,
 				70A0662C1A24A3A2004DA201 /* weChatBubble_Receiving_Cavern@2x.png */,
 				70A0662D1A24A3A2004DA201 /* weChatBubble_Receiving_Solid@2x.png */,
 				70A0662E1A24A3A2004DA201 /* weChatBubble_Sending_Cavern@2x.png */,
@@ -2916,6 +2922,7 @@
 				70E47E491A24656D00DE60FE /* 1f634.png in Resources */,
 				70D4C6261A237C1E001A655D /* CDProfileController.xib in Resources */,
 				70E47E281A24656D00DE60FE /* 1f601.png in Resources */,
+				7016414B1A2B689A006D1074 /* weChatBubble_Sending_LeanChat@2x.png in Resources */,
 				70D4C6521A237C1E001A655D /* menu_add_voip@2x.png in Resources */,
 				70E47E681A24686900DE60FE /* 1f60a.png in Resources */,
 				70A0667B1A24A3A2004DA201 /* MultiSelectedPanel.xib in Resources */,
@@ -2974,6 +2981,7 @@
 				70E47DD11A2457CC00DE60FE /* ue40d.png in Resources */,
 				70D4C6201A237C1E001A655D /* CDGroupDetailController.xib in Resources */,
 				70E47E271A24656D00DE60FE /* 1f600.png in Resources */,
+				7016414A1A2B689A006D1074 /* weChatBubble_Receiving_LeanChat@2x.png in Resources */,
 				70E47DDB1A2457CC00DE60FE /* ue417.png in Resources */,
 				70A066D81A24A3A2004DA201 /* keyborad@2x.png in Resources */,
 				70D4C6411A237C1E001A655D /* background@2x.png in Resources */,
@@ -3377,7 +3385,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				PRODUCT_NAME = LeanChat;
-				PROVISIONING_PROFILE = "4c127298-2786-459d-ab9d-aebea62709fd";
+				PROVISIONING_PROFILE = "3360136f-9d1d-4a71-a8f1-cb499212a8d7";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -3410,7 +3418,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				PRODUCT_NAME = LeanChat;
-				PROVISIONING_PROFILE = "4c127298-2786-459d-ab9d-aebea62709fd";
+				PROVISIONING_PROFILE = "3360136f-9d1d-4a71-a8f1-cb499212a8d7";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

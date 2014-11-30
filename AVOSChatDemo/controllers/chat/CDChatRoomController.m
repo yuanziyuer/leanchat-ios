@@ -559,13 +559,19 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
  *  @param indexPath 目标Cell所在位置IndexPath
  */
 - (void)configureCell:(XHMessageTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    XHMessage* msg=[self.messages objectAtIndex:indexPath.row];
     if([self shouldDisplayTimestampForRowAtIndexPath:indexPath]){
-        XHMessage* msg=[self.messages objectAtIndex:indexPath.row];
         NSDate* ts=msg.timestamp;
         NSDateFormatter* dateFormatter=[[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"M-d h:m"];
         NSString* str=[dateFormatter stringFromDate:ts];
         cell.timestampLabel.text=str;
+    }
+    SETextView* textView=cell.messageBubbleView.displayTextView;
+    if(msg.bubbleMessageType==XHBubbleMessageTypeSending){
+        [textView setTextColor:[UIColor whiteColor]];
+    }else{
+        [textView setTextColor:[UIColor blackColor]];
     }
 }
 
