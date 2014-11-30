@@ -10,6 +10,7 @@
 		701641471A2868FE006D1074 /* CDUpgradeService.m in Sources */ = {isa = PBXBuildFile; fileRef = 701641461A2868FE006D1074 /* CDUpgradeService.m */; };
 		7016414A1A2B689A006D1074 /* weChatBubble_Receiving_LeanChat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 701641481A2B689A006D1074 /* weChatBubble_Receiving_LeanChat@2x.png */; };
 		7016414B1A2B689A006D1074 /* weChatBubble_Sending_LeanChat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 701641491A2B689A006D1074 /* weChatBubble_Sending_LeanChat@2x.png */; };
+		7016414D1A2B776C006D1074 /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 7016414C1A2B776C006D1074 /* splash.png */; };
 		7029AE721A2708BF004832F9 /* CDAddFriendController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7029AE6F1A2708BF004832F9 /* CDAddFriendController.xib */; };
 		7029AE731A2708BF004832F9 /* CDAddFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7029AE701A2708BF004832F9 /* CDAddFriendController.m */; };
 		70A066311A24A3A2004DA201 /* NSString+MessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A064741A24A3A2004DA201 /* NSString+MessageInputView.m */; };
@@ -482,6 +483,7 @@
 		701641461A2868FE006D1074 /* CDUpgradeService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUpgradeService.m; sourceTree = "<group>"; };
 		701641481A2B689A006D1074 /* weChatBubble_Receiving_LeanChat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "weChatBubble_Receiving_LeanChat@2x.png"; path = "../../../../../../../Downloads/LeanChat/Sketch Exports/weChatBubble_Receiving_LeanChat@2x.png"; sourceTree = "<group>"; };
 		701641491A2B689A006D1074 /* weChatBubble_Sending_LeanChat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "weChatBubble_Sending_LeanChat@2x.png"; path = "../../../../../../../Downloads/LeanChat/Sketch Exports/weChatBubble_Sending_LeanChat@2x.png"; sourceTree = "<group>"; };
+		7016414C1A2B776C006D1074 /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash.png; path = "../../../../../Downloads/LeanChat/Sketch Exports/splash.png"; sourceTree = "<group>"; };
 		7029AE6F1A2708BF004832F9 /* CDAddFriendController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDAddFriendController.xib; sourceTree = "<group>"; };
 		7029AE701A2708BF004832F9 /* CDAddFriendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAddFriendController.m; sourceTree = "<group>"; };
 		7029AE711A2708BF004832F9 /* CDAddFriendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAddFriendController.h; sourceTree = "<group>"; };
@@ -2282,6 +2284,7 @@
 		70D4C5971A237C1E001A655D /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				7016414C1A2B776C006D1074 /* splash.png */,
 				70E47D951A2456E800DE60FE /* chat */,
 				70D4C5981A237C1E001A655D /* AppIcon60x60@2x.png */,
 				70D4C5991A237C1E001A655D /* avatar */,
@@ -2816,6 +2819,7 @@
 				70D4C6171A237C1E001A655D /* CDNewFriendTableViewController.xib in Resources */,
 				70E47E741A24686900DE60FE /* 1f62a.png in Resources */,
 				70E47E341A24656D00DE60FE /* 1f613.png in Resources */,
+				7016414D1A2B776C006D1074 /* splash.png in Resources */,
 				70D4C64B1A237C1E001A655D /* login_selected@2x.png in Resources */,
 				70D4C63A1A237C1E001A655D /* chat_menu_people.png in Resources */,
 				70A0670A1A24A3A2004DA201 /* sharemore_location@2x.png in Resources */,

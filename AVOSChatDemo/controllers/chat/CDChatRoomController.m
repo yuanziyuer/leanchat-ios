@@ -269,9 +269,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
                 [userIds addObject:msg.fromPeerId];
             }
             [sessionManager cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
-                if(error){
-                    [CDUtils alertError:error];
-                }else{
+                [CDUtils filterError:error callback:^{
                     NSMutableArray* messages=[[NSMutableArray alloc] init];
                     for(CDMsg* msg in msgs){
                         [messages addObject:[self getXHMessageByMsg:msg]];
@@ -283,7 +281,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
                     }else{
                         [self insertOldMessages:messages];
                     }
-                }
+                }];
                 // when fast scrolling at top, insertOldMessages is doing works in tableview , so delay 0.5s to permit loading msgs
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                     isLoadingMsg=NO;

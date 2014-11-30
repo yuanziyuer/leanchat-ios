@@ -24,6 +24,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
+    
     [CDAddRequest registerSubclass];
     [CDChatGroup registerSubclass];
 #if USE_US
@@ -44,11 +46,14 @@
     }
     [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
                                                            [UIColor whiteColor], NSForegroundColorAttributeName, [UIFont boldSystemFontOfSize:17], NSFontAttributeName, nil]];
+    UIViewController* nextController;
     if ([AVUser currentUser]) {
-        [self toMain];
+        nextController=[self toMain];
     } else {
-        [self toLogin];
+        nextController=[self toLogin];
     }
+    [self splashScreenAtAnchorView:nextController];
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
@@ -128,26 +133,24 @@
     //这儿你可以加入自己的代码 根据推送的数据进行相应处理
 }
 
-- (void)toLogin {
+- (UIViewController*)toLogin {
     CDLoginController *controller = [[CDLoginController alloc] init];
     self.window.rootViewController = controller;
+    return controller;
 }
 
-- (void)toMain {
+-(void)addItemController:(UIViewController*)itemController toTabBarController:(CDBaseTabBarController*)tab{
+    CDBaseNavigationController* nav=[[CDBaseNavigationController alloc] initWithRootViewController:itemController];
+    [tab addChildViewController:nav];
+}
+
+- (UIViewController*)toMain {
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     CDBaseTabBarController *tab = [[CDBaseTabBarController alloc] init];
     
-    CDBaseController *controller = [[CDChatListController alloc] init];
-    CDBaseNavigationController *nav = [[CDBaseNavigationController alloc] initWithRootViewController:controller];
-    [tab addChildViewController:nav];
-    
-    controller = [[CDContactListController alloc] init];
-    nav = [[CDBaseNavigationController alloc] initWithRootViewController:controller];
-    [tab addChildViewController:nav];
-    
-    controller = [[CDProfileController alloc] init];
-    nav = [[CDBaseNavigationController alloc] initWithRootViewController:controller];
-    [tab addChildViewController:nav];
+    [self addItemController:[[CDChatListController alloc] init] toTabBarController:tab];
+    [self addItemController:[[CDContactListController alloc] init] toTabBarController:tab];
+    [self addItemController:[[CDProfileController alloc] init] toTabBarController:tab];
     
     tab.selectedIndex=0;
     
@@ -164,6 +167,28 @@
     if([AVUser currentUser]){
         [man openSession];
     }
+    return tab;
+}
+
+-(void)splashScreenAtAnchorView:(UIViewController*)anchorController{
+    UIImageView *imgv = [[UIImageView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    UIImage* image=[UIImage imageNamed:@"splash.png"];
+    imgv.image=image;
+    imgv.contentMode=UIViewContentModeScaleAspectFill;
+    imgv.userInteractionEnabled = YES;
+    [anchorController.view addSubview:imgv];
+
+    [UIView animateWithDuration:0.5 delay:2 options:0
+                     animations:^{
+                         imgv.alpha=0.0f;
+                     } completion:^(BOOL finished){
+                         [imgv removeFromSuperview];
+                     }];
+    [self.window addSubview:anchorController.view];
+}
+
+- (void)removeSplash:(UIImageView *)imageView {
+    [imageView removeFromSuperview];
 }
 
 @end

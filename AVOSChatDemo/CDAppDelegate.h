@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-- (void)toLogin;
-- (void)toMain;
+- (UIViewController*)toMain;
+- (UIViewController*)toLogin;
+
 @end
