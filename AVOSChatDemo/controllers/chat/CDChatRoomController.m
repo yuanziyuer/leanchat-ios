@@ -323,9 +323,9 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     self = [super init];
     if (self) {
         // 配置输入框UI的样式
-        //        self.allowsSendVoice = NO;
-        //        self.allowsSendFace = NO;
-        //        self.allowsSendMultiMedia = NO;
+        //self.allowsSendVoice = NO;
+         //       self.allowsSendFace = NO;
+        //self.allowsSendMultiMedia = NO;
     }
     return self;
 }

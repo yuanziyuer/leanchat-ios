@@ -282,15 +282,15 @@
     // 允许发送语音
     if (self.allowsSendVoice) {
         button = [self createButtonWithImage:[UIImage imageNamed:@"voice"] HLImage:[UIImage imageNamed:@"voice_HL"]];
+        button.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
         [button addTarget:self action:@selector(messageStyleButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         button.tag = 0;
         [button setImage:[UIImage imageNamed:@"keyborad"] forState:UIControlStateSelected];
         buttonFrame = button.frame;
-        buttonFrame.origin = CGPointMake(horizontalPadding, verticalPadding);
+        buttonFrame.origin = CGPointMake(CGRectGetWidth(self.bounds) - horizontalPadding - CGRectGetWidth(buttonFrame), verticalPadding);
         button.frame = buttonFrame;
         [self addSubview:button];
-        allButtonWidth += CGRectGetMaxX(buttonFrame);
-        textViewLeftMargin += CGRectGetMaxX(buttonFrame);
+        allButtonWidth += CGRectGetWidth(buttonFrame) + horizontalPadding ;
         
         self.voiceChangeButton = button;
     }
@@ -298,14 +298,14 @@
     // 允许发送多媒体消息，为什么不是先放表情按钮呢？因为布局的需要！
     if (self.allowsSendMultiMedia) {
         button = [self createButtonWithImage:[UIImage imageNamed:@"multiMedia"] HLImage:[UIImage imageNamed:@"multiMedia_HL"]];
-        button.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
         [button addTarget:self action:@selector(messageStyleButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         button.tag = 2;
         buttonFrame = button.frame;
-        buttonFrame.origin = CGPointMake(CGRectGetWidth(self.bounds) - horizontalPadding - CGRectGetWidth(buttonFrame), verticalPadding);
+        buttonFrame.origin = CGPointMake(horizontalPadding, verticalPadding);
         button.frame = buttonFrame;
         [self addSubview:button];
-        allButtonWidth += CGRectGetWidth(buttonFrame) + horizontalPadding * 2.5;
+        allButtonWidth += CGRectGetWidth(buttonFrame)+horizontalPadding;
+        textViewLeftMargin += CGRectGetMaxX(buttonFrame);
         
         self.multiMediaSendButton = button;
     }
@@ -319,14 +319,17 @@
         button.tag = 1;
         buttonFrame = button.frame;
         if (self.allowsSendMultiMedia) {
-            buttonFrame.origin = CGPointMake(CGRectGetMinX(self.multiMediaSendButton.frame) - CGRectGetWidth(buttonFrame) - horizontalPadding, verticalPadding);
+//            buttonFrame.origin = CGPointMake(CGRectGetMinX(self.voiceChangeButton.frame) - CGRectGetWidth(buttonFrame) - horizontalPadding, verticalPadding);
+            buttonFrame.origin=CGPointMake(CGRectGetMaxX(buttonFrame)+horizontalPadding,verticalPadding);
             allButtonWidth += CGRectGetWidth(buttonFrame) + horizontalPadding * 1.5;
         } else {
-            buttonFrame.origin = CGPointMake(CGRectGetWidth(self.bounds) - horizontalPadding - CGRectGetWidth(buttonFrame), verticalPadding);
-            allButtonWidth += CGRectGetWidth(buttonFrame) + horizontalPadding * 2.5;
+//            buttonFrame.origin = CGPointMake(CGRectGetWidth(self.bounds) - horizontalPadding - CGRectGetWidth(buttonFrame), verticalPadding);
+            buttonFrame.origin=CGPointMake(horizontalPadding, verticalPadding);
+            allButtonWidth += CGRectGetWidth(buttonFrame) + horizontalPadding * 1.5;
         }
         button.frame = buttonFrame;
         [self addSubview:button];
+        textViewLeftMargin+=CGRectGetWidth(buttonFrame);
         
         self.faceSendButton = button;
     }
