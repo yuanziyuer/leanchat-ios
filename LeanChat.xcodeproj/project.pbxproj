@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		701641471A2868FE006D1074 /* CDUpgradeService.m in Sources */ = {isa = PBXBuildFile; fileRef = 701641461A2868FE006D1074 /* CDUpgradeService.m */; };
-		7016414A1A2B689A006D1074 /* weChatBubble_Receiving_LeanChat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 701641481A2B689A006D1074 /* weChatBubble_Receiving_LeanChat@2x.png */; };
-		7016414B1A2B689A006D1074 /* weChatBubble_Sending_LeanChat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 701641491A2B689A006D1074 /* weChatBubble_Sending_LeanChat@2x.png */; };
 		7016414F1A2C3348006D1074 /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 7016414E1A2C3348006D1074 /* splash.png */; };
+		701641521A2C3461006D1074 /* weChatBubble_Receiving_LeanChat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 701641501A2C3461006D1074 /* weChatBubble_Receiving_LeanChat@2x.png */; };
+		701641531A2C3461006D1074 /* weChatBubble_Sending_LeanChat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 701641511A2C3461006D1074 /* weChatBubble_Sending_LeanChat@2x.png */; };
 		7029AE721A2708BF004832F9 /* CDAddFriendController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7029AE6F1A2708BF004832F9 /* CDAddFriendController.xib */; };
 		7029AE731A2708BF004832F9 /* CDAddFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7029AE701A2708BF004832F9 /* CDAddFriendController.m */; };
 		70A066311A24A3A2004DA201 /* NSString+MessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A064741A24A3A2004DA201 /* NSString+MessageInputView.m */; };
@@ -481,9 +481,9 @@
 		5CEDD32E8213E54F4209381A /* libPods-LeanChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LeanChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		701641451A2868FE006D1074 /* CDUpgradeService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUpgradeService.h; sourceTree = "<group>"; };
 		701641461A2868FE006D1074 /* CDUpgradeService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUpgradeService.m; sourceTree = "<group>"; };
-		701641481A2B689A006D1074 /* weChatBubble_Receiving_LeanChat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "weChatBubble_Receiving_LeanChat@2x.png"; path = "../../../../../../../Downloads/LeanChat/Sketch Exports/weChatBubble_Receiving_LeanChat@2x.png"; sourceTree = "<group>"; };
-		701641491A2B689A006D1074 /* weChatBubble_Sending_LeanChat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "weChatBubble_Sending_LeanChat@2x.png"; path = "../../../../../../../Downloads/LeanChat/Sketch Exports/weChatBubble_Sending_LeanChat@2x.png"; sourceTree = "<group>"; };
 		7016414E1A2C3348006D1074 /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
+		701641501A2C3461006D1074 /* weChatBubble_Receiving_LeanChat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChatBubble_Receiving_LeanChat@2x.png"; sourceTree = "<group>"; };
+		701641511A2C3461006D1074 /* weChatBubble_Sending_LeanChat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChatBubble_Sending_LeanChat@2x.png"; sourceTree = "<group>"; };
 		7029AE6F1A2708BF004832F9 /* CDAddFriendController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDAddFriendController.xib; sourceTree = "<group>"; };
 		7029AE701A2708BF004832F9 /* CDAddFriendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAddFriendController.m; sourceTree = "<group>"; };
 		7029AE711A2708BF004832F9 /* CDAddFriendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAddFriendController.h; sourceTree = "<group>"; };
@@ -2036,6 +2036,8 @@
 		70A065D41A24A3A2004DA201 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				701641501A2C3461006D1074 /* weChatBubble_Receiving_LeanChat@2x.png */,
+				701641511A2C3461006D1074 /* weChatBubble_Sending_LeanChat@2x.png */,
 				70A065D51A24A3A2004DA201 /* AddGroupMemberBtn@2x.png */,
 				70A065D61A24A3A2004DA201 /* AddGroupMemberBtnHL@2x.png */,
 				70A065D71A24A3A2004DA201 /* avator@2x.png */,
@@ -2122,8 +2124,6 @@
 				70A066281A24A3A2004DA201 /* voice@2x.png */,
 				70A0662A1A24A3A2004DA201 /* VoiceBtn_Black@2x.png */,
 				70A0662B1A24A3A2004DA201 /* VoiceBtn_BlackHL@2x.png */,
-				701641481A2B689A006D1074 /* weChatBubble_Receiving_LeanChat@2x.png */,
-				701641491A2B689A006D1074 /* weChatBubble_Sending_LeanChat@2x.png */,
 				70A0662C1A24A3A2004DA201 /* weChatBubble_Receiving_Cavern@2x.png */,
 				70A0662D1A24A3A2004DA201 /* weChatBubble_Receiving_Solid@2x.png */,
 				70A0662E1A24A3A2004DA201 /* weChatBubble_Sending_Cavern@2x.png */,
@@ -2763,6 +2763,7 @@
 				70A066D01A24A3A2004DA201 /* face_HL@2x.png in Resources */,
 				70E47E761A24686900DE60FE /* 1f62c.png in Resources */,
 				70D4C6301A237C1E001A655D /* LeanChat-Info.plist in Resources */,
+				701641521A2C3461006D1074 /* weChatBubble_Receiving_LeanChat@2x.png in Resources */,
 				70E47E7C1A24686900DE60FE /* 1f63c.png in Resources */,
 				70E47E2D1A24656D00DE60FE /* 1f606.png in Resources */,
 				70D4C64C1A237C1E001A655D /* ok@2x.png in Resources */,
@@ -2855,6 +2856,7 @@
 				70A067091A24A3A2004DA201 /* sharemore_friendcard@2x.png in Resources */,
 				70E47E6C1A24686900DE60FE /* 1f60e.png in Resources */,
 				70D4C6581A237C1E001A655D /* wechat@2x.png in Resources */,
+				701641531A2C3461006D1074 /* weChatBubble_Sending_LeanChat@2x.png in Resources */,
 				70A066F01A24A3A2004DA201 /* RecordingSignal007@2x.png in Resources */,
 				70D4C6221A237C1E001A655D /* CDGroupTableViewController.xib in Resources */,
 				70D4C6481A237C1E001A655D /* cancel_seelected@2x.png in Resources */,
@@ -2925,7 +2927,6 @@
 				70E47E491A24656D00DE60FE /* 1f634.png in Resources */,
 				70D4C6261A237C1E001A655D /* CDProfileController.xib in Resources */,
 				70E47E281A24656D00DE60FE /* 1f601.png in Resources */,
-				7016414B1A2B689A006D1074 /* weChatBubble_Sending_LeanChat@2x.png in Resources */,
 				70D4C6521A237C1E001A655D /* menu_add_voip@2x.png in Resources */,
 				70E47E681A24686900DE60FE /* 1f60a.png in Resources */,
 				70A0667B1A24A3A2004DA201 /* MultiSelectedPanel.xib in Resources */,
@@ -2985,7 +2986,6 @@
 				70E47DD11A2457CC00DE60FE /* ue40d.png in Resources */,
 				70D4C6201A237C1E001A655D /* CDGroupDetailController.xib in Resources */,
 				70E47E271A24656D00DE60FE /* 1f600.png in Resources */,
-				7016414A1A2B689A006D1074 /* weChatBubble_Receiving_LeanChat@2x.png in Resources */,
 				70E47DDB1A2457CC00DE60FE /* ue417.png in Resources */,
 				70A066D81A24A3A2004DA201 /* keyborad@2x.png in Resources */,
 				70D4C6411A237C1E001A655D /* background@2x.png in Resources */,
