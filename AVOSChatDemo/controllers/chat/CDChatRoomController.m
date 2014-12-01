@@ -579,7 +579,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
  *  @return 返回YES or NO
  */
 - (BOOL)shouldPreventScrollToBottomWhileUserScrolling {
-    return NO;
+    return YES;
 }
 
 -(void)didSelecteShareMenuItem:(XHShareMenuItem *)shareMenuItem atIndex:(NSInteger)index{
