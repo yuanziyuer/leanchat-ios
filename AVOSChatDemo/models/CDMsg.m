@@ -7,6 +7,7 @@
 //
 
 #import "CDMsg.h"
+#import "CDEmotionUtils.h"
 
 
 @implementation CDMsg
@@ -131,7 +132,7 @@
 -(NSString*)getMsgDesc{
     switch (type) {
         case CDMsgTypeText:
-            return content;
+            return [CDEmotionUtils convertWithText:content toEmoji:YES];
         case CDMsgTypeAudio:
             return @"语音";
         case CDMsgTypeImage:

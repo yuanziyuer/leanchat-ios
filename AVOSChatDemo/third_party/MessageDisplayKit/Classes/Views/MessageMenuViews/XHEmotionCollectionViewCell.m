@@ -37,7 +37,7 @@
 - (void)setup {
     if (!_emotionImageView) {
         UIImageView *emotionImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kXHEmotionImageViewSize, kXHEmotionImageViewSize)];
-        emotionImageView.backgroundColor = [UIColor colorWithRed:0.000 green:0.251 blue:0.502 alpha:1.000];
+        //emotionImageView.backgroundColor = [UIColor blackColor];
         [self.contentView addSubview:emotionImageView];
         self.emotionImageView = emotionImageView;
     }

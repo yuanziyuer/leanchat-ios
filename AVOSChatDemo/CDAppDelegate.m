@@ -18,6 +18,7 @@
 #import "CDChatGroup.h"
 #import "CDUpgradeService.h"
 #import "CDUtils.h"
+#import "CDEmotionUtils.h"
 
 @implementation CDAppDelegate
 

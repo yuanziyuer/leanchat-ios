@@ -10,9 +10,10 @@
 #import "XHEmotionManager.h"
 #import "XHMacro.h"
 
-#define kXHEmotionPerRowItemCount (kIsiPad ? 10 : 4)
+#define kXHEmotionPerRowItemCount (kIsiPad ? 10 : 8)
+#define kXHEmotionPerColumnItemCount 3
 #define kXHEmotionPageControlHeight 38
-#define kXHEmotionSectionBarHeight 36
+#define kXHEmotionSectionBarHeight 0
 
 @protocol XHEmotionManagerViewDelegate <NSObject>
 
@@ -23,7 +24,7 @@
  *  @param emotion   被点击的gif表情Model
  *  @param indexPath 被点击的位置
  */
-- (void)didSelecteEmotion:(XHTextEmotion *)emotion atIndexPath:(NSIndexPath *)indexPath;
+- (void)didSelecteEmotion:(XHEmotion *)emotion atIndexPath:(NSIndexPath *)indexPath;
 
 @end
 

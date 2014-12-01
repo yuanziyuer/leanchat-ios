@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "XHTextEmotion.h"
+#import "XHEmotion.h"
 
 @interface XHEmotionManager : NSObject
 

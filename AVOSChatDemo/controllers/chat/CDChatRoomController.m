@@ -162,7 +162,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     AVUser* curUser=[AVUser currentUser];
     XHMessage* xhMessage;
     if(msg.type==CDMsgTypeText){
-        xhMessage=[[XHMessage alloc] initWithText:msg.content sender:fromUser.username timestamp:[msg getTimestampDate]];
+        xhMessage=[[XHMessage alloc] initWithText:[CDEmotionUtils convertWithText:msg.content toEmoji:YES] sender:fromUser.username timestamp:[msg getTimestampDate]];
     }else if(msg.type==CDMsgTypeAudio){
         NSString* objectId=msg.objectId;
         NSString* path=[CDSessionManager getPathByObjectId:objectId];
@@ -458,7 +458,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
  *  @param date   发送时间
  */
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date {
-    [sessionManager sendMessageWithType:CDMsgTypeText content:text
+    [sessionManager sendMessageWithType:CDMsgTypeText content:[CDEmotionUtils convertWithText:text toEmoji:NO]
                                toPeerId:self.chatUser.objectId group:self.group];
     [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
 }
@@ -519,7 +519,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     NSMutableString* str=[[NSMutableString alloc] initWithString:textView.text];
     [str deleteCharactersInRange:range];
     [str insertString:emotion atIndex:range.location];
-    textView.text=str;
+    textView.text=[CDEmotionUtils convertWithText:str toEmoji:YES];
     textView.selectedRange=NSMakeRange(range.location+emotion.length, 0);
     [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeEmotion];
 }

@@ -13,8 +13,6 @@
 #import "XHEmotionCollectionViewCell.h"
 #import "XHEmotionCollectionViewFlowLayout.h"
 
-#import "XHTextEmotionCollectionViewCell.h"
-
 
 @interface XHEmotionManagerView () <UICollectionViewDelegate, UICollectionViewDataSource, XHEmotionSectionBarDelegate>
 
@@ -56,10 +54,11 @@
     self.emotionSectionBar.emotionManagers = [self.dataSource emotionManagersAtManager];
     [self.emotionSectionBar reloadData];
     
+    
     XHEmotionManager *emotionManager = [self.dataSource emotionManagerForColumn:self.selectedIndex];
     NSInteger numberOfEmotions = emotionManager.emotions.count;
-    self.emotionPageControl.numberOfPages = (numberOfEmotions / (kXHEmotionPerRowItemCount * 2) + (numberOfEmotions % (kXHEmotionPerRowItemCount * 2) ? 1 : 0));
-
+    self.emotionPageControl.numberOfPages = (numberOfEmotions / (kXHEmotionPerRowItemCount * kXHEmotionPerColumnItemCount) + (numberOfEmotions % (kXHEmotionPerRowItemCount * kXHEmotionPerColumnItemCount) ? 1 : 0));
+    
     
     [self.emotionCollectionView reloadData];
 }
@@ -75,8 +74,7 @@
     if (!_emotionCollectionView) {
         UICollectionView *emotionCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - kXHEmotionPageControlHeight - kXHEmotionSectionBarHeight) collectionViewLayout:[[XHEmotionCollectionViewFlowLayout alloc] init]];
         emotionCollectionView.backgroundColor = self.backgroundColor;
-//        [emotionCollectionView registerClass:[XHEmotionCollectionViewCell class] forCellWithReuseIdentifier:kXHEmotionCollectionViewCellIdentifier];
-        [emotionCollectionView registerClass:[XHTextEmotionCollectionViewCell class] forCellWithReuseIdentifier:kXHTextEmotionCollectionViewCellIdentifier];
+        [emotionCollectionView registerClass:[XHEmotionCollectionViewCell class] forCellWithReuseIdentifier:kXHEmotionCollectionViewCellIdentifier];
         emotionCollectionView.showsHorizontalScrollIndicator = NO;
         emotionCollectionView.showsVerticalScrollIndicator = NO;
         [emotionCollectionView setScrollsToTop:NO];
@@ -166,14 +164,11 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    XHEmotionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kXHEmotionCollectionViewCellIdentifier forIndexPath:indexPath];
-//    
-//    XHEmotionManager *emotionManager = [self.dataSource emotionManagerForColumn:self.selectedIndex];
-//    cell.emotion = emotionManager.emotions[indexPath.row];
+    XHEmotionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kXHEmotionCollectionViewCellIdentifier forIndexPath:indexPath];
     
-    XHTextEmotionCollectionViewCell* cell=[collectionView dequeueReusableCellWithReuseIdentifier:kXHTextEmotionCollectionViewCellIdentifier forIndexPath:indexPath];
     XHEmotionManager *emotionManager = [self.dataSource emotionManagerForColumn:self.selectedIndex];
-    [cell setTextEmotion:emotionManager.emotions[indexPath.row]];
+    cell.emotion = emotionManager.emotions[indexPath.row];
+    
     return cell;
 }
 

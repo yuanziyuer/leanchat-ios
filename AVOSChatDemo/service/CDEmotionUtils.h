@@ -11,5 +11,6 @@
 @interface CDEmotionUtils : NSObject
 
 +(NSArray*)getEmotionManagers;
++(NSString*)convertWithText:(NSString*)text toEmoji:(BOOL)toEmoji;
 
 @end
