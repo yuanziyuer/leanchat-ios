@@ -12,10 +12,12 @@
 #import "CDChatRoomController.h"
 #import "CDNewGroupViewController.h"
 #import "CDImageLabelTableCell.h"
+#import "CDUtils.h"
 
 @interface CDGroupTableViewController (){
     NSArray* chatGroups;
     UIImage * groupImage;
+    id groupUpdatedObserver;
 }
 @end
 
@@ -42,11 +44,19 @@ static NSString* cellIndentifier=@"cell";
     UIRefreshControl* refreshControl=[[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl=refreshControl;
+    NSOperationQueue *mainQueue = [NSOperationQueue mainQueue];
+    groupUpdatedObserver=[[NSNotificationCenter defaultCenter] addObserverForName:NOTIFICATION_GROUP_UPDATED object:nil queue:mainQueue usingBlock:^(NSNotification *note) {
+        [self refresh:nil];
+    }];
+}
+
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:groupUpdatedObserver];
 }
 
 -(void)refresh:(UIRefreshControl*)refreshControl{
     [CDGroupService findGroupsWithCallback:^(NSArray *objects, NSError *error) {
-        [refreshControl endRefreshing];
+        [CDUtils stopRefreshControl:refreshControl];
         chatGroups=objects;
         [self.tableView reloadData];
     }];
@@ -130,7 +140,8 @@ static NSString* cellIndentifier=@"cell";
     CDChatGroup* chatGroup=[chatGroups objectAtIndex:indexPath.row];
     CDChatRoomController * controlloer=[[CDChatRoomController alloc] init];
     [controlloer setType:CDMsgRoomTypeGroup];
-    [controlloer setChatGroup:chatGroup];
+    CDSessionManager* manager=[CDSessionManager sharedInstance];
+    [manager setCurrentChatGroup:chatGroup];
     UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:controlloer];
     [self presentViewController:nav animated:YES completion:nil];
 }

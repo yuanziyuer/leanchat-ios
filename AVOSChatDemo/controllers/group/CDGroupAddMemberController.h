@@ -11,6 +11,5 @@
 
 @interface CDGroupAddMemberController : UITableViewController
 
-@property CDChatGroup* chatGroup;
 
 @end

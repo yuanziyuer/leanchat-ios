@@ -10,6 +10,7 @@
 #import "CDImageLabelTableCell.h"
 #import "CDSessionManager.h"
 #import "CDUserService.h"
+#import "CDUtils.h"
 
 @interface CDGroupAddMemberController (){
     CDSessionManager *sessionManager;
@@ -24,11 +25,11 @@ static NSString* reuseIdentifier=@"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    sessionManager=[CDSessionManager sharedInstance];
     
     NSString* nibName=NSStringFromClass([CDImageLabelTableCell class]);
     UINib* nib=[UINib nibWithNibName:nibName bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:reuseIdentifier];
-    sessionManager=[CDSessionManager sharedInstance];
     self.title=@"邀请好友";
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(invite)];
     
@@ -48,7 +49,7 @@ static NSString* reuseIdentifier=@"Cell";
 -(void)initPotentialIds{
     potentialIds=[[NSMutableArray alloc] init];
     for(AVUser* user in [sessionManager friends]){
-        if([self.chatGroup.m containsObject:user.objectId]==NO){
+        if([sessionManager.currentChatGroup.m containsObject:user.objectId]==NO){
             [potentialIds addObject:user.objectId];
         }
     }
@@ -61,8 +62,23 @@ static NSString* reuseIdentifier=@"Cell";
             [inviteIds addObject:[potentialIds objectAtIndex:i]];
         }
     }
-    [sessionManager inviteMembersToGroup:self.chatGroup userIds:inviteIds];
-    [self.navigationController popViewControllerAnimated:YES];
+    UIActivityIndicatorView* indicator=[CDUtils showIndicatorAtView:self.view];
+    [self inviteMembers:inviteIds callback:^(BOOL succeeded, NSError *error) {
+        [indicator stopAnimating];
+        [CDUtils filterError:error callback:^{
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+    }];
+}
+
+-(void)inviteMembers:(NSArray*)inviteIds callback:(AVBooleanResultBlock)callback{
+    [sessionManager inviteMembersToGroup:sessionManager.currentChatGroup userIds:inviteIds callback:^(NSArray *objects, NSError *error) {
+        if(error){
+            callback(NO,error);
+        }else{
+            [sessionManager refreshCurrentChatGroup:callback];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,14 +89,10 @@ static NSString* reuseIdentifier=@"Cell";
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
     return potentialIds.count;
 }
 

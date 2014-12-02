@@ -34,31 +34,46 @@ static NSString * const reuseIdentifier = @"Cell";
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Register cell classes
-    self.title=[self.chatGroup getTitle];
     NSString* nibName=NSStringFromClass([CDImageLabelCollectionCell class]);
     NSLog(@"nibName=%@",nibName);
     [self.collectionView registerNib:[UINib nibWithNibName:nibName bundle:nil]  forCellWithReuseIdentifier:reuseIdentifier];
     self.collectionView.backgroundColor = [UIColor whiteColor];
+    
+    sessionManager=[CDSessionManager sharedInstance];
+    // Do any additional setup after loading the view.
+    [self initWithCurrentChatGroup];
+    UILongPressGestureRecognizer* gestureRecognizer=[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressUser:)];
+    gestureRecognizer.delegate=self;
+    [self.collectionView addGestureRecognizer:gestureRecognizer];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initWithCurrentChatGroup) name:NOTIFICATION_GROUP_UPDATED object:nil];
+}
+
+-(CDChatGroup*)getChatGroup{
+    return sessionManager.currentChatGroup;
+}
+
+-(void)initWithCurrentChatGroup{
+    CDChatGroup* chatGroup=[self getChatGroup];
+    [sessionManager cacheUsersWithIds:chatGroup.m callback:^(NSArray *objects, NSError *error) {
+        [CDUtils filterError:error callback:^{
+            groupMembers=chatGroup.m;
+            [self.collectionView reloadData];
+        }];
+    }];
+    self.title=[[self getChatGroup] getTitle];
+    
     NSString* curUserId=[AVUser currentUser].objectId;
-    if([self.chatGroup.owner.objectId isEqualToString:curUserId]){
+    if([chatGroup.owner.objectId isEqualToString:curUserId]){
         self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addMember)];
         own=YES;
     }else{
         self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"退群" style:UIBarButtonItemStylePlain target:self action:@selector(quitGroup)];
     }
-    
-    sessionManager=[CDSessionManager sharedInstance];
-    // Do any additional setup after loading the view.
-    [self initWithMemberIds:self.chatGroup.m];
-    UILongPressGestureRecognizer* gestureRecognizer=[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressUser:)];
-    gestureRecognizer.delegate=self;
-    [self.collectionView addGestureRecognizer:gestureRecognizer];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshChatGroup) name:NOTIFICATION_GROUP_UPDATED object:nil];
 }
 
 -(void)quitGroup{
-    [sessionManager quitFromGroup:self.chatGroup];
+    [sessionManager quitFromGroup:[self getChatGroup]];
     [self.navigationController popToRootViewControllerAnimated:YES];
     UIViewController* first=self.navigationController.viewControllers[0];
     [first.presentingViewController dismissViewControllerAnimated:YES completion:nil];;
@@ -74,8 +89,9 @@ static NSString * const reuseIdentifier = @"Cell";
         NSLog(@"can't not find index path");
     }else{
         if(own){
-            NSString* userId=[self.chatGroup.m objectAtIndex:indexPath.row];
-            if([userId isEqualToString:self.chatGroup.owner.objectId]==NO){
+            CDChatGroup* chatGroup=[self getChatGroup];
+            NSString* userId=[chatGroup.m objectAtIndex:indexPath.row];
+            if([userId isEqualToString:chatGroup.owner.objectId]==NO){
                 UIAlertView * alert=[[UIAlertView alloc] initWithTitle:nil message:@"确定要踢走该成员吗？"  delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
                 alert.tag=indexPath.row;
                 [alert show];
@@ -88,26 +104,9 @@ static NSString * const reuseIdentifier = @"Cell";
 clickedButtonAtIndex:(NSInteger)buttonIndex{
     if(buttonIndex==0){
         int pos=alertView.tag;
-        NSString* userId=[self.chatGroup.m objectAtIndex:pos];
-        [sessionManager kickMemberFromGroup:self.chatGroup userId:userId];
+        NSString* userId=[[self getChatGroup].m objectAtIndex:pos];
+        [sessionManager kickMemberFromGroup:[self getChatGroup] userId:userId];
     }
-}
-
--(void)initWithMemberIds:(NSArray*)userIds{
-    [sessionManager cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
-        [CDUtils filterError:error callback:^{
-            groupMembers=self.chatGroup.m;
-            [self.collectionView reloadData];
-        }];
-    }];
-}
-
--(void)refreshChatGroup{
-    [self.chatGroup fetchInBackgroundWithBlock:^(AVObject *object, NSError *error) {
-        [CDUtils filterError:error callback:^{
-            [self initWithMemberIds:self.chatGroup.m];
-        }];
-    }];
 }
 
 -(void)dealloc{
@@ -122,8 +121,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 }
 
 -(void)addMember{
-    CDGroupAddMemberController *controller=[[CDGroupAddMemberController alloc] init];
-    controller.chatGroup=self.chatGroup;
+    CDGroupAddMemberController *controller=[[CDGroupAddMemberController alloc] init];;
     [self.navigationController pushViewController:controller animated:YES];
 }
 

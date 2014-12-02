@@ -12,6 +12,4 @@
 
 @interface CDGroupDetailController : UICollectionViewController<UIGestureRecognizerDelegate,UIAlertViewDelegate>
 
-@property CDChatGroup* chatGroup;
-
 @end

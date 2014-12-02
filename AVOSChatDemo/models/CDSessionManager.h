@@ -15,6 +15,7 @@
 + (instancetype)sharedInstance;
 
 @property NSMutableArray* friends;
+@property CDChatGroup* currentChatGroup;
 
 #pragma mark - conversation
 -(void)findConversationsWithCallback:(AVArrayResultBlock)callback;
@@ -53,9 +54,15 @@
 #pragma mark - group
 - (AVGroup *)joinGroupById:(NSString *)groupId;
 - (void)saveNewGroupWithName:(NSString*)name withCallback:(AVGroupResultBlock)callback ;
--(void)inviteMembersToGroup:(CDChatGroup*) chatGroup userIds:(NSArray*)userIds;
+
+-(void)inviteMembersToGroup:(CDChatGroup*) chatGroup userIds:(NSArray*)userIds callback:(AVArrayResultBlock)callback;
+
 -(void)kickMemberFromGroup:(CDChatGroup*)chatGroup userId:(NSString*)userId;
+
 -(void)quitFromGroup:(CDChatGroup*)chatGroup;
+
+-(void)refreshCurrentChatGroup:(AVBooleanResultBlock)callback;
+
 
 #pragma mark - user cache
 - (void)registerUsers:(NSArray*)users;

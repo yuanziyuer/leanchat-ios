@@ -127,7 +127,8 @@ static NSString *cellIdentifier = @"ContactCell";
     CDChatRoomController *controller = [[CDChatRoomController alloc] init];
     controller.type = type;
     if (type == CDMsgRoomTypeGroup) {
-        controller.chatGroup=chatRoom.chatGroup;
+        CDSessionManager* manager=[CDSessionManager sharedInstance];
+        [manager setCurrentChatGroup:chatRoom.chatGroup];
     } else {
         controller.chatUser=chatRoom.chatUser;
     }

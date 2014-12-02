@@ -42,7 +42,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 @implementation CDChatRoomController
 
-#pragma mark - lifecycle
+#pragma mark - life cycle
 
 /**
  *  Override point for customization.
@@ -65,25 +65,15 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop                                                                                          target:self                                                                                          action:@selector(backPressed:)];
     
-    if(self.type==CDMsgRoomTypeGroup){
+    if(self.type==CDMsgRoomTypeSingle){
+        self.title = self.chatUser.username;
+        [sessionManager watchPeerId:self.chatUser.objectId ];
+    }else{
         UIImage* peopleImage=[UIImage imageNamed:@"chat_menu_people"];
         UIImage* _peopleImage=[CDUtils imageWithImage:peopleImage scaledToSize:CGSizeMake(25, 25)];
         UIBarButtonItem* item=[[UIBarButtonItem alloc] initWithImage:_peopleImage style:UIBarButtonItemStyleDone target:self action:@selector(goChatGroupDetail:)];
         self.navigationItem.rightBarButtonItem=item;
     }
-    
-    if(self.type==CDMsgRoomTypeSingle){
-        [sessionManager watchPeerId:self.chatUser.objectId ];
-    }else{
-        _group=[sessionManager joinGroupById:_chatGroup.objectId];
-    }
-    
-    if (self.type == CDMsgRoomTypeGroup) {
-        self.title = [_chatGroup getTitle];
-    } else {
-        self.title = self.chatUser.username;
-    }
-    
     // Custom UI
     //    [self setBackgroundColor:[UIColor clearColor]];
     //    [self setBackgroundImage:[UIImage imageNamed:@"TableViewBackgroundImage"]];
@@ -111,14 +101,31 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageUpdated:) name:NOTIFICATION_MESSAGE_UPDATED object:nil];
+    NSNotificationCenter* center=[NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(messageUpdated:) name:NOTIFICATION_MESSAGE_UPDATED object:nil];
+    if(self.type==CDMsgRoomTypeGroup){
+        [center addObserver:self selector:@selector(initWithCurrentChatGroup) name:NOTIFICATION_GROUP_UPDATED object:nil];
+        [self initWithCurrentChatGroup];
+    }
     [self messageUpdated:nil];
+}
+
+-(void)initWithCurrentChatGroup{
+    if(self.type==CDMsgRoomTypeSingle){
+        return;
+    }
+    self.chatGroup=sessionManager.currentChatGroup;
+    self.title=[self.chatGroup getTitle];
+    _group=[sessionManager joinGroupById:_chatGroup.objectId];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     NSNotificationCenter* center=[NSNotificationCenter defaultCenter];
     [center removeObserver:self name:NOTIFICATION_MESSAGE_UPDATED object:nil];
+    if(self.type==CDMsgRoomTypeGroup){
+       [center removeObserver:self name:NOTIFICATION_GROUP_UPDATED object:nil];
+    }
 }
 
 -(void)dealloc{
@@ -126,12 +133,37 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     [[XHAudioPlayerHelper shareInstance] setDelegate:nil];
     if(self.type==CDMsgRoomTypeSingle){
         [sessionManager unwatchPeerId:self.chatUser.objectId];
+    }else{
+         sessionManager.currentChatGroup=nil;
     }
 }
 
 -(void)backPressed:(id)sender{
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[XHAudioPlayerHelper shareInstance] stopAudio];
+}
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        // 配置输入框UI的样式
+        //self.allowsSendVoice = NO;
+        //       self.allowsSendFace = NO;
+        //self.allowsSendMultiMedia = NO;
+    }
+    return self;
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
 
 #pragma mark - message data
 
@@ -223,7 +255,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     [flow setScrollDirection:UICollectionViewScrollDirectionVertical];
     
     CDGroupDetailController* controller=[[CDGroupDetailController alloc] initWithNibName:@"CDGroupDetailController" bundle:nil];
-    controller.chatGroup=self.chatGroup;
     [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -312,29 +343,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     }
 }
 
-#pragma mark - LifeCycle
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [[XHAudioPlayerHelper shareInstance] stopAudio];
-}
-
-- (id)init {
-    self = [super init];
-    if (self) {
-        // 配置输入框UI的样式
-        //self.allowsSendVoice = NO;
-         //       self.allowsSendFace = NO;
-        //self.allowsSendMultiMedia = NO;
-    }
-    return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 /*
  [self removeMessageAtIndexPath:indexPath];

@@ -40,6 +40,7 @@
                 [CDUtils alertError:error];
             }else{
                 [self backPressed];
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_GROUP_UPDATED object:self];
             }
         }];
     }

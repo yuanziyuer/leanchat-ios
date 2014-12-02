@@ -602,7 +602,6 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
 - (void)group:(AVGroup *)group didReceiveEvent:(AVGroupEvent)event peerIds:(NSArray *)peerIds {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     NSLog(@"group:%@ event:%u peerIds:%@", group.groupId, event, peerIds);
-    [self notifyGroupUpdate];
 }
 
 - (void)group:(AVGroup *)group messageSendFinished:(AVMessage *)message {
@@ -630,9 +629,9 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
 
 #pragma mark - group
 
--(void)inviteMembersToGroup:(CDChatGroup*) chatGroup userIds:(NSArray*)userIds{
+-(void)inviteMembersToGroup:(CDChatGroup*) chatGroup userIds:(NSArray*)userIds callback:(AVArrayResultBlock)callback {
     AVGroup* group=[self getGroupById:chatGroup.objectId];
-    [group invitePeerIds:userIds];
+    [group invitePeerIds:userIds callback:callback];
 }
 
 -(void)kickMemberFromGroup:(CDChatGroup*)chatGroup userId:(NSString*)userId{
@@ -668,6 +667,21 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
             callback(group,error);
         }
     }];
+}
+
+-(void)refreshCurrentChatGroup:(AVBooleanResultBlock)callback{
+    if(self.currentChatGroup!=nil){
+        [self.currentChatGroup fetchInBackgroundWithBlock:^(AVObject *object, NSError *error) {
+            if(error){
+                callback(NO,error);
+            }else{
+                [self notifyGroupUpdate];
+                callback(YES,nil);
+            }
+        }];
+    }else{
+        callback(NO,[NSError errorWithDomain:nil code:0 userInfo:@{NSLocalizedDescriptionKey:@"currentChatGroup is nil"}]);
+    }
 }
 
 #pragma mark - cache
