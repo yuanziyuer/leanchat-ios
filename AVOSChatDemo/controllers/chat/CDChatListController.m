@@ -51,7 +51,6 @@ static NSString *cellIdentifier = @"ContactCell";
     [self.tableView registerNib:[UINib nibWithNibName:nibName bundle:nil] forCellReuseIdentifier:cellIdentifier];
     chatRooms=[[NSMutableArray alloc] init];
     sessionManager=[CDSessionManager sharedInstance];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh:) name:NOTIFICATION_MESSAGE_UPDATED object:nil];
     
     UIRefreshControl* refreshControl=[[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
@@ -61,6 +60,12 @@ static NSString *cellIdentifier = @"ContactCell";
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self refresh:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh:) name:NOTIFICATION_MESSAGE_UPDATED object:nil];
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_MESSAGE_UPDATED object:nil];
 }
 
 -(void)refresh:(UIRefreshControl*)refreshControl{
@@ -82,7 +87,6 @@ static NSString *cellIdentifier = @"ContactCell";
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_MESSAGE_UPDATED object:nil];
 }
 
 - (void)showMenuOnView:(UIBarButtonItem *)buttonItem {
