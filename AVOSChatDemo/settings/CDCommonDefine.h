@@ -35,6 +35,8 @@
 
 #define NAVIGATION_COLOR NAVIGATION_COLOR_LEANCHAT
 
+#define CD_FONT_COLOR RGBCOLOR(0,0,0)
+
 #define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
 #define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
 

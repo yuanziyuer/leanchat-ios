@@ -24,6 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title=@"注册";
     UIImage *image = [UIImage imageNamed:@"cancel"];
     UIImage *selectedImage = [UIImage imageNamed:@"cancel_selected"];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
