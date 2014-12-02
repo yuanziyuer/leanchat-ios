@@ -14,12 +14,15 @@
 #import "CDCloudService.h"
 #import "CDChatGroup.h"
 #import "CDGroupService.h"
+#import "AFNetworking.h"
+#import "QiniuSDK.h"
 
 @interface CDSessionManager () {
     FMDatabase *_database;
     AVSession *_session;
     NSMutableDictionary *_cachedUsers;
     NSMutableDictionary *cachedChatGroups;
+    QNUploadManager *upManager;
 }
 
 @end
@@ -91,6 +94,7 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
 
 - (void)commonInit {
     [self createTable];
+    upManager=[[QNUploadManager alloc] init];
     initialized = YES;
 }
 
@@ -264,6 +268,66 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     [self insertMessageToDBAndNotify:msg];
 }
 
+-(void)runTwiceTimeWithTimes:(int)times persistentId:(NSString*)persistentId callback:(AVIdResultBlock)callback{
+    NSLog(@"times=%d",times);
+    NSError* commonError=[NSError errorWithDomain:@"error" code:0 userInfo:@{NSLocalizedDescriptionKey:@"上传错误"}];
+    if(times>=2){
+        callback(nil,commonError);
+    }else{
+        [CDUtils runInGlobalQueue:^{
+            sleep(1);
+            [CDUtils runInMainQueue:^{
+                NSString *url=@"http://api.qiniu.com/status/get/prefop";
+                AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+                [manager GET:url parameters:@{@"id":persistentId} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    NSDictionary* dict=(NSDictionary*)responseObject;
+                    NSLog(@"%@",dict);
+                    NSArray* arr=[dict objectForKey:@"items"];
+                    NSDictionary* result=[arr firstObject];
+                    NSString* key=[result objectForKey:@"key"];
+                    NSNumber* code=[result objectForKey:@"code"];
+                    int codeInt=[code intValue];
+                    if(codeInt==0){
+                        NSString* finalUrl=[@"http://lzw-love.qiniudn.com/" stringByAppendingString:key];
+                        callback(finalUrl,nil);
+                    }else{
+                        [self runTwiceTimeWithTimes:times+1 persistentId:persistentId callback:callback];
+                    }
+                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    callback(nil,error);
+                }];
+            }];
+        }];
+    }
+}
+
+-(void)sendAudioWithId:(NSString*)objectId toPeerId:(NSString*)toPeerId group:(AVGroup*)group callback:(AVBooleanResultBlock)callback{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    NSString* path=[CDSessionManager getPathByObjectId:objectId];
+    [manager GET:@"https://leanchat.avosapps.com/qiniuToken" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary* dict=(NSDictionary*)responseObject;
+        NSString* token=[dict objectForKey:@"token"];
+        NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
+        [upManager putData:data key:objectId token:token
+                  complete: ^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
+                      if(info.error){
+                          callback(NO,info.error);
+                      }else{
+                          [self runTwiceTimeWithTimes:0 persistentId:[resp objectForKey:@"persistentId"] callback:^(id object, NSError *error) {
+                              if(error){
+                                  callback(NO,error);
+                              }else{
+                                  [self sendMessageWithObjectId:objectId content:(NSString*)object type:CDMsgTypeAudio toPeerId:toPeerId group:group];
+                                  callback(YES,nil);
+                              }
+                          }];
+                      }
+                  } option:nil];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        callback(NO,error);
+    }];
+}
 
 +(NSString*)getFilesPath{
     NSString* appPath=[NSSearchPathForDirectoriesInDomains(NSDocumentationDirectory, NSUserDomainMask, YES) objectAtIndex:0];
@@ -675,8 +739,14 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
 }
 
 -(void)cacheChatGroupsWithIds:(NSMutableSet*)groupIds withCallback:(AVArrayResultBlock)callback{
-    if([groupIds count]>0){
-        [CDGroupService findGroupsByIds:groupIds withCallback:^(NSArray *objects, NSError *error) {
+    NSMutableSet* uncacheGroupIds=[[NSMutableSet alloc] init];
+    for(NSString * groupId in groupIds){
+        if([self lookupChatGroupById:groupId]==nil){
+            [uncacheGroupIds addObject:groupId];
+        }
+    }
+    if([uncacheGroupIds count]>0){
+        [CDGroupService findGroupsByIds:uncacheGroupIds withCallback:^(NSArray *objects, NSError *error) {
             [CDUtils filterError:error callback:^{
                 for(CDChatGroup* chatGroup in objects){
                     [self registerChatGroup:chatGroup];

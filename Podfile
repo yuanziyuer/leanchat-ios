@@ -5,4 +5,5 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 pod 'SDWebImage'
 pod 'AVOSCloud'
-
+pod 'Qiniu', '~> 7.0'
+pod 'AFNetworking', '~> 2.0'

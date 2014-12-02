@@ -499,11 +499,15 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     NSError* error;
     [[NSFileManager defaultManager] copyItemAtPath:voicePath toPath:path error:&error];
     if(error==nil){
-        [self sendAttachmentWithObjectId:objectId type:CDMsgTypeAudio];
+        [sessionManager sendAudioWithId:objectId toPeerId:self.chatUser.objectId group:self.group callback:^(BOOL succeeded, NSError *error) {
+            [CDUtils filterError:error callback:^{
+                NSLog(@"succeed");
+                [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeVoice];
+            }];
+        }];
     }else{
         [CDUtils alertError:error];
     }
-    [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeVoice];
 }
 
 /**
