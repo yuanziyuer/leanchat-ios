@@ -10,7 +10,9 @@
 #import "CDImageLabelTableCell.h"
 #import "CDSessionManager.h"
 #import "CDUserService.h"
+#import "CDCacheService.h"
 #import "CDUtils.h"
+#import "CDGroupService.h"
 
 @interface CDGroupAddMemberController (){
     CDSessionManager *sessionManager;
@@ -49,7 +51,7 @@ static NSString* reuseIdentifier=@"Cell";
 -(void)initPotentialIds{
     potentialIds=[[NSMutableArray alloc] init];
     for(AVUser* user in [sessionManager friends]){
-        if([sessionManager.currentChatGroup.m containsObject:user.objectId]==NO){
+        if([[CDCacheService getCurrentChatGroup].m containsObject:user.objectId]==NO){
             [potentialIds addObject:user.objectId];
         }
     }
@@ -72,11 +74,11 @@ static NSString* reuseIdentifier=@"Cell";
 }
 
 -(void)inviteMembers:(NSArray*)inviteIds callback:(AVBooleanResultBlock)callback{
-    [sessionManager inviteMembersToGroup:sessionManager.currentChatGroup userIds:inviteIds callback:^(NSArray *objects, NSError *error) {
+    [CDGroupService inviteMembersToGroup:[CDCacheService getCurrentChatGroup] userIds:inviteIds callback:^(NSArray *objects, NSError *error) {
         if(error){
             callback(NO,error);
         }else{
-            [sessionManager refreshCurrentChatGroup:callback];
+            [CDCacheService refreshCurrentChatGroup:callback];
         }
     }];
 }
@@ -103,7 +105,7 @@ static NSString* reuseIdentifier=@"Cell";
         cell=[[CDImageLabelTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     }
     NSString* userId=[potentialIds objectAtIndex:indexPath.row];
-    AVUser* user=[sessionManager lookupUser:userId];
+    AVUser* user=[CDCacheService lookupUser:userId];
     [CDUserService displayAvatarOfUser:user avatarView:cell.myImageView];
     cell.myLabel.text=user.username;
     if([selected[indexPath.row] boolValue]){

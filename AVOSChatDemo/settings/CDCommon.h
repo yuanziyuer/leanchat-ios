@@ -13,5 +13,6 @@
 #import "CDCommonDefine.h"
 #import "CDUserService.h"
 #import "CDAddRequest.h"
+#import "CDUtils.h"
 
 #endif

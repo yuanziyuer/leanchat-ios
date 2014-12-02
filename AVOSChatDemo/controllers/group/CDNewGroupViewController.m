@@ -9,6 +9,7 @@
 #import "CDNewGroupViewController.h"
 #import "CDSessionManager.h"
 #import "CDUtils.h"
+#import "CDGroupService.h"
 
 @interface CDNewGroupViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
@@ -34,7 +35,7 @@
     if([name length]>0){
         UIActivityIndicatorView* indicator=[CDUtils showIndicatorAtView:self.view];
         CDSessionManager* man=[CDSessionManager sharedInstance];
-        [man saveNewGroupWithName:name withCallback:^(AVGroup *group, NSError *error) {
+        [CDGroupService saveNewGroupWithName:name withCallback:^(AVGroup *group, NSError *error) {
             [indicator stopAnimating];
             if(error){
                 [CDUtils alertError:error];

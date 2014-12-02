@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AVOSCloud/AVOSCloud.h>
+#import "CDCommon.h"
 
 typedef void (^CDBlock)();
 
@@ -45,5 +46,8 @@ typedef void (^CDBlock)();
 +(void)runInGlobalQueue:(void (^)())queue;
 +(void)runInMainQueue:(void (^)())queue;
 
+
++(void)postNotification:(NSString*)name;
++(void)notifyGroupUpdate;
 
 @end

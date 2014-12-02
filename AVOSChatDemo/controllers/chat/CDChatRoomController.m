@@ -19,6 +19,9 @@
 #import "XHDisplayMediaViewController.h"
 #import "XHDisplayLocationViewController.h"
 #import "CDEmotionUtils.h"
+#import "CDCacheService.h"
+#import "CDGroupService.h"
+#import "CDDatabaseService.h"
 
 #import "XHContactDetailTableViewController.h"
 
@@ -114,9 +117,9 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     if(self.type==CDMsgRoomTypeSingle){
         return;
     }
-    self.chatGroup=sessionManager.currentChatGroup;
+    self.chatGroup=[CDCacheService getCurrentChatGroup];
     self.title=[self.chatGroup getTitle];
-    _group=[sessionManager joinGroupById:_chatGroup.objectId];
+    _group=[CDGroupService joinGroupById:_chatGroup.objectId];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -134,7 +137,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     if(self.type==CDMsgRoomTypeSingle){
         [sessionManager unwatchPeerId:self.chatUser.objectId];
     }else{
-         sessionManager.currentChatGroup=nil;
+        [CDCacheService setCurrentChatGroup:nil];
     }
 }
 
@@ -190,7 +193,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 }
 
 -(XHMessage*)getXHMessageByMsg:(CDMsg*)msg{
-    AVUser* fromUser=[sessionManager lookupUser:msg.fromPeerId];
+    AVUser* fromUser=[CDCacheService lookupUser:msg.fromPeerId];
     AVUser* curUser=[AVUser currentUser];
     XHMessage* xhMessage;
     if(msg.type==CDMsgTypeText){
@@ -227,7 +230,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     if(avatar){
         return avatar;
     }else{
-        AVUser* user=[sessionManager lookupUser:msg.fromPeerId];
+        AVUser* user=[CDCacheService lookupUser:msg.fromPeerId];
         SDWebImageManager* man=[SDWebImageManager sharedManager];
         AVFile* avatarFile=[user objectForKey:@"avatar"];
         [man downloadImageWithURL:[NSURL URLWithString:[avatarFile url]] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
@@ -275,7 +278,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         int64_t timestamp;
         int limit;
         if(isLoadMore==NO){
-            timestamp=[sessionManager getMaxTimetstamp];
+            timestamp=[CDDatabaseService getMaxTimetstamp];
             int count=[self.messages count];
             if(count>ONE_PAGE_SIZE){
                 limit=count;
@@ -289,8 +292,8 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
             limit=ONE_PAGE_SIZE;
         }
         NSString* convid=[CDSessionManager getConvidOfRoomType:self.type otherId:self.chatUser.objectId groupId:self.group.groupId];
-        NSMutableArray *msgs  = [[sessionManager getMsgsWithConvid:convid maxTimestamp:timestamp limit:limit] mutableCopy];
-        [sessionManager markHaveReadOfMsgs:msgs];
+        NSMutableArray *msgs  = [[CDDatabaseService getMsgsWithConvid:convid maxTimestamp:timestamp limit:limit] mutableCopy];
+        [CDDatabaseService markHaveReadOfMsgs:msgs];
         for(CDMsg* msg in msgs){
             [self getAvatarByMsg:msg];
         }
@@ -299,7 +302,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
             for(CDMsg* msg in msgs){
                 [userIds addObject:msg.fromPeerId];
             }
-            [sessionManager cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
+            [CDCacheService cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
                 [CDUtils filterError:error callback:^{
                     NSMutableArray* messages=[[NSMutableArray alloc] init];
                     for(CDMsg* msg in msgs){
@@ -573,7 +576,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     if([self shouldDisplayTimestampForRowAtIndexPath:indexPath]){
         NSDate* ts=msg.timestamp;
         NSDateFormatter* dateFormatter=[[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"M-d h:m"];
+        [dateFormatter setDateFormat:@"M-d H:m"];
         NSString* str=[dateFormatter stringFromDate:ts];
         cell.timestampLabel.text=str;
     }

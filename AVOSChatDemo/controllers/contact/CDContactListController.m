@@ -17,6 +17,7 @@
 #import "CDImageLabelTableCell.h"
 #import "CDGroupTableViewController.h"
 #import "CDUtils.h"
+#import "CDCacheService.h"
 
 enum : NSUInteger {
     kTagNameLabel = 10000,
@@ -101,7 +102,7 @@ enum : NSUInteger {
         CDBlock callback=^{
             self.users = [objects mutableCopy];
             CDSessionManager* sessionMan=[CDSessionManager sharedInstance];
-            [sessionMan registerUsers:self.users];
+            [CDCacheService registerUsers:self.users];
             [sessionMan setFriends:self.users];
             [self.tableView reloadData];
         };

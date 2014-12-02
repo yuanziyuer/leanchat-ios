@@ -19,6 +19,8 @@
 #import "CDUpgradeService.h"
 #import "CDUtils.h"
 #import "CDEmotionUtils.h"
+#import "CDCacheService.h"
+#import "CDDatabaseService.h"
 
 @implementation CDAppDelegate
 
@@ -161,10 +163,10 @@
     [CDUpgradeService upgradeWithBlock:^(BOOL upgrade, NSString *oldVersion, NSString *newVersion) {
                 NSLog(@"upgrade =%@ oldVersion=%@ newVersion=%@",upgrade? @"YES":@"NO",oldVersion,newVersion);
         if(upgrade && [newVersion isEqualToString:@"1.0.8"]){
-            [man upgradeToAddField];
+            [CDDatabaseService upgradeToAddField];
         }
     }];
-    [man registerUser:[AVUser currentUser]];
+    [CDCacheService registerUser:[AVUser currentUser]];
     if([AVUser currentUser]){
         [man openSession];
     }

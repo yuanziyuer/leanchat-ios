@@ -12,6 +12,7 @@
 #import "CDChatRoomController.h"
 #import "CDNewGroupViewController.h"
 #import "CDImageLabelTableCell.h"
+#import "CDCacheService.h"
 #import "CDUtils.h"
 
 @interface CDGroupTableViewController (){
@@ -58,6 +59,7 @@ static NSString* cellIndentifier=@"cell";
     [CDGroupService findGroupsWithCallback:^(NSArray *objects, NSError *error) {
         [CDUtils stopRefreshControl:refreshControl];
         chatGroups=objects;
+        [CDCacheService registerChatGroups:objects];
         [self.tableView reloadData];
     }];
 }
@@ -140,8 +142,7 @@ static NSString* cellIndentifier=@"cell";
     CDChatGroup* chatGroup=[chatGroups objectAtIndex:indexPath.row];
     CDChatRoomController * controlloer=[[CDChatRoomController alloc] init];
     [controlloer setType:CDMsgRoomTypeGroup];
-    CDSessionManager* manager=[CDSessionManager sharedInstance];
-    [manager setCurrentChatGroup:chatGroup];
+    [CDCacheService setCurrentChatGroup:chatGroup];
     UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:controlloer];
     [self presentViewController:nav animated:YES completion:nil];
 }

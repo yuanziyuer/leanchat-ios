@@ -11,6 +11,7 @@
 #import <CommonCrypto/CommonDigest.h>
 
 @implementation CDUtils
+
 +(void)alert:(NSString*)msg{
     UIAlertView *alertView=[[UIAlertView alloc]
                              initWithTitle:nil message:msg delegate:nil
@@ -20,6 +21,26 @@
 
 +(void)alertError:(NSError*)error{
     [CDUtils alert:[error localizedDescription]];
+}
+
++(void)filterError:(NSError*)error callback:(CDBlock)callback{
+    if(error){
+        [CDUtils alertError:error];
+    }else{
+        callback();
+    }
+}
+
++(void)logError:(NSError*)error callback:(CDBlock)callback{
+    if(error){
+        NSLog(@"%@",[error localizedDescription]);
+    }else{
+        callback();
+    }
+}
+
++(NSMutableArray*)setToArray:(NSMutableSet*)set{
+    return [[NSMutableArray alloc] initWithArray:[set allObjects]];
 }
 
 +(NSString*)md5OfString:(NSString*)s{
@@ -34,6 +55,46 @@
     
     return output;
 }
+
+
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
+    //UIGraphicsBeginImageContext(newSize);
+    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
+    // Pass 1.0 to force exact pixel size.
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+
++(NSArray*)reverseArray:(NSArray*)originArray{
+    NSMutableArray* array=[NSMutableArray arrayWithCapacity:[originArray count]];
+    NSEnumerator* enumerator=[originArray reverseObjectEnumerator];
+    for(id element in enumerator){
+        [array addObject:element];
+    }
+    return array;
+}
+
++(void)runInMainQueue:(void (^)())queue{
+    dispatch_async(dispatch_get_main_queue(), queue);
+}
+
++(void)runInGlobalQueue:(void (^)())queue{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), queue);
+}
+
++(void)postNotification:(NSString*)name{
+    [[NSNotificationCenter defaultCenter] postNotificationName:name object:nil];
+}
+
++(void)notifyGroupUpdate{
+    [CDUtils postNotification:NOTIFICATION_GROUP_UPDATED];
+}
+
+#pragma mark - view util
 
 +(UIActivityIndicatorView*)showIndicatorAtView:(UIView*)hookView{
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -60,37 +121,6 @@
     [CDUtils alertError:error];
 }
 
-+ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
-    //UIGraphicsBeginImageContext(newSize);
-    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
-    // Pass 1.0 to force exact pixel size.
-    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
-    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return newImage;
-}
-
-+(void)filterError:(NSError*)error callback:(CDBlock)callback{
-    if(error){
-        [CDUtils alertError:error];
-    }else{
-        callback();
-    }
-}
-
-+(void)logError:(NSError*)error callback:(CDBlock)callback{
-    if(error){
-        NSLog(@"%@",[error localizedDescription]);
-    }else{
-        callback();
-    }
-}
-
-+(NSMutableArray*)setToArray:(NSMutableSet*)set{
-    return [[NSMutableArray alloc] initWithArray:[set allObjects]];
-}
-
 +(void)setCellMarginsZero:(UITableViewCell*)cell{
     if([cell respondsToSelector:@selector(layoutMargins)]){
         cell.layoutMargins=UIEdgeInsetsZero;
@@ -109,31 +139,17 @@
     }
 }
 
-+(void)setPolicyOfAVQuery:(AVQuery*)query isNetwokOnly:(BOOL)onlyNetwork{
-    [query setCachePolicy:onlyNetwork ? kAVCachePolicyNetworkOnly : kAVCachePolicyNetworkElseCache];
-}
-
 +(void)stopRefreshControl:(UIRefreshControl*)refreshControl{
     if(refreshControl!=nil && [[refreshControl class] isSubclassOfClass:[UIRefreshControl class]]){
         [refreshControl endRefreshing];
     }
 }
 
-+(NSArray*)reverseArray:(NSArray*)originArray{
-    NSMutableArray* array=[NSMutableArray arrayWithCapacity:[originArray count]];
-    NSEnumerator* enumerator=[originArray reverseObjectEnumerator];
-    for(id element in enumerator){
-        [array addObject:element];
-    }
-    return array;
+#pragma mark - AVUtil
+
++(void)setPolicyOfAVQuery:(AVQuery*)query isNetwokOnly:(BOOL)onlyNetwork{
+    [query setCachePolicy:onlyNetwork ? kAVCachePolicyNetworkOnly : kAVCachePolicyNetworkElseCache];
 }
 
-+(void)runInMainQueue:(void (^)())queue{
-    dispatch_async(dispatch_get_main_queue(), queue);
-}
-
-+(void)runInGlobalQueue:(void (^)())queue{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), queue);
-}
 
 @end

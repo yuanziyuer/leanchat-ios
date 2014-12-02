@@ -10,11 +10,12 @@
 #import "CDSessionManager.h"
 #import "CDChatRoomController.h"
 #import "CDPopMenu.h"
-#import "CDChatConfirmController.h"
 #import "CDChatRoom.h"
 #import "CDImageTwoLabelTableCell.h"
 #import "CDUtils.h"
+#import "CDCacheService.h"
 #import "CDCloudService.h"
+#import "CDDatabaseService.h"
 
 enum : NSUInteger {
     kTagNameLabel = 10000,
@@ -70,7 +71,7 @@ static NSString *cellIdentifier = @"ContactCell";
 
 -(void)refresh:(UIRefreshControl*)refreshControl{
     [CDUtils showNetworkIndicator];
-    [sessionManager findConversationsWithCallback:^(NSArray *objects, NSError *error) {
+    [CDDatabaseService findConversationsWithCallback:^(NSArray *objects, NSError *error) {
         [CDUtils stopRefreshControl:refreshControl];
         [CDUtils hideNetworkIndicator];
         [CDUtils filterError:error callback:^{
@@ -127,8 +128,7 @@ static NSString *cellIdentifier = @"ContactCell";
     CDChatRoomController *controller = [[CDChatRoomController alloc] init];
     controller.type = type;
     if (type == CDMsgRoomTypeGroup) {
-        CDSessionManager* manager=[CDSessionManager sharedInstance];
-        [manager setCurrentChatGroup:chatRoom.chatGroup];
+        [CDCacheService setCurrentChatGroup:chatRoom.chatGroup];
     } else {
         controller.chatUser=chatRoom.chatUser;
     }
@@ -188,12 +188,6 @@ static NSString *cellIdentifier = @"ContactCell";
         NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
         dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (dict) {
-            CDMsgRoomType type = [[dict objectForKey:@"type"] integerValue];
-            NSString *otherId = [dict objectForKey:@"id"];
-            CDChatConfirmController *controller = [[CDChatConfirmController alloc] init];
-            controller.type = type;
-            controller.otherId = otherId;
-            [self.navigationController pushViewController:controller animated:YES];
         }
     }];
     // [self dismissViewControllerAnimated:NO completion:nil];

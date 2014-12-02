@@ -14,6 +14,8 @@
 #import "CDChatRoomController.h"
 #import "CDGroupAddMemberController.h"
 #import "CDCommonDefine.h"
+#import "CDCacheService.h"
+#import "CDGroupService.h"
 
 @interface CDGroupDetailController (){
     NSArray* groupMembers;
@@ -50,12 +52,12 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 -(CDChatGroup*)getChatGroup{
-    return sessionManager.currentChatGroup;
+    return [CDCacheService getCurrentChatGroup];
 }
 
 -(void)initWithCurrentChatGroup{
     CDChatGroup* chatGroup=[self getChatGroup];
-    [sessionManager cacheUsersWithIds:chatGroup.m callback:^(NSArray *objects, NSError *error) {
+    [CDCacheService cacheUsersWithIds:chatGroup.m callback:^(NSArray *objects, NSError *error) {
         [CDUtils filterError:error callback:^{
             groupMembers=chatGroup.m;
             [self.collectionView reloadData];
@@ -73,7 +75,7 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 -(void)quitGroup{
-    [sessionManager quitFromGroup:[self getChatGroup]];
+    [CDGroupService quitFromGroup:[self getChatGroup]];
     [self.navigationController popToRootViewControllerAnimated:YES];
     UIViewController* first=self.navigationController.viewControllers[0];
     [first.presentingViewController dismissViewControllerAnimated:YES completion:nil];;
@@ -105,7 +107,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     if(buttonIndex==0){
         int pos=alertView.tag;
         NSString* userId=[[self getChatGroup].m objectAtIndex:pos];
-        [sessionManager kickMemberFromGroup:[self getChatGroup] userId:userId];
+        [CDGroupService kickMemberFromGroup:[self getChatGroup] userId:userId];
     }
 }
 
@@ -148,7 +150,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     int imageTag=2;
     
     NSString* userId=[groupMembers objectAtIndex:indexPath.row];
-    AVUser* user=[sessionManager lookupUser:userId];
+    AVUser* user=[CDCacheService lookupUser:userId];
     
     UILabel* label=(UILabel*)[cell viewWithTag:labelTag];
     UIImageView* imageView=(UIImageView*)[cell viewWithTag:imageTag];
@@ -179,7 +181,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
         return YES;
     }
     
-    AVUser* user=[sessionManager lookupUser:userId];
+    AVUser* user=[CDCacheService lookupUser:userId];
     CDChatRoomController* chatController=[[CDChatRoomController alloc] init];
     chatController.type=CDMsgRoomTypeSingle;
     chatController.chatUser=user;

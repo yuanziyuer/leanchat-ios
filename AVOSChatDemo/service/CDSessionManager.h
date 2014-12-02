@@ -15,7 +15,6 @@
 + (instancetype)sharedInstance;
 
 @property NSMutableArray* friends;
-@property CDChatGroup* currentChatGroup;
 
 #pragma mark - conversation
 -(void)findConversationsWithCallback:(AVArrayResultBlock)callback;
@@ -32,43 +31,17 @@
 - (void)sendAttachmentWithObjectId:(NSString*)objectId type:(CDMsgType)type toPeerId:(NSString *)toPeerId group:(AVGroup*)group;
 -(void)sendAudioWithId:(NSString*)objectId toPeerId:(NSString*)toPeerId group:(AVGroup*)group callback:(AVBooleanResultBlock)callback;
 
-- (NSArray*)getMsgsForConvid:(NSString*)convid;
--(NSArray*)getMsgsWithConvid:(NSString*)convid maxTimestamp:(int64_t)timestamp limit:(int)limit;
-
 +(NSString*)getConvidOfRoomType:(CDMsgRoomType)roomType otherId:(NSString*)otherId groupId:(NSString*)groupId;
 - (void)clearData;
 +(NSString*)convidOfSelfId:(NSString*)myId andOtherId:(NSString*)otherId;
 +(NSString*)getPathByObjectId:(NSString*)objectId;
 +(NSString*)uuid;
 
--(int64_t)getMaxTimetstamp;
-
-#pragma mark - database
--(void)upgradeToAddField;
--(void)markHaveReadOfMsgs:(NSArray*)msgs;
-
 #pragma mark - histroy
 - (void)getHistoryMessagesForPeerId:(NSString *)peerId callback:(AVArrayResultBlock)callback;
 - (void)getHistoryMessagesForGroup:(NSString *)groupId callback:(AVArrayResultBlock)callback;
 
-#pragma mark - group
-- (AVGroup *)joinGroupById:(NSString *)groupId;
-- (void)saveNewGroupWithName:(NSString*)name withCallback:(AVGroupResultBlock)callback ;
 
--(void)inviteMembersToGroup:(CDChatGroup*) chatGroup userIds:(NSArray*)userIds callback:(AVArrayResultBlock)callback;
-
--(void)kickMemberFromGroup:(CDChatGroup*)chatGroup userId:(NSString*)userId;
-
--(void)quitFromGroup:(CDChatGroup*)chatGroup;
-
--(void)refreshCurrentChatGroup:(AVBooleanResultBlock)callback;
-
-
-#pragma mark - user cache
-- (void)registerUsers:(NSArray*)users;
-- (void)registerUser:(AVUser*)user;
-- (AVUser *)lookupUser:(NSString*)userId;
--(void)cacheUsersWithIds:(NSArray*)userIds callback:(AVArrayResultBlock)callback;
-
+-(AVSession*)getSession;
 
 @end
