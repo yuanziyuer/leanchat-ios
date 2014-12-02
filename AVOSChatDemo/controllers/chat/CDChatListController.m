@@ -37,7 +37,7 @@ static NSString *cellIdentifier = @"ContactCell";
 - (instancetype)init {
     if ((self = [super init])) {
         self.title = @"消息";
-        self.tabBarItem.image = [UIImage imageNamed:@"wechat"];
+        self.tabBarItem.image = [UIImage imageNamed:@"tabbar_chat_active"];
     }
     return self;
 }

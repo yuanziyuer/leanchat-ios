@@ -36,7 +36,7 @@ enum : NSUInteger {
 - (instancetype)init {
     if ((self = [super init])) {
         self.title = @"联系人";
-        self.tabBarItem.image = [UIImage imageNamed:@"contact"];
+        self.tabBarItem.image = [UIImage imageNamed:@"tabbar_contacts_active"];
     }
     return self;
 }

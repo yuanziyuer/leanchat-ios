@@ -26,7 +26,7 @@
 - (instancetype)init {
     if ((self = [super init])) {
         self.title = @"我";
-        self.tabBarItem.image = [UIImage imageNamed:@"profile"];
+        self.tabBarItem.image = [UIImage imageNamed:@"tabbar_me_active"];
     }
     return self;
 }
