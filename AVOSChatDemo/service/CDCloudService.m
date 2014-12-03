@@ -53,4 +53,8 @@
     return [AVCloud callFunction:@"group_sign" withParameters:dict];
 }
 
++(void)getQiniuUptokenWithCallback:(AVIdResultBlock)callback{
+    [AVCloud callFunctionInBackground:@"qiniuUptoken" withParameters:nil block:callback];
+}
+
 @end

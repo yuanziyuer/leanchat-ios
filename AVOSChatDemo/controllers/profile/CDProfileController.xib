@@ -19,13 +19,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TXM-82-HaM">
-                    <rect key="frame" x="84" y="157" width="136" height="43"/>
+                    <rect key="frame" x="77" y="97" width="136" height="43"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default_user_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="Dw9-N6-97H">
-                    <rect key="frame" x="99" y="95" width="106" height="54"/>
-                </imageView>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xgK-ZO-Nkd" customClass="ResizableButton">
                     <rect key="frame" x="25" y="226" width="275" height="36"/>
                     <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
@@ -35,6 +32,9 @@
                     </state>
                     <state key="highlighted" backgroundImage="blue_expand_highlight.png"/>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default_user_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="Dw9-N6-97H">
+                    <rect key="frame" x="102" y="35" width="106" height="54"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
         </view>

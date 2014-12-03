@@ -227,30 +227,29 @@ static BOOL initialized = NO;
 }
 
 -(void)sendAudioWithId:(NSString*)objectId toPeerId:(NSString*)toPeerId group:(AVGroup*)group callback:(AVBooleanResultBlock)callback{
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSString* path=[CDSessionManager getPathByObjectId:objectId];
-    [manager GET:@"https://leanchat.avosapps.com/qiniuToken" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSDictionary* dict=(NSDictionary*)responseObject;
-        NSString* token=[dict objectForKey:@"token"];
-        NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
-        [upManager putData:data key:objectId token:token
-                  complete: ^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
-                      if(info.error){
-                          callback(NO,info.error);
-                      }else{
-                          [self runTwiceTimeWithTimes:0 persistentId:[resp objectForKey:@"persistentId"] callback:^(id object, NSError *error) {
-                              if(error){
-                                  callback(NO,error);
-                              }else{
-                                  [self sendMessageWithObjectId:objectId content:(NSString*)object type:CDMsgTypeAudio toPeerId:toPeerId group:group];
-                                  callback(YES,nil);
-                              }
-                          }];
-                      }
-                  } option:nil];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        callback(NO,error);
+    [CDCloudService getQiniuUptokenWithCallback:^(id object, NSError *error) {
+        if(error){
+            callback(NO,error);
+        }else{
+            NSDictionary* dict=(NSDictionary*)object;
+            NSString* token=[dict objectForKey:@"token"];
+            NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
+            [upManager putData:data key:objectId token:token complete: ^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
+                if(info.error){
+                    callback(NO,info.error);
+                }else{
+                    [self runTwiceTimeWithTimes:0 persistentId:[resp objectForKey:@"persistentId"] callback:^(id object, NSError *error) {
+                        if(error){
+                            callback(NO,error);
+                        }else{
+                            [self sendMessageWithObjectId:objectId content:(NSString*)object type:CDMsgTypeAudio toPeerId:toPeerId group:group];
+                            callback(YES,nil);
+                        }
+                    }];
+                }
+            } option:nil];
+        }
     }];
 }
 
