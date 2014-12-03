@@ -31,3 +31,8 @@ AppID和AppKey可以在[www.avoscloud.com](http://www.avoscloud.com)创建应用
 ## 其他
 
 如果您在使用AVOSCloud SDK中, 有自己独特高效的用法, 非常欢迎您fork 并提交pull request, 帮助其他开发者更好的使用SDK. 我们将在本项目的贡献者中, 加入您的名字和联系方式(如果您同意的话)
+
+## 阅读源码
+iOS 源码，推荐阅读 [CDSessionManager.m](https://github.com/leancloud/leanchat-ios/blob/master/AVOSChatDemo/service/CDSessionManager.m)与 [CDDatabaseService.m](https://github.com/leancloud/leanchat-ios/blob/master/AVOSChatDemo/service/CDDatabaseService.m)
+
+更多请见 [wiki](https://github.com/leancloud/leanchat-android/wiki) 
