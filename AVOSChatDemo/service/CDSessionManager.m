@@ -19,7 +19,7 @@
 #import "CDDatabaseService.h"
 
 @interface CDSessionManager () {
-    AVSession *session;
+    AVSession *_session;
     QNUploadManager *upManager;
 }
 
@@ -43,25 +43,16 @@ static BOOL initialized = NO;
     return instance;
 }
 
-- (NSString *)databasePath {
-    static NSString *databasePath = nil;
-    if (!databasePath) {
-        NSString *cacheDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        databasePath = [cacheDirectory stringByAppendingPathComponent:@"chat.db"];
-    }
-    return databasePath;
-}
-
 - (id)copyWithZone:(NSZone *)zone {
     return self;
 }
 
 - (instancetype)init {
     if ((self = [super init])) {
-        
-        session = [[AVSession alloc] init];
-        session.sessionDelegate = self;
-        session.signatureDelegate = self;
+        upManager=[[QNUploadManager alloc] init];
+        _session = [[AVSession alloc] init];
+        _session.sessionDelegate = self;
+        _session.signatureDelegate = self;
         [self commonInit];
     }
     return self;
@@ -70,22 +61,21 @@ static BOOL initialized = NO;
 //if type is image ,message is attment.objectId
 
 - (void)commonInit {
-    upManager=[[QNUploadManager alloc] init];
     initialized = YES;
 }
 
 #pragma mark - session
 
 -(void)openSession{
-    [session openWithPeerId:[AVUser currentUser].objectId];
+    [_session openWithPeerId:[AVUser currentUser].objectId];
 }
 
 -(void)closeSession{
-    [session close];
+    [_session close];
 }
 
 - (void)clearData {
-    [session close];
+    [self closeSession];
     initialized = NO;
 }
 
@@ -93,7 +83,7 @@ static BOOL initialized = NO;
 
 - (void)watchPeerId:(NSString *)peerId {
     NSLog(@"unwatch");
-    [session watchPeerIds:@[peerId] callback:^(BOOL succeeded, NSError *error) {
+    [_session watchPeerIds:@[peerId] callback:^(BOOL succeeded, NSError *error) {
         [CDUtils logError:error callback:^{
             NSLog(@"watch succeed peerId=%@",peerId);
         }];
@@ -102,7 +92,7 @@ static BOOL initialized = NO;
 
 -(void)unwatchPeerId:(NSString*)peerId{
     NSLog(@"%s",__PRETTY_FUNCTION__);
-    [session unwatchPeerIds:@[peerId] callback:^(BOOL succeeded, NSError *error) {
+    [_session unwatchPeerIds:@[peerId] callback:^(BOOL succeeded, NSError *error) {
         NSLog(@"unwatch callback");
         [CDUtils logError:error callback:^{
             NSLog(@"unwatch succeed");
@@ -179,13 +169,13 @@ static BOOL initialized = NO;
 }
 
 -(AVSession*)getSession{
-    return session;
+    return _session;
 }
 
 -(CDMsg*)sendMsg:(CDMsg*)msg group:(AVGroup*)group{
     if(!group){
-        AVMessage *avMsg=[AVMessage messageForPeerWithSession:session toPeerId:msg.toPeerId payload:[msg toMessagePayload]];
-        [session sendMessage:avMsg];
+        AVMessage *avMsg=[AVMessage messageForPeerWithSession:_session toPeerId:msg.toPeerId payload:[msg toMessagePayload]];
+        [_session sendMessage:avMsg];
     }else{
         AVMessage *avMsg=[AVMessage messageForGroup:group payload:[msg toMessagePayload]];
         [group sendMessage:avMsg];
@@ -311,7 +301,7 @@ static BOOL initialized = NO;
 #pragma mark - history message
 
 - (void)getHistoryMessagesForPeerId:(NSString *)peerId callback:(AVArrayResultBlock)callback {
-    AVHistoryMessageQuery *query = [AVHistoryMessageQuery queryWithFirstPeerId:session.peerId secondPeerId:peerId];
+    AVHistoryMessageQuery *query = [AVHistoryMessageQuery queryWithFirstPeerId:_session.peerId secondPeerId:peerId];
     [query findInBackgroundWithCallback:callback];
 }
 
