@@ -21,7 +21,8 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
 +(void)initialize{
     [super initialize];
     database = [FMDatabase databaseWithPath:[self databasePath]];
-    [database open];
+    [database open];    
+    [self createTable];
 }
 
 +(void)createTable{
