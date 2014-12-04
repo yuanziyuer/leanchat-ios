@@ -29,6 +29,8 @@ typedef void (^CDBlock)();
 
 +(UIImage *)roundImage:(UIImage *) image toSize:(CGSize)size radius: (float) radius;
 
++(void)pickImageFromPhotoLibraryAtController:(UIViewController*)controller;
+
 +(void)filterError:(NSError*)error callback:(CDBlock)callback;
 +(void)logError:(NSError*)error callback:(CDBlock)callbak;
 

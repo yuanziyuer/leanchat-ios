@@ -42,9 +42,6 @@
         username = [NSString stringWithFormat:@"%@(%@)", username, [user mobilePhoneNumber]];
     }
     self.nameLabel.text = username;
-    UIImageView* imageView=self.avatarView;
-//    imageView.layer.cornerRadius=10;
-//    imageView.layer.masksToBounds = YES;
     
     [CDUserService displayAvatarOfUser:user avatarView:self.avatarView];
     //_tableView.autoresizingMask=UIViewAutoresizingFlexibleHeight;
@@ -91,29 +88,13 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     int section=indexPath.section;
     if(section==0){
-        [self pickImageFromPhotoLibrary];
+        [CDUtils pickImageFromPhotoLibraryAtController:self];
     }else if(section==1){
         [self logout];
     }
 }
 
--(void)pickImageFromPhotoLibrary{
-    UIImagePickerControllerSourceType srcType=UIImagePickerControllerSourceTypePhotoLibrary;
-    NSArray* mediaTypes=[UIImagePickerController availableMediaTypesForSourceType:srcType];
-    if([UIImagePickerController isSourceTypeAvailable:srcType] && [mediaTypes count]>0){
-        UIImagePickerController* ctrler=[[UIImagePickerController alloc] init];
-        ctrler.mediaTypes=mediaTypes;
-        ctrler.delegate=self;
-        ctrler.allowsEditing=YES;
-        ctrler.sourceType=srcType;
-        [self presentViewController:ctrler animated:YES completion:nil];
-    }else{
-        [CDUtils alert:@"no image picker available"];
-    }
-}
-
 #pragma mark - image picker delegate
-
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     [picker dismissViewControllerAnimated:YES completion:^{

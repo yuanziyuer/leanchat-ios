@@ -93,6 +93,21 @@
     return rounded;
 }
 
++(void)pickImageFromPhotoLibraryAtController:(UIViewController*)controller{
+    UIImagePickerControllerSourceType srcType=UIImagePickerControllerSourceTypePhotoLibrary;
+    NSArray* mediaTypes=[UIImagePickerController availableMediaTypesForSourceType:srcType];
+    if([UIImagePickerController isSourceTypeAvailable:srcType] && [mediaTypes count]>0){
+        UIImagePickerController* ctrler=[[UIImagePickerController alloc] init];
+        ctrler.mediaTypes=mediaTypes;
+        ctrler.delegate=(id)controller;
+        ctrler.allowsEditing=YES;
+        ctrler.sourceType=srcType;
+        [controller presentViewController:ctrler animated:YES completion:nil];
+    }else{
+        [CDUtils alert:@"no image picker available"];
+    }
+}
+
 +(NSArray*)reverseArray:(NSArray*)originArray{
     NSMutableArray* array=[NSMutableArray arrayWithCapacity:[originArray count]];
     NSEnumerator* enumerator=[originArray reverseObjectEnumerator];
