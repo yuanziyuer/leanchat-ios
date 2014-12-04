@@ -73,7 +73,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         [sessionManager watchPeerId:self.chatUser.objectId ];
     }else{
         UIImage* peopleImage=[UIImage imageNamed:@"chat_menu_people"];
-        UIImage* _peopleImage=[CDUtils imageWithImage:peopleImage scaledToSize:CGSizeMake(25, 25)];
+        UIImage* _peopleImage=[CDUtils resizeImage:peopleImage toSize:CGSizeMake(25, 25)];
         UIBarButtonItem* item=[[UIBarButtonItem alloc] initWithImage:_peopleImage style:UIBarButtonItemStyleDone target:self action:@selector(goChatGroupDetail:)];
         self.navigationItem.rightBarButtonItem=item;
     }

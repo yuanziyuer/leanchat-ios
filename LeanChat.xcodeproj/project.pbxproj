@@ -51,6 +51,7 @@
 		7029AE721A2708BF004832F9 /* CDAddFriendController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7029AE6F1A2708BF004832F9 /* CDAddFriendController.xib */; };
 		7029AE731A2708BF004832F9 /* CDAddFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7029AE701A2708BF004832F9 /* CDAddFriendController.m */; };
 		704727A71A2CFE6300690286 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 704727A61A2CFE6300690286 /* libz.dylib */; };
+		704A890F1A30F5B200D2A3C2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */; };
 		705553DC1A2E35A8001EA4FE /* tabbar_chat_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 705553D41A2E35A8001EA4FE /* tabbar_chat_active@2x.png */; };
 		705553DE1A2E35A8001EA4FE /* tabbar_contacts_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 705553D61A2E35A8001EA4FE /* tabbar_contacts_active@2x.png */; };
 		705553E01A2E35A8001EA4FE /* tabbar_discover_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 705553D81A2E35A8001EA4FE /* tabbar_discover_active@2x.png */; };
@@ -465,6 +466,7 @@
 		7029AE701A2708BF004832F9 /* CDAddFriendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAddFriendController.m; sourceTree = "<group>"; };
 		7029AE711A2708BF004832F9 /* CDAddFriendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAddFriendController.h; sourceTree = "<group>"; };
 		704727A61A2CFE6300690286 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		705553D41A2E35A8001EA4FE /* tabbar_chat_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_chat_active@2x.png"; sourceTree = "<group>"; };
 		705553D61A2E35A8001EA4FE /* tabbar_contacts_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_contacts_active@2x.png"; sourceTree = "<group>"; };
 		705553D81A2E35A8001EA4FE /* tabbar_discover_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_discover_active@2x.png"; sourceTree = "<group>"; };
@@ -1043,6 +1045,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				704A890F1A30F5B200D2A3C2 /* QuartzCore.framework in Frameworks */,
 				704727A71A2CFE6300690286 /* libz.dylib in Frameworks */,
 				8C470C9D19926019006A4E87 /* libiconv.dylib in Frameworks */,
 				8C925CB71987C20800D2750B /* libsqlite3.dylib in Frameworks */,
@@ -2471,6 +2474,7 @@
 		8CF21DC9197FCCC1002B9220 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */,
 				704727A61A2CFE6300690286 /* libz.dylib */,
 				8C470C9C19926019006A4E87 /* libiconv.dylib */,
 				8C470C5B199257E3006A4E87 /* libZXingWidget.a */,

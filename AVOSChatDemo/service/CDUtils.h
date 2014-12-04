@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
 #import <AVOSCloud/AVOSCloud.h>
 #import "CDCommon.h"
 
@@ -21,9 +22,13 @@ typedef void (^CDBlock)();
 +(UIActivityIndicatorView*)showIndicatorAtView:(UIView*)hookView;
 
 +(void)showNetworkIndicator;
+
 +(void)hideNetworkIndicator;
 
-+ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
++ (UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)newSize;
+
++(UIImage *)roundImage:(UIImage *) image toSize:(CGSize)size radius: (float) radius;
+
 +(void)filterError:(NSError*)error callback:(CDBlock)callback;
 +(void)logError:(NSError*)error callback:(CDBlock)callbak;
 

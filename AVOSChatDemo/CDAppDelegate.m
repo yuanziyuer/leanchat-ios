@@ -71,6 +71,7 @@
         [application registerForRemoteNotifications];
     }
     setenv("LOG_CURL", "YES", 0);
+    
     return YES;
 }
 
@@ -95,7 +96,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    [UIApplication sharedApplication].applicationIconBadgeNumber=0;
+    application.applicationIconBadgeNumber = 0;
     [application cancelAllLocalNotifications];
 }
 
@@ -123,16 +124,14 @@
     //可选 通过统计功能追踪通过提醒打开应用的行为
     if (application.applicationState == UIApplicationStateActive) {
         // 转换成一个本地通知，显示到通知栏，你也可以直接显示出一个alertView，只是那样稍显aggressive：）
-        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        localNotification.userInfo = userInfo;
-        localNotification.soundName = UILocalNotificationDefaultSoundName;
-        localNotification.alertBody = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
-        localNotification.fireDate = [NSDate date];
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+//        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+//        localNotification.userInfo = userInfo;
+//        localNotification.soundName = UILocalNotificationDefaultSoundName;
+//        localNotification.alertBody = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
+//        localNotification.fireDate = [NSDate date];
+//        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
     } else {
         [AVAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
-        [application setApplicationIconBadgeNumber: 0];
-        [application cancelAllLocalNotifications];
     }
     
     NSLog(@"receiveRemoteNotification");

@@ -7,7 +7,8 @@
 //
 
 #import "CDBaseController.h"
+#import <QuartzCore/QuartzCore.h>
 
-@interface CDProfileController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface CDProfileController : UIViewController<UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
 @end

@@ -56,13 +56,28 @@
 +(void)displayAvatarOfUser:(AVUser*)user avatarView:(UIImageView*)avatarView{
     AVFile* avatar=[user objectForKey:@"avatar"];
     if(avatar){
-        [avatarView setImageWithURL:[NSURL URLWithString:avatar.url] placeholderImage:[UIImage imageNamed:@"default_user_avatar"]];
+        [avatarView sd_setImageWithURL:[NSURL URLWithString:avatar.url] placeholderImage:[UIImage imageNamed:@"default_user_avatar"]];
     }
 }
 
 -(NSString*)getAvatarUrlOfAVUser:(AVUser*)user{
     AVFile* file=[user valueForKey:@"avatar"];
     return file.url;
+}
+
++(void)saveAvatar:(UIImage*)image callback:(AVBooleanResultBlock)callback{
+    NSData* data=UIImagePNGRepresentation(image);
+    AVFile* file=[AVFile fileWithData:data];
+    [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if(error){
+            callback(succeeded,error);
+        }else{
+            AVUser* user=[AVUser currentUser];
+            [user setObject:file forKey:@"avatar"];
+            [user setFetchWhenSave:YES];
+            [user saveInBackgroundWithBlock:callback];
+        }
+    }];
 }
 
 @end
