@@ -8,6 +8,6 @@
 
 #import "CDBaseController.h"
 
-@interface CDProfileController : UIViewController
+@interface CDProfileController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 
 @end

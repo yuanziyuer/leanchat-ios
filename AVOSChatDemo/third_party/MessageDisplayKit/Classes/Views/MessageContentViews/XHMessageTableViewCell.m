@@ -451,6 +451,10 @@ static const CGFloat kXHBubbleMessageViewPadding = 8;
     self.userNameLabel.center = CGPointMake(CGRectGetMidX(avatorButtonFrame), CGRectGetMaxY(avatorButtonFrame) + CGRectGetMidY(self.userNameLabel.bounds));
     
     self.messageBubbleView.frame = bubbleMessageViewFrame;
+    
+//    self.messageBubbleView.backgroundColor=[UIColor blackColor];
+//    self.avatorButton.backgroundColor=[UIColor redColor];
+//    self.userNameLabel.backgroundColor=[UIColor greenColor];
 }
 
 - (void)dealloc {

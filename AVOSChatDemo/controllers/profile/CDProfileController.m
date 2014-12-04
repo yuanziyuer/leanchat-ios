@@ -17,7 +17,10 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
-@property (weak, nonatomic) IBOutlet ResizableButton *logoutBtn;
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UITableViewCell *avatarCell;
+@property (strong, nonatomic) IBOutlet UITableViewCell *logoutCell;
 
 @end
 
@@ -39,8 +42,8 @@
         username = [NSString stringWithFormat:@"%@(%@)", username, [user mobilePhoneNumber]];
     }
     self.nameLabel.text = username;
-    [self.logoutBtn addTarget:self action:@selector(logout:) forControlEvents:UIControlEventTouchUpInside];
     [CDUserService displayAvatarOfUser:user avatarView:self.avatarView];
+    //_tableView.autoresizingMask=UIViewAutoresizingFlexibleHeight;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -50,11 +53,39 @@
 
 #pragma mark - Actions
 
--(void)logout:(id)sender {
+-(void)logout {
     [[CDSessionManager sharedInstance] clearData];
     [AVUser logOut];
     CDAppDelegate *delegate = (CDAppDelegate *)[UIApplication sharedApplication].delegate;
     [delegate toLogin];
+}
+
+#pragma mark - table view
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 2;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 1;
+}
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    int section=indexPath.section;
+    switch (section) {
+        case 0:
+            return _avatarCell;
+        default:
+            _logoutCell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+            return _logoutCell;
+    }
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    int section=indexPath.section;
+    if(section==1){
+        [self logout];
+    }
 }
 
 @end
