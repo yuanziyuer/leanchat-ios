@@ -14,8 +14,6 @@
 @interface CDSessionManager : NSObject <AVSessionDelegate, AVSignatureDelegate, AVGroupDelegate>
 + (instancetype)sharedInstance;
 
-@property NSMutableArray* friends;
-
 #pragma mark - session
 - (void)watchPeerId:(NSString *)peerId;
 -(void)unwatchPeerId:(NSString*)peerId;

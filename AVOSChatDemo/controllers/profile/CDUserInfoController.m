@@ -10,6 +10,7 @@
 #import "CDAddRequestService.h"
 #import "CDChatRoomController.h"
 #import "CDCloudService.h"
+#import "CDCacheService.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface CDUserInfoController (){
@@ -46,8 +47,7 @@
     [super viewDidLoad];
     self.title=@"详情";
     _nameLabel.text=_user.username;
-    CDSessionManager* man=[CDSessionManager sharedInstance];
-    isFriend=[[man friends] containsObject:_user];
+    isFriend=[[CDCacheService getFriends] containsObject:_user];
     [_actionBtn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
     if(isFriend){
         [_actionBtn setTitle:@"开始聊天" forState:UIControlStateNormal];
@@ -55,11 +55,7 @@
         [_actionBtn setTitle:@"添加好友" forState:UIControlStateNormal];
     }
     
-    AVFile* avatar=[_user objectForKey:@"avatar"];
-    
-    if(avatar){
-        [self.avatarView setImageWithURL:[NSURL URLWithString:avatar.url] placeholderImage:[UIImage imageNamed:@"default_user_avatar"]];
-    }
+    [CDUserService displayAvatarOfUser:_user avatarView:self.avatarView];
 }
 
 - (void)didReceiveMemoryWarning

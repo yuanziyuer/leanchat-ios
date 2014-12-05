@@ -50,7 +50,7 @@ static NSString* reuseIdentifier=@"Cell";
 
 -(void)initPotentialIds{
     potentialIds=[[NSMutableArray alloc] init];
-    for(AVUser* user in [sessionManager friends]){
+    for(AVUser* user in [CDCacheService getFriends]){
         if([[CDCacheService getCurrentChatGroup].m containsObject:user.objectId]==NO){
             [potentialIds addObject:user.objectId];
         }

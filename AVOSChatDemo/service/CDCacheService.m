@@ -15,6 +15,7 @@
 static NSMutableDictionary *cachedChatGroups;
 static NSMutableDictionary *cachedUsers;
 static CDChatGroup* currentChatGroup;
+static NSArray* friends;
 
 +(void)initialize{
     [super initialize];
@@ -145,5 +146,14 @@ static CDChatGroup* currentChatGroup;
     }
 }
 
+#pragma mark - friends
+
++(void)setFriends:(NSArray*)_friends{
+    friends=_friends;
+}
+
++(NSArray*)getFriends{
+    return friends;
+}
 
 @end

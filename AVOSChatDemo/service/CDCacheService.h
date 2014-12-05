@@ -38,4 +38,8 @@
 
 +(void)refreshCurrentChatGroup:(AVBooleanResultBlock)callback;
 
++(void)setFriends:(NSArray*)_friends;
+
++(NSArray*)getFriends;
+
 @end
