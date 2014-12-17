@@ -94,7 +94,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     }
    
     _emotionManagers=[CDEmotionUtils getEmotionManagers];
-    self.emotionManagerView.isShowEmotionStoreButton=NO;
+    self.emotionManagerView.isShowEmotionStoreButton=YES;
     [self.emotionManagerView reloadData];
     
     self.shareMenuItems = shareMenuItems;
@@ -469,9 +469,11 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
  *  @param date   发送时间
  */
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date {
-    [sessionManager sendMessageWithType:CDMsgTypeText content:[CDEmotionUtils convertWithText:text toEmoji:NO]
-                               toPeerId:self.chatUser.objectId group:self.group];
-    [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
+    if([text length]>0){
+        [sessionManager sendMessageWithType:CDMsgTypeText content:[CDEmotionUtils convertWithText:text toEmoji:NO]
+                                   toPeerId:self.chatUser.objectId group:self.group];
+        [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
+    }
 }
 
 /**

@@ -19,6 +19,8 @@
  */
 - (void)didSelecteEmotionManager:(XHEmotionManager *)emotionManager atSection:(NSInteger)section;
 
+-(void)didSelectEmotionStoreButton:(id)button;
+
 @end
 
 @interface XHEmotionSectionBar : UIView

@@ -51,4 +51,8 @@
 
 #define USERNAME_MIN_LENGTH 1
 #define PASSWORD_MIN_LENGTH 1
+
+//set NO when release
+#define CD_DEBUG YES
+
 #endif

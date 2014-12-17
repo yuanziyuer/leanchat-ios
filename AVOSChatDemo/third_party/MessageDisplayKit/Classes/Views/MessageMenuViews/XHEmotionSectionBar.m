@@ -34,7 +34,13 @@
     }
 }
 
-- (UIButton *)cratedButton {
+-(void)storeButtonClicked:(UIButton*)sender{
+    if([self.delegate respondsToSelector:@selector(didSelectEmotionStoreButton:)]){
+        [self.delegate didSelectEmotionStoreButton:sender];
+    }
+}
+
+- (UIButton *)createdButton {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0, 0, kXHStoreManagerItemWidth, CGRectGetHeight(self.bounds));
     [button addTarget:self action:@selector(sectionButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -49,7 +55,7 @@
     
     for (XHEmotionManager *emotionManager in self.emotionManagers) {
         NSInteger index = [self.emotionManagers indexOfObject:emotionManager];
-        UIButton *sectionButton = [self cratedButton];
+        UIButton *sectionButton = [self createdButton];
         sectionButton.tag = index;
         [sectionButton setTitle:emotionManager.emotionName forState:UIControlStateNormal];
         sectionButton.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -83,14 +89,15 @@
     }
     
     if (self.isShowEmotionStoreButton) {
-        UIButton *storeManagerItemButton = [self cratedButton];
+        UIButton *storeManagerItemButton = [self createdButton];
         
         CGRect storeManagerItemButtonFrame = storeManagerItemButton.frame;
         storeManagerItemButtonFrame.origin.x = CGRectGetWidth(self.bounds) - kXHStoreManagerItemWidth;
         storeManagerItemButton.frame = storeManagerItemButtonFrame;
         
-        [storeManagerItemButton setTitle:@"商店" forState:UIControlStateNormal];
+        [storeManagerItemButton setTitle:@"发送" forState:UIControlStateNormal];
         [storeManagerItemButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        [storeManagerItemButton addTarget:self action:@selector(storeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:storeManagerItemButton];
         _storeManagerItemButton = storeManagerItemButton;
     }

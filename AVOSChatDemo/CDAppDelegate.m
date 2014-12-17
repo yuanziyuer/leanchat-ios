@@ -70,7 +70,9 @@
         [application registerUserNotificationSettings:settings];
         [application registerForRemoteNotifications];
     }
-    setenv("LOG_CURL", "YES", 0);
+    if(CD_DEBUG){
+       setenv("LOG_CURL", "YES", 0);
+    }
     
     return YES;
 }

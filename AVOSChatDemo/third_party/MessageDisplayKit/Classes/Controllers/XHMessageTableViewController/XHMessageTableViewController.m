@@ -1103,6 +1103,10 @@ static CGPoint  delayOffset = {0.0};
     }
 }
 
+-(void)didSelectEmotionStoreButton:(UIButton *)button{
+    [self didSendMessageWithText:self.messageInputView.inputTextView.text];
+}
+
 #pragma mark - XHEmotionManagerView DataSource
 
 - (NSInteger)numberOfEmotionManagers {

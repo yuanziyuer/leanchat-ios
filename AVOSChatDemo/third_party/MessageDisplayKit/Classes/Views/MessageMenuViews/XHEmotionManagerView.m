@@ -68,7 +68,7 @@
 - (void)setup {
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.backgroundColor = [UIColor colorWithWhite:0.961 alpha:1.000];
-    self.isShowEmotionStoreButton = NO;
+    self.isShowEmotionStoreButton = YES;
     
     
     if (!_emotionCollectionView) {
@@ -139,6 +139,12 @@
     self.selectedIndex = section;
     self.emotionPageControl.currentPage = 0;
     [self reloadData];
+}
+
+-(void)didSelectEmotionStoreButton:(id)button{
+    if([self.delegate respondsToSelector:@selector(didSelectEmotionStoreButton:)]){
+        [self.delegate didSelectEmotionStoreButton:button];
+    }
 }
 
 #pragma mark - UIScrollView delegate

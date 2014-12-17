@@ -13,7 +13,7 @@
 #define kXHEmotionPerRowItemCount (kIsiPad ? 10 : 8)
 #define kXHEmotionPerColumnItemCount 3
 #define kXHEmotionPageControlHeight 38
-#define kXHEmotionSectionBarHeight 0
+#define kXHEmotionSectionBarHeight 36
 
 @protocol XHEmotionManagerViewDelegate <NSObject>
 
@@ -25,6 +25,8 @@
  *  @param indexPath 被点击的位置
  */
 - (void)didSelecteEmotion:(XHEmotion *)emotion atIndexPath:(NSIndexPath *)indexPath;
+
+-(void)didSelectEmotionStoreButton:(UIButton*)button;
 
 @end
 

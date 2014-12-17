@@ -41,3 +41,7 @@ AppID和AppKey可以在[www.avoscloud.com](http://www.avoscloud.com)创建应用
 iOS 源码，推荐阅读 [CDSessionManager.m](https://github.com/leancloud/leanchat-ios/blob/master/AVOSChatDemo/service/CDSessionManager.m)与 [CDDatabaseService.m](https://github.com/leancloud/leanchat-ios/blob/master/AVOSChatDemo/service/CDDatabaseService.m)
 
 更多请见 [wiki](https://github.com/leancloud/leanchat-android/wiki) 
+
+## 致谢
+
+感谢曾宪华大神的 [MessageDisplayKit](https://github.com/xhzengAIB/MessageDisplayKit) 开源库。
