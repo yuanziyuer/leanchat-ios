@@ -559,7 +559,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         XHMessage* msg=[self.messages objectAtIndex:indexPath.row];
         XHMessage* lastMsg=[self.messages objectAtIndex:indexPath.row-1];
         int interval=[msg.timestamp timeIntervalSinceDate:lastMsg.timestamp];
-        if(interval>60*5){
+        if(interval>60*3){
             return YES;
         }else{
             return NO;

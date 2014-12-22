@@ -9,6 +9,7 @@
 #import "XHEmotionSectionBar.h"
 
 #define kXHStoreManagerItemWidth 40
+#define kXHEmotionStoreButtonMargin 10
 
 @interface XHEmotionSectionBar ()
 
@@ -92,7 +93,7 @@
         UIButton *storeManagerItemButton = [self createdButton];
         
         CGRect storeManagerItemButtonFrame = storeManagerItemButton.frame;
-        storeManagerItemButtonFrame.origin.x = CGRectGetWidth(self.bounds) - kXHStoreManagerItemWidth;
+        storeManagerItemButtonFrame.origin.x = CGRectGetWidth(self.bounds) - kXHStoreManagerItemWidth-kXHEmotionStoreButtonMargin;
         storeManagerItemButton.frame = storeManagerItemButtonFrame;
         
         [storeManagerItemButton setTitle:@"发送" forState:UIControlStateNormal];

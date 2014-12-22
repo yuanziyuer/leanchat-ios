@@ -3133,7 +3133,7 @@
 					"$(PROJECT_DIR)/$(TARGET_NAME)/third_party/ZXing",
 				);
 				INFOPLIST_FILE = "AVOSChatDemo/LeanChat-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
@@ -3166,7 +3166,7 @@
 					"$(PROJECT_DIR)/$(TARGET_NAME)/third_party/ZXing",
 				);
 				INFOPLIST_FILE = "AVOSChatDemo/LeanChat-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",

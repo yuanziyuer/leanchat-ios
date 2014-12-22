@@ -193,14 +193,14 @@ static BOOL initialized = NO;
     [self insertMessageToDBAndNotify:msg];
 }
 
--(void)runTwiceTimeWithTimes:(int)times persistentId:(NSString*)persistentId callback:(AVIdResultBlock)callback{
+-(void)runTwiceTimeWithTimes:(int)times avfile:(AVFile*)file persistentId:(NSString*)persistentId callback:(AVIdResultBlock)callback{
     NSLog(@"times=%d",times);
     NSError* commonError=[NSError errorWithDomain:@"error" code:0 userInfo:@{NSLocalizedDescriptionKey:@"上传错误"}];
-    if(times>=2){
+    if(times>=4){
         callback(nil,commonError);
     }else{
         [CDUtils runInGlobalQueue:^{
-            sleep(1);
+            sleep(times+1);
             [CDUtils runInMainQueue:^{
                 NSString *url=@"http://api.qiniu.com/status/get/prefop";
                 AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -213,10 +213,10 @@ static BOOL initialized = NO;
                     NSNumber* code=[result objectForKey:@"code"];
                     int codeInt=[code intValue];
                     if(codeInt==0){
-                        NSString* finalUrl=[@"http://lzw-love.qiniudn.com/" stringByAppendingString:key];
+                        NSString* finalUrl=[NSString stringWithFormat:@"http://ac-%@.qiniudn.com/%@",file.bucket,key];
                         callback(finalUrl,nil);
                     }else{
-                        [self runTwiceTimeWithTimes:times+1 persistentId:persistentId callback:callback];
+                        [self runTwiceTimeWithTimes:times+1 avfile:file persistentId:persistentId callback:callback];
                     }
                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                     callback(nil,error);
@@ -226,20 +226,35 @@ static BOOL initialized = NO;
     }
 }
 
+
+
 -(void)sendAudioWithId:(NSString*)objectId toPeerId:(NSString*)toPeerId group:(AVGroup*)group callback:(AVBooleanResultBlock)callback{
     NSString* path=[CDSessionManager getPathByObjectId:objectId];
-    [CDCloudService getQiniuUptokenWithCallback:^(id object, NSError *error) {
+    AVFile* file=[AVFile fileWithName:[self getAVFileName] contentsAtPath:path];
+    [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if(error){
-            callback(NO,error);
+            callback(succeeded,error);
         }else{
-            NSDictionary* dict=(NSDictionary*)object;
-            NSString* token=[dict objectForKey:@"token"];
-            NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
-            [upManager putData:data key:objectId token:token complete: ^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
-                if(info.error){
-                    callback(NO,info.error);
-                }else{
-                    [self runTwiceTimeWithTimes:0 persistentId:[resp objectForKey:@"persistentId"] callback:^(id object, NSError *error) {
+            NSString* url=[@"https://leancloud.cn/1.1/qiniu/pfop/" stringByAppendingString:file.objectId];
+            NSMutableURLRequest* request=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+            [request setValue:AVOSAppID forHTTPHeaderField:@"X-AVOSCloud-Application-Id"];
+            [request setValue:AVOSAppKey forHTTPHeaderField:@"X-AVOSCloud-Application-Key"];
+            [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+            NSDictionary* params=[[NSDictionary alloc] initWithObjectsAndKeys:@"fops", @"avthumb/amr",nil];
+            
+            //NSData* data=[NSJSONSerialization dataWithJSONObject:params options:kNilOptions error:nil];
+            NSString* string=@"{\"fops\":\"avthumb/amr\"}";
+            NSData* data=[string dataUsingEncoding:NSUTF8StringEncoding];
+            [request setHTTPBody:data];
+            [request setValue:[NSString stringWithFormat:@"%d", [data length]] forHTTPHeaderField:@"Content-Length"];
+            [request setHTTPMethod:@"POST"];
+            NSOperationQueue *queue=[[NSOperationQueue alloc] init];
+            [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                NSHTTPURLResponse* res=(NSHTTPURLResponse*)response;
+                NSDictionary* dict=[NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+                NSLog(@"%d %@",[res statusCode],dict);
+                if(connectionError!=nil || [res statusCode]==200){
+                    [self runTwiceTimeWithTimes:0 avfile:file persistentId:[dict objectForKey:@"persistentId"] callback:^(id object, NSError *error) {
                         if(error){
                             callback(NO,error);
                         }else{
@@ -247,8 +262,10 @@ static BOOL initialized = NO;
                             callback(YES,nil);
                         }
                     }];
+                }else{
+                    callback(NO,[[NSError alloc] initWithDomain:[dict description] code:0 userInfo:nil]);
                 }
-            } option:nil];
+            }];
         }
     }];
 }
@@ -272,12 +289,19 @@ static BOOL initialized = NO;
     return [[self getFilesPath] stringByAppendingString:objectId];
 }
 
-- (void)sendAttachmentWithObjectId:(NSString*)objectId type:(CDMsgType)type toPeerId:(NSString *)toPeerId group:(AVGroup*)group{
-    NSString* path=[CDSessionManager getPathByObjectId:objectId];
+
+- (NSMutableString *)getAVFileName {
     AVUser* curUser=[AVUser currentUser];
     double time=[[NSDate date] timeIntervalSince1970];
     NSMutableString *name=[[curUser username] mutableCopy];
     [name appendFormat:@"%f",time];
+    return name;
+}
+
+- (void)sendAttachmentWithObjectId:(NSString*)objectId type:(CDMsgType)type toPeerId:(NSString *)toPeerId group:(AVGroup*)group{
+    NSString* path=[CDSessionManager getPathByObjectId:objectId];
+    NSMutableString *name;
+    name = [self getAVFileName];
     AVFile *f=[AVFile fileWithName:name contentsAtPath:path];
     [f saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if(error){
