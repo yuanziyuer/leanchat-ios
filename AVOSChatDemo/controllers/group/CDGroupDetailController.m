@@ -37,7 +37,6 @@ static NSString * const reuseIdentifier = @"Cell";
     
     // Register cell classes
     NSString* nibName=NSStringFromClass([CDImageLabelCollectionCell class]);
-    NSLog(@"nibName=%@",nibName);
     [self.collectionView registerNib:[UINib nibWithNibName:nibName bundle:nil]  forCellWithReuseIdentifier:reuseIdentifier];
     self.collectionView.backgroundColor = [UIColor whiteColor];
     
@@ -66,12 +65,17 @@ static NSString * const reuseIdentifier = @"Cell";
     self.title=[[self getChatGroup] getTitle];
     
     NSString* curUserId=[AVUser currentUser].objectId;
+    UIBarButtonItem* addMember=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addMember)];
+    UIBarButtonItem* quitGroup=[[UIBarButtonItem alloc] initWithTitle:@"退群" style:UIBarButtonItemStylePlain target:self action:@selector(quitGroup)];
     if([chatGroup.owner.objectId isEqualToString:curUserId]){
-        self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addMember)];
         own=YES;
-    }else{
-        self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"退群" style:UIBarButtonItemStylePlain target:self action:@selector(quitGroup)];
     }
+    NSMutableArray* array=[NSMutableArray array];
+    [array addObject:addMember];
+    if(own==NO){
+        [array addObject:quitGroup];
+    }
+    [self.navigationItem setRightBarButtonItems:array];
 }
 
 -(void)quitGroup{

@@ -206,7 +206,6 @@ static BOOL initialized = NO;
                 AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
                 [manager GET:url parameters:@{@"id":persistentId} success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     NSDictionary* dict=(NSDictionary*)responseObject;
-                    NSLog(@"%@",dict);
                     NSArray* arr=[dict objectForKey:@"items"];
                     NSDictionary* result=[arr firstObject];
                     NSString* key=[result objectForKey:@"key"];
@@ -240,11 +239,9 @@ static BOOL initialized = NO;
             [request setValue:AVOSAppID forHTTPHeaderField:@"X-AVOSCloud-Application-Id"];
             [request setValue:AVOSAppKey forHTTPHeaderField:@"X-AVOSCloud-Application-Key"];
             [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-            NSDictionary* params=[[NSDictionary alloc] initWithObjectsAndKeys:@"fops", @"avthumb/amr",nil];
+            NSDictionary* params=@{@"fops":@"avthumb/amr"};
             
-            //NSData* data=[NSJSONSerialization dataWithJSONObject:params options:kNilOptions error:nil];
-            NSString* string=@"{\"fops\":\"avthumb/amr\"}";
-            NSData* data=[string dataUsingEncoding:NSUTF8StringEncoding];
+            NSData* data=[NSJSONSerialization dataWithJSONObject:params options:kNilOptions error:nil];
             [request setHTTPBody:data];
             [request setValue:[NSString stringWithFormat:@"%d", [data length]] forHTTPHeaderField:@"Content-Length"];
             [request setHTTPMethod:@"POST"];
