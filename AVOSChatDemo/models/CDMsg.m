@@ -98,7 +98,7 @@
         case CDMsgStatusSendStart:
             return @"发送中";
         case CDMsgStatusSendFailed:
-            return @"发送失败";
+            return @"失败";
         case CDMsgStatusSendReceived:
             return @"";
         case CDMsgStatusSendSucceed:
@@ -108,7 +108,6 @@
                 case CDMsgRoomTypeGroup:
                    return @"";
             }
-
     }
     [NSException raise:@"invalid status" format:nil];
 }

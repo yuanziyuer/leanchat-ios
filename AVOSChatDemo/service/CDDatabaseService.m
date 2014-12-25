@@ -191,6 +191,10 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     [database executeUpdate:@"update messages set timestamp=? where objectId=?" withArgumentsInArray:@[timestampText,objectId]];
 }
 
++(void)updateMsgWithId:(NSString*)objectId content:(NSString*)content{
+    [database executeUpdate:@"update messages set content=? where objectId=?" withArgumentsInArray:@[objectId,content]];
+}
+
 +(void)updateMsgWithId:(NSString*)objectId status:(CDMsgStatus)status{
     [database executeUpdate:@"update messages set status=? where objectId=?" withArgumentsInArray:@[@(status),objectId]];
 }

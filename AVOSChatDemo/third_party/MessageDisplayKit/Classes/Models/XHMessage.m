@@ -12,13 +12,16 @@
 
 - (instancetype)initWithText:(NSString *)text
                       sender:(NSString *)sender
-                        timestamp:(NSDate *)timestamp {
+                   timestamp:(NSDate *)timestamp
+              attributedText:(NSString*)attributedText{
     self = [super init];
     if (self) {
         self.text = text;
         
         self.sender = sender;
         self.timestamp = timestamp;
+        
+        self.attributedText=attributedText;
         
         self.messageMediaType = XHBubbleMessageMediaTypeText;
     }
@@ -40,7 +43,8 @@
                  thumbnailUrl:(NSString *)thumbnailUrl
                originPhotoUrl:(NSString *)originPhotoUrl
                        sender:(NSString *)sender
-                         timestamp:(NSDate *)timestamp {
+                    timestamp:(NSDate *)timestamp
+               attributedText:(NSString*)attributedText{
     self = [super init];
     if (self) {
         self.photo = photo;
@@ -49,6 +53,7 @@
         
         self.sender = sender;
         self.timestamp = timestamp;
+        self.attributedText=attributedText;
         
         self.messageMediaType = XHBubbleMessageMediaTypePhoto;
     }
@@ -70,7 +75,8 @@
                                videoPath:(NSString *)videoPath
                                 videoUrl:(NSString *)videoUrl
                                   sender:(NSString *)sender
-                                    timestamp:(NSDate *)timestamp {
+                               timestamp:(NSDate *)timestamp
+                          attributedText:(NSString*)attributedText{
     self = [super init];
     if (self) {
         self.videoConverPhoto = videoConverPhoto;
@@ -79,6 +85,8 @@
         
         self.sender = sender;
         self.timestamp = timestamp;
+        
+        self.attributedText=attributedText;
         
         self.messageMediaType = XHBubbleMessageMediaTypeVideo;
     }
@@ -100,9 +108,10 @@
                          voiceUrl:(NSString *)voiceUrl
                     voiceDuration:(NSString *)voiceDuration
                            sender:(NSString *)sender
-                        timestamp:(NSDate *)timestamp {
+                        timestamp:(NSDate *)timestamp
+                   attributedText:(NSString*)attributedText{
     
-    return [self initWithVoicePath:voicePath voiceUrl:voiceUrl voiceDuration:voiceDuration sender:sender timestamp:timestamp isRead:YES];
+    return [self initWithVoicePath:voicePath voiceUrl:voiceUrl voiceDuration:voiceDuration sender:sender timestamp:timestamp isRead:YES attributedText:attributedText];
 }
 
 /**
@@ -122,7 +131,8 @@
                     voiceDuration:(NSString *)voiceDuration
                            sender:(NSString *)sender
                         timestamp:(NSDate *)timestamp
-                           isRead:(BOOL)isRead {
+                           isRead:(BOOL)isRead
+                   attributedText:(NSString*)attributedText{
     self = [super init];
     if (self) {
         self.voicePath = voicePath;
@@ -133,20 +143,25 @@
         self.timestamp = timestamp;
         self.isRead = isRead;
         
+        self.attributedText=attributedText;
+        
         self.messageMediaType = XHBubbleMessageMediaTypeVoice;
     }
     return self;
 }
 
 - (instancetype)initWithEmotionPath:(NSString *)emotionPath
-                          sender:(NSString *)sender
-                            timestamp:(NSDate *)timestamp {
+                             sender:(NSString *)sender
+                          timestamp:(NSDate *)timestamp
+                     attributedText:(NSString*)attributedText{
     self = [super init];
     if (self) {
         self.emotionPath = emotionPath;
         
         self.sender = sender;
         self.timestamp = timestamp;
+        
+        self.attributedText=attributedText;
         
         self.messageMediaType = XHBubbleMessageMediaTypeEmotion;
     }
@@ -157,7 +172,8 @@
                               geolocations:(NSString *)geolocations
                                   location:(CLLocation *)location
                                     sender:(NSString *)sender
-                                 timestamp:(NSDate *)timestamp {
+                                 timestamp:(NSDate *)timestamp
+                            attributedText:(NSString*)attributedText{
     self = [super init];
     if (self) {
         self.localPositionPhoto = localPositionPhoto;
@@ -166,6 +182,8 @@
         
         self.sender = sender;
         self.timestamp = timestamp;
+        
+        self.attributedText=attributedText;
         
         self.messageMediaType = XHBubbleMessageMediaTypeLocalPosition;
     }
@@ -199,6 +217,8 @@
     _sender = nil;
     
     _timestamp = nil;
+    
+    _attributedText=nil;
 }
 
 #pragma mark - NSCoding
@@ -231,6 +251,8 @@
         
         _sender = [aDecoder decodeObjectForKey:@"sender"];
         _timestamp = [aDecoder decodeObjectForKey:@"timestamp"];
+        
+        _attributedText=[aDecoder decodeObjectForKey:@"attributedText"];
     }
     return self;
 }
@@ -258,6 +280,8 @@
     
     [aCoder encodeObject:self.sender forKey:@"sender"];
     [aCoder encodeObject:self.timestamp forKey:@"timestamp"];
+    
+    [aCoder encodeObject:self.attributedText forKey:@"attributedText"];
 }
 
 #pragma mark - NSCopying
@@ -267,35 +291,41 @@
         case XHBubbleMessageMediaTypeText:
             return [[[self class] allocWithZone:zone] initWithText:[self.text copy]
                                                             sender:[self.sender copy]
-                                                              timestamp:[self.timestamp copy]];
+                                                         timestamp:[self.timestamp copy]
+                                                    attributedText:[self.attributedText copy]];
         case XHBubbleMessageMediaTypePhoto:
             return [[[self class] allocWithZone:zone] initWithPhoto:[self.photo copy]
                                                        thumbnailUrl:[self.thumbnailUrl copy]
                                                      originPhotoUrl:[self.originPhotoUrl copy]
                                                              sender:[self.sender copy]
-                                                               timestamp:[self.timestamp copy]];
+                                                          timestamp:[self.timestamp copy]
+                                                     attributedText:[self.attributedText copy]];
         case XHBubbleMessageMediaTypeVideo:
             return [[[self class] allocWithZone:zone] initWithVideoConverPhoto:[self.videoConverPhoto copy]
                                                                      videoPath:[self.videoPath copy]
                                                                       videoUrl:[self.videoUrl copy]
                                                                         sender:[self.sender copy]
-                                                                          timestamp:[self.timestamp copy]];
+                                                                     timestamp:[self.timestamp copy]
+                                                                attributedText:[self.attributedText copy]];
         case XHBubbleMessageMediaTypeVoice:
             return [[[self class] allocWithZone:zone] initWithVoicePath:[self.voicePath copy]
                                                                voiceUrl:[self.voiceUrl copy]
                                                           voiceDuration:[self.voiceDuration copy]
                                                                  sender:[self.sender copy]
-                                                              timestamp:[self.timestamp copy]];
+                                                              timestamp:[self.timestamp copy]
+                                                         attributedText:[self.attributedText copy]];
         case XHBubbleMessageMediaTypeEmotion:
             return [[[self class] allocWithZone:zone] initWithEmotionPath:[self.emotionPath copy]
-                                                                sender:[self.sender copy]
-                                                                  timestamp:[self.timestamp copy]];
+                                                                   sender:[self.sender copy]
+                                                                timestamp:[self.timestamp copy]
+                                                           attributedText:[self.attributedText copy]];
         case XHBubbleMessageMediaTypeLocalPosition:
             return [[[self class] allocWithZone:zone] initWithLocalPositionPhoto:[self.localPositionPhoto copy]
                                                                     geolocations:self.geolocations
                                                                         location:[self.location copy]
                                                                           sender:[self.sender copy]
-                                                                            timestamp:[self.timestamp copy]];
+                                                                       timestamp:[self.timestamp copy]
+                                                                  attributedText:[self.attributedText copy]];
         default:
             return nil;
     }

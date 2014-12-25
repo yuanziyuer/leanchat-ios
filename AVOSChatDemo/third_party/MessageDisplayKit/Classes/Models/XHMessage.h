@@ -47,19 +47,13 @@
 
 @property (nonatomic) BOOL isRead;
 
+@property (nonatomic,strong) NSString* attributedText;
 
-/**
- *  初始化文本消息
- *
- *  @param text   发送的目标文本
- *  @param sender 发送者的名称
- *  @param date   发送的时间
- *
- *  @return 返回Message model 对象
- */
+
 - (instancetype)initWithText:(NSString *)text
                       sender:(NSString *)sender
-                        timestamp:(NSDate *)timestamp;
+                   timestamp:(NSDate *)timestamp
+              attributedText:(NSString*)attributedText;
 
 /**
  *  初始化图片类型的消息
@@ -76,7 +70,8 @@
                  thumbnailUrl:(NSString *)thumbnailUrl
                originPhotoUrl:(NSString *)originPhotoUrl
                        sender:(NSString *)sender
-                         timestamp:(NSDate *)timestamp;
+                    timestamp:(NSDate *)timestamp
+               attributedText:(NSString*)attributedText;
 
 /**
  *  初始化视频类型的消息
@@ -93,7 +88,8 @@
                                videoPath:(NSString *)videoPath
                                 videoUrl:(NSString *)videoUrl
                                   sender:(NSString *)sender
-                                    timestamp:(NSDate *)timestamp;
+                               timestamp:(NSDate *)timestamp
+                          attributedText:(NSString*)attributedText;
 
 /**
  *  初始化语音类型的消息
@@ -110,7 +106,8 @@
                          voiceUrl:(NSString *)voiceUrl
                     voiceDuration:(NSString *)voiceDuration
                            sender:(NSString *)sender
-                        timestamp:(NSDate *)timestamp;
+                        timestamp:(NSDate *)timestamp
+                   attributedText:(NSString*)attributedText;
 
 /**
  *  初始化语音类型的消息。增加已读未读标记
@@ -129,36 +126,21 @@
                     voiceDuration:(NSString *)voiceDuration
                            sender:(NSString *)sender
                         timestamp:(NSDate *)timestamp
-                           isRead:(BOOL)isRead;
+                           isRead:(BOOL)isRead
+                   attributedText:(NSString*)attributedText;
 
-/**
- *  初始化gif表情类型的消息
- *
- *  @param emotionPath 表情的路径
- *  @param sender      发送者
- *  @param timestamp   发送时间
- *
- *  @return 返回Message model 对象
- */
 - (instancetype)initWithEmotionPath:(NSString *)emotionPath
-                           sender:(NSString *)sender
-                             timestamp:(NSDate *)timestamp;
+                             sender:(NSString *)sender
+                          timestamp:(NSDate *)timestamp
+                     attributedText:(NSString*)attributedText;
 
-/**
- *  初始化地理位置的消息
- *
- *  @param localPositionPhoto 地理位置默认显示的图
- *  @param geolocations       地理位置的信息
- *  @param location           地理位置的经纬度
- *  @param sender             发送者
- *  @param timestamp          发送时间
- *
- *  @return 返回Message model 对象
- */
 - (instancetype)initWithLocalPositionPhoto:(UIImage *)localPositionPhoto
                               geolocations:(NSString *)geolocations
                                   location:(CLLocation *)location
-                          sender:(NSString *)sender
-                            timestamp:(NSDate *)timestamp;
+                                    sender:(NSString *)sender
+                                 timestamp:(NSDate *)timestamp
+                            attributedText:(NSString*)attributedText;
+
+
 
 @end

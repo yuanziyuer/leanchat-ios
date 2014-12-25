@@ -291,6 +291,7 @@
 		70A067191A24A3A2004DA201 /* weChatBubble_Sending_Cavern@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A0662E1A24A3A2004DA201 /* weChatBubble_Sending_Cavern@2x.png */; };
 		70A0671A1A24A3A2004DA201 /* weChatBubble_Sending_Solid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A0662F1A24A3A2004DA201 /* weChatBubble_Sending_Solid@2x.png */; };
 		70A067291A24D394004DA201 /* CDEmotionUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A067281A24D394004DA201 /* CDEmotionUtils.m */; };
+		70B54F1F1A4BC0D000503A0A /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B54F1E1A4BC0D000503A0A /* AVOSCloud.framework */; };
 		70D4C60A1A237C1E001A655D /* CDAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D4C5401A237C1E001A655D /* CDAppDelegate.m */; };
 		70D4C60B1A237C1E001A655D /* CDBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D4C5441A237C1E001A655D /* CDBaseController.m */; };
 		70D4C60C1A237C1E001A655D /* CDBaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D4C5461A237C1E001A655D /* CDBaseNavigationController.m */; };
@@ -413,51 +414,6 @@
 		B0D4DC0C4CAAFC88082981E6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D569F4B827DF50C11F64070 /* libPods.a */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		709FB8031A491AAE006F35D1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 709FB6BF1A491AAE006F35D1 /* AVOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8CCC29FA196E4E3C0098C0FB;
-			remoteInfo = AVOSCloud;
-		};
-		709FB8051A491AAE006F35D1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 709FB6BF1A491AAE006F35D1 /* AVOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8CCC2A05196E4E3D0098C0FB;
-			remoteInfo = AVOSCloudTests;
-		};
-		709FB8071A491AAE006F35D1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 709FB6BF1A491AAE006F35D1 /* AVOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8CCC2B82196E67190098C0FB;
-			remoteInfo = AVOSCloudSNS;
-		};
-		709FB8091A491AAE006F35D1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 709FB6BF1A491AAE006F35D1 /* AVOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8CCC2B8C196E67190098C0FB;
-			remoteInfo = AVOSCloudSNSTests;
-		};
-		709FB80B1A491AAE006F35D1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 709FB6BF1A491AAE006F35D1 /* AVOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8C81EFA31A3046150052BDBF;
-			remoteInfo = AVOSCloudIM;
-		};
-		709FB80D1A491AAE006F35D1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 709FB6BF1A491AAE006F35D1 /* AVOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8C81EFAD1A3046150052BDBF;
-			remoteInfo = AVOSCloudIMTests;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		1AE56C31C63DFD24A31AC420 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		4D569F4B827DF50C11F64070 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -522,285 +478,6 @@
 		705553E81A2E3C1F001EA4FE /* CDCacheService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCacheService.m; sourceTree = "<group>"; };
 		705553EA1A2E49F5001EA4FE /* CDDatabaseService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDDatabaseService.h; sourceTree = "<group>"; };
 		705553EB1A2E49F5001EA4FE /* CDDatabaseService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDDatabaseService.m; sourceTree = "<group>"; };
-		709FB6BD1A491AAE006F35D1 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		709FB6BE1A491AAE006F35D1 /* AVConstants.html */ = {isa = PBXFileReference; lastKnownFileType = text.html.documentation; path = AVConstants.html; sourceTree = "<group>"; };
-		709FB6BF1A491AAE006F35D1 /* AVOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = AVOS.xcodeproj; sourceTree = "<group>"; };
-		709FB6C41A491AAE006F35D1 /* AVACL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVACL.h; sourceTree = "<group>"; };
-		709FB6C51A491AAE006F35D1 /* AVACL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVACL.m; sourceTree = "<group>"; };
-		709FB6C61A491AAE006F35D1 /* AVACL_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVACL_Internal.h; sourceTree = "<group>"; };
-		709FB6C71A491AAE006F35D1 /* AVRole.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVRole.h; sourceTree = "<group>"; };
-		709FB6C81A491AAE006F35D1 /* AVRole.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVRole.m; sourceTree = "<group>"; };
-		709FB6C91A491AAE006F35D1 /* AVRole_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVRole_Internal.h; sourceTree = "<group>"; };
-		709FB6CB1A491AAE006F35D1 /* AVAnalytics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVAnalytics.h; sourceTree = "<group>"; };
-		709FB6CC1A491AAE006F35D1 /* AVAnalytics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVAnalytics.m; sourceTree = "<group>"; };
-		709FB6CD1A491AAE006F35D1 /* AVAnalytics_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVAnalytics_Internal.h; sourceTree = "<group>"; };
-		709FB6CE1A491AAE006F35D1 /* AVAnalyticsActivity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVAnalyticsActivity.h; sourceTree = "<group>"; };
-		709FB6CF1A491AAE006F35D1 /* AVAnalyticsActivity.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVAnalyticsActivity.m; sourceTree = "<group>"; };
-		709FB6D01A491AAE006F35D1 /* AVAnalyticsImpl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVAnalyticsImpl.h; sourceTree = "<group>"; };
-		709FB6D11A491AAE006F35D1 /* AVAnalyticsImpl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVAnalyticsImpl.m; sourceTree = "<group>"; };
-		709FB6D21A491AAE006F35D1 /* AVAnalyticsSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVAnalyticsSession.h; sourceTree = "<group>"; };
-		709FB6D31A491AAE006F35D1 /* AVAnalyticsSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVAnalyticsSession.m; sourceTree = "<group>"; };
-		709FB6D41A491AAE006F35D1 /* AVAnalyticsUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVAnalyticsUtils.h; sourceTree = "<group>"; };
-		709FB6D51A491AAE006F35D1 /* AVAnalyticsUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVAnalyticsUtils.m; sourceTree = "<group>"; };
-		709FB6D61A491AAE006F35D1 /* AVDuration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVDuration.h; sourceTree = "<group>"; };
-		709FB6D71A491AAE006F35D1 /* AVDuration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVDuration.m; sourceTree = "<group>"; };
-		709FB6D81A491AAE006F35D1 /* AVExceptionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVExceptionHandler.h; sourceTree = "<group>"; };
-		709FB6D91A491AAE006F35D1 /* AVExceptionHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVExceptionHandler.m; sourceTree = "<group>"; };
-		709FB6DA1A491AAE006F35D1 /* AVConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVConstants.h; sourceTree = "<group>"; };
-		709FB6DB1A491AAE006F35D1 /* AVGlobal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVGlobal.h; sourceTree = "<group>"; };
-		709FB6DC1A491AAE006F35D1 /* AVOSCloud.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AVOSCloud.bundle; sourceTree = "<group>"; };
-		709FB6DD1A491AAE006F35D1 /* AVOSCloud.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVOSCloud.h; sourceTree = "<group>"; };
-		709FB6DE1A491AAE006F35D1 /* AVOSCloud.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVOSCloud.m; sourceTree = "<group>"; };
-		709FB6DF1A491AAE006F35D1 /* AVOSCloud_Art.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = AVOSCloud_Art.inc; sourceTree = "<group>"; };
-		709FB6E01A491AAE006F35D1 /* AVOSCloud_Art.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = AVOSCloud_Art.txt; sourceTree = "<group>"; };
-		709FB6E11A491AAE006F35D1 /* AVOSCloud_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVOSCloud_Internal.h; sourceTree = "<group>"; };
-		709FB6E31A491AAE006F35D1 /* AVCacheManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVCacheManager.h; sourceTree = "<group>"; };
-		709FB6E41A491AAE006F35D1 /* AVCacheManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVCacheManager.m; sourceTree = "<group>"; };
-		709FB6E51A491AAE006F35D1 /* AVPersistenceUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVPersistenceUtils.h; sourceTree = "<group>"; };
-		709FB6E61A491AAE006F35D1 /* AVPersistenceUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVPersistenceUtils.m; sourceTree = "<group>"; };
-		709FB6E71A491AAE006F35D1 /* AVScheduler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVScheduler.h; sourceTree = "<group>"; };
-		709FB6E81A491AAE006F35D1 /* AVScheduler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVScheduler.m; sourceTree = "<group>"; };
-		709FB6EA1A491AAE006F35D1 /* AVCloud.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVCloud.h; sourceTree = "<group>"; };
-		709FB6EB1A491AAE006F35D1 /* AVCloud.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVCloud.m; sourceTree = "<group>"; };
-		709FB6EC1A491AAE006F35D1 /* AVCloud_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVCloud_Internal.h; sourceTree = "<group>"; };
-		709FB6EE1A491AAE006F35D1 /* AVUserFeedback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVUserFeedback.h; sourceTree = "<group>"; };
-		709FB6EF1A491AAE006F35D1 /* AVUserFeedback.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVUserFeedback.m; sourceTree = "<group>"; };
-		709FB6F01A491AAE006F35D1 /* AVUserFeedback_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVUserFeedback_Internal.h; sourceTree = "<group>"; };
-		709FB6F11A491AAE006F35D1 /* AVUserFeedbackAgent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVUserFeedbackAgent.h; sourceTree = "<group>"; };
-		709FB6F21A491AAE006F35D1 /* AVUserFeedbackAgent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVUserFeedbackAgent.m; sourceTree = "<group>"; };
-		709FB6F31A491AAE006F35D1 /* AVUserFeedbackLeftCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVUserFeedbackLeftCell.h; sourceTree = "<group>"; };
-		709FB6F41A491AAE006F35D1 /* AVUserFeedbackLeftCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVUserFeedbackLeftCell.m; sourceTree = "<group>"; };
-		709FB6F51A491AAE006F35D1 /* AVUserFeedbackRightCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVUserFeedbackRightCell.h; sourceTree = "<group>"; };
-		709FB6F61A491AAE006F35D1 /* AVUserFeedbackRightCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVUserFeedbackRightCell.m; sourceTree = "<group>"; };
-		709FB6F71A491AAE006F35D1 /* AVUserFeedbackThread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVUserFeedbackThread.h; sourceTree = "<group>"; };
-		709FB6F81A491AAE006F35D1 /* AVUserFeedbackThread.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVUserFeedbackThread.m; sourceTree = "<group>"; };
-		709FB6F91A491AAE006F35D1 /* AVUserFeedbackViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVUserFeedbackViewController.h; sourceTree = "<group>"; };
-		709FB6FA1A491AAE006F35D1 /* AVUserFeedbackViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVUserFeedbackViewController.m; sourceTree = "<group>"; };
-		709FB6FC1A491AAE006F35D1 /* AVFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVFile.h; sourceTree = "<group>"; };
-		709FB6FD1A491AAE006F35D1 /* AVFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVFile.m; sourceTree = "<group>"; };
-		709FB6FE1A491AAE006F35D1 /* AVFile_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVFile_Internal.h; sourceTree = "<group>"; };
-		709FB6FF1A491AAE006F35D1 /* AVFileHTTPRequestOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVFileHTTPRequestOperation.h; sourceTree = "<group>"; };
-		709FB7001A491AAE006F35D1 /* AVFileHTTPRequestOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVFileHTTPRequestOperation.m; sourceTree = "<group>"; };
-		709FB7011A491AAE006F35D1 /* AVPartialInputStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVPartialInputStream.h; sourceTree = "<group>"; };
-		709FB7021A491AAE006F35D1 /* AVPartialInputStream.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVPartialInputStream.m; sourceTree = "<group>"; };
-		709FB7031A491AAE006F35D1 /* UploaderManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UploaderManager.h; sourceTree = "<group>"; };
-		709FB7041A491AAE006F35D1 /* UploaderManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UploaderManager.m; sourceTree = "<group>"; };
-		709FB7061A491AAE006F35D1 /* AVGeoPoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVGeoPoint.h; sourceTree = "<group>"; };
-		709FB7071A491AAE006F35D1 /* AVGeoPoint.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVGeoPoint.m; sourceTree = "<group>"; };
-		709FB7081A491AAE006F35D1 /* AVGeoPoint_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVGeoPoint_Internal.h; sourceTree = "<group>"; };
-		709FB7091A491AAE006F35D1 /* AVLocationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVLocationManager.h; sourceTree = "<group>"; };
-		709FB70A1A491AAE006F35D1 /* AVLocationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVLocationManager.m; sourceTree = "<group>"; };
-		709FB70C1A491AAE006F35D1 /* AVCommandDictionary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVCommandDictionary.h; sourceTree = "<group>"; };
-		709FB70D1A491AAE006F35D1 /* AVCommandDictionary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVCommandDictionary.m; sourceTree = "<group>"; };
-		709FB70E1A491AAE006F35D1 /* AVGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVGroup.h; sourceTree = "<group>"; };
-		709FB70F1A491AAE006F35D1 /* AVGroup.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVGroup.m; sourceTree = "<group>"; };
-		709FB7101A491AAE006F35D1 /* AVGroup_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVGroup_Internal.h; sourceTree = "<group>"; };
-		709FB7111A491AAE006F35D1 /* AVHistoryMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVHistoryMessage.h; sourceTree = "<group>"; };
-		709FB7121A491AAE006F35D1 /* AVHistoryMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVHistoryMessage.m; sourceTree = "<group>"; };
-		709FB7131A491AAE006F35D1 /* AVHistoryMessageQuery.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVHistoryMessageQuery.h; sourceTree = "<group>"; };
-		709FB7141A491AAE006F35D1 /* AVHistoryMessageQuery.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVHistoryMessageQuery.m; sourceTree = "<group>"; };
-		709FB7151A491AAE006F35D1 /* AVMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVMessage.h; sourceTree = "<group>"; };
-		709FB7161A491AAE006F35D1 /* AVMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVMessage.m; sourceTree = "<group>"; };
-		709FB7171A491AAE006F35D1 /* AVSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVSession.h; sourceTree = "<group>"; };
-		709FB7181A491AAE006F35D1 /* AVSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVSession.m; sourceTree = "<group>"; };
-		709FB7191A491AAE006F35D1 /* AVSession_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVSession_Internal.h; sourceTree = "<group>"; };
-		709FB71A1A491AAE006F35D1 /* AVSignature.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVSignature.h; sourceTree = "<group>"; };
-		709FB71B1A491AAE006F35D1 /* AVSignature.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVSignature.m; sourceTree = "<group>"; };
-		709FB71C1A491AAE006F35D1 /* AVWebSocketWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVWebSocketWrapper.h; sourceTree = "<group>"; };
-		709FB71D1A491AAE006F35D1 /* AVWebSocketWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVWebSocketWrapper.m; sourceTree = "<group>"; };
-		709FB71F1A491AAE006F35D1 /* AVAckCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVAckCommand.h; sourceTree = "<group>"; };
-		709FB7201A491AAE006F35D1 /* AVAckCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVAckCommand.m; sourceTree = "<group>"; };
-		709FB7211A491AAE006F35D1 /* AVCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVCommand.h; sourceTree = "<group>"; };
-		709FB7221A491AAE006F35D1 /* AVCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVCommand.m; sourceTree = "<group>"; };
-		709FB7231A491AAE006F35D1 /* AVCommandCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVCommandCommon.h; sourceTree = "<group>"; };
-		709FB7241A491AAE006F35D1 /* AVDirectCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVDirectCommand.h; sourceTree = "<group>"; };
-		709FB7251A491AAE006F35D1 /* AVDirectCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVDirectCommand.m; sourceTree = "<group>"; };
-		709FB7261A491AAE006F35D1 /* AVDirectInCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVDirectInCommand.h; sourceTree = "<group>"; };
-		709FB7271A491AAE006F35D1 /* AVDirectInCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVDirectInCommand.m; sourceTree = "<group>"; };
-		709FB7281A491AAE006F35D1 /* AVDirectOutCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVDirectOutCommand.h; sourceTree = "<group>"; };
-		709FB7291A491AAE006F35D1 /* AVDirectOutCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVDirectOutCommand.m; sourceTree = "<group>"; };
-		709FB72A1A491AAE006F35D1 /* AVDynamicBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVDynamicBase.h; sourceTree = "<group>"; };
-		709FB72B1A491AAE006F35D1 /* AVDynamicBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVDynamicBase.m; sourceTree = "<group>"; };
-		709FB72C1A491AAE006F35D1 /* AVPresenceCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVPresenceCommand.h; sourceTree = "<group>"; };
-		709FB72D1A491AAE006F35D1 /* AVPresenceCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVPresenceCommand.m; sourceTree = "<group>"; };
-		709FB72E1A491AAE006F35D1 /* AVRcpCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVRcpCommand.h; sourceTree = "<group>"; };
-		709FB72F1A491AAE006F35D1 /* AVRcpCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVRcpCommand.m; sourceTree = "<group>"; };
-		709FB7301A491AAE006F35D1 /* AVRoomCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVRoomCommand.h; sourceTree = "<group>"; };
-		709FB7311A491AAE006F35D1 /* AVRoomCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVRoomCommand.m; sourceTree = "<group>"; };
-		709FB7321A491AAE006F35D1 /* AVSessionCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVSessionCommand.h; sourceTree = "<group>"; };
-		709FB7331A491AAE006F35D1 /* AVSessionCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVSessionCommand.m; sourceTree = "<group>"; };
-		709FB7341A491AAE006F35D1 /* AVSessionInCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVSessionInCommand.h; sourceTree = "<group>"; };
-		709FB7351A491AAE006F35D1 /* AVSessionInCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVSessionInCommand.m; sourceTree = "<group>"; };
-		709FB7361A491AAE006F35D1 /* AVSessionOutCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVSessionOutCommand.h; sourceTree = "<group>"; };
-		709FB7371A491AAE006F35D1 /* AVSessionOutCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVSessionOutCommand.m; sourceTree = "<group>"; };
-		709FB7381A491AAE006F35D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		709FB73A1A491AAE006F35D1 /* AVObject+Subclass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AVObject+Subclass.h"; sourceTree = "<group>"; };
-		709FB73B1A491AAE006F35D1 /* AVObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVObject.h; sourceTree = "<group>"; };
-		709FB73C1A491AAE006F35D1 /* AVObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVObject.m; sourceTree = "<group>"; };
-		709FB73D1A491AAE006F35D1 /* AVObject_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVObject_Internal.h; sourceTree = "<group>"; };
-		709FB73E1A491AAE006F35D1 /* AVObjectUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVObjectUtils.h; sourceTree = "<group>"; };
-		709FB73F1A491AAE006F35D1 /* AVObjectUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVObjectUtils.m; sourceTree = "<group>"; };
-		709FB7401A491AAE006F35D1 /* AVRelation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVRelation.h; sourceTree = "<group>"; };
-		709FB7411A491AAE006F35D1 /* AVRelation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVRelation.m; sourceTree = "<group>"; };
-		709FB7421A491AAE006F35D1 /* AVRelation_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVRelation_Internal.h; sourceTree = "<group>"; };
-		709FB7431A491AAE006F35D1 /* AVSubclassing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVSubclassing.h; sourceTree = "<group>"; };
-		709FB7451A491AAE006F35D1 /* AVInstallation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVInstallation.h; sourceTree = "<group>"; };
-		709FB7461A491AAE006F35D1 /* AVInstallation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVInstallation.m; sourceTree = "<group>"; };
-		709FB7471A491AAE006F35D1 /* AVInstallation_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVInstallation_Internal.h; sourceTree = "<group>"; };
-		709FB7481A491AAE006F35D1 /* AVPush.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVPush.h; sourceTree = "<group>"; };
-		709FB7491A491AAE006F35D1 /* AVPush.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVPush.m; sourceTree = "<group>"; };
-		709FB74A1A491AAE006F35D1 /* AVPush_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVPush_Internal.h; sourceTree = "<group>"; };
-		709FB74C1A491AAE006F35D1 /* AVCloudQueryResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVCloudQueryResult.h; sourceTree = "<group>"; };
-		709FB74D1A491AAE006F35D1 /* AVCloudQueryResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVCloudQueryResult.m; sourceTree = "<group>"; };
-		709FB74E1A491AAE006F35D1 /* AVCloudQueryResult_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVCloudQueryResult_Internal.h; sourceTree = "<group>"; };
-		709FB74F1A491AAE006F35D1 /* AVFriendQuery.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVFriendQuery.h; sourceTree = "<group>"; };
-		709FB7501A491AAE006F35D1 /* AVFriendQuery.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVFriendQuery.m; sourceTree = "<group>"; };
-		709FB7511A491AAE006F35D1 /* AVQuery.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVQuery.h; sourceTree = "<group>"; };
-		709FB7521A491AAE006F35D1 /* AVQuery.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVQuery.m; sourceTree = "<group>"; };
-		709FB7531A491AAE006F35D1 /* AVQuery_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVQuery_Internal.h; sourceTree = "<group>"; };
-		709FB7551A491AAE006F35D1 /* AFNetworkingFix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AFNetworkingFix.h; sourceTree = "<group>"; };
-		709FB7561A491AAE006F35D1 /* AVOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVOperation.h; sourceTree = "<group>"; };
-		709FB7571A491AAE006F35D1 /* AVOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVOperation.m; sourceTree = "<group>"; };
-		709FB7581A491AAE006F35D1 /* AVPaasClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVPaasClient.h; sourceTree = "<group>"; };
-		709FB7591A491AAE006F35D1 /* AVPaasClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVPaasClient.m; sourceTree = "<group>"; };
-		709FB75A1A491AAE006F35D1 /* AVRequestManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVRequestManager.h; sourceTree = "<group>"; };
-		709FB75B1A491AAE006F35D1 /* AVRequestManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVRequestManager.m; sourceTree = "<group>"; };
-		709FB75D1A491AAE006F35D1 /* AVSearchQuery.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVSearchQuery.h; sourceTree = "<group>"; };
-		709FB75E1A491AAE006F35D1 /* AVSearchQuery.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVSearchQuery.m; sourceTree = "<group>"; };
-		709FB75F1A491AAE006F35D1 /* AVSearchSortBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVSearchSortBuilder.h; sourceTree = "<group>"; };
-		709FB7601A491AAE006F35D1 /* AVSearchSortBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVSearchSortBuilder.m; sourceTree = "<group>"; };
-		709FB7621A491AAE006F35D1 /* AVStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVStatus.h; sourceTree = "<group>"; };
-		709FB7631A491AAE006F35D1 /* AVStatus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVStatus.m; sourceTree = "<group>"; };
-		709FB7661A491AAE006F35D1 /* AVAmazonS3Client.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVAmazonS3Client.h; sourceTree = "<group>"; };
-		709FB7671A491AAE006F35D1 /* AVAmazonS3Client.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVAmazonS3Client.m; sourceTree = "<group>"; };
-		709FB7691A491AAE006F35D1 /* AVHTTPClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVHTTPClient.h; sourceTree = "<group>"; };
-		709FB76A1A491AAE006F35D1 /* AVHTTPClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVHTTPClient.m; sourceTree = "<group>"; };
-		709FB76B1A491AAE006F35D1 /* AVHTTPRequestOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVHTTPRequestOperation.h; sourceTree = "<group>"; };
-		709FB76C1A491AAE006F35D1 /* AVHTTPRequestOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVHTTPRequestOperation.m; sourceTree = "<group>"; };
-		709FB76D1A491AAE006F35D1 /* AVImageRequestOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVImageRequestOperation.h; sourceTree = "<group>"; };
-		709FB76E1A491AAE006F35D1 /* AVImageRequestOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVImageRequestOperation.m; sourceTree = "<group>"; };
-		709FB76F1A491AAE006F35D1 /* AVJSONRequestOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVJSONRequestOperation.h; sourceTree = "<group>"; };
-		709FB7701A491AAE006F35D1 /* AVJSONRequestOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVJSONRequestOperation.m; sourceTree = "<group>"; };
-		709FB7711A491AAE006F35D1 /* AVNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
-		709FB7721A491AAE006F35D1 /* AVNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVNetworkActivityIndicatorManager.m; sourceTree = "<group>"; };
-		709FB7731A491AAE006F35D1 /* AVNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVNetworking.h; sourceTree = "<group>"; };
-		709FB7741A491AAE006F35D1 /* AVPropertyListRequestOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVPropertyListRequestOperation.h; sourceTree = "<group>"; };
-		709FB7751A491AAE006F35D1 /* AVPropertyListRequestOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVPropertyListRequestOperation.m; sourceTree = "<group>"; };
-		709FB7761A491AAE006F35D1 /* AVURLConnectionOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVURLConnectionOperation.h; sourceTree = "<group>"; };
-		709FB7771A491AAE006F35D1 /* AVURLConnectionOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVURLConnectionOperation.m; sourceTree = "<group>"; };
-		709FB7781A491AAE006F35D1 /* AVXMLRequestOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVXMLRequestOperation.h; sourceTree = "<group>"; };
-		709FB7791A491AAE006F35D1 /* AVXMLRequestOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVXMLRequestOperation.m; sourceTree = "<group>"; };
-		709FB77B1A491AAE006F35D1 /* GTMDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
-		709FB77C1A491AAE006F35D1 /* GTMLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTMLogger.h; sourceTree = "<group>"; };
-		709FB77D1A491AAE006F35D1 /* GTMLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTMLogger.m; sourceTree = "<group>"; };
-		709FB77F1A491AAE006F35D1 /* LoggerClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoggerClient.h; sourceTree = "<group>"; };
-		709FB7801A491AAE006F35D1 /* LoggerClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoggerClient.m; sourceTree = "<group>"; };
-		709FB7811A491AAE006F35D1 /* LoggerCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoggerCommon.h; sourceTree = "<group>"; };
-		709FB7831A491AAE006F35D1 /* AVSRWebSocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVSRWebSocket.h; sourceTree = "<group>"; };
-		709FB7841A491AAE006F35D1 /* AVSRWebSocket.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVSRWebSocket.m; sourceTree = "<group>"; };
-		709FB7861A491AAE006F35D1 /* AVAnonymousUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVAnonymousUtils.h; sourceTree = "<group>"; };
-		709FB7871A491AAE006F35D1 /* AVAnonymousUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVAnonymousUtils.m; sourceTree = "<group>"; };
-		709FB7881A491AAE006F35D1 /* AVUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVUser.h; sourceTree = "<group>"; };
-		709FB7891A491AAE006F35D1 /* AVUser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVUser.m; sourceTree = "<group>"; };
-		709FB78A1A491AAE006F35D1 /* AVUser_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVUser_Internal.h; sourceTree = "<group>"; };
-		709FB78C1A491AAE006F35D1 /* AVErrorUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVErrorUtils.h; sourceTree = "<group>"; };
-		709FB78D1A491AAE006F35D1 /* AVErrorUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVErrorUtils.m; sourceTree = "<group>"; };
-		709FB78E1A491AAE006F35D1 /* AVHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVHelpers.h; sourceTree = "<group>"; };
-		709FB78F1A491AAE006F35D1 /* AVLog_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVLog_Internal.h; sourceTree = "<group>"; };
-		709FB7901A491AAE006F35D1 /* AVLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVLogger.h; sourceTree = "<group>"; };
-		709FB7911A491AAE006F35D1 /* AVLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVLogger.m; sourceTree = "<group>"; };
-		709FB7921A491AAE006F35D1 /* AVReachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVReachability.h; sourceTree = "<group>"; };
-		709FB7931A491AAE006F35D1 /* AVReachability.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVReachability.m; sourceTree = "<group>"; };
-		709FB7941A491AAE006F35D1 /* AVUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVUtils.h; sourceTree = "<group>"; };
-		709FB7951A491AAE006F35D1 /* AVUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVUtils.m; sourceTree = "<group>"; };
-		709FB7961A491AAE006F35D1 /* UserAgent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserAgent.h; sourceTree = "<group>"; };
-		709FB7971A491AAE006F35D1 /* AVOSCloud.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = AVOSCloud.podspec; sourceTree = "<group>"; };
-		709FB7991A491AAE006F35D1 /* AVIM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVIM.h; sourceTree = "<group>"; };
-		709FB79A1A491AAE006F35D1 /* AVIM.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVIM.m; sourceTree = "<group>"; };
-		709FB79B1A491AAE006F35D1 /* AVIMCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVIMCommon.h; sourceTree = "<group>"; };
-		709FB79C1A491AAE006F35D1 /* AVIMConversation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVIMConversation.h; sourceTree = "<group>"; };
-		709FB79D1A491AAE006F35D1 /* AVIMConversation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVIMConversation.m; sourceTree = "<group>"; };
-		709FB79E1A491AAE006F35D1 /* AVIMMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVIMMessage.h; sourceTree = "<group>"; };
-		709FB79F1A491AAE006F35D1 /* AVIMMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVIMMessage.m; sourceTree = "<group>"; };
-		709FB7A01A491AAE006F35D1 /* AVIMSignature.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVIMSignature.h; sourceTree = "<group>"; };
-		709FB7A11A491AAE006F35D1 /* AVIMSignature.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVIMSignature.m; sourceTree = "<group>"; };
-		709FB7A21A491AAE006F35D1 /* AVOSCloudIM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVOSCloudIM.h; sourceTree = "<group>"; };
-		709FB7A31A491AAE006F35D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		709FB7A51A491AAE006F35D1 /* AVOSCloudSNS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVOSCloudSNS.h; sourceTree = "<group>"; };
-		709FB7A61A491AAE006F35D1 /* AVOSCloudSNS.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVOSCloudSNS.m; sourceTree = "<group>"; };
-		709FB7A71A491AAE006F35D1 /* AVOSCloudSNS_.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVOSCloudSNS_.h; sourceTree = "<group>"; };
-		709FB7A81A491AAE006F35D1 /* AVOSCloudSNSUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVOSCloudSNSUtils.h; sourceTree = "<group>"; };
-		709FB7A91A491AAE006F35D1 /* AVOSCloudSNSUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVOSCloudSNSUtils.m; sourceTree = "<group>"; };
-		709FB7AA1A491AAE006F35D1 /* AVSNSLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVSNSLoginViewController.h; sourceTree = "<group>"; };
-		709FB7AB1A491AAE006F35D1 /* AVSNSLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVSNSLoginViewController.m; sourceTree = "<group>"; };
-		709FB7AC1A491AAE006F35D1 /* AVSNSWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVSNSWebViewController.h; sourceTree = "<group>"; };
-		709FB7AD1A491AAE006F35D1 /* AVSNSWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVSNSWebViewController.m; sourceTree = "<group>"; };
-		709FB7AE1A491AAE006F35D1 /* AVUser+SNS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AVUser+SNS.h"; sourceTree = "<group>"; };
-		709FB7AF1A491AAE006F35D1 /* AVUser+SNS.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AVUser+SNS.m"; sourceTree = "<group>"; };
-		709FB7B01A491AAE006F35D1 /* AVWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVWebViewController.h; sourceTree = "<group>"; };
-		709FB7B11A491AAE006F35D1 /* AVWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVWebViewController.m; sourceTree = "<group>"; };
-		709FB7B21A491AAE006F35D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		709FB7B31A491AAE006F35D1 /* NSURL+AVAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURL+AVAdditions.h"; sourceTree = "<group>"; };
-		709FB7B41A491AAE006F35D1 /* NSURL+AVAdditions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURL+AVAdditions.m"; sourceTree = "<group>"; };
-		709FB7B51A491AAE006F35D1 /* AVOSCloudSNS.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = AVOSCloudSNS.podspec; sourceTree = "<group>"; };
-		709FB7B71A491AAE006F35D1 /* AVOSCloudSNSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVOSCloudSNSTests.m; sourceTree = "<group>"; };
-		709FB7B81A491AAE006F35D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		709FB7BA1A491AAE006F35D1 /* 16M.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = 16M.bin; sourceTree = "<group>"; };
-		709FB7BB1A491AAE006F35D1 /* 1M.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = 1M.bin; sourceTree = "<group>"; };
-		709FB7BC1A491AAE006F35D1 /* 32M.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = 32M.bin; sourceTree = "<group>"; };
-		709FB7BD1A491AAE006F35D1 /* 4M.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = 4M.bin; sourceTree = "<group>"; };
-		709FB7BE1A491AAE006F35D1 /* 8M.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = 8M.bin; sourceTree = "<group>"; };
-		709FB7BF1A491AAE006F35D1 /* alpacino.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = alpacino.jpg; sourceTree = "<group>"; };
-		709FB7C01A491AAE006F35D1 /* Armor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Armor.h; sourceTree = "<group>"; };
-		709FB7C11A491AAE006F35D1 /* Armor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Armor.m; sourceTree = "<group>"; };
-		709FB7C21A491AAE006F35D1 /* AVCloudTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVCloudTest.m; sourceTree = "<group>"; };
-		709FB7C31A491AAE006F35D1 /* AVFileTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVFileTest.m; sourceTree = "<group>"; };
-		709FB7C41A491AAE006F35D1 /* AVHelpersTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVHelpersTest.m; sourceTree = "<group>"; };
-		709FB7C51A491AAE006F35D1 /* AVInstallationTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVInstallationTest.m; sourceTree = "<group>"; };
-		709FB7C61A491AAE006F35D1 /* AVObjectTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVObjectTest.m; sourceTree = "<group>"; };
-		709FB7C71A491AAE006F35D1 /* AVPushTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVPushTest.m; sourceTree = "<group>"; };
-		709FB7C81A491AAE006F35D1 /* AVQueryTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVQueryTest.m; sourceTree = "<group>"; };
-		709FB7C91A491AAE006F35D1 /* AVRelationTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVRelationTest.m; sourceTree = "<group>"; };
-		709FB7CA1A491AAE006F35D1 /* AVSearchQueryTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVSearchQueryTest.m; sourceTree = "<group>"; };
-		709FB7CB1A491AAE006F35D1 /* AVStatusTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVStatusTest.m; sourceTree = "<group>"; };
-		709FB7CC1A491AAE006F35D1 /* AVSubclassTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVSubclassTest.m; sourceTree = "<group>"; };
-		709FB7CD1A491AAE006F35D1 /* AVTestBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVTestBase.h; sourceTree = "<group>"; };
-		709FB7CE1A491AAE006F35D1 /* AVTestBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVTestBase.m; sourceTree = "<group>"; };
-		709FB7CF1A491AAE006F35D1 /* AVUserTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVUserTest.m; sourceTree = "<group>"; };
-		709FB7D01A491AAE006F35D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		709FB7D11A491AAE006F35D1 /* TestAVSearchSortBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestAVSearchSortBuilder.m; sourceTree = "<group>"; };
-		709FB7D21A491AAE006F35D1 /* Thread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Thread.h; sourceTree = "<group>"; };
-		709FB7D31A491AAE006F35D1 /* Thread.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Thread.m; sourceTree = "<group>"; };
-		709FB7D41A491AAE006F35D1 /* UserArmor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserArmor.h; sourceTree = "<group>"; };
-		709FB7D51A491AAE006F35D1 /* UserArmor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserArmor.m; sourceTree = "<group>"; };
-		709FB7D61A491AAE006F35D1 /* UserBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserBar.h; sourceTree = "<group>"; };
-		709FB7D71A491AAE006F35D1 /* UserBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserBar.m; sourceTree = "<group>"; };
-		709FB7D81A491AAE006F35D1 /* UserInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
-		709FB7D91A491AAE006F35D1 /* UserInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
-		709FB7DA1A491AAE006F35D1 /* XCTestCase+AsyncTesting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+AsyncTesting.h"; sourceTree = "<group>"; };
-		709FB7DB1A491AAE006F35D1 /* XCTestCase+AsyncTesting.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+AsyncTesting.m"; sourceTree = "<group>"; };
-		709FB7DC1A491AAE006F35D1 /* build-doc.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "build-doc.sh"; sourceTree = "<group>"; };
-		709FB7DD1A491AAE006F35D1 /* build-framework.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "build-framework.sh"; sourceTree = "<group>"; };
-		709FB7DE1A491AAE006F35D1 /* build.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = "<group>"; };
-		709FB7DF1A491AAE006F35D1 /* common.function */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = common.function; sourceTree = "<group>"; };
-		709FB7E01A491AAE006F35D1 /* deploy-sdk-beta.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "deploy-sdk-beta.sh"; sourceTree = "<group>"; };
-		709FB7E11A491AAE006F35D1 /* deploy-sdk-not-upload.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "deploy-sdk-not-upload.sh"; sourceTree = "<group>"; };
-		709FB7E21A491AAE006F35D1 /* deploy-sdk.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "deploy-sdk.sh"; sourceTree = "<group>"; };
-		709FB7E31A491AAE006F35D1 /* deploy.sdk.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = deploy.sdk.sh; sourceTree = "<group>"; };
-		709FB7E51A491AAE006F35D1 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		709FB7E61A491AAE006F35D1 /* cleancov */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = cleancov; sourceTree = "<group>"; };
-		709FB7E71A491AAE006F35D1 /* env.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = env.sh; sourceTree = "<group>"; };
-		709FB7E81A491AAE006F35D1 /* envcov.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = envcov.sh; sourceTree = "<group>"; };
-		709FB7E91A491AAE006F35D1 /* exportenv.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = exportenv.sh; sourceTree = "<group>"; };
-		709FB7EA1A491AAE006F35D1 /* getcov */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = getcov; sourceTree = "<group>"; };
-		709FB7ED1A491AAE006F35D1 /* genhtml */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; path = genhtml; sourceTree = "<group>"; };
-		709FB7EE1A491AAE006F35D1 /* geninfo */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; path = geninfo; sourceTree = "<group>"; };
-		709FB7EF1A491AAE006F35D1 /* lcov */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; path = lcov; sourceTree = "<group>"; };
-		709FB7F01A491AAE006F35D1 /* COPYING */ = {isa = PBXFileReference; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
-		709FB7F11A491AAE006F35D1 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
-		709FB7F21A491AAE006F35D1 /* llvm-cov-wrapper.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "llvm-cov-wrapper.sh"; sourceTree = "<group>"; };
-		709FB7F31A491AAE006F35D1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		709FB7F41A491AAE006F35D1 /* run_code_coverage_post.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run_code_coverage_post.sh; sourceTree = "<group>"; };
 		70A064731A24A3A2004DA201 /* NSString+MessageInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MessageInputView.h"; sourceTree = "<group>"; };
 		70A064741A24A3A2004DA201 /* NSString+MessageInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MessageInputView.m"; sourceTree = "<group>"; };
 		70A064751A24A3A2004DA201 /* NSString+XHDiskSizeTransfrom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XHDiskSizeTransfrom.h"; sourceTree = "<group>"; };
@@ -1177,6 +854,7 @@
 		70A066301A24A3A2004DA201 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MessageDisplayKitString.strings"; sourceTree = "<group>"; };
 		70A067271A24D394004DA201 /* CDEmotionUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEmotionUtils.h; sourceTree = "<group>"; };
 		70A067281A24D394004DA201 /* CDEmotionUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEmotionUtils.m; sourceTree = "<group>"; };
+		70B54F1E1A4BC0D000503A0A /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVOSCloud.framework; path = ../../../../Downloads/AVOSCloud.framework; sourceTree = "<group>"; };
 		70D4C53F1A237C1E001A655D /* CDAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAppDelegate.h; sourceTree = "<group>"; };
 		70D4C5401A237C1E001A655D /* CDAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAppDelegate.m; sourceTree = "<group>"; };
 		70D4C5431A237C1E001A655D /* CDBaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDBaseController.h; sourceTree = "<group>"; };
@@ -1370,6 +1048,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				704A890F1A30F5B200D2A3C2 /* QuartzCore.framework in Frameworks */,
+				70B54F1F1A4BC0D000503A0A /* AVOSCloud.framework in Frameworks */,
 				704727A71A2CFE6300690286 /* libz.dylib in Frameworks */,
 				8C470C9D19926019006A4E87 /* libiconv.dylib in Frameworks */,
 				8C925CB71987C20800D2750B /* libsqlite3.dylib in Frameworks */,
@@ -1395,554 +1074,6 @@
 				AEDF34F39BB747755DB36529 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		709FB6BC1A491AAE006F35D1 /* AVOS */ = {
-			isa = PBXGroup;
-			children = (
-				709FB6BD1A491AAE006F35D1 /* .gitignore */,
-				709FB6BE1A491AAE006F35D1 /* AVConstants.html */,
-				709FB6BF1A491AAE006F35D1 /* AVOS.xcodeproj */,
-				709FB6C21A491AAE006F35D1 /* AVOSCloud */,
-				709FB7971A491AAE006F35D1 /* AVOSCloud.podspec */,
-				709FB7981A491AAE006F35D1 /* AVOSCloudIM */,
-				709FB7A41A491AAE006F35D1 /* AVOSCloudSNS */,
-				709FB7B51A491AAE006F35D1 /* AVOSCloudSNS.podspec */,
-				709FB7B61A491AAE006F35D1 /* AVOSCloudSNSTests */,
-				709FB7B91A491AAE006F35D1 /* AVOSCloudTests */,
-				709FB7DC1A491AAE006F35D1 /* build-doc.sh */,
-				709FB7DD1A491AAE006F35D1 /* build-framework.sh */,
-				709FB7DE1A491AAE006F35D1 /* build.sh */,
-				709FB7DF1A491AAE006F35D1 /* common.function */,
-				709FB7E01A491AAE006F35D1 /* deploy-sdk-beta.sh */,
-				709FB7E11A491AAE006F35D1 /* deploy-sdk-not-upload.sh */,
-				709FB7E21A491AAE006F35D1 /* deploy-sdk.sh */,
-				709FB7E31A491AAE006F35D1 /* deploy.sdk.sh */,
-				709FB7E41A491AAE006F35D1 /* XcodeCoverage */,
-			);
-			name = AVOS;
-			path = "../../../../clojure/iOS-sdk/AVOS";
-			sourceTree = "<group>";
-		};
-		709FB6C01A491AAE006F35D1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				709FB8041A491AAE006F35D1 /* AVOSCloud.framework */,
-				709FB8061A491AAE006F35D1 /* AVOSCloudTests.xctest */,
-				709FB8081A491AAE006F35D1 /* AVOSCloudSNS.framework */,
-				709FB80A1A491AAE006F35D1 /* AVOSCloudSNSTests.xctest */,
-				709FB80C1A491AAE006F35D1 /* AVOSCloudIM.framework */,
-				709FB80E1A491AAE006F35D1 /* AVOSCloudIMTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		709FB6C21A491AAE006F35D1 /* AVOSCloud */ = {
-			isa = PBXGroup;
-			children = (
-				709FB6C31A491AAE006F35D1 /* ACL */,
-				709FB6CA1A491AAE006F35D1 /* Analytics */,
-				709FB6DA1A491AAE006F35D1 /* AVConstants.h */,
-				709FB6DB1A491AAE006F35D1 /* AVGlobal.h */,
-				709FB6DC1A491AAE006F35D1 /* AVOSCloud.bundle */,
-				709FB6DD1A491AAE006F35D1 /* AVOSCloud.h */,
-				709FB6DE1A491AAE006F35D1 /* AVOSCloud.m */,
-				709FB6DF1A491AAE006F35D1 /* AVOSCloud_Art.inc */,
-				709FB6E01A491AAE006F35D1 /* AVOSCloud_Art.txt */,
-				709FB6E11A491AAE006F35D1 /* AVOSCloud_Internal.h */,
-				709FB6E21A491AAE006F35D1 /* Cache */,
-				709FB6E91A491AAE006F35D1 /* CloudCode */,
-				709FB6ED1A491AAE006F35D1 /* Feedback */,
-				709FB6FB1A491AAE006F35D1 /* File */,
-				709FB7051A491AAE006F35D1 /* Geo */,
-				709FB70B1A491AAE006F35D1 /* IM */,
-				709FB7381A491AAE006F35D1 /* Info.plist */,
-				709FB7391A491AAE006F35D1 /* Object */,
-				709FB7441A491AAE006F35D1 /* Push */,
-				709FB74B1A491AAE006F35D1 /* Query */,
-				709FB7541A491AAE006F35D1 /* Request */,
-				709FB75C1A491AAE006F35D1 /* Search */,
-				709FB7611A491AAE006F35D1 /* Status */,
-				709FB7641A491AAE006F35D1 /* ThirdParty */,
-				709FB7851A491AAE006F35D1 /* User */,
-				709FB78B1A491AAE006F35D1 /* Utils */,
-			);
-			path = AVOSCloud;
-			sourceTree = "<group>";
-		};
-		709FB6C31A491AAE006F35D1 /* ACL */ = {
-			isa = PBXGroup;
-			children = (
-				709FB6C41A491AAE006F35D1 /* AVACL.h */,
-				709FB6C51A491AAE006F35D1 /* AVACL.m */,
-				709FB6C61A491AAE006F35D1 /* AVACL_Internal.h */,
-				709FB6C71A491AAE006F35D1 /* AVRole.h */,
-				709FB6C81A491AAE006F35D1 /* AVRole.m */,
-				709FB6C91A491AAE006F35D1 /* AVRole_Internal.h */,
-			);
-			path = ACL;
-			sourceTree = "<group>";
-		};
-		709FB6CA1A491AAE006F35D1 /* Analytics */ = {
-			isa = PBXGroup;
-			children = (
-				709FB6CB1A491AAE006F35D1 /* AVAnalytics.h */,
-				709FB6CC1A491AAE006F35D1 /* AVAnalytics.m */,
-				709FB6CD1A491AAE006F35D1 /* AVAnalytics_Internal.h */,
-				709FB6CE1A491AAE006F35D1 /* AVAnalyticsActivity.h */,
-				709FB6CF1A491AAE006F35D1 /* AVAnalyticsActivity.m */,
-				709FB6D01A491AAE006F35D1 /* AVAnalyticsImpl.h */,
-				709FB6D11A491AAE006F35D1 /* AVAnalyticsImpl.m */,
-				709FB6D21A491AAE006F35D1 /* AVAnalyticsSession.h */,
-				709FB6D31A491AAE006F35D1 /* AVAnalyticsSession.m */,
-				709FB6D41A491AAE006F35D1 /* AVAnalyticsUtils.h */,
-				709FB6D51A491AAE006F35D1 /* AVAnalyticsUtils.m */,
-				709FB6D61A491AAE006F35D1 /* AVDuration.h */,
-				709FB6D71A491AAE006F35D1 /* AVDuration.m */,
-				709FB6D81A491AAE006F35D1 /* AVExceptionHandler.h */,
-				709FB6D91A491AAE006F35D1 /* AVExceptionHandler.m */,
-			);
-			path = Analytics;
-			sourceTree = "<group>";
-		};
-		709FB6E21A491AAE006F35D1 /* Cache */ = {
-			isa = PBXGroup;
-			children = (
-				709FB6E31A491AAE006F35D1 /* AVCacheManager.h */,
-				709FB6E41A491AAE006F35D1 /* AVCacheManager.m */,
-				709FB6E51A491AAE006F35D1 /* AVPersistenceUtils.h */,
-				709FB6E61A491AAE006F35D1 /* AVPersistenceUtils.m */,
-				709FB6E71A491AAE006F35D1 /* AVScheduler.h */,
-				709FB6E81A491AAE006F35D1 /* AVScheduler.m */,
-			);
-			path = Cache;
-			sourceTree = "<group>";
-		};
-		709FB6E91A491AAE006F35D1 /* CloudCode */ = {
-			isa = PBXGroup;
-			children = (
-				709FB6EA1A491AAE006F35D1 /* AVCloud.h */,
-				709FB6EB1A491AAE006F35D1 /* AVCloud.m */,
-				709FB6EC1A491AAE006F35D1 /* AVCloud_Internal.h */,
-			);
-			path = CloudCode;
-			sourceTree = "<group>";
-		};
-		709FB6ED1A491AAE006F35D1 /* Feedback */ = {
-			isa = PBXGroup;
-			children = (
-				709FB6EE1A491AAE006F35D1 /* AVUserFeedback.h */,
-				709FB6EF1A491AAE006F35D1 /* AVUserFeedback.m */,
-				709FB6F01A491AAE006F35D1 /* AVUserFeedback_Internal.h */,
-				709FB6F11A491AAE006F35D1 /* AVUserFeedbackAgent.h */,
-				709FB6F21A491AAE006F35D1 /* AVUserFeedbackAgent.m */,
-				709FB6F31A491AAE006F35D1 /* AVUserFeedbackLeftCell.h */,
-				709FB6F41A491AAE006F35D1 /* AVUserFeedbackLeftCell.m */,
-				709FB6F51A491AAE006F35D1 /* AVUserFeedbackRightCell.h */,
-				709FB6F61A491AAE006F35D1 /* AVUserFeedbackRightCell.m */,
-				709FB6F71A491AAE006F35D1 /* AVUserFeedbackThread.h */,
-				709FB6F81A491AAE006F35D1 /* AVUserFeedbackThread.m */,
-				709FB6F91A491AAE006F35D1 /* AVUserFeedbackViewController.h */,
-				709FB6FA1A491AAE006F35D1 /* AVUserFeedbackViewController.m */,
-			);
-			path = Feedback;
-			sourceTree = "<group>";
-		};
-		709FB6FB1A491AAE006F35D1 /* File */ = {
-			isa = PBXGroup;
-			children = (
-				709FB6FC1A491AAE006F35D1 /* AVFile.h */,
-				709FB6FD1A491AAE006F35D1 /* AVFile.m */,
-				709FB6FE1A491AAE006F35D1 /* AVFile_Internal.h */,
-				709FB6FF1A491AAE006F35D1 /* AVFileHTTPRequestOperation.h */,
-				709FB7001A491AAE006F35D1 /* AVFileHTTPRequestOperation.m */,
-				709FB7011A491AAE006F35D1 /* AVPartialInputStream.h */,
-				709FB7021A491AAE006F35D1 /* AVPartialInputStream.m */,
-				709FB7031A491AAE006F35D1 /* UploaderManager.h */,
-				709FB7041A491AAE006F35D1 /* UploaderManager.m */,
-			);
-			path = File;
-			sourceTree = "<group>";
-		};
-		709FB7051A491AAE006F35D1 /* Geo */ = {
-			isa = PBXGroup;
-			children = (
-				709FB7061A491AAE006F35D1 /* AVGeoPoint.h */,
-				709FB7071A491AAE006F35D1 /* AVGeoPoint.m */,
-				709FB7081A491AAE006F35D1 /* AVGeoPoint_Internal.h */,
-				709FB7091A491AAE006F35D1 /* AVLocationManager.h */,
-				709FB70A1A491AAE006F35D1 /* AVLocationManager.m */,
-			);
-			path = Geo;
-			sourceTree = "<group>";
-		};
-		709FB70B1A491AAE006F35D1 /* IM */ = {
-			isa = PBXGroup;
-			children = (
-				709FB70C1A491AAE006F35D1 /* AVCommandDictionary.h */,
-				709FB70D1A491AAE006F35D1 /* AVCommandDictionary.m */,
-				709FB70E1A491AAE006F35D1 /* AVGroup.h */,
-				709FB70F1A491AAE006F35D1 /* AVGroup.m */,
-				709FB7101A491AAE006F35D1 /* AVGroup_Internal.h */,
-				709FB7111A491AAE006F35D1 /* AVHistoryMessage.h */,
-				709FB7121A491AAE006F35D1 /* AVHistoryMessage.m */,
-				709FB7131A491AAE006F35D1 /* AVHistoryMessageQuery.h */,
-				709FB7141A491AAE006F35D1 /* AVHistoryMessageQuery.m */,
-				709FB7151A491AAE006F35D1 /* AVMessage.h */,
-				709FB7161A491AAE006F35D1 /* AVMessage.m */,
-				709FB7171A491AAE006F35D1 /* AVSession.h */,
-				709FB7181A491AAE006F35D1 /* AVSession.m */,
-				709FB7191A491AAE006F35D1 /* AVSession_Internal.h */,
-				709FB71A1A491AAE006F35D1 /* AVSignature.h */,
-				709FB71B1A491AAE006F35D1 /* AVSignature.m */,
-				709FB71C1A491AAE006F35D1 /* AVWebSocketWrapper.h */,
-				709FB71D1A491AAE006F35D1 /* AVWebSocketWrapper.m */,
-				709FB71E1A491AAE006F35D1 /* Commands */,
-			);
-			path = IM;
-			sourceTree = "<group>";
-		};
-		709FB71E1A491AAE006F35D1 /* Commands */ = {
-			isa = PBXGroup;
-			children = (
-				709FB71F1A491AAE006F35D1 /* AVAckCommand.h */,
-				709FB7201A491AAE006F35D1 /* AVAckCommand.m */,
-				709FB7211A491AAE006F35D1 /* AVCommand.h */,
-				709FB7221A491AAE006F35D1 /* AVCommand.m */,
-				709FB7231A491AAE006F35D1 /* AVCommandCommon.h */,
-				709FB7241A491AAE006F35D1 /* AVDirectCommand.h */,
-				709FB7251A491AAE006F35D1 /* AVDirectCommand.m */,
-				709FB7261A491AAE006F35D1 /* AVDirectInCommand.h */,
-				709FB7271A491AAE006F35D1 /* AVDirectInCommand.m */,
-				709FB7281A491AAE006F35D1 /* AVDirectOutCommand.h */,
-				709FB7291A491AAE006F35D1 /* AVDirectOutCommand.m */,
-				709FB72A1A491AAE006F35D1 /* AVDynamicBase.h */,
-				709FB72B1A491AAE006F35D1 /* AVDynamicBase.m */,
-				709FB72C1A491AAE006F35D1 /* AVPresenceCommand.h */,
-				709FB72D1A491AAE006F35D1 /* AVPresenceCommand.m */,
-				709FB72E1A491AAE006F35D1 /* AVRcpCommand.h */,
-				709FB72F1A491AAE006F35D1 /* AVRcpCommand.m */,
-				709FB7301A491AAE006F35D1 /* AVRoomCommand.h */,
-				709FB7311A491AAE006F35D1 /* AVRoomCommand.m */,
-				709FB7321A491AAE006F35D1 /* AVSessionCommand.h */,
-				709FB7331A491AAE006F35D1 /* AVSessionCommand.m */,
-				709FB7341A491AAE006F35D1 /* AVSessionInCommand.h */,
-				709FB7351A491AAE006F35D1 /* AVSessionInCommand.m */,
-				709FB7361A491AAE006F35D1 /* AVSessionOutCommand.h */,
-				709FB7371A491AAE006F35D1 /* AVSessionOutCommand.m */,
-			);
-			path = Commands;
-			sourceTree = "<group>";
-		};
-		709FB7391A491AAE006F35D1 /* Object */ = {
-			isa = PBXGroup;
-			children = (
-				709FB73A1A491AAE006F35D1 /* AVObject+Subclass.h */,
-				709FB73B1A491AAE006F35D1 /* AVObject.h */,
-				709FB73C1A491AAE006F35D1 /* AVObject.m */,
-				709FB73D1A491AAE006F35D1 /* AVObject_Internal.h */,
-				709FB73E1A491AAE006F35D1 /* AVObjectUtils.h */,
-				709FB73F1A491AAE006F35D1 /* AVObjectUtils.m */,
-				709FB7401A491AAE006F35D1 /* AVRelation.h */,
-				709FB7411A491AAE006F35D1 /* AVRelation.m */,
-				709FB7421A491AAE006F35D1 /* AVRelation_Internal.h */,
-				709FB7431A491AAE006F35D1 /* AVSubclassing.h */,
-			);
-			path = Object;
-			sourceTree = "<group>";
-		};
-		709FB7441A491AAE006F35D1 /* Push */ = {
-			isa = PBXGroup;
-			children = (
-				709FB7451A491AAE006F35D1 /* AVInstallation.h */,
-				709FB7461A491AAE006F35D1 /* AVInstallation.m */,
-				709FB7471A491AAE006F35D1 /* AVInstallation_Internal.h */,
-				709FB7481A491AAE006F35D1 /* AVPush.h */,
-				709FB7491A491AAE006F35D1 /* AVPush.m */,
-				709FB74A1A491AAE006F35D1 /* AVPush_Internal.h */,
-			);
-			path = Push;
-			sourceTree = "<group>";
-		};
-		709FB74B1A491AAE006F35D1 /* Query */ = {
-			isa = PBXGroup;
-			children = (
-				709FB74C1A491AAE006F35D1 /* AVCloudQueryResult.h */,
-				709FB74D1A491AAE006F35D1 /* AVCloudQueryResult.m */,
-				709FB74E1A491AAE006F35D1 /* AVCloudQueryResult_Internal.h */,
-				709FB74F1A491AAE006F35D1 /* AVFriendQuery.h */,
-				709FB7501A491AAE006F35D1 /* AVFriendQuery.m */,
-				709FB7511A491AAE006F35D1 /* AVQuery.h */,
-				709FB7521A491AAE006F35D1 /* AVQuery.m */,
-				709FB7531A491AAE006F35D1 /* AVQuery_Internal.h */,
-			);
-			path = Query;
-			sourceTree = "<group>";
-		};
-		709FB7541A491AAE006F35D1 /* Request */ = {
-			isa = PBXGroup;
-			children = (
-				709FB7551A491AAE006F35D1 /* AFNetworkingFix.h */,
-				709FB7561A491AAE006F35D1 /* AVOperation.h */,
-				709FB7571A491AAE006F35D1 /* AVOperation.m */,
-				709FB7581A491AAE006F35D1 /* AVPaasClient.h */,
-				709FB7591A491AAE006F35D1 /* AVPaasClient.m */,
-				709FB75A1A491AAE006F35D1 /* AVRequestManager.h */,
-				709FB75B1A491AAE006F35D1 /* AVRequestManager.m */,
-			);
-			path = Request;
-			sourceTree = "<group>";
-		};
-		709FB75C1A491AAE006F35D1 /* Search */ = {
-			isa = PBXGroup;
-			children = (
-				709FB75D1A491AAE006F35D1 /* AVSearchQuery.h */,
-				709FB75E1A491AAE006F35D1 /* AVSearchQuery.m */,
-				709FB75F1A491AAE006F35D1 /* AVSearchSortBuilder.h */,
-				709FB7601A491AAE006F35D1 /* AVSearchSortBuilder.m */,
-			);
-			path = Search;
-			sourceTree = "<group>";
-		};
-		709FB7611A491AAE006F35D1 /* Status */ = {
-			isa = PBXGroup;
-			children = (
-				709FB7621A491AAE006F35D1 /* AVStatus.h */,
-				709FB7631A491AAE006F35D1 /* AVStatus.m */,
-			);
-			path = Status;
-			sourceTree = "<group>";
-		};
-		709FB7641A491AAE006F35D1 /* ThirdParty */ = {
-			isa = PBXGroup;
-			children = (
-				709FB7651A491AAE006F35D1 /* AFAmazonS3Client */,
-				709FB7681A491AAE006F35D1 /* AFNetworking */,
-				709FB77A1A491AAE006F35D1 /* GTMLogger */,
-				709FB77E1A491AAE006F35D1 /* NSLogger */,
-				709FB7821A491AAE006F35D1 /* SocketRocket */,
-			);
-			path = ThirdParty;
-			sourceTree = "<group>";
-		};
-		709FB7651A491AAE006F35D1 /* AFAmazonS3Client */ = {
-			isa = PBXGroup;
-			children = (
-				709FB7661A491AAE006F35D1 /* AVAmazonS3Client.h */,
-				709FB7671A491AAE006F35D1 /* AVAmazonS3Client.m */,
-			);
-			path = AFAmazonS3Client;
-			sourceTree = "<group>";
-		};
-		709FB7681A491AAE006F35D1 /* AFNetworking */ = {
-			isa = PBXGroup;
-			children = (
-				709FB7691A491AAE006F35D1 /* AVHTTPClient.h */,
-				709FB76A1A491AAE006F35D1 /* AVHTTPClient.m */,
-				709FB76B1A491AAE006F35D1 /* AVHTTPRequestOperation.h */,
-				709FB76C1A491AAE006F35D1 /* AVHTTPRequestOperation.m */,
-				709FB76D1A491AAE006F35D1 /* AVImageRequestOperation.h */,
-				709FB76E1A491AAE006F35D1 /* AVImageRequestOperation.m */,
-				709FB76F1A491AAE006F35D1 /* AVJSONRequestOperation.h */,
-				709FB7701A491AAE006F35D1 /* AVJSONRequestOperation.m */,
-				709FB7711A491AAE006F35D1 /* AVNetworkActivityIndicatorManager.h */,
-				709FB7721A491AAE006F35D1 /* AVNetworkActivityIndicatorManager.m */,
-				709FB7731A491AAE006F35D1 /* AVNetworking.h */,
-				709FB7741A491AAE006F35D1 /* AVPropertyListRequestOperation.h */,
-				709FB7751A491AAE006F35D1 /* AVPropertyListRequestOperation.m */,
-				709FB7761A491AAE006F35D1 /* AVURLConnectionOperation.h */,
-				709FB7771A491AAE006F35D1 /* AVURLConnectionOperation.m */,
-				709FB7781A491AAE006F35D1 /* AVXMLRequestOperation.h */,
-				709FB7791A491AAE006F35D1 /* AVXMLRequestOperation.m */,
-			);
-			path = AFNetworking;
-			sourceTree = "<group>";
-		};
-		709FB77A1A491AAE006F35D1 /* GTMLogger */ = {
-			isa = PBXGroup;
-			children = (
-				709FB77B1A491AAE006F35D1 /* GTMDefines.h */,
-				709FB77C1A491AAE006F35D1 /* GTMLogger.h */,
-				709FB77D1A491AAE006F35D1 /* GTMLogger.m */,
-			);
-			path = GTMLogger;
-			sourceTree = "<group>";
-		};
-		709FB77E1A491AAE006F35D1 /* NSLogger */ = {
-			isa = PBXGroup;
-			children = (
-				709FB77F1A491AAE006F35D1 /* LoggerClient.h */,
-				709FB7801A491AAE006F35D1 /* LoggerClient.m */,
-				709FB7811A491AAE006F35D1 /* LoggerCommon.h */,
-			);
-			path = NSLogger;
-			sourceTree = "<group>";
-		};
-		709FB7821A491AAE006F35D1 /* SocketRocket */ = {
-			isa = PBXGroup;
-			children = (
-				709FB7831A491AAE006F35D1 /* AVSRWebSocket.h */,
-				709FB7841A491AAE006F35D1 /* AVSRWebSocket.m */,
-			);
-			path = SocketRocket;
-			sourceTree = "<group>";
-		};
-		709FB7851A491AAE006F35D1 /* User */ = {
-			isa = PBXGroup;
-			children = (
-				709FB7861A491AAE006F35D1 /* AVAnonymousUtils.h */,
-				709FB7871A491AAE006F35D1 /* AVAnonymousUtils.m */,
-				709FB7881A491AAE006F35D1 /* AVUser.h */,
-				709FB7891A491AAE006F35D1 /* AVUser.m */,
-				709FB78A1A491AAE006F35D1 /* AVUser_Internal.h */,
-			);
-			path = User;
-			sourceTree = "<group>";
-		};
-		709FB78B1A491AAE006F35D1 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				709FB78C1A491AAE006F35D1 /* AVErrorUtils.h */,
-				709FB78D1A491AAE006F35D1 /* AVErrorUtils.m */,
-				709FB78E1A491AAE006F35D1 /* AVHelpers.h */,
-				709FB78F1A491AAE006F35D1 /* AVLog_Internal.h */,
-				709FB7901A491AAE006F35D1 /* AVLogger.h */,
-				709FB7911A491AAE006F35D1 /* AVLogger.m */,
-				709FB7921A491AAE006F35D1 /* AVReachability.h */,
-				709FB7931A491AAE006F35D1 /* AVReachability.m */,
-				709FB7941A491AAE006F35D1 /* AVUtils.h */,
-				709FB7951A491AAE006F35D1 /* AVUtils.m */,
-				709FB7961A491AAE006F35D1 /* UserAgent.h */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
-		709FB7981A491AAE006F35D1 /* AVOSCloudIM */ = {
-			isa = PBXGroup;
-			children = (
-				709FB7991A491AAE006F35D1 /* AVIM.h */,
-				709FB79A1A491AAE006F35D1 /* AVIM.m */,
-				709FB79B1A491AAE006F35D1 /* AVIMCommon.h */,
-				709FB79C1A491AAE006F35D1 /* AVIMConversation.h */,
-				709FB79D1A491AAE006F35D1 /* AVIMConversation.m */,
-				709FB79E1A491AAE006F35D1 /* AVIMMessage.h */,
-				709FB79F1A491AAE006F35D1 /* AVIMMessage.m */,
-				709FB7A01A491AAE006F35D1 /* AVIMSignature.h */,
-				709FB7A11A491AAE006F35D1 /* AVIMSignature.m */,
-				709FB7A21A491AAE006F35D1 /* AVOSCloudIM.h */,
-				709FB7A31A491AAE006F35D1 /* Info.plist */,
-			);
-			path = AVOSCloudIM;
-			sourceTree = "<group>";
-		};
-		709FB7A41A491AAE006F35D1 /* AVOSCloudSNS */ = {
-			isa = PBXGroup;
-			children = (
-				709FB7A51A491AAE006F35D1 /* AVOSCloudSNS.h */,
-				709FB7A61A491AAE006F35D1 /* AVOSCloudSNS.m */,
-				709FB7A71A491AAE006F35D1 /* AVOSCloudSNS_.h */,
-				709FB7A81A491AAE006F35D1 /* AVOSCloudSNSUtils.h */,
-				709FB7A91A491AAE006F35D1 /* AVOSCloudSNSUtils.m */,
-				709FB7AA1A491AAE006F35D1 /* AVSNSLoginViewController.h */,
-				709FB7AB1A491AAE006F35D1 /* AVSNSLoginViewController.m */,
-				709FB7AC1A491AAE006F35D1 /* AVSNSWebViewController.h */,
-				709FB7AD1A491AAE006F35D1 /* AVSNSWebViewController.m */,
-				709FB7AE1A491AAE006F35D1 /* AVUser+SNS.h */,
-				709FB7AF1A491AAE006F35D1 /* AVUser+SNS.m */,
-				709FB7B01A491AAE006F35D1 /* AVWebViewController.h */,
-				709FB7B11A491AAE006F35D1 /* AVWebViewController.m */,
-				709FB7B21A491AAE006F35D1 /* Info.plist */,
-				709FB7B31A491AAE006F35D1 /* NSURL+AVAdditions.h */,
-				709FB7B41A491AAE006F35D1 /* NSURL+AVAdditions.m */,
-			);
-			path = AVOSCloudSNS;
-			sourceTree = "<group>";
-		};
-		709FB7B61A491AAE006F35D1 /* AVOSCloudSNSTests */ = {
-			isa = PBXGroup;
-			children = (
-				709FB7B71A491AAE006F35D1 /* AVOSCloudSNSTests.m */,
-				709FB7B81A491AAE006F35D1 /* Info.plist */,
-			);
-			path = AVOSCloudSNSTests;
-			sourceTree = "<group>";
-		};
-		709FB7B91A491AAE006F35D1 /* AVOSCloudTests */ = {
-			isa = PBXGroup;
-			children = (
-				709FB7BA1A491AAE006F35D1 /* 16M.bin */,
-				709FB7BB1A491AAE006F35D1 /* 1M.bin */,
-				709FB7BC1A491AAE006F35D1 /* 32M.bin */,
-				709FB7BD1A491AAE006F35D1 /* 4M.bin */,
-				709FB7BE1A491AAE006F35D1 /* 8M.bin */,
-				709FB7BF1A491AAE006F35D1 /* alpacino.jpg */,
-				709FB7C01A491AAE006F35D1 /* Armor.h */,
-				709FB7C11A491AAE006F35D1 /* Armor.m */,
-				709FB7C21A491AAE006F35D1 /* AVCloudTest.m */,
-				709FB7C31A491AAE006F35D1 /* AVFileTest.m */,
-				709FB7C41A491AAE006F35D1 /* AVHelpersTest.m */,
-				709FB7C51A491AAE006F35D1 /* AVInstallationTest.m */,
-				709FB7C61A491AAE006F35D1 /* AVObjectTest.m */,
-				709FB7C71A491AAE006F35D1 /* AVPushTest.m */,
-				709FB7C81A491AAE006F35D1 /* AVQueryTest.m */,
-				709FB7C91A491AAE006F35D1 /* AVRelationTest.m */,
-				709FB7CA1A491AAE006F35D1 /* AVSearchQueryTest.m */,
-				709FB7CB1A491AAE006F35D1 /* AVStatusTest.m */,
-				709FB7CC1A491AAE006F35D1 /* AVSubclassTest.m */,
-				709FB7CD1A491AAE006F35D1 /* AVTestBase.h */,
-				709FB7CE1A491AAE006F35D1 /* AVTestBase.m */,
-				709FB7CF1A491AAE006F35D1 /* AVUserTest.m */,
-				709FB7D01A491AAE006F35D1 /* Info.plist */,
-				709FB7D11A491AAE006F35D1 /* TestAVSearchSortBuilder.m */,
-				709FB7D21A491AAE006F35D1 /* Thread.h */,
-				709FB7D31A491AAE006F35D1 /* Thread.m */,
-				709FB7D41A491AAE006F35D1 /* UserArmor.h */,
-				709FB7D51A491AAE006F35D1 /* UserArmor.m */,
-				709FB7D61A491AAE006F35D1 /* UserBar.h */,
-				709FB7D71A491AAE006F35D1 /* UserBar.m */,
-				709FB7D81A491AAE006F35D1 /* UserInfo.h */,
-				709FB7D91A491AAE006F35D1 /* UserInfo.m */,
-				709FB7DA1A491AAE006F35D1 /* XCTestCase+AsyncTesting.h */,
-				709FB7DB1A491AAE006F35D1 /* XCTestCase+AsyncTesting.m */,
-			);
-			path = AVOSCloudTests;
-			sourceTree = "<group>";
-		};
-		709FB7E41A491AAE006F35D1 /* XcodeCoverage */ = {
-			isa = PBXGroup;
-			children = (
-				709FB7E51A491AAE006F35D1 /* .gitignore */,
-				709FB7E61A491AAE006F35D1 /* cleancov */,
-				709FB7E71A491AAE006F35D1 /* env.sh */,
-				709FB7E81A491AAE006F35D1 /* envcov.sh */,
-				709FB7E91A491AAE006F35D1 /* exportenv.sh */,
-				709FB7EA1A491AAE006F35D1 /* getcov */,
-				709FB7EB1A491AAE006F35D1 /* lcov-1.10 */,
-				709FB7F11A491AAE006F35D1 /* LICENSE.txt */,
-				709FB7F21A491AAE006F35D1 /* llvm-cov-wrapper.sh */,
-				709FB7F31A491AAE006F35D1 /* README.md */,
-				709FB7F41A491AAE006F35D1 /* run_code_coverage_post.sh */,
-			);
-			path = XcodeCoverage;
-			sourceTree = "<group>";
-		};
-		709FB7EB1A491AAE006F35D1 /* lcov-1.10 */ = {
-			isa = PBXGroup;
-			children = (
-				709FB7EC1A491AAE006F35D1 /* bin */,
-				709FB7F01A491AAE006F35D1 /* COPYING */,
-			);
-			path = "lcov-1.10";
-			sourceTree = "<group>";
-		};
-		709FB7EC1A491AAE006F35D1 /* bin */ = {
-			isa = PBXGroup;
-			children = (
-				709FB7ED1A491AAE006F35D1 /* genhtml */,
-				709FB7EE1A491AAE006F35D1 /* geninfo */,
-				709FB7EF1A491AAE006F35D1 /* lcov */,
-			);
-			path = bin;
 			sourceTree = "<group>";
 		};
 		70A0646F1A24A3A2004DA201 /* MessageDisplayKit */ = {
@@ -3346,7 +2477,7 @@
 		8CF21DC9197FCCC1002B9220 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				709FB6BC1A491AAE006F35D1 /* AVOS */,
+				70B54F1E1A4BC0D000503A0A /* AVOSCloud.framework */,
 				704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */,
 				704727A61A2CFE6300690286 /* libz.dylib */,
 				8C470C9C19926019006A4E87 /* libiconv.dylib */,
@@ -3428,63 +2559,12 @@
 			mainGroup = 8CF21DBE197FCCC1002B9220;
 			productRefGroup = 8CF21DC8197FCCC1002B9220 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 709FB6C01A491AAE006F35D1 /* Products */;
-					ProjectRef = 709FB6BF1A491AAE006F35D1 /* AVOS.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				8CF21DC6197FCCC1002B9220 /* LeanChat */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		709FB8041A491AAE006F35D1 /* AVOSCloud.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = AVOSCloud.framework;
-			remoteRef = 709FB8031A491AAE006F35D1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		709FB8061A491AAE006F35D1 /* AVOSCloudTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = AVOSCloudTests.xctest;
-			remoteRef = 709FB8051A491AAE006F35D1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		709FB8081A491AAE006F35D1 /* AVOSCloudSNS.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = AVOSCloudSNS.framework;
-			remoteRef = 709FB8071A491AAE006F35D1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		709FB80A1A491AAE006F35D1 /* AVOSCloudSNSTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = AVOSCloudSNSTests.xctest;
-			remoteRef = 709FB8091A491AAE006F35D1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		709FB80C1A491AAE006F35D1 /* AVOSCloudIM.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = AVOSCloudIM.framework;
-			remoteRef = 709FB80B1A491AAE006F35D1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		709FB80E1A491AAE006F35D1 /* AVOSCloudIMTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = AVOSCloudIMTests.xctest;
-			remoteRef = 709FB80D1A491AAE006F35D1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8CF21DC5197FCCC1002B9220 /* Resources */ = {
@@ -4048,6 +3128,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
+					/Users/lzw/Downloads,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AVOSChatDemo/LeanChat-Prefix.pch";
@@ -4057,11 +3138,12 @@
 					"$(PROJECT_DIR)/$(TARGET_NAME)/third_party/ZXing",
 				);
 				INFOPLIST_FILE = "AVOSChatDemo/LeanChat-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = LeanChat;
 				PROVISIONING_PROFILE = "d513b42b-20df-408b-a68b-06c5684aa59f";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -4081,6 +3163,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
+					/Users/lzw/Downloads,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AVOSChatDemo/LeanChat-Prefix.pch";
@@ -4090,11 +3173,12 @@
 					"$(PROJECT_DIR)/$(TARGET_NAME)/third_party/ZXing",
 				);
 				INFOPLIST_FILE = "AVOSChatDemo/LeanChat-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = LeanChat;
 				PROVISIONING_PROFILE = "d513b42b-20df-408b-a68b-06c5684aa59f";
 				TARGETED_DEVICE_FAMILY = 1;

@@ -49,6 +49,8 @@ typedef void (^CDBlock)();
 
 +(void)setPolicyOfAVQuery:(AVQuery*)query isNetwokOnly:(BOOL)onlyNetwork;
 
++(NSString*)uuid;
+
 #pragma mark - async
 +(void)runInGlobalQueue:(void (^)())queue;
 +(void)runInMainQueue:(void (^)())queue;
@@ -56,5 +58,9 @@ typedef void (^CDBlock)();
 
 +(void)postNotification:(NSString*)name;
 +(void)notifyGroupUpdate;
+
++ (int)getDurationOfAudioPath:(NSString *)path ;
+
++ (void)downloadWithUrl:(NSString *)url toPath:(NSString *)path;
 
 @end

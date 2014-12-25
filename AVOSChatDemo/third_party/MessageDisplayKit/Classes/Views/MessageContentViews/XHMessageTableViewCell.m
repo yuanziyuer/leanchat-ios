@@ -16,6 +16,9 @@ static const CGFloat kXHAvatorPaddingY = 15;
 
 static const CGFloat kXHBubbleMessageViewPadding = 8;
 
+static const CGFloat kXHAttributedLabelWidth=40;
+static const CGFloat kXHAttributedLabelHeight=20;
+
 
 @interface XHMessageTableViewCell () {
     
@@ -26,6 +29,8 @@ static const CGFloat kXHBubbleMessageViewPadding = 8;
 @property (nonatomic, weak, readwrite) UIButton *avatorButton;
 
 @property (nonatomic, weak, readwrite) UILabel *userNameLabel;
+
+@property (nonatomic, weak, readwrite) UILabel *attributedLabel;
 
 @property (nonatomic, weak, readwrite) LKBadgeView *timestampLabel;
 
@@ -154,6 +159,8 @@ static const CGFloat kXHBubbleMessageViewPadding = 8;
     
     // 4、配置需要显示什么消息内容，比如语音、文字、视频、图片
     [self configureMessageBubbleViewWithMessage:message];
+    
+    [self configAttributedTextWithMessage:message];
 }
 
 - (void)configureTimestamp:(BOOL)displayTimestamp atMessage:(id <XHMessageModel>)message {
@@ -200,7 +207,11 @@ static const CGFloat kXHBubbleMessageViewPadding = 8;
         }
         case XHBubbleMessageMediaTypeText:
         case XHBubbleMessageMediaTypeVoice: {
-            self.messageBubbleView.voiceDurationLabel.text = [NSString stringWithFormat:@"%@\'\'", message.voiceDuration];
+            NSString* durationStr=@"";
+            if(message.voiceDuration!=0){
+                durationStr=[NSString stringWithFormat:@"%@\'\'", message.voiceDuration];
+            }
+            self.messageBubbleView.voiceDurationLabel.text = durationStr;
 //            break;
         }
         case XHBubbleMessageMediaTypeEmotion: {
@@ -218,6 +229,10 @@ static const CGFloat kXHBubbleMessageViewPadding = 8;
             break;
     }
     [self.messageBubbleView configureCellWithMessage:message];
+}
+
+- (void)configAttributedTextWithMessage:(id <XHMessageModel>)message {
+    self.attributedLabel.text=[message attributedText];
 }
 
 #pragma mark - Gestures
@@ -359,32 +374,37 @@ static const CGFloat kXHBubbleMessageViewPadding = 8;
         
         // 2、配置头像
         // avator
-        CGRect avatorButtonFrame;
-        switch (message.bubbleMessageType) {
-            case XHBubbleMessageTypeReceiving:
-                avatorButtonFrame = CGRectMake(kXHAvatorPaddingX, kXHAvatorPaddingY + (self.displayTimestamp ? kXHTimeStampLabelHeight : 0), kXHAvatarImageSize, kXHAvatarImageSize);
-                break;
-            case XHBubbleMessageTypeSending:
-                avatorButtonFrame = CGRectMake(CGRectGetWidth(self.bounds) - kXHAvatarImageSize - kXHAvatorPaddingX, kXHAvatorPaddingY + (self.displayTimestamp ? kXHTimeStampLabelHeight : 0), kXHAvatarImageSize, kXHAvatarImageSize);
-                break;
-            default:
-                break;
+        
+        if(!self.avatorButton){
+            CGRect avatorButtonFrame;
+            switch (message.bubbleMessageType) {
+                case XHBubbleMessageTypeReceiving:
+                    avatorButtonFrame = CGRectMake(kXHAvatorPaddingX, kXHAvatorPaddingY + (self.displayTimestamp ? kXHTimeStampLabelHeight : 0), kXHAvatarImageSize, kXHAvatarImageSize);
+                    break;
+                case XHBubbleMessageTypeSending:
+                    avatorButtonFrame = CGRectMake(CGRectGetWidth(self.bounds) - kXHAvatarImageSize - kXHAvatorPaddingX, kXHAvatorPaddingY + (self.displayTimestamp ? kXHTimeStampLabelHeight : 0), kXHAvatarImageSize, kXHAvatarImageSize);
+                    break;
+                default:
+                    break;
+            }
+            
+            UIButton *avatorButton = [[UIButton alloc] initWithFrame:avatorButtonFrame];
+            [avatorButton setImage:[XHMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"avator"] messageAvatorType:XHMessageAvatorTypeCircle] forState:UIControlStateNormal];
+            [avatorButton addTarget:self action:@selector(avatorButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [self.contentView addSubview:avatorButton];
+            self.avatorButton = avatorButton;
         }
         
-        UIButton *avatorButton = [[UIButton alloc] initWithFrame:avatorButtonFrame];
-        [avatorButton setImage:[XHMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"avator"] messageAvatorType:XHMessageAvatorTypeCircle] forState:UIControlStateNormal];
-        [avatorButton addTarget:self action:@selector(avatorButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [self.contentView addSubview:avatorButton];
-        self.avatorButton = avatorButton;
-        
         // 3、配置用户名
-        UILabel *userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.avatorButton.bounds) + 20, 20)];
-        userNameLabel.textAlignment = NSTextAlignmentCenter;
-        userNameLabel.backgroundColor = [UIColor clearColor];
-        userNameLabel.font = [UIFont systemFontOfSize:12];
-        userNameLabel.textColor = [UIColor colorWithRed:0.140 green:0.635 blue:0.969 alpha:1.000];
-        [self.contentView addSubview:userNameLabel];
-        self.userNameLabel = userNameLabel;
+        if(!self.userNameLabel){
+            UILabel *userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.avatorButton.bounds) + 20, 20)];
+            userNameLabel.textAlignment = NSTextAlignmentCenter;
+            userNameLabel.backgroundColor = [UIColor clearColor];
+            userNameLabel.font = [UIFont systemFontOfSize:12];
+            userNameLabel.textColor = [UIColor colorWithRed:0.140 green:0.635 blue:0.969 alpha:1.000];
+            [self.contentView addSubview:userNameLabel];
+            self.userNameLabel = userNameLabel;
+        }
         
         // 4、配置需要显示什么消息内容，比如语音、文字、视频、图片
         if (!_messageBubbleView) {
@@ -410,6 +430,16 @@ static const CGFloat kXHBubbleMessageViewPadding = 8;
             [self.contentView addSubview:messageBubbleView];
             [self.contentView sendSubviewToBack:messageBubbleView];
             self.messageBubbleView = messageBubbleView;
+        }
+        
+        if(!self.attributedLabel){
+            CGRect attributedLabelFrame=CGRectMake(0, 0, kXHAttributedLabelWidth, kXHAttributedLabelHeight);
+            UILabel* attributedLabel=[[UILabel alloc] initWithFrame:attributedLabelFrame];
+            attributedLabel.font=[UIFont systemFontOfSize:10];
+            //attributedLabel.backgroundColor=[UIColor redColor];
+            [self.contentView addSubview:attributedLabel];
+            attributedLabel.textAlignment=NSTextAlignmentRight;
+            self.attributedLabel=attributedLabel;
         }
     }
     return self;
@@ -452,6 +482,20 @@ static const CGFloat kXHBubbleMessageViewPadding = 8;
     
     self.messageBubbleView.frame = bubbleMessageViewFrame;
     
+    if(self.bubbleMessageType==XHBubbleMessageTypeSending){
+        self.attributedLabel.hidden=NO;
+        CGFloat attrX=CGRectGetMinX(self.messageBubbleView.bubbleFrame)-kXHAttributedLabelWidth-3;
+        CGFloat halfH=self.messageBubbleView.bubbleFrame.size.height/2;
+        CGRect attrFrame=self.attributedLabel.frame;
+        attrFrame.origin.y=layoutOriginY+halfH;
+        if([self.messageBubbleView.message messageMediaType]==XHBubbleMessageMediaTypeVoice && self.messageBubbleView.message.voiceDuration!=0){
+            attrX=attrX-15;
+        }
+        attrFrame.origin.x=attrX;
+        self.attributedLabel.frame=attrFrame;
+    }else{
+        self.attributedLabel.hidden=YES;
+    }
 //    self.messageBubbleView.backgroundColor=[UIColor blackColor];
 //    self.avatorButton.backgroundColor=[UIColor redColor];
 //    self.userNameLabel.backgroundColor=[UIColor greenColor];

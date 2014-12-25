@@ -116,18 +116,7 @@ static BOOL initialized = NO;
 }
 
 
-+(NSString*)uuid{
-    NSString *chars=@"abcdefghijklmnopgrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    assert(chars.length==62);
-    int len=chars.length;
-    NSMutableString* result=[[NSMutableString alloc] init];
-    for(int i=0;i<24;i++){
-        int p=arc4random_uniform(len);
-        NSRange range=NSMakeRange(p, 1);
-        [result appendString:[chars substringWithRange:range]];
-    }
-    return result;
-}
+
 
 +(NSString*)getConvidOfRoomType:(CDMsgRoomType)roomType otherId:(NSString*)otherId groupId:(NSString*)groupId{
     if(roomType==CDMsgRoomTypeSingle){
@@ -140,7 +129,7 @@ static BOOL initialized = NO;
 
 #pragma mark - send message
 
--(CDMsg*)createAndSendMsgWithObjectId:(NSString*)objectId type:(CDMsgType)type content:(NSString*)content toPeerId:(NSString*)toPeerId group:(AVGroup*)group{
+-(CDMsg*)createMsgWithType:(CDMsgType)type objectId:(NSString*)objectId content:(NSString*)content toPeerId:(NSString*)toPeerId group:(AVGroup*)group{
     CDMsg* msg=[[CDMsg alloc] init];
     msg.toPeerId=toPeerId;
     int64_t currentTime=[[NSDate date] timeIntervalSince1970]*1000;
@@ -159,13 +148,13 @@ static BOOL initialized = NO;
     }
     msg.readStatus=CDMsgReadStatusHaveRead;
     msg.convid=[CDSessionManager getConvidOfRoomType:msg.roomType otherId:msg.toPeerId groupId:group.groupId];
-    msg.objectId=objectId;
+    if(objectId){
+        msg.objectId=objectId;
+    }else{
+        msg.objectId=[CDUtils uuid];
+    }
     msg.type=type;
-    return [self sendMsg:msg group:group];
-}
-
--(CDMsg*)createAndSendMsgWithType:(CDMsgType)type content:(NSString*)content toPeerId:(NSString*)toPeerId group:(AVGroup*)group{
-    return [self createAndSendMsgWithObjectId:[CDSessionManager uuid] type:type content:content toPeerId:toPeerId group:group];
+    return msg;
 }
 
 -(AVSession*)getSession{
@@ -175,7 +164,7 @@ static BOOL initialized = NO;
 -(CDMsg*)sendMsg:(CDMsg*)msg group:(AVGroup*)group{
     if(!group){
         AVMessage *avMsg=[AVMessage messageForPeerWithSession:_session toPeerId:msg.toPeerId payload:[msg toMessagePayload]];
-        [_session sendMessage:avMsg];
+        [_session sendMessage:avMsg requestReceipt:YES];
     }else{
         AVMessage *avMsg=[AVMessage messageForGroup:group payload:[msg toMessagePayload]];
         [group sendMessage:avMsg];
@@ -183,14 +172,79 @@ static BOOL initialized = NO;
     return msg;
 }
 
-- (void)sendMessageWithType:(CDMsgType)type content:(NSString *)content  toPeerId:(NSString *)toPeerId group:(AVGroup*)group{
-    CDMsg* msg=[self createAndSendMsgWithType:type content:content toPeerId:toPeerId group:group];
-    [self insertMessageToDBAndNotify:msg];
+-(void)uploadFileMsg:(CDMsg*)msg block:(AVIdResultBlock)block{
+    NSString* path=[CDSessionManager getPathByObjectId:msg.objectId];
+    NSMutableString *name;
+    name = [self getAVFileName];
+    AVFile *f=[AVFile fileWithName:name contentsAtPath:path];
+    [f saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if(error){
+            block(nil,error);
+        }else{
+            block(f,nil);
+        }
+    }];
+}
+
+-(void)convertAudioFile:(AVFile*)file block:(AVIdResultBlock)block{
+    NSString* url=[@"https://leancloud.cn/1.1/qiniu/pfop/" stringByAppendingString:file.objectId];
+    NSMutableURLRequest* request=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+    [request setValue:AVOSAppID forHTTPHeaderField:@"X-AVOSCloud-Application-Id"];
+    [request setValue:AVOSAppKey forHTTPHeaderField:@"X-AVOSCloud-Application-Key"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    NSDictionary* params=@{@"fops":@"avthumb/aac"};
+    
+    NSData* data=[NSJSONSerialization dataWithJSONObject:params options:kNilOptions error:nil];
+    [request setHTTPBody:data];
+    [request setValue:[NSString stringWithFormat:@"%d", [data length]] forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPMethod:@"POST"];
+    NSOperationQueue *queue=[[NSOperationQueue alloc] init];
+    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSHTTPURLResponse* res=(NSHTTPURLResponse*)response;
+        NSDictionary* dict=[NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        if(connectionError!=nil || [res statusCode]==200){
+            [self runTwiceTimeWithTimes:0 avfile:file persistentId:[dict objectForKey:@"persistentId"] callback:block];
+        }else{
+            block(nil,[[NSError alloc] initWithDomain:[dict description] code:0 userInfo:nil]);
+        }
+    }];
+}
+
+-(void)uploadMsg:(CDMsg*)msg block:(AVIdResultBlock)block{
+    [self uploadFileMsg:msg block:^(id object, NSError *error) {
+        AVFile* file=(AVFile*)object;
+        if(msg.type==CDMsgTypeImage){
+            block(file.url,nil);
+        }else if(msg.type==CDMsgTypeAudio){
+            [self convertAudioFile:file block:block];
+            //block(file.url,nil);
+        }
+    }];
+}
+
+-(void)postUpdatedMsg:(CDMsg*)msg{
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_MESSAGE_UPDATED object:msg userInfo:nil];
 }
 
 - (void)sendMessageWithObjectId:(NSString*)objectId content:(NSString *)content type:(CDMsgType)type toPeerId:(NSString *)toPeerId group:(AVGroup*)group{
-    CDMsg* msg=[self createAndSendMsgWithObjectId:objectId type:type content:content toPeerId:toPeerId group:group];
-    [self insertMessageToDBAndNotify:msg];
+    CDMsg* msg=[self createMsgWithType:type objectId:objectId content:content toPeerId:toPeerId group:group];
+    [CDDatabaseService insertMsgToDB:msg];
+    [self postUpdatedMsg:msg];
+    if(msg.type==CDMsgTypeAudio || msg.type==CDMsgTypeImage){
+        [self uploadMsg:msg block:^(id object, NSError *error) {
+            if(error){
+                msg.status=CDMsgStatusSendFailed;
+                [self postUpdatedMsg:msg];
+            }else{
+                NSString* url=(NSString*)object;
+                msg.content=url;
+                [CDDatabaseService updateMsgWithId:msg.objectId content:url];
+                [self sendMsg:msg group:group];
+            }
+        }];
+    }else{
+        [self sendMsg:msg group:group];
+    }
 }
 
 -(void)runTwiceTimeWithTimes:(int)times avfile:(AVFile*)file persistentId:(NSString*)persistentId callback:(AVIdResultBlock)callback{
@@ -283,7 +337,7 @@ static BOOL initialized = NO;
 }
 
 +(NSString*)getPathByObjectId:(NSString*)objectId{
-    return [[self getFilesPath] stringByAppendingString:objectId];
+    return [[self getFilesPath] stringByAppendingFormat:@"%@",objectId];
 }
 
 
@@ -293,29 +347,6 @@ static BOOL initialized = NO;
     NSMutableString *name=[[curUser username] mutableCopy];
     [name appendFormat:@"%f",time];
     return name;
-}
-
-- (void)sendAttachmentWithObjectId:(NSString*)objectId type:(CDMsgType)type toPeerId:(NSString *)toPeerId group:(AVGroup*)group{
-    NSString* path=[CDSessionManager getPathByObjectId:objectId];
-    NSMutableString *name;
-    name = [self getAVFileName];
-    AVFile *f=[AVFile fileWithName:name contentsAtPath:path];
-    [f saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if(error){
-            [CDUtils alert:[error localizedDescription]];
-        }else{
-            [self sendMessageWithObjectId:objectId content:f.url type:type toPeerId:toPeerId group:group];
-        }
-    }];
-}
-
-- (void )insertMessageToDBAndNotify:(CDMsg*)msg{
-    [CDDatabaseService insertMsgToDB:msg];
-    [self notifyMessageUpdate];
-}
-
--(void)notifyMessageUpdate{
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_MESSAGE_UPDATED object:nil userInfo:nil];
 }
 
 #pragma mark - history message
@@ -332,29 +363,48 @@ static BOOL initialized = NO;
 
 #pragma mark - comman message handle
 
--(void)messageSendFinish:(AVMessage*)avMsg group:(AVGroup*)group{
+-(void)didMessageSendFinish:(AVMessage*)avMsg group:(AVGroup*)group{
     CDMsg* msg=[CDMsg fromAVMessage:avMsg];
+    msg.status=CDMsgStatusSendSucceed;
+    [self setRoomTypeAndConvidOfMsg:msg group:group];
     [CDDatabaseService updateMsgWithId:msg.objectId status:CDMsgStatusSendSucceed];
-    [self notifyMessageUpdate];
+    [self postUpdatedMsg:msg];
 }
 
--(void)messageSendFailure:(AVMessage*)avMsg group:(AVGroup*)group{
-    NSString* objectId=[CDMsg getObjectIdByAVMessage:avMsg];
-    [CDDatabaseService updateMsgWithId:objectId status:CDMsgStatusSendFailed];
-    [self notifyMessageUpdate];
+-(void)didMessageSendFailure:(AVMessage*)avMsg group:(AVGroup*)group{
+    CDMsg* msg=[CDMsg fromAVMessage:avMsg];
+    msg.status=CDMsgStatusSendFailed;
+    [self setRoomTypeAndConvidOfMsg:msg group:group];
+    [CDDatabaseService updateMsgWithId:msg.objectId status:CDMsgStatusSendFailed];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5*NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [self postUpdatedMsg:msg];
+    });
+}
+
+-(void)didMessageArrived:(AVMessage*)avMsg{
+    CDMsg* msg=[CDMsg fromAVMessage:avMsg];
+    msg.status=CDMsgStatusSendReceived;
+    [self setRoomTypeAndConvidOfMsg:msg group:nil];
+    [CDDatabaseService updateMsgWithId:msg.objectId status:CDMsgStatusSendReceived];
+    [self postUpdatedMsg:msg];
+}
+
+- (void)setRoomTypeAndConvidOfMsg:(CDMsg *)msg group:(AVGroup *)group {
+    if(group){
+        msg.roomType=CDMsgRoomTypeGroup;
+        msg.convid=group.groupId;
+    }else{
+        assert(msg.toPeerId!=nil && msg.fromPeerId!=nil);
+        msg.roomType=CDMsgRoomTypeSingle;
+        msg.convid=[CDSessionManager convidOfSelfId:msg.toPeerId andOtherId:msg.fromPeerId];
+    }
 }
 
 -(void)didReceiveAVMessage:(AVMessage*)avMsg group:(AVGroup*)group{
     NSLog(@"%s",__PRETTY_FUNCTION__);
     NSLog(@"payload=%@",avMsg.payload);
     CDMsg* msg=[CDMsg fromAVMessage:avMsg];
-    if(group){
-        msg.roomType=CDMsgRoomTypeGroup;
-        msg.convid=group.groupId;
-    }else{
-        msg.roomType=CDMsgRoomTypeSingle;
-        msg.convid=[CDSessionManager convidOfSelfId:[AVUser currentUser].objectId andOtherId:avMsg.fromPeerId];
-    }
+    [self setRoomTypeAndConvidOfMsg:msg group:group];
     msg.status=CDMsgStatusSendReceived;
     msg.readStatus=CDMsgReadStatusUnread;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -362,18 +412,18 @@ static BOOL initialized = NO;
             NSString* path=[CDSessionManager getPathByObjectId:msg.objectId];
             NSFileManager* fileMan=[NSFileManager defaultManager];
             if([fileMan fileExistsAtPath:path]==NO){
-                NSData* data=[[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:msg.content]];
-                NSError* error;
-                [data writeToFile:path options:NSDataWritingAtomic error:&error];
-                if(error==nil){
-                }else{
-                    NSLog(@"error when download file");
-                    return ;
-                }
+                NSString* url=msg.content;
+                AVFile* file=[AVFile fileWithURL:url];
+                NSData* data=[file getData];
+                [data writeToFile:path atomically:YES];
+                //[CDUtils downloadWithUrl:url toPath:path];
+                int duration=[CDUtils getDurationOfAudioPath:path];
+                NSLog(@"du=%d",duration);
             }
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self insertMessageToDBAndNotify:msg];
+            [CDDatabaseService insertMsgToDB:msg];
+            [self postUpdatedMsg:msg];
         });
     });
 }
@@ -401,11 +451,11 @@ static BOOL initialized = NO;
 - (void)session:(AVSession *)session messageSendFailed:(AVMessage *)message error:(NSError *)error {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     NSLog(@"session:%@ message:%@ toPeerId:%@ error:%@", session.peerId, message.payload, message.toPeerId, error);
-    [self messageSendFailure:message group:nil];
+    [self didMessageSendFailure:message group:nil];
 }
 
 - (void)session:(AVSession *)session messageSendFinished:(AVMessage *)message {
-    [self messageSendFinish:message group:nil];
+    [self didMessageSendFinish:message group:nil];
     NSLog(@"%s", __PRETTY_FUNCTION__);
     NSLog(@"session:%@ message:%@ toPeerId:%@", session.peerId, message.payload, message.toPeerId);
 }
@@ -420,13 +470,18 @@ static BOOL initialized = NO;
     NSLog(@"session:%@ error:%@", session.peerId, error);
 }
 
+- (void)session:(AVSession *)session messageArrived:(AVMessage *)message{
+    NSLog(@"%s",__PRETTY_FUNCTION__);
+    NSLog(@"%@",message);
+    [self didMessageArrived:message];
+}
+
 
 #pragma mark - AVGroupDelegate
 
 - (void)group:(AVGroup *)group didReceiveMessage:(AVMessage *)message {
     [self didReceiveAVMessage:message group:group];
     //[[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SESSION_UPDATED object:group.session userInfo:nil];
-
 }
 
 - (void)group:(AVGroup *)group didReceiveEvent:(AVGroupEvent)event peerIds:(NSArray *)peerIds {
@@ -438,7 +493,7 @@ static BOOL initialized = NO;
 }
 
 - (void)group:(AVGroup *)group messageSendFinished:(AVMessage *)message {
-    [self messageSendFinish:message group:group];
+    [self didMessageSendFinish:message group:group];
     NSLog(@"%s", __PRETTY_FUNCTION__);
     NSLog(@"group:%@ message:%@", group.groupId, message.payload);
 }

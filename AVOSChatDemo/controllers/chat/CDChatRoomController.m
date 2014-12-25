@@ -34,6 +34,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 @interface CDChatRoomController () <UINavigationControllerDelegate> {
     NSMutableDictionary *_loadedData;
     CDSessionManager* sessionManager;
+    NSMutableArray* _msgs;
     BOOL isLoadingMsg;
 }
 
@@ -110,7 +111,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         [center addObserver:self selector:@selector(initWithCurrentChatGroup) name:NOTIFICATION_GROUP_UPDATED object:nil];
         [self initWithCurrentChatGroup];
     }
-    [self messageUpdated:nil];
+    [self loadMsgsIsLoadMore:NO];
 }
 
 -(void)initWithCurrentChatGroup{
@@ -196,24 +197,21 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     AVUser* fromUser=[CDCacheService lookupUser:msg.fromPeerId];
     AVUser* curUser=[AVUser currentUser];
     XHMessage* xhMessage;
+    NSString* attrText=[msg getStatusDesc];
     if(msg.type==CDMsgTypeText){
-        xhMessage=[[XHMessage alloc] initWithText:[CDEmotionUtils convertWithText:msg.content toEmoji:YES] sender:fromUser.username timestamp:[msg getTimestampDate]];
+        xhMessage=[[XHMessage alloc] initWithText:[CDEmotionUtils convertWithText:msg.content toEmoji:YES] sender:fromUser.username timestamp:[msg getTimestampDate] attributedText:attrText];
     }else if(msg.type==CDMsgTypeAudio){
         NSString* objectId=msg.objectId;
         NSString* path=[CDSessionManager getPathByObjectId:objectId];
-        NSDictionary* fileAttrs=[[NSFileManager defaultManager] fileAttributesAtPath:path traverseLink:YES];
-        unsigned long long size=[fileAttrs fileSize];
-        int oneSecSize=15000;
-        int duration=(int)(size*1.0f/oneSecSize+1);
-        xhMessage=[[XHMessage alloc] initWithVoicePath:path voiceUrl:msg.content voiceDuration:[NSString stringWithFormat:@"%d",duration] sender:fromUser.username timestamp:[msg getTimestampDate]];
+        xhMessage=[[XHMessage alloc] initWithVoicePath:path voiceUrl:nil voiceDuration:0 sender:fromUser.username timestamp:[msg getTimestampDate] attributedText:attrText];
     }else if(msg.type==CDMsgTypeLocation){
         NSArray* parts=[msg.content componentsSeparatedByString:@"&"];
         double latitude=[[parts objectAtIndex:1] doubleValue];
         double longitude=[[parts objectAtIndex:2] doubleValue];
         
-        xhMessage=[[XHMessage alloc] initWithLocalPositionPhoto:[UIImage imageNamed:@"Fav_Cell_Loc"] geolocations:[parts objectAtIndex:0] location:[[CLLocation alloc] initWithLatitude:latitude longitude:longitude] sender:fromUser.username timestamp:[msg getTimestampDate]];
+        xhMessage=[[XHMessage alloc] initWithLocalPositionPhoto:[UIImage imageNamed:@"Fav_Cell_Loc"] geolocations:[parts objectAtIndex:0] location:[[CLLocation alloc] initWithLatitude:latitude longitude:longitude] sender:fromUser.username timestamp:[msg getTimestampDate] attributedText:attrText];
     }else if(msg.type==CDMsgTypeImage){
-        xhMessage=[[XHMessage alloc] initWithPhoto:[self getImageByMsg:msg] thumbnailUrl:msg.content originPhotoUrl:msg.content sender:fromUser.username timestamp:[msg getTimestampDate]];
+        xhMessage=[[XHMessage alloc] initWithPhoto:[self getImageByMsg:msg] thumbnailUrl:msg.content originPhotoUrl:msg.content sender:fromUser.username timestamp:[msg getTimestampDate] attributedText:attrText];
     }
     xhMessage.avator=[self getAvatarByMsg:msg];
     xhMessage.avatorUrl=nil;
@@ -263,8 +261,50 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 #pragma mark - messageUpdated
 
+-(NSString*)getOtherId{
+    if(_type==CDMsgRoomTypeSingle){
+        return _chatUser.objectId;
+    }else{
+        return _chatGroup.objectId;
+    }
+}
+
 - (void)messageUpdated:(NSNotification *)notification {
-    [self loadMsgsIsLoadMore:NO];
+    CDMsg* msg=(CDMsg*)notification.object;
+    NSString* otherId=[msg getOtherId];
+    assert(otherId !=nil);
+    if([otherId isEqualToString:[self getOtherId]]){
+        BOOL found=NO;
+        CDMsg* foundMsg;
+        for(CDMsg* msgItem in _msgs){
+            if([msgItem.objectId isEqualToString:msg.objectId]){
+                found=YES;
+                foundMsg=msgItem;
+                break;
+            }
+        }
+        if(!found){
+            [self loadMsgsIsLoadMore:NO];
+        }else{
+            foundMsg.status=msg.status;
+            if([foundMsg.content isEqualToString:@""]){
+                foundMsg.content=msg.content;
+            }
+            NSMutableArray* xhMsgs=[self getXHMessages:_msgs];
+            self.messages=xhMsgs;
+            [self.messageTableView reloadData];
+        }
+    }else{
+        
+    }
+}
+
+- (NSMutableArray *)getXHMessages:(NSMutableArray *)msgs {
+    NSMutableArray* messages=[[NSMutableArray alloc] init];
+    for(CDMsg* msg in msgs){
+        [messages addObject:[self getXHMessageByMsg:msg]];
+    }
+    return messages;
 }
 
 -(void)loadMsgsIsLoadMore:(BOOL)isLoadMore{
@@ -303,23 +343,27 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
                 [userIds addObject:msg.fromPeerId];
             }
             [CDCacheService cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
-                [CDUtils filterError:error callback:^{
-                    NSMutableArray* messages=[[NSMutableArray alloc] init];
-                    for(CDMsg* msg in msgs){
-                        [messages addObject:[self getXHMessageByMsg:msg]];
-                    }
+                if(error){
+                    [CDUtils alertError:error];
+                    isLoadingMsg=NO;
+                }else{
+                    NSMutableArray *messages;
+                    messages = [self getXHMessages:msgs];
                     if(isLoadMore==NO){
                         self.messages=messages;
+                        _msgs=msgs;
                         [self.messageTableView reloadData];
                         [self scrollToBottomAnimated:NO];
+                        isLoadingMsg=NO;
                     }else{
-                        [self insertOldMessages:messages];
+                        NSMutableArray* newMsgs=[NSMutableArray arrayWithArray:msgs];
+                        [newMsgs addObjectsFromArray:_msgs];
+                        _msgs=newMsgs;
+                        [self insertOldMessages:messages completion:^{
+                            isLoadingMsg=NO;
+                        }];
                     }
-                }];
-                // when fast scrolling at top, insertOldMessages is doing works in tableview , so delay 0.5s to permit loading msgs
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                    isLoadingMsg=NO;
-                });
+                }
             }];
         });
     });
@@ -328,13 +372,13 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 #pragma mark - send message
 
 - (void)sendAttachmentWithObjectId:(NSString *)objectId type:(CDMsgType)type{
-    [sessionManager sendAttachmentWithObjectId:objectId type:type toPeerId:self.chatUser.objectId group:self.group];
+    [sessionManager sendMessageWithObjectId:objectId content:@"" type:type toPeerId:self.chatUser.objectId group:self.group];
 }
 
 -(void)sendImage:(UIImage*)image{
     NSData *imageData = UIImageJPEGRepresentation(image, 0.6);
     
-    NSString* objectId=[CDSessionManager uuid];
+    NSString* objectId=[CDUtils uuid];
     NSString* path=[CDSessionManager getPathByObjectId:objectId];
     NSError* error;
     [imageData writeToFile:path options:NSDataWritingAtomic error:&error];
@@ -369,6 +413,8 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
             break;
         case XHBubbleMessageMediaTypeVoice: {
             DLog(@"message : %@", message.voicePath);
+            NSFileManager* man=[NSFileManager defaultManager];
+            BOOL exists=[man fileExistsAtPath:message.voicePath];
             
             // Mark the voice as read and hide the red dot.
             //message.isRead = YES;
@@ -470,8 +516,11 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
  */
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date {
     if([text length]>0){
-        [sessionManager sendMessageWithType:CDMsgTypeText content:[CDEmotionUtils convertWithText:text toEmoji:NO]
-                                   toPeerId:self.chatUser.objectId group:self.group];
+        [sessionManager sendMessageWithObjectId:nil
+                                        content:[CDEmotionUtils convertWithText:text toEmoji:NO]
+                                           type:CDMsgTypeText
+                                       toPeerId:self.chatUser.objectId
+                                          group:self.group];
         [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
     }
 }
@@ -507,17 +556,12 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
  *  @param date             发送时间
  */
 - (void)didSendVoice:(NSString *)voicePath voiceDuration:(NSString *)voiceDuration fromSender:(NSString *)sender onDate:(NSDate *)date {
-    NSString* objectId=[CDSessionManager uuid];
+    NSString* objectId=[CDUtils uuid];
     NSString* path=[CDSessionManager getPathByObjectId:objectId];
     NSError* error;
     [[NSFileManager defaultManager] copyItemAtPath:voicePath toPath:path error:&error];
     if(error==nil){
-        [sessionManager sendAudioWithId:objectId toPeerId:self.chatUser.objectId group:self.group callback:^(BOOL succeeded, NSError *error) {
-            [CDUtils filterError:error callback:^{
-                NSLog(@"succeed");
-                [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeVoice];
-            }];
-        }];
+        [self sendAttachmentWithObjectId:objectId type:CDMsgTypeAudio];
     }else{
         [CDUtils alertError:error];
     }

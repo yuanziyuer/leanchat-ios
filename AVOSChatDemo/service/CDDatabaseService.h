@@ -25,4 +25,6 @@
 
 +(void)updateMsgWithId:(NSString*)objectId status:(CDMsgStatus)status;
 
++(void)updateMsgWithId:(NSString*)objectId content:(NSString*)content;
+
 @end

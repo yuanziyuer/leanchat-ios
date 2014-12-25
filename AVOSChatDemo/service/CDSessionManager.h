@@ -12,31 +12,37 @@
 #import "CDChatGroup.h"
 
 @interface CDSessionManager : NSObject <AVSessionDelegate, AVSignatureDelegate, AVGroupDelegate>
+
 + (instancetype)sharedInstance;
 
 #pragma mark - session
 - (void)watchPeerId:(NSString *)peerId;
+
 -(void)unwatchPeerId:(NSString*)peerId;
+
 -(void)openSession;
+
 -(void)closeSession;
 
 #pragma mark - operation message
-- (void)sendMessageWithType:(CDMsgType)type content:(NSString *)content  toPeerId:(NSString *)toPeerId group:(AVGroup*)group;
 
-- (void)sendAttachmentWithObjectId:(NSString*)objectId type:(CDMsgType)type toPeerId:(NSString *)toPeerId group:(AVGroup*)group;
--(void)sendAudioWithId:(NSString*)objectId toPeerId:(NSString*)toPeerId group:(AVGroup*)group callback:(AVBooleanResultBlock)callback;
+- (void)sendMessageWithObjectId:(NSString*)objectId content:(NSString *)content type:(CDMsgType)type toPeerId:(NSString *)toPeerId group:(AVGroup*)group;
 
 +(NSString*)getConvidOfRoomType:(CDMsgRoomType)roomType otherId:(NSString*)otherId groupId:(NSString*)groupId;
+
 - (void)clearData;
+
 +(NSString*)convidOfSelfId:(NSString*)myId andOtherId:(NSString*)otherId;
+
 +(NSString*)getPathByObjectId:(NSString*)objectId;
-+(NSString*)uuid;
 
 #pragma mark - histroy
 - (void)getHistoryMessagesForPeerId:(NSString *)peerId callback:(AVArrayResultBlock)callback;
+
 - (void)getHistoryMessagesForGroup:(NSString *)groupId callback:(AVArrayResultBlock)callback;
 
 
 -(AVSession*)getSession;
 
 @end
+

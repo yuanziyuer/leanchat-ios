@@ -51,5 +51,7 @@
 - (BOOL)isRead;
 - (void)setIsRead:(BOOL)isRead;
 
+- (NSString*)attributedText;
+
 @end
 

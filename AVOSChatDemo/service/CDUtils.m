@@ -190,5 +190,43 @@
     [query setCachePolicy:onlyNetwork ? kAVCachePolicyNetworkOnly : kAVCachePolicyNetworkElseCache];
 }
 
++(NSString*)uuid{
+    NSString *chars=@"abcdefghijklmnopgrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    assert(chars.length==62);
+    int len=chars.length;
+    NSMutableString* result=[[NSMutableString alloc] init];
+    for(int i=0;i<24;i++){
+        int p=arc4random_uniform(len);
+        NSRange range=NSMakeRange(p, 1);
+        [result appendString:[chars substringWithRange:range]];
+    }
+    return result;
+}
+
++ (int)getDurationOfAudioPath:(NSString *)path {
+    int duration;
+    NSError* error;
+    NSDictionary* fileAttrs=[[NSFileManager defaultManager] attributesOfItemAtPath:path error:&error];
+    if(error==nil){
+        unsigned long long size=[fileAttrs fileSize];
+        int oneSecSize=3000;
+        duration=(int)(size*1.0f/oneSecSize+1);
+    }else{
+        [CDUtils alertError:error];
+    }
+    return duration;
+}
+
++ (void)downloadWithUrl:(NSString *)url toPath:(NSString *)path {
+    NSData* data=[[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:url]];
+    NSError* error;
+    [data writeToFile:path options:NSDataWritingAtomic error:&error];
+    if(error==nil){
+        NSLog(@"writeSucceed");
+    }else{
+        NSLog(@"error when download file");
+    }
+}
+
 
 @end
