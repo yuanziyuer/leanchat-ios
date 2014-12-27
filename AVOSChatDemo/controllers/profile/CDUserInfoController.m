@@ -11,7 +11,6 @@
 #import "CDChatRoomController.h"
 #import "CDCloudService.h"
 #import "CDCacheService.h"
-#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface CDUserInfoController (){
     BOOL isFriend;

@@ -8,7 +8,6 @@
 
 #import "CDUserService.h"
 #import "CDUtils.h"
-#import <SDWebImage/UIImageView+WebCache.h>
 
 @implementation CDUserService
 
@@ -54,9 +53,18 @@
 }
 
 +(void)displayAvatarOfUser:(AVUser*)user avatarView:(UIImageView*)avatarView{
+    UIImage* placeHolder=[UIImage imageNamed:@"default_user_avatar"];
+    [avatarView setImage:placeHolder];
     AVFile* avatar=[user objectForKey:@"avatar"];
     if(avatar){
-        [avatarView sd_setImageWithURL:[NSURL URLWithString:avatar.url] placeholderImage:[UIImage imageNamed:@"default_user_avatar"]];
+        [avatar getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            if(error==nil){
+                UIImage* image=[UIImage imageWithData:data];
+                [avatarView setImage:image];
+            }else{
+                [CDUtils alertError:error];
+            }
+        }];
     }
 }
 

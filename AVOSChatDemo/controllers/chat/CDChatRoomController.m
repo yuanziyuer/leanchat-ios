@@ -12,7 +12,6 @@
 #import "QBImagePickerController.h"
 #import "UIImage+Resize.h"
 #import "CDUtils.h"
-#import <SDWebImage/UIImageView+WebCache.h>
 #import "CDGroupDetailController.h"
 #import "CDGroupAddMemberController.h"
 #import "XHDisplayTextViewController.h"
@@ -101,6 +100,8 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     self.shareMenuItems = shareMenuItems;
     [self.shareMenuView reloadData];
     isLoadingMsg=NO;
+    NSString* url=@"http://ac-x3o016bx.qiniudn.com/o4R6UFKkc8lBiJDcDpSINuB";
+    AVFile* f=[AVFile fileWithURL:url];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -213,7 +214,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     }else if(msg.type==CDMsgTypeImage){
         xhMessage=[[XHMessage alloc] initWithPhoto:[self getImageByMsg:msg] thumbnailUrl:nil originPhotoUrl:nil sender:fromUser.username timestamp:[msg getTimestampDate] attributedText:attrText];
     }
-    xhMessage.avator=[self getAvatarByMsg:msg];
+    xhMessage.avator=[_loadedData objectForKey:msg.fromPeerId];
     xhMessage.avatorUrl=nil;
     if([curUser.objectId isEqualToString:msg.fromPeerId]){
         xhMessage.bubbleMessageType=XHBubbleMessageTypeSending;
@@ -223,25 +224,20 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     return xhMessage;
 }
 
--(UIImage*)getAvatarByMsg:(CDMsg*)msg{
-    __block UIImage* avatar=[_loadedData objectForKey:msg.fromPeerId];
-    if(avatar){
-        return avatar;
-    }else{
+-(void)cacheAvatarOfMsg:(CDMsg*)msg{
+    if([_loadedData objectForKey:msg.fromPeerId]==nil){
+        UIImage* defaultAvatar=[UIImage imageNamed:@"default_user_avatar"];
+        [_loadedData setObject:defaultAvatar forKey:msg.fromPeerId];
+        
         AVUser* user=[CDCacheService lookupUser:msg.fromPeerId];
-        SDWebImageManager* man=[SDWebImageManager sharedManager];
         AVFile* avatarFile=[user objectForKey:@"avatar"];
-        [man downloadImageWithURL:[NSURL URLWithString:[avatarFile url]] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-            [CDUtils logError:error callback:^{
-                [_loadedData setObject:image forKey:msg.fromPeerId];
-                avatar=image;
-            }];
-        }];
+        NSError* error;
+        NSData* data=[avatarFile getData:&error];
+        if(error==nil){
+            UIImage* image=[UIImage imageWithData:data];
+            [_loadedData setObject:image forKey:msg.fromPeerId];
+        }
     }
-    if(avatar==nil){
-        avatar=[UIImage imageNamed:@"default_user_avatar"];
-    }
-    return avatar;
 }
 
 #pragma mark - next controller
@@ -335,7 +331,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         NSMutableArray *msgs  = [[CDDatabaseService getMsgsWithConvid:convid maxTimestamp:timestamp limit:limit] mutableCopy];
         [CDDatabaseService markHaveReadOfMsgs:msgs];
         for(CDMsg* msg in msgs){
-            [self getAvatarByMsg:msg];
+            [self cacheAvatarOfMsg:msg];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             NSMutableArray* userIds=[[NSMutableArray alloc] init];
@@ -463,11 +459,12 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 - (void)didSelectedAvatorOnMessage:(id<XHMessageModel>)message atIndexPath:(NSIndexPath *)indexPath {
     DLog(@"indexPath : %@", indexPath);
-    XHContact *contact = [[XHContact alloc] init];
-    contact.contactName = [message sender];
-    contact.contactIntroduction = @"自定义描述，这个需要和业务逻辑挂钩";
-    XHContactDetailTableViewController *contactDetailTableViewController = [[XHContactDetailTableViewController alloc] initWithContact:contact];
-    [self.navigationController pushViewController:contactDetailTableViewController animated:YES];
+//    XHContact *contact = [[XHContact alloc] init];
+//    contact.contactName = [message sender];
+//    
+//    contact.contactIntroduction = @"自定义描述，这个需要和业务逻辑挂钩";
+//    XHContactDetailTableViewController *contactDetailTableViewController = [[XHContactDetailTableViewController alloc] initWithContact:contact];
+//    [self.navigationController pushViewController:contactDetailTableViewController animated:YES];
 }
 
 - (void)menuDidSelectedAtBubbleMessageMenuSelecteType:(XHBubbleMessageMenuSelecteType)bubbleMessageMenuSelecteType {
