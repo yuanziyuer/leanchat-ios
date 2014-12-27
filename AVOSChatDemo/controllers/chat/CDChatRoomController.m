@@ -211,7 +211,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         
         xhMessage=[[XHMessage alloc] initWithLocalPositionPhoto:[UIImage imageNamed:@"Fav_Cell_Loc"] geolocations:[parts objectAtIndex:0] location:[[CLLocation alloc] initWithLatitude:latitude longitude:longitude] sender:fromUser.username timestamp:[msg getTimestampDate] attributedText:attrText];
     }else if(msg.type==CDMsgTypeImage){
-        xhMessage=[[XHMessage alloc] initWithPhoto:[self getImageByMsg:msg] thumbnailUrl:msg.content originPhotoUrl:msg.content sender:fromUser.username timestamp:[msg getTimestampDate] attributedText:attrText];
+        xhMessage=[[XHMessage alloc] initWithPhoto:[self getImageByMsg:msg] thumbnailUrl:nil originPhotoUrl:nil sender:fromUser.username timestamp:[msg getTimestampDate] attributedText:attrText];
     }
     xhMessage.avator=[self getAvatarByMsg:msg];
     xhMessage.avatorUrl=nil;
@@ -404,6 +404,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         case XHBubbleMessageMediaTypeVideo:
         case XHBubbleMessageMediaTypePhoto: {
             DLog(@"message : %@", message.photo);
+            NSLog(@"message thumbnail Url:%@",message.thumbnailUrl);
             DLog(@"message : %@", message.videoConverPhoto);
             XHDisplayMediaViewController *messageDisplayTextView = [[XHDisplayMediaViewController alloc] init];
             messageDisplayTextView.message = message;

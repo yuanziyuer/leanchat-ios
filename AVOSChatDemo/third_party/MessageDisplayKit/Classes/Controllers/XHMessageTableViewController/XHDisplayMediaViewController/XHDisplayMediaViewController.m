@@ -35,6 +35,7 @@
 - (UIImageView *)photoImageView {
     if (!_photoImageView) {
         UIImageView *photoImageView = [[UIImageView alloc] initWithFrame:self.view.frame];
+        photoImageView.contentMode=UIViewContentModeScaleAspectFit;
         [self.view addSubview:photoImageView];
         _photoImageView = photoImageView;
     }

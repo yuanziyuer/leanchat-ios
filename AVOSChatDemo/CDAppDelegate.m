@@ -103,9 +103,7 @@
     if(num!=0){
         AVInstallation *currentInstallation = [AVInstallation currentInstallation];
         [currentInstallation setBadge:0];
-        [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            NSLog(@"log");
-        }];
+        [currentInstallation saveEventually];
         application.applicationIconBadgeNumber=0;
     }
     [application cancelAllLocalNotifications];

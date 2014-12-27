@@ -40,7 +40,17 @@ AppID和AppKey可以在[www.avoscloud.com](http://www.avoscloud.com)创建应用
 ## 阅读源码
 iOS 源码，推荐阅读 [CDSessionManager.m](https://github.com/leancloud/leanchat-ios/blob/master/AVOSChatDemo/service/CDSessionManager.m)与 [CDDatabaseService.m](https://github.com/leancloud/leanchat-ios/blob/master/AVOSChatDemo/service/CDDatabaseService.m)
 
-更多请见 [wiki](https://github.com/leancloud/leanchat-android/wiki) 
+更多请见 [wiki](https://github.com/leancloud/leanchat-android/wiki)
+
+## 发布日志
+
+v1.1.9
+1、群成员也可以加人
+2、增加消息发送状态显示，发送中、已发送、已接收，发送失败。
+3、解决iOS中收到iOS录音，不能播放的bug。
+4、发送图片、音频时，能提示正在上传发送中。
+5、增加桌面图标中未读消息红点显示
+
 
 ## 致谢
 
