@@ -28,6 +28,8 @@
 
 - (void)sendMessageWithObjectId:(NSString*)objectId content:(NSString *)content type:(CDMsgType)type toPeerId:(NSString *)toPeerId group:(AVGroup*)group;
 
+-(void)resendMsg:(CDMsg*)msg toPeerId:(NSString*)toPeerId group:(AVGroup*)group;
+
 +(NSString*)getConvidOfRoomType:(CDMsgRoomType)roomType otherId:(NSString*)otherId groupId:(NSString*)groupId;
 
 - (void)clearData;

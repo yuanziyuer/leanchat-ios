@@ -9,6 +9,7 @@
 #import "CDCommon.h"
 #import "CDSessionManager.h"
 #import "CDChatGroup.h"
+#import "FMDB.h"
 
 #import "XHMessageTableViewController.h"
 

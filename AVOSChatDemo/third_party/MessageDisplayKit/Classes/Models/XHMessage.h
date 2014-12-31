@@ -47,13 +47,11 @@
 
 @property (nonatomic) BOOL isRead;
 
-@property (nonatomic,strong) NSString* attributedText;
-
+@property (nonatomic,assign) XHMessageStatus status;
 
 - (instancetype)initWithText:(NSString *)text
                       sender:(NSString *)sender
-                   timestamp:(NSDate *)timestamp
-              attributedText:(NSString*)attributedText;
+                   timestamp:(NSDate *)timestamp;
 
 /**
  *  初始化图片类型的消息
@@ -70,8 +68,7 @@
                  thumbnailUrl:(NSString *)thumbnailUrl
                originPhotoUrl:(NSString *)originPhotoUrl
                        sender:(NSString *)sender
-                    timestamp:(NSDate *)timestamp
-               attributedText:(NSString*)attributedText;
+                    timestamp:(NSDate *)timestamp;
 
 /**
  *  初始化视频类型的消息
@@ -88,8 +85,7 @@
                                videoPath:(NSString *)videoPath
                                 videoUrl:(NSString *)videoUrl
                                   sender:(NSString *)sender
-                               timestamp:(NSDate *)timestamp
-                          attributedText:(NSString*)attributedText;
+                               timestamp:(NSDate *)timestamp;
 
 /**
  *  初始化语音类型的消息
@@ -106,8 +102,7 @@
                          voiceUrl:(NSString *)voiceUrl
                     voiceDuration:(NSString *)voiceDuration
                            sender:(NSString *)sender
-                        timestamp:(NSDate *)timestamp
-                   attributedText:(NSString*)attributedText;
+                        timestamp:(NSDate *)timestamp;
 
 /**
  *  初始化语音类型的消息。增加已读未读标记
@@ -126,21 +121,16 @@
                     voiceDuration:(NSString *)voiceDuration
                            sender:(NSString *)sender
                         timestamp:(NSDate *)timestamp
-                           isRead:(BOOL)isRead
-                   attributedText:(NSString*)attributedText;
+                           isRead:(BOOL)isRead;
 
 - (instancetype)initWithEmotionPath:(NSString *)emotionPath
                              sender:(NSString *)sender
-                          timestamp:(NSDate *)timestamp
-                     attributedText:(NSString*)attributedText;
+                          timestamp:(NSDate *)timestamp;
 
 - (instancetype)initWithLocalPositionPhoto:(UIImage *)localPositionPhoto
                               geolocations:(NSString *)geolocations
                                   location:(CLLocation *)location
                                     sender:(NSString *)sender
-                                 timestamp:(NSDate *)timestamp
-                            attributedText:(NSString*)attributedText;
-
-
+                                 timestamp:(NSDate *)timestamp;
 
 @end

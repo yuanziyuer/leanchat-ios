@@ -20,15 +20,18 @@ PODS:
   - AFNetworking/UIKit (2.5.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - AVOSCloud (2.6.9.1)
   - Qiniu (7.0.7):
     - AFNetworking (~> 2.0)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
+  - AVOSCloud
   - Qiniu (~> 7.0)
 
 SPEC CHECKSUMS:
   AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
+  AVOSCloud: a87a4653b2632f02ec9bc7bc24d0c61cdb43edbe
   Qiniu: 7252263a6987cd0afeea7c134269e5e476c86cef
 
 COCOAPODS: 0.35.0

@@ -63,6 +63,7 @@ enum : NSUInteger {
     UIRefreshControl* refreshControl=[[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refreshControl];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {

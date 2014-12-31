@@ -7,12 +7,11 @@
 //
 
 #import "CDDatabaseService.h"
-#import "FMDB.h"
 #import "CDUtils.h"
 #import "CDCacheService.h"
 #import "CDChatRoom.h"
 
-static FMDatabase *database;
+static FMDatabaseQueue* dbQueue;
 
 static NSString *messagesTableSQL=@"create table if not exists messages (id integer primary key, objectId varchar(63) unique not null,ownerId varchar(255) not null,fromPeerId varchar(255) not null, convid varchar(255) not null,toPeerId varchar(255),content varchar(1023) ,status integer,type integer,roomType integer,readStatus integer default 1,timestamp varchar(63) not null)";
 
@@ -20,15 +19,16 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
 
 +(void)initialize{
     [super initialize];
-    database = [FMDatabase databaseWithPath:[self databasePath]];
-    [database open];    
+    dbQueue=[FMDatabaseQueue databaseQueueWithPath:[self databasePath]];
     [self createTable];
 }
 
 +(void)createTable{
-    if (![database tableExists:@"messages"]) {
-        [database executeUpdate:messagesTableSQL];
-    }
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        if (![db tableExists:@"messages"]) {
+            [db executeUpdate:messagesTableSQL];
+        }
+    }];
 }
 
 + (NSString *)databasePath {
@@ -42,8 +42,10 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
 
 +(void)upgradeToAddField{
     NSLog(@"%s",__PRETTY_FUNCTION__);
-    [database executeStatements:@"drop table if exists messages"];
-    [self createTable];
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        [db executeStatements:@"drop table if exists messages"];
+        [db executeUpdate:messagesTableSQL];
+    }];
 }
 
 +(CDMsg* )getMsgByResultSet:(FMResultSet*)rs{
@@ -85,64 +87,70 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
 
 +(void)findConversationsWithCallback:(AVArrayResultBlock)callback{
     [CDUtils runInGlobalQueue:^{
-        AVUser* user=[AVUser currentUser];
-        FMResultSet *rs = [database executeQuery:@"select * from messages where ownerId=? group by convid order by timestamp desc" withArgumentsInArray:@[user.objectId]];
-        NSArray *msgs=[self getMsgsByResultSet:rs];
-        [CDCacheService cacheMsgs:msgs withCallback:^(NSArray *objects, NSError *error) {
-            if(error){
-                [CDUtils runInMainQueue:^{
-                    callback(nil,error);
-                }];
-            }else{
-                NSMutableArray *chatRooms=[[NSMutableArray alloc] init];
-                for(CDMsg* msg in msgs){
-                    CDChatRoom* chatRoom=[[CDChatRoom alloc] init];
-                    chatRoom.roomType=msg.roomType;
-                    FMResultSet * countResult=[database executeQuery:@"select count(*) from messages where convid=? and readStatus=?" withArgumentsInArray:@[msg.convid,@(CDMsgReadStatusUnread)]];
-                    NSInteger count=0;
-                    if([countResult next]){
-                        count=[countResult intForColumnIndex:0];
+        [dbQueue inDatabase:^(FMDatabase *db) {
+            AVUser* user=[AVUser currentUser];
+            FMResultSet *rs = [db executeQuery:@"select * from messages where ownerId=? group by convid order by timestamp desc" withArgumentsInArray:@[user.objectId]];
+            NSArray *msgs=[self getMsgsByResultSet:rs];
+            [CDCacheService cacheMsgs:msgs withCallback:^(NSArray *objects, NSError *error) {
+                if(error){
+                    [CDUtils runInMainQueue:^{
+                        callback(nil,error);
+                    }];
+                }else{
+                    NSMutableArray *chatRooms=[[NSMutableArray alloc] init];
+                    for(CDMsg* msg in msgs){
+                        CDChatRoom* chatRoom=[[CDChatRoom alloc] init];
+                        chatRoom.roomType=msg.roomType;
+                        FMResultSet * countResult=[db executeQuery:@"select count(*) from messages where convid=? and readStatus=?" withArgumentsInArray:@[msg.convid,@(CDMsgReadStatusUnread)]];
+                        NSInteger count=0;
+                        if([countResult next]){
+                            count=[countResult intForColumnIndex:0];
+                        }
+                        [countResult close];
+                        chatRoom.unreadCount=count;
+                        
+                        NSString* otherId=[msg getOtherId];
+                        if(msg.roomType==CDMsgRoomTypeSingle){
+                            chatRoom.chatUser=[CDCacheService lookupUser:otherId];;
+                        }else{
+                            chatRoom.chatGroup=[CDCacheService lookupChatGroupById:otherId];
+                        }
+                        chatRoom.latestMsg=msg;
+                        [chatRooms addObject:chatRoom];
                     }
-                    [countResult close];
-                    chatRoom.unreadCount=count;
-                    
-                    NSString* otherId=[msg getOtherId];
-                    if(msg.roomType==CDMsgRoomTypeSingle){
-                        chatRoom.chatUser=[CDCacheService lookupUser:otherId];;
-                    }else{
-                        chatRoom.chatGroup=[CDCacheService lookupChatGroupById:otherId];
-                    }
-                    chatRoom.latestMsg=msg;
-                    [chatRooms addObject:chatRoom];
+                    [CDUtils runInMainQueue:^{
+                        callback(chatRooms,error);
+                    }];
                 }
-                [CDUtils runInMainQueue:^{
-                    callback(chatRooms,error);
-                }];
-            }
+            }];
         }];
     }];
 }
 
-+(CDMsg*)insertMsgToDB:(CDMsg*)msg{
-    NSDictionary *dict=[msg toDatabaseDict];
-    [database executeUpdate:@"insert into messages (objectId,ownerId , fromPeerId, toPeerId, content,convid,status,type,roomType,readStatus,timestamp) values (:objectId,:ownerId,:fromPeerId,:toPeerId,:content,:convid,:status,:type,:roomType,:readStatus,:timestamp)" withParameterDictionary:dict];
-    return msg;
++(void)insertMsgToDB:(CDMsg*)msg{
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        NSDictionary *dict=[msg toDatabaseDict];
+        [db executeUpdate:@"insert into messages (objectId,ownerId , fromPeerId, toPeerId, content,convid,status,type,roomType,readStatus,timestamp) values (:objectId,:ownerId,:fromPeerId,:toPeerId,:content,:convid,:status,:type,:roomType,:readStatus,:timestamp)" withParameterDictionary:dict];
+    }];
 }
 
-+ (NSMutableArray*)getMsgsForConvid:(NSString*)convid{
-    FMResultSet * rs=[database executeQuery:@"select * from messages where convid=? order by timestamp" withArgumentsInArray:@[convid]];
-    return [self getMsgsByResultSet:rs];
++ (void)getMsgsForConvid:(NSString*)convid block:(AVArrayResultBlock)block{
+    [dbQueue inDatabase:^(FMDatabase *db) {
+         FMResultSet * rs=[db executeQuery:@"select * from messages where convid=? order by timestamp" withArgumentsInArray:@[convid]];
+         NSMutableArray* array=[self getMsgsByResultSet:rs];
+        block(array,nil);
+    }];
 }
 
-+(NSArray*)getMsgsWithConvid:(NSString*)convid maxTimestamp:(int64_t)timestamp limit:(int)limit{
++(NSArray*)getMsgsWithConvid:(NSString*)convid maxTimestamp:(int64_t)timestamp limit:(int)limit db:(FMDatabase*)db{
     NSString* timestampStr=[[NSNumber numberWithLongLong:timestamp] stringValue];
-    FMResultSet* rs=[database executeQuery:@"select * from messages where convid=? and timestamp<? order by timestamp desc limit ?" withArgumentsInArray:@[convid,timestampStr,@(limit)]];
+    FMResultSet* rs=[db executeQuery:@"select * from messages where convid=? and timestamp<? order by timestamp desc limit ?" withArgumentsInArray:@[convid,timestampStr,@(limit)]];
     NSMutableArray* msgs=[self getMsgsByResultSet:rs];
     return [CDUtils reverseArray:msgs];
 }
 
-+(int64_t)getMaxTimestampFromDB{
-    FMResultSet* rs=[database executeQuery:@"select * from messages order by timestamp desc limit 1"];
++(int64_t)getMaxTimestampFromDB:(FMDatabase*)db{
+    FMResultSet* rs=[db executeQuery:@"select * from messages order by timestamp desc limit 1"];
     NSArray* array=[self getMsgsByResultSet:rs];
     if([array count]>0){
         CDMsg* msg=[array firstObject];
@@ -152,18 +160,20 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     }
 }
 
-+(int64_t)getMaxTimetstamp{
-    int64_t timestamp=[self getMaxTimestampFromDB];
++(int64_t)getMaxTimetstampWithDB:(FMDatabase*)db{
+    int64_t timestamp=[self getMaxTimestampFromDB:db];
+    int64_t result;
     if(timestamp!=-1){
-        return timestamp+1;
+        result=timestamp+1;
     }else{
         NSDate* now=[NSDate date];
         int sec=[now timeIntervalSince1970]+10;
-        return  (int64_t)sec*1000;
+        result= (int64_t)sec*1000;
     }
+    return result;
 }
 
-+(void)markHaveReadOfMsgs:(NSArray*)msgs{
++(void)markHaveReadOfMsgs:(NSArray*)msgs db:(FMDatabase*)db{
     BOOL hasUnread=NO;
     for(CDMsg* msg in msgs){
         if(msg.readStatus==CDMsgReadStatusUnread){
@@ -174,29 +184,37 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     if(!hasUnread){
         return;
     }
-    [database beginTransaction];
     for(CDMsg* msg in msgs){
         if(msg.readStatus==CDMsgReadStatusUnread){
             msg.readStatus=CDMsgReadStatusHaveRead;
-            [database executeUpdate:@"update messages set readStatus=? where objectId=?" withArgumentsInArray:@[@(CDMsgReadStatusHaveRead),msg.objectId]];
+            [db executeUpdate:@"update messages set readStatus=? where objectId=?" withArgumentsInArray:@[@(CDMsgReadStatusHaveRead),msg.objectId]];
         }
     }
-    [database commit];
 }
 
 +(void)updateMsgWithId:(NSString*)objectId status:(CDMsgStatus)status timestamp:(int64_t)timestamp{
     NSLog(@"%s",__PRETTY_FUNCTION__);
     [self updateMsgWithId:objectId status:status];
     NSString* timestampText=[NSString stringWithFormat:@"%lld",timestamp];
-    [database executeUpdate:@"update messages set timestamp=? where objectId=?" withArgumentsInArray:@[timestampText,objectId]];
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@"update messages set timestamp=? where objectId=?" withArgumentsInArray:@[timestampText,objectId]];
+    }];
 }
 
 +(void)updateMsgWithId:(NSString*)objectId content:(NSString*)content{
-    [database executeUpdate:@"update messages set content=? where objectId=?" withArgumentsInArray:@[objectId,content]];
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@"update messages set content=? where objectId=?" withArgumentsInArray:@[objectId,content]];
+    }];
 }
 
 +(void)updateMsgWithId:(NSString*)objectId status:(CDMsgStatus)status{
-    [database executeUpdate:@"update messages set status=? where objectId=?" withArgumentsInArray:@[@(status),objectId]];
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@"update messages set status=? where objectId=?" withArgumentsInArray:@[@(status),objectId]];
+    }];
+}
+
++(FMDatabaseQueue*) databaseQueue{
+    return dbQueue;
 }
 
 @end

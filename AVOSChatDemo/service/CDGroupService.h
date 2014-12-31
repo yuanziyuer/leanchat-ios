@@ -26,4 +26,8 @@
 
 + (AVGroup *)joinGroupById:(NSString *)groupId;
 
++(AVGroup*)getGroupById:(NSString*)groupId;
+
++(void)setDelegateWithGroupId:(NSString*)groupId;
+
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "CDBaseTableController.h"
+#import "CDGroupService.h"
 #import "CDCommon.h"
 
 @interface CDChatListController : UIViewController<UITableViewDataSource,UITableViewDelegate>

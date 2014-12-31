@@ -56,4 +56,6 @@
 #define CD_DEBUG YES
 #define DEBUG YES
 
+#define INSTALLATION @"installation"
+
 #endif

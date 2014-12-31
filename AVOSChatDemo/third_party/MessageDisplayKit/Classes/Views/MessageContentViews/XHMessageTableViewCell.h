@@ -51,6 +51,8 @@
  */
 - (void)menuDidSelectedAtBubbleMessageMenuSelecteType:(XHBubbleMessageMenuSelecteType)bubbleMessageMenuSelecteType;
 
+-(void)didRetrySendMessage:(id <XHMessageModel>)message atIndexPath:(NSIndexPath*)indexPath;
+
 @end
 
 @interface XHMessageTableViewCell : XHBaseTableViewCell

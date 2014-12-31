@@ -55,14 +55,19 @@
 
 + (AVGroup *)joinGroupById:(NSString *)groupId {
     AVGroup *group = [self getGroupById:groupId];
-    CDSessionManager* man=[CDSessionManager sharedInstance];
-    group.delegate = man;
+    [self setDelegateWithGroupId:groupId];
     [group join];
     return group;
 }
 
 +(AVGroup*)getGroupById:(NSString*)groupId{
     return [AVGroup getGroupWithGroupId:groupId session:[self getSession]];
+}
+
++(void)setDelegateWithGroupId:(NSString*)groupId{
+    AVGroup* group=[self getGroupById:groupId];
+    CDSessionManager* man=[CDSessionManager sharedInstance];
+    group.delegate=man;
 }
 
 +(AVSession*)getSession{

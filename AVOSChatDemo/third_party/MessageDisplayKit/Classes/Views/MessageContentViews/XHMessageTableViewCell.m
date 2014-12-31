@@ -7,6 +7,7 @@
 //
 
 #import "XHMessageTableViewCell.h"
+#import "XHMessageStatusView.h"
 
 static const CGFloat kXHLabelPadding = 5.0f;
 static const CGFloat kXHTimeStampLabelHeight = 20.0f;
@@ -15,9 +16,6 @@ static const CGFloat kXHAvatorPaddingX = 8.0;
 static const CGFloat kXHAvatorPaddingY = 15;
 
 static const CGFloat kXHBubbleMessageViewPadding = 8;
-
-static const CGFloat kXHAttributedLabelWidth=40;
-static const CGFloat kXHAttributedLabelHeight=20;
 
 
 @interface XHMessageTableViewCell () {
@@ -30,7 +28,7 @@ static const CGFloat kXHAttributedLabelHeight=20;
 
 @property (nonatomic, weak, readwrite) UILabel *userNameLabel;
 
-@property (nonatomic, weak, readwrite) UILabel *attributedLabel;
+@property (nonatomic, weak, readwrite) XHMessageStatusView *statusView;
 
 @property (nonatomic, weak, readwrite) LKBadgeView *timestampLabel;
 
@@ -110,6 +108,12 @@ static const CGFloat kXHAttributedLabelHeight=20;
     }
 }
 
+-(void)retryButtonClicked:(UIButton*)sender{
+    if([_delegate respondsToSelector:@selector(didRetrySendMessage:atIndexPath:)]){
+        [_delegate didRetrySendMessage:self.messageBubbleView.message atIndexPath:self.indexPath];
+    }
+}
+
 #pragma mark - Copying Method
 
 - (BOOL)canBecomeFirstResponder {
@@ -160,7 +164,7 @@ static const CGFloat kXHAttributedLabelHeight=20;
     // 4、配置需要显示什么消息内容，比如语音、文字、视频、图片
     [self configureMessageBubbleViewWithMessage:message];
     
-    [self configAttributedTextWithMessage:message];
+    [self configStatusViewWithMessage:message];
 }
 
 - (void)configureTimestamp:(BOOL)displayTimestamp atMessage:(id <XHMessageModel>)message {
@@ -228,11 +232,21 @@ static const CGFloat kXHAttributedLabelHeight=20;
         default:
             break;
     }
+    
+    UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecognizerHandle:)];
+    [recognizer setMinimumPressDuration:0.4f];
+    [self.messageBubbleView.bubbleImageView addGestureRecognizer:recognizer];
+    [self.messageBubbleView.bubblePhotoImageView addGestureRecognizer:recognizer];
+    
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizerHandle:)];
+    [self addGestureRecognizer:tapGestureRecognizer];
+    
     [self.messageBubbleView configureCellWithMessage:message];
 }
 
-- (void)configAttributedTextWithMessage:(id <XHMessageModel>)message {
-    self.attributedLabel.text=[message attributedText];
+- (void)configStatusViewWithMessage:(id <XHMessageModel>)message {
+    //NSString* str=[NSString stringWithFormat:@"%d",[message status]];
+    [_statusView setStatus:[message status]];
 }
 
 #pragma mark - Gestures
@@ -343,13 +357,6 @@ static const CGFloat kXHAttributedLabelHeight=20;
     self.accessoryType = UITableViewCellAccessoryNone;
     self.accessoryView = nil;
     
-    UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecognizerHandle:)];
-    [recognizer setMinimumPressDuration:0.4f];
-    [self addGestureRecognizer:recognizer];
-    
-    
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizerHandle:)];
-    [self addGestureRecognizer:tapGestureRecognizer];
 }
 
 - (instancetype)initWithMessage:(id <XHMessageModel>)message
@@ -432,14 +439,15 @@ static const CGFloat kXHAttributedLabelHeight=20;
             self.messageBubbleView = messageBubbleView;
         }
         
-        if(!self.attributedLabel){
-            CGRect attributedLabelFrame=CGRectMake(0, 0, kXHAttributedLabelWidth, kXHAttributedLabelHeight);
-            UILabel* attributedLabel=[[UILabel alloc] initWithFrame:attributedLabelFrame];
-            attributedLabel.font=[UIFont systemFontOfSize:10];
+        if(!self.statusView){
+            CGRect statusViewFrame=CGRectMake(0, 0, kXHStatusViewWidth, kXHStatusViewHeight);
+            XHMessageStatusView* statusView=[[XHMessageStatusView alloc] initWithFrame:statusViewFrame];
+
             //attributedLabel.backgroundColor=[UIColor redColor];
-            [self.contentView addSubview:attributedLabel];
-            attributedLabel.textAlignment=NSTextAlignmentRight;
-            self.attributedLabel=attributedLabel;
+            [self.contentView addSubview:statusView];
+            [self.contentView bringSubviewToFront:statusView];
+            [statusView.retryButton addTarget:self action:@selector(retryButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            self.statusView=statusView;
         }
     }
     return self;
@@ -483,18 +491,18 @@ static const CGFloat kXHAttributedLabelHeight=20;
     self.messageBubbleView.frame = bubbleMessageViewFrame;
     
     if(self.bubbleMessageType==XHBubbleMessageTypeSending){
-        self.attributedLabel.hidden=NO;
-        CGFloat attrX=CGRectGetMinX(self.messageBubbleView.bubbleFrame)-kXHAttributedLabelWidth-3;
+        self.statusView.hidden=NO;
+        CGFloat statusX=CGRectGetMinX(self.messageBubbleView.bubbleFrame)-kXHStatusViewWidth-3;
         CGFloat halfH=self.messageBubbleView.bubbleFrame.size.height/2;
-        CGRect attrFrame=self.attributedLabel.frame;
-        attrFrame.origin.y=layoutOriginY+halfH;
+        CGRect statusFrame=self.statusView.frame;
+        statusFrame.origin.y=layoutOriginY+halfH;
         if([self.messageBubbleView.message messageMediaType]==XHBubbleMessageMediaTypeVoice && self.messageBubbleView.message.voiceDuration!=0){
-            attrX=attrX-15;
+            statusX=statusX-15;
         }
-        attrFrame.origin.x=attrX;
-        self.attributedLabel.frame=attrFrame;
+        statusFrame.origin.x=statusX;
+        self.statusView.frame=statusFrame;
     }else{
-        self.attributedLabel.hidden=YES;
+        self.statusView.hidden=YES;
     }
 //    self.messageBubbleView.backgroundColor=[UIColor blackColor];
 //    self.avatorButton.backgroundColor=[UIColor redColor];

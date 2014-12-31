@@ -72,6 +72,7 @@
     }
     if(CD_DEBUG){
        setenv("LOG_CURL", "YES", 0);
+       [AVOSCloud setVerbosePolicy:kAVVerboseShow];
     }
     
     return YES;
@@ -172,15 +173,22 @@
     
     CDSessionManager* man=[CDSessionManager sharedInstance];
     [CDUpgradeService upgradeWithBlock:^(BOOL upgrade, NSString *oldVersion, NSString *newVersion) {
-                NSLog(@"upgrade =%@ oldVersion=%@ newVersion=%@",upgrade? @"YES":@"NO",oldVersion,newVersion);
+        NSLog(@"upgrade =%@ oldVersion=%@ newVersion=%@",upgrade? @"YES":@"NO",oldVersion,newVersion);
         if(upgrade && [newVersion isEqualToString:@"1.0.8"]){
             [CDDatabaseService upgradeToAddField];
         }
     }];
     [CDCacheService registerUser:[AVUser currentUser]];
-    if([AVUser currentUser]){
-        [man openSession];
-    }
+    [man openSession];
+    AVInstallation* installation=[AVInstallation currentInstallation];
+    AVUser* user=[AVUser currentUser];
+    [user setObject:installation forKey:INSTALLATION];
+    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if(error){
+            [CDUtils logError:error callback:nil];
+        }else{
+        }
+    }];
     return tab;
 }
 

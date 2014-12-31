@@ -53,6 +53,7 @@ static BOOL initialized = NO;
         _session = [[AVSession alloc] init];
         _session.sessionDelegate = self;
         _session.signatureDelegate = self;
+        [AVGroup setDefaultDelegate:self];
         [self commonInit];
     }
     return self;
@@ -162,6 +163,9 @@ static BOOL initialized = NO;
 }
 
 -(CDMsg*)sendMsg:(CDMsg*)msg group:(AVGroup*)group{
+    if([_session isOpen]==NO || [_session isPaused]){
+        [CDUtils alert:@"会话暂停，请检查网络"];
+    }
     if(!group){
         AVMessage *avMsg=[AVMessage messageForPeerWithSession:_session toPeerId:msg.toPeerId payload:[msg toMessagePayload]];
         [_session sendMessage:avMsg requestReceipt:YES];
@@ -212,12 +216,16 @@ static BOOL initialized = NO;
 
 -(void)uploadMsg:(CDMsg*)msg block:(AVIdResultBlock)block{
     [self uploadFileMsg:msg block:^(id object, NSError *error) {
-        AVFile* file=(AVFile*)object;
-        if(msg.type==CDMsgTypeImage){
-            block(file.url,nil);
-        }else if(msg.type==CDMsgTypeAudio){
-            [self convertAudioFile:file block:block];
-            //block(file.url,nil);
+        if(error){
+            block(nil,error);
+        }else{
+            AVFile* file=(AVFile*)object;
+            if(msg.type==CDMsgTypeImage){
+                block(file.url,nil);
+            }else if(msg.type==CDMsgTypeAudio){
+                [self convertAudioFile:file block:block];
+                //block(file.url,nil);
+            }
         }
     }];
 }
@@ -226,15 +234,11 @@ static BOOL initialized = NO;
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_MESSAGE_UPDATED object:msg userInfo:nil];
 }
 
-- (void)sendMessageWithObjectId:(NSString*)objectId content:(NSString *)content type:(CDMsgType)type toPeerId:(NSString *)toPeerId group:(AVGroup*)group{
-    CDMsg* msg=[self createMsgWithType:type objectId:objectId content:content toPeerId:toPeerId group:group];
-    [CDDatabaseService insertMsgToDB:msg];
-    [self postUpdatedMsg:msg];
+- (void)sendCreatedMsg:(CDMsg *)msg group:(AVGroup*)group{
     if(msg.type==CDMsgTypeAudio || msg.type==CDMsgTypeImage){
         [self uploadMsg:msg block:^(id object, NSError *error) {
             if(error){
-                msg.status=CDMsgStatusSendFailed;
-                [self postUpdatedMsg:msg];
+                [self setStatusFailedOfMsg:msg];
             }else{
                 NSString* url=(NSString*)object;
                 msg.content=url;
@@ -245,6 +249,20 @@ static BOOL initialized = NO;
     }else{
         [self sendMsg:msg group:group];
     }
+}
+
+- (void)sendMessageWithObjectId:(NSString*)objectId content:(NSString *)content type:(CDMsgType)type toPeerId:(NSString *)toPeerId group:(AVGroup*)group{
+    CDMsg* msg=[self createMsgWithType:type objectId:objectId content:content toPeerId:toPeerId group:group];
+    [CDDatabaseService insertMsgToDB:msg];
+    [self postUpdatedMsg:msg];
+    
+    [self sendCreatedMsg:msg group:group];
+}
+
+
+-(void)resendMsg:(CDMsg*)msg toPeerId:(NSString*)toPeerId group:(AVGroup*)group{
+    [self sendCreatedMsg:msg group:group];
+    NSLog(@"resendMsg");
 }
 
 -(void)runTwiceTimeWithTimes:(int)times avfile:(AVFile*)file persistentId:(NSString*)persistentId callback:(AVIdResultBlock)callback{
@@ -371,14 +389,20 @@ static BOOL initialized = NO;
     [self postUpdatedMsg:msg];
 }
 
+-(void)setStatusFailedOfMsg:(CDMsg*)msg{
+    msg.status=CDMsgStatusSendFailed;
+    [CDDatabaseService updateMsgWithId:msg.objectId status:CDMsgStatusSendFailed];
+    // forbid to fast load message
+    [self postUpdatedMsg:msg];
+    
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5*NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+//    });
+}
+
 -(void)didMessageSendFailure:(AVMessage*)avMsg group:(AVGroup*)group{
     CDMsg* msg=[CDMsg fromAVMessage:avMsg];
-    msg.status=CDMsgStatusSendFailed;
     [self setRoomTypeAndConvidOfMsg:msg group:group];
-    [CDDatabaseService updateMsgWithId:msg.objectId status:CDMsgStatusSendFailed];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5*NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        [self postUpdatedMsg:msg];
-    });
+    [self setStatusFailedOfMsg:msg];
 }
 
 -(void)didMessageArrived:(AVMessage*)avMsg{

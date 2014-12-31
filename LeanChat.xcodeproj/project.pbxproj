@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5423D3A58D2AAF3DD752C11F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D569F4B827DF50C11F64070 /* libPods.a */; };
 		701641471A2868FE006D1074 /* CDUpgradeService.m in Sources */ = {isa = PBXBuildFile; fileRef = 701641461A2868FE006D1074 /* CDUpgradeService.m */; };
 		7016414F1A2C3348006D1074 /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 7016414E1A2C3348006D1074 /* splash.png */; };
 		701641521A2C3461006D1074 /* weChatBubble_Receiving_LeanChat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 701641501A2C3461006D1074 /* weChatBubble_Receiving_LeanChat@2x.png */; };
@@ -51,6 +52,8 @@
 		7029AE721A2708BF004832F9 /* CDAddFriendController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7029AE6F1A2708BF004832F9 /* CDAddFriendController.xib */; };
 		7029AE731A2708BF004832F9 /* CDAddFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7029AE701A2708BF004832F9 /* CDAddFriendController.m */; };
 		704727A71A2CFE6300690286 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 704727A61A2CFE6300690286 /* libz.dylib */; };
+		704A6CA31A527F7300680A50 /* XHMessageStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 704A6CA21A527F7300680A50 /* XHMessageStatusView.m */; };
+		704A6CAC1A53BAF100680A50 /* messageSendFail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 704A6CAB1A53BAF100680A50 /* messageSendFail@2x.png */; };
 		704A890F1A30F5B200D2A3C2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */; };
 		705553DC1A2E35A8001EA4FE /* tabbar_chat_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 705553D41A2E35A8001EA4FE /* tabbar_chat_active@2x.png */; };
 		705553DE1A2E35A8001EA4FE /* tabbar_contacts_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 705553D61A2E35A8001EA4FE /* tabbar_contacts_active@2x.png */; };
@@ -291,7 +294,6 @@
 		70A067191A24A3A2004DA201 /* weChatBubble_Sending_Cavern@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A0662E1A24A3A2004DA201 /* weChatBubble_Sending_Cavern@2x.png */; };
 		70A0671A1A24A3A2004DA201 /* weChatBubble_Sending_Solid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A0662F1A24A3A2004DA201 /* weChatBubble_Sending_Solid@2x.png */; };
 		70A067291A24D394004DA201 /* CDEmotionUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A067281A24D394004DA201 /* CDEmotionUtils.m */; };
-		70B54F1F1A4BC0D000503A0A /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B54F1E1A4BC0D000503A0A /* AVOSCloud.framework */; };
 		70D4C60A1A237C1E001A655D /* CDAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D4C5401A237C1E001A655D /* CDAppDelegate.m */; };
 		70D4C60B1A237C1E001A655D /* CDBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D4C5441A237C1E001A655D /* CDBaseController.m */; };
 		70D4C60C1A237C1E001A655D /* CDBaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D4C5461A237C1E001A655D /* CDBaseNavigationController.m */; };
@@ -411,7 +413,6 @@
 		8CF21DCB197FCCC1002B9220 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF21DCA197FCCC1002B9220 /* Foundation.framework */; };
 		8CF21DCD197FCCC1002B9220 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF21DCC197FCCC1002B9220 /* CoreGraphics.framework */; };
 		8CF21DCF197FCCC1002B9220 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF21DCE197FCCC1002B9220 /* UIKit.framework */; };
-		B0D4DC0C4CAAFC88082981E6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D569F4B827DF50C11F64070 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -467,6 +468,9 @@
 		7029AE701A2708BF004832F9 /* CDAddFriendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAddFriendController.m; sourceTree = "<group>"; };
 		7029AE711A2708BF004832F9 /* CDAddFriendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAddFriendController.h; sourceTree = "<group>"; };
 		704727A61A2CFE6300690286 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		704A6CA11A527F7300680A50 /* XHMessageStatusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHMessageStatusView.h; sourceTree = "<group>"; };
+		704A6CA21A527F7300680A50 /* XHMessageStatusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHMessageStatusView.m; sourceTree = "<group>"; };
+		704A6CAB1A53BAF100680A50 /* messageSendFail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messageSendFail@2x.png"; sourceTree = "<group>"; };
 		704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		705553D41A2E35A8001EA4FE /* tabbar_chat_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_chat_active@2x.png"; sourceTree = "<group>"; };
 		705553D61A2E35A8001EA4FE /* tabbar_contacts_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_contacts_active@2x.png"; sourceTree = "<group>"; };
@@ -854,7 +858,6 @@
 		70A066301A24A3A2004DA201 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MessageDisplayKitString.strings"; sourceTree = "<group>"; };
 		70A067271A24D394004DA201 /* CDEmotionUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEmotionUtils.h; sourceTree = "<group>"; };
 		70A067281A24D394004DA201 /* CDEmotionUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEmotionUtils.m; sourceTree = "<group>"; };
-		70B54F1E1A4BC0D000503A0A /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVOSCloud.framework; path = ../../../../Downloads/AVOSCloud.framework; sourceTree = "<group>"; };
 		70D4C53F1A237C1E001A655D /* CDAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAppDelegate.h; sourceTree = "<group>"; };
 		70D4C5401A237C1E001A655D /* CDAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAppDelegate.m; sourceTree = "<group>"; };
 		70D4C5431A237C1E001A655D /* CDBaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDBaseController.h; sourceTree = "<group>"; };
@@ -1048,7 +1051,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				704A890F1A30F5B200D2A3C2 /* QuartzCore.framework in Frameworks */,
-				70B54F1F1A4BC0D000503A0A /* AVOSCloud.framework in Frameworks */,
 				704727A71A2CFE6300690286 /* libz.dylib in Frameworks */,
 				8C470C9D19926019006A4E87 /* libiconv.dylib in Frameworks */,
 				8C925CB71987C20800D2750B /* libsqlite3.dylib in Frameworks */,
@@ -1060,7 +1062,7 @@
 				8CF21DCD197FCCC1002B9220 /* CoreGraphics.framework in Frameworks */,
 				8CF21DCF197FCCC1002B9220 /* UIKit.framework in Frameworks */,
 				8CF21DCB197FCCC1002B9220 /* Foundation.framework in Frameworks */,
-				B0D4DC0C4CAAFC88082981E6 /* libPods.a in Frameworks */,
+				5423D3A58D2AAF3DD752C11F /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1816,6 +1818,8 @@
 				70A065A21A24A3A2004DA201 /* XHMessageTableView.m */,
 				70A065A31A24A3A2004DA201 /* XHMessageTableViewCell.h */,
 				70A065A41A24A3A2004DA201 /* XHMessageTableViewCell.m */,
+				704A6CA11A527F7300680A50 /* XHMessageStatusView.h */,
+				704A6CA21A527F7300680A50 /* XHMessageStatusView.m */,
 			);
 			path = MessageContentViews;
 			sourceTree = "<group>";
@@ -1912,6 +1916,7 @@
 		70A065D41A24A3A2004DA201 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				704A6CAB1A53BAF100680A50 /* messageSendFail@2x.png */,
 				701641501A2C3461006D1074 /* weChatBubble_Receiving_LeanChat@2x.png */,
 				701641511A2C3461006D1074 /* weChatBubble_Sending_LeanChat@2x.png */,
 				70A065D51A24A3A2004DA201 /* AddGroupMemberBtn@2x.png */,
@@ -2477,7 +2482,6 @@
 		8CF21DC9197FCCC1002B9220 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				70B54F1E1A4BC0D000503A0A /* AVOSCloud.framework */,
 				704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */,
 				704727A61A2CFE6300690286 /* libz.dylib */,
 				8C470C9C19926019006A4E87 /* libiconv.dylib */,
@@ -2679,6 +2683,7 @@
 				70A066ED1A24A3A2004DA201 /* RecordingSignal004@2x.png in Resources */,
 				705553DE1A2E35A8001EA4FE /* tabbar_contacts_active@2x.png in Resources */,
 				70D4C6121A237C1E001A655D /* CDChatListController.xib in Resources */,
+				704A6CAC1A53BAF100680A50 /* messageSendFail@2x.png in Resources */,
 				70D4C64A1A237C1E001A655D /* login_disabled@2x.png in Resources */,
 				70A066C61A24A3A2004DA201 /* CellNotSelected@2x.png in Resources */,
 				705553E01A2E35A8001EA4FE /* tabbar_discover_active@2x.png in Resources */,
@@ -2876,6 +2881,7 @@
 				70A0666C1A24A3A2004DA201 /* XHVideoOutputSampleBufferFactory.m in Sources */,
 				70A066581A24A3A2004DA201 /* XHDisplayTextViewController.m in Sources */,
 				70A066811A24A3A2004DA201 /* MultiSelectViewController.m in Sources */,
+				704A6CA31A527F7300680A50 /* XHMessageStatusView.m in Sources */,
 				70D4C6771A237C1E001A655D /* CDPopMenuItem.m in Sources */,
 				70D4C6611A237C1E001A655D /* QBAssetsCollectionOverlayView.m in Sources */,
 				70A066751A24A3A2004DA201 /* FLAnimatedImage.m in Sources */,
@@ -3059,6 +3065,7 @@
 				CODE_SIGN_IDENTITY = "iOS Development: 智维 李 (DQF8JZ3M7J)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
@@ -3102,6 +3109,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;

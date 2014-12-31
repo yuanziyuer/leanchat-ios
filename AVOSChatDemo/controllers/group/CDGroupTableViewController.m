@@ -59,6 +59,9 @@ static NSString* cellIndentifier=@"cell";
     [CDGroupService findGroupsWithCallback:^(NSArray *objects, NSError *error) {
         [CDUtils stopRefreshControl:refreshControl];
         chatGroups=objects;
+        for(CDChatGroup* chatGroup in chatGroups){
+            [CDGroupService setDelegateWithGroupId:chatGroup.objectId];
+        }
         [CDCacheService registerChatGroups:objects];
         [self.tableView reloadData];
     }];

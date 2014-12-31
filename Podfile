@@ -5,6 +5,6 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 platform :ios, '6.0'
 
-# pod 'AVOSCloud'
+pod 'AVOSCloud'
 pod 'Qiniu', '~> 7.0'
 pod 'AFNetworking', '~> 2.0'

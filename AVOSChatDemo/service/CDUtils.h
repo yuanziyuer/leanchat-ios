@@ -12,6 +12,7 @@
 #import "CDCommon.h"
 
 typedef void (^CDBlock)();
+typedef void (^Int64Block)(int64_t num);
 
 @interface CDUtils : NSObject
 
