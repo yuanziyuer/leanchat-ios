@@ -34,8 +34,7 @@ AppID和AppKey可以在[www.avoscloud.com](http://www.avoscloud.com)创建应用
 
 ## 部署项目
 *  申请应用，替换[CDCommonDefine.h](https://github.com/leancloud/leanchat-ios/blob/master/AVOSChatDemo/settings/CDCommonDefine.h)中的appId,appKey
-*  fork [AdventureCloud](https://github.com/avoscloud/AdventureCloud)，[部署云代码](https://github.com/leancloud/leanchat-cloudcode)
-*  建表`AddRequest`
+*  参考[如何替换 AppId 部署应用](https://github.com/leancloud/leanchat-android/wiki/%E5%A6%82%E4%BD%95%E6%9B%BF%E6%8D%A2-AppId-%E9%83%A8%E7%BD%B2%E5%BA%94%E7%94%A8)
 
 ## 阅读源码
 iOS 源码，推荐阅读 [CDSessionManager.m](https://github.com/leancloud/leanchat-ios/blob/master/AVOSChatDemo/service/CDSessionManager.m)与 [CDDatabaseService.m](https://github.com/leancloud/leanchat-ios/blob/master/AVOSChatDemo/service/CDDatabaseService.m)
