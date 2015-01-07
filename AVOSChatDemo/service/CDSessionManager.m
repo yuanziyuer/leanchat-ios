@@ -164,7 +164,7 @@ static BOOL initialized = NO;
 
 -(CDMsg*)sendMsg:(CDMsg*)msg group:(AVGroup*)group{
     if([_session isOpen]==NO || [_session isPaused]){
-        [CDUtils alert:@"会话暂停，请检查网络"];
+        //[CDUtils alert:@"会话暂停，请检查网络"];
     }
     if(!group){
         AVMessage *avMsg=[AVMessage messageForPeerWithSession:_session toPeerId:msg.toPeerId payload:[msg toMessagePayload]];
@@ -234,6 +234,10 @@ static BOOL initialized = NO;
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_MESSAGE_UPDATED object:msg userInfo:nil];
 }
 
+-(void)postSessionUpdate{
+   [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SESSION_UPDATED object:nil userInfo:nil];
+}
+
 - (void)sendCreatedMsg:(CDMsg *)msg group:(AVGroup*)group{
     if(msg.type==CDMsgTypeAudio || msg.type==CDMsgTypeImage){
         [self uploadMsg:msg block:^(id object, NSError *error) {
@@ -296,8 +300,6 @@ static BOOL initialized = NO;
         }];
     }
 }
-
-
 
 -(void)sendAudioWithId:(NSString*)objectId toPeerId:(NSString*)toPeerId group:(AVGroup*)group callback:(AVBooleanResultBlock)callback{
     NSString* path=[CDSessionManager getPathByObjectId:objectId];
@@ -385,7 +387,7 @@ static BOOL initialized = NO;
     CDMsg* msg=[CDMsg fromAVMessage:avMsg];
     msg.status=CDMsgStatusSendSucceed;
     [self setRoomTypeAndConvidOfMsg:msg group:group];
-    [CDDatabaseService updateMsgWithId:msg.objectId status:CDMsgStatusSendSucceed];
+    [CDDatabaseService updateMsgWithId:msg.objectId status:msg.status timestamp:msg.timestamp];
     [self postUpdatedMsg:msg];
 }
 
@@ -394,9 +396,6 @@ static BOOL initialized = NO;
     [CDDatabaseService updateMsgWithId:msg.objectId status:CDMsgStatusSendFailed];
     // forbid to fast load message
     [self postUpdatedMsg:msg];
-    
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5*NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-//    });
 }
 
 -(void)didMessageSendFailure:(AVMessage*)avMsg group:(AVGroup*)group{
@@ -456,16 +455,19 @@ static BOOL initialized = NO;
 - (void)sessionOpened:(AVSession *)session {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     NSLog(@"session:%@", session.peerId);
+    [self postSessionUpdate];
 }
 
 - (void)sessionPaused:(AVSession *)session {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     NSLog(@"session:%@", session.peerId);
+    [self postSessionUpdate];
 }
 
 - (void)sessionResumed:(AVSession *)session {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     NSLog(@"session:%@", session.peerId);
+    [self postSessionUpdate];
 }
 
 - (void)session:(AVSession *)session didReceiveMessage:(AVMessage *)message {
@@ -505,7 +507,6 @@ static BOOL initialized = NO;
 
 - (void)group:(AVGroup *)group didReceiveMessage:(AVMessage *)message {
     [self didReceiveAVMessage:message group:group];
-    //[[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SESSION_UPDATED object:group.session userInfo:nil];
 }
 
 - (void)group:(AVGroup *)group didReceiveEvent:(AVGroupEvent)event peerIds:(NSArray *)peerIds {
@@ -525,7 +526,7 @@ static BOOL initialized = NO;
 - (void)group:(AVGroup *)group messageSendFailed:(AVMessage *)message error:(NSError *)error {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     NSLog(@"group:%@ message:%@ error:%@", group.groupId, message.payload, error);
-
+    [self didMessageSendFailure:message group:group];
 }
 
 - (void)session:(AVSession *)session group:(AVGroup *)group messageSent:(NSString *)message success:(BOOL)success {

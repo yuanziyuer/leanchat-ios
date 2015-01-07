@@ -26,6 +26,8 @@
 
 +(void)upgradeToAddField;
 
++(void)updateMsgWithId:(NSString*)objectId status:(CDMsgStatus)status timestamp:(int64_t)timestamp;
+
 +(void)updateMsgWithId:(NSString*)objectId status:(CDMsgStatus)status;
 
 +(void)updateMsgWithId:(NSString*)objectId content:(NSString*)content;

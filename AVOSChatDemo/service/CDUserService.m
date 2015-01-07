@@ -9,6 +9,8 @@
 #import "CDUserService.h"
 #import "CDUtils.h"
 
+static UIImage* defaultAvatar;
+
 @implementation CDUserService
 
 +(void)findFriendsIsNetworkOnly:(BOOL)networkOnly callback:(AVArrayResultBlock)block{
@@ -68,9 +70,24 @@
     }
 }
 
--(NSString*)getAvatarUrlOfAVUser:(AVUser*)user{
-    AVFile* file=[user valueForKey:@"avatar"];
-    return file.url;
++(UIImage*)getAvatarOfUser:(AVUser*)user{
+    if(defaultAvatar==nil){
+        defaultAvatar=[UIImage imageNamed:@"default_user_avatar"];
+    }
+    UIImage* image=defaultAvatar;
+    AVFile* avatarFile=[user objectForKey:@"avatar"];
+    if(avatarFile==nil){
+        [CDUtils alert:@"avatar of user is nil"];
+    }else{
+        NSError* error;
+        NSData* data=[avatarFile getData:&error];
+        if(error==nil){
+            image=[UIImage imageWithData:data];
+        }else{
+            [CDUtils alertError:error];
+        }
+    }
+    return image;
 }
 
 +(void)saveAvatar:(UIImage*)image callback:(AVBooleanResultBlock)callback{

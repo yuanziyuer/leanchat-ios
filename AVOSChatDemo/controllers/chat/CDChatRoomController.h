@@ -10,8 +10,8 @@
 #import "CDSessionManager.h"
 #import "CDChatGroup.h"
 #import "FMDB.h"
-
 #import "XHMessageTableViewController.h"
+#import "CDSessionStateView.h"
 
 
 @class CDChatRoomController;
@@ -24,5 +24,6 @@
 @property (nonatomic,strong) CDChatGroup* chatGroup;
 
 @property (nonatomic, strong) AVGroup *group;
+
 
 @end

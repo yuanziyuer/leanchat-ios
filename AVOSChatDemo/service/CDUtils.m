@@ -125,6 +125,10 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), queue);
 }
 
++(void)runAfterSecs:(float)secs block:(void (^)())block{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, secs*NSEC_PER_SEC), dispatch_get_main_queue(), block);
+}
+
 +(void)postNotification:(NSString*)name{
     [[NSNotificationCenter defaultCenter] postNotificationName:name object:nil];
 }
@@ -228,5 +232,11 @@
     }
 }
 
++ (BOOL)connected
+{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    return networkStatus != NotReachable;
+}
 
 @end

@@ -80,7 +80,7 @@ static NSArray* friends;
     }
 }
 
-+(void)cacheUsersWithIds:(NSMutableArray*)userIds callback:(AVArrayResultBlock)callback{
++(void)cacheUsersWithIds:(NSSet*)userIds callback:(AVArrayResultBlock)callback{
     NSMutableSet* uncachedUserIds=[[NSMutableSet alloc] init];
     for(NSString* userId in userIds){
         if([self lookupUser:userId]==nil){
@@ -111,7 +111,7 @@ static NSArray* friends;
             [groupIds addObject:msg.convid];
         }
     }
-    [self cacheUsersWithIds:[NSMutableArray arrayWithArray:[userIds allObjects]] callback:^(NSArray *objects, NSError *error) {
+    [self cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
         if(error){
             callback(objects,error);
         }else{

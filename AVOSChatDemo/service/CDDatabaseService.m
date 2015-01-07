@@ -166,9 +166,7 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     if(timestamp!=-1){
         result=timestamp+1;
     }else{
-        NSDate* now=[NSDate date];
-        int sec=[now timeIntervalSince1970]+10;
-        result= (int64_t)sec*1000;
+        result=(int64_t)([[NSDate date] timeIntervalSince1970]+10)*1000;
     }
     return result;
 }

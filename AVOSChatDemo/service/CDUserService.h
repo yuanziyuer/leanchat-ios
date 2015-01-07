@@ -21,6 +21,8 @@
 
 +(void)displayAvatarOfUser:(AVUser*)user avatarView:(UIImageView*)avatarView;
 
++(UIImage*)getAvatarOfUser:(AVUser*)user;
+
 +(void)saveAvatar:(UIImage*)image callback:(AVBooleanResultBlock)callback;
 
 @end

@@ -56,7 +56,8 @@ static NSString * const reuseIdentifier = @"Cell";
 
 -(void)initWithCurrentChatGroup{
     CDChatGroup* chatGroup=[self getChatGroup];
-    [CDCacheService cacheUsersWithIds:chatGroup.m callback:^(NSArray *objects, NSError *error) {
+    NSSet* userIds=[NSSet setWithArray:chatGroup.m];
+    [CDCacheService cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
         [CDUtils filterError:error callback:^{
             groupMembers=chatGroup.m;
             [self.collectionView reloadData];
@@ -98,7 +99,8 @@ static NSString * const reuseIdentifier = @"Cell";
             CDChatGroup* chatGroup=[self getChatGroup];
             NSString* userId=[chatGroup.m objectAtIndex:indexPath.row];
             if([userId isEqualToString:chatGroup.owner.objectId]==NO){
-                UIAlertView * alert=[[UIAlertView alloc] initWithTitle:nil message:@"确定要踢走该成员吗？"  delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
+                UIAlertView * alert=[[UIAlertView alloc]
+                                     initWithTitle:nil message:@"确定要踢走该成员吗？"  delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
                 alert.tag=indexPath.row;
                 [alert show];
             }

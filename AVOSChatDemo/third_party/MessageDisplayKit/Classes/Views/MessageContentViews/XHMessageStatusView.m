@@ -16,11 +16,11 @@
         //self.backgroundColor=[UIColor redColor];
         _indicatorView=[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         CGPoint centerPoint=self.center;
-        CGFloat x=self.bounds.size.width-_indicatorView.bounds.size.width+(_indicatorView.bounds.size.width/2);
+        CGFloat x=self.bounds.size.width-_indicatorView.bounds.size.width+(_indicatorView.bounds.size.width/2)-kXHStatusViewPadding;
         centerPoint.x=x;
         _indicatorView.center=centerPoint;
         
-        _indicatorView.transform = CGAffineTransformMakeScale(0.75, 0.75);
+        _indicatorView.transform = CGAffineTransformMakeScale(0.8, 0.8);
         [self addSubview:_indicatorView];
 
         CGFloat sentX=CGRectGetWidth(self.frame)-kXHStatusViewSentWidth;
@@ -37,9 +37,9 @@
         [_sentView setTextColor:[UIColor whiteColor]];
         [self addSubview:_sentView];
         
-        CGFloat retryX=CGRectGetWidth(self.frame)-kXHStatusViewRetryButtonSize-kXHStatusViewRetryPadding;
+        CGFloat retryX=CGRectGetWidth(self.frame)-kXHStatusViewRetryButtonSize-kXHStatusViewPadding;
         
-        _retryButton=[[UIButton alloc] initWithFrame:CGRectMake(retryX, 0, 15,15)];
+        _retryButton=[[UIButton alloc] initWithFrame:CGRectMake(retryX, 0, kXHStatusViewRetryButtonSize,kXHStatusViewRetryButtonSize)];
         //_retryButton.center=self.center;
         [_retryButton setBackgroundImage:[UIImage imageNamed:@"messageSendFail"] forState:UIControlStateNormal];
         [self addSubview:_retryButton];

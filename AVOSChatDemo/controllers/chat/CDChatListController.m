@@ -16,6 +16,7 @@
 #import "CDCacheService.h"
 #import "CDCloudService.h"
 #import "CDDatabaseService.h"
+#import "SRRefreshView.h"
 
 enum : NSUInteger {
     kTagNameLabel = 10000,
@@ -28,6 +29,8 @@ enum : NSUInteger {
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (strong,nonatomic) SRRefreshView* slimeView;
 
 @end
 
@@ -52,16 +55,23 @@ static NSString *cellIdentifier = @"ContactCell";
     [self.tableView registerNib:[UINib nibWithNibName:nibName bundle:nil] forCellReuseIdentifier:cellIdentifier];
     chatRooms=[[NSMutableArray alloc] init];
     sessionManager=[CDSessionManager sharedInstance];
+    //[self slimeView];
+    [_tableView addSubview:self.slimeView];
     
-    UIRefreshControl* refreshControl=[[UIRefreshControl alloc] init];
-    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:refreshControl];
+//    UIRefreshControl* refreshControl=[[UIRefreshControl alloc] init];
+//    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+//    [self.tableView addSubview:refreshControl];
+    _networkStateView=[[CDSessionStateView alloc] initWithWidth:self.tableView.frame.size.width];
+    [_networkStateView setDelegate:self];
+    [_networkStateView observeSessionUpdate];
+    [_slimeView setLoading:YES];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self refresh:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh:) name:NOTIFICATION_MESSAGE_UPDATED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:NOTIFICATION_MESSAGE_UPDATED object:nil];
+    // hide it
+    [self refresh:_slimeView];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -69,10 +79,34 @@ static NSString *cellIdentifier = @"ContactCell";
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_MESSAGE_UPDATED object:nil];
 }
 
--(void)refresh:(UIRefreshControl*)refreshControl{
+- (SRRefreshView *)slimeView
+{
+    if (!_slimeView) {
+        _slimeView = [[SRRefreshView alloc] init];
+        _slimeView.delegate = self;
+        _slimeView.upInset = 64;
+        _slimeView.slimeMissWhenGoingBack = YES;
+        _slimeView.slime.bodyColor = [UIColor grayColor];
+        _slimeView.slime.skinColor = [UIColor grayColor];
+        _slimeView.slime.lineWith = 1;
+        _slimeView.slime.shadowBlur = 4;
+        _slimeView.slime.shadowColor = [UIColor grayColor];
+        _slimeView.backgroundColor = [UIColor clearColor];
+    }
+    
+    return _slimeView;
+}
+
+-(void)refresh{
+    [self refresh:nil];
+}
+
+-(void)refresh:(SRRefreshView*)refrshView{
     [CDUtils showNetworkIndicator];
     [CDDatabaseService findConversationsWithCallback:^(NSArray *objects, NSError *error) {
-        [CDUtils stopRefreshControl:refreshControl];
+        if(refrshView!=nil){
+          [refrshView endRefresh];
+        }
         [CDUtils hideNetworkIndicator];
         [CDUtils filterError:error callback:^{
             chatRooms=[objects mutableCopy];
@@ -192,6 +226,31 @@ static NSString *cellIdentifier = @"ContactCell";
         }
     }];
     // [self dismissViewControllerAnimated:NO completion:nil];
+}
+
+#pragma mark -- CDSessionDelegateMethods
+
+-(void)onSessionBrokenWithStateView:(CDSessionStateView *)view{
+    _tableView.tableHeaderView=view;
+}
+
+-(void)onSessionFineWithStateView:(CDSessionStateView *)view{
+    _tableView.tableHeaderView=nil;
+}
+
+-(void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView{
+    [self refresh:refreshView];
+}
+
+#pragma mark - scrollView delegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [_slimeView scrollViewDidScroll];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [_slimeView scrollViewDidEndDraging];
 }
 
 @end

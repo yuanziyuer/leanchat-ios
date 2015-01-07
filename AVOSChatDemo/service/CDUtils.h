@@ -10,6 +10,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import <AVOSCloud/AVOSCloud.h>
 #import "CDCommon.h"
+#import "Reachability.h"
+#import <SystemConfiguration/SystemConfiguration.h>
 
 typedef void (^CDBlock)();
 typedef void (^Int64Block)(int64_t num);
@@ -54,7 +56,10 @@ typedef void (^Int64Block)(int64_t num);
 
 #pragma mark - async
 +(void)runInGlobalQueue:(void (^)())queue;
+
 +(void)runInMainQueue:(void (^)())queue;
+
++(void)runAfterSecs:(float)secs block:(void (^)())block;
 
 
 +(void)postNotification:(NSString*)name;
@@ -63,5 +68,8 @@ typedef void (^Int64Block)(int64_t num);
 + (int)getDurationOfAudioPath:(NSString *)path ;
 
 + (void)downloadWithUrl:(NSString *)url toPath:(NSString *)path;
+
++ (BOOL)connected;
+
 
 @end

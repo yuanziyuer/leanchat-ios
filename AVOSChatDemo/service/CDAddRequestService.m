@@ -20,4 +20,5 @@
     [CDUtils setPolicyOfAVQuery:q isNetwokOnly:onlyNetwork];
     [q findObjectsInBackgroundWithBlock:callback];
 }
+
 @end

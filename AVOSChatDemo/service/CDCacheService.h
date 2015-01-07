@@ -22,7 +22,7 @@
 
 +(void)registerChatGroup:(CDChatGroup*)chatGroup;
 
-+(void)cacheUsersWithIds:(NSArray*)userIds callback:(AVArrayResultBlock)callback;
++(void)cacheUsersWithIds:(NSSet*)userIds callback:(AVArrayResultBlock)callback;
 
 +(void)cacheChatGroupsWithIds:(NSMutableSet*)groupIds withCallback:(AVArrayResultBlock)callback;
 
