@@ -401,7 +401,7 @@
 		70D4C6771A237C1E001A655D /* CDPopMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D4C6031A237C1E001A655D /* CDPopMenuItem.m */; };
 		70D4C6781A237C1E001A655D /* CDPopMenuItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D4C6051A237C1E001A655D /* CDPopMenuItemCell.m */; };
 		70D4C6791A237C1E001A655D /* CDTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D4C6071A237C1E001A655D /* CDTextField.m */; };
-		70D4C67A1A237C1E001A655D /* ResizableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D4C6091A237C1E001A655D /* ResizableButton.m */; };
+		70D4C67A1A237C1E001A655D /* CDResizableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D4C6091A237C1E001A655D /* CDResizableButton.m */; };
 		70E47DE71A245D2C00DE60FE /* Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E47DE41A245D2C00DE60FE /* Emoji.m */; };
 		70E47DE81A245D2C00DE60FE /* EmojiEmoticons.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E47DE61A245D2C00DE60FE /* EmojiEmoticons.m */; };
 		70E47DF81A245E1200DE60FE /* CDAddRequestService.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E47DEB1A245E1200DE60FE /* CDAddRequestService.m */; };
@@ -409,6 +409,9 @@
 		70E47DFB1A245E1200DE60FE /* CDGroupService.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E47DF11A245E1200DE60FE /* CDGroupService.m */; };
 		70E47DFC1A245E1200DE60FE /* CDUserService.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E47DF31A245E1200DE60FE /* CDUserService.m */; };
 		70E47DFD1A245E1200DE60FE /* CDUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E47DF51A245E1200DE60FE /* CDUtils.m */; };
+		70FD7BC01A63805B00F29C79 /* rounded_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 70FD7BBF1A63805B00F29C79 /* rounded_icon.png */; };
+		70FD7BC91A63A26C00F29C79 /* blue_expand_disable@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70FD7BC81A63A26C00F29C79 /* blue_expand_disable@2x.png */; };
+		70FD7BCD1A641DD600F29C79 /* CDBadgeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 70FD7BCC1A641DD600F29C79 /* CDBadgeLabel.m */; };
 		8C470C9D19926019006A4E87 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C470C9C19926019006A4E87 /* libiconv.dylib */; };
 		8C925C1F19876D8100D2750B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C925C1E19876D8100D2750B /* libicucore.dylib */; };
 		8C925CB71987C20800D2750B /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C925CB61987C20800D2750B /* libsqlite3.dylib */; };
@@ -1031,8 +1034,8 @@
 		70D4C6051A237C1E001A655D /* CDPopMenuItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDPopMenuItemCell.m; sourceTree = "<group>"; };
 		70D4C6061A237C1E001A655D /* CDTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDTextField.h; sourceTree = "<group>"; };
 		70D4C6071A237C1E001A655D /* CDTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDTextField.m; sourceTree = "<group>"; };
-		70D4C6081A237C1E001A655D /* ResizableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResizableButton.h; sourceTree = "<group>"; };
-		70D4C6091A237C1E001A655D /* ResizableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResizableButton.m; sourceTree = "<group>"; };
+		70D4C6081A237C1E001A655D /* CDResizableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDResizableButton.h; sourceTree = "<group>"; };
+		70D4C6091A237C1E001A655D /* CDResizableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDResizableButton.m; sourceTree = "<group>"; };
 		70E47DE31A245D2C00DE60FE /* Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Emoji.h; sourceTree = "<group>"; };
 		70E47DE41A245D2C00DE60FE /* Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Emoji.m; sourceTree = "<group>"; };
 		70E47DE51A245D2C00DE60FE /* EmojiEmoticons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmojiEmoticons.h; sourceTree = "<group>"; };
@@ -1047,6 +1050,11 @@
 		70E47DF31A245E1200DE60FE /* CDUserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUserService.m; sourceTree = "<group>"; };
 		70E47DF41A245E1200DE60FE /* CDUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUtils.h; sourceTree = "<group>"; };
 		70E47DF51A245E1200DE60FE /* CDUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUtils.m; sourceTree = "<group>"; };
+		70FD7BBF1A63805B00F29C79 /* rounded_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rounded_icon.png; path = "../../../../../../Downloads/LeanChat/App Icon [Rounded]/rounded_icon.png"; sourceTree = "<group>"; };
+		70FD7BC81A63A26C00F29C79 /* blue_expand_disable@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blue_expand_disable@2x.png"; sourceTree = "<group>"; };
+		70FD7BCA1A63D22700F29C79 /* CDService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDService.h; sourceTree = "<group>"; };
+		70FD7BCB1A641DD600F29C79 /* CDBadgeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDBadgeLabel.h; sourceTree = "<group>"; };
+		70FD7BCC1A641DD600F29C79 /* CDBadgeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDBadgeLabel.m; sourceTree = "<group>"; };
 		8C470C5B199257E3006A4E87 /* libZXingWidget.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libZXingWidget.a; sourceTree = "<group>"; };
 		8C470C9C19926019006A4E87 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		8C925C1E19876D8100D2750B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
@@ -2167,8 +2175,8 @@
 			children = (
 				70D4C5731A237C1E001A655D /* CDProfileController.h */,
 				70D4C5741A237C1E001A655D /* CDProfileController.m */,
-				70D4C5761A237C1E001A655D /* CDUserInfoController.h */,
 				70D4C5751A237C1E001A655D /* CDProfileController.xib */,
+				70D4C5761A237C1E001A655D /* CDUserInfoController.h */,
 				70D4C5771A237C1E001A655D /* CDUserInfoController.m */,
 				70D4C5781A237C1E001A655D /* CDUserInfoController.xib */,
 			);
@@ -2239,7 +2247,9 @@
 		70D4C5A31A237C1E001A655D /* login */ = {
 			isa = PBXGroup;
 			children = (
+				70FD7BBF1A63805B00F29C79 /* rounded_icon.png */,
 				70D4C5A41A237C1E001A655D /* background@2x.png */,
+				70FD7BC81A63A26C00F29C79 /* blue_expand_disable@2x.png */,
 				70D4C5A51A237C1E001A655D /* blue_expand_highlight@2x.png */,
 				70D4C5A61A237C1E001A655D /* blue_expand_normal@2x.png */,
 				70D4C5A71A237C1E001A655D /* bottom_bar_normal@2x.png */,
@@ -2409,10 +2419,12 @@
 				70D4C6051A237C1E001A655D /* CDPopMenuItemCell.m */,
 				70D4C6061A237C1E001A655D /* CDTextField.h */,
 				70D4C6071A237C1E001A655D /* CDTextField.m */,
-				70D4C6081A237C1E001A655D /* ResizableButton.h */,
-				70D4C6091A237C1E001A655D /* ResizableButton.m */,
+				70D4C6081A237C1E001A655D /* CDResizableButton.h */,
+				70D4C6091A237C1E001A655D /* CDResizableButton.m */,
 				706A0DC71A5AC0C90075DEA9 /* CDSessionStateView.h */,
 				706A0DC81A5AC0C90075DEA9 /* CDSessionStateView.m */,
+				70FD7BCB1A641DD600F29C79 /* CDBadgeLabel.h */,
+				70FD7BCC1A641DD600F29C79 /* CDBadgeLabel.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -2501,6 +2513,7 @@
 				705553E81A2E3C1F001EA4FE /* CDCacheService.m */,
 				705553EA1A2E49F5001EA4FE /* CDDatabaseService.h */,
 				705553EB1A2E49F5001EA4FE /* CDDatabaseService.m */,
+				70FD7BCA1A63D22700F29C79 /* CDService.h */,
 			);
 			path = service;
 			sourceTree = "<group>";
@@ -2656,6 +2669,7 @@
 				70A066F31A24A3A2004DA201 /* SECoreTextView.bundle in Resources */,
 				70D4C62E1A237C1E001A655D /* InfoPlist.strings in Resources */,
 				70D4C6171A237C1E001A655D /* CDNewFriendTableViewController.xib in Resources */,
+				70FD7BC91A63A26C00F29C79 /* blue_expand_disable@2x.png in Resources */,
 				701641831A2C59A8006D1074 /* u1f60c.png in Resources */,
 				70D4C64B1A237C1E001A655D /* login_selected@2x.png in Resources */,
 				701641881A2C59A8006D1074 /* u1f61c.png in Resources */,
@@ -2755,6 +2769,7 @@
 				70A067121A24A3A2004DA201 /* sharemore_wxtalk@2x.png in Resources */,
 				701641801A2C59A8006D1074 /* u1f44e.png in Resources */,
 				70D4C6751A237C1E001A655D /* CDLabelButtonTableCell.xib in Resources */,
+				70FD7BC01A63805B00F29C79 /* rounded_icon.png in Resources */,
 				7016418A1A2C59A8006D1074 /* u1f62a.png in Resources */,
 				701641961A2C59A8006D1074 /* u1f620.png in Resources */,
 				701641851A2C59A8006D1074 /* u1f60f.png in Resources */,
@@ -2873,7 +2888,7 @@
 				70A0663E1A24A3A2004DA201 /* XHAudioPlayerHelper.m in Sources */,
 				70A0667F1A24A3A2004DA201 /* MultiSelectTableViewCell.m in Sources */,
 				70A066BD1A24A3A2004DA201 /* XHRefreshCircleView.m in Sources */,
-				70D4C67A1A237C1E001A655D /* ResizableButton.m in Sources */,
+				70D4C67A1A237C1E001A655D /* CDResizableButton.m in Sources */,
 				70A0669B1A24A3A2004DA201 /* XHAlbumRichTextView.m in Sources */,
 				70A066321A24A3A2004DA201 /* NSString+XHDiskSizeTransfrom.m in Sources */,
 				706A0DC61A5ABEAE0075DEA9 /* Reachability.m in Sources */,
@@ -2929,6 +2944,7 @@
 				705304071A5C20BF0078B876 /* SRSlimeView.m in Sources */,
 				70A0666C1A24A3A2004DA201 /* XHVideoOutputSampleBufferFactory.m in Sources */,
 				70A066581A24A3A2004DA201 /* XHDisplayTextViewController.m in Sources */,
+				70FD7BCD1A641DD600F29C79 /* CDBadgeLabel.m in Sources */,
 				70A066811A24A3A2004DA201 /* MultiSelectViewController.m in Sources */,
 				704A6CA31A527F7300680A50 /* XHMessageStatusView.m in Sources */,
 				70D4C6771A237C1E001A655D /* CDPopMenuItem.m in Sources */,
@@ -3183,6 +3199,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_IDENTITY = "";
+				DEPLOYMENT_POSTPROCESSING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
@@ -3218,6 +3235,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_IDENTITY = "";
+				DEPLOYMENT_POSTPROCESSING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",

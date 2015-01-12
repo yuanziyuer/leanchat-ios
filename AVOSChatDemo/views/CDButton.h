@@ -6,8 +6,8 @@
 //  Copyright (c) 2014年 AVOS. All rights reserved.
 //
 
-#import "ResizableButton.h"
+#import "CDResizableButton.h"
 
-@interface CDButton : ResizableButton
+@interface CDButton : CDResizableButton
 
 @end

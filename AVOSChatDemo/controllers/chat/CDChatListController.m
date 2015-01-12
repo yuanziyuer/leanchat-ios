@@ -17,6 +17,7 @@
 #import "CDCloudService.h"
 #import "CDDatabaseService.h"
 #import "SRRefreshView.h"
+#import "CDUpgradeService.h"
 
 enum : NSUInteger {
     kTagNameLabel = 10000,

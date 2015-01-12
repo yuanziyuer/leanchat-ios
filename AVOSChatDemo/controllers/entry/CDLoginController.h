@@ -7,6 +7,7 @@
 //
 
 #import "CDBaseController.h"
+#import "CDResizableButton.h"
 
 @interface CDLoginController : CDBaseController
 

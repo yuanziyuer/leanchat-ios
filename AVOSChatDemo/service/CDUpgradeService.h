@@ -7,12 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AVOSCloud/AVOSCloud.h>
 
 typedef void (^CDUpgradeBlock)(BOOL upgrade,NSString* oldVersion,NSString* newVersion);
 
 @interface CDUpgradeService : NSObject
 
 +(NSString*)currentVersion;
+
 +(void)upgradeWithBlock:(CDUpgradeBlock)callback;
+
++(void)findNewVersionWithBlock:(AVBooleanResultBlock)block;
 
 @end

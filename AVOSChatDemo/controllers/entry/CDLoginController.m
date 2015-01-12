@@ -18,7 +18,7 @@
 }
 @property (nonatomic, strong)CDTextField *usernameField;
 @property (nonatomic, strong)CDTextField *passwordField;
-@property (nonatomic, strong)UIButton *loginButton;
+@property (nonatomic, strong)CDResizableButton *loginButton;
 
 @end
 
@@ -37,11 +37,14 @@
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(closeKeyboard:)];
     [self.view addGestureRecognizer:pan];
     
-    CGFloat originX = 0;
-    CGFloat originY = 0;
-    CGFloat width = self.view.frame.size.width;
-    CGFloat height = self.view.frame.size.height;
-    UIImage *image = [[UIImage imageNamed:@"background"] resizableImageWithCapInsets:UIEdgeInsetsMake(100, 0, 285, 0)];
+    //[self.view setBackgroundColor:RGBCOLOR(222, 223, 225)];
+    
+    UIImage *image = [UIImage imageNamed:@"rounded_icon"];
+    CGFloat width = image.size.width/2;
+    CGFloat height = image.size.height/2;
+    CGFloat originX = CGRectGetWidth(self.view.frame)/2-width/2;
+    CGFloat originY=60;
+    
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
     imageView.frame = CGRectMake(originX, originY, width, height);
     [self.view addSubview:imageView];
@@ -80,22 +83,17 @@
     self.passwordField = textField;
     
     originY += height + 7;
-    image = [UIImage imageNamed:@"login"];
-    width = image.size.width;
-    height = image.size.height;
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(originX, originY, width, height);
-    [button setBackgroundImage:image forState:UIControlStateNormal];
-    image = [UIImage imageNamed:@"login_selected"];
-    [button setBackgroundImage:image forState:UIControlStateHighlighted];
-    image = [UIImage imageNamed:@"login_disabled"];
-    [button setBackgroundImage:image forState:UIControlStateDisabled];
-    button.enabled = NO;
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    //    button.userInteractionEnabled = YES;
-    [button addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
-    self.loginButton = button;
+    CDResizableButton* resizeButton=[[CDResizableButton alloc] initWithFrame:CGRectMake(originX,originY,width,height)];
+    [resizeButton setTitle:@"登录" forState:UIControlStateNormal];
+    [resizeButton setBackgroundImage:[UIImage imageNamed:@"blue_expand_normal"] forState:UIControlStateNormal];
+    [resizeButton setBackgroundImage:[UIImage imageNamed:@"blue_expand_highlight"] forState:UIControlStateHighlighted];
+    [resizeButton setBackgroundImage:[UIImage imageNamed:@"blue_expand_normal"] forState:UIControlStateDisabled];
+    resizeButton.enabled=NO;
+    [resizeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    //[resizeButton setBackgroundColor:[UIColor redColor]];
+    [resizeButton addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:resizeButton];
+    self.loginButton = resizeButton;
     
     image = [[UIImage imageNamed:@"bottom_bar_normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
     UIImage *selectedImage = [[UIImage imageNamed:@"bottom_bar_selected"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
@@ -103,7 +101,7 @@
     originY = self.view.frame.size.height - image.size.height;
     width = self.view.frame.size.width/2;
     height = image.size.height;
-    button = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(originX, originY, width, height);
     [button setBackgroundImage:image forState:UIControlStateNormal];
     [button setBackgroundImage:selectedImage forState:UIControlStateHighlighted];

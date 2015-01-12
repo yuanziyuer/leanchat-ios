@@ -7,11 +7,13 @@
 //
 
 #import "CDProfileController.h"
+#import "CDService.h"
 #import "CDCommon.h"
 #import "CDLoginController.h"
 #import "CDAppDelegate.h"
-#import "CDSessionManager.h"
-#import "ResizableButton.h"
+#import "CDResizableButton.h"
+#import "JSBadgeView.h"
+#import "CDBadgeLabel.h"
 
 @interface CDProfileController ()
 
@@ -21,6 +23,13 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UITableViewCell *avatarCell;
 @property (strong, nonatomic) IBOutlet UITableViewCell *logoutCell;
+@property (strong, nonatomic) IBOutlet UITableViewCell *upgradeCell;
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *upgradeAction;
+
+@property (strong,nonatomic) JSBadgeView *badgeView;
+
+@property (nonatomic,assign) BOOL haveNewVersion;
 
 @end
 
@@ -30,6 +39,7 @@
     if ((self = [super init])) {
         self.title = @"我";
         self.tabBarItem.image = [UIImage imageNamed:@"tabbar_me_active"];
+        _haveNewVersion=NO;
     }
     return self;
 }
@@ -45,6 +55,23 @@
     
     [CDUserService displayAvatarOfUser:user avatarView:self.avatarView];
     //_tableView.autoresizingMask=UIViewAutoresizingFlexibleHeight;
+    NSString* str=@"当前:v";
+    [_versionLabel setText:[str stringByAppendingString:[CDUpgradeService currentVersion]]];
+    
+    _badgeView = [[JSBadgeView alloc] initWithParentView:_upgradeAction alignment:JSBadgeViewAlignmentTopRight];
+    _badgeView.badgeText=@"New";
+    
+    //[_upgradeAction setBackgroundColor:[UIColor grayColor]];
+    
+    [CDUpgradeService findNewVersionWithBlock:^(BOOL succeeded, NSError *error) {
+        [CDUtils filterError:error callback:^{
+            if(succeeded){
+                _haveNewVersion=YES;
+            }else{
+                _haveNewVersion=NO;
+            }
+        }];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -64,7 +91,7 @@
 #pragma mark - table view
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
+    return 3;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -78,6 +105,9 @@
             _avatarCell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
             return _avatarCell;
         case 1:
+            _upgradeCell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+            return _upgradeCell;
+        case 2:
             _logoutCell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
             return _logoutCell;
         default:
@@ -90,6 +120,13 @@
     if(section==0){
         [CDUtils pickImageFromPhotoLibraryAtController:self];
     }else if(section==1){
+        if(_haveNewVersion){
+            NSURL *url = [NSURL URLWithString:@"http://fir.im/Lean"];
+            [[UIApplication sharedApplication] openURL:url];
+        }else{
+            [CDUtils alert:@"已经是最新版本"];
+        }
+    }else if(section==2){
         [self logout];
     }
 }

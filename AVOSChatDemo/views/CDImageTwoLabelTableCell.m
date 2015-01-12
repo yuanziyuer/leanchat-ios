@@ -18,11 +18,6 @@
     return self;
 }
 
--(void)setup{
-    self.unreadLabel.layer.cornerRadius=10;
-    self.unreadLabel.clipsToBounds=YES;
-}
-
 -(void)layoutSubviews{
     [super layoutSubviews];
     if (_unreadCount > 0) {
@@ -42,7 +37,6 @@
 }
 
 - (void)awakeFromNib {
-    [self setup];
     // Initialization code
 }
 

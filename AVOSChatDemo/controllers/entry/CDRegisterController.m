@@ -101,8 +101,6 @@
     [button addTarget:self action:@selector(register:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
     self.registerButton = button;
-
-
 }
 
 - (void)viewWillAppear:(BOOL)animated{

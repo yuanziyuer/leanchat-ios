@@ -97,6 +97,8 @@ enum : NSUInteger {
 -(void)refresh:(UIRefreshControl*)refreshControl{
     BOOL networkOnly= refreshControl!=nil;
     [CDUtils showNetworkIndicator];
+    //[CDUserService findFriendsWithCallback:^(NSArray *objects, NSError *error) {
+    //}];
     [CDUserService findFriendsIsNetworkOnly:networkOnly callback:^(NSArray *objects, NSError *error) {
         [CDUtils stopRefreshControl:refreshControl];
         [CDUtils hideNetworkIndicator];

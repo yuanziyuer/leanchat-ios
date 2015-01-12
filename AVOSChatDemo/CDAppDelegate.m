@@ -74,7 +74,7 @@
        setenv("LOG_CURL", "YES", 0);
        setenv("LOG_IM", "YES", 0);
        [AVOSCloud setVerbosePolicy:kAVVerboseShow];
-       [AVAnalytics setAnalyticsEnabled:NO];
+       [AVAnalytics setAnalyticsEnabled:YES];
     }
     
     return YES;
@@ -191,6 +191,7 @@
         }else{
         }
     }];
+    
     return tab;
 }
 
@@ -202,7 +203,13 @@
     imgv.userInteractionEnabled = YES;
     [anchorController.view addSubview:imgv];
 
-    [UIView animateWithDuration:0.5 delay:2 options:0
+    double duration=0.5;
+    double delay=2;
+    if(CD_DEBUG){
+        duration=0;
+        delay=0;
+    }
+    [UIView animateWithDuration:duration delay:delay options:0
                      animations:^{
                          imgv.alpha=0.0f;
                      } completion:^(BOOL finished){

@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 AVOS. All rights reserved.
 //
 
-#import "ResizableButton.h"
+#import "CDResizableButton.h"
 
-@implementation ResizableButton
+@implementation CDResizableButton
 
 /*
 // Only override drawRect: if you perform custom drawing.

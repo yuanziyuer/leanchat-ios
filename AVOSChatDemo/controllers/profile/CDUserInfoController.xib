@@ -26,7 +26,7 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default_user_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="Dw9-N6-97H">
                     <rect key="frame" x="56" y="82" width="35" height="35"/>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xgK-ZO-Nkd" customClass="ResizableButton">
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xgK-ZO-Nkd" customClass="CDResizableButton">
                     <rect key="frame" x="39" y="150" width="242" height="32"/>
                     <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                     <state key="normal" title="添加好友" backgroundImage="blue_expand_normal.png">

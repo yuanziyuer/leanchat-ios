@@ -479,10 +479,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         }
             break;
         case XHBubbleMessageMediaTypeVoice: {
-            DLog(@"message : %@", message.voicePath);
-            NSFileManager* man=[NSFileManager defaultManager];
-            BOOL exists=[man fileExistsAtPath:message.voicePath];
-            
             // Mark the voice as read and hide the red dot.
             //message.isRead = YES;
             //messageTableViewCell.messageBubbleView.voiceUnreadDotImageView.hidden = YES;

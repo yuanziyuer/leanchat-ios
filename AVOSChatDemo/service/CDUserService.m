@@ -28,6 +28,12 @@ static UIImage* defaultAvatar;
     [q findObjectsInBackgroundWithBlock:block];
 }
 
++(void)findFriendsWithCallback:(AVArrayResultBlock)callback{
+    AVUser* user=[AVUser currentUser];
+    AVQuery* q=[AVRelation reverseQuery:@"_User" relationKey:@"friends" childObject:user];
+    [q findObjectsInBackgroundWithBlock:callback];
+}
+
 +(NSString*)getPeerIdOfUser:(AVUser*)user{
     return user.objectId;
 }

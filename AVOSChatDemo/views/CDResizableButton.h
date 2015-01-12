@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ResizableButton : UIButton
+@interface CDResizableButton : UIButton
 
 @end

@@ -13,6 +13,8 @@
 
 +(void)findFriendsIsNetworkOnly:(BOOL)networkOnly callback:(AVArrayResultBlock)block;
 
++(void)findFriendsWithCallback:(AVArrayResultBlock)callback;
+
 +(void)findUsersByPartname:(NSString*)partName withBlock:(AVArrayResultBlock)block;
 
 +(NSString*)getPeerIdOfUser:(AVUser*)user;
