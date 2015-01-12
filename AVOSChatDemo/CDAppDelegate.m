@@ -74,7 +74,7 @@
        setenv("LOG_CURL", "YES", 0);
        setenv("LOG_IM", "YES", 0);
        [AVOSCloud setVerbosePolicy:kAVVerboseShow];
-       [AVAnalytics setAnalyticsEnabled:YES];
+       [AVAnalytics setAnalyticsEnabled:NO];
     }
     
     return YES;
