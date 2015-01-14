@@ -22,12 +22,15 @@
 #import "CDCacheService.h"
 #import "CDDatabaseService.h"
 
+#import <libNBSAppAgent/NBSAppAgent.h>
+
 @implementation CDAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
+    [NBSAppAgent startWithAppID:@"e4adbe6558c7438d91af9ef8f696649a"];
     
     [CDAddRequest registerSubclass];
     [CDChatGroup registerSubclass];

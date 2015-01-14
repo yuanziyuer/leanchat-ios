@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5423D3A58D2AAF3DD752C11F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D569F4B827DF50C11F64070 /* libPods.a */; };
+		5C6622B21A666FFC00BCA281 /* libNBSAppAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6622B11A666FFC00BCA281 /* libNBSAppAgent.framework */; };
+		5C6622B41A66702800BCA281 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6622B31A66702800BCA281 /* Security.framework */; };
 		701641471A2868FE006D1074 /* CDUpgradeService.m in Sources */ = {isa = PBXBuildFile; fileRef = 701641461A2868FE006D1074 /* CDUpgradeService.m */; };
 		7016414F1A2C3348006D1074 /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 7016414E1A2C3348006D1074 /* splash.png */; };
 		701641521A2C3461006D1074 /* weChatBubble_Receiving_LeanChat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 701641501A2C3461006D1074 /* weChatBubble_Receiving_LeanChat@2x.png */; };
@@ -427,6 +429,8 @@
 /* Begin PBXFileReference section */
 		1AE56C31C63DFD24A31AC420 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		4D569F4B827DF50C11F64070 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C6622B11A666FFC00BCA281 /* libNBSAppAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libNBSAppAgent.framework; sourceTree = "<group>"; };
+		5C6622B31A66702800BCA281 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		5CEDD32E8213E54F4209381A /* libPods-LeanChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LeanChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		701641451A2868FE006D1074 /* CDUpgradeService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUpgradeService.h; sourceTree = "<group>"; };
 		701641461A2868FE006D1074 /* CDUpgradeService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUpgradeService.m; sourceTree = "<group>"; };
@@ -1075,6 +1079,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C6622B41A66702800BCA281 /* Security.framework in Frameworks */,
+				5C6622B21A666FFC00BCA281 /* libNBSAppAgent.framework in Frameworks */,
 				704A890F1A30F5B200D2A3C2 /* QuartzCore.framework in Frameworks */,
 				704727A71A2CFE6300690286 /* libz.dylib in Frameworks */,
 				8C470C9D19926019006A4E87 /* libiconv.dylib in Frameworks */,
@@ -2539,6 +2545,8 @@
 		8CF21DC9197FCCC1002B9220 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5C6622B31A66702800BCA281 /* Security.framework */,
+				5C6622B11A666FFC00BCA281 /* libNBSAppAgent.framework */,
 				704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */,
 				704727A61A2CFE6300690286 /* libz.dylib */,
 				8C470C9C19926019006A4E87 /* libiconv.dylib */,
