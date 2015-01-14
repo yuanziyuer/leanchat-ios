@@ -60,16 +60,20 @@
     
     _badgeView = [[JSBadgeView alloc] initWithParentView:_upgradeAction alignment:JSBadgeViewAlignmentTopRight];
     _badgeView.badgeText=@"New";
+    _badgeView.hidden=YES;
     
     //[_upgradeAction setBackgroundColor:[UIColor grayColor]];
     
+    [CDUtils showNetworkIndicator];
     [CDUpgradeService findNewVersionWithBlock:^(BOOL succeeded, NSError *error) {
+        [CDUtils hideNetworkIndicator];
         [CDUtils filterError:error callback:^{
             if(succeeded){
                 _haveNewVersion=YES;
             }else{
                 _haveNewVersion=NO;
             }
+            _badgeView.hidden=!_haveNewVersion;
         }];
     }];
 }
