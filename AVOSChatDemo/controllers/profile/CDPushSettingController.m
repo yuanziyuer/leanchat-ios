@@ -13,16 +13,10 @@
 @interface CDPushSettingController ()
 
 @property (strong,nonatomic) UITableViewCell* receiveMessageCell;
-@property (strong,nonatomic) UITableViewCell* soundCell;
 
 @property (strong,nonatomic) UISwitch* receiveSwitch;
-@property (strong,nonatomic) UISwitch* soundSwitch;
 
-@property (strong,nonatomic) CDSetting* setting;
-
-@property BOOL receiveOn;
-@property BOOL soundOn;
-@property BOOL dataChanged;
+@property (nonatomic,assign) BOOL receiveOn;
 
 @end
 
@@ -40,44 +34,28 @@ static NSString* cellIndentifier=@"cellIndentifier";
     [super viewDidLoad];
     [self setTitle:@"消息通知"];
     
+    UIApplication *application = [UIApplication sharedApplication];
+    
+    BOOL enabled;
+    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)]){
+        // ios8
+        enabled = [application isRegisteredForRemoteNotifications];
+    }else{
+        UIRemoteNotificationType types = [application enabledRemoteNotificationTypes];
+        enabled = types & UIRemoteNotificationTypeAlert;
+    }
+    
+    _receiveOn=enabled;
+    self.tableView.allowsSelection=NO;
+    [self setTableViewCellInSection:0];
+    
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    self.tableView.allowsSelection=NO;
-    [self setTableViewCellInSection:0];
-    [self setTableViewCellInSection:1];
-    _dataChanged=NO;
     
-    [CDUtils showNetworkIndicator];
-    [CDSettingService getSettingWithBlock:^(id object, NSError *error) {
-        [CDUtils hideNetworkIndicator];
-        [CDUtils filterError:error callback:^{
-            _setting=object;
-            if(_setting==nil){
-                _receiveOn=YES;
-                _soundOn=YES;
-            }else{
-                _receiveOn=_setting.msgPush;
-                _soundOn=_setting.sound;
-            }
-            [self setSwitchStatus];
-        }];
-    }];
-    //[self.tableView setBackgroundColor:[UIColor redColor]];
-    //self.tableView.autoresizingMask=UIViewAutoresizingFlexibleHeight;
-}
-
--(void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-    if(_dataChanged){
-        [CDUtils showNetworkIndicator];
-        [CDSettingService changeSetting:_setting msgPush:_receiveOn sound:_soundOn block:^(id object, NSError *error) {
-            [CDUtils hideNetworkIndicator];
-            [CDUtils filterError:error callback:nil];
-        }];
-    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -86,7 +64,7 @@ static NSString* cellIndentifier=@"cellIndentifier";
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 10;
+    return 40;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -100,7 +78,7 @@ static NSString* cellIndentifier=@"cellIndentifier";
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -117,49 +95,37 @@ static NSString* cellIndentifier=@"cellIndentifier";
 }
 
 -(void)setTableViewCellInSection:(int)section{
-    UITableViewCell* cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndentifier];
-    UISwitch* switchView=[self switchView:cell];
-    [cell addSubview:switchView];
-    [switchView addTarget:self action:@selector(switchStateChanged:) forControlEvents:UIControlEventValueChanged];
-    if(section==0){
-        cell.textLabel.text=@"接收消息通知";
-        switchView.tag=0;
-        _receiveSwitch=switchView;
-        _receiveMessageCell=cell;
-    }else if(section==1){
-        cell.textLabel.text=@"声音";
-        switchView.tag=1;
-        _soundSwitch=switchView;
-        _soundCell=cell;
+    UITableViewCell* cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIndentifier];
+    if(_receiveOn){
+      cell.detailTextLabel.text=@"已开启";
+    }else{
+      cell.detailTextLabel.text=@"已关闭";
     }
+    cell.textLabel.text=@"接收新消息通知";
+    _receiveMessageCell=cell;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if(indexPath.section==0){
         return _receiveMessageCell;
-    }else{
-        return _soundCell;
     }
+    return nil;
 }
 
--(void)switchStateChanged:(UISwitch*)switchView{
-    _dataChanged=YES;
-    int tag=switchView.tag;
-    BOOL on=[switchView isOn];
-    if(tag==0){
-        _receiveOn=on;
-        if(_receiveOn==NO){
-            _soundOn=NO;
-        }
-    }else{
-        _soundOn=on;
+-(UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    if(section==0){
+        CGFloat pad=30;
+        UILabel* label=[[UILabel alloc] initWithFrame:CGRectMake(pad, 0, tableView.frame.size.width-2*pad, 40)];
+        label.bounds=CGRectInset(label.frame, 20, 20);
+        [label setFont:[UIFont systemFontOfSize:10]];
+        [label setTextColor:[UIColor grayColor]];
+        label.lineBreakMode = NSLineBreakByWordWrapping;
+        label.textAlignment=NSTextAlignmentCenter;
+        label.numberOfLines = 0;
+        label.text=@"如果你要关闭或开启 LeanChat 的新消息通知，请在 iPhone 的\"设置\"-\"通知\"功能中，找到应用程序 LeanChat 更改。";
+        return label;
     }
-    [self setSwitchStatus];
-}
-
--(void)setSwitchStatus{
-    [_receiveSwitch setOn:_receiveOn];
-    [_soundSwitch setOn:_soundOn];
+    return nil;
 }
 
 /*
