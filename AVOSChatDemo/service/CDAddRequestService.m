@@ -21,4 +21,12 @@
     [q findObjectsInBackgroundWithBlock:callback];
 }
 
++(void)countAddRequestsWithBlock:(AVIntegerResultBlock)block{
+    AVQuery  *q=[CDAddRequest query];
+    AVUser* user=[AVUser currentUser];
+    [q whereKey:TO_USER equalTo:user];
+    [q setCachePolicy:kAVCachePolicyNetworkElseCache];
+    [q countObjectsInBackgroundWithBlock:block];
+}
+
 @end

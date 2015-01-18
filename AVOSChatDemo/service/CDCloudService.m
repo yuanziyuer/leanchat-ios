@@ -16,6 +16,11 @@
     [AVCloud callFunctionInBackground:action withParameters:dict block:callback];
 }
 
++(void)removeFriend:(AVUser*)friend block:(AVIdResultBlock)block{
+    AVUser* user=[AVUser currentUser];
+    [self callCloudRelationFnWithFromUser:user toUser:friend action:kCDCloudServiceRemoveFriend callback:block];
+}
+
 +(void)tryCreateAddRequestWithToUser:(AVUser*)toUser callback:(AVIdResultBlock)callback{
     AVUser* user=[AVUser currentUser];
     assert(user!=nil);

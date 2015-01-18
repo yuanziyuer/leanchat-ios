@@ -13,11 +13,15 @@
 
 @implementation CDGroupService
 
-+(void)findGroupsWithCallback:(AVArrayResultBlock)callback{
++(void)findGroupsWithCallback:(AVArrayResultBlock)callback cacheFirst:(BOOL)cacheFirst{
     AVUser* user=[AVUser currentUser];
     AVQuery* q=[CDChatGroup query];
     [q includeKey:@"owner"];
-    [q setCachePolicy:kAVCachePolicyNetworkElseCache];
+    if(cacheFirst){
+        [q setCachePolicy:kAVCachePolicyCacheElseNetwork];
+    }else{
+        [q setCachePolicy:kAVCachePolicyNetworkElseCache];
+    }
     [q whereKey:@"m" equalTo:user.objectId];
     [q orderByDescending:@"updatedAt"];
     [q findObjectsInBackgroundWithBlock:callback];

@@ -24,10 +24,12 @@
 }
 
 +(void)filterError:(NSError*)error callback:(CDBlock)callback{
-    if(error){
+    if(error && error.code!=kAVErrorCacheMiss){
         [CDUtils alertError:error];
     }else{
-        callback();
+        if(callback){
+            callback();
+        }
     }
 }
 

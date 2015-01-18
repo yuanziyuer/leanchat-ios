@@ -13,7 +13,8 @@
 
 @interface CDDatabaseService : NSObject
 
-+(void)markHaveReadOfMsgs:(NSArray*)msgs db:(FMDatabase*)db;
+
++(void)markHaveReadWithConvid:(NSString*)convid;
 
 +(void)insertMsgToDB:(CDMsg*)msg;
 

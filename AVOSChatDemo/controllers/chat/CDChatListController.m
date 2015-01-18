@@ -57,7 +57,6 @@ static NSString *cellIdentifier = @"ContactCell";
     chatRooms=[[NSMutableArray alloc] init];
     sessionManager=[CDSessionManager sharedInstance];
     //[self slimeView];
-    [_tableView addSubview:self.slimeView];
     
 //    UIRefreshControl* refreshControl=[[UIRefreshControl alloc] init];
 //    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
@@ -65,19 +64,21 @@ static NSString *cellIdentifier = @"ContactCell";
     _networkStateView=[[CDSessionStateView alloc] initWithWidth:self.tableView.frame.size.width];
     [_networkStateView setDelegate:self];
     [_networkStateView observeSessionUpdate];
+    
+    [_tableView addSubview:self.slimeView];
+    //[_slimeView setLoadingWithExpansion];
     [_slimeView setLoading:YES];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:NOTIFICATION_MESSAGE_UPDATED object:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:NOTIFICATION_MESSAGE_UPDATED object:nil];
-    // hide it
     [self refresh:_slimeView];
+    // hide it
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_MESSAGE_UPDATED object:nil];
 }
 
 - (SRRefreshView *)slimeView
@@ -112,6 +113,15 @@ static NSString *cellIdentifier = @"ContactCell";
         [CDUtils filterError:error callback:^{
             chatRooms=[objects mutableCopy];
             [self.tableView reloadData];
+            int totalUnreadCount=0;
+            for(CDChatRoom* room in chatRooms){
+                totalUnreadCount+=room.unreadCount;
+            }
+            if(totalUnreadCount>0){
+                self.tabBarItem.badgeValue=[NSString stringWithFormat:@"%d",totalUnreadCount];
+            }else{
+                self.tabBarItem.badgeValue=nil;
+            }
         }];
     }];
 }
@@ -121,8 +131,8 @@ static NSString *cellIdentifier = @"ContactCell";
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc
-{
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_MESSAGE_UPDATED object:nil];
 }
 
 - (void)showMenuOnView:(UIBarButtonItem *)buttonItem {
@@ -132,7 +142,7 @@ static NSString *cellIdentifier = @"ContactCell";
 #pragma table view
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 40;
+    return CD_COMMON_ROW_HEIGHT;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -145,7 +155,6 @@ static NSString *cellIdentifier = @"ContactCell";
     CDMsgRoomType type=[chatRoom roomType];
     NSMutableString *nameString = [[NSMutableString alloc] init];
     if (type == CDMsgRoomTypeGroup) {
-        [CDGroupService setDelegateWithGroupId:chatRoom.chatGroup.objectId];
         [nameString appendFormat:@"%@", [chatRoom.chatGroup getTitle]];
         [cell.myImageView setImage:[UIImage imageNamed:@"group_icon"]];
     } else {
@@ -212,21 +221,6 @@ static NSString *cellIdentifier = @"ContactCell";
         _popMenu = popMenu;
     }
     return _popMenu;
-}
-
-#pragma mark - ZXingDelegateMethods
-
--(void)zxingScanResult:(NSString*)result{
-    NSLog(@"%s %@", __PRETTY_FUNCTION__, result);
-    [self dismissViewControllerAnimated:NO completion:^{
-        NSDictionary *dict = nil;
-        NSError *error = nil;
-        NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
-        dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (dict) {
-        }
-    }];
-    // [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 #pragma mark -- CDSessionDelegateMethods

@@ -171,23 +171,10 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     return result;
 }
 
-+(void)markHaveReadOfMsgs:(NSArray*)msgs db:(FMDatabase*)db{
-    BOOL hasUnread=NO;
-    for(CDMsg* msg in msgs){
-        if(msg.readStatus==CDMsgReadStatusUnread){
-            hasUnread=YES;
-            break;
-        }
-    }
-    if(!hasUnread){
-        return;
-    }
-    for(CDMsg* msg in msgs){
-        if(msg.readStatus==CDMsgReadStatusUnread){
-            msg.readStatus=CDMsgReadStatusHaveRead;
-            [db executeUpdate:@"update messages set readStatus=? where objectId=?" withArgumentsInArray:@[@(CDMsgReadStatusHaveRead),msg.objectId]];
-        }
-    }
++(void)markHaveReadWithConvid:(NSString*)convid{
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@"update messages set readStatus=? where convid=?" withArgumentsInArray:@[@(CDMsgReadStatusHaveRead),convid]];
+    }];
 }
 
 +(void)updateMsgWithId:(NSString*)objectId status:(CDMsgStatus)status timestamp:(int64_t)timestamp{

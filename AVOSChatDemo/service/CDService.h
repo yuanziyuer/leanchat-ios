@@ -18,5 +18,7 @@
 #import "CDCacheService.h"
 #import "CDDatabaseService.h"
 #import "CDUserService.h"
+#import "CDSettingService.h"
+#import "CDLocalService.h"
 
 #endif

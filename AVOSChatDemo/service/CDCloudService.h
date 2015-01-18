@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import <AVOSCloud/AVOSCloud.h>
-static NSString *kAddFriendFnName=@"addFriend";
-static NSString *kRemoveFriendFnName=@"removeFriend";
+static NSString *kCDCloudServiceAddFriend=@"addFriend";
+static NSString *kCDCloudServiceRemoveFriend=@"removeFriend";
 
 @interface CDCloudService : NSObject
 
 +(void)callCloudRelationFnWithFromUser:(AVUser*)fromUser toUser:(AVUser*)toUser action:(NSString*)action callback:(AVIdResultBlock)callback;
+
++(void)removeFriend:(AVUser*)friend block:(AVIdResultBlock)block;
 
 +(void)tryCreateAddRequestWithToUser:(AVUser*)toUser callback:(AVIdResultBlock)callback;
 

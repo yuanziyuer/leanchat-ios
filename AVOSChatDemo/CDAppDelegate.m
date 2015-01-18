@@ -21,24 +21,22 @@
 #import "CDEmotionUtils.h"
 #import "CDCacheService.h"
 #import "CDDatabaseService.h"
-
-#import <libNBSAppAgent/NBSAppAgent.h>
+#import "CDModels.h"
 
 @implementation CDAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
-    [NBSAppAgent startWithAppID:@"e4adbe6558c7438d91af9ef8f696649a"];
     
     [CDAddRequest registerSubclass];
     [CDChatGroup registerSubclass];
+    [CDSetting registerSubclass];
 #if USE_US
     [AVOSCloud useAVCloudUS];
 #endif
-    [AVOSCloud setApplicationId:AVOSAppID
-                      clientKey:AVOSAppKey];
+    [AVOSCloud setApplicationId:AVOSAppID clientKey:AVOSAppKey];
+//    [AVOSCloud setApplicationId:PublicAppId clientKey:PublicAppKey];
     //统计应用启动情况
     [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
@@ -185,15 +183,24 @@
     }];
     [CDCacheService registerUser:[AVUser currentUser]];
     [man openSession];
-    AVInstallation* installation=[AVInstallation currentInstallation];
-    AVUser* user=[AVUser currentUser];
-    [user setObject:installation forKey:INSTALLATION];
-    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if(error){
-            [CDUtils logError:error callback:nil];
-        }else{
-        }
-    }];
+//    AVInstallation* installation=[AVInstallation currentInstallation];
+//    AVUser* user=[AVUser currentUser];
+//    [user setObject:installation forKey:INSTALLATION];
+//    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//        if(error){
+//            [CDUtils logError:error callback:nil];
+//        }else{
+//        }
+//    }];
+
+    // important
+    [CDGroupService findGroupsWithCallback:^(NSArray *objects, NSError *error) {
+        [CDUtils logError:error callback:^{
+            for(CDChatGroup* group in objects){
+                [CDGroupService setDelegateWithGroupId:group.objectId];
+            }
+        }];
+    } cacheFirst:YES];
     
     return tab;
 }
