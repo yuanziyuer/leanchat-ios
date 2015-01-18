@@ -126,6 +126,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         [center addObserver:self selector:@selector(initWithCurrentChatGroup) name:NOTIFICATION_GROUP_UPDATED object:nil];
         [self initWithCurrentChatGroup];
     }
+    [CDDatabaseService markHaveReadWithConvid:[self getConvid]];
     [self loadMsgsIsLoadMore:NO];
 }
 
@@ -145,6 +146,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     if(self.type==CDMsgRoomTypeGroup){
        [center removeObserver:self name:NOTIFICATION_GROUP_UPDATED object:nil];
     }
+    [CDDatabaseService markHaveReadWithConvid:[self getConvid]];
 }
 
 -(void)dealloc{
@@ -428,10 +430,13 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     }];
 }
 
+-(NSString*)getConvid{
+    return [CDSessionManager getConvidOfRoomType:self.type otherId:self.chatUser.objectId groupId:self.group.groupId];
+}
+
 -(NSMutableArray*)getDBMsgsWithTimestamp:(int64_t)timestamp limit:(int)limit isLoadMore:(BOOL)isLoadMore db:(FMDatabase*)db{
-    NSString* convid=[CDSessionManager getConvidOfRoomType:self.type otherId:self.chatUser.objectId groupId:self.group.groupId];
+    NSString* convid=[self getConvid];
     NSMutableArray *msgs=[[CDDatabaseService getMsgsWithConvid:convid maxTimestamp:timestamp limit:limit db:db] mutableCopy];
-    [CDDatabaseService markHaveReadOfMsgs:msgs db:db];
     return msgs;
 }
 

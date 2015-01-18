@@ -64,7 +64,7 @@ static NSString* cellIndentifier=@"cell";
         }
         [CDCacheService registerChatGroups:objects];
         [self.tableView reloadData];
-    }];
+    } cacheFirst:NO];
 }
 
 -(void)goNewGroup{

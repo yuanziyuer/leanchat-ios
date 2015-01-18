@@ -116,9 +116,6 @@ static BOOL initialized = NO;
     return [CDUtils md5OfString:result];
 }
 
-
-
-
 +(NSString*)getConvidOfRoomType:(CDMsgRoomType)roomType otherId:(NSString*)otherId groupId:(NSString*)groupId{
     if(roomType==CDMsgRoomTypeSingle){
         NSString* curUserId=[AVUser currentUser].objectId;

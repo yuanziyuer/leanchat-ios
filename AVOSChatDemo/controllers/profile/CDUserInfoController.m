@@ -74,7 +74,13 @@
         UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:controller];
         [self presentViewController:nav animated:YES completion:nil];
     }else{
+        [CDUtils showNetworkIndicator];
         [CDCloudService tryCreateAddRequestWithToUser:_user callback:^(id object, NSError *error) {
+            [CDUtils hideNetworkIndicator];
+            if(error.code==3840){
+                [CDUtils alert:@"云代码未部署，请到项目主页根据说明来部署"];
+                return ;
+            }
             NSString *info;
             if(error==nil){
                 info=@"请求成功";

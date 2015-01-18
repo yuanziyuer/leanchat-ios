@@ -46,6 +46,8 @@ typedef void (^SRRefreshBlock)(SRRefreshView* sender);
 - (void)scrollViewDidScroll;
 - (void)scrollViewDidEndDraging;
 
+- (void)restore;
+
 //as the name, called when loading over.
 - (void)endRefresh;
 

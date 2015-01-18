@@ -50,14 +50,17 @@
     }else{
         onlyNetwork=YES;
     }
-    UIActivityIndicatorView* indicator=[CDUtils showIndicatorAtView:self.view];
+    [CDUtils showNetworkIndicator];
     [CDAddRequestService findAddRequestsOnlyByNetwork:onlyNetwork withCallback:^(NSArray *objects, NSError *error) {
-        [indicator stopAnimating];
+        [CDUtils hideNetworkIndicator];
         [self.refreshControl endRefreshing];
-        [CDUtils filterError:error callback:^{
-            addRequests=objects;
-            [self.tableView reloadData];
-        }];
+        if(error.code==kAVErrorObjectNotFound){
+        }else{
+            [CDUtils filterError:error callback:^{
+                addRequests=objects;
+                [self.tableView reloadData];
+            }];
+        }
     }];
 }
 
@@ -108,7 +111,9 @@
 -(void)actionBtnClicked:(id)sender{
     UIButton *btn=(UIButton*)sender;
     CDAddRequest* addRequest=[addRequests objectAtIndex:btn.tag];
+    [CDUtils showNetworkIndicator];
     [CDCloudService agreeAddRequestWithId:addRequest.objectId callback:^(id object, NSError *error) {
+        [CDUtils hideNetworkIndicator];
         if(error){
             [CDUtils alert:[error localizedDescription]];
         }else{

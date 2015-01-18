@@ -98,7 +98,7 @@
     [button setTitle:@"注册" forState:UIControlStateNormal];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     //    button.userInteractionEnabled = YES;
-    [button addTarget:self action:@selector(register:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(registerAVUser:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
     self.registerButton = button;
 }
@@ -139,7 +139,7 @@
     }];
 }
 
--(void)register:(id)sender
+-(void)registerAVUser:(id)sender
 {
     AVUser *user = [AVUser user];
     user.username = self.usernameField.text;
@@ -148,16 +148,12 @@
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         [CDUtils filterError:error callback:^{
             // retrive relation, gender , gender
-            [user refreshInBackgroundWithBlock:^(AVObject *object, NSError *error) {
-                [CDUtils filterError:error callback:^{
-                    NSLog(@"Register success");
-                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:KEY_ISLOGINED];
-                    [[NSUserDefaults standardUserDefaults] setObject:self.usernameField.text forKey:KEY_USERNAME];
-                    [self dismissViewControllerAnimated:NO completion:^{
-                        CDAppDelegate *delegate = (CDAppDelegate *)[UIApplication sharedApplication].delegate;
-                        [delegate toMain];
-                    }];
-                }];
+            NSLog(@"Register success");
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:KEY_ISLOGINED];
+            [[NSUserDefaults standardUserDefaults] setObject:self.usernameField.text forKey:KEY_USERNAME];
+            [self dismissViewControllerAnimated:NO completion:^{
+                CDAppDelegate *delegate = (CDAppDelegate *)[UIApplication sharedApplication].delegate;
+                [delegate toMain];
             }];
         }];
     }];

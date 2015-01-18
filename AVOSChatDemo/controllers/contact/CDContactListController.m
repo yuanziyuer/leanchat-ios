@@ -18,16 +18,21 @@
 #import "CDGroupTableViewController.h"
 #import "CDUtils.h"
 #import "CDCacheService.h"
+#import "CDService.h"
+#import "JSBadgeView.h"
 
 enum : NSUInteger {
     kTagNameLabel = 10000,
 };
-@interface CDContactListController ()
+@interface CDContactListController()<UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *users;
 @property (weak, nonatomic) IBOutlet UIView *myNewFriendView;
 @property (weak, nonatomic) IBOutlet UIView *groupView;
+@property (nonatomic,assign) int addRequestN;
+@property (weak, nonatomic) IBOutlet UIImageView *myNewFriendIcon;
+@property JSBadgeView* badgeView;
 
 @end
 
@@ -58,12 +63,14 @@ enum : NSUInteger {
     
     //[self.myNewFriendView addGestureRecognizer:singleTap];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh:) name:CD_FRIENDS_UPDATE object:nil];
-    [self refresh:nil];
     
     UIRefreshControl* refreshControl=[[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refreshControl];
-    
+    [self refresh:nil];
+    UILongPressGestureRecognizer *recogizer=[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
+    recogizer.minimumPressDuration=1.0;
+    [self.tableView addGestureRecognizer:recogizer];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -80,6 +87,8 @@ enum : NSUInteger {
 }
 
 -(void)goNewFriend:(id)sender{
+    [CDLocalService setAddRequestN:_addRequestN];
+    [_badgeView removeFromSuperview];
     CDNewFriendTableViewController *controller=[[CDNewFriendTableViewController alloc] init];
     [[self navigationController] pushViewController:controller animated:YES];
 }
@@ -108,17 +117,32 @@ enum : NSUInteger {
             [CDCacheService setFriends:objects];
             [self.tableView reloadData];
         };
-        if(error && error.code==kAVErrorCacheMiss){
+        if(error && (error.code==kAVErrorCacheMiss || error.code==1)){
             // for the first start
+            objects=[NSMutableArray array];
             callback();
         }else{
             [CDUtils filterError:error callback:callback];
         }
     }];
+    
+    [CDAddRequestService countAddRequestsWithBlock:^(NSInteger number, NSError *error) {
+        [CDUtils logError:error callback:^{
+            _addRequestN=number;
+            int oldN=[CDLocalService getAddRequestN];
+            if(_addRequestN>oldN){
+                if(_badgeView!=nil){
+                    [_badgeView removeFromSuperview];
+                }
+                _badgeView=[[JSBadgeView alloc] initWithParentView:_myNewFriendIcon alignment:JSBadgeViewAlignmentTopRight];
+                _badgeView.badgeText=[NSString stringWithFormat:@"%d",_addRequestN-oldN];
+            }
+        }];
+    }];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 40;
+    return CD_COMMON_ROW_HEIGHT;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -150,5 +174,27 @@ enum : NSUInteger {
     [self.navigationController pushViewController:controller animated:YES];
 }
 
+-(void)handleLongPress:(UILongPressGestureRecognizer*)recognizer{
+    CGPoint point=[recognizer locationInView:self.tableView];
+    NSIndexPath *path=[self.tableView indexPathForRowAtPoint:point];
+    if(path!=nil && recognizer.state==UIGestureRecognizerStateBegan){
+        UIAlertView* alertView=[[UIAlertView alloc] initWithTitle:@"" message:@"解除好友关系吗" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
+        alertView.tag=path.row;
+        [alertView show];
+    }
+}
 
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if(buttonIndex==0){
+        int row=alertView.tag;
+        AVUser* user=[_users objectAtIndex:row];
+        [CDUtils showNetworkIndicator];
+        [CDCloudService removeFriend:user block:^(id object, NSError *error) {
+            [CDUtils hideNetworkIndicator];
+            [CDUtils filterError:error callback:^{
+                [self refresh:nil];
+            }];
+        }];
+    }
+}
 @end

@@ -12,7 +12,7 @@
 
 @interface CDGroupService : NSObject
 
-+(void)findGroupsWithCallback:(AVArrayResultBlock)callback;
++(void)findGroupsWithCallback:(AVArrayResultBlock)callback cacheFirst:(BOOL)cacheFirst;
 
 +(void)findGroupsByIds:(NSMutableSet*)groupIds withCallback:(AVArrayResultBlock)callback;
 

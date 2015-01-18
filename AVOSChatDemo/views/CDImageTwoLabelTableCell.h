@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "CDBadgeLabel.h"
+#import "JSBadgeView.h"
 
 @interface CDImageTwoLabelTableCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *myImageView;
 @property (weak, nonatomic) IBOutlet UILabel *topLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bottomLabel;
-@property (weak, nonatomic) IBOutlet CDBadgeLabel *unreadLabel;
+@property (strong, nonatomic) JSBadgeView *unreadBadge;
 @property (nonatomic) NSInteger unreadCount;
 
 @end

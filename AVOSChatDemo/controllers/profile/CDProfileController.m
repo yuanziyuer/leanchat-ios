@@ -14,6 +14,7 @@
 #import "CDResizableButton.h"
 #import "JSBadgeView.h"
 #import "CDBadgeLabel.h"
+#import "CDPushSettingController.h"
 
 @interface CDProfileController ()
 
@@ -26,6 +27,7 @@
 @property (strong, nonatomic) IBOutlet UITableViewCell *upgradeCell;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *upgradeAction;
+@property (strong, nonatomic) IBOutlet UITableViewCell *pushSettingCell;
 
 @property (strong,nonatomic) JSBadgeView *badgeView;
 
@@ -95,7 +97,7 @@
 #pragma mark - table view
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 3;
+    return 4;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -104,34 +106,50 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     int section=indexPath.section;
+    UITableViewCell* cell;
     switch (section) {
         case 0:
-            _avatarCell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
-            return _avatarCell;
+            cell=_avatarCell;
+            break;
         case 1:
-            _upgradeCell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
-            return _upgradeCell;
+            cell=_pushSettingCell;
+            break;
         case 2:
-            _logoutCell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
-            return _logoutCell;
-        default:
-            return nil;
+            cell=_upgradeCell;
+            break;
+        case 3:
+            cell=_logoutCell;
+            break;
     }
+    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+    return cell;
+}
+
+-(void)goPushSetting{
+    CDPushSettingController* controller=[[CDPushSettingController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     int section=indexPath.section;
-    if(section==0){
-        [CDUtils pickImageFromPhotoLibraryAtController:self];
-    }else if(section==1){
-        if(_haveNewVersion){
-            NSURL *url = [NSURL URLWithString:@"http://fir.im/Lean"];
-            [[UIApplication sharedApplication] openURL:url];
-        }else{
-            [CDUtils alert:@"已经是最新版本"];
-        }
-    }else if(section==2){
-        [self logout];
+    switch (section) {
+        case 0:
+            [CDUtils pickImageFromPhotoLibraryAtController:self];
+            break;
+        case 1:
+            [self goPushSetting];
+            break;
+        case 2:
+            if(_haveNewVersion){
+                NSURL *url = [NSURL URLWithString:@"http://fir.im/Lean"];
+                [[UIApplication sharedApplication] openURL:url];
+            }else{
+                [CDUtils alert:@"已经是最新版本"];
+            }
+            break;
+        case 3:
+            [self logout];
+            break;
     }
 }
 
