@@ -43,6 +43,7 @@ enum : NSUInteger {
     if ((self = [super init])) {
         self.title = @"联系人";
         self.tabBarItem.image = [UIImage imageNamed:@"tabbar_contacts_active"];
+        [self setBadgeIncludeBadgeView:NO];
     }
     return self;
 }
@@ -91,6 +92,7 @@ enum : NSUInteger {
     [_badgeView removeFromSuperview];
     CDNewFriendTableViewController *controller=[[CDNewFriendTableViewController alloc] init];
     [[self navigationController] pushViewController:controller animated:YES];
+    self.tabBarItem.badgeValue=nil;
 }
 
 -(void)goGroup:(id)sender{
@@ -126,16 +128,26 @@ enum : NSUInteger {
         }
     }];
     
+    [self setBadgeIncludeBadgeView:YES];
+}
+
+-(void)setBadgeIncludeBadgeView:(BOOL)includeBadgeView{
     [CDAddRequestService countAddRequestsWithBlock:^(NSInteger number, NSError *error) {
         [CDUtils logError:error callback:^{
             _addRequestN=number;
             int oldN=[CDLocalService getAddRequestN];
             if(_addRequestN>oldN){
-                if(_badgeView!=nil){
-                    [_badgeView removeFromSuperview];
+                NSString* badge=[NSString stringWithFormat:@"%d",_addRequestN-oldN];;
+                if(includeBadgeView){
+                    if(_badgeView!=nil){
+                        [_badgeView removeFromSuperview];
+                    }
+                    _badgeView=[[JSBadgeView alloc] initWithParentView:_myNewFriendIcon alignment:JSBadgeViewAlignmentTopRight];
+                    _badgeView.badgeText=badge;
                 }
-                _badgeView=[[JSBadgeView alloc] initWithParentView:_myNewFriendIcon alignment:JSBadgeViewAlignmentTopRight];
-                _badgeView.badgeText=[NSString stringWithFormat:@"%d",_addRequestN-oldN];
+                self.tabBarItem.badgeValue=badge;
+            }else{
+                self.tabBarItem.badgeValue=nil;
             }
         }];
     }];

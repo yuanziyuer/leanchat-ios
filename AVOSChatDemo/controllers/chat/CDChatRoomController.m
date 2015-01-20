@@ -703,7 +703,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     if([self shouldDisplayTimestampForRowAtIndexPath:indexPath]){
         NSDate* ts=msg.timestamp;
         NSDateFormatter* dateFormatter=[[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"M-d H:m"];
+        [dateFormatter setDateFormat:@"MM-dd HH:mm"];
         NSString* str=[dateFormatter stringFromDate:ts];
         cell.timestampLabel.text=str;
     }
