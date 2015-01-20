@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <AVOSCloud/AVOSCloud.h>
 #import "CDCommon.h"
-#import "Reachability.h"
+#import "CDReachability.h"
 #import <SystemConfiguration/SystemConfiguration.h>
 
 typedef void (^CDBlock)();

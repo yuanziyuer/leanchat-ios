@@ -236,7 +236,7 @@
 
 + (BOOL)connected
 {
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    CDReachability *reachability = [CDReachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
     return networkStatus != NotReachable;
 }

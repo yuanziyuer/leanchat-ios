@@ -14,13 +14,11 @@
 #import "CDChatGroup.h"
 #import "CDGroupService.h"
 #import "AFNetworking.h"
-#import "QiniuSDK.h"
 #import "CDCacheService.h"
 #import "CDDatabaseService.h"
 
 @interface CDSessionManager () {
     AVSession *_session;
-    QNUploadManager *upManager;
 }
 
 @end
@@ -49,7 +47,6 @@ static BOOL initialized = NO;
 
 - (instancetype)init {
     if ((self = [super init])) {
-        upManager=[[QNUploadManager alloc] init];
         _session = [[AVSession alloc] init];
         _session.sessionDelegate = self;
         _session.signatureDelegate = self;
@@ -276,6 +273,7 @@ static BOOL initialized = NO;
             sleep(times+1);
             [CDUtils runInMainQueue:^{
                 NSString *url=@"http://api.qiniu.com/status/get/prefop";
+                
                 AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
                 [manager GET:url parameters:@{@"id":persistentId} success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     NSDictionary* dict=(NSDictionary*)responseObject;
