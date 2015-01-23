@@ -189,8 +189,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     
     AVUser* user=[CDCacheService lookupUser:userId];
     CDChatRoomController* chatController=[[CDChatRoomController alloc] init];
-    chatController.type=CDMsgRoomTypeSingle;
-    chatController.chatUser=user;
+//    chatController.type=CDMsgRoomTypeSingle;
+//    chatController.chatUser=user;
     
     [self.navigationController setViewControllers:[NSArray arrayWithObject:chatController] animated:YES];
     return YES;

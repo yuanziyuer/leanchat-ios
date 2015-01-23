@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CDCommon.h"
-#import "CDSessionManager.h"
+#import "CDIMClient.h"
 
 static CGFloat kCDSessionStateViewHight=44;
 

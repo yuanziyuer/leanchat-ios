@@ -7,14 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CDCommon.h"
 #import "CDMsg.h"
 #import "CDChatGroup.h"
 
 @interface CDChatRoom : NSObject
 
 @property CDMsgRoomType roomType;
-@property CDChatGroup* chatGroup;
+@property NSString* conversationId;
+
+@property AVIMConversation* conversation;
 @property AVUser* chatUser;
+
 @property CDMsg* latestMsg;
 @property NSInteger unreadCount;
 

@@ -127,11 +127,13 @@
                 [strongSelf cancelRecording];
             } else {
                 strongSelf.recorder = [[AVAudioRecorder alloc] initWithURL:[NSURL fileURLWithPath:strongSelf.recordPath] settings:recordSetting error:&error];
-                strongSelf.recorder.delegate = strongSelf;
-                [strongSelf.recorder prepareToRecord];
-                strongSelf.recorder.meteringEnabled = YES;
-                [strongSelf.recorder recordForDuration:(NSTimeInterval) 160];
-                [strongSelf startBackgroundTask];
+                if(!error){
+                    strongSelf.recorder.delegate = strongSelf;
+                    [strongSelf.recorder prepareToRecord];
+                    strongSelf.recorder.meteringEnabled = YES;
+                    [strongSelf.recorder recordForDuration:(NSTimeInterval) 160];
+                    [strongSelf startBackgroundTask];
+                }
             }
             
             if(error) {

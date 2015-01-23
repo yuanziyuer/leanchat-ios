@@ -320,8 +320,11 @@
 		70CACE6E1A6EB54F00F58885 /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 70CACE591A6EB54F00F58885 /* UIProgressView+AFNetworking.m */; };
 		70CACE6F1A6EB54F00F58885 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 70CACE5B1A6EB54F00F58885 /* UIRefreshControl+AFNetworking.m */; };
 		70CACE701A6EB54F00F58885 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 70CACE5D1A6EB54F00F58885 /* UIWebView+AFNetworking.m */; };
-		70CACE901A6EB57A00F58885 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70CACE8F1A6EB57A00F58885 /* AVOSCloud.framework */; };
 		70CACE9C1A6EBC9A00F58885 /* JSBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70CACE9B1A6EBC9A00F58885 /* JSBadgeView.m */; };
+		70CACF381A6EC1CE00F58885 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70CACF2D1A6EC1C200F58885 /* AVOSCloud.framework */; };
+		70CACF391A6EC1CF00F58885 /* AVOSCloudIM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70CACF351A6EC1C200F58885 /* AVOSCloudIM.framework */; };
+		70CACF3D1A6EC97500F58885 /* CDIMClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 70CACF3C1A6EC97500F58885 /* CDIMClient.m */; };
+		70CACF441A6FA9F600F58885 /* YTKKeyValueStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 70CACF431A6FA9F600F58885 /* YTKKeyValueStore.m */; };
 		70CEE6111A6672420034BCA3 /* rounded_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 70CEE6101A6672420034BCA3 /* rounded_icon.png */; };
 		70CEE6141A66DB2E0034BCA3 /* CDPushSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70CEE6131A66DB2E0034BCA3 /* CDPushSettingController.m */; };
 		70CEE61A1A676D080034BCA3 /* CDSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 70CEE6191A676D080034BCA3 /* CDSetting.m */; };
@@ -435,6 +438,7 @@
 		70E47DFB1A245E1200DE60FE /* CDGroupService.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E47DF11A245E1200DE60FE /* CDGroupService.m */; };
 		70E47DFC1A245E1200DE60FE /* CDUserService.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E47DF31A245E1200DE60FE /* CDUserService.m */; };
 		70E47DFD1A245E1200DE60FE /* CDUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E47DF51A245E1200DE60FE /* CDUtils.m */; };
+		70F9A3991A72499A00195430 /* CDFileService.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F9A3981A72499A00195430 /* CDFileService.m */; };
 		70FD7BC91A63A26C00F29C79 /* blue_expand_disable@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70FD7BC81A63A26C00F29C79 /* blue_expand_disable@2x.png */; };
 		70FD7BCD1A641DD600F29C79 /* CDBadgeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 70FD7BCC1A641DD600F29C79 /* CDBadgeLabel.m */; };
 		8C470C9D19926019006A4E87 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C470C9C19926019006A4E87 /* libiconv.dylib */; };
@@ -448,6 +452,51 @@
 		8CF21DCD197FCCC1002B9220 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF21DCC197FCCC1002B9220 /* CoreGraphics.framework */; };
 		8CF21DCF197FCCC1002B9220 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF21DCE197FCCC1002B9220 /* UIKit.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		70CACF2C1A6EC1C200F58885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 70CACF221A6EC1C200F58885 /* AVOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8C8419861A5A791300C5C6C4;
+			remoteInfo = AVOSCloud;
+		};
+		70CACF2E1A6EC1C200F58885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 70CACF221A6EC1C200F58885 /* AVOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8C8419911A5A791300C5C6C4;
+			remoteInfo = AVOSCloudTests;
+		};
+		70CACF301A6EC1C200F58885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 70CACF221A6EC1C200F58885 /* AVOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8C8419A51A5A794600C5C6C4;
+			remoteInfo = AVOSCloudSNS;
+		};
+		70CACF321A6EC1C200F58885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 70CACF221A6EC1C200F58885 /* AVOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8C8419AF1A5A794600C5C6C4;
+			remoteInfo = AVOSCloudSNSTests;
+		};
+		70CACF341A6EC1C200F58885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 70CACF221A6EC1C200F58885 /* AVOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8C8419C31A5A796000C5C6C4;
+			remoteInfo = AVOSCloudIM;
+		};
+		70CACF361A6EC1C200F58885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 70CACF221A6EC1C200F58885 /* AVOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8C8419CD1A5A796000C5C6C4;
+			remoteInfo = AVOSCloudIMTests;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		5C6622B31A66702800BCA281 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -941,9 +990,13 @@
 		70CACE5B1A6EB54F00F58885 /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
 		70CACE5C1A6EB54F00F58885 /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
 		70CACE5D1A6EB54F00F58885 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
-		70CACE8F1A6EB57A00F58885 /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
 		70CACE9A1A6EBC9A00F58885 /* JSBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSBadgeView.h; sourceTree = "<group>"; };
 		70CACE9B1A6EBC9A00F58885 /* JSBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSBadgeView.m; sourceTree = "<group>"; };
+		70CACF221A6EC1C200F58885 /* AVOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AVOS.xcodeproj; path = "../../../clojure/iOS-sdk/AVOS/AVOS.xcodeproj"; sourceTree = "<group>"; };
+		70CACF3B1A6EC97500F58885 /* CDIMClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIMClient.h; sourceTree = "<group>"; };
+		70CACF3C1A6EC97500F58885 /* CDIMClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIMClient.m; sourceTree = "<group>"; };
+		70CACF421A6FA9F600F58885 /* YTKKeyValueStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTKKeyValueStore.h; sourceTree = "<group>"; };
+		70CACF431A6FA9F600F58885 /* YTKKeyValueStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTKKeyValueStore.m; sourceTree = "<group>"; };
 		70CEE6101A6672420034BCA3 /* rounded_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rounded_icon.png; sourceTree = "<group>"; };
 		70CEE6121A66DB2E0034BCA3 /* CDPushSettingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDPushSettingController.h; sourceTree = "<group>"; };
 		70CEE6131A66DB2E0034BCA3 /* CDPushSettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDPushSettingController.m; sourceTree = "<group>"; };
@@ -1125,6 +1178,8 @@
 		70E47DF31A245E1200DE60FE /* CDUserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUserService.m; sourceTree = "<group>"; };
 		70E47DF41A245E1200DE60FE /* CDUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUtils.h; sourceTree = "<group>"; };
 		70E47DF51A245E1200DE60FE /* CDUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUtils.m; sourceTree = "<group>"; };
+		70F9A3971A72499A00195430 /* CDFileService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDFileService.h; sourceTree = "<group>"; };
+		70F9A3981A72499A00195430 /* CDFileService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDFileService.m; sourceTree = "<group>"; };
 		70FD7BC81A63A26C00F29C79 /* blue_expand_disable@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blue_expand_disable@2x.png"; sourceTree = "<group>"; };
 		70FD7BCA1A63D22700F29C79 /* CDService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDService.h; sourceTree = "<group>"; };
 		70FD7BCB1A641DD600F29C79 /* CDBadgeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDBadgeLabel.h; sourceTree = "<group>"; };
@@ -1148,6 +1203,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70CACF381A6EC1CE00F58885 /* AVOSCloud.framework in Frameworks */,
+				70CACF391A6EC1CF00F58885 /* AVOSCloudIM.framework in Frameworks */,
 				5C6622B41A66702800BCA281 /* Security.framework in Frameworks */,
 				704A890F1A30F5B200D2A3C2 /* QuartzCore.framework in Frameworks */,
 				704727A71A2CFE6300690286 /* libz.dylib in Frameworks */,
@@ -1161,7 +1218,6 @@
 				8CF21DCD197FCCC1002B9220 /* CoreGraphics.framework in Frameworks */,
 				8CF21DCF197FCCC1002B9220 /* UIKit.framework in Frameworks */,
 				8CF21DCB197FCCC1002B9220 /* Foundation.framework in Frameworks */,
-				70CACE901A6EB57A00F58885 /* AVOSCloud.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2196,6 +2252,28 @@
 			path = JSBadgeView;
 			sourceTree = "<group>";
 		};
+		70CACF231A6EC1C200F58885 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				70CACF2D1A6EC1C200F58885 /* AVOSCloud.framework */,
+				70CACF2F1A6EC1C200F58885 /* AVOSCloudTests.xctest */,
+				70CACF311A6EC1C200F58885 /* AVOSCloudSNS.framework */,
+				70CACF331A6EC1C200F58885 /* AVOSCloudSNSTests.xctest */,
+				70CACF351A6EC1C200F58885 /* AVOSCloudIM.framework */,
+				70CACF371A6EC1C200F58885 /* AVOSCloudIMTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		70CACF411A6FA9F600F58885 /* YTKKeyValueStore */ = {
+			isa = PBXGroup;
+			children = (
+				70CACF421A6FA9F600F58885 /* YTKKeyValueStore.h */,
+				70CACF431A6FA9F600F58885 /* YTKKeyValueStore.m */,
+			);
+			path = YTKKeyValueStore;
+			sourceTree = "<group>";
+		};
 		70D4C53E1A237C1E001A655D /* AVOSChatDemo */ = {
 			isa = PBXGroup;
 			children = (
@@ -2447,6 +2525,7 @@
 		70D4C5C11A237C1E001A655D /* third_party */ = {
 			isa = PBXGroup;
 			children = (
+				70CACF411A6FA9F600F58885 /* YTKKeyValueStore */,
 				70CACE991A6EBC9A00F58885 /* JSBadgeView */,
 				70CACE351A6EB54F00F58885 /* AFNetworking */,
 				705303FC1A5C20BF0078B876 /* SlimeRefresh */,
@@ -2661,6 +2740,10 @@
 				70CEE61D1A6771890034BCA3 /* CDSettingService.m */,
 				70B6CF421A68C27A00F61062 /* CDLocalService.h */,
 				70B6CF431A68C27A00F61062 /* CDLocalService.m */,
+				70CACF3B1A6EC97500F58885 /* CDIMClient.h */,
+				70CACF3C1A6EC97500F58885 /* CDIMClient.m */,
+				70F9A3971A72499A00195430 /* CDFileService.h */,
+				70F9A3981A72499A00195430 /* CDFileService.m */,
 			);
 			path = service;
 			sourceTree = "<group>";
@@ -2668,6 +2751,7 @@
 		8CF21DBE197FCCC1002B9220 = {
 			isa = PBXGroup;
 			children = (
+				70CACF221A6EC1C200F58885 /* AVOS.xcodeproj */,
 				70D4C53E1A237C1E001A655D /* AVOSChatDemo */,
 				8CF21DC9197FCCC1002B9220 /* Frameworks */,
 				8CF21DC8197FCCC1002B9220 /* Products */,
@@ -2685,7 +2769,6 @@
 		8CF21DC9197FCCC1002B9220 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				70CACE8F1A6EB57A00F58885 /* AVOSCloud.framework */,
 				5C6622B31A66702800BCA281 /* Security.framework */,
 				704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */,
 				704727A61A2CFE6300690286 /* libz.dylib */,
@@ -2764,12 +2847,63 @@
 			mainGroup = 8CF21DBE197FCCC1002B9220;
 			productRefGroup = 8CF21DC8197FCCC1002B9220 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 70CACF231A6EC1C200F58885 /* Products */;
+					ProjectRef = 70CACF221A6EC1C200F58885 /* AVOS.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8CF21DC6197FCCC1002B9220 /* LeanChat */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		70CACF2D1A6EC1C200F58885 /* AVOSCloud.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = AVOSCloud.framework;
+			remoteRef = 70CACF2C1A6EC1C200F58885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		70CACF2F1A6EC1C200F58885 /* AVOSCloudTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = AVOSCloudTests.xctest;
+			remoteRef = 70CACF2E1A6EC1C200F58885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		70CACF311A6EC1C200F58885 /* AVOSCloudSNS.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = AVOSCloudSNS.framework;
+			remoteRef = 70CACF301A6EC1C200F58885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		70CACF331A6EC1C200F58885 /* AVOSCloudSNSTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = AVOSCloudSNSTests.xctest;
+			remoteRef = 70CACF321A6EC1C200F58885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		70CACF351A6EC1C200F58885 /* AVOSCloudIM.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = AVOSCloudIM.framework;
+			remoteRef = 70CACF341A6EC1C200F58885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		70CACF371A6EC1C200F58885 /* AVOSCloudIMTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = AVOSCloudIMTests.xctest;
+			remoteRef = 70CACF361A6EC1C200F58885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8CF21DC5197FCCC1002B9220 /* Resources */ = {
@@ -3031,6 +3165,7 @@
 				70D4C6661A237C1E001A655D /* QBImagePickerController.m in Sources */,
 				70A066721A24A3A2004DA201 /* XHMessage.m in Sources */,
 				70A066501A24A3A2004DA201 /* XHDiscoverTableViewController.m in Sources */,
+				70F9A3991A72499A00195430 /* CDFileService.m in Sources */,
 				70A066BF1A24A3A2004DA201 /* XHRefreshView.m in Sources */,
 				70CEE6141A66DB2E0034BCA3 /* CDPushSettingController.m in Sources */,
 				70A066B61A24A3A2004DA201 /* XHNewsContainerView.m in Sources */,
@@ -3080,6 +3215,7 @@
 				70A0664A1A24A3A2004DA201 /* XHPullRefreshTableViewController.m in Sources */,
 				70A066AD1A24A3A2004DA201 /* XHMessageInputView.m in Sources */,
 				70CEE61E1A6771890034BCA3 /* CDSettingService.m in Sources */,
+				70CACF441A6FA9F600F58885 /* YTKKeyValueStore.m in Sources */,
 				70D4C6651A237C1E001A655D /* QBAssetsCollectionViewLayout.m in Sources */,
 				70A066411A24A3A2004DA201 /* XHLocationHelper.m in Sources */,
 				70D4C66E1A237C1E001A655D /* CDImageLabelCollectionCell.m in Sources */,
@@ -3208,6 +3344,7 @@
 				70A0668F1A24A3A2004DA201 /* SETextMagnifierRanged.m in Sources */,
 				70D4C61F1A237C1E001A655D /* CDGroupDetailController.m in Sources */,
 				70A0663A1A24A3A2004DA201 /* UIImage+XHRounded.m in Sources */,
+				70CACF3D1A6EC97500F58885 /* CDIMClient.m in Sources */,
 				705553E61A2E3AEF001EA4FE /* CDSessionManager.m in Sources */,
 				70CACE651A6EB54F00F58885 /* AFURLResponseSerialization.m in Sources */,
 				70CACE6D1A6EB54F00F58885 /* UIImageView+AFNetworking.m in Sources */,

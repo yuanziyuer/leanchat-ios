@@ -113,7 +113,7 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
                         if(msg.roomType==CDMsgRoomTypeSingle){
                             chatRoom.chatUser=[CDCacheService lookupUser:otherId];;
                         }else{
-                            chatRoom.chatGroup=[CDCacheService lookupChatGroupById:otherId];
+                            chatRoom.conversation=[CDCacheService lookupChatGroupById:otherId];
                         }
                         chatRoom.latestMsg=msg;
                         [chatRooms addObject:chatRoom];

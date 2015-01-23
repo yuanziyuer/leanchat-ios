@@ -11,14 +11,17 @@
 #import "CDChatRoomController.h"
 #import "CDCloudService.h"
 #import "CDCacheService.h"
+#import "CDService.h"
 
 @interface CDUserInfoController (){
     BOOL isFriend;
+    CDIMClient* imClient;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *actionBtn;
+
 @end
 
 @implementation CDUserInfoController
@@ -53,7 +56,8 @@
     }else{
         [_actionBtn setTitle:@"添加好友" forState:UIControlStateNormal];
     }
-    
+    imClient=[CDIMClient sharedInstance];
+
     [CDUserService displayAvatarOfUser:_user avatarView:self.avatarView];
 }
 
@@ -68,11 +72,13 @@
 
 -(void)btnClicked:(UIButton*)button{
     if(isFriend){
-        CDChatRoomController *controller = [[CDChatRoomController alloc] init];
-        controller.chatUser = self.user;
-        controller.type = CDMsgRoomTypeSingle;
-        UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:controller];
-        [self presentViewController:nav animated:YES completion:nil];
+        [imClient fetchOrCreateConversationWithUserId:self.user.objectId callback:^(AVIMConversation *conversation, NSError *error) {
+            [CDUtils filterError:error callback:^{
+                CDChatRoomController *controller = [[CDChatRoomController alloc] initWithConversation:conversation];
+                UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:controller];
+                [self presentViewController:nav animated:YES completion:nil];
+            }];
+        }];
     }else{
         [CDUtils showNetworkIndicator];
         [CDCloudService tryCreateAddRequestWithToUser:_user callback:^(id object, NSError *error) {

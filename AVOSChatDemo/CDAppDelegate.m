@@ -22,6 +22,7 @@
 #import "CDCacheService.h"
 #import "CDDatabaseService.h"
 #import "CDModels.h"
+#import "CDIMClient.h"
 
 @implementation CDAppDelegate
 
@@ -76,6 +77,8 @@
        setenv("LOG_IM", "YES", 0);
        [AVOSCloud setVerbosePolicy:kAVVerboseShow];
        [AVAnalytics setAnalyticsEnabled:NO];
+       [AVLogger addLoggerDomain:AVLoggerDomainIM];
+       [AVLogger setLoggerLevelMask:AVLoggerLevelAll];        
     }
     
     return YES;
@@ -170,19 +173,16 @@
     [self addItemController:[[CDContactListController alloc] init] toTabBarController:tab];
     [self addItemController:[[CDProfileController alloc] init] toTabBarController:tab];
     
-    tab.selectedIndex=0;
+    tab.selectedIndex=1;
     
     self.window.rootViewController = tab;
     
-    CDSessionManager* man=[CDSessionManager sharedInstance];
-    [CDUpgradeService upgradeWithBlock:^(BOOL upgrade, NSString *oldVersion, NSString *newVersion) {
-        NSLog(@"upgrade =%@ oldVersion=%@ newVersion=%@",upgrade? @"YES":@"NO",oldVersion,newVersion);
-        if(upgrade && [newVersion isEqualToString:@"1.0.8"]){
-            [CDDatabaseService upgradeToAddField];
-        }
-    }];
+//    [CDUpgradeService upgradeWithBlock:^(BOOL upgrade, NSString *oldVersion, NSString *newVersion) {
+//        if(upgrade && [newVersion isEqualToString:@"1.0.8"]){
+//            [CDDatabaseService upgradeToAddField];
+//        }
+//    }];
     [CDCacheService registerUser:[AVUser currentUser]];
-    [man openSession];
 //    AVInstallation* installation=[AVInstallation currentInstallation];
 //    AVUser* user=[AVUser currentUser];
 //    [user setObject:installation forKey:INSTALLATION];
@@ -194,14 +194,18 @@
 //    }];
 
     // important
-    [CDGroupService findGroupsWithCallback:^(NSArray *objects, NSError *error) {
-        [CDUtils logError:error callback:^{
-            for(CDChatGroup* group in objects){
-                [CDGroupService setDelegateWithGroupId:group.objectId];
-            }
-        }];
-    } cacheFirst:YES];
+//    [CDGroupService findGroupsWithCallback:^(NSArray *objects, NSError *error) {
+//        [CDUtils logError:error callback:^{
+//            for(CDChatGroup* group in objects){
+//                [CDGroupService setDelegateWithGroupId:group.objectId];
+//            }
+//        }];
+//    } cacheFirst:YES];
     
+    CDIMClient* client=[CDIMClient sharedInstance];
+    [client open];
+    
+
     return tab;
 }
 

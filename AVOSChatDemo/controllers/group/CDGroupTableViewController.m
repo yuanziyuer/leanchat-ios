@@ -144,7 +144,6 @@ static NSString* cellIndentifier=@"cell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     CDChatGroup* chatGroup=[chatGroups objectAtIndex:indexPath.row];
     CDChatRoomController * controlloer=[[CDChatRoomController alloc] init];
-    [controlloer setType:CDMsgRoomTypeGroup];
     [CDCacheService setCurrentChatGroup:chatGroup];
     UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:controlloer];
     [self presentViewController:nav animated:YES completion:nil];

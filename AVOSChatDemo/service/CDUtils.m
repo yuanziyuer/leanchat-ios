@@ -20,7 +20,8 @@
 }
 
 +(void)alertError:(NSError*)error{
-    [CDUtils alert:[error localizedDescription]];
+    //[CDUtils alert:[error localizedDescription]];
+    [CDUtils alert:[NSString stringWithFormat:@"%@",error]];
 }
 
 +(void)filterError:(NSError*)error callback:(CDBlock)callback{

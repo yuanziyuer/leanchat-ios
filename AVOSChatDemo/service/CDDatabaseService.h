@@ -22,7 +22,6 @@
 
 +(NSArray*)getMsgsWithConvid:(NSString*)convid maxTimestamp:(int64_t)timestamp limit:(int)limit db:(FMDatabase*)db;
 
-
 +(int64_t)getMaxTimetstampWithDB:(FMDatabase*)db;
 
 +(void)upgradeToAddField;

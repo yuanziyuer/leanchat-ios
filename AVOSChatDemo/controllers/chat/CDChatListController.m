@@ -15,6 +15,7 @@
 #import "CDUtils.h"
 #import "CDCacheService.h"
 #import "CDCloudService.h"
+#import "CDService.h"
 #import "CDDatabaseService.h"
 #import "SRRefreshView.h"
 #import "CDUpgradeService.h"
@@ -25,8 +26,8 @@ enum : NSUInteger {
 
 @interface CDChatListController ()  {
     CDPopMenu *_popMenu;
-    CDSessionManager* sessionManager;
-    NSMutableArray *chatRooms;
+    NSMutableArray *conversations;
+    CDIMClient* imClient;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -54,8 +55,9 @@ static NSString *cellIdentifier = @"ContactCell";
     self.tableView.dataSource=self;
     self.tableView.delegate=self;
     [self.tableView registerNib:[UINib nibWithNibName:nibName bundle:nil] forCellReuseIdentifier:cellIdentifier];
-    chatRooms=[[NSMutableArray alloc] init];
-    sessionManager=[CDSessionManager sharedInstance];
+    conversations=[[NSMutableArray alloc] init];
+    imClient=[CDIMClient sharedInstance];
+//    sessionManager=[CDSessionManager sharedInstance];
     //[self slimeView];
     
 //    UIRefreshControl* refreshControl=[[UIRefreshControl alloc] init];
@@ -105,18 +107,15 @@ static NSString *cellIdentifier = @"ContactCell";
 
 -(void)refresh:(SRRefreshView*)refrshView{
     [CDUtils showNetworkIndicator];
-    [CDDatabaseService findConversationsWithCallback:^(NSArray *objects, NSError *error) {
+    [imClient queryConversationsWithCallback:^(NSArray *objects, NSError *error) {
         if(refrshView!=nil){
-          [refrshView endRefresh];
+            [refrshView endRefresh];
         }
         [CDUtils hideNetworkIndicator];
         [CDUtils filterError:error callback:^{
-            chatRooms=[objects mutableCopy];
+            conversations=[objects mutableCopy];
             [self.tableView reloadData];
             int totalUnreadCount=0;
-            for(CDChatRoom* room in chatRooms){
-                totalUnreadCount+=room.unreadCount;
-            }
             if(totalUnreadCount>0){
                 self.tabBarItem.badgeValue=[NSString stringWithFormat:@"%d",totalUnreadCount];
             }else{
@@ -135,10 +134,6 @@ static NSString *cellIdentifier = @"ContactCell";
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_MESSAGE_UPDATED object:nil];
 }
 
-- (void)showMenuOnView:(UIBarButtonItem *)buttonItem {
-    [self.popMenu showMenuOnView:self.navigationController.view atPoint:CGPointZero];
-}
-
 #pragma table view
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -146,81 +141,39 @@ static NSString *cellIdentifier = @"ContactCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [chatRooms count];
+    return [conversations count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CDImageTwoLabelTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    CDChatRoom *chatRoom = [chatRooms objectAtIndex:indexPath.row];
-    CDMsgRoomType type=[chatRoom roomType];
-    NSMutableString *nameString = [[NSMutableString alloc] init];
-    if (type == CDMsgRoomTypeGroup) {
-        [nameString appendFormat:@"%@", [chatRoom.chatGroup getTitle]];
-        [cell.myImageView setImage:[UIImage imageNamed:@"group_icon"]];
-    } else {
-        [CDUserService displayAvatarOfUser:chatRoom.chatUser avatarView:cell.myImageView];
-        [nameString appendFormat:@"%@", chatRoom.chatUser.username];
-    }
-    cell.topLabel.text=nameString;
-    cell.bottomLabel.text=[chatRoom.latestMsg getMsgDesc];
-    cell.unreadCount=chatRoom.unreadCount;
+    AVIMConversation *chatRoom = [conversations objectAtIndex:indexPath.row];
+    
+//    CDMsgRoomType type=[chatRoom roomType];
+//    NSMutableString *nameString = [[NSMutableString alloc] init];
+//    if (type == CDMsgRoomTypeGroup) {
+//        //[nameString appendFormat:@"%@", [chatRoom.conversation getTitle]];
+//        [cell.myImageView setImage:[UIImage imageNamed:@"group_icon"]];
+//    } else {
+//        [CDUserService displayAvatarOfUser:chatRoom.chatUser avatarView:cell.myImageView];
+//        [nameString appendFormat:@"%@", chatRoom.chatUser.username];
+//    }
+//    cell.topLabel.text=nameString;
+//    cell.bottomLabel.text=[chatRoom.latestMsg getMsgDesc];
+//    cell.unreadCount=chatRoom.unreadCount;
+    
+    [cell.myImageView setImage:[UIImage imageNamed:@"group_icon"]];
+    cell.topLabel.text=chatRoom.name;
+    cell.bottomLabel.text=@"lastestMsg";
+    cell.unreadCount=0;
+    
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    CDChatRoom *chatRoom = [chatRooms objectAtIndex:indexPath.row];
-    CDMsgRoomType type = chatRoom.roomType;
-    CDChatRoomController *controller = [[CDChatRoomController alloc] init];
-    controller.type = type;
-    if (type == CDMsgRoomTypeGroup) {
-        [CDCacheService setCurrentChatGroup:chatRoom.chatGroup];
-    } else {
-        controller.chatUser=chatRoom.chatUser;
-    }
+    AVIMConversation *conversation = [conversations objectAtIndex:indexPath.row];
+    CDChatRoomController *controller = [[CDChatRoomController alloc] initWithConversation:conversation];
     UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:controller];
     [self presentViewController:nav animated:YES completion:nil];
-}
-
-- (CDPopMenu *)popMenu {
-    if (!_popMenu) {
-        int count = 2;
-        NSMutableArray *popMenuItems = [[NSMutableArray alloc] initWithCapacity:count];
-        for (int i = 0; i < count; ++i) {
-            NSString *imageName = nil;
-            NSString *title;
-            switch (i) {
-                case 0: {
-                    imageName = @"menu_add_newmessage";
-                    title = @"发起群聊";
-                    break;
-                }
-                case 1: {
-                    imageName = @"menu_add_scan";
-                    title = @"扫一扫";
-                    break;
-                }
-                default:
-                    break;
-            }
-            UIImage *image = [UIImage imageNamed:imageName];
-            CDPopMenuItem *popMenuItem = [[CDPopMenuItem alloc] initWithImage:image title:title];
-            [popMenuItems addObject:popMenuItem];
-        }
-        CDPopMenu *popMenu = [[CDPopMenu alloc] initWithMenus:popMenuItems];
-        popMenu.popMenuSelected = ^(NSInteger index, CDPopMenuItem *item) {
-            switch (index) {
-                case 0:
-                    break;
-                case 1:
-                    break;
-                    
-                default:
-                    break;
-            }
-        };
-        _popMenu = popMenu;
-    }
-    return _popMenu;
 }
 
 #pragma mark -- CDSessionDelegateMethods
