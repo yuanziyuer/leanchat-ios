@@ -7,21 +7,15 @@
 //
 
 #import "CDChatRoomController.h"
-#import "CDIMClient.h"
-#import "CDChatDetailController.h"
 #import "QBImagePickerController.h"
 #import "UIImage+Resize.h"
-#import "CDUtils.h"
 #import "CDGroupDetailController.h"
 #import "CDGroupAddMemberController.h"
 #import "XHDisplayTextViewController.h"
 #import "XHDisplayMediaViewController.h"
 #import "XHDisplayLocationViewController.h"
-#import "CDEmotionUtils.h"
 #import "CDService.h"
-
 #import "XHContactDetailTableViewController.h"
-
 #import "XHAudioPlayerHelper.h"
 
 
@@ -33,7 +27,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     NSMutableDictionary *_loadedImages;
     NSMutableDictionary *_avatars;
     NSMutableArray* _msgs;
-    CDIMClient* imClient;
+    CDIM* imClient;
     UIImage* defaultAvatar;
     BOOL isLoadingMsg;
 }
@@ -62,7 +56,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         isLoadingMsg=NO;
         _loadedImages = [[NSMutableDictionary alloc] init];
         _avatars=[[NSMutableDictionary alloc] init];
-        imClient=[CDIMClient sharedInstance];
+        imClient=[CDIM sharedInstance];
         defaultAvatar=[UIImage imageNamed:@"default_user_avatar"];
     }
     return self;
@@ -86,17 +80,13 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     if(members.count<2){
         [self backPressed:nil];
     }else if(members.count==2){
-        NSString* otherId;
-        if([members[0] isEqualToString:curUser.objectId]){
-            otherId=members[1];
-        }else{
-            otherId=members[0];
-        }
+        NSString* otherId=[CDIMUtils getOtherIdOfConv:_conversation];
         AVUser* other=[CDCacheService lookupUser:otherId];
         self.title=other.username;
     }else{
         self.title=[NSString stringWithFormat:@"%d",members.count];
     }
+    [CDCacheService setCurrentConversation:_conversation];
     
     UIImage* _peopleImage=[CDUtils resizeImage:[UIImage imageNamed:@"chat_menu_people"] toSize:CGSizeMake(25, 25)];
     UIBarButtonItem* item=[[UIBarButtonItem alloc] initWithImage:_peopleImage style:UIBarButtonItemStyleDone target:self action:@selector(goChatGroupDetail:)];
@@ -106,10 +96,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
                                                               target:nil
                                                               action:nil];
     [[self navigationItem] setBackBarButtonItem:backBtn];
-    
-    // Custom UI
-    //    [self setBackgroundColor:[UIColor clearColor]];
-    //    [self setBackgroundImage:[UIImage imageNamed:@"TableViewBackgroundImage"]];
     
     // 设置自身用户名
     self.messageSender = [curUser username];
@@ -167,10 +153,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 -(void)dealloc{
     self.emotionManagers = nil;
     [[XHAudioPlayerHelper shareInstance] setDelegate:nil];
-//    if(self.type==CDMsgRoomTypeSingle){
-//    }else{
-//        [CDCacheService setCurrentChatGroup:nil];
-//    }
+    [CDCacheService setCurrentConversation:nil];
 }
 
 -(void)backPressed:(id)sender{
@@ -644,18 +627,15 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
  *  @param date             发送时间
  */
 - (void)didSendVoice:(NSString *)voicePath voiceDuration:(NSString *)voiceDuration fromSender:(NSString *)sender onDate:(NSDate *)date {
-    NSString* objectId=[CDUtils uuid];
-    NSString* path=[CDSessionManager getPathByObjectId:objectId];
-    NSError* error;
-    [[NSFileManager defaultManager] copyItemAtPath:voicePath toPath:path error:&error];
-    if(error==nil){
-        AVIMAudioMessage* msg=[AVIMAudioMessage messageWithText:nil attachedFilePath:voicePath attributes:nil];
-        [imClient sendMessage:msg conversation:_conversation callback:^(BOOL succeeded, NSError *error) {
+    AVIMAudioMessage* msg=[AVIMAudioMessage messageWithText:nil attachedFilePath:voicePath attributes:nil];
+    [imClient sendMessage:msg conversation:_conversation callback:^(BOOL succeeded, NSError *error) {
+        NSString* path=[CDFileService getPathByObjectId:msg.messageId];
+        NSError* error1;
+        [[NSFileManager defaultManager] copyItemAtPath:voicePath toPath:path error:&error1];
+        if(error1==nil){
             NSLog(@"succeed");
-        }];
-    }else{
-        [CDUtils alertError:error];
-    }
+        }
+    }];
 }
 
 /**

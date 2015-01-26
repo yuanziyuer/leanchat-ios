@@ -8,11 +8,7 @@
 
 #import "CDGroupAddMemberController.h"
 #import "CDImageLabelTableCell.h"
-#import "CDSessionManager.h"
-#import "CDUserService.h"
-#import "CDCacheService.h"
-#import "CDUtils.h"
-#import "CDGroupService.h"
+#import "CDService.h"
 
 @interface CDGroupAddMemberController (){
     CDSessionManager *sessionManager;
@@ -51,7 +47,7 @@ static NSString* reuseIdentifier=@"Cell";
 -(void)initPotentialIds{
     potentialIds=[[NSMutableArray alloc] init];
     for(AVUser* user in [CDCacheService getFriends]){
-        if([[CDCacheService getCurrentChatGroup].m containsObject:user.objectId]==NO){
+        if([[CDCacheService getCurrentConversation].members containsObject:user.objectId]==NO){
             [potentialIds addObject:user.objectId];
         }
     }
@@ -74,11 +70,12 @@ static NSString* reuseIdentifier=@"Cell";
 }
 
 -(void)inviteMembers:(NSArray*)inviteIds callback:(AVBooleanResultBlock)callback{
-    [CDGroupService inviteMembersToGroup:[CDCacheService getCurrentChatGroup] userIds:inviteIds callback:^(NSArray *objects, NSError *error) {
+    AVIMConversation* conv=[CDCacheService getCurrentConversation];
+    [conv addMembersWithClientIds:inviteIds callback:^(BOOL succeeded, NSError *error) {
         if(error){
             callback(NO,error);
         }else{
-            [CDCacheService refreshCurrentChatGroup:callback];
+            [CDCacheService refreshCurrentConversation:callback];
         }
     }];
 }

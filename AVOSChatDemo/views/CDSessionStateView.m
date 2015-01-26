@@ -7,10 +7,11 @@
 //
 
 #import "CDSessionStateView.h"
+#import "CDUtils.h"
 
 @interface CDSessionStateView()
 
-@property CDIMClient* imClient;
+@property CDIM* imClient;
 
 @end
 
@@ -42,7 +43,7 @@
 -(void)observeSessionUpdate{
     NSNotificationCenter* center=[NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(sessionUpdated) name:NOTIFICATION_SESSION_UPDATED object:nil];
-    _imClient=[CDIMClient sharedInstance];
+    _imClient=[CDIM sharedInstance];
     [self sessionUpdated];
 }
 
@@ -56,7 +57,7 @@
 
 - (void)sessionUpdated
 {
-    CDIMClient* imClient=[CDIMClient sharedInstance];
+    CDIM* imClient=[CDIM sharedInstance];
     if([CDUtils connected]==NO || [imClient isOpened]==NO){
         if([_delegate respondsToSelector:@selector(onSessionBrokenWithStateView:)])
             [_delegate onSessionBrokenWithStateView:self];

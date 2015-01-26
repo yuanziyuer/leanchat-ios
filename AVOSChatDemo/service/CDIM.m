@@ -6,32 +6,34 @@
 //  Copyright (c) 2015年 AVOS. All rights reserved.
 //
 
-#import "CDIMClient.h"
+#import "CDIM.h"
+#import "CDModels.h"
+#import "CDService.h"
 
-static CDIMClient*instance;
+static CDIM*instance;
 static BOOL initialized;
 static NSMutableArray* _conversations;
 static NSMutableArray* _messages;
-static AVIM* _im;
+static AVIMClient* _imClient;
 
-@interface CDIMClient()<AVIMDelegate,AVIMSignatureDataSource>{
+@interface CDIM()<AVIMClientDelegate,AVIMSignatureDataSource>{
     
 }
 @end
 
-@implementation CDIMClient
+@implementation CDIM
 
 + (instancetype)sharedInstance
 {
     static dispatch_once_t once_token=0;
     dispatch_once(&once_token, ^{
-        instance=[[CDIMClient alloc] init];
+        instance=[[CDIM alloc] init];
     });
     if(!initialized){
         _conversations=[NSMutableArray array];
         _messages=[NSMutableArray array];
-        _im=[[AVIM alloc] init];
-        _im.delegate=instance;
+        _imClient=[[AVIMClient alloc] init];
+        _imClient.delegate=instance;
         //_im.signatureDataSource=instance;
         initialized=YES;
     }
@@ -39,11 +41,11 @@ static AVIM* _im;
 }
 
 -(BOOL)isOpened{
-    return _im.status==AVIMStatusOpened;
+    return _imClient.status==AVIMClientStatusOpened;
 }
 
 -(void)open{
-    [_im openWithClientId:[AVUser currentUser].objectId callback:^(BOOL succeeded, NSError *error) {
+    [_imClient openWithClientId:[AVUser currentUser].objectId callback:^(BOOL succeeded, NSError *error) {
         [CDUtils logError:error callback:^{
             NSLog(@"im open succeed");
         }];
@@ -58,35 +60,82 @@ static AVIM* _im;
 
 - (void)close {
     [_conversations removeAllObjects];
-    [_im closeWithCallback:nil];
+    [_imClient closeWithCallback:nil];
     initialized = NO;
 }
 
 - (void)fetchOrCreateConversationWithUserId:(NSString *)userId callback:(AVIMConversationResultBlock)callback {
     NSMutableArray *array = [[NSMutableArray alloc] init];
-    [array addObject:_im.clientId];
+    [array addObject:_imClient.clientId];
     [array addObject:userId];
-    [_im queryConversationsWithClientIds:array skip:0 limit:0 callback:^(NSArray *objects, NSError *error) {
+    [_imClient queryConversationsWithClientIds:array skip:0 limit:0 callback:^(NSArray *objects, NSError *error) {
         if(error){
             callback(nil,error);
         }else{
+            AVIMConversationResultBlock withConversation=^(AVIMConversation* conversation,NSError* error){
+                if(error){
+                }else{
+                    [self addConversation:conversation];
+                    callback(conversation, nil);
+                }
+            };
             if (objects.count > 0) {
                 AVIMConversation *conversation = [objects objectAtIndex:0];
-                [self addConversation:conversation];
-                callback(conversation, nil);
+                withConversation(conversation,nil);
             } else{
-                [_im createConversationWithName:nil clientIds:@[userId] attributes:nil callback:^(AVIMConversation *conversation, NSError *error) {
-                    [self addConversation:conversation];
-                    callback(conversation,error);
-                }];
+                [_imClient createConversationWithName:nil clientIds:@[userId] attributes:nil callback:withConversation];
             }
         }
     }];
 }
 
-- (void)queryConversationsWithCallback:(AVIMArrayResultBlock)callback {
+-(AVIMTypedMessage*)getLastMsgWithConvid:(NSString*)convid{
+    for(int i=_messages.count-1;i>=0;i--){
+        AVIMTypedMessage* msg=[_messages objectAtIndex:i];
+        if([msg.conversationId isEqualToString:convid]){
+            return msg;
+        }
+    }
+    return nil;
+}
+
++(void)cacheRooms:(NSArray*)rooms callback:(AVArrayResultBlock)callback{
+    NSMutableSet* userIds=[NSMutableSet set];
+    for(CDRoom* room in rooms){
+        if(room.type==CDRoomTypeSingle){
+            if([CDCacheService lookupUser:room.otherId]==nil){
+                [userIds addObject:room.otherId];
+            }
+        }
+    }
+    [CDCacheService cacheUsersWithIds:userIds callback:callback];
+}
+
+- (void)findRoomsWithCallback:(AVArrayResultBlock)callback {
     //todo: getConversationsFromDB
-    callback(_conversations,nil);
+    NSMutableArray* rooms=[NSMutableArray array];
+    for(AVIMConversation* conv in _conversations){
+        CDRoom* room=[[CDRoom alloc] init];
+        room.conv=conv;
+        room.unreadCount=0;
+        if([conv.members count]==2){
+            room.type=CDRoomTypeSingle;
+            room.otherId=[CDIMUtils getOtherIdOfConv:conv];
+        }else{
+            room.type=CDRoomTypeGroup;
+        }
+        room.lastMsg=[self getLastMsgWithConvid:conv.conversationId];
+        [rooms addObject:room];
+    }
+    callback(rooms,nil);
+}
+
+-(void)findGroupedConvsWithBlock:(AVArrayResultBlock)block{
+    AVUser* user=[AVUser currentUser];
+    NSMutableDictionary *whereDict=[NSMutableDictionary dictionary];
+    NSDictionary* cond=@{@"$size":@{@"$gt":@(2)},@"$in":@[user.objectId]};
+    [whereDict setObject:cond forKey:@"m"];
+    [_imClient queryConversationWithConditions:whereDict skip:0 limit:0 callback:block];
 }
 
 - (void)updateConversation:(AVIMConversation *)conversation withName:(NSString *)name attributes:(NSDictionary *)attributes callback:(AVIMBooleanResultBlock)callback {
@@ -123,9 +172,21 @@ static AVIM* _im;
     }];
 }
 
--(void)receiveMessage:(AVIMTypedMessage*)message{
-    [_messages addObject:message];
-    [self postUpdatedMessage:message];
+-(void)receiveMessage:(AVIMTypedMessage*)msg{
+    [CDUtils runInGlobalQueue:^{
+        if(msg.mediaType==kAVIMMessageMediaTypeImage || msg.mediaType==kAVIMMessageMediaTypeAudio){
+            NSString* path=[CDFileService getPathByObjectId:msg.messageId];
+            NSFileManager* fileMan=[NSFileManager defaultManager];
+            if([fileMan fileExistsAtPath:path]==NO){
+                NSData* data=[msg.file getData];
+                [data writeToFile:path atomically:YES];
+            }
+        }
+        [CDUtils runInMainQueue:^{
+            [_messages addObject:msg];
+            [self postUpdatedMessage:msg];
+        }];
+    }];
 }
 
 -(NSArray*)findMessagesByConversationId:(NSString*)convid{
@@ -138,27 +199,31 @@ static AVIM* _im;
     return array;
 }
 
-#pragma mark - AVIMDelegate
+#pragma mark - conversation
+
+#pragma mark - AVIMClientDelegate
 
 /*!
  当前聊天状态被暂停，常见于网络断开时触发。
  */
-- (void)imPaused:(AVIM *)im{
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+- (void)imClientPaused:(AVIMClient *)imClient{
+    DLog();
 }
 
 /*!
  当前聊天状态开始恢复，常见于网络断开后开始重新连接。
  */
-- (void)imResuming:(AVIM *)im{
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+- (void)imClientResuming:(AVIMClient *)imClient{
+    DLog();
 }
 /*!
  当前聊天状态已经恢复，常见于网络断开后重新连接上。
  */
-- (void)imResumed:(AVIM *)im{
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+- (void)imClientResumed:(AVIMClient *)imClient{
+    DLog();
 }
+
+#pragma mark - AVIMMessageDelegate
 
 /*!
  接收到新的普通消息。
@@ -167,7 +232,7 @@ static AVIM* _im;
  @return None.
  */
 - (void)conversation:(AVIMConversation *)conversation didReceiveCommonMessage:(AVIMMessage *)message{
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+    DLog();
 }
 
 /*!
@@ -177,7 +242,7 @@ static AVIM* _im;
  @return None.
  */
 - (void)conversation:(AVIMConversation *)conversation didReceiveTypedMessage:(AVIMTypedMessage *)message{
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+    DLog();
     [self receiveMessage:message];
 }
 
@@ -188,7 +253,7 @@ static AVIM* _im;
  @return None.
  */
 - (void)conversation:(AVIMConversation *)conversation messageDelivered:(AVIMMessage *)message{
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+    DLog();
 }
 
 /*!
@@ -199,7 +264,7 @@ static AVIM* _im;
  @return None.
  */
 - (void)conversation:(AVIMConversation *)conversation membersAdded:(NSArray *)clientIds byClientId:(NSString *)clientId{
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+    DLog();
 }
 /*!
  对话中有成员离开的通知。
@@ -209,7 +274,7 @@ static AVIM* _im;
  @return None.
  */
 - (void)conversation:(AVIMConversation *)conversation membersRemoved:(NSArray *)clientIds byClientId:(NSString *)clientId{
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+    DLog();
 }
 
 /*!
@@ -219,7 +284,7 @@ static AVIM* _im;
  @return None.
  */
 - (void)conversation:(AVIMConversation *)conversation invitedByClientId:(NSString *)clientId{
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+    DLog();
 }
 
 /*!
@@ -229,7 +294,7 @@ static AVIM* _im;
  @return None.
  */
 - (void)conversation:(AVIMConversation *)conversation kickedByClientId:(NSString *)clientId{
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+    DLog();
 }
 
 @end

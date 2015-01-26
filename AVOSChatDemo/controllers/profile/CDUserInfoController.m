@@ -15,7 +15,7 @@
 
 @interface CDUserInfoController (){
     BOOL isFriend;
-    CDIMClient* imClient;
+    CDIM* imClient;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
@@ -56,7 +56,7 @@
     }else{
         [_actionBtn setTitle:@"添加好友" forState:UIControlStateNormal];
     }
-    imClient=[CDIMClient sharedInstance];
+    imClient=[CDIM sharedInstance];
 
     [CDUserService displayAvatarOfUser:_user avatarView:self.avatarView];
 }

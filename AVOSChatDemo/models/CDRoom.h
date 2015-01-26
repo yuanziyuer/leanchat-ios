@@ -9,17 +9,17 @@
 #import <Foundation/Foundation.h>
 #import "CDCommon.h"
 #import "CDMsg.h"
-#import "CDChatGroup.h"
 
-@interface CDChatRoom : NSObject
+@interface CDRoom : NSObject
 
-@property CDMsgRoomType roomType;
-@property NSString* conversationId;
+@property CDRoomType type;
 
-@property AVIMConversation* conversation;
-@property AVUser* chatUser;
+@property AVIMConversation* conv;
 
-@property CDMsg* latestMsg;
+@property NSString* otherId; // if single
+
+@property AVIMTypedMessage* lastMsg;
+
 @property NSInteger unreadCount;
 
 @end

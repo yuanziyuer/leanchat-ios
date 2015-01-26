@@ -20,8 +20,10 @@
 #import "CDUserService.h"
 #import "CDSettingService.h"
 #import "CDLocalService.h"
-#import "CDIMClient.h"
+#import "CDIM.h"
+#import "CDIMUtils.h"
 #import "CDFileService.h"
 #import "CDCacheService.h"
+#import "CDGroupService.h"
 
 #endif

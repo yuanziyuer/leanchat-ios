@@ -22,9 +22,9 @@
 #define READ_STATUS @"readStatus"
 
 typedef enum : NSUInteger {
-    CDMsgRoomTypeSingle = 0,
-    CDMsgRoomTypeGroup=1,
-} CDMsgRoomType;
+    CDRoomTypeSingle = 0,
+    CDRoomTypeGroup=1,
+} CDRoomType;
 
 typedef enum : NSUInteger{
     CDMsgTypeText=0,
@@ -56,7 +56,7 @@ typedef enum : NSUInteger{
 @property NSString* objectId;
 @property NSString* convid;
 
-@property CDMsgRoomType roomType;
+@property CDRoomType roomType;
 @property CDMsgStatus status;
 @property CDMsgType type;
 @property CDMsgReadStaus readStatus;

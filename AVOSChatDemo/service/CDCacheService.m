@@ -9,12 +9,14 @@
 #import "CDCacheService.h"
 #import "CDGroupService.h"
 #import "CDMsg.h"
+#import "CDUtils.h"
+#import "CDService.h"
 
 @implementation CDCacheService
 
 static NSMutableDictionary *cachedChatGroups;
 static NSMutableDictionary *cachedUsers;
-static CDChatGroup* currentChatGroup;
+static AVIMConversation* currentConversation;
 static NSArray* friends;
 
 +(void)initialize{
@@ -103,7 +105,7 @@ static NSArray* friends;
     NSMutableSet* userIds=[[NSMutableSet alloc] init];
     NSMutableSet* groupIds=[[NSMutableSet alloc] init];
     for(CDMsg* msg in msgs){
-        if(msg.roomType==CDMsgRoomTypeSingle){
+        if(msg.roomType==CDRoomTypeSingle){
             [userIds addObject:msg.fromPeerId];
             [userIds addObject:msg.toPeerId];
         }else{
@@ -122,25 +124,25 @@ static NSArray* friends;
 
 #pragma mark - current cache group
 
-+(void)setCurrentChatGroup:(CDChatGroup*)chatGroup{
-    currentChatGroup=chatGroup;
++(void)setCurrentConversation:(AVIMConversation*)chatGroup{
+    currentConversation=chatGroup;
 }
 
-+(CDChatGroup*)getCurrentChatGroup{
-    return currentChatGroup;
++(AVIMConversation*)getCurrentConversation{
+    return currentConversation;
 }
 
-
-+(void)refreshCurrentChatGroup:(AVBooleanResultBlock)callback{
-    if(currentChatGroup!=nil){
-        [currentChatGroup fetchInBackgroundWithBlock:^(AVObject *object, NSError *error) {
-            if(error){
-                callback(NO,error);
-            }else{
-                [self notifyGroupUpdate];
-                callback(YES,nil);
-            }
-        }];
++(void)refreshCurrentConversation:(AVBooleanResultBlock)callback{
+    if(currentConversation!=nil){
+        callback(YES,nil);
+//        [currentChatGroup fetchInBackgroundWithBlock:^(AVObject *object, NSError *error) {
+//            if(error){
+//                callback(NO,error);
+//            }else{
+//                [self notifyGroupUpdate];
+//                callback(YES,nil);
+//            }
+//        }];
     }else{
         callback(NO,[NSError errorWithDomain:nil code:0 userInfo:@{NSLocalizedDescriptionKey:@"currentChatGroup is nil"}]);
     }

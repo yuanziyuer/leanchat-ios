@@ -10,7 +10,7 @@
 #import "CDSessionManager.h"
 #import "CDChatRoomController.h"
 #import "CDPopMenu.h"
-#import "CDChatRoom.h"
+#import "CDRoom.h"
 #import "CDImageTwoLabelTableCell.h"
 #import "CDUtils.h"
 #import "CDCacheService.h"
@@ -26,8 +26,8 @@ enum : NSUInteger {
 
 @interface CDChatListController ()  {
     CDPopMenu *_popMenu;
-    NSMutableArray *conversations;
-    CDIMClient* imClient;
+    NSMutableArray *rooms;
+    CDIM* imClient;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -44,6 +44,8 @@ static NSString *cellIdentifier = @"ContactCell";
     if ((self = [super init])) {
         self.title = @"消息";
         self.tabBarItem.image = [UIImage imageNamed:@"tabbar_chat_active"];
+        rooms=[[NSMutableArray alloc] init];
+        imClient=[CDIM sharedInstance];
     }
     return self;
 }
@@ -55,10 +57,6 @@ static NSString *cellIdentifier = @"ContactCell";
     self.tableView.dataSource=self;
     self.tableView.delegate=self;
     [self.tableView registerNib:[UINib nibWithNibName:nibName bundle:nil] forCellReuseIdentifier:cellIdentifier];
-    conversations=[[NSMutableArray alloc] init];
-    imClient=[CDIMClient sharedInstance];
-//    sessionManager=[CDSessionManager sharedInstance];
-    //[self slimeView];
     
 //    UIRefreshControl* refreshControl=[[UIRefreshControl alloc] init];
 //    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
@@ -107,13 +105,13 @@ static NSString *cellIdentifier = @"ContactCell";
 
 -(void)refresh:(SRRefreshView*)refrshView{
     [CDUtils showNetworkIndicator];
-    [imClient queryConversationsWithCallback:^(NSArray *objects, NSError *error) {
+    [imClient findRoomsWithCallback:^(NSArray *objects, NSError *error) {
         if(refrshView!=nil){
             [refrshView endRefresh];
         }
         [CDUtils hideNetworkIndicator];
         [CDUtils filterError:error callback:^{
-            conversations=[objects mutableCopy];
+            rooms=[objects mutableCopy];
             [self.tableView reloadData];
             int totalUnreadCount=0;
             if(totalUnreadCount>0){
@@ -141,37 +139,30 @@ static NSString *cellIdentifier = @"ContactCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [conversations count];
+    return [rooms count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CDImageTwoLabelTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    AVIMConversation *chatRoom = [conversations objectAtIndex:indexPath.row];
+    CDRoom* room = [rooms objectAtIndex:indexPath.row];
+    if(room.type==CDRoomTypeSingle){
+        AVUser* user=[CDCacheService lookupUser:room.otherId];
+        [CDUserService displayAvatarOfUser:user avatarView:cell.myImageView];
+        cell.topLabel.text=user.username;
+    }else{
+        [cell.myImageView setImage:[UIImage imageNamed:@"group_icon"]];
+        cell.topLabel.text=room.conv.name;
+    }
     
-//    CDMsgRoomType type=[chatRoom roomType];
-//    NSMutableString *nameString = [[NSMutableString alloc] init];
-//    if (type == CDMsgRoomTypeGroup) {
-//        //[nameString appendFormat:@"%@", [chatRoom.conversation getTitle]];
-//        [cell.myImageView setImage:[UIImage imageNamed:@"group_icon"]];
-//    } else {
-//        [CDUserService displayAvatarOfUser:chatRoom.chatUser avatarView:cell.myImageView];
-//        [nameString appendFormat:@"%@", chatRoom.chatUser.username];
-//    }
-//    cell.topLabel.text=nameString;
-//    cell.bottomLabel.text=[chatRoom.latestMsg getMsgDesc];
-//    cell.unreadCount=chatRoom.unreadCount;
-    
-    [cell.myImageView setImage:[UIImage imageNamed:@"group_icon"]];
-    cell.topLabel.text=chatRoom.name;
-    cell.bottomLabel.text=@"lastestMsg";
+    cell.bottomLabel.text=[CDIMUtils getMsgDesc:room.lastMsg];
     cell.unreadCount=0;
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    AVIMConversation *conversation = [conversations objectAtIndex:indexPath.row];
-    CDChatRoomController *controller = [[CDChatRoomController alloc] initWithConversation:conversation];
+    CDRoom *room = [rooms objectAtIndex:indexPath.row];
+    CDChatRoomController *controller = [[CDChatRoomController alloc] initWithConversation:room.conv];
     UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:controller];
     [self presentViewController:nav animated:YES completion:nil];
 }

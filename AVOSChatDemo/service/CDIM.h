@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "CDCommon.h"
 
-@interface CDIMClient : NSObject
+@interface CDIM : NSObject
 
 + (instancetype)sharedInstance;
 
@@ -21,7 +21,9 @@
 
 - (void)fetchOrCreateConversationWithUserId:(NSString *)userId callback:(AVIMConversationResultBlock)callback ;
 
-- (void)queryConversationsWithCallback:(AVIMArrayResultBlock)callback;
+- (void)findRoomsWithCallback:(AVArrayResultBlock)callback;
+
+-(void)findGroupedConvsWithBlock:(AVArrayResultBlock)block;
 
 - (void)updateConversation:(AVIMConversation *)conversation withName:(NSString *)name attributes:(NSDictionary *)attributes callback:(AVIMBooleanResultBlock)callback ;
 

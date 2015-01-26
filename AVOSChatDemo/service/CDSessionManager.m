@@ -8,7 +8,7 @@
 #import "CDSessionManager.h"
 #import "CDCommon.h"
 #import "CDMsg.h"
-#import "CDChatRoom.h"
+#import "CDRoom.h"
 #import "CDUtils.h"
 #import "CDCloudService.h"
 #import "CDChatGroup.h"
@@ -113,8 +113,8 @@ static BOOL initialized = NO;
     return [CDUtils md5OfString:result];
 }
 
-+(NSString*)getConvidOfRoomType:(CDMsgRoomType)roomType otherId:(NSString*)otherId groupId:(NSString*)groupId{
-    if(roomType==CDMsgRoomTypeSingle){
++(NSString*)getConvidOfRoomType:(CDRoomType)roomType otherId:(NSString*)otherId groupId:(NSString*)groupId{
+    if(roomType==CDRoomTypeSingle){
         NSString* curUserId=[AVUser currentUser].objectId;
         return [CDSessionManager convidOfSelfId:curUserId andOtherId:otherId];
     }else{
@@ -136,9 +136,9 @@ static BOOL initialized = NO;
     msg.status=CDMsgStatusSendStart;
     if(!group){
         msg.toPeerId=toPeerId;
-        msg.roomType=CDMsgRoomTypeSingle;
+        msg.roomType=CDRoomTypeSingle;
     }else{
-        msg.roomType=CDMsgRoomTypeGroup;
+        msg.roomType=CDRoomTypeGroup;
         msg.toPeerId=@"";
     }
     msg.readStatus=CDMsgReadStatusHaveRead;
@@ -391,11 +391,11 @@ static BOOL initialized = NO;
 
 - (void)setRoomTypeAndConvidOfMsg:(CDMsg *)msg group:(AVGroup *)group {
     if(group){
-        msg.roomType=CDMsgRoomTypeGroup;
+        msg.roomType=CDRoomTypeGroup;
         msg.convid=group.groupId;
     }else{
         assert(msg.toPeerId!=nil && msg.fromPeerId!=nil);
-        msg.roomType=CDMsgRoomTypeSingle;
+        msg.roomType=CDRoomTypeSingle;
         msg.convid=[CDSessionManager convidOfSelfId:msg.toPeerId andOtherId:msg.fromPeerId];
     }
 }
@@ -416,9 +416,6 @@ static BOOL initialized = NO;
                 AVFile* file=[AVFile fileWithURL:url];
                 NSData* data=[file getData];
                 [data writeToFile:path atomically:YES];
-                //[CDUtils downloadWithUrl:url toPath:path];
-                int duration=[CDUtils getDurationOfAudioPath:path];
-                NSLog(@"du=%d",duration);
             }
         }
         dispatch_async(dispatch_get_main_queue(), ^{

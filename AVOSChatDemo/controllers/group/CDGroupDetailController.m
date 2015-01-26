@@ -8,18 +8,13 @@
 
 #import "CDGroupDetailController.h"
 #import "CDImageLabelCollectionCell.h"
-#import "CDUserService.h"
-#import "CDSessionManager.h"
-#import "CDUtils.h"
 #import "CDChatRoomController.h"
 #import "CDGroupAddMemberController.h"
-#import "CDCommonDefine.h"
-#import "CDCacheService.h"
-#import "CDGroupService.h"
+#import "CDService.h"
 
 @interface CDGroupDetailController (){
     NSArray* groupMembers;
-    CDSessionManager* sessionManager;
+    CDIM* im;
     BOOL own;
 }
 @end
@@ -31,56 +26,54 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.clearsSelectionOnViewWillAppear = NO;
     
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Register cell classes
     NSString* nibName=NSStringFromClass([CDImageLabelCollectionCell class]);
     [self.collectionView registerNib:[UINib nibWithNibName:nibName bundle:nil]  forCellWithReuseIdentifier:reuseIdentifier];
     self.collectionView.backgroundColor = [UIColor whiteColor];
     
-    sessionManager=[CDSessionManager sharedInstance];
-    // Do any additional setup after loading the view.
-    [self initWithCurrentChatGroup];
+    im=[CDIM sharedInstance];
+    [self initWithConversation];
+    self.title=@"详情";
+    
     UILongPressGestureRecognizer* gestureRecognizer=[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressUser:)];
     gestureRecognizer.delegate=self;
     [self.collectionView addGestureRecognizer:gestureRecognizer];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initWithCurrentChatGroup) name:NOTIFICATION_GROUP_UPDATED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initWithConversation) name:NOTIFICATION_GROUP_UPDATED object:nil];
 }
 
--(CDChatGroup*)getChatGroup{
-    return [CDCacheService getCurrentChatGroup];
+-(AVIMConversation*)getConv{
+    return [CDCacheService getCurrentConversation];
 }
 
--(void)initWithCurrentChatGroup{
-    CDChatGroup* chatGroup=[self getChatGroup];
-    NSSet* userIds=[NSSet setWithArray:chatGroup.m];
+-(void)initWithConversation{
+    AVIMConversation* conv=[self getConv];
+    NSSet* userIds=[NSSet setWithArray:conv.members];
     [CDCacheService cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
         [CDUtils filterError:error callback:^{
-            groupMembers=chatGroup.m;
+            groupMembers=conv.members;
             [self.collectionView reloadData];
         }];
     }];
-    self.title=[[self getChatGroup] getTitle];
-    
     NSString* curUserId=[AVUser currentUser].objectId;
+    own=[conv.constructor isEqualToString:curUserId];
+    [self setupBarButton];
+}
+
+-(void)setupBarButton{
     UIBarButtonItem* addMember=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addMember)];
-    UIBarButtonItem* quitGroup=[[UIBarButtonItem alloc] initWithTitle:@"退群" style:UIBarButtonItemStylePlain target:self action:@selector(quitGroup)];
-    if([chatGroup.owner.objectId isEqualToString:curUserId]){
-        own=YES;
-    }
+    UIBarButtonItem* quitConv=[[UIBarButtonItem alloc] initWithTitle:@"退群" style:UIBarButtonItemStylePlain target:self action:@selector(quitGroup)];
     NSMutableArray* array=[NSMutableArray array];
     [array addObject:addMember];
     if(own==NO){
-        [array addObject:quitGroup];
+        [array addObject:quitConv];
     }
     [self.navigationItem setRightBarButtonItems:array];
 }
 
 -(void)quitGroup{
-    [CDGroupService quitFromGroup:[self getChatGroup]];
+    //[CDGroupService quitFromGroup:[self getConv]];
     [self.navigationController popToRootViewControllerAnimated:YES];
     UIViewController* first=self.navigationController.viewControllers[0];
     [first.presentingViewController dismissViewControllerAnimated:YES completion:nil];;
@@ -96,9 +89,9 @@ static NSString * const reuseIdentifier = @"Cell";
         NSLog(@"can't not find index path");
     }else{
         if(own){
-            CDChatGroup* chatGroup=[self getChatGroup];
-            NSString* userId=[chatGroup.m objectAtIndex:indexPath.row];
-            if([userId isEqualToString:chatGroup.owner.objectId]==NO){
+            AVIMConversation* conv=[self getConv];
+            NSString* userId=[conv.members objectAtIndex:indexPath.row];
+            if([userId isEqualToString:conv.constructor]==NO){
                 UIAlertView * alert=[[UIAlertView alloc]
                                      initWithTitle:nil message:@"确定要踢走该成员吗？"  delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
                 alert.tag=indexPath.row;
@@ -112,8 +105,8 @@ static NSString * const reuseIdentifier = @"Cell";
 clickedButtonAtIndex:(NSInteger)buttonIndex{
     if(buttonIndex==0){
         int pos=alertView.tag;
-        NSString* userId=[[self getChatGroup].m objectAtIndex:pos];
-        [CDGroupService kickMemberFromGroup:[self getChatGroup] userId:userId];
+        NSString* userId=[[self getConv].members objectAtIndex:pos];
+        [CDGroupService kickMemberFromGroup:[self getConv] userId:userId];
     }
 }
 

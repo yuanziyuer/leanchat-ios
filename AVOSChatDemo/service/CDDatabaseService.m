@@ -9,7 +9,7 @@
 #import "CDDatabaseService.h"
 #import "CDUtils.h"
 #import "CDCacheService.h"
-#import "CDChatRoom.h"
+#import "CDRoom.h"
 
 static FMDatabaseQueue* dbQueue;
 
@@ -56,7 +56,7 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
     NSString* timestampText = [rs stringForColumn:TIMESTAMP];
     int64_t timestamp=[timestampText longLongValue];
     NSString* content=[rs stringForColumn:CONTENT];
-    CDMsgRoomType roomType=[rs intForColumn:ROOM_TYPE];
+    CDRoomType roomType=[rs intForColumn:ROOM_TYPE];
     CDMsgType type=[rs intForColumn:TYPE];
     CDMsgStatus status=[rs intForColumn:STATUS];
     CDMsgReadStaus readStatus=[rs intForColumn:READ_STATUS];
@@ -99,8 +99,8 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
                 }else{
                     NSMutableArray *chatRooms=[[NSMutableArray alloc] init];
                     for(CDMsg* msg in msgs){
-                        CDChatRoom* chatRoom=[[CDChatRoom alloc] init];
-                        chatRoom.roomType=msg.roomType;
+                        CDRoom* chatRoom=[[CDRoom alloc] init];
+//                      chatRoom.roomType=msg.roomType;
                         FMResultSet * countResult=[db executeQuery:@"select count(*) from messages where convid=? and readStatus=?" withArgumentsInArray:@[msg.convid,@(CDMsgReadStatusUnread)]];
                         NSInteger count=0;
                         if([countResult next]){
@@ -110,12 +110,12 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
                         chatRoom.unreadCount=count;
                         
                         NSString* otherId=[msg getOtherId];
-                        if(msg.roomType==CDMsgRoomTypeSingle){
-                            chatRoom.chatUser=[CDCacheService lookupUser:otherId];;
-                        }else{
-                            chatRoom.conversation=[CDCacheService lookupChatGroupById:otherId];
-                        }
-                        chatRoom.latestMsg=msg;
+//                        if(msg.roomType==CDRoomTypeSingle){
+//                            chatRoom.chatUser=[CDCacheService lookupUser:otherId];;
+//                        }else{
+//                            chatRoom.conversation=[CDCacheService lookupChatGroupById:otherId];
+//                        }
+//                        chatRoom.lastMsg=msg;
                         [chatRooms addObject:chatRoom];
                     }
                     [CDUtils runInMainQueue:^{

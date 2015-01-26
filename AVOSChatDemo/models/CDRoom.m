@@ -6,8 +6,8 @@
 //  Copyright (c) 2014年 AVOS. All rights reserved.
 //
 
-#import "CDChatRoom.h"
+#import "CDRoom.h"
 
-@implementation CDChatRoom
+@implementation CDRoom
 
 @end

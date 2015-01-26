@@ -16,9 +16,10 @@
 #import "CDUtils.h"
 
 @interface CDGroupTableViewController (){
-    NSArray* chatGroups;
+    NSArray* convs;
     UIImage * groupImage;
     id groupUpdatedObserver;
+    CDIM* _im;
 }
 @end
 
@@ -28,7 +29,8 @@ static NSString* cellIndentifier=@"cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    chatGroups=[[NSMutableArray alloc] init];
+    convs=[[NSMutableArray alloc] init];
+    _im=[CDIM sharedInstance];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -56,15 +58,13 @@ static NSString* cellIndentifier=@"cell";
 }
 
 -(void)refresh:(UIRefreshControl*)refreshControl{
-    [CDGroupService findGroupsWithCallback:^(NSArray *objects, NSError *error) {
+    [_im findGroupedConvsWithBlock:^(NSArray *objects, NSError *error) {
         [CDUtils stopRefreshControl:refreshControl];
-        chatGroups=objects;
-        for(CDChatGroup* chatGroup in chatGroups){
-            [CDGroupService setDelegateWithGroupId:chatGroup.objectId];
-        }
-        [CDCacheService registerChatGroups:objects];
+        convs=objects;
         [self.tableView reloadData];
-    } cacheFirst:NO];
+    }];
+//    [CDGroupService findGroupsWithCallback:^(NSArray *objects, NSError *error) {
+//    } cacheFirst:NO];
 }
 
 -(void)goNewGroup{
@@ -87,7 +87,7 @@ static NSString* cellIndentifier=@"cell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return chatGroups.count;
+    return convs.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -95,8 +95,8 @@ static NSString* cellIndentifier=@"cell";
     if(cell==nil){
         cell=[[CDImageLabelTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
-    CDChatGroup* chatGroup=[chatGroups objectAtIndex:indexPath.row];
-    cell.myLabel.text=[chatGroup getTitle];
+    AVIMConversation* conv=[convs objectAtIndex:indexPath.row];
+    cell.myLabel.text=conv.name;
     [cell.myImageView setImage:groupImage];
     // Configure the cell...
     
@@ -142,9 +142,9 @@ static NSString* cellIndentifier=@"cell";
 
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    CDChatGroup* chatGroup=[chatGroups objectAtIndex:indexPath.row];
+    CDChatGroup* chatGroup=[convs objectAtIndex:indexPath.row];
     CDChatRoomController * controlloer=[[CDChatRoomController alloc] init];
-    [CDCacheService setCurrentChatGroup:chatGroup];
+    [CDCacheService setCurrentConversation:chatGroup];
     UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:controlloer];
     [self presentViewController:nav animated:YES completion:nil];
 }

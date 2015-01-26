@@ -22,7 +22,7 @@
 #import "CDCacheService.h"
 #import "CDDatabaseService.h"
 #import "CDModels.h"
-#import "CDIMClient.h"
+#import "CDIM.h"
 
 @implementation CDAppDelegate
 
@@ -202,7 +202,7 @@
 //        }];
 //    } cacheFirst:YES];
     
-    CDIMClient* client=[CDIMClient sharedInstance];
+    CDIM* client=[CDIM sharedInstance];
     [client open];
     
 
