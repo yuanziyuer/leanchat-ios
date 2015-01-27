@@ -113,8 +113,8 @@ static BOOL initialized = NO;
     return [CDUtils md5OfString:result];
 }
 
-+(NSString*)getConvidOfRoomType:(CDRoomType)roomType otherId:(NSString*)otherId groupId:(NSString*)groupId{
-    if(roomType==CDRoomTypeSingle){
++(NSString*)getConvidOfRoomType:(CDConvType)roomType otherId:(NSString*)otherId groupId:(NSString*)groupId{
+    if(roomType==CDConvTypeSingle){
         NSString* curUserId=[AVUser currentUser].objectId;
         return [CDSessionManager convidOfSelfId:curUserId andOtherId:otherId];
     }else{
@@ -136,9 +136,9 @@ static BOOL initialized = NO;
     msg.status=CDMsgStatusSendStart;
     if(!group){
         msg.toPeerId=toPeerId;
-        msg.roomType=CDRoomTypeSingle;
+        msg.roomType=CDConvTypeSingle;
     }else{
-        msg.roomType=CDRoomTypeGroup;
+        msg.roomType=CDConvTypeGroup;
         msg.toPeerId=@"";
     }
     msg.readStatus=CDMsgReadStatusHaveRead;
@@ -391,11 +391,11 @@ static BOOL initialized = NO;
 
 - (void)setRoomTypeAndConvidOfMsg:(CDMsg *)msg group:(AVGroup *)group {
     if(group){
-        msg.roomType=CDRoomTypeGroup;
+        msg.roomType=CDConvTypeGroup;
         msg.convid=group.groupId;
     }else{
         assert(msg.toPeerId!=nil && msg.fromPeerId!=nil);
-        msg.roomType=CDRoomTypeSingle;
+        msg.roomType=CDConvTypeSingle;
         msg.convid=[CDSessionManager convidOfSelfId:msg.toPeerId andOtherId:msg.fromPeerId];
     }
 }

@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "CDCommon.h"
-#import "CDMsg.h"
+#import "CDConv.h"
 
 @interface CDRoom : NSObject
 
-@property CDRoomType type;
+@property CDConvType type;
 
 @property AVIMConversation* conv;
 

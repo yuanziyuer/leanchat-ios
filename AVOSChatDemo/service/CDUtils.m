@@ -19,9 +19,16 @@
     [alertView show];
 }
 
-+(void)alertError:(NSError*)error{
-    //[CDUtils alert:[error localizedDescription]];
-    [CDUtils alert:[NSString stringWithFormat:@"%@",error]];
++(BOOL)alertError:(NSError*)error{
+    if(error){
+        [CDUtils alert:[NSString stringWithFormat:@"%@",error]];
+        return YES;
+    }
+    return NO;
+}
+
++(BOOL)filterError:(NSError*)error{
+    return [self alertError:error]==NO;
 }
 
 +(void)filterError:(NSError*)error callback:(CDBlock)callback{

@@ -59,7 +59,7 @@
 
 -(NSString*)getOtherId{
     NSString* curUserId=[AVUser currentUser].objectId;
-    if(roomType==CDRoomTypeSingle){
+    if(roomType==CDConvTypeSingle){
         if([curUserId isEqualToString:fromPeerId]){
             return toPeerId;
         }else{
@@ -103,9 +103,9 @@
             return @"";
         case CDMsgStatusSendSucceed:
             switch (roomType) {
-                case CDRoomTypeSingle:
+                case CDConvTypeSingle:
                    return @"已发送";
-                case CDRoomTypeGroup:
+                case CDConvTypeGroup:
                    return @"";
             }
     }

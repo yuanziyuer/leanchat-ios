@@ -438,6 +438,7 @@
 		70EB3AFD1A72D4B000136E0D /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70CACF2D1A6EC1C200F58885 /* AVOSCloud.framework */; };
 		70EB3AFE1A72D4B400136E0D /* AVOSCloudIM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70CACF351A6EC1C200F58885 /* AVOSCloudIM.framework */; };
 		70EB3B0C1A7661D900136E0D /* CDIMUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 70EB3B0B1A7661D900136E0D /* CDIMUtils.m */; };
+		70EB3B131A77E31A00136E0D /* CDConv.m in Sources */ = {isa = PBXBuildFile; fileRef = 70EB3B121A77E31A00136E0D /* CDConv.m */; };
 		70F9A3991A72499A00195430 /* CDFileService.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F9A3981A72499A00195430 /* CDFileService.m */; };
 		70F9A3AD1A72BC6D00195430 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F9A3A41A72A12500195430 /* AVFoundation.framework */; };
 		70FD7BC91A63A26C00F29C79 /* blue_expand_disable@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70FD7BC81A63A26C00F29C79 /* blue_expand_disable@2x.png */; };
@@ -1179,6 +1180,9 @@
 		70E47DF51A245E1200DE60FE /* CDUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUtils.m; sourceTree = "<group>"; };
 		70EB3B0A1A7661D900136E0D /* CDIMUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIMUtils.h; sourceTree = "<group>"; };
 		70EB3B0B1A7661D900136E0D /* CDIMUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIMUtils.m; sourceTree = "<group>"; };
+		70EB3B0D1A77DCE900136E0D /* CDViews.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDViews.h; sourceTree = "<group>"; };
+		70EB3B111A77E31A00136E0D /* CDConv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConv.h; sourceTree = "<group>"; };
+		70EB3B121A77E31A00136E0D /* CDConv.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDConv.m; sourceTree = "<group>"; };
 		70F9A3971A72499A00195430 /* CDFileService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDFileService.h; sourceTree = "<group>"; };
 		70F9A3981A72499A00195430 /* CDFileService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDFileService.m; sourceTree = "<group>"; };
 		70F9A3A41A72A12500195430 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -2402,6 +2406,8 @@
 		70D4C58A1A237C1E001A655D /* models */ = {
 			isa = PBXGroup;
 			children = (
+				70EB3B111A77E31A00136E0D /* CDConv.h */,
+				70EB3B121A77E31A00136E0D /* CDConv.m */,
 				70D4C58B1A237C1E001A655D /* avobject */,
 				70D4C5901A237C1E001A655D /* CDRoom.h */,
 				70D4C5911A237C1E001A655D /* CDRoom.m */,
@@ -2648,6 +2654,7 @@
 				706A0DC81A5AC0C90075DEA9 /* CDSessionStateView.m */,
 				70FD7BCB1A641DD600F29C79 /* CDBadgeLabel.h */,
 				70FD7BCC1A641DD600F29C79 /* CDBadgeLabel.m */,
+				70EB3B0D1A77DCE900136E0D /* CDViews.h */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -3263,6 +3270,7 @@
 				70A0665C1A24A3A2004DA201 /* XHExpressionDetailTableViewController.m in Sources */,
 				70A066311A24A3A2004DA201 /* NSString+MessageInputView.m in Sources */,
 				70A066B01A24A3A2004DA201 /* XHEmotionCollectionViewCell.m in Sources */,
+				70EB3B131A77E31A00136E0D /* CDConv.m in Sources */,
 				70A066881A24A3A2004DA201 /* SESelectionGrabber.m in Sources */,
 				70A066971A24A3A2004DA201 /* XHSoundManager.m in Sources */,
 				70D4C61B1A237C1E001A655D /* CDLoginController.m in Sources */,

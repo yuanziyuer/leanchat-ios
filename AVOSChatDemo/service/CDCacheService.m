@@ -16,7 +16,7 @@
 
 static NSMutableDictionary *cachedChatGroups;
 static NSMutableDictionary *cachedUsers;
-static AVIMConversation* currentConversation;
+static AVIMConversation* curConv;
 static NSArray* friends;
 
 +(void)initialize{
@@ -105,7 +105,7 @@ static NSArray* friends;
     NSMutableSet* userIds=[[NSMutableSet alloc] init];
     NSMutableSet* groupIds=[[NSMutableSet alloc] init];
     for(CDMsg* msg in msgs){
-        if(msg.roomType==CDRoomTypeSingle){
+        if(msg.roomType==CDConvTypeSingle){
             [userIds addObject:msg.fromPeerId];
             [userIds addObject:msg.toPeerId];
         }else{
@@ -124,25 +124,24 @@ static NSArray* friends;
 
 #pragma mark - current cache group
 
-+(void)setCurrentConversation:(AVIMConversation*)chatGroup{
-    currentConversation=chatGroup;
++(void)setCurConv:(AVIMConversation*)conv{
+    curConv=conv;
 }
 
-+(AVIMConversation*)getCurrentConversation{
-    return currentConversation;
++(AVIMConversation*)getCurConv{
+    return curConv;
 }
 
-+(void)refreshCurrentConversation:(AVBooleanResultBlock)callback{
-    if(currentConversation!=nil){
-        callback(YES,nil);
-//        [currentChatGroup fetchInBackgroundWithBlock:^(AVObject *object, NSError *error) {
-//            if(error){
-//                callback(NO,error);
-//            }else{
-//                [self notifyGroupUpdate];
-//                callback(YES,nil);
-//            }
-//        }];
++(void)refreshCurConv:(AVBooleanResultBlock)callback{
+    if(curConv!=nil){
+        CDIM* im=[CDIM sharedInstance];
+        [im setTypeOfConv:curConv callback:^(BOOL succeeded, NSError *error) {
+            if(error){
+                callback(NO,error);
+            }else{
+                callback(YES,nil);
+            }
+        }];
     }else{
         callback(NO,[NSError errorWithDomain:nil code:0 userInfo:@{NSLocalizedDescriptionKey:@"currentChatGroup is nil"}]);
     }

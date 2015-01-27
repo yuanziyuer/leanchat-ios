@@ -11,6 +11,8 @@
 
 @interface CDIM : NSObject
 
+@property AVIMClient* imClient;
+
 + (instancetype)sharedInstance;
 
 -(void)open;
@@ -25,7 +27,7 @@
 
 -(void)findGroupedConvsWithBlock:(AVArrayResultBlock)block;
 
-- (void)updateConversation:(AVIMConversation *)conversation withName:(NSString *)name attributes:(NSDictionary *)attributes callback:(AVIMBooleanResultBlock)callback ;
+-(void)setTypeOfConv:(AVIMConversation*)conv callback:(AVBooleanResultBlock)callback;
 
 - (void)sendText:(NSString *)text conversation:(AVIMConversation *)conversation  callback:(AVIMBooleanResultBlock)callback;
 

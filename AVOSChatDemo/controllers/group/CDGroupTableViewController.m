@@ -142,9 +142,8 @@ static NSString* cellIndentifier=@"cell";
 
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    CDChatGroup* chatGroup=[convs objectAtIndex:indexPath.row];
-    CDChatRoomController * controlloer=[[CDChatRoomController alloc] init];
-    [CDCacheService setCurrentConversation:chatGroup];
+    AVIMConversation* conv=[convs objectAtIndex:indexPath.row];
+    CDChatRoomController * controlloer=[[CDChatRoomController alloc] initWithConversation:conv];
     UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:controlloer];
     [self presentViewController:nav animated:YES completion:nil];
 }

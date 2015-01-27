@@ -12,4 +12,6 @@
 
 @interface CDGroupDetailController : UICollectionViewController<UIGestureRecognizerDelegate,UIAlertViewDelegate>
 
+-(void)refresh;
+
 @end

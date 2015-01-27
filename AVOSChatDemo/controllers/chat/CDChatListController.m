@@ -145,7 +145,7 @@ static NSString *cellIdentifier = @"ContactCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CDImageTwoLabelTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     CDRoom* room = [rooms objectAtIndex:indexPath.row];
-    if(room.type==CDRoomTypeSingle){
+    if(room.type==CDConvTypeSingle){
         AVUser* user=[CDCacheService lookupUser:room.otherId];
         [CDUserService displayAvatarOfUser:user avatarView:cell.myImageView];
         cell.topLabel.text=user.username;

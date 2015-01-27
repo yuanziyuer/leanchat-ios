@@ -32,11 +32,11 @@
 
 #pragma mark - current chat group
 
-+(void)setCurrentConversation:(AVIMConversation*)chatGroup;
++(void)setCurConv:(AVIMConversation*)conv;
 
-+(AVIMConversation*)getCurrentConversation;
++(AVIMConversation*)getCurConv;
 
-+(void)refreshCurrentConversation:(AVBooleanResultBlock)callback;
++(void)refreshCurConv:(AVBooleanResultBlock)callback;
 
 +(void)setFriends:(NSArray*)_friends;
 

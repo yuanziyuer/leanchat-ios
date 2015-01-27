@@ -8,18 +8,14 @@
 
 #import "CDContactListController.h"
 #import "CDCommon.h"
-#import "CDUserService.h"
 #import "CDAddFriendController.h"
 #import "CDBaseNavigationController.h"
 #import "CDNewFriendTableViewController.h"
-#import "CDUserInfoController.h"
-#import "CDSessionManager.h"
 #import "CDImageLabelTableCell.h"
 #import "CDGroupTableViewController.h"
-#import "CDUtils.h"
-#import "CDCacheService.h"
-#import "CDService.h"
+#import "CDChatRoomController.h"
 #import "JSBadgeView.h"
+#import "CDService.h"
 
 enum : NSUInteger {
     kTagNameLabel = 10000,
@@ -182,8 +178,7 @@ enum : NSUInteger {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     AVUser *user = [self.users objectAtIndex:indexPath.row];
-    CDUserInfoController *controller=[[CDUserInfoController alloc] initWithUser:user];
-    [self.navigationController pushViewController:controller animated:YES];
+    [CDChatRoomController chatWithUserId:user.objectId fromVC:self];
 }
 
 -(void)handleLongPress:(UILongPressGestureRecognizer*)recognizer{

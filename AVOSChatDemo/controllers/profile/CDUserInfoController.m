@@ -72,13 +72,7 @@
 
 -(void)btnClicked:(UIButton*)button{
     if(isFriend){
-        [imClient fetchOrCreateConversationWithUserId:self.user.objectId callback:^(AVIMConversation *conversation, NSError *error) {
-            [CDUtils filterError:error callback:^{
-                CDChatRoomController *controller = [[CDChatRoomController alloc] initWithConversation:conversation];
-                UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:controller];
-                [self presentViewController:nav animated:YES completion:nil];
-            }];
-        }];
+        [CDChatRoomController chatWithUserId:self.user.objectId fromVC:self];
     }else{
         [CDUtils showNetworkIndicator];
         [CDCloudService tryCreateAddRequestWithToUser:_user callback:^(id object, NSError *error) {

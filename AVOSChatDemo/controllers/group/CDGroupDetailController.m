@@ -33,21 +33,21 @@ static NSString * const reuseIdentifier = @"Cell";
     self.collectionView.backgroundColor = [UIColor whiteColor];
     
     im=[CDIM sharedInstance];
-    [self initWithConversation];
+    [self refresh];
     self.title=@"详情";
     
     UILongPressGestureRecognizer* gestureRecognizer=[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressUser:)];
     gestureRecognizer.delegate=self;
     [self.collectionView addGestureRecognizer:gestureRecognizer];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initWithConversation) name:NOTIFICATION_GROUP_UPDATED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:NOTIFICATION_GROUP_UPDATED object:nil];
 }
 
 -(AVIMConversation*)getConv{
-    return [CDCacheService getCurrentConversation];
+    return [CDCacheService getCurConv];
 }
 
--(void)initWithConversation{
+-(void)refresh{
     AVIMConversation* conv=[self getConv];
     NSSet* userIds=[NSSet setWithArray:conv.members];
     [CDCacheService cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
@@ -106,7 +106,16 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     if(buttonIndex==0){
         int pos=alertView.tag;
         NSString* userId=[[self getConv].members objectAtIndex:pos];
-        [CDGroupService kickMemberFromGroup:[self getConv] userId:userId];
+        AVIMConversation* conv=[self getConv];
+        [conv removeMembersWithClientIds:@[userId] callback:^(BOOL succeeded, NSError *error) {
+            if([CDUtils filterError:error]){
+                [CDCacheService refreshCurConv:^(BOOL succeeded, NSError *error) {
+                    if([CDUtils filterError:error]){
+                        [self refresh];
+                    }
+                }];
+            }
+        }];
     }
 }
 
@@ -123,6 +132,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 
 -(void)addMember{
     CDGroupAddMemberController *controller=[[CDGroupAddMemberController alloc] init];;
+    controller.groupDetailVC=self;
     [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -150,7 +160,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     
     NSString* userId=[groupMembers objectAtIndex:indexPath.row];
     AVUser* user=[CDCacheService lookupUser:userId];
-    
     UILabel* label=(UILabel*)[cell viewWithTag:labelTag];
     UIImageView* imageView=(UIImageView*)[cell viewWithTag:imageTag];
     

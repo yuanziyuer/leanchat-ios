@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AVOSCloud/AVOSCloud.h>
+#import "CDConv.h"
 
 #define OWNER_ID @"ownerId"
 #define FROM_PEER_ID @"fromPeerId"
@@ -20,11 +21,6 @@
 #define ROOM_TYPE @"roomType"
 #define STATUS @"status"
 #define READ_STATUS @"readStatus"
-
-typedef enum : NSUInteger {
-    CDRoomTypeSingle = 0,
-    CDRoomTypeGroup=1,
-} CDRoomType;
 
 typedef enum : NSUInteger{
     CDMsgTypeText=0,
@@ -56,7 +52,7 @@ typedef enum : NSUInteger{
 @property NSString* objectId;
 @property NSString* convid;
 
-@property CDRoomType roomType;
+@property CDConvType roomType;
 @property CDMsgStatus status;
 @property CDMsgType type;
 @property CDMsgReadStaus readStatus;

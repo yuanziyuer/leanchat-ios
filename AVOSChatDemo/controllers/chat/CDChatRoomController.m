@@ -68,6 +68,17 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     return self;
 }
 
++(void)chatWithUserId:(NSString*)userId fromVC:(UIViewController*)vc {
+    CDIM* im=[CDIM sharedInstance];
+    [im fetchOrCreateConversationWithUserId:userId callback:^(AVIMConversation *conversation, NSError *error) {
+        [CDUtils filterError:error callback:^{
+            CDChatRoomController *controller = [[CDChatRoomController alloc] initWithConversation:conversation];
+            UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:controller];
+            [vc presentViewController:nav animated:YES completion:nil];
+        }];
+    }];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -86,7 +97,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     }else{
         self.title=[NSString stringWithFormat:@"%d",members.count];
     }
-    [CDCacheService setCurrentConversation:_conversation];
+    [CDCacheService setCurConv:_conversation];
     
     UIImage* _peopleImage=[CDUtils resizeImage:[UIImage imageNamed:@"chat_menu_people"] toSize:CGSizeMake(25, 25)];
     UIBarButtonItem* item=[[UIBarButtonItem alloc] initWithImage:_peopleImage style:UIBarButtonItemStyleDone target:self action:@selector(goChatGroupDetail:)];
@@ -153,7 +164,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 -(void)dealloc{
     self.emotionManagers = nil;
     [[XHAudioPlayerHelper shareInstance] setDelegate:nil];
-    [CDCacheService setCurrentConversation:nil];
+    [CDCacheService setCurConv:nil];
 }
 
 -(void)backPressed:(id)sender{
@@ -176,7 +187,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 -(void)cacheImageOfMsg:(AVIMImageMessage*)msg{
     if([_loadedImages objectForKey:msg.messageId]==nil){
-        NSString* path=[CDSessionManager getPathByObjectId:msg.messageId];
+        NSString* path=[CDFileService getPathByObjectId:msg.messageId];
         NSFileManager* fileMan=[NSFileManager defaultManager];
         if([fileMan fileExistsAtPath:path]){
             NSData* data=[fileMan contentsAtPath:path];
@@ -433,7 +444,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     NSData *imageData = UIImageJPEGRepresentation(image, 0.6);
     
     NSString* objectId=[CDUtils uuid];
-    NSString* path=[CDSessionManager getPathByObjectId:objectId];
+    NSString* path=[CDFileService getPathByObjectId:objectId];
     NSError* error;
     [imageData writeToFile:path options:NSDataWritingAtomic error:&error];
     NSLog(@" save path=%@",path);

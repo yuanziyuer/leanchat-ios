@@ -20,7 +20,7 @@ typedef void (^Int64Block)(int64_t num);
 
 +(void)alert:(NSString*)msg;
 +(NSString*)md5OfString:(NSString*)s;
-+(void)alertError:(NSError*)error;
++(BOOL)alertError:(NSError*)error;
 
 +(UIActivityIndicatorView*)showIndicatorAtView:(UIView*)hookView;
 
@@ -34,7 +34,10 @@ typedef void (^Int64Block)(int64_t num);
 
 +(void)pickImageFromPhotoLibraryAtController:(UIViewController*)controller;
 
++(BOOL)filterError:(NSError*)error;
+
 +(void)filterError:(NSError*)error callback:(CDBlock)callback;
+
 +(void)logError:(NSError*)error callback:(CDBlock)callbak;
 
 +(void)hideNetworkIndicatorAndAlertError:(NSError*)error;

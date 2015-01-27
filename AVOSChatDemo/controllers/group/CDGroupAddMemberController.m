@@ -47,7 +47,7 @@ static NSString* reuseIdentifier=@"Cell";
 -(void)initPotentialIds{
     potentialIds=[[NSMutableArray alloc] init];
     for(AVUser* user in [CDCacheService getFriends]){
-        if([[CDCacheService getCurrentConversation].members containsObject:user.objectId]==NO){
+        if([[CDCacheService getCurConv].members containsObject:user.objectId]==NO){
             [potentialIds addObject:user.objectId];
         }
     }
@@ -64,18 +64,19 @@ static NSString* reuseIdentifier=@"Cell";
     [self inviteMembers:inviteIds callback:^(BOOL succeeded, NSError *error) {
         [indicator stopAnimating];
         [CDUtils filterError:error callback:^{
+            [_groupDetailVC refresh];
             [self.navigationController popViewControllerAnimated:YES];
         }];
     }];
 }
 
 -(void)inviteMembers:(NSArray*)inviteIds callback:(AVBooleanResultBlock)callback{
-    AVIMConversation* conv=[CDCacheService getCurrentConversation];
+    AVIMConversation* conv=[CDCacheService getCurConv];
     [conv addMembersWithClientIds:inviteIds callback:^(BOOL succeeded, NSError *error) {
         if(error){
             callback(NO,error);
         }else{
-            [CDCacheService refreshCurrentConversation:callback];
+            [CDCacheService refreshCurConv:callback];
         }
     }];
 }

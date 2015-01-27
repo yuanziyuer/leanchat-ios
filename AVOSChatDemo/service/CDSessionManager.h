@@ -30,7 +30,7 @@
 
 -(void)resendMsg:(CDMsg*)msg toPeerId:(NSString*)toPeerId group:(AVGroup*)group;
 
-+(NSString*)getConvidOfRoomType:(CDRoomType)roomType otherId:(NSString*)otherId groupId:(NSString*)groupId;
++(NSString*)getConvidOfRoomType:(CDConvType)roomType otherId:(NSString*)otherId groupId:(NSString*)groupId;
 
 - (void)clearData;
 

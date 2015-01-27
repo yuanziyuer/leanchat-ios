@@ -31,4 +31,6 @@
 
 -(instancetype)initWithConversation:(AVIMConversation*)conversation;
 
++(void)chatWithUserId:(NSString*)userId fromVC:(UIViewController*)controller;
+
 @end
