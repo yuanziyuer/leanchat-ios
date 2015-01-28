@@ -44,13 +44,13 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 -(AVIMConversation*)getConv{
-    return [CDCacheService getCurConv];
+    return [CDCache getCurConv];
 }
 
 -(void)refresh{
     AVIMConversation* conv=[self getConv];
     NSSet* userIds=[NSSet setWithArray:conv.members];
-    [CDCacheService cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
+    [CDCache cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
         [CDUtils filterError:error callback:^{
             groupMembers=conv.members;
             [self.collectionView reloadData];
@@ -109,7 +109,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
         AVIMConversation* conv=[self getConv];
         [conv removeMembersWithClientIds:@[userId] callback:^(BOOL succeeded, NSError *error) {
             if([CDUtils filterError:error]){
-                [CDCacheService refreshCurConv:^(BOOL succeeded, NSError *error) {
+                [CDCache refreshCurConv:^(BOOL succeeded, NSError *error) {
                     if([CDUtils filterError:error]){
                         [self refresh];
                     }
@@ -159,7 +159,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     int imageTag=2;
     
     NSString* userId=[groupMembers objectAtIndex:indexPath.row];
-    AVUser* user=[CDCacheService lookupUser:userId];
+    AVUser* user=[CDCache lookupUser:userId];
     UILabel* label=(UILabel*)[cell viewWithTag:labelTag];
     UIImageView* imageView=(UIImageView*)[cell viewWithTag:imageTag];
     
@@ -189,7 +189,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
         return YES;
     }
     
-    AVUser* user=[CDCacheService lookupUser:userId];
+    AVUser* user=[CDCache lookupUser:userId];
     CDChatRoomVC* chatController=[[CDChatRoomVC alloc] init];
 //    chatController.type=CDMsgRoomTypeSingle;
 //    chatController.chatUser=user;

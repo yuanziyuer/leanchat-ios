@@ -12,7 +12,7 @@
 #import "CDChatRoomVC.h"
 #import "CDNewGroupVC.h"
 #import "CDImageLabelTableCell.h"
-#import "CDCacheService.h"
+#import "CDCache.h"
 #import "CDUtils.h"
 
 @interface CDGroupListVC (){

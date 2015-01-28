@@ -11,7 +11,7 @@
 
 #define CONV_TYPE @"type"
 
-@interface CDConv : NSObject
+@interface CDConvService : NSObject
 
 typedef enum : NSUInteger {
     CDConvTypeSingle = 0,
@@ -19,5 +19,7 @@ typedef enum : NSUInteger {
 } CDConvType;
 
 +(CDConvType)typeOfConv:(AVIMConversation*)conv;
+
++(NSString*)getOtherIdOfConv:(AVIMConversation*)conv;
 
 @end

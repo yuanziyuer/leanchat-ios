@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AVOSCloud/AVOSCloud.h>
-#import "CDConv.h"
+#import "CDConvService.h"
 
 #define OWNER_ID @"ownerId"
 #define FROM_PEER_ID @"fromPeerId"

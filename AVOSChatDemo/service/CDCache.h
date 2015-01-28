@@ -10,7 +10,7 @@
 #import "CDCommon.h"
 #import "CDChatGroup.h"
 
-@interface CDCacheService : NSObject
+@interface CDCache : NSObject
 
 + (void)registerUsers:(NSArray*)users;
 

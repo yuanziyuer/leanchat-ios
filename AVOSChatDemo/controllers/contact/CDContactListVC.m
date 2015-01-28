@@ -111,8 +111,8 @@ enum : NSUInteger {
         [CDUtils hideNetworkIndicator];
         CDBlock callback=^{
             self.users = [objects mutableCopy];
-            [CDCacheService registerUsers:self.users];
-            [CDCacheService setFriends:objects];
+            [CDCache registerUsers:self.users];
+            [CDCache setFriends:objects];
             [self.tableView reloadData];
         };
         if(error && (error.code==kAVErrorCacheMiss || error.code==1)){

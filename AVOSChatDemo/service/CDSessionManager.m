@@ -15,7 +15,7 @@
 #import "CDChatGroup.h"
 #import "CDGroupService.h"
 #import "AFNetworking.h"
-#import "CDCacheService.h"
+#import "CDCache.h"
 #import "CDDatabaseService.h"
 
 @interface CDSessionManager () {

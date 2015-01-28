@@ -123,14 +123,14 @@ static NSMutableArray* _messages;
         room.unreadCount=0;
         if([conv.members count]==2){
             room.type=CDConvTypeSingle;
-            room.otherId=[CDIMUtils getOtherIdOfConv:conv];
+            room.otherId=[CDConvService getOtherIdOfConv:conv];
         }else{
             room.type=CDConvTypeGroup;
         }
         room.lastMsg=[self getLastMsgWithConvid:conv.conversationId];
         [rooms addObject:room];
     }
-    [CDCacheService cacheRooms:rooms callback:^(NSArray *objects, NSError *error) {
+    [CDCache cacheRooms:rooms callback:^(NSArray *objects, NSError *error) {
         if([CDUtils filterError:error]){
             callback(rooms,nil);
         }
@@ -171,13 +171,13 @@ static NSMutableArray* _messages;
         dict=[NSMutableDictionary dictionary];
     }
     if(conv.members.count>2){
-        if([CDConv typeOfConv:conv]==CDConvTypeSingle){
+        if([CDConvService typeOfConv:conv]==CDConvTypeSingle){
             // convert it
             [dict setObject:@(CDConvTypeGroup) forKey:CONV_TYPE];
             
             NSMutableArray* names=[NSMutableArray array];
             for(int i=0;i<conv.members.count;i++){
-                AVUser* user=[CDCacheService lookupUser:conv.members[i]];
+                AVUser* user=[CDCache lookupUser:conv.members[i]];
                 [names addObject:user.username];
             }
             newName=[names componentsJoinedByString:@","];

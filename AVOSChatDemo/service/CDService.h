@@ -15,7 +15,7 @@
 #import "CDUtils.h"
 #import "CDEmotionUtils.h"
 #import "CDUpgradeService.h"
-#import "CDCacheService.h"
+#import "CDCache.h"
 #import "CDDatabaseService.h"
 #import "CDUserService.h"
 #import "CDSettingService.h"
@@ -23,7 +23,8 @@
 #import "CDIM.h"
 #import "CDIMUtils.h"
 #import "CDFileService.h"
-#import "CDCacheService.h"
+#import "CDCache.h"
 #import "CDGroupService.h"
+#import "CDConvService.h"
 
 #endif

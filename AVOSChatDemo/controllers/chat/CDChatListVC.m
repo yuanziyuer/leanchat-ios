@@ -13,7 +13,7 @@
 #import "CDRoom.h"
 #import "CDImageTwoLabelTableCell.h"
 #import "CDUtils.h"
-#import "CDCacheService.h"
+#import "CDCache.h"
 #import "CDCloudService.h"
 #import "CDService.h"
 #import "CDDatabaseService.h"
@@ -146,7 +146,7 @@ static NSString *cellIdentifier = @"ContactCell";
     CDImageTwoLabelTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     CDRoom* room = [rooms objectAtIndex:indexPath.row];
     if(room.type==CDConvTypeSingle){
-        AVUser* user=[CDCacheService lookupUser:room.otherId];
+        AVUser* user=[CDCache lookupUser:room.otherId];
         [CDUserService displayAvatarOfUser:user avatarView:cell.myImageView];
         cell.topLabel.text=user.username;
     }else{

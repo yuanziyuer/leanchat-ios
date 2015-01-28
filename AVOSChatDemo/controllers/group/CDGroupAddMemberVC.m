@@ -11,7 +11,6 @@
 #import "CDService.h"
 
 @interface CDGroupAddMemberVC (){
-    CDSessionManager *sessionManager;
     NSMutableArray *selected;
     NSMutableArray *potentialIds;
 }
@@ -23,11 +22,11 @@ static NSString* reuseIdentifier=@"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    sessionManager=[CDSessionManager sharedInstance];
     
     NSString* nibName=NSStringFromClass([CDImageLabelTableCell class]);
     UINib* nib=[UINib nibWithNibName:nibName bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:reuseIdentifier];
+    
     self.title=@"邀请好友";
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(invite)];
     
@@ -37,17 +36,12 @@ static NSString* reuseIdentifier=@"Cell";
     for(int i=0;i<count;i++){
         [selected addObject:[NSNumber numberWithBool:NO]];
     }
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 -(void)initPotentialIds{
     potentialIds=[[NSMutableArray alloc] init];
-    for(AVUser* user in [CDCacheService getFriends]){
-        if([[CDCacheService getCurConv].members containsObject:user.objectId]==NO){
+    for(AVUser* user in [CDCache getFriends]){
+        if([[CDCache getCurConv].members containsObject:user.objectId]==NO){
             [potentialIds addObject:user.objectId];
         }
     }
@@ -71,12 +65,12 @@ static NSString* reuseIdentifier=@"Cell";
 }
 
 -(void)inviteMembers:(NSArray*)inviteIds callback:(AVBooleanResultBlock)callback{
-    AVIMConversation* conv=[CDCacheService getCurConv];
+    AVIMConversation* conv=[CDCache getCurConv];
     [conv addMembersWithClientIds:inviteIds callback:^(BOOL succeeded, NSError *error) {
         if(error){
             callback(NO,error);
         }else{
-            [CDCacheService refreshCurConv:callback];
+            [CDCache refreshCurConv:callback];
         }
     }];
 }
@@ -103,7 +97,7 @@ static NSString* reuseIdentifier=@"Cell";
         cell=[[CDImageLabelTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     }
     NSString* userId=[potentialIds objectAtIndex:indexPath.row];
-    AVUser* user=[CDCacheService lookupUser:userId];
+    AVUser* user=[CDCache lookupUser:userId];
     [CDUserService displayAvatarOfUser:user avatarView:cell.myImageView];
     cell.myLabel.text=user.username;
     if([selected[indexPath.row] boolValue]){

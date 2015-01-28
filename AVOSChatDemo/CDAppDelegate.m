@@ -19,7 +19,7 @@
 #import "CDUpgradeService.h"
 #import "CDUtils.h"
 #import "CDEmotionUtils.h"
-#import "CDCacheService.h"
+#import "CDCache.h"
 #import "CDDatabaseService.h"
 #import "CDModels.h"
 #import "CDIM.h"
@@ -182,7 +182,7 @@
 //            [CDDatabaseService upgradeToAddField];
 //        }
 //    }];
-    [CDCacheService registerUser:[AVUser currentUser]];
+    [CDCache registerUser:[AVUser currentUser]];
 //    AVInstallation* installation=[AVInstallation currentInstallation];
 //    AVUser* user=[AVUser currentUser];
 //    [user setObject:installation forKey:INSTALLATION];

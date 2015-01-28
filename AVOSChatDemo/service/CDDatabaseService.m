@@ -8,7 +8,7 @@
 
 #import "CDDatabaseService.h"
 #import "CDUtils.h"
-#import "CDCacheService.h"
+#import "CDCache.h"
 #import "CDRoom.h"
 
 static FMDatabaseQueue* dbQueue;
@@ -91,7 +91,7 @@ static NSString *messagesTableSQL=@"create table if not exists messages (id inte
             AVUser* user=[AVUser currentUser];
             FMResultSet *rs = [db executeQuery:@"select * from messages where ownerId=? group by convid order by timestamp desc" withArgumentsInArray:@[user.objectId]];
             NSArray *msgs=[self getMsgsByResultSet:rs];
-            [CDCacheService cacheMsgs:msgs withCallback:^(NSArray *objects, NSError *error) {
+            [CDCache cacheMsgs:msgs withCallback:^(NSArray *objects, NSError *error) {
                 if(error){
                     [CDUtils runInMainQueue:^{
                         callback(nil,error);

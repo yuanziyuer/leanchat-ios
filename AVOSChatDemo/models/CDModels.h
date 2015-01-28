@@ -15,6 +15,5 @@
 #import "CDChatGroup.h"
 #import "CDAddRequest.h"
 #import "CDUser.h"
-#import "CDConv.h"
 
 #endif

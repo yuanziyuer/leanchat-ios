@@ -6,13 +6,13 @@
 //  Copyright (c) 2014年 AVOS. All rights reserved.
 //
 
-#import "CDCacheService.h"
+#import "CDCache.h"
 #import "CDGroupService.h"
 #import "CDMsg.h"
 #import "CDUtils.h"
 #import "CDService.h"
 
-@implementation CDCacheService
+@implementation CDCache
 
 static NSMutableDictionary *cachedChatGroups;
 static NSMutableDictionary *cachedUsers;
@@ -163,12 +163,12 @@ static NSArray* friends;
     NSMutableSet* userIds=[NSMutableSet set];
     for(CDRoom* room in rooms){
         if(room.type==CDConvTypeSingle){
-            if([CDCacheService lookupUser:room.otherId]==nil){
+            if([CDCache lookupUser:room.otherId]==nil){
                 [userIds addObject:room.otherId];
             }
         }
     }
-    [CDCacheService cacheUsersWithIds:userIds callback:callback];
+    [CDCache cacheUsersWithIds:userIds callback:callback];
 }
 
 @end

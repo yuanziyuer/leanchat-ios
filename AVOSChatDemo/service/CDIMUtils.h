@@ -11,8 +11,6 @@
 
 @interface CDIMUtils : NSObject
 
-+(NSString*)getOtherIdOfConv:(AVIMConversation*)conv;
-
 +(NSString*)getMsgDesc:(AVIMTypedMessage*)msg;
 
 @end

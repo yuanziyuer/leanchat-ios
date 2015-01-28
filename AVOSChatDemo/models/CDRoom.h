@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CDCommon.h"
-#import "CDConv.h"
+#import "CDConvService.h"
 
 @interface CDRoom : NSObject
 

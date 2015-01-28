@@ -10,7 +10,7 @@
 #import "CDAddRequestService.h"
 #import "CDChatRoomVC.h"
 #import "CDCloudService.h"
-#import "CDCacheService.h"
+#import "CDCache.h"
 #import "CDService.h"
 
 @interface CDUserInfoVC (){
@@ -49,7 +49,7 @@
     [super viewDidLoad];
     self.title=@"详情";
     _nameLabel.text=_user.username;
-    isFriend=[[CDCacheService getFriends] containsObject:_user];
+    isFriend=[[CDCache getFriends] containsObject:_user];
     [_actionBtn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
     if(isFriend){
         [_actionBtn setTitle:@"开始聊天" forState:UIControlStateNormal];

@@ -67,7 +67,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 -(instancetype)initWithConv:(AVIMConversation*)conv{
     self=[self init];
-    [CDCacheService setCurConv:conv];
+    [CDCache setCurConv:conv];
     return self;
 }
 
@@ -85,7 +85,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    AVUser* curUser=[AVUser currentUser];
     
     UIImage* _peopleImage=[CDUtils resizeImage:[UIImage imageNamed:@"chat_menu_people"] toSize:CGSizeMake(25, 25)];
     UIBarButtonItem* item=[[UIBarButtonItem alloc] initWithImage:_peopleImage style:UIBarButtonItemStyleDone target:self action:@selector(goChatGroupDetail:)];
@@ -96,6 +95,8 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
                                                               action:nil];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop                                                                                          target:self                                                                                          action:@selector(backPressed:)];
     [[self navigationItem] setBackBarButtonItem:backBtn];
+    
+    AVUser* curUser=[AVUser currentUser];
     // 设置自身用户名
     self.messageSender = [curUser username];
     
@@ -122,7 +123,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 }
 
 -(AVIMConversation*)conv{
-    return [CDCacheService getCurConv];
+    return [CDCache getCurConv];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -136,10 +137,10 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 }
 
 -(void)refreshConv{
-    CDConvType type=[CDConv typeOfConv:self.conv];
+    CDConvType type=[CDConvService typeOfConv:self.conv];
     if(type==CDConvTypeSingle){
-        NSString* otherId=[CDIMUtils getOtherIdOfConv:self.conv];
-        AVUser* other=[CDCacheService lookupUser:otherId];
+        NSString* otherId=[CDConvService getOtherIdOfConv:self.conv];
+        AVUser* other=[CDCache lookupUser:otherId];
         self.title=other.username;
     }else{
         self.title=self.conv.name;
@@ -156,7 +157,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 -(void)dealloc{
     self.emotionManagers = nil;
     [[XHAudioPlayerHelper shareInstance] setDelegate:nil];
-    [CDCacheService setCurConv:nil];
+    [CDCache setCurConv:nil];
 }
 
 -(void)backPressed:(id)sender{
@@ -196,7 +197,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 }
 
 -(XHMessage*)getXHMessageByMsg:(AVIMTypedMessage*)msg{
-    AVUser* fromUser=[CDCacheService lookupUser:msg.clientId];
+    AVUser* fromUser=[CDCache lookupUser:msg.clientId];
     AVUser* curUser=[AVUser currentUser];
     XHMessage* xhMessage;
     NSDate* time=[self getTimestampDate:msg.sendTimestamp];
@@ -252,7 +253,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     if([_avatars objectForKey:userId]==nil){
         [_avatars setObject:defaultAvatar forKey:userId];
         
-        AVUser* user=[CDCacheService lookupUser:userId];
+        AVUser* user=[CDCache lookupUser:userId];
         if(user==nil){
             [CDUtils alert:@"can not find the user"];
             return;
@@ -357,7 +358,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     for(AVIMTypedMessage* msg in msgs){
         [userIds addObject:msg.clientId];
     }
-    [CDCacheService cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
+    [CDCache cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
         if(error){
             callback(NO,error);
         }else{
@@ -384,7 +385,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         for(CDMsg* msg in msgs){
             [userIds addObject:msg.fromPeerId];
         }
-        [CDCacheService cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
+        [CDCache cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
             if(error){
                 [CDUtils alertError:error];
                 isLoadingMsg=NO;

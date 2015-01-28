@@ -10,24 +10,6 @@
 
 @implementation CDIMUtils
 
-+(NSString*)getOtherIdOfConv:(AVIMConversation*)conv{
-    NSArray* members=conv.members;
-    if(members.count!=2){
-        [NSException raise:@"invalid conv" format:nil];
-    }
-    AVUser* user=[AVUser currentUser];
-    if([members containsObject:user.objectId]==NO){
-        [NSException raise:@"invalid conv" format:nil];
-    }
-    NSString* otherId;
-    if([members[0] isEqualToString:user.objectId]){
-        otherId=members[1];
-    }else{
-        otherId=members[0];
-    }
-    return otherId;
-}
-
 +(NSString*)getMsgDesc:(AVIMTypedMessage*)msg{
     NSString* desc;
     AVIMLocationMessage* locationMsg;
