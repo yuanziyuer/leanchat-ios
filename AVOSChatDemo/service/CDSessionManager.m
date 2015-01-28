@@ -9,6 +9,7 @@
 #import "CDCommon.h"
 #import "CDMsg.h"
 #import "CDRoom.h"
+#import "CDFileService.h"
 #import "CDUtils.h"
 #import "CDCloudService.h"
 #import "CDChatGroup.h"
@@ -171,7 +172,7 @@ static BOOL initialized = NO;
 }
 
 -(void)uploadFileMsg:(CDMsg*)msg block:(AVIdResultBlock)block{
-    NSString* path=[CDSessionManager getPathByObjectId:msg.objectId];
+    NSString* path=[CDFileService getPathByObjectId:msg.objectId];
     NSMutableString *name;
     name = [self getAVFileName];
     AVFile *f=[AVFile fileWithName:name contentsAtPath:path];
@@ -297,7 +298,7 @@ static BOOL initialized = NO;
 }
 
 -(void)sendAudioWithId:(NSString*)objectId toPeerId:(NSString*)toPeerId group:(AVGroup*)group callback:(AVBooleanResultBlock)callback{
-    NSString* path=[CDSessionManager getPathByObjectId:objectId];
+    NSString* path=[CDFileService getPathByObjectId:objectId];
     AVFile* file=[AVFile fileWithName:[self getAVFileName] contentsAtPath:path];
     [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if(error){
@@ -409,7 +410,7 @@ static BOOL initialized = NO;
     msg.readStatus=CDMsgReadStatusUnread;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         if(msg.type==CDMsgTypeImage || msg.type==CDMsgTypeAudio){
-            NSString* path=[CDSessionManager getPathByObjectId:msg.objectId];
+            NSString* path=[CDFileService getPathByObjectId:msg.objectId];
             NSFileManager* fileMan=[NSFileManager defaultManager];
             if([fileMan fileExistsAtPath:path]==NO){
                 NSString* url=msg.content;

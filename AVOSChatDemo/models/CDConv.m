@@ -10,4 +10,12 @@
 
 @implementation CDConv
 
++(CDConvType)typeOfConv:(AVIMConversation*)conv{
+    CDConvType type=[[conv.attributes objectForKey:CONV_TYPE] intValue];
+    if(type==CDConvTypeSingle && conv.members.count!=2){
+        [NSException raise:@"invalid conv type" format:nil];
+    }
+    return type;
+}
+
 @end

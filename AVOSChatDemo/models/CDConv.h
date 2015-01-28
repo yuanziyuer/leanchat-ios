@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CDCommon.h"
 
 #define CONV_TYPE @"type"
 
@@ -16,5 +17,7 @@ typedef enum : NSUInteger {
     CDConvTypeSingle = 0,
     CDConvTypeGroup=1,
 } CDConvType;
+
++(CDConvType)typeOfConv:(AVIMConversation*)conv;
 
 @end

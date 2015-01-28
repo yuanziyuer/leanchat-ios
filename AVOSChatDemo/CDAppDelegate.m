@@ -8,12 +8,12 @@
 
 #import "CDAppDelegate.h"
 #import "CDCommon.h"
-#import "CDLoginController.h"
-#import "CDBaseTabBarController.h"
-#import "CDBaseNavigationController.h"
-#import "CDChatListController.h"
-#import "CDContactListController.h"
-#import "CDProfileController.h"
+#import "CDLoginVC.h"
+#import "CDBaseTabC.h"
+#import "CDBaseNavC.h"
+#import "CDChatListVC.h"
+#import "CDContactListVC.h"
+#import "CDProfileVC.h"
 #import "CDSessionManager.h"
 #import "CDChatGroup.h"
 #import "CDUpgradeService.h"
@@ -155,23 +155,23 @@
 }
 
 - (UIViewController*)toLogin {
-    CDLoginController *controller = [[CDLoginController alloc] init];
+    CDLoginVC *controller = [[CDLoginVC alloc] init];
     self.window.rootViewController = controller;
     return controller;
 }
 
--(void)addItemController:(UIViewController*)itemController toTabBarController:(CDBaseTabBarController*)tab{
-    CDBaseNavigationController* nav=[[CDBaseNavigationController alloc] initWithRootViewController:itemController];
+-(void)addItemController:(UIViewController*)itemController toTabBarController:(CDBaseTabC*)tab{
+    CDBaseNavC* nav=[[CDBaseNavC alloc] initWithRootViewController:itemController];
     [tab addChildViewController:nav];
 }
 
 - (UIViewController*)toMain {
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
-    CDBaseTabBarController *tab = [[CDBaseTabBarController alloc] init];
+    CDBaseTabC *tab = [[CDBaseTabC alloc] init];
     
-    [self addItemController:[[CDChatListController alloc] init] toTabBarController:tab];
-    [self addItemController:[[CDContactListController alloc] init] toTabBarController:tab];
-    [self addItemController:[[CDProfileController alloc] init] toTabBarController:tab];
+    [self addItemController:[[CDChatListVC alloc] init] toTabBarController:tab];
+    [self addItemController:[[CDContactListVC alloc] init] toTabBarController:tab];
+    [self addItemController:[[CDProfileVC alloc] init] toTabBarController:tab];
     
     tab.selectedIndex=1;
     

@@ -12,7 +12,7 @@
 
 static CDIM*instance;
 static BOOL initialized;
-static NSMutableArray* _conversations;
+static NSMutableArray* _convs;
 static NSMutableArray* _messages;
 
 @interface CDIM()<AVIMClientDelegate,AVIMSignatureDataSource>{
@@ -40,7 +40,7 @@ static NSMutableArray* _messages;
 {
     self = [super init];
     if (self) {
-        _conversations=[NSMutableArray array];
+        _convs=[NSMutableArray array];
         _messages=[NSMutableArray array];
         _imClient=[[AVIMClient alloc] init];
         _imClient.delegate=self;
@@ -62,20 +62,20 @@ static NSMutableArray* _messages;
 }
 
 - (void)close {
-    [_conversations removeAllObjects];
+    [_convs removeAllObjects];
     [_imClient closeWithCallback:nil];
     initialized = NO;
 }
 
 #pragma mark - conversation
 
-- (void)addConversation:(AVIMConversation *)conversation {
-    if (conversation && ![_conversations containsObject:conversation]) {
-        [_conversations addObject:conversation];
+- (void)addConv:(AVIMConversation *)conv {
+    if (conv && ![_convs containsObject:conv]) {
+        [_convs addObject:conv];
     }
 }
 
-- (void)fetchOrCreateConversationWithUserId:(NSString *)userId callback:(AVIMConversationResultBlock)callback {
+- (void)fetcgConvWithUserId:(NSString *)userId callback:(AVIMConversationResultBlock)callback {
     NSMutableArray *array = [[NSMutableArray alloc] init];
     [array addObject:_imClient.clientId];
     [array addObject:userId];
@@ -83,21 +83,25 @@ static NSMutableArray* _messages;
         if(error){
             callback(nil,error);
         }else{
-            AVIMConversationResultBlock withConversation=^(AVIMConversation* conversation,NSError* error){
+            AVIMConversationResultBlock WithConv=^(AVIMConversation* conv,NSError* error){
                 if(error){
                 }else{
-                    [self addConversation:conversation];
-                    callback(conversation, nil);
+                    [self addConv:conv];
+                    callback(conv, nil);
                 }
             };
             if (objects.count > 0) {
-                AVIMConversation *conversation = [objects objectAtIndex:0];
-                withConversation(conversation,nil);
+                AVIMConversation *conv = [objects objectAtIndex:0];
+                WithConv(conv,nil);
             } else{
-                [_imClient createConversationWithName:nil clientIds:@[userId] attributes:nil callback:withConversation];
+                [self createConvWithUserId:userId callback:WithConv];
             }
         }
     }];
+}
+
+-(void)createConvWithUserId:(NSString*)userId callback:(AVIMConversationResultBlock)callback{
+    [_imClient createConversationWithName:nil clientIds:@[userId] attributes:@{CONV_TYPE:@(CDConvTypeSingle)} callback:callback];
 }
 
 -(AVIMTypedMessage*)getLastMsgWithConvid:(NSString*)convid{
@@ -110,22 +114,10 @@ static NSMutableArray* _messages;
     return nil;
 }
 
-+(void)cacheRooms:(NSArray*)rooms callback:(AVArrayResultBlock)callback{
-    NSMutableSet* userIds=[NSMutableSet set];
-    for(CDRoom* room in rooms){
-        if(room.type==CDConvTypeSingle){
-            if([CDCacheService lookupUser:room.otherId]==nil){
-                [userIds addObject:room.otherId];
-            }
-        }
-    }
-    [CDCacheService cacheUsersWithIds:userIds callback:callback];
-}
-
 - (void)findRoomsWithCallback:(AVArrayResultBlock)callback {
     //todo: getConversationsFromDB
     NSMutableArray* rooms=[NSMutableArray array];
-    for(AVIMConversation* conv in _conversations){
+    for(AVIMConversation* conv in _convs){
         CDRoom* room=[[CDRoom alloc] init];
         room.conv=conv;
         room.unreadCount=0;
@@ -138,15 +130,16 @@ static NSMutableArray* _messages;
         room.lastMsg=[self getLastMsgWithConvid:conv.conversationId];
         [rooms addObject:room];
     }
-    callback(rooms,nil);
+    [CDCacheService cacheRooms:rooms callback:^(NSArray *objects, NSError *error) {
+        if([CDUtils filterError:error]){
+            callback(rooms,nil);
+        }
+    }];
 }
 
 -(void)findGroupedConvsWithBlock:(AVArrayResultBlock)block{
-    AVUser* user=[AVUser currentUser];
-    NSMutableDictionary *whereDict=[NSMutableDictionary dictionary];
-    NSDictionary* cond=@{@"$size":@{@"$gt":@(2)},@"$all":@[user.objectId]};
-    [whereDict setObject:cond forKey:@"m"];
-    [_imClient queryConversationsWithConditions:whereDict skip:0 limit:0 callback:block];
+    NSDictionary* attrs=@{CONV_TYPE:@(CDConvTypeGroup)};
+    [_imClient queryConversationsWithName:nil andAttributes:attrs skip:0 limit:0 callback:block];
 }
 
 - (void)updateConv:(AVIMConversation *)conv name:(NSString *)name attrs:(NSDictionary *)attrs callback:(AVIMBooleanResultBlock)callback {
@@ -160,7 +153,7 @@ static NSMutableArray* _messages;
     [conv sendUpdate:[builder dictionary] callback:callback];
 }
 
--(NSArray*)findMessagesByConversationId:(NSString*)convid{
+-(NSArray*)findMsgsByConvId:(NSString*)convid{
     NSMutableArray* array=[[NSMutableArray alloc] init];
     for(AVIMTypedMessage* msg in _messages){
         if([msg.conversationId isEqualToString:convid]){
@@ -170,27 +163,29 @@ static NSMutableArray* _messages;
     return array;
 }
 
--(BOOL)setAttrs:(NSMutableDictionary*)attrs convType:(CDConvType)type{
-    if([[attrs objectForKey:CONV_TYPE] isEqualToNumber:@(type)]==NO){
-        [attrs setObject:@(type) forKey:CONV_TYPE];
-        return YES;
-    }
-    return NO;
-}
-
 -(void)setTypeOfConv:(AVIMConversation*)conv callback:(AVBooleanResultBlock)callback{
-    BOOL changed;
+    BOOL changed=NO;
     NSMutableDictionary* dict=[conv.attributes mutableCopy];
+    NSString* newName=conv.name;
     if(dict==nil){
         dict=[NSMutableDictionary dictionary];
     }
     if(conv.members.count>2){
-        changed=[self setAttrs:dict convType:CDConvTypeGroup];
-    }else{
-        changed=[self setAttrs:dict convType:CDConvTypeSingle];
+        if([CDConv typeOfConv:conv]==CDConvTypeSingle){
+            // convert it
+            [dict setObject:@(CDConvTypeGroup) forKey:CONV_TYPE];
+            
+            NSMutableArray* names=[NSMutableArray array];
+            for(int i=0;i<conv.members.count;i++){
+                AVUser* user=[CDCacheService lookupUser:conv.members[i]];
+                [names addObject:user.username];
+            }
+            newName=[names componentsJoinedByString:@","];
+            changed=YES;
+        }
     }
     if(changed){
-        [self updateConv:conv name:conv.name attrs:dict callback:callback];
+        [self updateConv:conv name:newName attrs:dict callback:callback];
     }else{
         callback(YES,nil);
     }
@@ -202,18 +197,18 @@ static NSMutableArray* _messages;
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_MESSAGE_UPDATED object:message];
 }
 
-- (void)sendText:(NSString *)text conversation:(AVIMConversation *)conversation  callback:(AVIMBooleanResultBlock)callback{
+- (void)sendText:(NSString *)text conv:(AVIMConversation *)conv  callback:(AVIMBooleanResultBlock)callback{
     AVIMTextMessage* message=[AVIMTextMessage messageWithText:text attributes:nil];
-    [self sendMessage:message conversation:conversation callback:callback];
+    [self sendMsg:message conv:conv callback:callback];
 }
 
--(void)sendImageWithPath:(NSString*)path conversation:(AVIMConversation*)conversation callback:(AVIMBooleanResultBlock)callback{
+-(void)sendImageWithPath:(NSString*)path conv:(AVIMConversation*)conv callback:(AVIMBooleanResultBlock)callback{
     AVIMImageMessage* message=[AVIMImageMessage messageWithText:nil attachedFilePath:path attributes:nil];
-    [self sendMessage:message conversation:conversation callback:callback];
+    [self sendMsg:message conv:conv callback:callback];
 }
 
--(void)sendMessage:(AVIMTypedMessage*)message conversation:(AVIMConversation *)conversation callback:(AVIMBooleanResultBlock)callback{
-    [conversation sendMessage:message callback:^(BOOL succeeded, NSError *error) {
+-(void)sendMsg:(AVIMTypedMessage*)message conv:(AVIMConversation *)conv callback:(AVIMBooleanResultBlock)callback{
+    [conv sendMessage:message callback:^(BOOL succeeded, NSError *error) {
         if(error==nil){
             [_messages addObject:message];
             [self postUpdatedMessage:message];

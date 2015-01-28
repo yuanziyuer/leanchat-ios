@@ -42,4 +42,6 @@
 
 +(NSArray*)getFriends;
 
++(void)cacheRooms:(NSArray*)rooms callback:(AVArrayResultBlock)callback;
+
 @end

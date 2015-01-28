@@ -157,4 +157,18 @@ static NSArray* friends;
     return friends;
 }
 
+#pragma mark - rooms
+
++(void)cacheRooms:(NSArray*)rooms callback:(AVArrayResultBlock)callback{
+    NSMutableSet* userIds=[NSMutableSet set];
+    for(CDRoom* room in rooms){
+        if(room.type==CDConvTypeSingle){
+            if([CDCacheService lookupUser:room.otherId]==nil){
+                [userIds addObject:room.otherId];
+            }
+        }
+    }
+    [CDCacheService cacheUsersWithIds:userIds callback:callback];
+}
+
 @end

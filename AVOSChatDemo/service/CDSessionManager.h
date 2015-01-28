@@ -36,8 +36,6 @@
 
 +(NSString*)convidOfSelfId:(NSString*)myId andOtherId:(NSString*)otherId;
 
-+(NSString*)getPathByObjectId:(NSString*)objectId;
-
 #pragma mark - histroy
 - (void)getHistoryMessagesForPeerId:(NSString *)peerId callback:(AVArrayResultBlock)callback;
 
