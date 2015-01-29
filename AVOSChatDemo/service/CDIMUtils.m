@@ -7,6 +7,7 @@
 //
 
 #import "CDIMUtils.h"
+#import "CDEmotionUtils.h"
 
 @implementation CDIMUtils
 
@@ -15,7 +16,7 @@
     AVIMLocationMessage* locationMsg;
     switch (msg.mediaType) {
         case kAVIMMessageMediaTypeText:
-            desc=msg.text;
+            desc=[CDEmotionUtils convertWithText:msg.text toEmoji:YES];;
             break;
         case kAVIMMessageMediaTypeAudio:
             desc=@"声音";

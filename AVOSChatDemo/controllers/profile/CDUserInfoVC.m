@@ -72,7 +72,7 @@
 
 -(void)btnClicked:(UIButton*)button{
     if(isFriend){
-        [CDChatRoomVC chatWithUserId:self.user.objectId fromVC:self];
+        [CDChatRoomVC initWithUserId:self.user.objectId fromVC:self];
     }else{
         [CDUtils showNetworkIndicator];
         [CDCloudService tryCreateAddRequestWithToUser:_user callback:^(id object, NSError *error) {

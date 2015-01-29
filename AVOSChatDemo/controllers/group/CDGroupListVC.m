@@ -37,7 +37,7 @@ static NSString* cellIndentifier=@"cell";
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.title=@"群组";
-    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(goNewGroup)];
+//    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(goNewGroup)];
     NSString* nibName=NSStringFromClass([CDImageLabelTableCell class]);
     UINib* nib=[UINib nibWithNibName:nibName bundle:nil];;
     [self.tableView registerNib:nib forCellReuseIdentifier:cellIndentifier];
@@ -96,7 +96,7 @@ static NSString* cellIndentifier=@"cell";
         cell=[[CDImageLabelTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     AVIMConversation* conv=[convs objectAtIndex:indexPath.row];
-    cell.myLabel.text=conv.name;
+    cell.myLabel.text=[CDConvService nameOfConv:conv];
     [cell.myImageView setImage:groupImage];
     // Configure the cell...
     

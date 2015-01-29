@@ -14,15 +14,9 @@
 #import "CDChatListVC.h"
 #import "CDContactListVC.h"
 #import "CDProfileVC.h"
-#import "CDSessionManager.h"
 #import "CDChatGroup.h"
-#import "CDUpgradeService.h"
-#import "CDUtils.h"
-#import "CDEmotionUtils.h"
-#import "CDCache.h"
-#import "CDDatabaseService.h"
 #import "CDModels.h"
-#import "CDIM.h"
+#import "CDService.h"
 
 @implementation CDAppDelegate
 
@@ -182,7 +176,8 @@
 //            [CDDatabaseService upgradeToAddField];
 //        }
 //    }];
-    [CDCache registerUser:[AVUser currentUser]];
+    AVUser* user=[AVUser currentUser];
+    [CDCache registerUser:user];
 //    AVInstallation* installation=[AVInstallation currentInstallation];
 //    AVUser* user=[AVUser currentUser];
 //    [user setObject:installation forKey:INSTALLATION];
@@ -205,7 +200,9 @@
     CDIM* client=[CDIM sharedInstance];
     [client open];
     
-
+    CDStorage* storage=[CDStorage sharedInstance];
+    [storage setupWithUserId:user.objectId];
+    
     return tab;
 }
 

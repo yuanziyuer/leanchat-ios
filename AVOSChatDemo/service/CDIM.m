@@ -13,11 +13,13 @@
 static CDIM*instance;
 static BOOL initialized;
 static NSMutableArray* _convs;
-static NSMutableArray* _messages;
 
 @interface CDIM()<AVIMClientDelegate,AVIMSignatureDataSource>{
     
 }
+
+@property CDStorage* storage;
+
 @end
 
 @implementation CDIM
@@ -41,9 +43,9 @@ static NSMutableArray* _messages;
     self = [super init];
     if (self) {
         _convs=[NSMutableArray array];
-        _messages=[NSMutableArray array];
         _imClient=[[AVIMClient alloc] init];
         _imClient.delegate=self;
+        _storage=[CDStorage sharedInstance];
         //_imClient.signatureDataSource=self;
     }
     return self;
@@ -75,7 +77,7 @@ static NSMutableArray* _messages;
     }
 }
 
-- (void)fetcgConvWithUserId:(NSString *)userId callback:(AVIMConversationResultBlock)callback {
+- (void)fetchConvWithUserId:(NSString *)userId callback:(AVIMConversationResultBlock)callback {
     NSMutableArray *array = [[NSMutableArray alloc] init];
     [array addObject:_imClient.clientId];
     [array addObject:userId];
@@ -105,12 +107,6 @@ static NSMutableArray* _messages;
 }
 
 -(AVIMTypedMessage*)getLastMsgWithConvid:(NSString*)convid{
-    for(int i=_messages.count-1;i>=0;i--){
-        AVIMTypedMessage* msg=[_messages objectAtIndex:i];
-        if([msg.conversationId isEqualToString:convid]){
-            return msg;
-        }
-    }
     return nil;
 }
 
@@ -121,11 +117,9 @@ static NSMutableArray* _messages;
         CDRoom* room=[[CDRoom alloc] init];
         room.conv=conv;
         room.unreadCount=0;
-        if([conv.members count]==2){
-            room.type=CDConvTypeSingle;
-            room.otherId=[CDConvService getOtherIdOfConv:conv];
-        }else{
-            room.type=CDConvTypeGroup;
+        room.type=[CDConvService typeOfConv:room.conv];
+        if(room.type==CDConvTypeSingle){
+            room.otherId=[CDConvService otherIdOfConv:conv];
         }
         room.lastMsg=[self getLastMsgWithConvid:conv.conversationId];
         [rooms addObject:room];
@@ -153,16 +147,6 @@ static NSMutableArray* _messages;
     [conv sendUpdate:[builder dictionary] callback:callback];
 }
 
--(NSArray*)findMsgsByConvId:(NSString*)convid{
-    NSMutableArray* array=[[NSMutableArray alloc] init];
-    for(AVIMTypedMessage* msg in _messages){
-        if([msg.conversationId isEqualToString:convid]){
-            [array addObject:msg];
-        }
-    }
-    return array;
-}
-
 -(void)setTypeOfConv:(AVIMConversation*)conv callback:(AVBooleanResultBlock)callback{
     BOOL changed=NO;
     NSMutableDictionary* dict=[conv.attributes mutableCopy];
@@ -174,13 +158,6 @@ static NSMutableArray* _messages;
         if([CDConvService typeOfConv:conv]==CDConvTypeSingle){
             // convert it
             [dict setObject:@(CDConvTypeGroup) forKey:CONV_TYPE];
-            
-            NSMutableArray* names=[NSMutableArray array];
-            for(int i=0;i<conv.members.count;i++){
-                AVUser* user=[CDCache lookupUser:conv.members[i]];
-                [names addObject:user.username];
-            }
-            newName=[names componentsJoinedByString:@","];
             changed=YES;
         }
     }
@@ -193,31 +170,15 @@ static NSMutableArray* _messages;
 
 #pragma mark - send or receive message
 
--(void)postUpdatedMessage:(id)message{
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_MESSAGE_UPDATED object:message];
+-(void)postUpdatedMsg:(id)msg{
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_MESSAGE_UPDATED object:msg];
 }
 
-- (void)sendText:(NSString *)text conv:(AVIMConversation *)conv  callback:(AVIMBooleanResultBlock)callback{
-    AVIMTextMessage* message=[AVIMTextMessage messageWithText:text attributes:nil];
-    [self sendMsg:message conv:conv callback:callback];
+-(void)sendMsg:(AVIMTypedMessage*)msg conv:(AVIMConversation *)conv callback:(AVIMBooleanResultBlock)callback{
+    [conv sendMessage:msg callback:callback];
 }
 
--(void)sendImageWithPath:(NSString*)path conv:(AVIMConversation*)conv callback:(AVIMBooleanResultBlock)callback{
-    AVIMImageMessage* message=[AVIMImageMessage messageWithText:nil attachedFilePath:path attributes:nil];
-    [self sendMsg:message conv:conv callback:callback];
-}
-
--(void)sendMsg:(AVIMTypedMessage*)message conv:(AVIMConversation *)conv callback:(AVIMBooleanResultBlock)callback{
-    [conv sendMessage:message callback:^(BOOL succeeded, NSError *error) {
-        if(error==nil){
-            [_messages addObject:message];
-            [self postUpdatedMessage:message];
-        }
-        callback(succeeded,error);
-    }];
-}
-
--(void)receiveMessage:(AVIMTypedMessage*)msg{
+-(void)receiveMsg:(AVIMTypedMessage*)msg{
     [CDUtils runInGlobalQueue:^{
         if(msg.mediaType==kAVIMMessageMediaTypeImage || msg.mediaType==kAVIMMessageMediaTypeAudio){
             NSString* path=[CDFileService getPathByObjectId:msg.messageId];
@@ -228,8 +189,8 @@ static NSMutableArray* _messages;
             }
         }
         [CDUtils runInMainQueue:^{
-            [_messages addObject:msg];
-            [self postUpdatedMessage:msg];
+            [_storage insertMsg:msg];
+            [self postUpdatedMsg:msg];
         }];
     }];
 }
@@ -276,7 +237,9 @@ static NSMutableArray* _messages;
  */
 - (void)conversation:(AVIMConversation *)conversation didReceiveTypedMessage:(AVIMTypedMessage *)message{
     DLog();
-    [self receiveMessage:message];
+    if(message.messageId){
+        [self receiveMsg:message];
+    }
 }
 
 /*!

@@ -19,16 +19,8 @@
 
 @interface CDChatRoomVC : XHMessageTableViewController
 
-//@property (nonatomic, strong) AVUser *chatUser;
-
-//@property (nonatomic) CDMsgRoomType type;
-
-//@property (nonatomic,strong) CDChatGroup* chatGroup;
-
-//@property (nonatomic, strong) AVGroup *group;
-
 -(instancetype)initWithConv:(AVIMConversation*)conv;
 
-+(void)chatWithUserId:(NSString*)userId fromVC:(UIViewController*)controller;
++(void)initWithUserId:(NSString*)userId fromVC:(UIViewController*)vc;
 
 @end

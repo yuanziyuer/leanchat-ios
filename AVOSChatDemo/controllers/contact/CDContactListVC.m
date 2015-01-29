@@ -178,7 +178,7 @@ enum : NSUInteger {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     AVUser *user = [self.users objectAtIndex:indexPath.row];
-    [CDChatRoomVC chatWithUserId:user.objectId fromVC:self];
+    [CDChatRoomVC initWithUserId:user.objectId fromVC:self];
 }
 
 -(void)handleLongPress:(UILongPressGestureRecognizer*)recognizer{

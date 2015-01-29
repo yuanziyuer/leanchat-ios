@@ -10,7 +10,6 @@
 #define LeanChat_CDViews_h
 
 #import "CDButton.h"
-#import "CDImageLabelCollection.h"
 #import "CDImageLabelTableCell.h"
 #import "CDImageLabelCollectionCell.h"
 #import "CDImageTwoLabelTableCell.h"

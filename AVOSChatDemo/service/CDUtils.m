@@ -249,4 +249,14 @@
     return networkStatus != NotReachable;
 }
 
+#pragma mark - time 
+
++(int64_t)int64OfStr:(NSString*)str{
+    return [str longLongValue];
+}
+
++(NSString*)strOfInt64:(int64_t)num{
+    return [[NSNumber numberWithLongLong:num] stringValue];
+}
+
 @end

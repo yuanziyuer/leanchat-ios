@@ -21,7 +21,7 @@
         return conv.name;
     }else{
         if([self typeOfConv:conv]==CDConvTypeSingle){
-            NSString* otherId=[self getOtherIdOfConv:conv];
+            NSString* otherId=[self otherIdOfConv:conv];
             AVUser* other=[CDCache lookupUser:otherId];
             return other.username;
         }else{
@@ -35,7 +35,7 @@
     }
 }
 
-+(NSString*)getOtherIdOfConv:(AVIMConversation*)conv{
++(NSString*)otherIdOfConv:(AVIMConversation*)conv{
     NSArray* members=conv.members;
     if(members.count!=2){
         [NSException raise:@"invalid conv" format:nil];
@@ -52,6 +52,5 @@
     }
     return otherId;
 }
-
 
 @end

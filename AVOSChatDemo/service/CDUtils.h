@@ -74,5 +74,10 @@ typedef void (^Int64Block)(int64_t num);
 
 + (BOOL)connected;
 
+#pragma mark - time
+
++(int64_t)int64OfStr:(NSString*)str;
+
++(NSString*)strOfInt64:(int64_t)num;
 
 @end

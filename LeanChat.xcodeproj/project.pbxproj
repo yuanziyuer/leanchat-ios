@@ -69,6 +69,7 @@
 		706A0DC61A5ABEAE0075DEA9 /* CDReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 706A0DC51A5ABEAE0075DEA9 /* CDReachability.m */; };
 		706A0DC91A5AC0C90075DEA9 /* CDSessionStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 706A0DC81A5AC0C90075DEA9 /* CDSessionStateView.m */; };
 		707644221A7948FE00E6C182 /* CDConvService.m in Sources */ = {isa = PBXBuildFile; fileRef = 707644211A7948FE00E6C182 /* CDConvService.m */; };
+		707644281A7A173600E6C182 /* CDStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 707644271A7A173600E6C182 /* CDStorage.m */; };
 		70A066311A24A3A2004DA201 /* NSString+MessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A064741A24A3A2004DA201 /* NSString+MessageInputView.m */; };
 		70A066321A24A3A2004DA201 /* NSString+XHDiskSizeTransfrom.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A064761A24A3A2004DA201 /* NSString+XHDiskSizeTransfrom.m */; };
 		70A066331A24A3A2004DA201 /* NSString+XHMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A064781A24A3A2004DA201 /* NSString+XHMD5.m */; };
@@ -578,6 +579,8 @@
 		706A0DC81A5AC0C90075DEA9 /* CDSessionStateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSessionStateView.m; sourceTree = "<group>"; };
 		707644201A7948FE00E6C182 /* CDConvService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConvService.h; sourceTree = "<group>"; };
 		707644211A7948FE00E6C182 /* CDConvService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDConvService.m; sourceTree = "<group>"; };
+		707644261A7A173600E6C182 /* CDStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDStorage.h; sourceTree = "<group>"; };
+		707644271A7A173600E6C182 /* CDStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDStorage.m; sourceTree = "<group>"; };
 		70A064731A24A3A2004DA201 /* NSString+MessageInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MessageInputView.h"; sourceTree = "<group>"; };
 		70A064741A24A3A2004DA201 /* NSString+MessageInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MessageInputView.m"; sourceTree = "<group>"; };
 		70A064751A24A3A2004DA201 /* NSString+XHDiskSizeTransfrom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XHDiskSizeTransfrom.h"; sourceTree = "<group>"; };
@@ -2754,6 +2757,8 @@
 				70F9A3981A72499A00195430 /* CDFileService.m */,
 				707644201A7948FE00E6C182 /* CDConvService.h */,
 				707644211A7948FE00E6C182 /* CDConvService.m */,
+				707644261A7A173600E6C182 /* CDStorage.h */,
+				707644271A7A173600E6C182 /* CDStorage.m */,
 			);
 			path = service;
 			sourceTree = "<group>";
@@ -3156,6 +3161,7 @@
 				70CACE5E1A6EB54F00F58885 /* AFHTTPRequestOperation.m in Sources */,
 				70D4C6321A237C1E001A655D /* CDAddRequest.m in Sources */,
 				70E47DE71A245D2C00DE60FE /* Emoji.m in Sources */,
+				707644281A7A173600E6C182 /* CDStorage.m in Sources */,
 				70A066B31A24A3A2004DA201 /* XHEmotionSectionBar.m in Sources */,
 				70A066AC1A24A3A2004DA201 /* XHMessageTableViewCell.m in Sources */,
 				70D4C6111A237C1E001A655D /* CDChatListVC.m in Sources */,

@@ -20,6 +20,8 @@ typedef enum : NSUInteger {
 
 +(CDConvType)typeOfConv:(AVIMConversation*)conv;
 
-+(NSString*)getOtherIdOfConv:(AVIMConversation*)conv;
++(NSString*)otherIdOfConv:(AVIMConversation*)conv;
+
++(NSString*)nameOfConv:(AVIMConversation*)conv;
 
 @end

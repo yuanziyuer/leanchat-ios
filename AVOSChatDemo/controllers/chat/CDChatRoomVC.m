@@ -26,14 +26,21 @@
 
 typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
-@interface CDChatRoomVC () <UINavigationControllerDelegate,CDSessionStateProtocal> {
-    NSMutableDictionary *_loadedImages;
-    NSMutableDictionary *_avatars;
-    NSMutableArray* _msgs;
-    CDIM* im;
-    UIImage* defaultAvatar;
-    BOOL isLoadingMsg;
-}
+@interface CDChatRoomVC () <UINavigationControllerDelegate,CDSessionStateProtocal>
+
+@property CDStorage* storage;
+
+@property NSMutableDictionary* loadedImages;
+
+@property NSMutableDictionary* avatars;
+
+@property NSMutableArray* msgs;
+
+@property CDIM* im;
+
+@property BOOL isLoadingMsg;
+
+@property UIImage* defaultAvatar;
 
 @property (nonatomic, strong) XHMessageTableViewCell *currentSelectedCell;
 
@@ -56,11 +63,12 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         //self.allowsSendVoice = NO;
         //self.allowsSendFace = NO;
         //self.allowsSendMultiMedia = NO;
-        isLoadingMsg=NO;
+        _isLoadingMsg=NO;
         _loadedImages = [[NSMutableDictionary alloc] init];
         _avatars=[[NSMutableDictionary alloc] init];
-        im=[CDIM sharedInstance];
-        defaultAvatar=[UIImage imageNamed:@"default_user_avatar"];
+        _im=[CDIM sharedInstance];
+        _defaultAvatar=[UIImage imageNamed:@"default_user_avatar"];
+        _storage=[CDStorage sharedInstance];
     }
     return self;
 }
@@ -71,9 +79,9 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     return self;
 }
 
-+(void)chatWithUserId:(NSString*)userId fromVC:(UIViewController*)vc {
++(void)initWithUserId:(NSString*)userId fromVC:(UIViewController*)vc {
     CDIM* im=[CDIM sharedInstance];
-    [im fetcgConvWithUserId:userId callback:^(AVIMConversation *conversation, NSError *error) {
+    [im fetchConvWithUserId:userId callback:^(AVIMConversation *conversation, NSError *error) {
         [CDUtils filterError:error callback:^{
             CDChatRoomVC *controller = [[CDChatRoomVC alloc] initWithConv:conversation];
             UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:controller];
@@ -129,22 +137,11 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     NSNotificationCenter* center=[NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(loadMessages:) name:NOTIFICATION_MESSAGE_UPDATED object:nil];
+    [center addObserver:self selector:@selector(loadMsg:) name:NOTIFICATION_MESSAGE_UPDATED object:nil];
     //[CDDatabaseService markHaveReadWithConvid:[self getConvid]];
     //[self loadMsgsIsLoadMore:NO];
     [self refreshConv];
-    [self loadMessages:nil];
-}
-
--(void)refreshConv{
-    CDConvType type=[CDConvService typeOfConv:self.conv];
-    if(type==CDConvTypeSingle){
-        NSString* otherId=[CDConvService getOtherIdOfConv:self.conv];
-        AVUser* other=[CDCache lookupUser:otherId];
-        self.title=other.username;
-    }else{
-        self.title=self.conv.name;
-    }
+    [self loadMsgsIsLoadMore:NO];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -152,6 +149,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     NSNotificationCenter* center=[NSNotificationCenter defaultCenter];
     [center removeObserver:self name:NOTIFICATION_MESSAGE_UPDATED object:nil];
     //[CDDatabaseService markHaveReadWithConvid:[self getConvid]];
+    [[XHAudioPlayerHelper shareInstance] stopAudio];
 }
 
 -(void)dealloc{
@@ -160,23 +158,37 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     [CDCache setCurConv:nil];
 }
 
--(void)backPressed:(id)sender{
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [[XHAudioPlayerHelper shareInstance] stopAudio];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - prev and next controller
+
+- (void)goChatGroupDetail:(id)sender {
+//    CDGroupDetailController *controller=[[CDGroupDetailController alloc] init];
+//    controller.chatGroup=self.chatGroup;
+//    [self.navigationController pushViewController: controller animated:YES];
+
+    UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
+    [flow setItemSize:CGSizeMake(240, 240)];
+    [flow setScrollDirection:UICollectionViewScrollDirectionVertical];
+    NSString* name=NSStringFromClass([CDGroupDetailVC class]);
+    
+    CDGroupDetailVC* controller=[[CDGroupDetailVC alloc] initWithNibName:name bundle:nil];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+-(void)backPressed:(id)sender{
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
 
 #pragma mark - message data
+
+-(void)loadMsg:(NSNotification*)notification{
+    [self loadMsgsIsLoadMore:NO];
+}
 
 -(void)cacheImageOfMsg:(AVIMImageMessage*)msg{
     if([_loadedImages objectForKey:msg.messageId]==nil){
@@ -217,6 +229,8 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         NSLog(@"%@",imageMsg);
         NSString* url=imageMsg.file.url;
         xhMessage=[[XHMessage alloc] initWithPhoto:nil thumbnailUrl:url originPhotoUrl:url sender:fromUser.username timestamp:time];
+    }else{
+        DLog();
     }
     xhMessage.avator=[_avatars objectForKey:msg.clientId];
     xhMessage.avatorUrl=nil;
@@ -238,11 +252,11 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
             }
         }
         xhMessage.status=status;
-//        if(msg.roomType==CDMsgRoomTypeGroup){
-//            if(status==CDMsgStatusSendSucceed){
-//                xhMessage.status=XHMessageStatusReceived;
-//            }
-//        }
+        //        if(msg.roomType==CDMsgRoomTypeGroup){
+        //            if(status==CDMsgStatusSendSucceed){
+        //                xhMessage.status=XHMessageStatusReceived;
+        //            }
+        //        }
     }else{
         xhMessage.status=XHMessageStatusReceived;
     }
@@ -251,7 +265,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 -(void)cacheAvatarByUserId:(NSString*)userId{
     if([_avatars objectForKey:userId]==nil){
-        [_avatars setObject:defaultAvatar forKey:userId];
+        [_avatars setObject:_defaultAvatar forKey:userId];
         
         AVUser* user=[CDCache lookupUser:userId];
         if(user==nil){
@@ -263,96 +277,89 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     }
 }
 
-#pragma mark - next controller
-
-- (void)goChatGroupDetail:(id)sender {
-//    CDGroupDetailController *controller=[[CDGroupDetailController alloc] init];
-//    controller.chatGroup=self.chatGroup;
-//    [self.navigationController pushViewController: controller animated:YES];
-
-    UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
-    [flow setItemSize:CGSizeMake(240, 240)];
-    [flow setScrollDirection:UICollectionViewScrollDirectionVertical];
-    
-    CDGroupDetailVC* controller=[[CDGroupDetailVC alloc] initWithNibName:@"CDGroupDetailController" bundle:nil];
-    [self.navigationController pushViewController:controller animated:YES];
+-(void)refreshConv{
+    self.title=[CDConvService nameOfConv:self.conv];
 }
 
-#pragma mark - messageUpdated
-
--(NSString*)getOtherId{
-//    if(_type==CDMsgRoomTypeSingle){
-//        return _chatUser.objectId;
-//    }else{
-//        return _chatGroup.objectId;
-//    }
-    return nil;
-}
-
--(void)loadMessages:(NSNotification*)notification{
-    NSArray* msgs=[im findMsgsByConvId:self.conv.conversationId];
-    [self cacheMsgs:msgs callback:^(BOOL succeeded, NSError *error) {
-        [CDUtils filterError:error callback:^{
-            self.messages=[self getXHMessages:msgs];
-            [self.messageTableView reloadData];
-            [self scrollToBottomAnimated:YES];
-        }];
-    }];
+-(void)didSendMsg:(AVIMTypedMessage*)msg{
+    [_storage insertMsg:msg];
+    [self loadMsgsIsLoadMore:NO];
 }
 
 - (NSArray *)getXHMessages:(NSArray *)msgs {
     NSMutableArray* messages=[[NSMutableArray alloc] init];
     for(AVIMTypedMessage* msg in msgs){
-        [messages addObject:[self getXHMessageByMsg:msg]];
+        XHMessage* xhMsg=[self getXHMessageByMsg:msg];
+        [messages addObject:xhMsg];
     }
     return messages;
 }
 
 -(void)loadMsgsIsLoadMore:(BOOL)isLoadMore{
-    if(isLoadingMsg){
+    if(_isLoadingMsg){
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1*NSEC_PER_SEC), dispatch_get_main_queue(), ^{
             [self loadMsgsIsLoadMore:isLoadMore];
         });
         NSLog(@"loading msg and return");
         return ;
     }
-    isLoadingMsg=YES;
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+    _isLoadingMsg=YES;
+    DLog();
     [CDUtils runInGlobalQueue:^{
         __block NSMutableArray* msgs;
-//        FMDatabaseQueue* dbQueue=[CDDatabaseService databaseQueue];
-//        [dbQueue inDatabase:^(FMDatabase *db) {
-//            int64_t maxTimestamp=(((int64_t)[[NSDate date] timeIntervalSince1970])+10)*1000;
-//            if(isLoadMore==NO){
-//                int64_t timestamp=maxTimestamp;
-//                int limit;
-//                int count=[self.messages count];
-//                if(count>ONE_PAGE_SIZE){
-//                    limit=count;
-//                }else{
-//                    limit=ONE_PAGE_SIZE;
-//                }
-//                msgs=[self getDBMsgsWithTimestamp:timestamp limit:limit isLoadMore:isLoadMore db:db];
-//            }else{
-//                int64_t timestamp;
-//                if([self.messages count]>0){
-//                    XHMessage* firstMessage=[self.messages objectAtIndex:0];
-//                    NSDate* date=firstMessage.timestamp;
-//                    timestamp=[date timeIntervalSince1970]*1000;
-//                }else{
-//                    timestamp=maxTimestamp;
-//                }
-//                int limit=ONE_PAGE_SIZE;
-//                msgs=[self getDBMsgsWithTimestamp:timestamp limit:limit
-//                                       isLoadMore:isLoadMore db:db];
-//            }
-//        }];
+        FMDatabaseQueue* dbQueue=[_storage getDBQueue];
+        [dbQueue inDatabase:^(FMDatabase *db) {
+            int64_t maxTimestamp=(((int64_t)[[NSDate date] timeIntervalSince1970])+10)*1000;
+            if(isLoadMore==NO){
+                int64_t timestamp=maxTimestamp;
+                int limit;
+                int count=[_msgs count];
+                if(count>ONE_PAGE_SIZE){
+                    limit=count;
+                }else{
+                    limit=ONE_PAGE_SIZE;
+                }
+                msgs=[self getDBMsgsWithTimestamp:timestamp limit:limit db:db isLoadMore:isLoadMore];
+            }else{
+                int64_t timestamp;
+                if([self.messages count]>0){
+                    XHMessage* firstMessage=[self.messages objectAtIndex:0];
+                    NSDate* date=firstMessage.timestamp;
+                    timestamp=[date timeIntervalSince1970]*1000;
+                }else{
+                    timestamp=maxTimestamp;
+                }
+                int limit=ONE_PAGE_SIZE;
+                msgs=[self getDBMsgsWithTimestamp:timestamp limit:limit db:db
+                                       isLoadMore:isLoadMore];
+            }
+        }];
         
-        
-        [self cacheAndLoadMsgs:msgs isLoadMore:isLoadMore];
+        [self cacheMsgs:msgs callback:^(BOOL succeeded, NSError *error) {
+            [CDUtils runInMainQueue:^{
+                if([CDUtils filterError:error]){
+                    NSMutableArray *xhMsgs= [self getXHMessages:msgs];
+                    if(isLoadMore==NO){
+                        self.messages=xhMsgs;
+                        _msgs=msgs;
+                        [self.messageTableView reloadData];
+                        [self scrollToBottomAnimated:NO];
+                        _isLoadingMsg=NO;
+                    }else{
+                        NSMutableArray* newMsgs=[NSMutableArray arrayWithArray:msgs];
+                        [newMsgs addObjectsFromArray:_msgs];
+                        _msgs=newMsgs;
+                        [self insertOldMessages:xhMsgs completion:^{
+                            _isLoadingMsg=NO;
+                        }];
+                    }
+                }
+            }];
+        }];
     }];
 }
 
+//run it global
 - (void)cacheMsgs:(NSArray *)msgs callback:(AVBooleanResultBlock)callback{
     __block NSMutableSet* userIds=[[NSMutableSet alloc] init];
     for(AVIMTypedMessage* msg in msgs){
@@ -362,68 +369,22 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         if(error){
             callback(NO,error);
         }else{
-            [CDUtils runInGlobalQueue:^{
-                for(NSString* userId in userIds){
-                    [self cacheAvatarByUserId:userId];
-                }
-                for(AVIMTypedMessage* msg in msgs){
-                    if(msg.mediaType==kAVIMMessageMediaTypeImage){
-                        [self cacheImageOfMsg:(AVIMImageMessage*)msg];
-                    }
-                }
-                [CDUtils runInMainQueue:^{
-                    callback(YES,nil);
-                }];
-            }];
-        }
-    }];
-}
-
-- (void)cacheAndLoadMsgs:(NSMutableArray *)msgs isLoadMore:(BOOL)isLoadMore {
-    [CDUtils runInMainQueue:^{
-        __block NSMutableSet* userIds=[[NSMutableSet alloc] init];
-        for(CDMsg* msg in msgs){
-            [userIds addObject:msg.fromPeerId];
-        }
-        [CDCache cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
-            if(error){
-                [CDUtils alertError:error];
-                isLoadingMsg=NO;
-            }else{
-                [CDUtils runInGlobalQueue:^{
-                    for(NSString* userId in userIds){
-                        [self cacheAvatarByUserId:userId];
-                    }
-                    [CDUtils runInMainQueue:^{
-                        NSMutableArray *messages= [self getXHMessages:msgs];
-                        if(isLoadMore==NO){
-                            self.messages=messages;
-                            _msgs=msgs;
-                            [self.messageTableView reloadData];
-                            [self scrollToBottomAnimated:NO];
-                            isLoadingMsg=NO;
-                        }else{
-                            NSMutableArray* newMsgs=[NSMutableArray arrayWithArray:msgs];
-                            [newMsgs addObjectsFromArray:_msgs];
-                            _msgs=newMsgs;
-                            [self insertOldMessages:messages completion:^{
-                                isLoadingMsg=NO;
-                            }];
-                        }
-                    }];
-                }];
+            for(NSString* userId in userIds){
+                [self cacheAvatarByUserId:userId];
             }
-        }];
+            for(AVIMTypedMessage* msg in msgs){
+                if(msg.mediaType==kAVIMMessageMediaTypeImage){
+                    [self cacheImageOfMsg:(AVIMImageMessage*)msg];
+                }
+            }
+            callback(YES,nil);
+        }
     }];
 }
 
--(NSString*)getConvid{
-    return self.conv.conversationId;
-}
-
--(NSMutableArray*)getDBMsgsWithTimestamp:(int64_t)timestamp limit:(int)limit isLoadMore:(BOOL)isLoadMore db:(FMDatabase*)db{
-    NSString* convid=[self getConvid];
-    NSMutableArray *msgs=[[CDDatabaseService getMsgsWithConvid:convid maxTimestamp:timestamp limit:limit db:db] mutableCopy];
+-(NSMutableArray*)getDBMsgsWithTimestamp:(int64_t)timestamp limit:(int)limit db:(FMDatabase*)db isLoadMore:(BOOL)isLoadMore{
+    NSString* convid=self.conv.conversationId;
+    NSMutableArray* msgs=[[_storage getMsgsWithConvid:convid maxTime:timestamp limit:limit db:db] mutableCopy];
     return msgs;
 }
 
@@ -442,9 +403,10 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     [imageData writeToFile:path options:NSDataWritingAtomic error:&error];
     NSLog(@" save path=%@",path);
     if(error==nil){
-        AVIMImageMessage* message=[AVIMImageMessage messageWithText:nil attachedFilePath:path attributes:nil];
-        [im sendMsg:message conv:self.conv callback:^(BOOL succeeded, NSError *error) {
-            NSLog(@"send succeed");
+        AVIMImageMessage* msg=[AVIMImageMessage messageWithText:nil attachedFilePath:path attributes:nil];
+        [_im sendMsg:msg conv:self.conv callback:^(BOOL succeeded, NSError *error) {
+            DLog();
+            [self didSendMsg:msg];
         }];
     }else{
         [CDUtils alert:@"write image to file error"];
@@ -453,7 +415,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 /*
  [self removeMessageAtIndexPath:indexPath];
- [self insertOldMessages:self.messages];
+ [self insertOldMessdsages:self.messages];
  */
 
 #pragma mark - XHMessageTableViewCell delegate
@@ -574,7 +536,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 }
 
 - (void)loadMoreMessagesScrollTotop {
-    //[self loadMsgsIsLoadMore:YES];
+    [self loadMsgsIsLoadMore:YES];
 }
 
 /**
@@ -591,12 +553,12 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 //                                           type:CDMsgTypeText
 //                                       toPeerId:self.chatUser.objectId
 //                                          group:self.group];
-        [im sendText:text conv:self.conv callback:^(BOOL succeeded, NSError *error) {
-            [CDUtils filterError:error callback:^{
-                NSLog(@"send succeed");
-            }];
+        
+        AVIMTextMessage* msg=[AVIMTextMessage messageWithText:text attributes:nil];
+        [_im sendMsg:msg conv:self.conv callback:^(BOOL succeeded, NSError *error) {
+            [self didSendMsg:msg];
+            [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
         }];
-        [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
     }
 }
 
@@ -632,7 +594,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
  */
 - (void)didSendVoice:(NSString *)voicePath voiceDuration:(NSString *)voiceDuration fromSender:(NSString *)sender onDate:(NSDate *)date {
     AVIMAudioMessage* msg=[AVIMAudioMessage messageWithText:nil attachedFilePath:voicePath attributes:nil];
-    [im sendMsg:msg conv:self.conv callback:^(BOOL succeeded, NSError *error) {
+    [_im sendMsg:msg conv:self.conv callback:^(BOOL succeeded, NSError *error) {
         NSString* path=[CDFileService getPathByObjectId:msg.messageId];
         NSError* error1;
         [[NSFileManager defaultManager] copyItemAtPath:voicePath toPath:path error:&error1];
@@ -723,7 +685,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 }
 
 
-#pragma mark - session protocal
+#pragma mark - session state
 
 -(void)onSessionBrokenWithStateView:(CDSessionStateView *)view{
     if(_sessionStateViewVisiable==NO){
