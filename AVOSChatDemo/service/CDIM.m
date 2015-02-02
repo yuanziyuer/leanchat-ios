@@ -229,6 +229,8 @@ static BOOL initialized;
  @return None.
  */
 - (void)conversation:(AVIMConversation *)conversation messageDelivered:(AVIMMessage *)message{
+    [_storage updateStatus:AVIMMessageStatusDelivered byMsgId:message.messageId];
+    [self postUpdatedMsg:message];
     DLog();
 }
 

@@ -73,6 +73,37 @@ static CDStorage* _storage;
     return [CDUtils reverseArray:msgs];
 }
 
+-(AVIMTypedMessage*)getMsgByMsgId:(NSString*)msgId{
+    __block AVIMTypedMessage* msg=nil;
+    [_dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet* rs=[db executeQuery:@"SELECT * FROM msgs where msg_id=?" withArgumentsInArray:@[msgId]];
+        if([rs next]){
+            msg=[self getMsgByResultSet:rs];
+        }
+        [rs close];
+    }];
+    return msg;
+}
+
+-(BOOL)updateMsg:(AVIMTypedMessage*)msg byMsgId:(NSString*)msgId{
+    __block BOOL result;
+    [_dbQueue inDatabase:^(FMDatabase *db) {
+        NSData* data=[NSKeyedArchiver archivedDataWithRootObject:msg];
+        result=[db executeUpdate:@"UPDATE msgs SET object=? WHERE msg_id=?" withArgumentsInArray:@[data,msgId]];
+    }];
+    return result;
+}
+
+-(BOOL)updateStatus:(AVIMMessageStatus)status byMsgId:(NSString*)msgId{
+    AVIMTypedMessage* msg=[self getMsgByMsgId:msgId];
+    if(msg){
+        msg.status=status;
+        return [self updateMsg:msg byMsgId:msgId];
+    }else{
+        return NO;
+    }
+}
+
 -(NSMutableArray*)getMsgsByResultSet:(FMResultSet*)rs{
     NSMutableArray *result = [NSMutableArray array];
     while ([rs next]) {
@@ -86,9 +117,6 @@ static CDStorage* _storage;
 -(AVIMTypedMessage* )getMsgByResultSet:(FMResultSet*)rs{
     AVIMTypedMessage* msg;
     NSData* data=[rs objectForColumnName:FIELD_OBJECT];
-    AVFile *file=[AVFile fileWithData:data];
-    [file saveInBackground];
-    DLog(@"after=%@",data);
     if(data!=nil){
         msg=[NSKeyedUnarchiver unarchiveObjectWithData:data];
     }
@@ -98,7 +126,6 @@ static CDStorage* _storage;
 -(void)insertMsg:(AVIMTypedMessage*)msg{
     [_dbQueue inDatabase:^(FMDatabase *db) {
         NSData* data=[NSKeyedArchiver archivedDataWithRootObject:msg];
-        DLog(@"before=%@",data);
         NSDictionary* dict=@{FIELD_MSG_ID:msg.messageId,FIELD_CONVID:msg.conversationId,FIELD_OBJECT:data,FIELD_TIME:[CDUtils strOfInt64:msg.sendTimestamp]};
         [db executeUpdate:@"insert into msgs (msg_id,convid,object,time) values(:msg_id,:convid,:object,:time)" withParameterDictionary:dict];
     }];

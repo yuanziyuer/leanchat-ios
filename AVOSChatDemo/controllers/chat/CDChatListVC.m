@@ -65,7 +65,7 @@ static NSString *cellIdentifier = @"ContactCell";
     [_networkStateView observeSessionUpdate];
     
 //    [_tableView addSubview:self.slimeView];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:NOTIFICATION_MESSAGE_UPDATED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh:) name:NOTIFICATION_MESSAGE_UPDATED object:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated{

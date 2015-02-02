@@ -21,6 +21,8 @@
 
 -(void)insertMsg:(AVIMTypedMessage*)msg;
 
+-(BOOL)updateStatus:(AVIMMessageStatus)status byMsgId:(NSString*)msgId;
+
 -(FMDatabaseQueue*)getDBQueue;
 
 -(NSArray*)getRooms;
