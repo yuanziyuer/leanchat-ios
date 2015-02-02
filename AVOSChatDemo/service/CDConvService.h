@@ -15,7 +15,7 @@
 
 typedef enum : NSUInteger {
     CDConvTypeSingle = 0,
-    CDConvTypeGroup=1,
+    CDConvTypeGroup,
 } CDConvType;
 
 +(CDConvType)typeOfConv:(AVIMConversation*)conv;

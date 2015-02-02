@@ -12,4 +12,6 @@
 
 +(NSString*)getPathByObjectId:(NSString*)objectId;
 
++(NSString*)tmpPath;
+
 @end

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "CDCommon.h"
 #import "FMDB.h"
+#import "CDModels.h"
 
 @interface CDStorage : NSObject
 
@@ -21,5 +22,9 @@
 -(void)insertMsg:(AVIMTypedMessage*)msg;
 
 -(FMDatabaseQueue*)getDBQueue;
+
+-(NSArray*)getRooms;
+
+-(void)insertRoomWithConvid:(NSString*)convid;
 
 @end

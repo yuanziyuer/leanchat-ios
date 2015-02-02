@@ -12,7 +12,7 @@
 #import "CDCommon.h"
 #import "SRRefreshView.h"
 
-@interface CDChatListVC : UIViewController<UITableViewDataSource,UITableViewDelegate,CDSessionStateProtocal,SRRefreshDelegate>
+@interface CDChatListVC : UIViewController<UITableViewDataSource,UITableViewDelegate,CDSessionStateProtocal>
 
 @property (nonatomic) CDSessionStateView* networkStateView;
 

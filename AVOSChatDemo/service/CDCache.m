@@ -11,18 +11,21 @@
 #import "CDMsg.h"
 #import "CDUtils.h"
 #import "CDService.h"
+#import "CDIM.h"
 
 @implementation CDCache
 
-static NSMutableDictionary *cachedChatGroups;
+static NSMutableDictionary *cachedConvs;
 static NSMutableDictionary *cachedUsers;
 static AVIMConversation* curConv;
 static NSArray* friends;
+static CDIM* _im;
 
 +(void)initialize{
     [super initialize];
-    cachedChatGroups=[[NSMutableDictionary alloc] init];
+    cachedConvs=[[NSMutableDictionary alloc] init];
     cachedUsers=[[NSMutableDictionary alloc] init];
+    _im=[CDIM sharedInstance];
 }
 
 #pragma mark - user cache
@@ -43,17 +46,17 @@ static NSArray* friends;
 
 #pragma mark - group cache
 
-+(CDChatGroup*)lookupChatGroupById:(NSString*)groupId{
-    return [cachedChatGroups valueForKey:groupId];
++(CDChatGroup*)lookupConvById:(NSString*)convid{
+    return [cachedConvs valueForKey:convid];
 }
 
-+(void)registerChatGroup:(CDChatGroup*)chatGroup{
-    [cachedChatGroups setObject:chatGroup forKey:chatGroup.objectId];
++(void)registerConv:(AVIMConversation*)conv{
+    [cachedConvs setObject:conv forKey:conv.conversationId];
 }
 
-+(void)registerChatGroups:(NSArray*)chatGroups{
-    for(CDChatGroup* chatGroup in chatGroups){
-        [self registerChatGroup:chatGroup];
++(void)registerConvs:(NSArray*)convs{
+    for(AVIMConversation* conv in convs){
+        [self registerConv:conv];
     }
 }
 
@@ -61,25 +64,21 @@ static NSArray* friends;
     [CDUtils postNotification:NOTIFICATION_GROUP_UPDATED];
 }
 
-+(void)cacheChatGroupsWithIds:(NSMutableSet*)groupIds withCallback:(AVArrayResultBlock)callback{
-    NSMutableSet* uncacheGroupIds=[[NSMutableSet alloc] init];
-    for(NSString * groupId in groupIds){
-        if([self lookupChatGroupById:groupId]==nil){
-            [uncacheGroupIds addObject:groupId];
++(void)cacheConvsWithIds:(NSMutableSet*)convids callback:(AVArrayResultBlock)callback{
+    NSMutableSet* uncacheConvids=[[NSMutableSet alloc] init];
+    for(NSString * convid in convids){
+        if([self lookupConvById:convid]==nil){
+            [uncacheConvids addObject:convid];
         }
     }
-    if([uncacheGroupIds count]>0){
-        [CDGroupService findGroupsByIds:uncacheGroupIds withCallback:^(NSArray *objects, NSError *error) {
-            [CDUtils filterError:error callback:^{
-                for(CDChatGroup* chatGroup in objects){
-                    [self registerChatGroup:chatGroup];
-                }
-                callback(objects,error);
-            }];
+    [_im fetchConvsWithIds:uncacheConvids callback:^(NSArray *objects, NSError *error) {
+        [CDUtils filterError:error callback:^{
+            for(AVIMConversation* conv in objects){
+                [self registerConv:conv];
+            }
+            callback(objects,error);
         }];
-    }else{
-        callback([[NSMutableArray alloc] init],nil);
-    }
+    }];
 }
 
 +(void)cacheUsersWithIds:(NSSet*)userIds callback:(AVArrayResultBlock)callback{
@@ -117,7 +116,7 @@ static NSArray* friends;
         if(error){
             callback(objects,error);
         }else{
-            [self cacheChatGroupsWithIds:groupIds withCallback:callback];
+            [self cacheConvsWithIds:groupIds callback:callback];
         }
     }];
 }
@@ -159,16 +158,33 @@ static NSArray* friends;
 
 #pragma mark - rooms
 
-+(void)cacheRooms:(NSArray*)rooms callback:(AVArrayResultBlock)callback{
-    NSMutableSet* userIds=[NSMutableSet set];
++(void)cacheAndFillRooms:(NSMutableArray*)rooms callback:(AVBooleanResultBlock)callback{
+    NSMutableSet* convids=[NSMutableSet set];
     for(CDRoom* room in rooms){
-        if(room.type==CDConvTypeSingle){
-            if([CDCache lookupUser:room.otherId]==nil){
-                [userIds addObject:room.otherId];
-            }
-        }
+        [convids addObject:room.convid];
     }
-    [CDCache cacheUsersWithIds:userIds callback:callback];
+    [CDCache cacheConvsWithIds:convids callback:^(NSArray *objects, NSError *error) {
+        if(error){
+            callback(NO,error);
+        }else{
+            for(CDRoom * room in rooms){
+                room.conv=[CDCache lookupConvById:room.convid];
+            }
+            NSMutableSet* userIds=[NSMutableSet set];
+            for(CDRoom* room in rooms){
+                if([CDConvService typeOfConv:room.conv]==CDConvTypeSingle){
+                    [userIds addObject:[CDConvService otherIdOfConv:room.conv]];
+                }
+            }
+            [CDCache cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
+                if(error){
+                    callback(NO,error);
+                }else{
+                    callback(YES,nil);
+                }
+            }];
+        }
+    }];
 }
 
 @end

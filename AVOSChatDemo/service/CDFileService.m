@@ -29,5 +29,9 @@
     return [[self getFilesPath] stringByAppendingFormat:@"%@",objectId];
 }
 
++(NSString*)tmpPath{
+    return [[self getFilesPath] stringByAppendingFormat:@"tmp"];
+}
+
 
 @end

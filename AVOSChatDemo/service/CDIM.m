@@ -12,7 +12,6 @@
 
 static CDIM*instance;
 static BOOL initialized;
-static NSMutableArray* _convs;
 
 @interface CDIM()<AVIMClientDelegate,AVIMSignatureDataSource>{
     
@@ -42,7 +41,6 @@ static NSMutableArray* _convs;
 {
     self = [super init];
     if (self) {
-        _convs=[NSMutableArray array];
         _imClient=[[AVIMClient alloc] init];
         _imClient.delegate=self;
         _storage=[CDStorage sharedInstance];
@@ -64,17 +62,14 @@ static NSMutableArray* _convs;
 }
 
 - (void)close {
-    [_convs removeAllObjects];
     [_imClient closeWithCallback:nil];
     initialized = NO;
 }
 
 #pragma mark - conversation
 
-- (void)addConv:(AVIMConversation *)conv {
-    if (conv && ![_convs containsObject:conv]) {
-        [_convs addObject:conv];
-    }
+-(void)fecthConvWithId:(NSString*)convid callback:(AVIMConversationResultBlock)callback{
+    [_imClient queryConversationById:convid callback:callback];
 }
 
 - (void)fetchConvWithUserId:(NSString *)userId callback:(AVIMConversationResultBlock)callback {
@@ -88,7 +83,6 @@ static NSMutableArray* _convs;
             AVIMConversationResultBlock WithConv=^(AVIMConversation* conv,NSError* error){
                 if(error){
                 }else{
-                    [self addConv:conv];
                     callback(conv, nil);
                 }
             };
@@ -108,27 +102,6 @@ static NSMutableArray* _convs;
 
 -(AVIMTypedMessage*)getLastMsgWithConvid:(NSString*)convid{
     return nil;
-}
-
-- (void)findRoomsWithCallback:(AVArrayResultBlock)callback {
-    //todo: getConversationsFromDB
-    NSMutableArray* rooms=[NSMutableArray array];
-    for(AVIMConversation* conv in _convs){
-        CDRoom* room=[[CDRoom alloc] init];
-        room.conv=conv;
-        room.unreadCount=0;
-        room.type=[CDConvService typeOfConv:room.conv];
-        if(room.type==CDConvTypeSingle){
-            room.otherId=[CDConvService otherIdOfConv:conv];
-        }
-        room.lastMsg=[self getLastMsgWithConvid:conv.conversationId];
-        [rooms addObject:room];
-    }
-    [CDCache cacheRooms:rooms callback:^(NSArray *objects, NSError *error) {
-        if([CDUtils filterError:error]){
-            callback(rooms,nil);
-        }
-    }];
 }
 
 -(void)findGroupedConvsWithBlock:(AVArrayResultBlock)block{
@@ -168,14 +141,18 @@ static NSMutableArray* _convs;
     }
 }
 
+-(void)fetchConvsWithIds:(NSSet*)convids callback:(AVIMArrayResultBlock)callback{
+    if(convids.count>0){
+        [_imClient queryConversationByIds:[convids allObjects] callback:callback];
+    }else{
+        callback([NSMutableArray array],nil);
+    }
+}
+
 #pragma mark - send or receive message
 
 -(void)postUpdatedMsg:(id)msg{
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_MESSAGE_UPDATED object:msg];
-}
-
--(void)sendMsg:(AVIMTypedMessage*)msg conv:(AVIMConversation *)conv callback:(AVIMBooleanResultBlock)callback{
-    [conv sendMessage:msg callback:callback];
 }
 
 -(void)receiveMsg:(AVIMTypedMessage*)msg{
@@ -237,6 +214,9 @@ static NSMutableArray* _convs;
  */
 - (void)conversation:(AVIMConversation *)conversation didReceiveTypedMessage:(AVIMTypedMessage *)message{
     DLog();
+    if(conversation!=nil){
+        [_storage insertRoomWithConvid:conversation.conversationId];
+    }
     if(message.messageId){
         [self receiveMsg:message];
     }

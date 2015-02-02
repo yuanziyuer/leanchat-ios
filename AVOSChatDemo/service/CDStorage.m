@@ -8,15 +8,17 @@
 
 #import "CDStorage.h"
 #import "CDUtils.h"
-#import "CDModels.h"
 
-#define MSG_TABLE_SQL @"create table if not exists msgs(id integer primary key,msg_id varchar(63) unique not null,convid varchar(63) not null,object blob not null,time varchar(63) not null)"
+#define MSG_TABLE_SQL @"CREATE TABLE IF NOT EXISTS `msgs` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `msg_id` VARCHAR(63) UNIQUE NOT NULL,`convid` VARCHAR(63) NOT NULL,`object` BLOB NOT NULL,`time` VARCHAR(63) NOT NULL)"
+#define ROOMS_TABLE_SQL @"CREATE TABLE IF NOT EXISTS `rooms` (`id` INTEGER PRIMARY KEY AUTOINCREMENT,`convid` VARCHAR(63) UNIQUE NOT NULL,`unread_count` INTEGER DEFAULT 0)"
 
 #define FIELD_ID @"id"
 #define FIELD_CONVID @"convid"
 #define FIELD_OBJECT @"object"
 #define FIELD_TIME @"time"
 #define FIELD_MSG_ID @"msg_id"
+
+#define FIELD_UNREAD_COUNT @"unread_count"
 
 static CDStorage* _storage;
 
@@ -54,8 +56,15 @@ static CDStorage* _storage;
     _dbQueue=[FMDatabaseQueue databaseQueueWithPath:[self dbPathWithUserId:userId]];
     [_dbQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:MSG_TABLE_SQL];
+        [db executeUpdate:ROOMS_TABLE_SQL];
     }];
 }
+
+-(FMDatabaseQueue*)getDBQueue{
+    return _dbQueue;
+}
+
+#pragma mark - msgs table
 
 -(NSArray*)getMsgsWithConvid:(NSString*)convid maxTime:(int64_t)time limit:(int)limit db:(FMDatabase*)db{
     NSString* timeStr=[CDUtils strOfInt64:time];
@@ -75,21 +84,52 @@ static CDStorage* _storage;
 }
 
 -(AVIMTypedMessage* )getMsgByResultSet:(FMResultSet*)rs{
+    AVIMTypedMessage* msg;
     NSData* data=[rs objectForColumnName:FIELD_OBJECT];
-    AVIMTypedMessage* msg=[NSKeyedUnarchiver unarchiveObjectWithData:data];
+    AVFile *file=[AVFile fileWithData:data];
+    [file saveInBackground];
+    DLog(@"after=%@",data);
+    if(data!=nil){
+        msg=[NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }
     return msg;
 }
 
 -(void)insertMsg:(AVIMTypedMessage*)msg{
     [_dbQueue inDatabase:^(FMDatabase *db) {
         NSData* data=[NSKeyedArchiver archivedDataWithRootObject:msg];
+        DLog(@"before=%@",data);
         NSDictionary* dict=@{FIELD_MSG_ID:msg.messageId,FIELD_CONVID:msg.conversationId,FIELD_OBJECT:data,FIELD_TIME:[CDUtils strOfInt64:msg.sendTimestamp]};
         [db executeUpdate:@"insert into msgs (msg_id,convid,object,time) values(:msg_id,:convid,:object,:time)" withParameterDictionary:dict];
     }];
 }
 
--(FMDatabaseQueue*)getDBQueue{
-    return _dbQueue;
+#pragma mark - rooms table
+
+-(CDRoom*)getRoomByResultSet:(FMResultSet*)rs{
+    CDRoom* room=[[CDRoom alloc] init];
+    room.convid=[rs stringForColumn:FIELD_CONVID];
+    room.unreadCount=[rs intForColumn:FIELD_UNREAD_COUNT];
+    room.lastMsg=[self getMsgByResultSet:rs];
+    return room;
+}
+
+-(NSArray*)getRooms{
+    NSMutableArray* rooms=[NSMutableArray array];
+    [_dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet* rs=[db executeQuery:@"SELECT * FROM rooms JOIN msgs ON rooms.convid=msgs.convid GROUP BY msgs.convid ORDER BY msgs.time DESC"];
+        while ([rs next]) {
+            [rooms addObject:[self getRoomByResultSet:rs]];
+        }
+        [rs close];
+    }];
+    return rooms;
+}
+
+-(void)insertRoomWithConvid:(NSString*)convid{
+    [_dbQueue inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@"INSERT INTO ROOMS (convid) VALUES(?) " withArgumentsInArray:@[convid]];
+    }];
 }
 
 @end

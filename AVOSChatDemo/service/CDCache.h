@@ -18,19 +18,19 @@
 
 + (AVUser *)lookupUser:(NSString*)userId;
 
-+(CDChatGroup*)lookupChatGroupById:(NSString*)groupId;
++(AVIMConversation*)lookupConvById:(NSString*)convid;
 
-+(void)registerChatGroup:(CDChatGroup*)chatGroup;
++(void)registerConv:(AVIMConversation*)conv;
 
 +(void)cacheUsersWithIds:(NSSet*)userIds callback:(AVArrayResultBlock)callback;
 
-+(void)cacheChatGroupsWithIds:(NSMutableSet*)groupIds withCallback:(AVArrayResultBlock)callback;
++(void)cacheConvsWithIds:(NSMutableSet*)convids callback:(AVArrayResultBlock)callback;
 
-+(void)registerChatGroups:(NSArray*)chatGroups;
++(void)registerConvs:(NSArray*)convs;
 
 +(void)cacheMsgs:(NSArray*)msgs withCallback:(AVArrayResultBlock)callback;
 
-#pragma mark - current chat group
+#pragma mark - current conv
 
 +(void)setCurConv:(AVIMConversation*)conv;
 
@@ -42,6 +42,6 @@
 
 +(NSArray*)getFriends;
 
-+(void)cacheRooms:(NSArray*)rooms callback:(AVArrayResultBlock)callback;
++(void)cacheAndFillRooms:(NSMutableArray*)rooms callback:(AVBooleanResultBlock)callback;
 
 @end

@@ -21,14 +21,14 @@
 
 - (void)close;
 
+-(void)fecthConvWithId:(NSString*)convid callback:(AVIMConversationResultBlock)callback;
+
 - (void)fetchConvWithUserId:(NSString *)userId callback:(AVIMConversationResultBlock)callback ;
 
-- (void)findRoomsWithCallback:(AVArrayResultBlock)callback;
+-(void)fetchConvsWithIds:(NSSet*)convids callback:(AVIMArrayResultBlock)callback;
 
 -(void)findGroupedConvsWithBlock:(AVArrayResultBlock)block;
 
 -(void)setTypeOfConv:(AVIMConversation*)conv callback:(AVBooleanResultBlock)callback;
-
--(void)sendMsg:(AVIMTypedMessage*)msg conv:(AVIMConversation *)conv callback:(AVIMBooleanResultBlock)callback;
 
 @end

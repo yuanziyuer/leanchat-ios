@@ -7,18 +7,12 @@
 //
 
 #import "CDChatListVC.h"
-#import "CDSessionManager.h"
 #import "CDChatRoomVC.h"
 #import "CDPopMenu.h"
-#import "CDRoom.h"
-#import "CDImageTwoLabelTableCell.h"
-#import "CDUtils.h"
-#import "CDCache.h"
-#import "CDCloudService.h"
+#import "CDViews.h"
+#import "CDModels.h"
 #import "CDService.h"
-#import "CDDatabaseService.h"
 #import "SRRefreshView.h"
-#import "CDUpgradeService.h"
 
 enum : NSUInteger {
     kTagNameLabel = 10000,
@@ -26,13 +20,17 @@ enum : NSUInteger {
 
 @interface CDChatListVC ()  {
     CDPopMenu *_popMenu;
-    NSMutableArray *rooms;
-    CDIM* imClient;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (strong,nonatomic) SRRefreshView* slimeView;
+@property UIRefreshControl* refreshControl;
+
+@property NSMutableArray* rooms;
+
+@property CDStorage* storage;
+
+@property CDIM* im;
 
 @end
 
@@ -44,36 +42,35 @@ static NSString *cellIdentifier = @"ContactCell";
     if ((self = [super init])) {
         self.title = @"消息";
         self.tabBarItem.image = [UIImage imageNamed:@"tabbar_chat_active"];
-        rooms=[[NSMutableArray alloc] init];
-        imClient=[CDIM sharedInstance];
+        _rooms=[[NSMutableArray alloc] init];
+        _im=[CDIM sharedInstance];
+        _storage=[CDStorage sharedInstance];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showMenuOnView:)];
     NSString* nibName=NSStringFromClass([CDImageTwoLabelTableCell class]);
     self.tableView.dataSource=self;
     self.tableView.delegate=self;
     [self.tableView registerNib:[UINib nibWithNibName:nibName bundle:nil] forCellReuseIdentifier:cellIdentifier];
     
-//    UIRefreshControl* refreshControl=[[UIRefreshControl alloc] init];
-//    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
-//    [self.tableView addSubview:refreshControl];
+    _refreshControl=[[UIRefreshControl alloc] init];
+    [_refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:_refreshControl];
+    
     _networkStateView=[[CDSessionStateView alloc] initWithWidth:self.tableView.frame.size.width];
     [_networkStateView setDelegate:self];
     [_networkStateView observeSessionUpdate];
     
-    [_tableView addSubview:self.slimeView];
-    //[_slimeView setLoadingWithExpansion];
-    [_slimeView setLoading:YES];
+//    [_tableView addSubview:self.slimeView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:NOTIFICATION_MESSAGE_UPDATED object:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self refresh:_slimeView];
+    [self refresh:nil];
     // hide it
 }
 
@@ -81,51 +78,26 @@ static NSString *cellIdentifier = @"ContactCell";
     [super viewDidDisappear:animated];
 }
 
-- (SRRefreshView *)slimeView
-{
-    if (!_slimeView) {
-        _slimeView = [[SRRefreshView alloc] init];
-        _slimeView.delegate = self;
-        _slimeView.upInset = 64;
-        _slimeView.slimeMissWhenGoingBack = YES;
-        _slimeView.slime.bodyColor = [UIColor grayColor];
-        _slimeView.slime.skinColor = [UIColor grayColor];
-        _slimeView.slime.lineWith = 1;
-        _slimeView.slime.shadowBlur = 4;
-        _slimeView.slime.shadowColor = [UIColor grayColor];
-        _slimeView.backgroundColor = [UIColor clearColor];
-    }
-    
-    return _slimeView;
-}
-
--(void)refresh{
-    [self refresh:nil];
-}
-
--(void)refresh:(SRRefreshView*)refrshView{
+-(void)refresh:(UIRefreshControl*)refreshControl{
+    NSMutableArray* rooms=[[_storage getRooms] mutableCopy];
     [CDUtils showNetworkIndicator];
-    [imClient findRoomsWithCallback:^(NSArray *objects, NSError *error) {
-        if(refrshView!=nil){
-            [refrshView endRefresh];
-        }
+    [CDCache cacheAndFillRooms:rooms callback:^(BOOL succeeded, NSError *error) {
         [CDUtils hideNetworkIndicator];
-        [CDUtils filterError:error callback:^{
-            rooms=[objects mutableCopy];
+        [CDUtils stopRefreshControl:refreshControl];
+        if([CDUtils filterError:error]){
+            _rooms=rooms;
             [self.tableView reloadData];
             int totalUnreadCount=0;
+            for(CDRoom* room in _rooms){
+                totalUnreadCount+=room.unreadCount;
+            }
             if(totalUnreadCount>0){
                 self.tabBarItem.badgeValue=[NSString stringWithFormat:@"%d",totalUnreadCount];
             }else{
                 self.tabBarItem.badgeValue=nil;
             }
-        }];
+        }
     }];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)dealloc{
@@ -139,29 +111,30 @@ static NSString *cellIdentifier = @"ContactCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [rooms count];
+    return [_rooms count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CDImageTwoLabelTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    CDRoom* room = [rooms objectAtIndex:indexPath.row];
-    if(room.type==CDConvTypeSingle){
-        AVUser* user=[CDCache lookupUser:room.otherId];
+    CDRoom* room = [_rooms objectAtIndex:indexPath.row];
+    CDConvType type=[CDConvService typeOfConv:room.conv];
+    if(type==CDConvTypeSingle){
+        AVUser* user=[CDCache lookupUser:[CDConvService otherIdOfConv:room.conv]];
         [CDUserService displayAvatarOfUser:user avatarView:cell.myImageView];
         cell.topLabel.text=user.username;
     }else{
         [cell.myImageView setImage:[UIImage imageNamed:@"group_icon"]];
-        cell.topLabel.text=room.conv.name;
+        cell.topLabel.text=[CDConvService nameOfConv:room.conv];
     }
     
     cell.bottomLabel.text=[CDIMUtils getMsgDesc:room.lastMsg];
-    cell.unreadCount=0;
+    cell.unreadCount=room.unreadCount;
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    CDRoom *room = [rooms objectAtIndex:indexPath.row];
+    CDRoom *room = [_rooms objectAtIndex:indexPath.row];
     CDChatRoomVC *controller = [[CDChatRoomVC alloc] initWithConv:room.conv];
     UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:controller];
     [self presentViewController:nav animated:YES completion:nil];
@@ -175,21 +148,6 @@ static NSString *cellIdentifier = @"ContactCell";
 
 -(void)onSessionFineWithStateView:(CDSessionStateView *)view{
     _tableView.tableHeaderView=nil;
-}
-
--(void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView{
-    [self refresh:refreshView];
-}
-
-#pragma mark - scrollView delegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    [_slimeView scrollViewDidScroll];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    [_slimeView scrollViewDidEndDraging];
 }
 
 @end
