@@ -57,7 +57,7 @@ static NSString * const reuseIdentifier = @"Cell";
         }];
     }];
     NSString* curUserId=[AVUser currentUser].objectId;
-    own=[conv.constructor isEqualToString:curUserId];
+    own=[conv.creator isEqualToString:curUserId];
     [self setupBarButton];
 }
 
@@ -91,7 +91,7 @@ static NSString * const reuseIdentifier = @"Cell";
         if(own){
             AVIMConversation* conv=[self getConv];
             NSString* userId=[conv.members objectAtIndex:indexPath.row];
-            if([userId isEqualToString:conv.constructor]==NO){
+            if([userId isEqualToString:conv.creator]==NO){
                 UIAlertView * alert=[[UIAlertView alloc]
                                      initWithTitle:nil message:@"确定要踢走该成员吗？"  delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
                 alert.tag=indexPath.row;

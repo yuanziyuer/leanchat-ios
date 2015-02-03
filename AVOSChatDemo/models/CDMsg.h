@@ -1,5 +1,5 @@
 //
-//  CDChatMsg.h
+//  CDMsg.h
 //  LeanChat
 //
 //  Created by lzw on 15/2/3.
@@ -7,7 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CDCommon.h"
 
-@interface CDChatMsg : NSObject
+@interface CDMsg : NSObject
+
+@property int localId;
+
+@property AVIMTypedMessage* innerMsg;
 
 @end

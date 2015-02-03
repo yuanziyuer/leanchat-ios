@@ -94,6 +94,16 @@ static CDStorage* _storage;
     return result;
 }
 
+-(BOOL)updateFailedMsg:(AVIMTypedMessage*)msg byLocalId:(int)localId{
+    __block BOOL result;
+    [_dbQueue inDatabase:^(FMDatabase *db) {
+        NSData* data=[NSKeyedArchiver archivedDataWithRootObject:msg];
+        result=[db executeUpdate:@"UPDATE msgs SET object=?,time=? WHERE id=? "
+                   withArgumentsInArray:@[data,[CDUtils strOfInt64:msg.sendTimestamp],@(localId)]];
+    }];
+    return result;
+}
+
 -(BOOL)updateStatus:(AVIMMessageStatus)status byMsgId:(NSString*)msgId{
     AVIMTypedMessage* msg=[self getMsgByMsgId:msgId];
     if(msg){
@@ -107,8 +117,10 @@ static CDStorage* _storage;
 -(NSMutableArray*)getMsgsByResultSet:(FMResultSet*)rs{
     NSMutableArray *result = [NSMutableArray array];
     while ([rs next]) {
-        AVIMTypedMessage *msg=[self getMsgByResultSet:rs];
-        [result addObject:msg];
+        CDMsg* localMsg=[[CDMsg alloc] init];
+        localMsg.localId=[rs intForColumn:FIELD_ID];
+        localMsg.innerMsg=[self getMsgByResultSet:rs];
+        [result addObject:localMsg];
     }
     [rs close];
     return result;
@@ -120,20 +132,18 @@ static CDStorage* _storage;
     if(data!=nil){
         msg=[NSKeyedUnarchiver unarchiveObjectWithData:data];
     }
+    DLog(@"%@",msg);
     return msg;
 }
 
 -(int64_t)insertMsg:(AVIMTypedMessage*)msg{
     __block int64_t rowId;
+    DLog(@"%@",msg);
     [_dbQueue inDatabase:^(FMDatabase *db) {
         NSData* data=[NSKeyedArchiver archivedDataWithRootObject:msg];
-        NSDictionary* dict=@{FIELD_MSG_ID:msg.messageId,FIELD_CONVID:msg.conversationId,FIELD_OBJECT:data,FIELD_TIME:[CDUtils strOfInt64:msg.sendTimestamp]};
-        BOOL result=[db executeUpdate:@"insert into msgs (msg_id,convid,object,time) values(:msg_id,:convid,:object,:time)" withParameterDictionary:dict];
-        if(result){
-            rowId=[db lastInsertRowId];
-        }else{
-            rowId=-1;
-        }
+        BOOL result=[db executeUpdate:@"INSERT INTO msgs (msg_id,convid,object,time) VALUES(?,?,?,?)"
+                 withArgumentsInArray:@[msg.messageId,msg.conversationId,data,[CDUtils strOfInt64:msg.sendTimestamp]]];
+        rowId=[db lastInsertRowId];
     }];
     return rowId;
 }

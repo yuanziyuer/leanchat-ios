@@ -57,7 +57,7 @@
 		704A890F1A30F5B200D2A3C2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */; };
 		704CFA181A809DC4000B378F /* CDGroupDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 704CFA161A809DC4000B378F /* CDGroupDetailViewController.m */; };
 		704CFA191A809DC4000B378F /* CDGroupDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 704CFA171A809DC4000B378F /* CDGroupDetailViewController.xib */; };
-		704CFA231A80AF84000B378F /* CDChatMsg.m in Sources */ = {isa = PBXBuildFile; fileRef = 704CFA221A80AF84000B378F /* CDChatMsg.m */; };
+		704CFA261A80B2B7000B378F /* CDMsg.m in Sources */ = {isa = PBXBuildFile; fileRef = 704CFA251A80B2B7000B378F /* CDMsg.m */; };
 		705304041A5C20BF0078B876 /* sr_refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 705303FD1A5C20BF0078B876 /* sr_refresh.png */; };
 		705304051A5C20BF0078B876 /* sr_refresh@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 705303FE1A5C20BF0078B876 /* sr_refresh@2X.png */; };
 		705304061A5C20BF0078B876 /* SRRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 705304011A5C20BF0078B876 /* SRRefreshView.m */; };
@@ -558,8 +558,8 @@
 		704CFA151A809DC4000B378F /* CDGroupDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDGroupDetailViewController.h; sourceTree = "<group>"; };
 		704CFA161A809DC4000B378F /* CDGroupDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDGroupDetailViewController.m; sourceTree = "<group>"; };
 		704CFA171A809DC4000B378F /* CDGroupDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDGroupDetailViewController.xib; sourceTree = "<group>"; };
-		704CFA211A80AF84000B378F /* CDChatMsg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDChatMsg.h; sourceTree = "<group>"; };
-		704CFA221A80AF84000B378F /* CDChatMsg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDChatMsg.m; sourceTree = "<group>"; };
+		704CFA241A80B2B7000B378F /* CDMsg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDMsg.h; sourceTree = "<group>"; };
+		704CFA251A80B2B7000B378F /* CDMsg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDMsg.m; sourceTree = "<group>"; };
 		705303FD1A5C20BF0078B876 /* sr_refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sr_refresh.png; sourceTree = "<group>"; };
 		705303FE1A5C20BF0078B876 /* sr_refresh@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sr_refresh@2X.png"; sourceTree = "<group>"; };
 		705303FF1A5C20BF0078B876 /* SRDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRDefine.h; sourceTree = "<group>"; };
@@ -2413,8 +2413,8 @@
 				70D4C5911A237C1E001A655D /* CDRoom.m */,
 				70CEE61B1A676F4B0034BCA3 /* CDModels.h */,
 				70CEE61F1A677B300034BCA3 /* CDUser.h */,
-				704CFA211A80AF84000B378F /* CDChatMsg.h */,
-				704CFA221A80AF84000B378F /* CDChatMsg.m */,
+				704CFA241A80B2B7000B378F /* CDMsg.h */,
+				704CFA251A80B2B7000B378F /* CDMsg.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -3254,6 +3254,7 @@
 				70A066521A24A3A2004DA201 /* XHMoreGameTableViewController.m in Sources */,
 				70A066901A24A3A2004DA201 /* SETextSelection.m in Sources */,
 				70A066A81A24A3A2004DA201 /* XHBubblePhotoImageView.m in Sources */,
+				704CFA261A80B2B7000B378F /* CDMsg.m in Sources */,
 				70A066791A24A3A2004DA201 /* MLLetterIndexNavigationView.m in Sources */,
 				70A066891A24A3A2004DA201 /* SETextAttachment.m in Sources */,
 				70A0667C1A24A3A2004DA201 /* MultiSelectItem.m in Sources */,
@@ -3352,7 +3353,6 @@
 				70A066B71A24A3A2004DA201 /* XHNewsTemplateContainerView.m in Sources */,
 				70A066591A24A3A2004DA201 /* XHMessageTableViewController.m in Sources */,
 				70A0668F1A24A3A2004DA201 /* SETextMagnifierRanged.m in Sources */,
-				704CFA231A80AF84000B378F /* CDChatMsg.m in Sources */,
 				70D4C61F1A237C1E001A655D /* CDGroupDetailVC.m in Sources */,
 				70A0663A1A24A3A2004DA201 /* UIImage+XHRounded.m in Sources */,
 				70CACF3D1A6EC97500F58885 /* CDIM.m in Sources */,

@@ -23,6 +23,8 @@
 
 -(BOOL)updateStatus:(AVIMMessageStatus)status byMsgId:(NSString*)msgId;
 
+-(BOOL)updateFailedMsg:(AVIMTypedMessage*)msg byLocalId:(int)localId;
+
 -(FMDatabaseQueue*)getDBQueue;
 
 -(NSArray*)getRooms;

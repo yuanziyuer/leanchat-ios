@@ -21,7 +21,6 @@
 
 #import "CDService.h"
 
-
 #define ONE_PAGE_SIZE 20
 
 typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
@@ -242,7 +241,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     }else{
         xhMessage.bubbleMessageType=XHBubbleMessageTypeReceiving;
     }
-    NSInteger msgStatuses[4]={AVIMMessageStatusSending,AVIMMessageStatusSent,AVIMMessageStatusDelivered,AVIMMessageStatusNone};
+    NSInteger msgStatuses[4]={AVIMMessageStatusSending,AVIMMessageStatusSent,AVIMMessageStatusDelivered,AVIMMessageStatusFailed};
     NSInteger xhMessageStatuses[4]={XHMessageStatusSending,XHMessageStatusSent,XHMessageStatusReceived,XHMessageStatusFailed};
     
     if(xhMessage.bubbleMessageType==XHBubbleMessageTypeSending){
@@ -255,11 +254,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
             }
         }
         xhMessage.status=status;
-        //        if(msg.roomType==CDMsgRoomTypeGroup){
-        //            if(status==CDMsgStatusSendSucceed){
-        //                xhMessage.status=XHMessageStatusReceived;
-        //            }
-        //        }
     }else{
         xhMessage.status=XHMessageStatusReceived;
     }
@@ -286,8 +280,8 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 - (NSArray *)getXHMessages:(NSArray *)msgs {
     NSMutableArray* messages=[[NSMutableArray alloc] init];
-    for(AVIMTypedMessage* msg in msgs){
-        XHMessage* xhMsg=[self getXHMessageByMsg:msg];
+    for(CDMsg* msg in msgs){
+        XHMessage* xhMsg=[self getXHMessageByMsg:msg.innerMsg];
         if(xhMsg){
             [messages addObject:xhMsg];
         }
@@ -361,8 +355,8 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 - (void)cacheMsgs:(NSArray *)msgs callback:(AVBooleanResultBlock)callback{
     __block NSMutableSet* userIds=[[NSMutableSet alloc] init];
-    for(AVIMTypedMessage* msg in msgs){
-        [userIds addObject:msg.clientId];
+    for(CDMsg* msg in msgs){
+        [userIds addObject:msg.innerMsg.clientId];
     }
     [CDCache cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
         if(error){
@@ -371,9 +365,9 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
             for(NSString* userId in userIds){
                 [self cacheAvatarByUserId:userId];
             }
-            for(AVIMTypedMessage* msg in msgs){
-                if(msg.mediaType==kAVIMMessageMediaTypeImage){
-                    [self cacheImageOfMsg:(AVIMImageMessage*)msg];
+            for(CDMsg* msg in msgs){
+                if(msg.innerMsg.mediaType==kAVIMMessageMediaTypeImage){
+                    [self cacheImageOfMsg:(AVIMImageMessage*)msg.innerMsg];
                 }
             }
             callback(YES,nil);
@@ -414,11 +408,23 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     [self.conv sendMessage:msg options:AVIMMessageSendOptionRequestReceipt callback:^(BOOL succeeded, NSError *error) {
         if(error){
             msg.messageId=[CDUtils uuid];
+            msg.sendTimestamp=[[NSDate date] timeIntervalSince1970]*1000;
         }
         if(onJustSent){
             onJustSent();
         }
         int64_t rowId=[_storage insertMsg:msg];
+        [self loadMsgsWithLoadMore:NO];
+    }];
+}
+
+-(void)resendMsg:(CDMsg*)msg{
+    [self.conv sendMessage:msg.innerMsg options:AVIMMessageSendOptionRequestReceipt callback:^(BOOL succeeded, NSError *error) {
+        if(error){
+            
+        }else{
+            [_storage updateFailedMsg:msg.innerMsg byLocalId:msg.localId];
+        }
         [self loadMsgsWithLoadMore:NO];
     }];
 }
@@ -499,15 +505,11 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 }
 
 -(void)didRetrySendMessage:(id<XHMessageModel>)message atIndexPath:(NSIndexPath *)indexPath{
-//    CDMsg* msg=[_msgs objectAtIndex:indexPath.row];
-//    msg.status=CDMsgStatusSendStart;
-//    
-//    XHMessage* xhMsg=(XHMessage*)message;
-//    xhMsg.status=XHMessageStatusSending;
-//    [self.messageTableView reloadData];
-    
-    //NSLog(@"resend");
-    //[sessionManager resendMsg:msg toPeerId:_chatUser.objectId group:_group];
+    CDMsg* msg=[_msgs objectAtIndex:indexPath.row];
+    XHMessage* xhMsg=(XHMessage*)message;
+    xhMsg.status=XHMessageStatusSending;
+    [self.messageTableView reloadData];
+    [self resendMsg:msg];
 }
 
 #pragma mark - XHAudioPlayerHelper Delegate
