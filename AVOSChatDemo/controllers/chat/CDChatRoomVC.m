@@ -412,13 +412,11 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 -(void)sendMsg:(AVIMTypedMessage*)msg onJustSent:(CDBlock)onJustSent{
     [self.conv sendMessage:msg options:AVIMMessageSendOptionRequestReceipt callback:^(BOOL succeeded, NSError *error) {
-        if([CDUtils filterError:error]){
-            if(onJustSent){
-                onJustSent();
-            }
-            [_storage insertMsg:msg];
-            [self loadMsgsWithLoadMore:NO];
+        if(onJustSent){
+            onJustSent();
         }
+        [_storage insertMsg:msg];
+        [self loadMsgsWithLoadMore:NO];
     }];
 }
 
