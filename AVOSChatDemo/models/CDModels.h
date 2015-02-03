@@ -9,7 +9,6 @@
 #ifndef LeanChat_CDModels_h
 #define LeanChat_CDModels_h
 
-#import "CDMsg.h"
 #import "CDRoom.h"
 #import "CDSetting.h"
 #import "CDChatGroup.h"

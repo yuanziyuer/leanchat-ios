@@ -7,9 +7,7 @@
 //
 
 #import "CDNewGroupVC.h"
-#import "CDSessionManager.h"
-#import "CDUtils.h"
-#import "CDGroupService.h"
+#import "CDService.h"
 
 @interface CDNewGroupVC ()
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
@@ -34,15 +32,15 @@
     NSString* name=[self.nameTextField text];
     if([name length]>0){
         UIActivityIndicatorView* indicator=[CDUtils showIndicatorAtView:self.view];
-        [CDGroupService saveNewGroupWithName:name withCallback:^(AVGroup *group, NSError *error) {
-            [indicator stopAnimating];
-            if(error){
-                [CDUtils alertError:error];
-            }else{
-                [self backPressed];
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_GROUP_UPDATED object:self];
-            }
-        }];
+//        [CDGroupService saveNewGroupWithName:name withCallback:^(AVGroup *group, NSError *error) {
+//            [indicator stopAnimating];
+//            if(error){
+//                [CDUtils alertError:error];
+//            }else{
+//                [self backPressed];
+//                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_GROUP_UPDATED object:self];
+//            }
+//        }];
     }
 }
 

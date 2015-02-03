@@ -8,7 +8,6 @@
 
 #import "CDBaseTableVC.h"
 #import "CDSessionStateView.h"
-#import "CDGroupService.h"
 #import "CDCommon.h"
 #import "SRRefreshView.h"
 

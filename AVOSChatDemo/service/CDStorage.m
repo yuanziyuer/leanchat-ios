@@ -123,12 +123,19 @@ static CDStorage* _storage;
     return msg;
 }
 
--(void)insertMsg:(AVIMTypedMessage*)msg{
+-(int64_t)insertMsg:(AVIMTypedMessage*)msg{
+    __block int64_t rowId;
     [_dbQueue inDatabase:^(FMDatabase *db) {
         NSData* data=[NSKeyedArchiver archivedDataWithRootObject:msg];
         NSDictionary* dict=@{FIELD_MSG_ID:msg.messageId,FIELD_CONVID:msg.conversationId,FIELD_OBJECT:data,FIELD_TIME:[CDUtils strOfInt64:msg.sendTimestamp]};
-        [db executeUpdate:@"insert into msgs (msg_id,convid,object,time) values(:msg_id,:convid,:object,:time)" withParameterDictionary:dict];
+        BOOL result=[db executeUpdate:@"insert into msgs (msg_id,convid,object,time) values(:msg_id,:convid,:object,:time)" withParameterDictionary:dict];
+        if(result){
+            rowId=[db lastInsertRowId];
+        }else{
+            rowId=-1;
+        }
     }];
+    return rowId;
 }
 
 #pragma mark - rooms table

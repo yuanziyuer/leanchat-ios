@@ -55,6 +55,9 @@
 		704A6CA31A527F7300680A50 /* XHMessageStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 704A6CA21A527F7300680A50 /* XHMessageStatusView.m */; };
 		704A6CAC1A53BAF100680A50 /* messageSendFail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 704A6CAB1A53BAF100680A50 /* messageSendFail@2x.png */; };
 		704A890F1A30F5B200D2A3C2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */; };
+		704CFA181A809DC4000B378F /* CDGroupDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 704CFA161A809DC4000B378F /* CDGroupDetailViewController.m */; };
+		704CFA191A809DC4000B378F /* CDGroupDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 704CFA171A809DC4000B378F /* CDGroupDetailViewController.xib */; };
+		704CFA231A80AF84000B378F /* CDChatMsg.m in Sources */ = {isa = PBXBuildFile; fileRef = 704CFA221A80AF84000B378F /* CDChatMsg.m */; };
 		705304041A5C20BF0078B876 /* sr_refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 705303FD1A5C20BF0078B876 /* sr_refresh.png */; };
 		705304051A5C20BF0078B876 /* sr_refresh@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 705303FE1A5C20BF0078B876 /* sr_refresh@2X.png */; };
 		705304061A5C20BF0078B876 /* SRRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 705304011A5C20BF0078B876 /* SRRefreshView.m */; };
@@ -63,9 +66,7 @@
 		705553DE1A2E35A8001EA4FE /* tabbar_contacts_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 705553D61A2E35A8001EA4FE /* tabbar_contacts_active@2x.png */; };
 		705553E01A2E35A8001EA4FE /* tabbar_discover_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 705553D81A2E35A8001EA4FE /* tabbar_discover_active@2x.png */; };
 		705553E21A2E35A8001EA4FE /* tabbar_me_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 705553DA1A2E35A8001EA4FE /* tabbar_me_active@2x.png */; };
-		705553E61A2E3AEF001EA4FE /* CDSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 705553E51A2E3AEF001EA4FE /* CDSessionManager.m */; };
 		705553E91A2E3C1F001EA4FE /* CDCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 705553E81A2E3C1F001EA4FE /* CDCache.m */; };
-		705553EC1A2E49F5001EA4FE /* CDDatabaseService.m in Sources */ = {isa = PBXBuildFile; fileRef = 705553EB1A2E49F5001EA4FE /* CDDatabaseService.m */; };
 		706A0DC61A5ABEAE0075DEA9 /* CDReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 706A0DC51A5ABEAE0075DEA9 /* CDReachability.m */; };
 		706A0DC91A5AC0C90075DEA9 /* CDSessionStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 706A0DC81A5AC0C90075DEA9 /* CDSessionStateView.m */; };
 		707644221A7948FE00E6C182 /* CDConvService.m in Sources */ = {isa = PBXBuildFile; fileRef = 707644211A7948FE00E6C182 /* CDConvService.m */; };
@@ -362,7 +363,6 @@
 		70D4C6321A237C1E001A655D /* CDAddRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D4C58D1A237C1E001A655D /* CDAddRequest.m */; };
 		70D4C6331A237C1E001A655D /* CDChatGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D4C58F1A237C1E001A655D /* CDChatGroup.m */; };
 		70D4C6341A237C1E001A655D /* CDRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D4C5911A237C1E001A655D /* CDRoom.m */; };
-		70D4C6351A237C1E001A655D /* CDMsg.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D4C5931A237C1E001A655D /* CDMsg.m */; };
 		70D4C6381A237C1E001A655D /* AppIcon60x60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D4C5981A237C1E001A655D /* AppIcon60x60@2x.png */; };
 		70D4C6391A237C1E001A655D /* default_user_avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D4C59A1A237C1E001A655D /* default_user_avatar.png */; };
 		70D4C63A1A237C1E001A655D /* chat_menu_people.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D4C59B1A237C1E001A655D /* chat_menu_people.png */; };
@@ -434,7 +434,6 @@
 		70E47DE81A245D2C00DE60FE /* EmojiEmoticons.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E47DE61A245D2C00DE60FE /* EmojiEmoticons.m */; };
 		70E47DF81A245E1200DE60FE /* CDAddRequestService.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E47DEB1A245E1200DE60FE /* CDAddRequestService.m */; };
 		70E47DF91A245E1200DE60FE /* CDCloudService.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E47DED1A245E1200DE60FE /* CDCloudService.m */; };
-		70E47DFB1A245E1200DE60FE /* CDGroupService.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E47DF11A245E1200DE60FE /* CDGroupService.m */; };
 		70E47DFC1A245E1200DE60FE /* CDUserService.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E47DF31A245E1200DE60FE /* CDUserService.m */; };
 		70E47DFD1A245E1200DE60FE /* CDUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E47DF51A245E1200DE60FE /* CDUtils.m */; };
 		70EB3AFD1A72D4B000136E0D /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70CACF2D1A6EC1C200F58885 /* AVOSCloud.framework */; };
@@ -556,6 +555,11 @@
 		704A6CA21A527F7300680A50 /* XHMessageStatusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHMessageStatusView.m; sourceTree = "<group>"; };
 		704A6CAB1A53BAF100680A50 /* messageSendFail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messageSendFail@2x.png"; sourceTree = "<group>"; };
 		704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		704CFA151A809DC4000B378F /* CDGroupDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDGroupDetailViewController.h; sourceTree = "<group>"; };
+		704CFA161A809DC4000B378F /* CDGroupDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDGroupDetailViewController.m; sourceTree = "<group>"; };
+		704CFA171A809DC4000B378F /* CDGroupDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDGroupDetailViewController.xib; sourceTree = "<group>"; };
+		704CFA211A80AF84000B378F /* CDChatMsg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDChatMsg.h; sourceTree = "<group>"; };
+		704CFA221A80AF84000B378F /* CDChatMsg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDChatMsg.m; sourceTree = "<group>"; };
 		705303FD1A5C20BF0078B876 /* sr_refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sr_refresh.png; sourceTree = "<group>"; };
 		705303FE1A5C20BF0078B876 /* sr_refresh@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sr_refresh@2X.png"; sourceTree = "<group>"; };
 		705303FF1A5C20BF0078B876 /* SRDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRDefine.h; sourceTree = "<group>"; };
@@ -567,12 +571,8 @@
 		705553D61A2E35A8001EA4FE /* tabbar_contacts_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_contacts_active@2x.png"; sourceTree = "<group>"; };
 		705553D81A2E35A8001EA4FE /* tabbar_discover_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_discover_active@2x.png"; sourceTree = "<group>"; };
 		705553DA1A2E35A8001EA4FE /* tabbar_me_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_me_active@2x.png"; sourceTree = "<group>"; };
-		705553E41A2E3AEF001EA4FE /* CDSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSessionManager.h; sourceTree = "<group>"; };
-		705553E51A2E3AEF001EA4FE /* CDSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSessionManager.m; sourceTree = "<group>"; };
 		705553E71A2E3C1F001EA4FE /* CDCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCache.h; sourceTree = "<group>"; };
 		705553E81A2E3C1F001EA4FE /* CDCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCache.m; sourceTree = "<group>"; };
-		705553EA1A2E49F5001EA4FE /* CDDatabaseService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDDatabaseService.h; sourceTree = "<group>"; };
-		705553EB1A2E49F5001EA4FE /* CDDatabaseService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDDatabaseService.m; sourceTree = "<group>"; };
 		706A0DC41A5ABEAE0075DEA9 /* CDReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDReachability.h; sourceTree = "<group>"; };
 		706A0DC51A5ABEAE0075DEA9 /* CDReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDReachability.m; sourceTree = "<group>"; };
 		706A0DC71A5AC0C90075DEA9 /* CDSessionStateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSessionStateView.h; sourceTree = "<group>"; };
@@ -1067,8 +1067,6 @@
 		70D4C58F1A237C1E001A655D /* CDChatGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDChatGroup.m; sourceTree = "<group>"; };
 		70D4C5901A237C1E001A655D /* CDRoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDRoom.h; sourceTree = "<group>"; };
 		70D4C5911A237C1E001A655D /* CDRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDRoom.m; sourceTree = "<group>"; };
-		70D4C5921A237C1E001A655D /* CDMsg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDMsg.h; sourceTree = "<group>"; };
-		70D4C5931A237C1E001A655D /* CDMsg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDMsg.m; sourceTree = "<group>"; };
 		70D4C5981A237C1E001A655D /* AppIcon60x60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIcon60x60@2x.png"; sourceTree = "<group>"; };
 		70D4C59A1A237C1E001A655D /* default_user_avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_user_avatar.png; sourceTree = "<group>"; };
 		70D4C59B1A237C1E001A655D /* chat_menu_people.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_menu_people.png; sourceTree = "<group>"; };
@@ -1177,8 +1175,6 @@
 		70E47DEB1A245E1200DE60FE /* CDAddRequestService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAddRequestService.m; sourceTree = "<group>"; };
 		70E47DEC1A245E1200DE60FE /* CDCloudService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCloudService.h; sourceTree = "<group>"; };
 		70E47DED1A245E1200DE60FE /* CDCloudService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCloudService.m; sourceTree = "<group>"; };
-		70E47DF01A245E1200DE60FE /* CDGroupService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDGroupService.h; sourceTree = "<group>"; };
-		70E47DF11A245E1200DE60FE /* CDGroupService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDGroupService.m; sourceTree = "<group>"; };
 		70E47DF21A245E1200DE60FE /* CDUserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUserService.h; sourceTree = "<group>"; };
 		70E47DF31A245E1200DE60FE /* CDUserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUserService.m; sourceTree = "<group>"; };
 		70E47DF41A245E1200DE60FE /* CDUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUtils.h; sourceTree = "<group>"; };
@@ -2381,6 +2377,9 @@
 				70D4C5691A237C1E001A655D /* CDGroupDetailVC.h */,
 				70D4C56A1A237C1E001A655D /* CDGroupDetailVC.m */,
 				70D4C56B1A237C1E001A655D /* CDGroupDetailVC.xib */,
+				704CFA151A809DC4000B378F /* CDGroupDetailViewController.h */,
+				704CFA161A809DC4000B378F /* CDGroupDetailViewController.m */,
+				704CFA171A809DC4000B378F /* CDGroupDetailViewController.xib */,
 				70D4C56C1A237C1E001A655D /* CDGroupListVC.h */,
 				70D4C56D1A237C1E001A655D /* CDGroupListVC.m */,
 				70D4C56E1A237C1E001A655D /* CDGroupListVC.xib */,
@@ -2412,10 +2411,10 @@
 				70D4C58B1A237C1E001A655D /* avobject */,
 				70D4C5901A237C1E001A655D /* CDRoom.h */,
 				70D4C5911A237C1E001A655D /* CDRoom.m */,
-				70D4C5921A237C1E001A655D /* CDMsg.h */,
-				70D4C5931A237C1E001A655D /* CDMsg.m */,
 				70CEE61B1A676F4B0034BCA3 /* CDModels.h */,
 				70CEE61F1A677B300034BCA3 /* CDUser.h */,
+				704CFA211A80AF84000B378F /* CDChatMsg.h */,
+				704CFA221A80AF84000B378F /* CDChatMsg.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -2724,14 +2723,10 @@
 		70E47DE91A245E1200DE60FE /* service */ = {
 			isa = PBXGroup;
 			children = (
-				705553E41A2E3AEF001EA4FE /* CDSessionManager.h */,
-				705553E51A2E3AEF001EA4FE /* CDSessionManager.m */,
 				70E47DEA1A245E1200DE60FE /* CDAddRequestService.h */,
 				70E47DEB1A245E1200DE60FE /* CDAddRequestService.m */,
 				70E47DEC1A245E1200DE60FE /* CDCloudService.h */,
 				70E47DED1A245E1200DE60FE /* CDCloudService.m */,
-				70E47DF01A245E1200DE60FE /* CDGroupService.h */,
-				70E47DF11A245E1200DE60FE /* CDGroupService.m */,
 				70E47DF21A245E1200DE60FE /* CDUserService.h */,
 				70E47DF31A245E1200DE60FE /* CDUserService.m */,
 				70E47DF41A245E1200DE60FE /* CDUtils.h */,
@@ -2742,8 +2737,6 @@
 				701641461A2868FE006D1074 /* CDUpgradeService.m */,
 				705553E71A2E3C1F001EA4FE /* CDCache.h */,
 				705553E81A2E3C1F001EA4FE /* CDCache.m */,
-				705553EA1A2E49F5001EA4FE /* CDDatabaseService.h */,
-				705553EB1A2E49F5001EA4FE /* CDDatabaseService.m */,
 				70FD7BCA1A63D22700F29C79 /* CDService.h */,
 				70CEE61C1A6771890034BCA3 /* CDSettingService.h */,
 				70CEE61D1A6771890034BCA3 /* CDSettingService.m */,
@@ -3044,6 +3037,7 @@
 				7016419B1A2C59A8006D1074 /* u1f628.png in Resources */,
 				70D4C6511A237C1E001A655D /* menu_add_scan@2x.png in Resources */,
 				70A066F91A24A3A2004DA201 /* section0_emotion14@2x.png in Resources */,
+				704CFA191A809DC4000B378F /* CDGroupDetailViewController.xib in Resources */,
 				70A066D91A24A3A2004DA201 /* keyborad_HL@2x.png in Resources */,
 				70D4C65E1A237C1E001A655D /* QBImagePickerController.strings in Resources */,
 				70A066C11A24A3A2004DA201 /* AddGroupMemberBtn@2x.png in Resources */,
@@ -3150,7 +3144,6 @@
 				70A066A61A24A3A2004DA201 /* XHHorizontalGridView.m in Sources */,
 				70CACE641A6EB54F00F58885 /* AFURLRequestSerialization.m in Sources */,
 				70EB3B0C1A7661D900136E0D /* CDIMUtils.m in Sources */,
-				70E47DFB1A245E1200DE60FE /* CDGroupService.m in Sources */,
 				70A0663E1A24A3A2004DA201 /* XHAudioPlayerHelper.m in Sources */,
 				70A0667F1A24A3A2004DA201 /* MultiSelectTableViewCell.m in Sources */,
 				70A066BD1A24A3A2004DA201 /* XHRefreshCircleView.m in Sources */,
@@ -3173,7 +3166,6 @@
 				70A066BC1A24A3A2004DA201 /* XHLoadMoreView.m in Sources */,
 				70CACE6F1A6EB54F00F58885 /* UIRefreshControl+AFNetworking.m in Sources */,
 				70A066371A24A3A2004DA201 /* UIImage+RoundedCorner.m in Sources */,
-				70D4C6351A237C1E001A655D /* CDMsg.m in Sources */,
 				70A066961A24A3A2004DA201 /* XHPathCover.m in Sources */,
 				70A0665D1A24A3A2004DA201 /* XHMoreExpressionShopsTableViewController.m in Sources */,
 				70CACE611A6EB54F00F58885 /* AFNetworkReachabilityManager.m in Sources */,
@@ -3191,7 +3183,6 @@
 				70A066AF1A24A3A2004DA201 /* XHVoiceRecordHUD.m in Sources */,
 				70A066821A24A3A2004DA201 /* UIView+Convenience.m in Sources */,
 				701641471A2868FE006D1074 /* CDUpgradeService.m in Sources */,
-				705553EC1A2E49F5001EA4FE /* CDDatabaseService.m in Sources */,
 				70E47DF81A245E1200DE60FE /* CDAddRequestService.m in Sources */,
 				70CACE5F1A6EB54F00F58885 /* AFHTTPRequestOperationManager.m in Sources */,
 				70A0664B1A24A3A2004DA201 /* XHBaseViewController.m in Sources */,
@@ -3348,6 +3339,7 @@
 				7016415C1A2C58C1006D1074 /* XHEmotionManager.m in Sources */,
 				70A066771A24A3A2004DA201 /* LKBadgeView.m in Sources */,
 				70A0664D1A24A3A2004DA201 /* XHContactTableViewController.m in Sources */,
+				704CFA181A809DC4000B378F /* CDGroupDetailViewController.m in Sources */,
 				70A0665A1A24A3A2004DA201 /* XHMultipleSectionTableViewController.m in Sources */,
 				70A066C01A24A3A2004DA201 /* XHScanningView.m in Sources */,
 				707644221A7948FE00E6C182 /* CDConvService.m in Sources */,
@@ -3360,10 +3352,10 @@
 				70A066B71A24A3A2004DA201 /* XHNewsTemplateContainerView.m in Sources */,
 				70A066591A24A3A2004DA201 /* XHMessageTableViewController.m in Sources */,
 				70A0668F1A24A3A2004DA201 /* SETextMagnifierRanged.m in Sources */,
+				704CFA231A80AF84000B378F /* CDChatMsg.m in Sources */,
 				70D4C61F1A237C1E001A655D /* CDGroupDetailVC.m in Sources */,
 				70A0663A1A24A3A2004DA201 /* UIImage+XHRounded.m in Sources */,
 				70CACF3D1A6EC97500F58885 /* CDIM.m in Sources */,
-				705553E61A2E3AEF001EA4FE /* CDSessionManager.m in Sources */,
 				70CACE651A6EB54F00F58885 /* AFURLResponseSerialization.m in Sources */,
 				70CACE6D1A6EB54F00F58885 /* UIImageView+AFNetworking.m in Sources */,
 				70A066861A24A3A2004DA201 /* SELineLayout.m in Sources */,

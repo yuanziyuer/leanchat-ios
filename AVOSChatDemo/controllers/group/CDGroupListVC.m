@@ -7,13 +7,11 @@
 //
 
 #import "CDGroupListVC.h"
-#import "CDChatGroup.h"
-#import "CDGroupService.h"
+#import "CDModels.h"
 #import "CDChatRoomVC.h"
 #import "CDNewGroupVC.h"
-#import "CDImageLabelTableCell.h"
-#import "CDCache.h"
-#import "CDUtils.h"
+#import "CDViews.h"
+#import "CDService.h"
 
 @interface CDGroupListVC (){
     NSArray* convs;

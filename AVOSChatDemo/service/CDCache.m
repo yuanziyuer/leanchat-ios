@@ -7,8 +7,6 @@
 //
 
 #import "CDCache.h"
-#import "CDGroupService.h"
-#import "CDMsg.h"
 #import "CDUtils.h"
 #import "CDService.h"
 #import "CDIM.h"
@@ -98,27 +96,6 @@ static CDIM* _im;
     }else{
         callback([[NSMutableArray alloc] init],nil);
     }
-}
-
-+(void)cacheMsgs:(NSArray*)msgs withCallback:(AVArrayResultBlock)callback{
-    NSMutableSet* userIds=[[NSMutableSet alloc] init];
-    NSMutableSet* groupIds=[[NSMutableSet alloc] init];
-    for(CDMsg* msg in msgs){
-        if(msg.roomType==CDConvTypeSingle){
-            [userIds addObject:msg.fromPeerId];
-            [userIds addObject:msg.toPeerId];
-        }else{
-            [userIds addObject:msg.fromPeerId];
-            [groupIds addObject:msg.convid];
-        }
-    }
-    [self cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
-        if(error){
-            callback(objects,error);
-        }else{
-            [self cacheConvsWithIds:groupIds callback:callback];
-        }
-    }];
 }
 
 #pragma mark - current cache group

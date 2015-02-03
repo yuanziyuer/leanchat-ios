@@ -412,10 +412,13 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 -(void)sendMsg:(AVIMTypedMessage*)msg onJustSent:(CDBlock)onJustSent{
     [self.conv sendMessage:msg options:AVIMMessageSendOptionRequestReceipt callback:^(BOOL succeeded, NSError *error) {
+        if(error){
+            msg.messageId=[CDUtils uuid];
+        }
         if(onJustSent){
             onJustSent();
         }
-        [_storage insertMsg:msg];
+        int64_t rowId=[_storage insertMsg:msg];
         [self loadMsgsWithLoadMore:NO];
     }];
 }
@@ -496,12 +499,12 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 }
 
 -(void)didRetrySendMessage:(id<XHMessageModel>)message atIndexPath:(NSIndexPath *)indexPath{
-    CDMsg* msg=[_msgs objectAtIndex:indexPath.row];
-    msg.status=CDMsgStatusSendStart;
-    
-    XHMessage* xhMsg=(XHMessage*)message;
-    xhMsg.status=XHMessageStatusSending;
-    [self.messageTableView reloadData];
+//    CDMsg* msg=[_msgs objectAtIndex:indexPath.row];
+//    msg.status=CDMsgStatusSendStart;
+//    
+//    XHMessage* xhMsg=(XHMessage*)message;
+//    xhMsg.status=XHMessageStatusSending;
+//    [self.messageTableView reloadData];
     
     //NSLog(@"resend");
     //[sessionManager resendMsg:msg toPeerId:_chatUser.objectId group:_group];

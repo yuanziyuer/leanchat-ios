@@ -19,7 +19,7 @@
 
 -(NSArray*)getMsgsWithConvid:(NSString*)convid maxTime:(int64_t)time limit:(int)limit db:(FMDatabase*)db;
 
--(void)insertMsg:(AVIMTypedMessage*)msg;
+-(int64_t)insertMsg:(AVIMTypedMessage*)msg;
 
 -(BOOL)updateStatus:(AVIMMessageStatus)status byMsgId:(NSString*)msgId;
 
