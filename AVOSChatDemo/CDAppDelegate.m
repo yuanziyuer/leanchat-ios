@@ -12,7 +12,7 @@
 #import "CDBaseTabC.h"
 #import "CDBaseNavC.h"
 #import "CDChatListVC.h"
-#import "CDContactListVC.h"
+#import "CDFriendListVC.h"
 #import "CDProfileVC.h"
 #import "CDChatGroup.h"
 #import "CDModels.h"
@@ -164,7 +164,7 @@
     CDBaseTabC *tab = [[CDBaseTabC alloc] init];
     
     [self addItemController:[[CDChatListVC alloc] init] toTabBarController:tab];
-    [self addItemController:[[CDContactListVC alloc] init] toTabBarController:tab];
+    [self addItemController:[[CDFriendListVC alloc] init] toTabBarController:tab];
     [self addItemController:[[CDProfileVC alloc] init] toTabBarController:tab];
     
     tab.selectedIndex=1;

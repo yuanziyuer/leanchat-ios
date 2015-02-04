@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CDCommon.h"
 
-@interface CDGroupDetailVC : UIViewController
+@interface CDConvDetailVC : UIViewController
 
 -(void)refresh;
 

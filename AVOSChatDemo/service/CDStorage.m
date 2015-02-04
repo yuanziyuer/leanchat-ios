@@ -170,9 +170,14 @@ static CDStorage* _storage;
 }
 
 -(void)insertRoomWithConvid:(NSString*)convid{
-    assert(convid!=nil);
     [_dbQueue inDatabase:^(FMDatabase *db) {
-        [db executeUpdate:@"INSERT INTO ROOMS (convid) VALUES(?) " withArgumentsInArray:@[convid]];
+        [db executeUpdate:@"INSERT INTO rooms (convid) VALUES(?) " withArgumentsInArray:@[convid]];
+    }];
+}
+
+-(void)deleteRoomByConvid:(NSString*)convid{
+    [_dbQueue inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@"DELETE FROM rooms WHERE convid=?" withArgumentsInArray:@[convid]];
     }];
 }
 

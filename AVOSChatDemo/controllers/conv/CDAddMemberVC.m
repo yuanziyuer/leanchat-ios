@@ -6,12 +6,12 @@
 //  Copyright (c) 2014年 AVOS. All rights reserved.
 //
 
-#import "CDGroupAddMemberVC.h"
+#import "CDAddMemberVC.h"
 #import "CDImageLabelTableCell.h"
 #import "CDService.h"
 #import "CDChatRoomVC.h"
 
-@interface CDGroupAddMemberVC ()
+@interface CDAddMemberVC ()
 
 @property NSMutableArray *selected;
 
@@ -21,7 +21,7 @@
 
 @end
 
-@implementation CDGroupAddMemberVC
+@implementation CDAddMemberVC
 
 static NSString* reuseIdentifier=@"Cell";
 

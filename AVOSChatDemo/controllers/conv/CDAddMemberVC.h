@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "CDChatGroup.h"
-#import "CDGroupDetailVC.h"
+#import "CDConvDetailVC.h"
 
-@interface CDGroupAddMemberVC : UITableViewController
+@interface CDAddMemberVC : UITableViewController
 
-@property CDGroupDetailVC* groupDetailVC;
+@property CDConvDetailVC* groupDetailVC;
 
 @end

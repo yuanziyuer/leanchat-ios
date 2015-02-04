@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CDGroupListVC : UITableViewController
+@interface CDGroupedConvListVC : UITableViewController
 
 @end

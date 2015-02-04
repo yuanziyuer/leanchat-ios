@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 AVOS. All rights reserved.
 //
 
-#import "CDContactListVC.h"
+#import "CDFriendListVC.h"
 #import "CDCommon.h"
 #import "CDAddFriendVC.h"
 #import "CDBaseNavC.h"
 #import "CDNewFriendVC.h"
 #import "CDImageLabelTableCell.h"
-#import "CDGroupListVC.h"
+#import "CDGroupedConvListVC.h"
 #import "CDChatRoomVC.h"
 #import "JSBadgeView.h"
 #import "CDService.h"
@@ -20,7 +20,7 @@
 enum : NSUInteger {
     kTagNameLabel = 10000,
 };
-@interface CDContactListVC()<UIAlertViewDelegate>
+@interface CDFriendListVC()<UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *users;
@@ -32,7 +32,7 @@ enum : NSUInteger {
 
 @end
 
-@implementation CDContactListVC
+@implementation CDFriendListVC
 
 #pragma mark - Life Cycle
 - (instancetype)init {
@@ -92,7 +92,7 @@ enum : NSUInteger {
 }
 
 -(void)goGroup:(id)sender{
-    CDGroupListVC *controller=[[CDGroupListVC alloc] init];
+    CDGroupedConvListVC *controller=[[CDGroupedConvListVC alloc] init];
     [[self navigationController] pushViewController:controller animated:YES];
 }
 

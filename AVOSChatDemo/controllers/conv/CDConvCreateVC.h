@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "CDCommon.h"
 
-@interface CDNewGroupVC : UIViewController
+@interface CDConvCreateVC : UIViewController
 
 @end

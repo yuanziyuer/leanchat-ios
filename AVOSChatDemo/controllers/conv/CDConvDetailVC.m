@@ -6,13 +6,14 @@
 //  Copyright (c) 2014年 AVOS. All rights reserved.
 //
 
-#import "CDGroupDetailVC.h"
+#import "CDConvDetailVC.h"
 #import "CDImageLabelCollectionCell.h"
 #import "CDChatRoomVC.h"
-#import "CDGroupAddMemberVC.h"
+#import "CDAddMemberVC.h"
+#import "CDConvNameVC.h"
 #import "CDService.h"
 
-@interface CDGroupDetailVC ()<UICollectionViewDelegate,UICollectionViewDataSource,
+@interface CDConvDetailVC ()<UICollectionViewDelegate,UICollectionViewDataSource,
    UIGestureRecognizerDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -23,19 +24,25 @@
 
 @property BOOL own;
 
+@property CDConvType type;
+
+@property CDStorage* storage;
+
 @property (weak, nonatomic) IBOutlet UITableView *settingTableView;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
 
 @end
 
-@implementation CDGroupDetailVC
+@implementation CDConvDetailVC
 
 static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     //self.clearsSelectionOnViewWillAppear = NO;
+    
+    self.view.backgroundColor=NORMAL_BACKGROUD_COLOR;
     
     NSString* nibName=NSStringFromClass([CDImageLabelCollectionCell class]);
     [self.collectionView registerNib:[UINib nibWithNibName:nibName bundle:nil]  forCellWithReuseIdentifier:reuseIdentifier];
@@ -52,8 +59,8 @@ static NSString * const reuseIdentifier = @"Cell";
     [self.collectionView addGestureRecognizer:gestureRecognizer];
     
     _im=[CDIM sharedInstance];
-    
-    self.title=[NSString stringWithFormat:@"详情(%d人)",self.conv.members.count];
+    _storage=[CDStorage sharedInstance];
+    _type=[CDConvService typeOfConv:self.conv];
     
     [self refresh];
     
@@ -82,24 +89,25 @@ static NSString * const reuseIdentifier = @"Cell";
     NSString* curUserId=[AVUser currentUser].objectId;
     _own=[conv.creator isEqualToString:curUserId];
     [self setupBarButton];
+    [_settingTableView reloadData];
+    
+    self.title=[NSString stringWithFormat:@"详情(%d人)",self.conv.members.count];
 }
 
 -(void)setupBarButton{
     UIBarButtonItem* addMember=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addMember)];
-    UIBarButtonItem* quitConv=[[UIBarButtonItem alloc] initWithTitle:@"退群" style:UIBarButtonItemStylePlain target:self action:@selector(quitGroup)];
-    NSMutableArray* array=[NSMutableArray array];
-    [array addObject:addMember];
-    if(_own==NO){
-        [array addObject:quitConv];
-    }
-    [self.navigationItem setRightBarButtonItems:array];
+    self.navigationItem.rightBarButtonItem=addMember;
 }
 
--(void)quitGroup{
-    //[CDGroupService quitFromGroup:[self getConv]];
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    UIViewController* first=self.navigationController.viewControllers[0];
-    [first.presentingViewController dismissViewControllerAnimated:YES completion:nil];;
+-(void)quitConv{
+    [self.conv quitWithCallback:^(BOOL succeeded, NSError *error) {
+        if([CDUtils filterError:error]){
+            [_storage deleteRoomByConvid:self.conv.conversationId];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            UIViewController* first=self.navigationController.viewControllers[0];
+            [first.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+        }
+    }];
 }
 
 -(void)longPressUser:(UILongPressGestureRecognizer*)gestureRecognizer{
@@ -153,7 +161,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 }
 
 -(void)addMember{
-    CDGroupAddMemberVC *controller=[[CDGroupAddMemberVC alloc] init];;
+    CDAddMemberVC *controller=[[CDAddMemberVC alloc] init];;
     controller.groupDetailVC=self;
     [self.navigationController pushViewController:controller animated:YES];
 }
@@ -224,7 +232,11 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 #pragma mark - tableview
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    if(_type==CDConvTypeGroup){
+        return 2;
+    }else{
+        return 0;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -233,17 +245,27 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell* cell;
-    if(indexPath.row==0){
-        cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
-        cell.textLabel.text=@"群聊名称";
-        cell.detailTextLabel.text=[CDConvService nameOfConv:self.conv];
-        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+    if(indexPath.section==0){
+        cell=[tableView dequeueReusableCellWithIdentifier:@"cell1"];
+        if(cell==nil){
+            cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell1"];
+            cell.textLabel.text=@"群聊名称";
+            cell.detailTextLabel.text=[CDConvService nameOfConv:self.conv];
+            cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+        }
+    }else if(indexPath.section==1){
+        cell=[tableView dequeueReusableCellWithIdentifier:@"cell2"];
+        if(cell==nil){
+            cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell2"];
+            cell.textLabel.text=@"删除并退出";
+            cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+        }
     }
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 40;
+    return 10;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -252,6 +274,17 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.section==0){
+        CDConvNameVC* vc=[[CDConvNameVC alloc] init];
+        vc.detailVC=self;
+        vc.conv=self.conv;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if(indexPath.section==1){
+        [self quitConv];
+    }
 }
 
 /*

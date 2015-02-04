@@ -10,8 +10,8 @@
 #import "QBImagePickerController.h"
 #import "UIImage+Resize.h"
 
-#import "CDGroupDetailVC.h"
-#import "CDGroupAddMemberVC.h"
+#import "CDConvDetailVC.h"
+#import "CDAddMemberVC.h"
 
 #import "XHDisplayTextViewController.h"
 #import "XHDisplayMediaViewController.h"
@@ -178,7 +178,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 //    
 //    NSString* name=NSStringFromClass([CDGroupDetailVC class]);
 //
-    CDGroupDetailVC* controller=[[CDGroupDetailVC alloc] init];
+    CDConvDetailVC* controller=[[CDConvDetailVC alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
     
 //    CDGroupDetailViewController* controller=[[CDGroupDetailViewController alloc] init];

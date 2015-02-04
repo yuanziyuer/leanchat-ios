@@ -6,14 +6,14 @@
 //
 //
 
-#import "CDGroupListVC.h"
+#import "CDGroupedConvListVC.h"
 #import "CDModels.h"
 #import "CDChatRoomVC.h"
-#import "CDNewGroupVC.h"
+#import "CDConvCreateVC.h"
 #import "CDViews.h"
 #import "CDService.h"
 
-@interface CDGroupListVC (){
+@interface CDGroupedConvListVC (){
     NSArray* convs;
     UIImage * groupImage;
     id groupUpdatedObserver;
@@ -23,7 +23,7 @@
 
 static NSString* cellIndentifier=@"cell";
 
-@implementation CDGroupListVC
+@implementation CDGroupedConvListVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -66,7 +66,7 @@ static NSString* cellIndentifier=@"cell";
 }
 
 -(void)goNewGroup{
-    CDNewGroupVC* controller=[[CDNewGroupVC alloc] init];
+    CDConvCreateVC* controller=[[CDConvCreateVC alloc] init];
     UINavigationController*nav =[[UINavigationController alloc] initWithRootViewController:controller];
     [self presentViewController:nav animated:YES completion:nil];
 }

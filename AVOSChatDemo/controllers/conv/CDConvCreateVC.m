@@ -6,15 +6,15 @@
 //  Copyright (c) 2014年 AVOS. All rights reserved.
 //
 
-#import "CDNewGroupVC.h"
+#import "CDConvCreateVC.h"
 #import "CDService.h"
 
-@interface CDNewGroupVC ()
+@interface CDConvCreateVC ()
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 
 @end
 
-@implementation CDNewGroupVC
+@implementation CDConvCreateVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];

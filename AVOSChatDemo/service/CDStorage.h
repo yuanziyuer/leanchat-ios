@@ -31,4 +31,6 @@
 
 -(void)insertRoomWithConvid:(NSString*)convid;
 
+-(void)deleteRoomByConvid:(NSString*)convid;
+
 @end

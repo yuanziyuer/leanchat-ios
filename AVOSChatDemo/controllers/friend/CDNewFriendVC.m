@@ -12,7 +12,7 @@
 #import "CDCloudService.h"
 #import "CDUtils.h"
 #import "CDUtils.h"
-#import "CDContactListVC.h"
+#import "CDFriendListVC.h"
 
 @interface CDNewFriendVC (){
     NSArray *addRequests;
