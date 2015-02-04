@@ -9,16 +9,31 @@
 #import "CDGroupAddMemberVC.h"
 #import "CDImageLabelTableCell.h"
 #import "CDService.h"
+#import "CDChatRoomVC.h"
 
-@interface CDGroupAddMemberVC (){
-    NSMutableArray *selected;
-    NSMutableArray *potentialIds;
-}
+@interface CDGroupAddMemberVC ()
+
+@property NSMutableArray *selected;
+
+@property NSMutableArray *potentialIds;
+
+@property CDIM* im;
+
 @end
 
 @implementation CDGroupAddMemberVC
 
 static NSString* reuseIdentifier=@"Cell";
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _selected=[NSMutableArray array];
+        _potentialIds=[NSMutableArray array];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -30,49 +45,59 @@ static NSString* reuseIdentifier=@"Cell";
     self.title=@"邀请好友";
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(invite)];
     
+    _im=[CDIM sharedInstance];
     [self initPotentialIds];
-    int count=potentialIds.count;
-    selected = [[NSMutableArray alloc] init];
+    int count=_potentialIds.count;
     for(int i=0;i<count;i++){
-        [selected addObject:[NSNumber numberWithBool:NO]];
+        [_selected addObject:[NSNumber numberWithBool:NO]];
     }
 }
 
 -(void)initPotentialIds{
-    potentialIds=[[NSMutableArray alloc] init];
+    [_potentialIds removeAllObjects];
     for(AVUser* user in [CDCache getFriends]){
         if([[CDCache getCurConv].members containsObject:user.objectId]==NO){
-            [potentialIds addObject:user.objectId];
+            [_potentialIds addObject:user.objectId];
         }
     }
 }
 
 -(void)invite{
     NSMutableArray* inviteIds=[[NSMutableArray alloc] init];
-    for(int i=0;i<selected.count;i++){
-        if([selected[i] boolValue]){
-            [inviteIds addObject:[potentialIds objectAtIndex:i]];
+    for(int i=0;i<_selected.count;i++){
+        if([_selected[i] boolValue]){
+            [inviteIds addObject:[_potentialIds objectAtIndex:i]];
         }
     }
-    UIActivityIndicatorView* indicator=[CDUtils showIndicatorAtView:self.view];
-    [self inviteMembers:inviteIds callback:^(BOOL succeeded, NSError *error) {
-        [indicator stopAnimating];
-        [CDUtils filterError:error callback:^{
-            [_groupDetailVC refresh];
-            [self.navigationController popViewControllerAnimated:YES];
-        }];
-    }];
-}
-
--(void)inviteMembers:(NSArray*)inviteIds callback:(AVBooleanResultBlock)callback{
     AVIMConversation* conv=[CDCache getCurConv];
-    [conv addMembersWithClientIds:inviteIds callback:^(BOOL succeeded, NSError *error) {
-        if(error){
-            callback(NO,error);
-        }else{
-            [CDCache refreshCurConv:callback];
-        }
-    }];
+    if([CDConvService typeOfConv:[CDCache getCurConv]]==CDConvTypeSingle){
+        NSMutableArray* members=[conv.members mutableCopy];
+        [members addObjectsFromArray:inviteIds];
+        [CDUtils showNetworkIndicator];
+        [_im createConvWithUserIds:members callback:^(AVIMConversation *conversation, NSError *error) {
+            [CDUtils hideNetworkIndicator];
+            if([CDUtils filterError:error]){
+                CDChatRoomVC* vc=[[CDChatRoomVC alloc] initWithConv:conversation];
+                [self.navigationController setViewControllers:[NSArray arrayWithObject:vc] animated:YES];
+            }
+        }];
+    }else{
+        [CDUtils showNetworkIndicator];
+        [conv addMembersWithClientIds:inviteIds callback:^(BOOL succeeded, NSError *error) {
+            if(error){
+                [CDUtils hideNetworkIndicator];
+                [CDUtils alertError:error];
+            }else{
+                [CDCache refreshCurConv:^(BOOL succeeded, NSError *error) {
+                    [CDUtils hideNetworkIndicator];
+                    if([CDUtils filterError:error]){
+                        [_groupDetailVC refresh];
+                        [self.navigationController popViewControllerAnimated:YES];
+                    }
+                }];
+            }
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -87,7 +112,7 @@ static NSString* reuseIdentifier=@"Cell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return potentialIds.count;
+    return _potentialIds.count;
 }
 
 
@@ -96,11 +121,11 @@ static NSString* reuseIdentifier=@"Cell";
     if(cell==nil){
         cell=[[CDImageLabelTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     }
-    NSString* userId=[potentialIds objectAtIndex:indexPath.row];
+    NSString* userId=[_potentialIds objectAtIndex:indexPath.row];
     AVUser* user=[CDCache lookupUser:userId];
     [CDUserService displayAvatarOfUser:user avatarView:cell.myImageView];
     cell.myLabel.text=user.username;
-    if([selected[indexPath.row] boolValue]){
+    if([_selected[indexPath.row] boolValue]){
         cell.accessoryType=UITableViewCellAccessoryCheckmark;
     }else{
         cell.accessoryType=UITableViewCellAccessoryNone;
@@ -147,7 +172,7 @@ static NSString* reuseIdentifier=@"Cell";
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     int pos=indexPath.row;
-    selected[pos]=[NSNumber numberWithBool:![selected[pos] boolValue]];
+    _selected[pos]=[NSNumber numberWithBool:![_selected[pos] boolValue]];
     [self.tableView reloadData];
 }
 

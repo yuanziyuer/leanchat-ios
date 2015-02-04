@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "CDCommon.h"
-#import "CDChatGroup.h"
 
-@interface CDGroupDetailVC : UICollectionViewController<UIGestureRecognizerDelegate,UIAlertViewDelegate>
+@interface CDGroupDetailVC : UIViewController
 
 -(void)refresh;
 

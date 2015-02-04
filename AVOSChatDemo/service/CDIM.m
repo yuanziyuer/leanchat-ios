@@ -100,8 +100,9 @@ static BOOL initialized;
     [_imClient createConversationWithName:nil clientIds:@[userId] attributes:@{CONV_TYPE:@(CDConvTypeSingle)} callback:callback];
 }
 
--(AVIMTypedMessage*)getLastMsgWithConvid:(NSString*)convid{
-    return nil;
+-(void)createConvWithUserIds:(NSArray*)userIds callback:(AVIMConversationResultBlock)callback{
+    NSString* name=[CDConvService nameOfUserIds:userIds];
+    [_imClient createConversationWithName:name clientIds:userIds attributes:@{CONV_TYPE:@(CDConvTypeGroup)} callback:callback];
 }
 
 -(void)findGroupedConvsWithBlock:(AVArrayResultBlock)block{
@@ -118,27 +119,6 @@ static BOOL initialized;
         builder.attributes = attrs;
     }
     [conv sendUpdate:[builder dictionary] callback:callback];
-}
-
--(void)setTypeOfConv:(AVIMConversation*)conv callback:(AVBooleanResultBlock)callback{
-    BOOL changed=NO;
-    NSMutableDictionary* dict=[conv.attributes mutableCopy];
-    NSString* newName=conv.name;
-    if(dict==nil){
-        dict=[NSMutableDictionary dictionary];
-    }
-    if(conv.members.count>2){
-        if([CDConvService typeOfConv:conv]==CDConvTypeSingle){
-            // convert it
-            [dict setObject:@(CDConvTypeGroup) forKey:CONV_TYPE];
-            changed=YES;
-        }
-    }
-    if(changed){
-        [self updateConv:conv name:newName attrs:dict callback:callback];
-    }else{
-        callback(YES,nil);
-    }
 }
 
 -(void)fetchConvsWithIds:(NSSet*)convids callback:(AVIMArrayResultBlock)callback{

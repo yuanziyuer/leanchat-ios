@@ -111,15 +111,16 @@ static CDIM* _im;
 +(void)refreshCurConv:(AVBooleanResultBlock)callback{
     if(curConv!=nil){
         CDIM* im=[CDIM sharedInstance];
-        [im setTypeOfConv:curConv callback:^(BOOL succeeded, NSError *error) {
+        [im fecthConvWithId:curConv.conversationId callback:^(AVIMConversation *conversation, NSError *error) {
             if(error){
                 callback(NO,error);
             }else{
+                [self setCurConv:conversation];
                 callback(YES,nil);
             }
         }];
     }else{
-        callback(NO,[NSError errorWithDomain:nil code:0 userInfo:@{NSLocalizedDescriptionKey:@"currentChatGroup is nil"}]);
+        callback(NO,[NSError errorWithDomain:nil code:0 userInfo:@{NSLocalizedDescriptionKey:@"current conv is nil"}]);
     }
 }
 

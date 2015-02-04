@@ -129,6 +129,8 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     [_sessionStateView observeSessionUpdate];
     if(self.conv!=nil){
         [_storage insertRoomWithConvid:self.conv.conversationId];
+    }else{
+        DLog();
     }
 }
 
@@ -169,17 +171,18 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 #pragma mark - prev and next controller
 
 - (void)goChatGroupDetail:(id)sender {
-//    CDGroupDetailController *controller=[[CDGroupDetailController alloc] init];
-//    controller.chatGroup=self.chatGroup;
-//    [self.navigationController pushViewController: controller animated:YES];
 
-    UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
-    [flow setItemSize:CGSizeMake(240, 240)];
-    [flow setScrollDirection:UICollectionViewScrollDirectionVertical];
-    NSString* name=NSStringFromClass([CDGroupDetailVC class]);
-    
-    CDGroupDetailVC* controller=[[CDGroupDetailVC alloc] initWithNibName:name bundle:nil];
+//    UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
+//    [flow setItemSize:CGSizeMake(240, 240)];
+//    [flow setScrollDirection:UICollectionViewScrollDirectionVertical];
+//    
+//    NSString* name=NSStringFromClass([CDGroupDetailVC class]);
+//
+    CDGroupDetailVC* controller=[[CDGroupDetailVC alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
+    
+//    CDGroupDetailViewController* controller=[[CDGroupDetailViewController alloc] init];
+//    [self.navigationController pushViewController:controller animated:YES];
 }
 
 -(void)backPressed:(id)sender{
@@ -384,11 +387,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     }else{
         msg=[AVIMAudioMessage messageWithText:nil attachedFilePath:path attributes:nil];
     }
-    [self sendMsg:msg onJustSent:^{
-        NSString* newPath=[CDFileService getPathByObjectId:msg.messageId];
-        NSError* error1;
-        [[NSFileManager defaultManager] moveItemAtPath:path toPath:newPath error:&error1];
-    }];
+    [self sendMsg:msg originFilePath:path];
 }
 
 -(void)sendImage:(UIImage*)image{
@@ -404,16 +403,18 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 //    [self removeMessageAtIndexPath:indexPath];
 }
 
--(void)sendMsg:(AVIMTypedMessage*)msg onJustSent:(CDBlock)onJustSent{
+-(void)sendMsg:(AVIMTypedMessage*)msg originFilePath:(NSString*)path{
     [self.conv sendMessage:msg options:AVIMMessageSendOptionRequestReceipt callback:^(BOOL succeeded, NSError *error) {
         if(error){
             msg.messageId=[CDUtils uuid];
             msg.sendTimestamp=[[NSDate date] timeIntervalSince1970]*1000;
         }
-        if(onJustSent){
-            onJustSent();
+        if(path && error==nil){
+            NSString* newPath=[CDFileService getPathByObjectId:msg.messageId];
+            NSError* error1;
+            [[NSFileManager defaultManager] moveItemAtPath:path toPath:newPath error:&error1];
         }
-        int64_t rowId=[_storage insertMsg:msg];
+        [_storage insertMsg:msg];
         [self loadMsgsWithLoadMore:NO];
     }];
 }
@@ -555,13 +556,8 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
  */
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date {
     if([text length]>0){
-//        [sessionManager sendMessageWithObjectId:nil
-//                                        content:[CDEmotionUtils convertWithText:text toEmoji:NO]
-//                                           type:CDMsgTypeText
-//                                       toPeerId:self.chatUser.objectId
-//                                          group:self.group];
-        AVIMTextMessage* msg=[AVIMTextMessage messageWithText:text attributes:nil];
-        [self sendMsg:msg onJustSent:nil];
+        AVIMTextMessage* msg=[AVIMTextMessage messageWithText:[CDEmotionUtils convertWithText:text toEmoji:NO] attributes:nil];
+        [self sendMsg:msg originFilePath:nil];
         [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
     }
 }

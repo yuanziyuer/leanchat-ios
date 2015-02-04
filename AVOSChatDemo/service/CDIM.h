@@ -27,8 +27,8 @@
 
 -(void)fetchConvsWithIds:(NSSet*)convids callback:(AVIMArrayResultBlock)callback;
 
--(void)findGroupedConvsWithBlock:(AVArrayResultBlock)block;
+-(void)createConvWithUserIds:(NSArray*)userIds callback:(AVIMConversationResultBlock)callback;
 
--(void)setTypeOfConv:(AVIMConversation*)conv callback:(AVBooleanResultBlock)callback;
+-(void)findGroupedConvsWithBlock:(AVArrayResultBlock)block;
 
 @end

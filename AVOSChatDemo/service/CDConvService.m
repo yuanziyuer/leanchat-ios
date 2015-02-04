@@ -16,22 +16,22 @@
     return type;
 }
 
++(NSString*)nameOfUserIds:(NSArray*)userIds{
+    NSMutableArray* names=[NSMutableArray array];
+    for(int i=0;i<userIds.count;i++){
+        AVUser* user=[CDCache lookupUser:[userIds objectAtIndex:i]];
+        [names addObject:user.username];
+    }
+    return [names componentsJoinedByString:@","];
+}
+
 +(NSString*)nameOfConv:(AVIMConversation*)conv{
-    if(conv.name!=nil){
-        return conv.name;
+    if([self typeOfConv:conv]==CDConvTypeSingle){
+        NSString* otherId=[self otherIdOfConv:conv];
+        AVUser* other=[CDCache lookupUser:otherId];
+        return other.username;
     }else{
-        if([self typeOfConv:conv]==CDConvTypeSingle){
-            NSString* otherId=[self otherIdOfConv:conv];
-            AVUser* other=[CDCache lookupUser:otherId];
-            return other.username;
-        }else{
-            NSMutableArray* names=[NSMutableArray array];
-            for(int i=0;i<conv.members.count;i++){
-                AVUser* user=[CDCache lookupUser:conv.members[i]];
-                [names addObject:user.username];
-            }
-            return [names componentsJoinedByString:@","];
-        }
+        return conv.name;
     }
 }
 

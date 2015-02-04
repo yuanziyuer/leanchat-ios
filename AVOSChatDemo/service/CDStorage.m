@@ -127,18 +127,17 @@ static CDStorage* _storage;
 }
 
 -(AVIMTypedMessage* )getMsgByResultSet:(FMResultSet*)rs{
-    AVIMTypedMessage* msg;
     NSData* data=[rs objectForColumnName:FIELD_OBJECT];
-    if(data!=nil){
-        msg=[NSKeyedUnarchiver unarchiveObjectWithData:data];
+    if([data isKindOfClass:[NSData class]] && data.length>0){
+        AVIMTypedMessage* msg=[NSKeyedUnarchiver unarchiveObjectWithData:data];
+        return msg;
+    }else{
+        return nil;
     }
-    DLog(@"%@",msg);
-    return msg;
 }
 
 -(int64_t)insertMsg:(AVIMTypedMessage*)msg{
     __block int64_t rowId;
-    DLog(@"%@",msg);
     [_dbQueue inDatabase:^(FMDatabase *db) {
         NSData* data=[NSKeyedArchiver archivedDataWithRootObject:msg];
         BOOL result=[db executeUpdate:@"INSERT INTO msgs (msg_id,convid,object,time) VALUES(?,?,?,?)"
@@ -161,7 +160,7 @@ static CDStorage* _storage;
 -(NSArray*)getRooms{
     NSMutableArray* rooms=[NSMutableArray array];
     [_dbQueue inDatabase:^(FMDatabase *db) {
-        FMResultSet* rs=[db executeQuery:@"SELECT * FROM rooms JOIN msgs ON rooms.convid=msgs.convid GROUP BY msgs.convid ORDER BY msgs.time DESC"];
+        FMResultSet* rs=[db executeQuery:@"SELECT rooms.*, msgs.object FROM rooms LEFT JOIN msgs ON rooms.convid=msgs.convid GROUP BY msgs.convid ORDER BY msgs.time DESC"];
         while ([rs next]) {
             [rooms addObject:[self getRoomByResultSet:rs]];
         }
@@ -171,6 +170,7 @@ static CDStorage* _storage;
 }
 
 -(void)insertRoomWithConvid:(NSString*)convid{
+    assert(convid!=nil);
     [_dbQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"INSERT INTO ROOMS (convid) VALUES(?) " withArgumentsInArray:@[convid]];
     }];
