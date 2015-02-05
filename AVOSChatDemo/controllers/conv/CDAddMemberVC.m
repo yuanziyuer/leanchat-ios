@@ -17,6 +17,8 @@
 
 @property NSMutableArray *potentialIds;
 
+@property CDNotify* notify;
+
 @property CDIM* im;
 
 @end
@@ -31,6 +33,8 @@ static NSString* reuseIdentifier=@"Cell";
     if (self) {
         _selected=[NSMutableArray array];
         _potentialIds=[NSMutableArray array];
+        _im=[CDIM sharedInstance];
+        _notify=[CDNotify sharedInstance];
     }
     return self;
 }
@@ -45,7 +49,6 @@ static NSString* reuseIdentifier=@"Cell";
     self.title=@"邀请好友";
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(invite)];
     
-    _im=[CDIM sharedInstance];
     [self initPotentialIds];
     int count=_potentialIds.count;
     for(int i=0;i<count;i++){
@@ -91,7 +94,6 @@ static NSString* reuseIdentifier=@"Cell";
                 [CDCache refreshCurConv:^(BOOL succeeded, NSError *error) {
                     [CDUtils hideNetworkIndicator];
                     if([CDUtils filterError:error]){
-                        [_groupDetailVC refresh];
                         [self.navigationController popViewControllerAnimated:YES];
                     }
                 }];

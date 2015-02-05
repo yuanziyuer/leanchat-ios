@@ -77,6 +77,7 @@
 		7071B06E1A82988000A1597C /* CDGroupedConvListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7071B0661A82988000A1597C /* CDGroupedConvListVC.xib */; };
 		7071B0771A829ACB00A1597C /* CDConvNameVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7071B0751A829ACB00A1597C /* CDConvNameVC.m */; };
 		7071B0781A829ACB00A1597C /* CDConvNameVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7071B0761A829ACB00A1597C /* CDConvNameVC.xib */; };
+		7071B07B1A83420500A1597C /* CDNotify.m in Sources */ = {isa = PBXBuildFile; fileRef = 7071B07A1A83420500A1597C /* CDNotify.m */; };
 		707644221A7948FE00E6C182 /* CDConvService.m in Sources */ = {isa = PBXBuildFile; fileRef = 707644211A7948FE00E6C182 /* CDConvService.m */; };
 		707644281A7A173600E6C182 /* CDStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 707644271A7A173600E6C182 /* CDStorage.m */; };
 		70A066311A24A3A2004DA201 /* NSString+MessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A064741A24A3A2004DA201 /* NSString+MessageInputView.m */; };
@@ -589,6 +590,8 @@
 		7071B0741A829ACB00A1597C /* CDConvNameVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConvNameVC.h; sourceTree = "<group>"; };
 		7071B0751A829ACB00A1597C /* CDConvNameVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDConvNameVC.m; sourceTree = "<group>"; };
 		7071B0761A829ACB00A1597C /* CDConvNameVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDConvNameVC.xib; sourceTree = "<group>"; };
+		7071B0791A83420500A1597C /* CDNotify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDNotify.h; sourceTree = "<group>"; };
+		7071B07A1A83420500A1597C /* CDNotify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDNotify.m; sourceTree = "<group>"; };
 		707644201A7948FE00E6C182 /* CDConvService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConvService.h; sourceTree = "<group>"; };
 		707644211A7948FE00E6C182 /* CDConvService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDConvService.m; sourceTree = "<group>"; };
 		707644261A7A173600E6C182 /* CDStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDStorage.h; sourceTree = "<group>"; };
@@ -2753,6 +2756,8 @@
 				707644211A7948FE00E6C182 /* CDConvService.m */,
 				707644261A7A173600E6C182 /* CDStorage.h */,
 				707644271A7A173600E6C182 /* CDStorage.m */,
+				7071B0791A83420500A1597C /* CDNotify.h */,
+				7071B07A1A83420500A1597C /* CDNotify.m */,
 			);
 			path = service;
 			sourceTree = "<group>";
@@ -3359,6 +3364,7 @@
 				70CACE651A6EB54F00F58885 /* AFURLResponseSerialization.m in Sources */,
 				70CACE6D1A6EB54F00F58885 /* UIImageView+AFNetworking.m in Sources */,
 				70A066861A24A3A2004DA201 /* SELineLayout.m in Sources */,
+				7071B07B1A83420500A1597C /* CDNotify.m in Sources */,
 				7071B0691A82988000A1597C /* CDConvCreateVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

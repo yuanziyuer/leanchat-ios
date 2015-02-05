@@ -116,6 +116,7 @@ static CDIM* _im;
                 callback(NO,error);
             }else{
                 [self setCurConv:conversation];
+                [[CDNotify sharedInstance] postConvNotify];
                 callback(YES,nil);
             }
         }];

@@ -37,6 +37,8 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 @property CDIM* im;
 
+@property CDNotify* notify;
+
 @property BOOL isLoadingMsg;
 
 @property UIImage* defaultAvatar;
@@ -66,6 +68,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         _loadedImages = [[NSMutableDictionary alloc] init];
         _avatars=[[NSMutableDictionary alloc] init];
         _im=[CDIM sharedInstance];
+        _notify=[CDNotify sharedInstance];
         _defaultAvatar=[UIImage imageNamed:@"default_user_avatar"];
         _storage=[CDStorage sharedInstance];
     }
@@ -132,6 +135,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     }else{
         DLog();
     }
+    [_notify addConvObserver:self selector:@selector(refreshConv)];
 }
 
 -(AVIMConversation*)conv{
@@ -160,6 +164,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     self.emotionManagers = nil;
     [[XHAudioPlayerHelper shareInstance] setDelegate:nil];
     [CDCache setCurConv:nil];
+    [_notify removeConvObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -278,7 +283,11 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 }
 
 -(void)refreshConv{
-    self.title=[CDConvService nameOfConv:self.conv];
+    NSString* name=[CDConvService nameOfConv:self.conv];
+    if([CDConvService typeOfConv:self.conv]==CDConvTypeGroup){
+        name=[NSString stringWithFormat:@"%@(%d)",name,self.conv.members.count];
+    }
+    self.title=name;
 }
 
 - (NSArray *)getXHMessages:(NSArray *)msgs {

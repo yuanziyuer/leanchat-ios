@@ -11,6 +11,4 @@
 
 @interface CDConvDetailVC : UIViewController
 
--(void)refresh;
-
 @end

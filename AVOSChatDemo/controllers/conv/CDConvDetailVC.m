@@ -28,6 +28,8 @@
 
 @property CDStorage* storage;
 
+@property CDNotify* notify;
+
 @property (weak, nonatomic) IBOutlet UITableView *settingTableView;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
@@ -59,12 +61,11 @@ static NSString * const reuseIdentifier = @"Cell";
     [self.collectionView addGestureRecognizer:gestureRecognizer];
     
     _im=[CDIM sharedInstance];
+    _notify=[CDNotify sharedInstance];
     _storage=[CDStorage sharedInstance];
     _type=[CDConvService typeOfConv:self.conv];
-    
+    [_notify addConvObserver:self selector:@selector(refresh)];
     [self refresh];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:NOTIFICATION_GROUP_UPDATED object:nil];
 }
 
 -(AVIMConversation*)conv{
@@ -141,7 +142,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
             if([CDUtils filterError:error]){
                 [CDCache refreshCurConv:^(BOOL succeeded, NSError *error) {
                     if([CDUtils filterError:error]){
-                        [self refresh];
                     }
                 }];
             }
@@ -150,10 +150,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 }
 
 -(void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self  name:NOTIFICATION_GROUP_UPDATED object:nil];
+    [_notify removeConvObserver:self];
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -250,9 +248,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
         if(cell==nil){
             cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell1"];
             cell.textLabel.text=@"群聊名称";
-            cell.detailTextLabel.text=[CDConvService nameOfConv:self.conv];
             cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
         }
+        cell.detailTextLabel.text=[CDConvService nameOfConv:self.conv];
     }else if(indexPath.section==1){
         cell=[tableView dequeueReusableCellWithIdentifier:@"cell2"];
         if(cell==nil){

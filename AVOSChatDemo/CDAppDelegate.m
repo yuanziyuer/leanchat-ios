@@ -67,12 +67,11 @@
         [application registerForRemoteNotifications];
     }
     if(CD_DEBUG){
-       setenv("LOG_CURL", "YES", 0);
-       setenv("LOG_IM", "YES", 0);
-       [AVOSCloud setVerbosePolicy:kAVVerboseShow];
-       [AVAnalytics setAnalyticsEnabled:NO];
-       [AVLogger addLoggerDomain:AVLoggerDomainIM];
-       [AVLogger setLoggerLevelMask:AVLoggerLevelAll];        
+        [AVAnalytics setAnalyticsEnabled:NO];
+        [AVOSCloud setVerbosePolicy:kAVVerboseShow];
+        [AVLogger addLoggerDomain:AVLoggerDomainIM];
+        [AVLogger addLoggerDomain:AVLoggerDomainCURL];
+        [AVLogger setLoggerLevelMask:AVLoggerLevelAll];
     }
     
     return YES;

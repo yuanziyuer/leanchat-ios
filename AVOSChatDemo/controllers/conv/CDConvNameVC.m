@@ -17,6 +17,8 @@
 
 @property CDIM* im;
 
+@property CDNotify* notify;
+
 @end
 
 @implementation CDConvNameVC
@@ -28,6 +30,7 @@
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveName:)];
     self.nameTextField.text=_conv.name;
     _im=[CDIM sharedInstance];
+    _notify=[CDNotify sharedInstance];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -39,7 +42,7 @@
     if(_nameTextField.text.length>0){
          [_im updateConv:_conv name:_nameTextField.text attrs:nil callback:^(BOOL succeeded, NSError *error) {
              if([CDUtils filterError:error]){
-                 [_detailVC refresh];
+                 [_notify postConvNotify];
                  [self.navigationController popViewControllerAnimated:YES];
              }
          }];

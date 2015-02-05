@@ -24,5 +24,6 @@
 #import "CDCache.h"
 #import "CDConvService.h"
 #import "CDStorage.h"
+#import "CDNotify.h"
 
 #endif
