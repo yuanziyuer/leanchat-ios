@@ -58,10 +58,6 @@ static CDIM* _im;
     }
 }
 
-+(void)notifyGroupUpdate{
-    [CDUtils postNotification:NOTIFICATION_GROUP_UPDATED];
-}
-
 +(void)cacheConvsWithIds:(NSMutableSet*)convids callback:(AVArrayResultBlock)callback{
     NSMutableSet* uncacheConvids=[[NSMutableSet alloc] init];
     for(NSString * convid in convids){

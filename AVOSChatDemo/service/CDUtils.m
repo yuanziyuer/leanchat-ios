@@ -143,10 +143,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:name object:nil];
 }
 
-+(void)notifyGroupUpdate{
-    [CDUtils postNotification:NOTIFICATION_GROUP_UPDATED];
-}
-
 #pragma mark - view util
 
 +(UIActivityIndicatorView*)showIndicatorAtView:(UIView*)hookView{

@@ -19,6 +19,9 @@
     id groupUpdatedObserver;
     CDIM* _im;
 }
+
+@property  CDNotify* notify;
+
 @end
 
 static NSString* cellIndentifier=@"cell";
@@ -29,6 +32,7 @@ static NSString* cellIndentifier=@"cell";
     [super viewDidLoad];
     convs=[[NSMutableArray alloc] init];
     _im=[CDIM sharedInstance];
+    _notify=[CDNotify sharedInstance];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -45,14 +49,12 @@ static NSString* cellIndentifier=@"cell";
     UIRefreshControl* refreshControl=[[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl=refreshControl;
-    NSOperationQueue *mainQueue = [NSOperationQueue mainQueue];
-    groupUpdatedObserver=[[NSNotificationCenter defaultCenter] addObserverForName:NOTIFICATION_GROUP_UPDATED object:nil queue:mainQueue usingBlock:^(NSNotification *note) {
-        [self refresh:nil];
-    }];
+    
+    [_notify addConvObserver:self selector:@selector(refresh:)];
 }
 
 -(void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:groupUpdatedObserver];
+    [_notify removeConvObserver:self];
 }
 
 -(void)refresh:(UIRefreshControl*)refreshControl{
@@ -61,8 +63,6 @@ static NSString* cellIndentifier=@"cell";
         convs=objects;
         [self.tableView reloadData];
     }];
-//    [CDGroupService findGroupsWithCallback:^(NSArray *objects, NSError *error) {
-//    } cacheFirst:NO];
 }
 
 -(void)goNewGroup{
