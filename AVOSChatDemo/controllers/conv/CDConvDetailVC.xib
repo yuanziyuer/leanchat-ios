@@ -20,7 +20,6 @@
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="UsT-Hg-qMa">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
-                    <color key="backgroundColor" red="0.15704350908464207" green="0.76873533849999998" blue="0.39095451032544609" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="400" id="swL-Xk-1SX"/>
                     </constraints>

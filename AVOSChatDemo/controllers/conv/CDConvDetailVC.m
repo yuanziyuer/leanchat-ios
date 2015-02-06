@@ -83,7 +83,7 @@ static NSString * const reuseIdentifier = @"Cell";
             } completion:^(BOOL finished) {
                 CGFloat h=self.collectionView.contentSize.height;
                 //DLog(@"%f",h)
-                _heightConstraint.constant=h+self.navigationController.navigationBar.frame.size.height;
+                _heightConstraint.constant=h+self.navigationController.navigationBar.frame.size.height+30;
             }];
         }];
     }];

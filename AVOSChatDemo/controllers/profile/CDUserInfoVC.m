@@ -72,23 +72,14 @@
 
 -(void)btnClicked:(UIButton*)button{
     if(isFriend){
-        [CDChatRoomVC initWithUserId:self.user.objectId fromVC:self];
+        [CDChatRoomVC goWithUserId:self.user.objectId fromVC:self];
     }else{
         [CDUtils showNetworkIndicator];
-        [CDCloudService tryCreateAddRequestWithToUser:_user callback:^(id object, NSError *error) {
+        [CDAddRequestService tryCreateAddRequestWithToUser:_user callback:^(BOOL succeeded, NSError *error) {
             [CDUtils hideNetworkIndicator];
-            if(error.code==3840){
-                [CDUtils alert:@"云代码未部署，请到项目主页根据说明来部署"];
-                return ;
+            if([CDUtils filterError:error]){
+                [CDUtils alert:@"请求成功"];
             }
-            NSString *info;
-            if(error==nil){
-                info=@"请求成功";
-            }else{
-                info=[error localizedDescription];
-            }
-            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:NULL message:info delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alert show];
         }];
     }
 }

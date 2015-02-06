@@ -14,7 +14,6 @@
 #import "CDChatListVC.h"
 #import "CDFriendListVC.h"
 #import "CDProfileVC.h"
-#import "CDChatGroup.h"
 #import "CDModels.h"
 #import "CDService.h"
 
@@ -25,8 +24,6 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     [CDAddRequest registerSubclass];
-    [CDChatGroup registerSubclass];
-    [CDSetting registerSubclass];
 #if USE_US
     [AVOSCloud useAVCloudUS];
 #endif

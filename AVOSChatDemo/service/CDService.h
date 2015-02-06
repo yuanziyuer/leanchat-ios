@@ -16,7 +16,6 @@
 #import "CDUpgradeService.h"
 #import "CDCache.h"
 #import "CDUserService.h"
-#import "CDSettingService.h"
 #import "CDLocalService.h"
 #import "CDIM.h"
 #import "CDIMUtils.h"

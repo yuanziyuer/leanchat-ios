@@ -39,17 +39,13 @@ static CDStorage* _storage;
     return _storage;
 }
 
+-(void)close{
+    _storage=nil;
+}
+
 - (NSString *)dbPathWithUserId:(NSString*)userId {
     NSString *libPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     return [libPath stringByAppendingPathComponent:[NSString stringWithFormat:@"chat_%@",userId]];
-}
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-    }
-    return self;
 }
 
 -(void)setupWithUserId:(NSString*)userId{

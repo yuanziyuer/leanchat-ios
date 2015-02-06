@@ -81,7 +81,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     return self;
 }
 
-+(void)initWithUserId:(NSString*)userId fromVC:(UIViewController*)vc {
++(void)goWithUserId:(NSString*)userId fromVC:(UIViewController*)vc {
     CDIM* im=[CDIM sharedInstance];
     [im fetchConvWithUserId:userId callback:^(AVIMConversation *conversation, NSError *error) {
         [CDUtils filterError:error callback:^{
@@ -409,7 +409,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     }else{
         [CDUtils alert:@"write image to file error"];
     }
-//    [self removeMessageAtIndexPath:indexPath];
 }
 
 -(void)sendMsg:(AVIMTypedMessage*)msg originFilePath:(NSString*)path{
@@ -431,7 +430,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 -(void)resendMsg:(CDMsg*)msg{
     [self.conv sendMessage:msg.innerMsg options:AVIMMessageSendOptionRequestReceipt callback:^(BOOL succeeded, NSError *error) {
         if(error){
-            
         }else{
             [_storage updateFailedMsg:msg.innerMsg byLocalId:msg.localId];
         }

@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "CDCommon.h"
-#import "CDChatGroup.h"
 
 @interface CDCache : NSObject
 

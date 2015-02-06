@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CDChatGroup.h"
 #import "CDConvDetailVC.h"
 
 @interface CDAddMemberVC : UITableViewController

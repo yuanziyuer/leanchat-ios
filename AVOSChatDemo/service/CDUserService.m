@@ -13,19 +13,9 @@ static UIImage* defaultAvatar;
 
 @implementation CDUserService
 
-+(void)findFriendsIsNetworkOnly:(BOOL)networkOnly callback:(AVArrayResultBlock)block{
-    AVUser *user=[AVUser currentUser];
-    AVRelation *relation=[user relationforKey:@"friends"];
-    //    //设置缓存有效期
-    //    query.maxCacheAge = 4 * 3600;
-    AVQuery *q=[relation query];
-    [CDUtils setPolicyOfAVQuery:q isNetwokOnly:networkOnly];
-    if([q hasCachedResult]){
-        NSLog(@"has cached results");
-    }else{
-        NSLog(@"don't have cache");
-    }
-    [q findObjectsInBackgroundWithBlock:block];
++(void)findFriendsIsNetworkOnly:(BOOL)networkOnly callback:(AVArrayResultBlock)callback{
+    AVUser* user=[AVUser currentUser];
+    [user getFollowees:callback];
 }
 
 +(void)findFriendsWithCallback:(AVArrayResultBlock)callback{
@@ -109,6 +99,16 @@ static UIImage* defaultAvatar;
             [user saveInBackgroundWithBlock:callback];
         }
     }];
+}
+
++(void)addFriend:(AVUser*)user callback:(AVBooleanResultBlock)callback{
+    AVUser* curUser=[AVUser currentUser];
+    [curUser follow:user.objectId andCallback:callback];
+}
+
++(void)removeFriend:(AVUser*)user callback:(AVBooleanResultBlock)callback{
+    AVUser* curUser=[AVUser currentUser];
+    [curUser unfollow:user.objectId andCallback:callback];
 }
 
 @end

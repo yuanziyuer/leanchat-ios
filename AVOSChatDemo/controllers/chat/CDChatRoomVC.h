@@ -7,7 +7,6 @@
 //
 
 #import "CDCommon.h"
-#import "CDChatGroup.h"
 #import "FMDB.h"
 #import "XHMessageTableViewController.h"
 #import "CDSessionStateView.h"
@@ -20,6 +19,6 @@
 
 -(instancetype)initWithConv:(AVIMConversation*)conv;
 
-+(void)initWithUserId:(NSString*)userId fromVC:(UIViewController*)vc;
++(void)goWithUserId:(NSString*)userId fromVC:(UIViewController*)vc;
 
 @end

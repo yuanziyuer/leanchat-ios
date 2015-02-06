@@ -44,7 +44,7 @@ static CDIM* _im;
 
 #pragma mark - group cache
 
-+(CDChatGroup*)lookupConvById:(NSString*)convid{
++(AVIMConversation*)lookupConvById:(NSString*)convid{
     return [cachedConvs valueForKey:convid];
 }
 

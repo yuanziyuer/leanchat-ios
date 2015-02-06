@@ -15,6 +15,8 @@
 
 +(instancetype)sharedInstance;
 
+-(void)close;
+
 -(void)setupWithUserId:(NSString*)userId;
 
 -(NSArray*)getMsgsWithConvid:(NSString*)convid maxTime:(int64_t)time limit:(int)limit db:(FMDatabase*)db;
