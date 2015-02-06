@@ -32,7 +32,6 @@ static NSString* cellIndentifier=@"cellIndentifier";
     UINib* nib=[UINib nibWithNibName:NSStringFromClass([CDImageLabelTableCell class]) bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:cellIndentifier];
     [self searchUser:@""];
-    // Do any additional setup after loading the view from its nib.
 }
 
 -(void)searchUser:(NSString *)name{
@@ -66,17 +65,10 @@ static NSString* cellIndentifier=@"cellIndentifier";
 }
 
 -(void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    //NSLog(@"select");
     AVUser *user=users[indexPath.row];
     CDUserInfoVC *controller=[[CDUserInfoVC alloc] init];
     controller.user=user;
     [self.navigationController pushViewController:controller animated:YES];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{

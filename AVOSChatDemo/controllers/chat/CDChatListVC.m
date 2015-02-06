@@ -30,6 +30,8 @@ enum : NSUInteger {
 
 @property CDStorage* storage;
 
+@property CDNotify* notify;
+
 @property CDIM* im;
 
 @end
@@ -45,6 +47,7 @@ static NSString *cellIdentifier = @"ContactCell";
         _rooms=[[NSMutableArray alloc] init];
         _im=[CDIM sharedInstance];
         _storage=[CDStorage sharedInstance];
+        _notify=[CDNotify sharedInstance];
     }
     return self;
 }
@@ -64,14 +67,13 @@ static NSString *cellIdentifier = @"ContactCell";
     [_networkStateView setDelegate:self];
     [_networkStateView observeSessionUpdate];
     
-//    [_tableView addSubview:self.slimeView];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh:) name:NOTIFICATION_MESSAGE_UPDATED object:nil];
+    [_notify addMsgObserver:self selector:@selector(refresh:)];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self refresh:nil];
-    // hide it
+    [_refreshControl beginRefreshing];
+    [self refresh:_refreshControl];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -101,7 +103,7 @@ static NSString *cellIdentifier = @"ContactCell";
 }
 
 - (void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_MESSAGE_UPDATED object:nil];
+    [_notify removeMsgObserver:self];
 }
 
 #pragma table view

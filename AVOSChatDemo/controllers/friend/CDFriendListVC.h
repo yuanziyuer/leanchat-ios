@@ -7,8 +7,9 @@
 //
 
 #import "CDBaseTableVC.h"
-#define CD_FRIENDS_UPDATE @"CDFriendsUpdate"
 
 @interface CDFriendListVC : UIViewController<UITableViewDataSource,UITableViewDelegate>
+
+-(void)refresh;
 
 @end

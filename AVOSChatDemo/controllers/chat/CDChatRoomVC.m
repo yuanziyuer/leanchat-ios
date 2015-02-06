@@ -92,10 +92,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     }];
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
+-(void)initBarButton{
     UIImage* _peopleImage=[CDUtils resizeImage:[UIImage imageNamed:@"chat_menu_people"] toSize:CGSizeMake(25, 25)];
     UIBarButtonItem* item=[[UIBarButtonItem alloc] initWithImage:_peopleImage style:UIBarButtonItemStyleDone target:self action:@selector(goChatGroupDetail:)];
     self.navigationItem.rightBarButtonItem=item;
@@ -105,12 +102,16 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
                                                               action:nil];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop                                                                                          target:self                                                                                          action:@selector(backPressed:)];
     [[self navigationItem] setBackBarButtonItem:backBtn];
-    
-    AVUser* curUser=[AVUser currentUser];
-    // 设置自身用户名
-    self.messageSender = [curUser username];
-    
-    // 添加第三方接入数据
+}
+
+-(void)initSessionStateView{
+    _sessionStateView=[[CDSessionStateView alloc] initWithFrame:CGRectMake(0, 64, self.messageTableView.frame.size.width, kCDSessionStateViewHight)];
+    [_sessionStateView setDelegate:self];
+    _sessionStateViewVisiable=NO;
+    [_sessionStateView observeSessionUpdate];
+}
+
+-(void)initBottomMenuAndEmotionView{
     NSMutableArray *shareMenuItems = [NSMutableArray array];
     NSArray *plugIcons = @[@"sharemore_pic", @"sharemore_video"];
     NSArray *plugTitle = @[@"照片", @"拍摄"];
@@ -118,18 +119,25 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         XHShareMenuItem *shareMenuItem = [[XHShareMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:plugIcon] title:[plugTitle objectAtIndex:[plugIcons indexOfObject:plugIcon]]];
         [shareMenuItems addObject:shareMenuItem];
     }
-   
-    _emotionManagers=[CDEmotionUtils getEmotionManagers];
-    self.emotionManagerView.isShowEmotionStoreButton=YES;
-    [self.emotionManagerView reloadData];
-    
     self.shareMenuItems = shareMenuItems;
     [self.shareMenuView reloadData];
     
-    _sessionStateView=[[CDSessionStateView alloc] initWithFrame:CGRectMake(0, 64, self.messageTableView.frame.size.width, kCDSessionStateViewHight)];
-    [_sessionStateView setDelegate:self];
-    _sessionStateViewVisiable=NO;
-    [_sessionStateView observeSessionUpdate];
+    _emotionManagers=[CDEmotionUtils getEmotionManagers];
+    self.emotionManagerView.isShowEmotionStoreButton=YES;
+    [self.emotionManagerView reloadData];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self initBarButton];
+    [self initBottomMenuAndEmotionView];
+    [self initSessionStateView];
+    
+    AVUser* curUser=[AVUser currentUser];
+    // 设置自身用户名
+    self.messageSender = [curUser username];
     
     [_storage insertRoomWithConvid:self.conv.conversationId];
     [_storage clearUnreadWithConvid:self.conv.conversationId];
@@ -142,19 +150,14 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    NSNotificationCenter* center=[NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(loadMsg:) name:NOTIFICATION_MESSAGE_UPDATED object:nil];
-    //[CDDatabaseService markHaveReadWithConvid:[self getConvid]];
-    //[self loadMsgsIsLoadMore:NO];
+    [_notify addMsgObserver:self selector:@selector(loadMsg:)];
     [self refreshConv];
     [self loadMsgsWithLoadMore:NO];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-    NSNotificationCenter* center=[NSNotificationCenter defaultCenter];
-    [center removeObserver:self name:NOTIFICATION_MESSAGE_UPDATED object:nil];
-    //[CDDatabaseService markHaveReadWithConvid:[self getConvid]];
+    [_notify removeMsgObserver:self];
     [[XHAudioPlayerHelper shareInstance] stopAudio];
 }
 
@@ -165,27 +168,11 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     [_notify removeConvObserver:self];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - prev and next controller
 
 - (void)goChatGroupDetail:(id)sender {
-
-//    UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
-//    [flow setItemSize:CGSizeMake(240, 240)];
-//    [flow setScrollDirection:UICollectionViewScrollDirectionVertical];
-//    
-//    NSString* name=NSStringFromClass([CDGroupDetailVC class]);
-//
     CDConvDetailVC* controller=[[CDConvDetailVC alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
-    
-//    CDGroupDetailViewController* controller=[[CDGroupDetailViewController alloc] init];
-//    [self.navigationController pushViewController:controller animated:YES];
 }
 
 -(void)backPressed:(id)sender{
@@ -249,6 +236,12 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     }
     NSInteger msgStatuses[4]={AVIMMessageStatusSending,AVIMMessageStatusSent,AVIMMessageStatusDelivered,AVIMMessageStatusFailed};
     NSInteger xhMessageStatuses[4]={XHMessageStatusSending,XHMessageStatusSent,XHMessageStatusReceived,XHMessageStatusFailed};
+    
+    if([CDConvService typeOfConv:self.conv]==CDConvTypeGroup){
+        if(msg.status==AVIMMessageStatusSent){
+            msg.status=AVIMMessageStatusDelivered;
+        }
+    }
     
     if(xhMessage.bubbleMessageType==XHBubbleMessageTypeSending){
         XHMessageStatus status=XHMessageStatusReceived;
@@ -442,9 +435,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     switch (message.messageMediaType) {
         case XHBubbleMessageMediaTypeVideo:
         case XHBubbleMessageMediaTypePhoto: {
-            DLog(@"message : %@", message.photo);
-            NSLog(@"message thumbnail Url:%@",message.thumbnailUrl);
-            DLog(@"message : %@", message.videoConverPhoto);
             XHDisplayMediaViewController *messageDisplayTextView = [[XHDisplayMediaViewController alloc] init];
             messageDisplayTextView.message = message;
             disPlayViewController = messageDisplayTextView;
@@ -500,7 +490,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     DLog(@"indexPath : %@", indexPath);
 //    XHContact *contact = [[XHContact alloc] init];
 //    contact.contactName = [message sender];
-//    
 //    contact.contactIntroduction = @"自定义描述，这个需要和业务逻辑挂钩";
 //    XHContactDetailTableViewController *contactDetailTableViewController = [[XHContactDetailTableViewController alloc] initWithContact:contact];
 //    [self.navigationController pushViewController:contactDetailTableViewController animated:YES];
@@ -552,13 +541,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     [self loadMsgsWithLoadMore:YES];
 }
 
-/**
- *  发送文本消息的回调方法
- *
- *  @param text   目标文本字符串
- *  @param sender 发送者的名字
- *  @param date   发送时间
- */
+//发送文本消息的回调方法
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date {
     if([text length]>0){
         AVIMTextMessage* msg=[AVIMTextMessage messageWithText:[CDEmotionUtils convertWithText:text toEmoji:NO] attributes:nil];
@@ -567,47 +550,22 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     }
 }
 
-/**
- *  发送图片消息的回调方法
- *
- *  @param photo  目标图片对象，后续有可能会换
- *  @param sender 发送者的名字
- *  @param date   发送时间
- */
+//发送图片消息的回调方法
 - (void)didSendPhoto:(UIImage *)photo fromSender:(NSString *)sender onDate:(NSDate *)date {
     [self sendImage:photo];
     [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypePhoto];
 }
 
-/**
- *  发送视频消息的回调方法
- *
- *  @param videoPath 目标视频本地路径
- *  @param sender    发送者的名字
- *  @param date      发送时间
- */
+// 发送视频消息的回调方法
 - (void)didSendVideoConverPhoto:(UIImage *)videoConverPhoto videoPath:(NSString *)videoPath fromSender:(NSString *)sender onDate:(NSDate *)date {
 }
 
-/**
- *  发送语音消息的回调方法
- *
- *  @param voicePath        目标语音本地路径
- *  @param voiceDuration    目标语音时长
- *  @param sender           发送者的名字
- *  @param date             发送时间
- */
+// 发送语音消息的回调方法
 - (void)didSendVoice:(NSString *)voicePath voiceDuration:(NSString *)voiceDuration fromSender:(NSString *)sender onDate:(NSDate *)date {
     [self sendFileMsgWithPath:voicePath type:kAVIMMessageMediaTypeAudio];
 }
 
-/**
- *  发送第三方表情消息的回调方法
- *
- *  @param facePath 目标第三方表情的本地路径
- *  @param sender   发送者的名字
- *  @param date     发送时间
- */
+// 发送表情消息的回调方法
 - (void)didSendEmotion:(NSString *)emotion fromSender:(NSString *)sender onDate:(NSDate *)date {
     UITextView *textView=self.messageInputView.inputTextView;
     NSRange range=[textView selectedRange];
@@ -623,13 +581,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeLocalPosition];
 }
 
-/**
- *  是否显示时间轴Label的回调方法
- *
- *  @param indexPath 目标消息的位置IndexPath
- *
- *  @return 根据indexPath获取消息的Model的对象，从而判断返回YES or NO来控制是否显示时间轴Label
- */
+// 是否显示时间轴Label的回调方法
 - (BOOL)shouldDisplayTimestampForRowAtIndexPath:(NSIndexPath *)indexPath {
     if(indexPath.row==0){
         return YES;
@@ -645,12 +597,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     }
 }
 
-/**
- *  配置Cell的样式或者字体
- *
- *  @param cell      目标Cell
- *  @param indexPath 目标Cell所在位置IndexPath
- */
+// 配置Cell的样式或者字体
 - (void)configureCell:(XHMessageTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     XHMessage* msg=[self.messages objectAtIndex:indexPath.row];
     if([self shouldDisplayTimestampForRowAtIndexPath:indexPath]){
@@ -668,11 +615,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     }
 }
 
-/**
- *  协议回掉是否支持用户手动滚动
- *
- *  @return 返回YES or NO
- */
+// 协议回掉是否支持用户手动滚动
 - (BOOL)shouldPreventScrollToBottomWhileUserScrolling {
     return YES;
 }

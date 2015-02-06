@@ -12,7 +12,6 @@
 #import "CDCloudService.h"
 #import "CDUtils.h"
 #import "CDUtils.h"
-#import "CDFriendListVC.h"
 
 @interface CDNewFriendVC (){
     NSArray *addRequests;
@@ -24,14 +23,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    //[self.tableView setDataSource:self];
-    //[self.tableView setDelegate:self];
     UIRefreshControl* refreshControl=[[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl=refreshControl;
@@ -64,23 +55,15 @@
     }];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
     return addRequests.count;
 }
 
@@ -102,22 +85,20 @@
         cell.actionBtn.enabled=false;
         [cell.actionBtn setTitle:@"已同意" forState:UIControlStateNormal];
     }
-    // Configure the cell...
-//    UITableViewCell* cell1=[[UITableViewCell alloc] init];
-//    cell1.textLabel.text=@"hah";
     return cell;
 }
 
 -(void)actionBtnClicked:(id)sender{
     UIButton *btn=(UIButton*)sender;
     CDAddRequest* addRequest=[addRequests objectAtIndex:btn.tag];
-    [CDUtils showNetworkIndicator];
     
+    [CDUtils showNetworkIndicator];
     [CDAddRequestService agreeAddRequest:addRequest callback:^(BOOL succeeded, NSError *error) {
+        [CDUtils hideNetworkIndicator];
         if([CDUtils filterError:error]){
             [CDUtils alert:@"添加成功"];
             [self refresh:sender];
-            [[NSNotificationCenter defaultCenter] postNotificationName:CD_FRIENDS_UPDATE object:nil];
+            [_friendListVC refresh];
         }
     }];
 }

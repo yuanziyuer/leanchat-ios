@@ -11,11 +11,23 @@
 
 @interface CDSessionStateView()
 
-@property CDIM* imClient;
+@property CDIM* im;
+
+@property CDNotify* notify;
 
 @end
 
 @implementation CDSessionStateView
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _im=[CDIM sharedInstance];
+        _notify=[CDNotify sharedInstance];
+    }
+    return self;
+}
 
 -(instancetype)initWithFrame:(CGRect)frame{
     self=[super initWithFrame:frame];
@@ -41,9 +53,7 @@
 }
 
 -(void)observeSessionUpdate{
-    NSNotificationCenter* center=[NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(sessionUpdated) name:NOTIFICATION_SESSION_UPDATED object:nil];
-    _imClient=[CDIM sharedInstance];
+    [_notify addSessionObserver:self selector:@selector(sessionUpdated)];
     [self sessionUpdated];
 }
 
@@ -69,7 +79,7 @@
 }
 
 -(void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_SESSION_UPDATED object:nil];
+    [_notify removeSessionObserver:self];
 }
 
 @end

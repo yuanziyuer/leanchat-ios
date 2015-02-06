@@ -56,15 +56,12 @@
     self.nameLabel.text = username;
     
     [CDUserService displayAvatarOfUser:user avatarView:self.avatarView];
-    //_tableView.autoresizingMask=UIViewAutoresizingFlexibleHeight;
     NSString* str=@"当前:v";
     [_versionLabel setText:[str stringByAppendingString:[CDUpgradeService currentVersion]]];
     
     _badgeView = [[JSBadgeView alloc] initWithParentView:_upgradeAction alignment:JSBadgeViewAlignmentTopRight];
     _badgeView.badgeText=@"New";
     _badgeView.hidden=YES;
-    
-    //[_upgradeAction setBackgroundColor:[UIColor grayColor]];
     
     [CDUtils showNetworkIndicator];
     [CDUpgradeService findNewVersionWithBlock:^(BOOL succeeded, NSError *error) {

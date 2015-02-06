@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CDFriendListVC.h"
 
 @interface CDNewFriendVC : UITableViewController
+
+@property CDFriendListVC* friendListVC;
 
 @end

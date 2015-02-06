@@ -30,6 +30,8 @@ enum : NSUInteger {
 @property (weak, nonatomic) IBOutlet UIImageView *myNewFriendIcon;
 @property JSBadgeView* badgeView;
 
+@property UIRefreshControl* refreshControl;
+
 @end
 
 @implementation CDFriendListVC
@@ -58,16 +60,14 @@ enum : NSUInteger {
     singleTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goGroup:)];
     [self.groupView addGestureRecognizer:singleTap];
     
-    //[self.myNewFriendView addGestureRecognizer:singleTap];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh:) name:CD_FRIENDS_UPDATE object:nil];
-    
-    UIRefreshControl* refreshControl=[[UIRefreshControl alloc] init];
-    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:refreshControl];
-    [self refresh:nil];
+    _refreshControl=[[UIRefreshControl alloc] init];
+    [_refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:_refreshControl];
     UILongPressGestureRecognizer *recogizer=[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
     recogizer.minimumPressDuration=1.0;
     [self.tableView addGestureRecognizer:recogizer];
+    
+    [self refresh];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -79,14 +79,11 @@ enum : NSUInteger {
     // Dispose of any resources that can be recreated.
 }
 
--(void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:CD_FRIENDS_UPDATE object:nil];
-}
-
 -(void)goNewFriend:(id)sender{
     [CDLocalService setAddRequestN:_addRequestN];
     [_badgeView removeFromSuperview];
     CDNewFriendVC *controller=[[CDNewFriendVC alloc] init];
+    controller.friendListVC=self;
     [[self navigationController] pushViewController:controller animated:YES];
     self.tabBarItem.badgeValue=nil;
 }
@@ -101,11 +98,14 @@ enum : NSUInteger {
     [[self navigationController] pushViewController:controller animated:YES];
 }
 
+-(void)refresh{
+    [_refreshControl beginRefreshing];
+    [self refresh:_refreshControl];
+}
+
 -(void)refresh:(UIRefreshControl*)refreshControl{
     BOOL networkOnly= refreshControl!=nil;
     [CDUtils showNetworkIndicator];
-    //[CDUserService findFriendsWithCallback:^(NSArray *objects, NSError *error) {
-    //}];
     [CDUserService findFriendsIsNetworkOnly:networkOnly callback:^(NSArray *objects, NSError *error) {
         [CDUtils stopRefreshControl:refreshControl];
         [CDUtils hideNetworkIndicator];
