@@ -130,11 +130,9 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     [_sessionStateView setDelegate:self];
     _sessionStateViewVisiable=NO;
     [_sessionStateView observeSessionUpdate];
-    if(self.conv!=nil){
-        [_storage insertRoomWithConvid:self.conv.conversationId];
-    }else{
-        DLog();
-    }
+    
+    [_storage insertRoomWithConvid:self.conv.conversationId];
+    [_storage clearUnreadWithConvid:self.conv.conversationId];
     [_notify addConvObserver:self selector:@selector(refreshConv)];
 }
 

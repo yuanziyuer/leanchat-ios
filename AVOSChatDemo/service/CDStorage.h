@@ -35,4 +35,8 @@
 
 -(void)deleteRoomByConvid:(NSString*)convid;
 
+-(void)incrementUnreadWithConvid:(NSString*)convid;
+
+-(void)clearUnreadWithConvid:(NSString*)convid;
+
 @end

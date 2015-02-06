@@ -177,4 +177,16 @@ static CDStorage* _storage;
     }];
 }
 
+-(void)incrementUnreadWithConvid:(NSString*)convid{
+    [_dbQueue inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@"UPDATE rooms SET unread_count=unread_count+1 WHERE convid=?" withArgumentsInArray:@[convid]];
+    }];
+}
+
+-(void)clearUnreadWithConvid:(NSString*)convid{
+    [_dbQueue inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@"UPDATE rooms SET unread_count=0 WHERE convid=?" withArgumentsInArray:@[convid]];
+    }];
+}
+
 @end

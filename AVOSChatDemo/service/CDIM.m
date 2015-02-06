@@ -135,7 +135,7 @@ static BOOL initialized;
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_MESSAGE_UPDATED object:msg];
 }
 
--(void)receiveMsg:(AVIMTypedMessage*)msg{
+-(void)receiveMsg:(AVIMTypedMessage*)msg conv:(AVIMConversation*)conv{
     [CDUtils runInGlobalQueue:^{
         if(msg.mediaType==kAVIMMessageMediaTypeImage || msg.mediaType==kAVIMMessageMediaTypeAudio){
             NSString* path=[CDFileService getPathByObjectId:msg.messageId];
@@ -146,7 +146,9 @@ static BOOL initialized;
             }
         }
         [CDUtils runInMainQueue:^{
+            [_storage insertRoomWithConvid:conv.conversationId];
             [_storage insertMsg:msg];
+            [_storage incrementUnreadWithConvid:conv.conversationId];
             [self postUpdatedMsg:msg];
         }];
     }];
@@ -194,11 +196,8 @@ static BOOL initialized;
  */
 - (void)conversation:(AVIMConversation *)conversation didReceiveTypedMessage:(AVIMTypedMessage *)message{
     DLog();
-    if(conversation!=nil){
-        [_storage insertRoomWithConvid:conversation.conversationId];
-    }
     if(message.messageId){
-        [self receiveMsg:message];
+        [self receiveMsg:message conv:conversation];
     }
 }
 
