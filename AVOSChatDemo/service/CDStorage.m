@@ -136,7 +136,7 @@ static CDStorage* _storage;
     __block int64_t rowId;
     [_dbQueue inDatabase:^(FMDatabase *db) {
         NSData* data=[NSKeyedArchiver archivedDataWithRootObject:msg];
-        BOOL result=[db executeUpdate:@"INSERT INTO msgs (msg_id,convid,object,time) VALUES(?,?,?,?)"
+        [db executeUpdate:@"INSERT INTO msgs (msg_id,convid,object,time) VALUES(?,?,?,?)"
                  withArgumentsInArray:@[msg.messageId,msg.conversationId,data,[CDUtils strOfInt64:msg.sendTimestamp]]];
         rowId=[db lastInsertRowId];
     }];

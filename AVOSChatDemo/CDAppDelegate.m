@@ -183,15 +183,6 @@
 //        }else{
 //        }
 //    }];
-
-    // important
-//    [CDGroupService findGroupsWithCallback:^(NSArray *objects, NSError *error) {
-//        [CDUtils logError:error callback:^{
-//            for(CDChatGroup* group in objects){
-//                [CDGroupService setDelegateWithGroupId:group.objectId];
-//            }
-//        }];
-//    } cacheFirst:YES];
     
     CDIM* client=[CDIM sharedInstance];
     [client open];
