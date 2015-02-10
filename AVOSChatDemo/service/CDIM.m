@@ -11,7 +11,6 @@
 #import "CDService.h"
 
 static CDIM*instance;
-static BOOL initialized;
 
 @interface CDIM()<AVIMClientDelegate,AVIMSignatureDataSource>{
     
@@ -29,12 +28,8 @@ static BOOL initialized;
 
 + (instancetype)sharedInstance
 {
-    static dispatch_once_t once_token=0;
-    dispatch_once(&once_token, ^{
+    if(instance==nil){
         instance=[[CDIM alloc] init];
-    });
-    if(!initialized){
-        initialized=YES;
     }
     return instance;
 }
@@ -58,6 +53,7 @@ static BOOL initialized;
 
 -(void)open{
     [_imClient openWithClientId:[AVUser currentUser].objectId callback:^(BOOL succeeded, NSError *error) {
+        [_notify postSessionNotify];
         [CDUtils logError:error callback:^{
             NSLog(@"im open succeed");
         }];
@@ -66,7 +62,7 @@ static BOOL initialized;
 
 - (void)close {
     [_imClient closeWithCallback:nil];
-    initialized = NO;
+    instance=nil;
 }
 
 #pragma mark - conversation
@@ -110,7 +106,7 @@ static BOOL initialized;
 
 -(void)findGroupedConvsWithBlock:(AVArrayResultBlock)block{
     NSDictionary* attrs=@{CONV_TYPE:@(CDConvTypeGroup)};
-    [_imClient queryConversationsWithName:nil andAttributes:attrs skip:0 limit:0 callback:block];
+    [_imClient queryConversationWithName:nil andConditions:attrs skip:0 limit:0 callback:block];
 }
 
 - (void)updateConv:(AVIMConversation *)conv name:(NSString *)name attrs:(NSDictionary *)attrs callback:(AVIMBooleanResultBlock)callback {
@@ -135,36 +131,27 @@ static BOOL initialized;
 #pragma mark - send or receive message
 
 -(void)receiveMsg:(AVIMTypedMessage*)msg conv:(AVIMConversation*)conv{
-    [CDUtils runInGlobalQueue:^{
-        if(msg.mediaType==kAVIMMessageMediaTypeImage || msg.mediaType==kAVIMMessageMediaTypeAudio){
-            NSString* path=[CDFileService getPathByObjectId:msg.messageId];
-            NSFileManager* fileMan=[NSFileManager defaultManager];
-            if([fileMan fileExistsAtPath:path]==NO){
-                NSData* data=[msg.file getData];
-                [data writeToFile:path atomically:YES];
-            }
-        }
-        [CDUtils runInMainQueue:^{
-            [_storage insertRoomWithConvid:conv.conversationId];
-            [_storage insertMsg:msg];
-            [_storage incrementUnreadWithConvid:conv.conversationId];
-            [_notify postMsgNotify:msg];
-        }];
-    }];
+    [_storage insertRoomWithConvid:conv.conversationId];
+    [_storage insertMsg:msg];
+    [_storage incrementUnreadWithConvid:conv.conversationId];
+    [_notify postMsgNotify:msg];
 }
 
 #pragma mark - AVIMClientDelegate
 
 - (void)imClientPaused:(AVIMClient *)imClient{
     DLog();
+    [_notify postSessionNotify];
 }
 
 - (void)imClientResuming:(AVIMClient *)imClient{
     DLog();
+    [_notify postSessionNotify];
 }
 
 - (void)imClientResumed:(AVIMClient *)imClient{
     DLog();
+    [_notify postSessionNotify];
 }
 
 #pragma mark - AVIMMessageDelegate

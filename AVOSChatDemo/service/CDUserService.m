@@ -80,7 +80,7 @@ static UIImage* defaultAvatar;
         if(error==nil){
             image=[UIImage imageWithData:data];
         }else{
-            [CDUtils alertError:error];
+            DLog(@"%@",error);
         }
     }
     return image;

@@ -19,16 +19,6 @@
 
 @implementation CDSessionStateView
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        _im=[CDIM sharedInstance];
-        _notify=[CDNotify sharedInstance];
-    }
-    return self;
-}
-
 -(instancetype)initWithFrame:(CGRect)frame{
     self=[super initWithFrame:frame];
     if(self){
@@ -53,22 +43,16 @@
 }
 
 -(void)observeSessionUpdate{
+    _im=[CDIM sharedInstance];
+    _notify=[CDNotify sharedInstance];
     [_notify addSessionObserver:self selector:@selector(sessionUpdated)];
     [self sessionUpdated];
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
-
 - (void)sessionUpdated
 {
-    CDIM* imClient=[CDIM sharedInstance];
-    if([CDUtils connected]==NO || [imClient isOpened]==NO){
+//    [CDUtils connected]==NO ||
+    if([_im isOpened]==NO){
         if([_delegate respondsToSelector:@selector(onSessionBrokenWithStateView:)])
             [_delegate onSessionBrokenWithStateView:self];
     }else{

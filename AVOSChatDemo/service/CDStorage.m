@@ -139,8 +139,14 @@ static CDStorage* _storage;
         [db executeUpdate:@"INSERT INTO msgs (msg_id,convid,object,time) VALUES(?,?,?,?)"
                  withArgumentsInArray:@[msg.messageId,msg.conversationId,data,[CDUtils strOfInt64:msg.sendTimestamp]]];
         rowId=[db lastInsertRowId];
-    }];
+    }];	
     return rowId;
+}
+
+-(void)deleteMsgsByConvid:(NSString*)convid{
+    [_dbQueue inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@"DELETE FROM msgs where convid=?" withArgumentsInArray:@[convid]];
+    }];
 }
 
 #pragma mark - rooms table

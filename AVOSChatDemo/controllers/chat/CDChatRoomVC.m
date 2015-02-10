@@ -69,8 +69,8 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         _avatars=[[NSMutableDictionary alloc] init];
         _im=[CDIM sharedInstance];
         _notify=[CDNotify sharedInstance];
-        _defaultAvatar=[UIImage imageNamed:@"default_user_avatar"];
         _storage=[CDStorage sharedInstance];
+        _defaultAvatar=[UIImage imageNamed:@"default_user_avatar"];
     }
     return self;
 }
@@ -360,6 +360,15 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     __block NSMutableSet* userIds=[[NSMutableSet alloc] init];
     for(CDMsg* msg in msgs){
         [userIds addObject:msg.innerMsg.clientId];
+        if(msg.innerMsg.mediaType==kAVIMMessageMediaTypeImage ||
+           msg.innerMsg.mediaType==kAVIMMessageMediaTypeAudio){
+            NSString* path=[CDFileService getPathByObjectId:msg.innerMsg.messageId];
+            NSFileManager* fileMan=[NSFileManager defaultManager];
+            if([fileMan fileExistsAtPath:path]==NO){
+                NSData* data=[msg.innerMsg.file getData];
+                [data writeToFile:path atomically:YES];
+            }
+        }
     }
     [CDCache cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
         if(error){

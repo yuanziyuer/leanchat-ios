@@ -27,6 +27,8 @@
 
 -(BOOL)updateFailedMsg:(AVIMTypedMessage*)msg byLocalId:(int)localId;
 
+-(void)deleteMsgsByConvid:(NSString*)convid;
+
 -(FMDatabaseQueue*)getDBQueue;
 
 -(NSArray*)getRooms;
@@ -38,5 +40,6 @@
 -(void)incrementUnreadWithConvid:(NSString*)convid;
 
 -(void)clearUnreadWithConvid:(NSString*)convid;
+
 
 @end

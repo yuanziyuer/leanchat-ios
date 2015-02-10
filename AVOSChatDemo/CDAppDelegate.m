@@ -157,13 +157,20 @@
 
 - (UIViewController*)toMain {
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    CDIM* client=[CDIM sharedInstance];
+    [client open];
+    AVUser* user=[AVUser currentUser];
+    [CDCache registerUser:user];
+    CDStorage* storage=[CDStorage sharedInstance];
+    [storage setupWithUserId:user.objectId];
+    
     CDBaseTabC *tab = [[CDBaseTabC alloc] init];
     
     [self addItemController:[[CDChatListVC alloc] init] toTabBarController:tab];
     [self addItemController:[[CDFriendListVC alloc] init] toTabBarController:tab];
     [self addItemController:[[CDProfileVC alloc] init] toTabBarController:tab];
     
-    tab.selectedIndex=1;
+    tab.selectedIndex=0;
     
     self.window.rootViewController = tab;
     
@@ -172,8 +179,6 @@
 //            [CDDatabaseService upgradeToAddField];
 //        }
 //    }];
-    AVUser* user=[AVUser currentUser];
-    [CDCache registerUser:user];
 //    AVInstallation* installation=[AVInstallation currentInstallation];
 //    AVUser* user=[AVUser currentUser];
 //    [user setObject:installation forKey:INSTALLATION];
@@ -183,12 +188,6 @@
 //        }else{
 //        }
 //    }];
-    
-    CDIM* client=[CDIM sharedInstance];
-    [client open];
-    
-    CDStorage* storage=[CDStorage sharedInstance];
-    [storage setupWithUserId:user.objectId];
     
     return tab;
 }

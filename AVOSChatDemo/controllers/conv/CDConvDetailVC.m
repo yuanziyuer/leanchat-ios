@@ -34,6 +34,12 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
 
+@property UITableViewCell* nameCell;
+
+@property UITableViewCell* deleteMsgsCell;
+
+@property UITableViewCell* quitCell;
+
 @end
 
 @implementation CDConvDetailVC
@@ -66,6 +72,16 @@ static NSString * const reuseIdentifier = @"Cell";
     _type=[CDConvService typeOfConv:self.conv];
     [_notify addConvObserver:self selector:@selector(refresh)];
     [self refresh];
+    
+    _nameCell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell1"];
+    _nameCell.textLabel.text=@"群聊名称";
+    _nameCell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+    
+    _deleteMsgsCell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell2"];
+    _deleteMsgsCell.textLabel.text=@"清空聊天记录";
+    
+    _quitCell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell3"];
+    _quitCell.textLabel.text=@"删除并退出";
 }
 
 -(AVIMConversation*)conv{
@@ -231,9 +247,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if(_type==CDConvTypeGroup){
-        return 2;
+        return 3;
     }else{
-        return 0;
+        return 1;
     }
 }
 
@@ -243,23 +259,27 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell* cell;
-    if(indexPath.section==0){
-        cell=[tableView dequeueReusableCellWithIdentifier:@"cell1"];
-        if(cell==nil){
-            cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell1"];
-            cell.textLabel.text=@"群聊名称";
-            cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+    if(_type==CDConvTypeGroup){
+        switch (indexPath.section) {
+            case 0:
+                return _nameCell;
+            case 1:
+                return _deleteMsgsCell;
+            case 2:
+                return _quitCell;
+            default:
+                break;
         }
-        cell.detailTextLabel.text=[CDConvService nameOfConv:self.conv];
-    }else if(indexPath.section==1){
-        cell=[tableView dequeueReusableCellWithIdentifier:@"cell2"];
-        if(cell==nil){
-            cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell2"];
-            cell.textLabel.text=@"删除并退出";
-            cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+    }else{
+        switch (indexPath.section) {
+            case 0:
+                return _deleteMsgsCell;
+                break;
+            default:
+                break;
         }
     }
-    return cell;
+    return nil;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -274,14 +294,32 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     return 10;
 }
 
+-(void)deleteMsgs{
+    [_storage deleteMsgsByConvid:self.conv.conversationId];
+    [CDUtils alert:@"已清空"];
+}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(indexPath.section==0){
-        CDConvNameVC* vc=[[CDConvNameVC alloc] init];
-        vc.detailVC=self;
-        vc.conv=self.conv;
-        [self.navigationController pushViewController:vc animated:YES];
-    }else if(indexPath.section==1){
-        [self quitConv];
+    if(_type==CDConvTypeGroup){
+        switch (indexPath.section) {
+            case 0:{
+                   CDConvNameVC* vc=[[CDConvNameVC alloc] init];
+                   vc.detailVC=self;
+                   vc.conv=self.conv;
+                   [self.navigationController pushViewController:vc animated:YES];
+                }
+                break;
+            case 1:
+                [self deleteMsgs];
+                break;
+            case 2:
+                [self quitConv];
+                break;
+        }
+    }else{
+        if(indexPath.section==0){
+            [self deleteMsgs];
+        }
     }
 }
 
