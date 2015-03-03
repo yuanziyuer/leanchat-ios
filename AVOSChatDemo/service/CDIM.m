@@ -68,14 +68,25 @@ static CDIM*instance;
 #pragma mark - conversation
 
 -(void)fecthConvWithId:(NSString*)convid callback:(AVIMConversationResultBlock)callback{
-    [_imClient queryConversationById:convid callback:callback];
+    AVIMConversationQuery* q=[_imClient conversationQuery];
+    [q whereKey:@"objectId" equalTo:convid];
+    [q findConversationsWithCallback:^(NSArray *objects, NSError *error) {
+        if(error){
+            callback(nil,error);
+        }else{
+            callback([objects objectAtIndex:0],error);
+        }
+    }];;
 }
 
 - (void)fetchConvWithUserId:(NSString *)userId callback:(AVIMConversationResultBlock)callback {
     NSMutableArray *array = [[NSMutableArray alloc] init];
     [array addObject:_imClient.clientId];
     [array addObject:userId];
-    [_imClient queryConversationsWithClientIds:array skip:0 limit:0 callback:^(NSArray *objects, NSError *error) {
+    AVIMConversationQuery* q=[_imClient conversationQuery];
+    [q whereKey:@"m" sizeEqualTo:2];
+    [q whereKey:@"m" containsAllObjectsInArray:array];
+    [q findConversationsWithCallback:^(NSArray *objects, NSError *error) {
         if(error){
             callback(nil,error);
         }else{
@@ -96,33 +107,38 @@ static CDIM*instance;
 }
 
 -(void)createConvWithUserId:(NSString*)userId callback:(AVIMConversationResultBlock)callback{
-    [_imClient createConversationWithName:nil clientIds:@[userId] attributes:@{CONV_TYPE:@(CDConvTypeSingle)} callback:callback];
+    [_imClient createConversationWithName:nil clientIds:@[userId] attributes:@{CONV_TYPE:@(CDConvTypeSingle)} options:AVIMConversationOptionNone callback:callback];
 }
 
 -(void)createConvWithUserIds:(NSArray*)userIds callback:(AVIMConversationResultBlock)callback{
     NSString* name=[CDConvService nameOfUserIds:userIds];
-    [_imClient createConversationWithName:name clientIds:userIds attributes:@{CONV_TYPE:@(CDConvTypeGroup)} callback:callback];
+    [_imClient createConversationWithName:name clientIds:userIds attributes:@{CONV_TYPE:@(CDConvTypeGroup)} options:AVIMConversationOptionNone callback:callback];
 }
 
--(void)findGroupedConvsWithBlock:(AVArrayResultBlock)block{
-    NSDictionary* attrs=@{CONV_TYPE:@(CDConvTypeGroup)};
-    [_imClient queryConversationWithName:nil andConditions:attrs skip:0 limit:0 callback:block];
+-(void)findGroupedConvsWithBlock:(AVIMArrayResultBlock)block{
+    AVUser* user=[AVUser currentUser];
+    AVIMConversationQuery* q=[_imClient conversationQuery];
+    [q whereKey:@"attr.type" equalTo:@(CDConvTypeGroup)];
+    [q whereKey:@"m" containedIn:@[user.objectId]];
+    [q findConversationsWithCallback:block];
 }
 
 - (void)updateConv:(AVIMConversation *)conv name:(NSString *)name attrs:(NSDictionary *)attrs callback:(AVIMBooleanResultBlock)callback {
-    AVIMConversationUpdateBuilder *builder = [conv newUpdateBuilder];
+    NSMutableDictionary* dict=[NSMutableDictionary dictionary];
     if(name){
-        builder.name = name;
+        [dict setObject:name forKey:@"name"];
     }
     if(attrs){
-        builder.attributes = attrs;
+        [dict setObject:attrs forKey:@"attrs"];
     }
-    [conv sendUpdate:[builder dictionary] callback:callback];
+    [conv update:dict callback:callback];
 }
 
 -(void)fetchConvsWithIds:(NSSet*)convids callback:(AVIMArrayResultBlock)callback{
     if(convids.count>0){
-        [_imClient queryConversationByIds:[convids allObjects] callback:callback];
+        AVIMConversationQuery* q=[_imClient conversationQuery];
+        [q whereKey:@"objectId" containedIn:[convids allObjects]];
+        [q findConversationsWithCallback:callback];
     }else{
         callback([NSMutableArray array],nil);
     }

@@ -31,6 +31,6 @@
 
 - (void)updateConv:(AVIMConversation *)conv name:(NSString *)name attrs:(NSDictionary *)attrs callback:(AVIMBooleanResultBlock)callback ;
 
--(void)findGroupedConvsWithBlock:(AVArrayResultBlock)block;
+-(void)findGroupedConvsWithBlock:(AVIMArrayResultBlock)block;
 
 @end
