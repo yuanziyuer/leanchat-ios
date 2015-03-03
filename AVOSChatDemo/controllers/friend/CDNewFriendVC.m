@@ -7,10 +7,8 @@
 //
 
 #import "CDNewFriendVC.h"
-#import "CDAddRequestService.h"
-#import "CDLabelButtonTableCell.h"
-#import "CDCloudService.h"
-#import "CDUtils.h"
+#import "CDViews.h"
+#import "CDService.h"
 #import "CDUtils.h"
 
 @interface CDNewFriendVC (){
