@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5C6622B41A66702800BCA281 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6622B31A66702800BCA281 /* Security.framework */; };
-		700D536D1AA96E4300FB7730 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700D536B1AA96E4300FB7730 /* AVOSCloud.framework */; };
-		700D536E1AA96E4300FB7730 /* AVOSCloudIM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700D536C1AA96E4300FB7730 /* AVOSCloudIM.framework */; };
+		700D53751AA97E8000FB7730 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700D53731AA97E8000FB7730 /* AVOSCloud.framework */; };
+		700D53761AA97E8100FB7730 /* AVOSCloudIM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700D53741AA97E8000FB7730 /* AVOSCloudIM.framework */; };
 		701641471A2868FE006D1074 /* CDUpgradeService.m in Sources */ = {isa = PBXBuildFile; fileRef = 701641461A2868FE006D1074 /* CDUpgradeService.m */; };
 		7016414F1A2C3348006D1074 /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 7016414E1A2C3348006D1074 /* splash.png */; };
 		701641521A2C3461006D1074 /* weChatBubble_Receiving_LeanChat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 701641501A2C3461006D1074 /* weChatBubble_Receiving_LeanChat@2x.png */; };
@@ -455,8 +455,8 @@
 
 /* Begin PBXFileReference section */
 		5C6622B31A66702800BCA281 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		700D536B1AA96E4300FB7730 /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
-		700D536C1AA96E4300FB7730 /* AVOSCloudIM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloudIM.framework; sourceTree = "<group>"; };
+		700D53731AA97E8000FB7730 /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
+		700D53741AA97E8000FB7730 /* AVOSCloudIM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloudIM.framework; sourceTree = "<group>"; };
 		701641451A2868FE006D1074 /* CDUpgradeService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUpgradeService.h; sourceTree = "<group>"; };
 		701641461A2868FE006D1074 /* CDUpgradeService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUpgradeService.m; sourceTree = "<group>"; };
 		7016414E1A2C3348006D1074 /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
@@ -1165,7 +1165,7 @@
 				8C470C9D19926019006A4E87 /* libiconv.dylib in Frameworks */,
 				8C925CB71987C20800D2750B /* libsqlite3.dylib in Frameworks */,
 				8C925C1F19876D8100D2750B /* libicucore.dylib in Frameworks */,
-				700D536E1AA96E4300FB7730 /* AVOSCloudIM.framework in Frameworks */,
+				700D53761AA97E8100FB7730 /* AVOSCloudIM.framework in Frameworks */,
 				8CB3085B1980FC1400BDC34D /* SystemConfiguration.framework in Frameworks */,
 				8CB308591980FBF900BDC34D /* CoreTelephony.framework in Frameworks */,
 				8CB308571980FBEC00BDC34D /* MobileCoreServices.framework in Frameworks */,
@@ -1173,7 +1173,7 @@
 				8CF21DCD197FCCC1002B9220 /* CoreGraphics.framework in Frameworks */,
 				8CF21DCF197FCCC1002B9220 /* UIKit.framework in Frameworks */,
 				8CF21DCB197FCCC1002B9220 /* Foundation.framework in Frameworks */,
-				700D536D1AA96E4300FB7730 /* AVOSCloud.framework in Frameworks */,
+				700D53751AA97E8000FB7730 /* AVOSCloud.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2710,8 +2710,8 @@
 		8CF21DC9197FCCC1002B9220 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				700D536B1AA96E4300FB7730 /* AVOSCloud.framework */,
-				700D536C1AA96E4300FB7730 /* AVOSCloudIM.framework */,
+				700D53731AA97E8000FB7730 /* AVOSCloud.framework */,
+				700D53741AA97E8000FB7730 /* AVOSCloudIM.framework */,
 				70F9A3A41A72A12500195430 /* AVFoundation.framework */,
 				5C6622B31A66702800BCA281 /* Security.framework */,
 				704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */,
