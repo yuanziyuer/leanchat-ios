@@ -3228,6 +3228,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1AE56C31C63DFD24A31AC420 /* Pods.debug.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
@@ -3237,7 +3238,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
-					/Users/lzw/Downloads,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AVOSChatDemo/LeanChat-Prefix.pch";
@@ -3254,9 +3254,36 @@
 					"$(PROJECT_DIR)/Pods/build/Release-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-l\"Pods-AFNetworking\"",
+					"-l\"Pods-AVOSCloud\"",
+					"-l\"Pods-JSBadgeView\"",
+					"-l\"Pods-Qiniu\"",
+					"-l\"icucore\"",
+					"-framework",
+					"\"AVOSCloud\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+				);
 				PRODUCT_NAME = LeanChat;
 				PROVISIONING_PROFILE = "deef035c-80ae-4253-baf1-fdb197da3e79";
 				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -3265,6 +3292,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AEDF34F39BB747755DB36529 /* Pods.release.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
@@ -3274,7 +3302,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
-					/Users/lzw/Downloads,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AVOSChatDemo/LeanChat-Prefix.pch";
@@ -3291,9 +3318,36 @@
 					"$(PROJECT_DIR)/Pods/build/Release-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-l\"Pods-AFNetworking\"",
+					"-l\"Pods-AVOSCloud\"",
+					"-l\"Pods-JSBadgeView\"",
+					"-l\"Pods-Qiniu\"",
+					"-l\"icucore\"",
+					"-framework",
+					"\"AVOSCloud\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+				);
 				PRODUCT_NAME = LeanChat;
 				PROVISIONING_PROFILE = "deef035c-80ae-4253-baf1-fdb197da3e79";
 				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

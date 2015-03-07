@@ -11,35 +11,6 @@
 
 @implementation CDCloudService
 
-+(void)callCloudRelationFnWithFromUser:(AVUser*)fromUser toUser:(AVUser*)toUser action:(NSString*)action callback:(AVIdResultBlock)callback{
-    NSDictionary *dict=@{@"fromUserId":fromUser.objectId,@"toUserId":toUser.objectId};
-    [AVCloud callFunctionInBackground:action withParameters:dict block:callback];
-}
-
-+(void)removeFriend:(AVUser*)friend block:(AVIdResultBlock)block{
-    AVUser* user=[AVUser currentUser];
-    [self callCloudRelationFnWithFromUser:user toUser:friend action:kCDCloudServiceRemoveFriend callback:block];
-}
-
-+(void)tryCreateAddRequestWithToUser:(AVUser*)toUser callback:(AVIdResultBlock)callback{
-    AVUser* user=[AVUser currentUser];
-    assert(user!=nil);
-    NSDictionary* dict=@{@"fromUserId":user.objectId,@"toUserId":toUser.objectId};
-    [AVCloud callFunctionInBackground:@"tryCreateAddRequest" withParameters:dict block:callback];
-}
-
-+(void)agreeAddRequestWithId:(NSString*)objectId callback:(AVIdResultBlock)callback{
-    NSDictionary* dict=@{@"objectId":objectId};
-    [AVCloud callFunctionInBackground:@"agreeAddRequest" withParameters:dict block:callback];
-}
-
-+(void)saveChatGroupWithId:(NSString*)groupId name:(NSString*)name callback:(AVIdResultBlock)callback{
-    NSString* userId=[AVUser currentUser].objectId;
-    assert(userId!=nil);
-    NSDictionary* dict=@{@"groupId":groupId,@"ownerId":userId,@"name":name};
-    [AVCloud callFunctionInBackground:@"saveChatGroup" withParameters:dict block:callback];
-}
-
 +(id)signWithPeerId:(NSString*)peerId watchedPeerIds:(NSArray*)watchPeerIds{
     if(watchPeerIds==nil){
         watchPeerIds=[[NSMutableArray alloc] init];
@@ -56,10 +27,6 @@
         [dict setObject:groupPeerIds forKey:@"group_peer_ids"];
     }
     return [AVCloud callFunction:@"group_sign" withParameters:dict];
-}
-
-+(void)getQiniuUptokenWithCallback:(AVIdResultBlock)callback{
-    [AVCloud callFunctionInBackground:@"qiniuUptoken" withParameters:nil block:callback];
 }
 
 @end

@@ -1,40 +1,40 @@
 PODS:
-  - AFNetworking (2.5.0):
-    - AFNetworking/NSURLConnection (= 2.5.0)
-    - AFNetworking/NSURLSession (= 2.5.0)
-    - AFNetworking/Reachability (= 2.5.0)
-    - AFNetworking/Security (= 2.5.0)
-    - AFNetworking/Serialization (= 2.5.0)
-    - AFNetworking/UIKit (= 2.5.0)
-  - AFNetworking/NSURLConnection (2.5.0):
+  - AFNetworking (2.5.1):
+    - AFNetworking/NSURLConnection (= 2.5.1)
+    - AFNetworking/NSURLSession (= 2.5.1)
+    - AFNetworking/Reachability (= 2.5.1)
+    - AFNetworking/Security (= 2.5.1)
+    - AFNetworking/Serialization (= 2.5.1)
+    - AFNetworking/UIKit (= 2.5.1)
+  - AFNetworking/NSURLConnection (2.5.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.5.0):
+  - AFNetworking/NSURLSession (2.5.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.5.0)
-  - AFNetworking/Security (2.5.0)
-  - AFNetworking/Serialization (2.5.0)
-  - AFNetworking/UIKit (2.5.0):
+  - AFNetworking/Reachability (2.5.1)
+  - AFNetworking/Security (2.5.1)
+  - AFNetworking/Serialization (2.5.1)
+  - AFNetworking/UIKit (2.5.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - AVOSCloud (2.6.10)
+  - AVOSCloud (2.6.11)
   - JSBadgeView (1.3.2)
-  - Qiniu (7.0.7):
+  - Qiniu (7.0.8):
     - AFNetworking (~> 2.0)
 
 DEPENDENCIES:
-  - AFNetworking (~> 2.0)
+  - AFNetworking
   - AVOSCloud
   - JSBadgeView
-  - Qiniu (~> 7.0)
+  - Qiniu
 
 SPEC CHECKSUMS:
-  AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
-  AVOSCloud: f6bda519d035a21ceacab049184aa5cdb9e1177f
+  AFNetworking: 8bee59492a6ff15d69130efa4d0dc67e0094a52a
+  AVOSCloud: e2fc2896944edf90f83fb161c3d73e5f55edcbef
   JSBadgeView: 75bec79d76e0eb01d57c9ce75b7c5ea8d6707955
-  Qiniu: 7252263a6987cd0afeea7c134269e5e476c86cef
+  Qiniu: 928e087bb94f33537e5d0b4cdbf4d4ccd83a4cd3
 
 COCOAPODS: 0.35.0

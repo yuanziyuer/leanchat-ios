@@ -16,7 +16,7 @@
 
 +(void)findGroupsByIds:(NSMutableSet*)groupIds withCallback:(AVArrayResultBlock)callback;
 
-+ (void)saveNewGroupWithName:(NSString*)name withCallback:(AVGroupResultBlock)callback;
++ (void)saveNewGroupWithName:(NSString*)name withCallback:(AVBooleanResultBlock)callback;
 
 +(void)inviteMembersToGroup:(CDChatGroup*) chatGroup userIds:(NSArray*)userIds callback:(AVArrayResultBlock)callback;
 

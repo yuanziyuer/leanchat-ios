@@ -15,4 +15,8 @@
 
 +(void)findAddRequestsOnlyByNetwork:(BOOL)onlyNetwork withCallback:(AVArrayResultBlock)callback;
 
++(void)agreeAddRequest:(CDAddRequest*)addRequest callback:(AVBooleanResultBlock)callback;
+
++(void)tryCreateAddRequestWithToUser:(AVUser*)user callback:(AVBooleanResultBlock)callback;
+
 @end

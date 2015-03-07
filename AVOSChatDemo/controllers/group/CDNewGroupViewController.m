@@ -34,9 +34,7 @@
     NSString* name=[self.nameTextField text];
     if([name length]>0){
         UIActivityIndicatorView* indicator=[CDUtils showIndicatorAtView:self.view];
-        CDSessionManager* man=[CDSessionManager sharedInstance];
-        [CDGroupService saveNewGroupWithName:name withCallback:^(AVGroup *group, NSError *error) {
-            [indicator stopAnimating];
+        [CDGroupService saveNewGroupWithName:name withCallback:^(BOOL succeeded, NSError *error) {
             if(error){
                 [CDUtils alertError:error];
             }else{

@@ -93,7 +93,7 @@
     CDLabelButtonTableCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell" ];
     CDAddRequest* addRequest=[addRequests objectAtIndex:indexPath.row];
     cell.nameLabel.text=addRequest.fromUser.username;
-    if(addRequest.status==kAddRequestStatusWait){
+    if(addRequest.status==CDAddRequestStatusWait){
         cell.actionBtn.enabled=true;
         cell.actionBtn.tag=indexPath.row;
         [cell.actionBtn setTitle:@"同意" forState:UIControlStateNormal];
@@ -112,9 +112,8 @@
     UIButton *btn=(UIButton*)sender;
     CDAddRequest* addRequest=[addRequests objectAtIndex:btn.tag];
     [CDUtils showNetworkIndicator];
-    [CDCloudService agreeAddRequestWithId:addRequest.objectId callback:^(id object, NSError *error) {
-        [CDUtils hideNetworkIndicator];
-        if(error){
+    [CDAddRequestService agreeAddRequest:addRequest callback:^(BOOL succeeded, NSError *error) {
+        if(error && error.code!=kAVErrorUserCannotBeAlteredWithoutSession){
             [CDUtils alert:[error localizedDescription]];
         }else{
             [CDUtils alert:@"添加成功"];

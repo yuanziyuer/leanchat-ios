@@ -80,15 +80,17 @@
     return session;
 }
 
-+ (void)saveNewGroupWithName:(NSString*)name withCallback:(AVGroupResultBlock)callback {
++ (void)saveNewGroupWithName:(NSString*)name withCallback:(AVBooleanResultBlock)callback{
     CDSessionManager* man=[CDSessionManager sharedInstance];
     [AVGroup createGroupWithSession:[self getSession] groupDelegate:man callback:^(AVGroup *group, NSError *error) {
         if(error==nil){
-            [CDCloudService saveChatGroupWithId:group.groupId name:name callback:^(id object, NSError *error) {
-                callback(group,error);
-            }];
+            CDChatGroup* chatGroup=[CDChatGroup objectWithoutDataWithObjectId:group.groupId];
+            [chatGroup setName:name];
+            AVUser* user=[AVUser currentUser];
+            [chatGroup setOwner:user];
+            [chatGroup saveInBackgroundWithBlock:callback];
         }else{
-            callback(group,error);
+            callback(NO,error);
         }
     }];
 }

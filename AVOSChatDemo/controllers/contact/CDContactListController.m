@@ -201,7 +201,7 @@ enum : NSUInteger {
         int row=alertView.tag;
         AVUser* user=[_users objectAtIndex:row];
         [CDUtils showNetworkIndicator];
-        [CDCloudService removeFriend:user block:^(id object, NSError *error) {
+        [CDUserService removeFriend:user callback:^(BOOL succeeded, NSError *error) {
             [CDUtils hideNetworkIndicator];
             [CDUtils filterError:error callback:^{
                 [self refresh:nil];

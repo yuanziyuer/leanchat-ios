@@ -27,4 +27,8 @@
 
 +(void)saveAvatar:(UIImage*)image callback:(AVBooleanResultBlock)callback;
 
++(void)addFriend:(AVUser*)user callback:(AVBooleanResultBlock)callback;
+
++(void)removeFriend:(AVUser*)user callback:(AVBooleanResultBlock)callback;
+
 @end
