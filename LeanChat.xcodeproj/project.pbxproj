@@ -1139,7 +1139,6 @@
 		70FD7BCA1A63D22700F29C79 /* CDService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDService.h; sourceTree = "<group>"; };
 		70FD7BCB1A641DD600F29C79 /* CDBadgeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDBadgeLabel.h; sourceTree = "<group>"; };
 		70FD7BCC1A641DD600F29C79 /* CDBadgeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDBadgeLabel.m; sourceTree = "<group>"; };
-		8C470C5B199257E3006A4E87 /* libZXingWidget.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libZXingWidget.a; sourceTree = "<group>"; };
 		8C470C9C19926019006A4E87 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		8C925C1E19876D8100D2750B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		8C925CB61987C20800D2750B /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -2717,7 +2716,6 @@
 				704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */,
 				704727A61A2CFE6300690286 /* libz.dylib */,
 				8C470C9C19926019006A4E87 /* libiconv.dylib */,
-				8C470C5B199257E3006A4E87 /* libZXingWidget.a */,
 				8CF21DCC197FCCC1002B9220 /* CoreGraphics.framework */,
 				8CB308541980FBD900BDC34D /* CoreLocation.framework */,
 				8CB308581980FBF900BDC34D /* CoreTelephony.framework */,
@@ -3366,7 +3364,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
-					/Users/lzw/Downloads,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AVOSChatDemo/LeanChat-Prefix.pch";
@@ -3403,7 +3400,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
-					/Users/lzw/Downloads,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AVOSChatDemo/LeanChat-Prefix.pch";
