@@ -162,7 +162,7 @@ static CDStorage* _storage;
 -(NSArray*)getRooms{
     NSMutableArray* rooms=[NSMutableArray array];
     [_dbQueue inDatabase:^(FMDatabase *db) {
-        FMResultSet* rs=[db executeQuery:@"SELECT rooms.*, msgs.object FROM rooms LEFT JOIN msgs ON rooms.convid=msgs.convid GROUP BY msgs.convid ORDER BY msgs.time DESC"];
+        FMResultSet* rs=[db executeQuery:@"SELECT * FROM rooms LEFT JOIN (SELECT msgs.object,MAX(time) as time ,msgs.convid as msg_convid FROM msgs GROUP BY msgs.convid) ON rooms.convid=msg_convid ORDER BY time DESC"];
         while ([rs next]) {
             [rooms addObject:[self getRoomByResultSet:rs]];
         }
