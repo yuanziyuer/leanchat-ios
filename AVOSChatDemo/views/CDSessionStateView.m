@@ -7,7 +7,7 @@
 //
 
 #import "CDSessionStateView.h"
-#import "CDUtils.h"
+#import "CDReachability.h"
 
 @interface CDSessionStateView()
 
@@ -49,9 +49,16 @@
     [self sessionUpdated];
 }
 
++ (BOOL)connected
+{
+    CDReachability *reachability = [CDReachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    return networkStatus != NotReachable;
+}
+
 - (void)sessionUpdated
 {
-//    [CDUtils connected]==NO ||
+    //[self connected]==NO ||
     if([_im isOpened]==NO){
         if([_delegate respondsToSelector:@selector(onSessionBrokenWithStateView:)])
             [_delegate onSessionBrokenWithStateView:self];

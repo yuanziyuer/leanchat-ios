@@ -8,18 +8,21 @@
 
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
-#import <AVOSCloud/AVOSCloud.h>
-#import "CDCommon.h"
-#import "CDReachability.h"
 #import <SystemConfiguration/SystemConfiguration.h>
+#import <CommonCrypto/CommonDigest.h>
+
+#define SYSTEM_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
 
 typedef void (^CDBlock)();
+
 typedef void (^Int64Block)(int64_t num);
 
 @interface CDUtils : NSObject
 
 +(void)alert:(NSString*)msg;
+
 +(NSString*)md5OfString:(NSString*)s;
+
 +(BOOL)alertError:(NSError*)error;
 
 +(UIActivityIndicatorView*)showIndicatorAtView:(UIView*)hookView;
@@ -44,16 +47,17 @@ typedef void (^Int64Block)(int64_t num);
 
 #pragma mark - collection utils
 +(NSMutableArray*)setToArray:(NSMutableSet*)set;
+
 +(NSArray*)reverseArray:(NSArray*)originArray;
 
 #pragma mark - view utils
 +(void)setCellMarginsZero:(UITableViewCell*)cell;
+
 +(void)setTableViewMarginsZero:(UITableView*)view;
+
 +(void)stopRefreshControl:(UIRefreshControl*)refreshControl;
 
 #pragma mark - AVUtils
-
-+(void)setPolicyOfAVQuery:(AVQuery*)query isNetwokOnly:(BOOL)onlyNetwork;
 
 +(NSString*)uuid;
 
@@ -64,15 +68,9 @@ typedef void (^Int64Block)(int64_t num);
 
 +(void)runAfterSecs:(float)secs block:(void (^)())block;
 
-
 +(void)postNotification:(NSString*)name;
-+(void)notifyGroupUpdate;
-
-+ (int)getDurationOfAudioPath:(NSString *)path ;
 
 + (void)downloadWithUrl:(NSString *)url toPath:(NSString *)path;
-
-+ (BOOL)connected;
 
 #pragma mark - time
 

@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5C6622B41A66702800BCA281 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6622B31A66702800BCA281 /* Security.framework */; };
-		700D53751AA97E8000FB7730 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700D53731AA97E8000FB7730 /* AVOSCloud.framework */; };
-		700D53761AA97E8100FB7730 /* AVOSCloudIM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700D53741AA97E8000FB7730 /* AVOSCloudIM.framework */; };
 		701641471A2868FE006D1074 /* CDUpgradeService.m in Sources */ = {isa = PBXBuildFile; fileRef = 701641461A2868FE006D1074 /* CDUpgradeService.m */; };
 		7016414F1A2C3348006D1074 /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 7016414E1A2C3348006D1074 /* splash.png */; };
 		701641521A2C3461006D1074 /* weChatBubble_Receiving_LeanChat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 701641501A2C3461006D1074 /* weChatBubble_Receiving_LeanChat@2x.png */; };
@@ -82,6 +80,9 @@
 		7071B07B1A83420500A1597C /* CDNotify.m in Sources */ = {isa = PBXBuildFile; fileRef = 7071B07A1A83420500A1597C /* CDNotify.m */; };
 		707644221A7948FE00E6C182 /* CDConvService.m in Sources */ = {isa = PBXBuildFile; fileRef = 707644211A7948FE00E6C182 /* CDConvService.m */; };
 		707644281A7A173600E6C182 /* CDStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 707644271A7A173600E6C182 /* CDStorage.m */; };
+		709295181AADF0920078E972 /* CDAVUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 709295171AADF0920078E972 /* CDAVUtils.m */; };
+		709295D91AAEEFEF0078E972 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 709295D71AAEEFEF0078E972 /* AVOSCloud.framework */; };
+		709295DA1AAEEFEF0078E972 /* AVOSCloudIM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 709295D81AAEEFEF0078E972 /* AVOSCloudIM.framework */; };
 		70A066311A24A3A2004DA201 /* NSString+MessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A064741A24A3A2004DA201 /* NSString+MessageInputView.m */; };
 		70A066321A24A3A2004DA201 /* NSString+XHDiskSizeTransfrom.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A064761A24A3A2004DA201 /* NSString+XHDiskSizeTransfrom.m */; };
 		70A066331A24A3A2004DA201 /* NSString+XHMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A064781A24A3A2004DA201 /* NSString+XHMD5.m */; };
@@ -455,8 +456,6 @@
 
 /* Begin PBXFileReference section */
 		5C6622B31A66702800BCA281 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		700D53731AA97E8000FB7730 /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
-		700D53741AA97E8000FB7730 /* AVOSCloudIM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloudIM.framework; sourceTree = "<group>"; };
 		701641451A2868FE006D1074 /* CDUpgradeService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUpgradeService.h; sourceTree = "<group>"; };
 		701641461A2868FE006D1074 /* CDUpgradeService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUpgradeService.m; sourceTree = "<group>"; };
 		7016414E1A2C3348006D1074 /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
@@ -550,6 +549,10 @@
 		707644211A7948FE00E6C182 /* CDConvService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDConvService.m; sourceTree = "<group>"; };
 		707644261A7A173600E6C182 /* CDStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDStorage.h; sourceTree = "<group>"; };
 		707644271A7A173600E6C182 /* CDStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDStorage.m; sourceTree = "<group>"; };
+		709295161AADF0920078E972 /* CDAVUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAVUtils.h; sourceTree = "<group>"; };
+		709295171AADF0920078E972 /* CDAVUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAVUtils.m; sourceTree = "<group>"; };
+		709295D71AAEEFEF0078E972 /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
+		709295D81AAEEFEF0078E972 /* AVOSCloudIM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloudIM.framework; sourceTree = "<group>"; };
 		70A064731A24A3A2004DA201 /* NSString+MessageInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MessageInputView.h"; sourceTree = "<group>"; };
 		70A064741A24A3A2004DA201 /* NSString+MessageInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MessageInputView.m"; sourceTree = "<group>"; };
 		70A064751A24A3A2004DA201 /* NSString+XHDiskSizeTransfrom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XHDiskSizeTransfrom.h"; sourceTree = "<group>"; };
@@ -1164,7 +1167,7 @@
 				8C470C9D19926019006A4E87 /* libiconv.dylib in Frameworks */,
 				8C925CB71987C20800D2750B /* libsqlite3.dylib in Frameworks */,
 				8C925C1F19876D8100D2750B /* libicucore.dylib in Frameworks */,
-				700D53761AA97E8100FB7730 /* AVOSCloudIM.framework in Frameworks */,
+				709295DA1AAEEFEF0078E972 /* AVOSCloudIM.framework in Frameworks */,
 				8CB3085B1980FC1400BDC34D /* SystemConfiguration.framework in Frameworks */,
 				8CB308591980FBF900BDC34D /* CoreTelephony.framework in Frameworks */,
 				8CB308571980FBEC00BDC34D /* MobileCoreServices.framework in Frameworks */,
@@ -1172,7 +1175,7 @@
 				8CF21DCD197FCCC1002B9220 /* CoreGraphics.framework in Frameworks */,
 				8CF21DCF197FCCC1002B9220 /* UIKit.framework in Frameworks */,
 				8CF21DCB197FCCC1002B9220 /* Foundation.framework in Frameworks */,
-				700D53751AA97E8000FB7730 /* AVOSCloud.framework in Frameworks */,
+				709295D91AAEEFEF0078E972 /* AVOSCloud.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2664,6 +2667,8 @@
 				70E47DF31A245E1200DE60FE /* CDUserService.m */,
 				70E47DF41A245E1200DE60FE /* CDUtils.h */,
 				70E47DF51A245E1200DE60FE /* CDUtils.m */,
+				709295161AADF0920078E972 /* CDAVUtils.h */,
+				709295171AADF0920078E972 /* CDAVUtils.m */,
 				70A067271A24D394004DA201 /* CDEmotionUtils.h */,
 				70A067281A24D394004DA201 /* CDEmotionUtils.m */,
 				701641451A2868FE006D1074 /* CDUpgradeService.h */,
@@ -2709,8 +2714,8 @@
 		8CF21DC9197FCCC1002B9220 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				700D53731AA97E8000FB7730 /* AVOSCloud.framework */,
-				700D53741AA97E8000FB7730 /* AVOSCloudIM.framework */,
+				709295D71AAEEFEF0078E972 /* AVOSCloud.framework */,
+				709295D81AAEEFEF0078E972 /* AVOSCloudIM.framework */,
 				70F9A3A41A72A12500195430 /* AVFoundation.framework */,
 				5C6622B31A66702800BCA281 /* Security.framework */,
 				704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */,
@@ -3082,6 +3087,7 @@
 				70A0663B1A24A3A2004DA201 /* UIScrollView+XHkeyboardControl.m in Sources */,
 				70A066361A24A3A2004DA201 /* UIImage+Resize.m in Sources */,
 				70CACE6C1A6EB54F00F58885 /* UIButton+AFNetworking.m in Sources */,
+				709295181AADF0920078E972 /* CDAVUtils.m in Sources */,
 				7071B0671A82988000A1597C /* CDAddMemberVC.m in Sources */,
 				70A066BE1A24A3A2004DA201 /* XHRefreshControl.m in Sources */,
 				70A066491A24A3A2004DA201 /* XHBaseTableViewController.m in Sources */,
@@ -3377,7 +3383,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
-					"$(PROJECT_DIR)/Pods/build/Release-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
@@ -3413,9 +3418,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
-					"$(PROJECT_DIR)/Pods/build/Release-iphoneos",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = LeanChat;
 				PROVISIONING_PROFILE = "c92f9f6a-c25b-4b35-acc0-4e6f54a0b08d";

@@ -7,8 +7,6 @@
 //
 
 #import "CDUtils.h"
-#import "CDCommonDefine.h"
-#import <CommonCrypto/CommonDigest.h>
 
 @implementation CDUtils
 
@@ -32,7 +30,7 @@
 }
 
 +(void)filterError:(NSError*)error callback:(CDBlock)callback{
-    if(error && error.code!=kAVErrorCacheMiss){
+    if(error){
         [CDUtils alertError:error];
     }else{
         if(callback){
@@ -196,9 +194,6 @@
 
 #pragma mark - AVUtil
 
-+(void)setPolicyOfAVQuery:(AVQuery*)query isNetwokOnly:(BOOL)onlyNetwork{
-    [query setCachePolicy:onlyNetwork ? kAVCachePolicyNetworkOnly : kAVCachePolicyNetworkElseCache];
-}
 
 +(NSString*)uuid{
     NSString *chars=@"abcdefghijklmnopgrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -213,20 +208,6 @@
     return result;
 }
 
-+ (int)getDurationOfAudioPath:(NSString *)path {
-    int duration;
-    NSError* error;
-    NSDictionary* fileAttrs=[[NSFileManager defaultManager] attributesOfItemAtPath:path error:&error];
-    if(error==nil){
-        unsigned long long size=[fileAttrs fileSize];
-        int oneSecSize=3000;
-        duration=(int)(size*1.0f/oneSecSize+1);
-    }else{
-        [CDUtils alertError:error];
-    }
-    return duration;
-}
-
 + (void)downloadWithUrl:(NSString *)url toPath:(NSString *)path {
     NSData* data=[[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:url]];
     NSError* error;
@@ -236,13 +217,6 @@
     }else{
         NSLog(@"error when download file");
     }
-}
-
-+ (BOOL)connected
-{
-    CDReachability *reachability = [CDReachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    return networkStatus != NotReachable;
 }
 
 #pragma mark - time 

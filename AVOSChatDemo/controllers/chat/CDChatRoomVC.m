@@ -313,8 +313,8 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
             if(isLoadMore==NO){
                 timestamp=maxTimestamp;
                 int count=[_msgs count];
-                // refresh
                 if(count>ONE_PAGE_SIZE){
+                    // more than one page msgs, get that many msgs
                     limit=count;
                 }else{
                     limit=ONE_PAGE_SIZE;
