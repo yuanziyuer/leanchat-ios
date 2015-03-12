@@ -7,7 +7,7 @@
 // 
 
 #import "CDAddRequestService.h"
-#import "CDUtils.h"
+#import "CDAVUtils.h"
 #import "CDUserService.h"
 
 @implementation CDAddRequestService
@@ -18,7 +18,7 @@
     [q includeKey:kAddRequestFromUser];
     [q whereKey:@"toUser" equalTo:curUser];
     [q orderByDescending:@"createdAt"];
-    [CDUtils setPolicyOfAVQuery:q isNetwokOnly:onlyNetwork];
+    [CDAVUtils setPolicyOfAVQuery:q isNetwokOnly:onlyNetwork];
     [q findObjectsInBackgroundWithBlock:callback];
 }
 
