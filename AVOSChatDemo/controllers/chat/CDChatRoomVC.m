@@ -426,6 +426,8 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 -(void)sendMsg:(AVIMTypedMessage*)msg originFilePath:(NSString*)path{
     [self.conv sendMessage:msg options:AVIMMessageSendOptionRequestReceipt callback:^(BOOL succeeded, NSError *error) {
         if(error){
+            // 赋值一个临时的messageId，因为发送失败，messageId，sendTimestamp不能从服务端获取
+            // resend 成功的时候再改过来
             msg.messageId=[CDUtils uuid];
             msg.sendTimestamp=[[NSDate date] timeIntervalSince1970]*1000;
         }
