@@ -68,12 +68,17 @@ static NSString *cellIdentifier = @"ContactCell";
     [_networkStateView observeSessionUpdate];
     
     [_notify addMsgObserver:self selector:@selector(refresh)];
-    [_notify addSessionObserver:self selector:@selector(refresh)];
+    [_notify addSessionObserver:self selector:@selector(sessionChanged)];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self refresh];
+    [CDUtils runAfterSecs:0.5 block:^{
+        [self refresh:nil];
+    }];
+}
+
+-(void)sessionChanged{
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -88,7 +93,7 @@ static NSString *cellIdentifier = @"ContactCell";
 -(void)refresh:(UIRefreshControl*)refreshControl{
     if([_im isOpened]==NO){
         [CDUtils stopRefreshControl:refreshControl];
-        return;
+        //return;
     }
     NSMutableArray* rooms=[[_storage getRooms] mutableCopy];
     [CDUtils showNetworkIndicator];

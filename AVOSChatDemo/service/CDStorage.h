@@ -19,13 +19,13 @@
 
 -(void)setupWithUserId:(NSString*)userId;
 
--(NSArray*)getMsgsWithConvid:(NSString*)convid maxTime:(int64_t)time limit:(int)limit db:(FMDatabase*)db;
+-(NSArray*)getMsgsWithConvid:(NSString*)convid maxTime:(int64_t)time limit:(int)limit;
 
 -(int64_t)insertMsg:(AVIMTypedMessage*)msg;
 
 -(BOOL)updateStatus:(AVIMMessageStatus)status byMsgId:(NSString*)msgId;
 
--(BOOL)updateFailedMsg:(AVIMTypedMessage*)msg byLocalId:(int)localId;
+-(BOOL)updateFailedMsg:(AVIMTypedMessage*)msg byTmpId:(NSString*)tmpId;
 
 -(void)deleteMsgsByConvid:(NSString*)convid;
 

@@ -55,7 +55,6 @@
 		704A6CA31A527F7300680A50 /* XHMessageStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 704A6CA21A527F7300680A50 /* XHMessageStatusView.m */; };
 		704A6CAC1A53BAF100680A50 /* messageSendFail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 704A6CAB1A53BAF100680A50 /* messageSendFail@2x.png */; };
 		704A890F1A30F5B200D2A3C2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */; };
-		704CFA261A80B2B7000B378F /* CDMsg.m in Sources */ = {isa = PBXBuildFile; fileRef = 704CFA251A80B2B7000B378F /* CDMsg.m */; };
 		705304041A5C20BF0078B876 /* sr_refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 705303FD1A5C20BF0078B876 /* sr_refresh.png */; };
 		705304051A5C20BF0078B876 /* sr_refresh@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 705303FE1A5C20BF0078B876 /* sr_refresh@2X.png */; };
 		705304061A5C20BF0078B876 /* SRRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 705304011A5C20BF0078B876 /* SRRefreshView.m */; };
@@ -81,8 +80,8 @@
 		707644221A7948FE00E6C182 /* CDConvService.m in Sources */ = {isa = PBXBuildFile; fileRef = 707644211A7948FE00E6C182 /* CDConvService.m */; };
 		707644281A7A173600E6C182 /* CDStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 707644271A7A173600E6C182 /* CDStorage.m */; };
 		709295181AADF0920078E972 /* CDAVUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 709295171AADF0920078E972 /* CDAVUtils.m */; };
-		709295D91AAEEFEF0078E972 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 709295D71AAEEFEF0078E972 /* AVOSCloud.framework */; };
-		709295DA1AAEEFEF0078E972 /* AVOSCloudIM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 709295D81AAEEFEF0078E972 /* AVOSCloudIM.framework */; };
+		709296EA1AB16F8A0078E972 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 709296E81AB16F8A0078E972 /* AVOSCloud.framework */; };
+		709296EB1AB16F8A0078E972 /* AVOSCloudIM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 709296E91AB16F8A0078E972 /* AVOSCloudIM.framework */; };
 		70A066311A24A3A2004DA201 /* NSString+MessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A064741A24A3A2004DA201 /* NSString+MessageInputView.m */; };
 		70A066321A24A3A2004DA201 /* NSString+XHDiskSizeTransfrom.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A064761A24A3A2004DA201 /* NSString+XHDiskSizeTransfrom.m */; };
 		70A066331A24A3A2004DA201 /* NSString+XHMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A064781A24A3A2004DA201 /* NSString+XHMD5.m */; };
@@ -509,8 +508,6 @@
 		704A6CA21A527F7300680A50 /* XHMessageStatusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHMessageStatusView.m; sourceTree = "<group>"; };
 		704A6CAB1A53BAF100680A50 /* messageSendFail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messageSendFail@2x.png"; sourceTree = "<group>"; };
 		704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		704CFA241A80B2B7000B378F /* CDMsg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDMsg.h; sourceTree = "<group>"; };
-		704CFA251A80B2B7000B378F /* CDMsg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDMsg.m; sourceTree = "<group>"; };
 		705303FD1A5C20BF0078B876 /* sr_refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sr_refresh.png; sourceTree = "<group>"; };
 		705303FE1A5C20BF0078B876 /* sr_refresh@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sr_refresh@2X.png"; sourceTree = "<group>"; };
 		705303FF1A5C20BF0078B876 /* SRDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRDefine.h; sourceTree = "<group>"; };
@@ -551,8 +548,8 @@
 		707644271A7A173600E6C182 /* CDStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDStorage.m; sourceTree = "<group>"; };
 		709295161AADF0920078E972 /* CDAVUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAVUtils.h; sourceTree = "<group>"; };
 		709295171AADF0920078E972 /* CDAVUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAVUtils.m; sourceTree = "<group>"; };
-		709295D71AAEEFEF0078E972 /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
-		709295D81AAEEFEF0078E972 /* AVOSCloudIM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloudIM.framework; sourceTree = "<group>"; };
+		709296E81AB16F8A0078E972 /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
+		709296E91AB16F8A0078E972 /* AVOSCloudIM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloudIM.framework; sourceTree = "<group>"; };
 		70A064731A24A3A2004DA201 /* NSString+MessageInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MessageInputView.h"; sourceTree = "<group>"; };
 		70A064741A24A3A2004DA201 /* NSString+MessageInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MessageInputView.m"; sourceTree = "<group>"; };
 		70A064751A24A3A2004DA201 /* NSString+XHDiskSizeTransfrom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XHDiskSizeTransfrom.h"; sourceTree = "<group>"; };
@@ -1167,7 +1164,7 @@
 				8C470C9D19926019006A4E87 /* libiconv.dylib in Frameworks */,
 				8C925CB71987C20800D2750B /* libsqlite3.dylib in Frameworks */,
 				8C925C1F19876D8100D2750B /* libicucore.dylib in Frameworks */,
-				709295DA1AAEEFEF0078E972 /* AVOSCloudIM.framework in Frameworks */,
+				709296EB1AB16F8A0078E972 /* AVOSCloudIM.framework in Frameworks */,
 				8CB3085B1980FC1400BDC34D /* SystemConfiguration.framework in Frameworks */,
 				8CB308591980FBF900BDC34D /* CoreTelephony.framework in Frameworks */,
 				8CB308571980FBEC00BDC34D /* MobileCoreServices.framework in Frameworks */,
@@ -1175,7 +1172,7 @@
 				8CF21DCD197FCCC1002B9220 /* CoreGraphics.framework in Frameworks */,
 				8CF21DCF197FCCC1002B9220 /* UIKit.framework in Frameworks */,
 				8CF21DCB197FCCC1002B9220 /* Foundation.framework in Frameworks */,
-				709295D91AAEEFEF0078E972 /* AVOSCloud.framework in Frameworks */,
+				709296EA1AB16F8A0078E972 /* AVOSCloud.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2353,8 +2350,6 @@
 				70D4C5911A237C1E001A655D /* CDRoom.m */,
 				70CEE61B1A676F4B0034BCA3 /* CDModels.h */,
 				70CEE61F1A677B300034BCA3 /* CDUser.h */,
-				704CFA241A80B2B7000B378F /* CDMsg.h */,
-				704CFA251A80B2B7000B378F /* CDMsg.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -2714,8 +2709,8 @@
 		8CF21DC9197FCCC1002B9220 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				709295D71AAEEFEF0078E972 /* AVOSCloud.framework */,
-				709295D81AAEEFEF0078E972 /* AVOSCloudIM.framework */,
+				709296E81AB16F8A0078E972 /* AVOSCloud.framework */,
+				709296E91AB16F8A0078E972 /* AVOSCloudIM.framework */,
 				70F9A3A41A72A12500195430 /* AVFoundation.framework */,
 				5C6622B31A66702800BCA281 /* Security.framework */,
 				704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */,
@@ -3141,7 +3136,6 @@
 				70A066521A24A3A2004DA201 /* XHMoreGameTableViewController.m in Sources */,
 				70A066901A24A3A2004DA201 /* SETextSelection.m in Sources */,
 				70A066A81A24A3A2004DA201 /* XHBubblePhotoImageView.m in Sources */,
-				704CFA261A80B2B7000B378F /* CDMsg.m in Sources */,
 				70A066791A24A3A2004DA201 /* MLLetterIndexNavigationView.m in Sources */,
 				70A066891A24A3A2004DA201 /* SETextAttachment.m in Sources */,
 				70A0667C1A24A3A2004DA201 /* MultiSelectItem.m in Sources */,

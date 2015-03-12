@@ -33,4 +33,6 @@
 
 -(void)findGroupedConvsWithBlock:(AVIMArrayResultBlock)block;
 
+-(NSArray*)queryMsgsWithConv:(AVIMConversation*)conv msgId:(NSString*)msgId maxTime:(int64_t)time limit:(int)limit error:(NSError**)theError;
+
 @end

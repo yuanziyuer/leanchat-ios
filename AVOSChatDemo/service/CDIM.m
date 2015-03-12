@@ -40,9 +40,9 @@ static CDIM*instance;
     if (self) {
         _imClient=[[AVIMClient alloc] init];
         _imClient.delegate=self;
+        _imClient.signatureDataSource=self;
         _storage=[CDStorage sharedInstance];
         _notify=[CDNotify sharedInstance];
-        //_imClient.signatureDataSource=self;
     }
     return self;
 }
@@ -144,6 +144,24 @@ static CDIM*instance;
     }
 }
 
+#pragma mark - query msgs
+
+-(NSArray*)queryMsgsWithConv:(AVIMConversation*)conv msgId:(NSString*)msgId maxTime:(int64_t)time limit:(int)limit error:(NSError**)theError{
+    dispatch_semaphore_t sema=dispatch_semaphore_create(0);
+    __block NSArray* result;
+    __block NSError* blockError=nil;
+    [conv queryHistoricalMessagesBeforeId:msgId timestamp:time limit:limit callback:^(NSArray *objects, NSError *error) {
+        result=objects;
+        blockError=error;
+        dispatch_semaphore_signal(sema);
+    }];
+    dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+    *theError=blockError;
+    if(blockError==nil){
+    }
+    return result;
+}
+
 #pragma mark - send or receive message
 
 -(void)receiveMsg:(AVIMTypedMessage*)msg conv:(AVIMConversation*)conv{
@@ -205,6 +223,40 @@ static CDIM*instance;
 
 - (void)conversation:(AVIMConversation *)conversation kickedByClientId:(NSString *)clientId{
     DLog();
+}
+
+-(AVIMSignature*)getAVSignatureWithParams:(NSDictionary*) fields peerIds:(NSArray*)peerIds{
+    AVIMSignature* avSignature=[[AVIMSignature alloc] init];
+    NSNumber* timestampNum=[fields objectForKey:@"timestamp"];
+    long timestamp=[timestampNum longValue];
+    NSString* nonce=[fields objectForKey:@"nonce"];
+    NSString* signature=[fields objectForKey:@"signature"];
+
+    [avSignature setTimestamp:timestamp];
+    [avSignature setNonce:nonce];
+    [avSignature setSignature:signature];;
+    return avSignature;
+}
+
+- (AVIMSignature *)signatureWithClientId:(NSString *)clientId
+                          conversationId:(NSString *)conversationId
+                                  action:(NSString *)action
+                       actionOnClientIds:(NSArray *)clientIds{
+    if([action isEqualToString:@"open"] || [action isEqualToString:@"start"]){
+        action=nil;
+    }
+    if([action isEqualToString:@"remove"]){
+        action=@"kick";
+    }
+    if([action isEqualToString:@"add"]){
+        action=@"invite";
+    }
+    NSDictionary* dict=[CDCloudService convSignWithSelfId:clientId convid:conversationId targetIds:clientIds action:action];
+    if(dict!=nil){
+        return [self getAVSignatureWithParams:dict peerIds:clientIds];
+    }else{
+        return nil;
+    }
 }
 
 @end

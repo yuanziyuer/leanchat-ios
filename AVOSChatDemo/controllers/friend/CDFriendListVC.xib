@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -26,16 +27,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="94"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tPO-Ct-eLZ">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tPO-Ct-eLZ">
                                 <rect key="frame" x="0.0" y="0.0" width="319" height="44"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new_friends_icon" translatesAutoresizingMaskIntoConstraints="NO" id="Cxa-bj-G8o">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="new_friends_icon" translatesAutoresizingMaskIntoConstraints="NO" id="Cxa-bj-G8o">
                                         <rect key="frame" x="18" y="8" width="34" height="31"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="34" id="KD9-d7-s1m"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="新的朋友" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNg-MO-A8e">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="新的朋友" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNg-MO-A8e">
                                         <rect key="frame" x="60" y="13" width="68" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.19157893585385508" green="0.44831280807529383" blue="0.76102756367292224" alpha="1" colorSpace="calibratedRGB"/>
@@ -52,16 +53,16 @@
                                     <constraint firstItem="RNg-MO-A8e" firstAttribute="top" secondItem="tPO-Ct-eLZ" secondAttribute="top" constant="13" id="xte-BN-zVf"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0u5-QL-7YS">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0u5-QL-7YS">
                                 <rect key="frame" x="0.0" y="46" width="319" height="55"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="group_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="nQK-AV-0DX">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="group_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="nQK-AV-0DX">
                                         <rect key="frame" x="19" y="8" width="34" height="31"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="34" id="2Nc-XX-kyA"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="群组" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QGm-lY-9wR">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="群组" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QGm-lY-9wR">
                                         <rect key="frame" x="61" y="17" width="34" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.19351926937693145" green="0.45285337181971602" blue="0.76873533847184983" alpha="1" colorSpace="calibratedRGB"/>

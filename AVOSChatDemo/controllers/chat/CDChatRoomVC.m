@@ -138,7 +138,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     AVUser* curUser=[AVUser currentUser];
     // 设置自身用户名
     self.messageSender = [curUser username];
-    
     [_storage insertRoomWithConvid:self.conv.conversationId];
     [_storage clearUnreadWithConvid:self.conv.conversationId];
     [_notify addConvObserver:self selector:@selector(refreshConv)];
@@ -218,7 +217,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         xhMessage=[[XHMessage alloc] initWithVoicePath:voicePath voiceUrl:nil voiceDuration:duration sender:fromUser.username timestamp:time];
     }else if(msg.mediaType==kAVIMMessageMediaTypeLocation){
         AVIMLocationMessage* locationMsg=(AVIMLocationMessage*)msg;
-        xhMessage=[[XHMessage alloc] initWithLocalPositionPhoto:[UIImage imageNamed:@"Fav_Cell_Loc"] geolocations:@"location" location:[[CLLocation alloc] initWithLatitude:locationMsg.latitude longitude:locationMsg.longitude] sender:fromUser.username timestamp:time];
+        xhMessage=[[XHMessage alloc] initWithLocalPositionPhoto:[UIImage imageNamed:@"Fav_Cell_Loc"] geolocations:locationMsg.text location:[[CLLocation alloc] initWithLatitude:locationMsg.latitude longitude:locationMsg.longitude] sender:fromUser.username timestamp:time];
     }else if(msg.mediaType==kAVIMMessageMediaTypeImage){
         AVIMImageMessage* imageMsg=(AVIMImageMessage*)msg;
         NSLog(@"%@",imageMsg);
@@ -283,8 +282,8 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 - (NSArray *)getXHMessages:(NSArray *)msgs {
     NSMutableArray* messages=[[NSMutableArray alloc] init];
-    for(CDMsg* msg in msgs){
-        XHMessage* xhMsg=[self getXHMessageByMsg:msg.innerMsg];
+    for(AVIMTypedMessage* msg in msgs){
+        XHMessage* xhMsg=[self getXHMessageByMsg:msg];
         if(xhMsg){
             [messages addObject:xhMsg];
         }
@@ -303,34 +302,40 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     _isLoadingMsg=YES;
     DLog();
     [CDUtils runInGlobalQueue:^{
-        __block NSMutableArray* msgs;
-        FMDatabaseQueue* dbQueue=[_storage getDBQueue];
-        [dbQueue inDatabase:^(FMDatabase *db) {
-            int64_t maxTimestamp=(((int64_t)[[NSDate date] timeIntervalSince1970])+10)*1000;
-            int64_t timestamp;
-            int limit;
-            NSString* convid=self.conv.conversationId;
-            if(isLoadMore==NO){
-                timestamp=maxTimestamp;
-                int count=[_msgs count];
-                if(count>ONE_PAGE_SIZE){
-                    // more than one page msgs, get that many msgs
-                    limit=count;
-                }else{
-                    limit=ONE_PAGE_SIZE;
-                }
+        int64_t maxTimestamp=(((int64_t)[[NSDate date] timeIntervalSince1970])+10)*1000;
+        int64_t timestamp;
+        int limit;
+        NSString* msgId;
+        if(isLoadMore==NO){
+            timestamp=maxTimestamp;
+            int count=[_msgs count];
+            if(count>ONE_PAGE_SIZE){
+                // more than one page msgs, get that many msgs
+                limit=count;
             }else{
-                if([self.messages count]>0){
-                    XHMessage* firstMsg=[self.messages objectAtIndex:0];
-                    NSDate* date=firstMsg.timestamp;
-                    timestamp=[date timeIntervalSince1970]*1000;
-                }else{
-                    timestamp=maxTimestamp;
-                }
                 limit=ONE_PAGE_SIZE;
             }
-            msgs=[[_storage getMsgsWithConvid:convid maxTime:timestamp limit:limit db:db] mutableCopy];
-        }];
+        }else{
+            if([self.messages count]>0){
+                XHMessage* firstMsg=[self.messages objectAtIndex:0];
+                NSDate* date=firstMsg.timestamp;
+                timestamp=[date timeIntervalSince1970]*1000;
+                AVIMTypedMessage* msg=[self.msgs objectAtIndex:0];
+                msgId=msg.messageId;
+            }else{
+                timestamp=maxTimestamp;
+            }
+            limit=ONE_PAGE_SIZE;
+        }
+        NSMutableArray* msgs=[[_storage getMsgsWithConvid:self.conv.conversationId maxTime:timestamp limit:limit] mutableCopy];
+        
+//        NSError* error;
+//        NSArray* arrayMsgs=[_im queryMsgsWithConv:self.conv msgId:msgId maxTime:timestamp limit:limit error:&error];
+//        if(error){
+//            [CDUtils alertError:error];
+//            return ;
+//        }
+//        NSMutableArray* msgs=[arrayMsgs mutableCopy];
         
         [self cacheMsgs:msgs callback:^(BOOL succeeded, NSError *error) {
             [CDUtils runInMainQueue:^{
@@ -358,14 +363,14 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 - (void)cacheMsgs:(NSArray *)msgs callback:(AVBooleanResultBlock)callback{
     __block NSMutableSet* userIds=[[NSMutableSet alloc] init];
-    for(CDMsg* msg in msgs){
-        [userIds addObject:msg.innerMsg.clientId];
-        if(msg.innerMsg.mediaType==kAVIMMessageMediaTypeImage ||
-           msg.innerMsg.mediaType==kAVIMMessageMediaTypeAudio){
-            NSString* path=[CDFileService getPathByObjectId:msg.innerMsg.messageId];
+    for(AVIMTypedMessage* msg in msgs){
+        [userIds addObject:msg.clientId];
+        if(msg.mediaType==kAVIMMessageMediaTypeImage ||
+           msg.mediaType==kAVIMMessageMediaTypeAudio){
+            NSString* path=[CDFileService getPathByObjectId:msg.messageId];
             NSFileManager* fileMan=[NSFileManager defaultManager];
             if([fileMan fileExistsAtPath:path]==NO){
-                NSData* data=[msg.innerMsg.file getData];
+                NSData* data=[msg.file getData];
                 [data writeToFile:path atomically:YES];
             }
         }
@@ -377,9 +382,9 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
             for(NSString* userId in userIds){
                 [self cacheAvatarByUserId:userId];
             }
-            for(CDMsg* msg in msgs){
-                if(msg.innerMsg.mediaType==kAVIMMessageMediaTypeImage){
-                    [self cacheImageOfMsg:(AVIMImageMessage*)msg.innerMsg];
+            for(AVIMTypedMessage* msg in msgs){
+                if(msg.mediaType==kAVIMMessageMediaTypeImage){
+                    [self cacheImageOfMsg:msg];
                 }
             }
             callback(YES,nil);
@@ -411,6 +416,11 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     }
 }
 
+-(void)sendLocationWithLatitude:(double)latitude longitude:(double)longitude address:(NSString*)address{
+    AVIMLocationMessage* locMsg=[AVIMLocationMessage messageWithText:nil latitude:latitude longitude:longitude attributes:nil];
+    [self sendMsg:locMsg originFilePath:nil];
+}
+
 -(void)sendMsg:(AVIMTypedMessage*)msg originFilePath:(NSString*)path{
     [self.conv sendMessage:msg options:AVIMMessageSendOptionRequestReceipt callback:^(BOOL succeeded, NSError *error) {
         if(error){
@@ -427,11 +437,13 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     }];
 }
 
--(void)resendMsg:(CDMsg*)msg{
-    [self.conv sendMessage:msg.innerMsg options:AVIMMessageSendOptionRequestReceipt callback:^(BOOL succeeded, NSError *error) {
+-(void)resendMsg:(AVIMTypedMessage*)msg{
+    NSString* tmpId=msg.messageId;
+    [self.conv sendMessage:msg options:AVIMMessageSendOptionRequestReceipt callback:^(BOOL succeeded, NSError *error) {
         if(error){
+            [CDUtils alertError:error];
         }else{
-            [_storage updateFailedMsg:msg.innerMsg byLocalId:msg.localId];
+            [_storage updateFailedMsg:msg byTmpId:tmpId];
         }
         [self loadMsgsWithLoadMore:NO];
     }];
@@ -509,7 +521,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 }
 
 -(void)didRetrySendMessage:(id<XHMessageModel>)message atIndexPath:(NSIndexPath *)indexPath{
-    CDMsg* msg=[_msgs objectAtIndex:indexPath.row];
+    AVIMTypedMessage* msg=[_msgs objectAtIndex:indexPath.row];
     XHMessage* xhMsg=(XHMessage*)message;
     xhMsg.status=XHMessageStatusSending;
     [self.messageTableView reloadData];

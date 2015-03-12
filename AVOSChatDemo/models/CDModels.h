@@ -10,7 +10,6 @@
 #define LeanChat_CDModels_h
 
 #import "CDRoom.h"
-#import "CDMsg.h"
 #import "CDAddRequest.h"
 #import "CDUser.h"
 

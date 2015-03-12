@@ -62,11 +62,14 @@ static CDStorage* _storage;
 
 #pragma mark - msgs table
 
--(NSArray*)getMsgsWithConvid:(NSString*)convid maxTime:(int64_t)time limit:(int)limit db:(FMDatabase*)db{
-    NSString* timeStr=[CDUtils strOfInt64:time];
-    FMResultSet* rs=[db executeQuery:@"select * from msgs where convid=? and time<? order by time desc limit ?" withArgumentsInArray:@[convid,timeStr,@(limit)]];
-    NSMutableArray* msgs=[self getMsgsByResultSet:rs];
-    return [CDUtils reverseArray:msgs];
+-(NSArray*)getMsgsWithConvid:(NSString*)convid maxTime:(int64_t)time limit:(int)limit{
+    __block NSArray* msgs=nil;
+    [_dbQueue inDatabase:^(FMDatabase *db) {
+        NSString* timeStr=[CDUtils strOfInt64:time];
+        FMResultSet* rs=[db executeQuery:@"select * from msgs where convid=? and time<? order by time desc limit ?" withArgumentsInArray:@[convid,timeStr,@(limit)]];
+        msgs=[CDUtils reverseArray:[self getMsgsByResultSet:rs]];
+    }];
+    return msgs;
 }
 
 -(AVIMTypedMessage*)getMsgByMsgId:(NSString*)msgId{
@@ -90,12 +93,12 @@ static CDStorage* _storage;
     return result;
 }
 
--(BOOL)updateFailedMsg:(AVIMTypedMessage*)msg byLocalId:(int)localId{
+-(BOOL)updateFailedMsg:(AVIMTypedMessage*)msg byTmpId:(NSString*)tmpId{
     __block BOOL result;
     [_dbQueue inDatabase:^(FMDatabase *db) {
         NSData* data=[NSKeyedArchiver archivedDataWithRootObject:msg];
-        result=[db executeUpdate:@"UPDATE msgs SET object=?,time=? WHERE id=? "
-                   withArgumentsInArray:@[data,[CDUtils strOfInt64:msg.sendTimestamp],@(localId)]];
+        result=[db executeUpdate:@"UPDATE msgs SET object=?,time=?,msg_id=? WHERE msg_id=?"
+                   withArgumentsInArray:@[data,[CDUtils strOfInt64:msg.sendTimestamp],msg.messageId,tmpId]];
     }];
     return result;
 }
@@ -113,10 +116,10 @@ static CDStorage* _storage;
 -(NSMutableArray*)getMsgsByResultSet:(FMResultSet*)rs{
     NSMutableArray *result = [NSMutableArray array];
     while ([rs next]) {
-        CDMsg* localMsg=[[CDMsg alloc] init];
-        localMsg.localId=[rs intForColumn:FIELD_ID];
-        localMsg.innerMsg=[self getMsgByResultSet:rs];
-        [result addObject:localMsg];
+        AVIMTypedMessage* msg=[self getMsgByResultSet:rs];
+        if(msg!=nil){
+            [result addObject:msg];
+        }
     }
     [rs close];
     return result;
@@ -125,7 +128,13 @@ static CDStorage* _storage;
 -(AVIMTypedMessage* )getMsgByResultSet:(FMResultSet*)rs{
     NSData* data=[rs objectForColumnName:FIELD_OBJECT];
     if([data isKindOfClass:[NSData class]] && data.length>0){
-        AVIMTypedMessage* msg=[NSKeyedUnarchiver unarchiveObjectWithData:data];
+        AVIMTypedMessage* msg;
+        @try {
+            msg=[NSKeyedUnarchiver unarchiveObjectWithData:data];
+        }
+        @catch (NSException *exception) {
+            [CDUtils alert:exception.description];
+        }
         return msg;
     }else{
         return nil;
