@@ -329,6 +329,8 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         }
         NSMutableArray* msgs=[[_storage getMsgsWithConvid:self.conv.conversationId maxTime:timestamp limit:limit] mutableCopy];
         
+        // 注释上面一行，取消掉下面几行的注释，消息记录将从远程服务器获取
+        
 //        NSError* error;
 //        NSArray* arrayMsgs=[_im queryMsgsWithConv:self.conv msgId:msgId maxTime:timestamp limit:limit error:&error];
 //        if(error){

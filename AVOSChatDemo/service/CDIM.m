@@ -40,7 +40,10 @@ static CDIM*instance;
     if (self) {
         _imClient=[[AVIMClient alloc] init];
         _imClient.delegate=self;
-        _imClient.signatureDataSource=self;
+/* 取消下面的注释，将对 im的 open ，start(create conv),kick,invite 操作签名，更安全
+   可以从你的服务器获得签名，这里从云代码获取，需要部署云代码，https://github.com/leancloud/leanchat-cloudcode
+*/
+        //_imClient.signatureDataSource=self;
         _storage=[CDStorage sharedInstance];
         _notify=[CDNotify sharedInstance];
     }
