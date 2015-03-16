@@ -435,6 +435,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
             NSString* newPath=[CDFileService getPathByObjectId:msg.messageId];
             NSError* error1;
             [[NSFileManager defaultManager] moveItemAtPath:path toPath:newPath error:&error1];
+            DLog(@"%@",newPath);
         }
         [_storage insertMsg:msg];
         [self loadMsgsWithLoadMore:NO];
@@ -587,6 +588,8 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 // 发送语音消息的回调方法
 - (void)didSendVoice:(NSString *)voicePath voiceDuration:(NSString *)voiceDuration fromSender:(NSString *)sender onDate:(NSDate *)date {
+    DLog(@"record a voice ");
+    DLog(@"%@",voicePath);
     [self sendFileMsgWithPath:voicePath type:kAVIMMessageMediaTypeAudio];
 }
 
