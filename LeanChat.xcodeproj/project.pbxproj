@@ -163,7 +163,6 @@
 		70A066801A24A3A2004DA201 /* MultiSelectTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70A065411A24A3A2004DA201 /* MultiSelectTableViewCell.xib */; };
 		70A066811A24A3A2004DA201 /* MultiSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A065431A24A3A2004DA201 /* MultiSelectViewController.m */; };
 		70A066821A24A3A2004DA201 /* UIView+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A065451A24A3A2004DA201 /* UIView+Convenience.m */; };
-		70A066831A24A3A2004DA201 /* NSMutableAttributedString+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A065481A24A3A2004DA201 /* NSMutableAttributedString+Helper.m */; };
 		70A066841A24A3A2004DA201 /* SECompatibility.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A0654A1A24A3A2004DA201 /* SECompatibility.m */; };
 		70A066851A24A3A2004DA201 /* SEConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A0654C1A24A3A2004DA201 /* SEConstants.m */; };
 		70A066861A24A3A2004DA201 /* SELineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A0654E1A24A3A2004DA201 /* SELineLayout.m */; };
@@ -713,8 +712,6 @@
 		70A065431A24A3A2004DA201 /* MultiSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiSelectViewController.m; sourceTree = "<group>"; };
 		70A065441A24A3A2004DA201 /* UIView+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Convenience.h"; sourceTree = "<group>"; };
 		70A065451A24A3A2004DA201 /* UIView+Convenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Convenience.m"; sourceTree = "<group>"; };
-		70A065471A24A3A2004DA201 /* NSMutableAttributedString+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+Helper.h"; sourceTree = "<group>"; };
-		70A065481A24A3A2004DA201 /* NSMutableAttributedString+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+Helper.m"; sourceTree = "<group>"; };
 		70A065491A24A3A2004DA201 /* SECompatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SECompatibility.h; sourceTree = "<group>"; };
 		70A0654A1A24A3A2004DA201 /* SECompatibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SECompatibility.m; sourceTree = "<group>"; };
 		70A0654B1A24A3A2004DA201 /* SEConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEConstants.h; sourceTree = "<group>"; };
@@ -1796,8 +1793,6 @@
 		70A065461A24A3A2004DA201 /* SECoreTextView */ = {
 			isa = PBXGroup;
 			children = (
-				70A065471A24A3A2004DA201 /* NSMutableAttributedString+Helper.h */,
-				70A065481A24A3A2004DA201 /* NSMutableAttributedString+Helper.m */,
 				70A065491A24A3A2004DA201 /* SECompatibility.h */,
 				70A0654A1A24A3A2004DA201 /* SECompatibility.m */,
 				70A0654B1A24A3A2004DA201 /* SEConstants.h */,
@@ -3213,7 +3208,6 @@
 				70A066731A24A3A2004DA201 /* XHShareMenuItem.m in Sources */,
 				70A066681A24A3A2004DA201 /* XHMessageAvatorFactory.m in Sources */,
 				70A066A71A24A3A2004DA201 /* XHLocationServiceTableViewCell.m in Sources */,
-				70A066831A24A3A2004DA201 /* NSMutableAttributedString+Helper.m in Sources */,
 				70D4C65B1A237C1E001A655D /* FMDatabasePool.m in Sources */,
 				7016415C1A2C58C1006D1074 /* XHEmotionManager.m in Sources */,
 				70A066771A24A3A2004DA201 /* LKBadgeView.m in Sources */,

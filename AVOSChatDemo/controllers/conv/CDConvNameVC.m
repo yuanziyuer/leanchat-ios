@@ -35,7 +35,9 @@
 
 -(void)saveName:(id)sender{
     if(_nameTextField.text.length>0){
-         [_im updateConv:_conv name:_nameTextField.text attrs:nil callback:^(BOOL succeeded, NSError *error) {
+         AVIMConversationUpdateBuilder* updateBuilder=[_conv newUpdateBuilder];
+         [updateBuilder setName:_nameTextField.text];
+         [_conv update:[updateBuilder dictionary] callback:^(BOOL succeeded, NSError *error) {
              if([CDUtils filterError:error]){
                  [_notify postConvNotify];
                  [self.navigationController popViewControllerAnimated:YES];
