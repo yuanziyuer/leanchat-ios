@@ -73,7 +73,7 @@ static NSString* cellIndentifier=@"cellIndentifier";
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     [searchBar resignFirstResponder];
-    NSString* content=[searchBar text];
+    NSString* content=searchBar.text;
     [self searchUser:content];
 }
 

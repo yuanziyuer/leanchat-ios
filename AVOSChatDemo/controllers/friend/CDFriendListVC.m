@@ -84,17 +84,20 @@ enum : NSUInteger {
     [_badgeView removeFromSuperview];
     CDNewFriendVC *controller=[[CDNewFriendVC alloc] init];
     controller.friendListVC=self;
+    controller.hidesBottomBarWhenPushed=YES;
     [[self navigationController] pushViewController:controller animated:YES];
     self.tabBarItem.badgeValue=nil;
 }
 
 -(void)goGroup:(id)sender{
     CDGroupedConvListVC *controller=[[CDGroupedConvListVC alloc] init];
+    controller.hidesBottomBarWhenPushed=YES;
     [[self navigationController] pushViewController:controller animated:YES];
 }
 
 -(void)goAddFriend:(UIBarButtonItem*)buttonItem{
     CDAddFriendVC *controller = [[CDAddFriendVC alloc] init];
+    controller.hidesBottomBarWhenPushed=YES;
     [[self navigationController] pushViewController:controller animated:YES];
 }
 

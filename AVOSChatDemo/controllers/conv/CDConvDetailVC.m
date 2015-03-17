@@ -30,9 +30,8 @@
 
 @property CDNotify* notify;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalConstraint;
 @property (weak, nonatomic) IBOutlet UITableView *settingTableView;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
 
 @property UITableViewCell* nameCell;
 
@@ -99,7 +98,9 @@ static NSString * const reuseIdentifier = @"Cell";
             } completion:^(BOOL finished) {
                 CGFloat h=self.collectionView.contentSize.height;
                 //DLog(@"%f",h)
-                _heightConstraint.constant=h+self.navigationController.navigationBar.frame.size.height+30;
+                if(h<CGRectGetHeight(self.view.frame)){
+                    _verticalConstraint.constant=h;
+                }
             }];
         }];
     }];
@@ -121,8 +122,6 @@ static NSString * const reuseIdentifier = @"Cell";
         if([CDUtils filterError:error]){
             [_storage deleteRoomByConvid:self.conv.conversationId];
             [self.navigationController popToRootViewControllerAnimated:YES];
-            UIViewController* first=self.navigationController.viewControllers[0];
-            [first.presentingViewController dismissViewControllerAnimated:YES completion:nil];
         }
     }];
 }
@@ -177,7 +176,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 -(void)addMember{
     CDAddMemberVC *controller=[[CDAddMemberVC alloc] init];;
     controller.groupDetailVC=self;
-    [self.navigationController pushViewController:controller animated:YES];
+    UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:controller];
+    [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
 
 /*
@@ -236,8 +236,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     AVUser* user=[CDCache lookupUser:userId];
     [_im fetchConvWithUserId:user.objectId callback:^(AVIMConversation *conversation, NSError *error) {
         if([CDUtils filterError:error]){
-            CDChatRoomVC* vc=[[CDChatRoomVC alloc] initWithConv:conversation];
-            [self.navigationController setViewControllers:[NSArray arrayWithObject:vc] animated:YES];
+            UINavigationController* nav=self.navigationController;
+            [nav popToRootViewControllerAnimated:YES];
+            [CDChatRoomVC goWithConv:conversation fromNav:nav];
         }
     }];
     return YES;
@@ -299,6 +300,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     [CDUtils alert:@"已清空"];
 }
 
+
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(_type==CDConvTypeGroup){
         switch (indexPath.section) {
@@ -306,7 +309,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                    CDConvNameVC* vc=[[CDConvNameVC alloc] init];
                    vc.detailVC=self;
                    vc.conv=self.conv;
-                   [self.navigationController pushViewController:vc animated:YES];
+                   UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:vc];
+                   [self.navigationController presentViewController:nav animated:YES completion:nil];
                 }
                 break;
             case 1:

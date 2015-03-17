@@ -28,9 +28,14 @@
     
     self.title=@"群聊名称";
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveName:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop                                                                                          target:self                                                                                          action:@selector(backPressed)];
     self.nameTextField.text=_conv.name;
     _im=[CDIM sharedInstance];
     _notify=[CDNotify sharedInstance]; 
+}
+
+-(void)backPressed{
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)saveName:(id)sender{
@@ -40,7 +45,7 @@
          [_conv update:[updateBuilder dictionary] callback:^(BOOL succeeded, NSError *error) {
              if([CDUtils filterError:error]){
                  [_notify postConvNotify];
-                 [self.navigationController popViewControllerAnimated:YES];
+                 [self backPressed];
              }
          }];
     }

@@ -95,9 +95,7 @@ static NSString* cellIndentifier=@"cell";
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     AVIMConversation* conv=[convs objectAtIndex:indexPath.row];
-    CDChatRoomVC * controlloer=[[CDChatRoomVC alloc] initWithConv:conv];
-    UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:controlloer];
-    [self presentViewController:nav animated:YES completion:nil];
+    [CDChatRoomVC goWithConv:conv fromVC:self];
 }
 
 @end

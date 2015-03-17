@@ -1,52 +1,55 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CDConvDetailVC">
             <connections>
                 <outlet property="collectionView" destination="UsT-Hg-qMa" id="SrI-dg-zLt"/>
-                <outlet property="heightConstraint" destination="swL-Xk-1SX" id="UUj-qj-k6V"/>
                 <outlet property="settingTableView" destination="6Xr-1j-tqR" id="EZ7-2R-vUh"/>
+                <outlet property="verticalConstraint" destination="5vv-9J-EnO" id="SSO-YM-Sgf"/>
                 <outlet property="view" destination="iN0-l3-epB" id="ApL-qg-9IE"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="UsT-Hg-qMa">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kz3-it-Vcf">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <subviews>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="UsT-Hg-qMa">
+                            <rect key="frame" x="0.0" y="-5" width="320" height="267"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="267" id="5vv-9J-EnO"/>
+                            </constraints>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hFR-dG-RnQ">
+                                <size key="itemSize" width="50" height="50"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="6Xr-1j-tqR">
+                            <rect key="frame" x="0.0" y="263" width="320" height="305"/>
+                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        </tableView>
+                    </subviews>
                     <constraints>
-                        <constraint firstAttribute="height" constant="400" id="swL-Xk-1SX"/>
+                        <constraint firstItem="6Xr-1j-tqR" firstAttribute="leading" secondItem="kz3-it-Vcf" secondAttribute="leading" id="5pd-GH-6Hz"/>
+                        <constraint firstItem="6Xr-1j-tqR" firstAttribute="top" secondItem="UsT-Hg-qMa" secondAttribute="bottom" constant="1" id="GIB-WQ-v3K"/>
                     </constraints>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="tYi-qm-hig">
-                        <size key="itemSize" width="50" height="50"/>
-                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    </collectionViewFlowLayout>
-                </collectionView>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="6Xr-1j-tqR">
-                    <rect key="frame" x="0.0" y="400" width="600" height="200"/>
-                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="200" id="v6n-a9-bdU"/>
-                    </constraints>
-                </tableView>
+                </scrollView>
             </subviews>
-            <constraints>
-                <constraint firstItem="UsT-Hg-qMa" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="2i6-Fc-T5E"/>
-                <constraint firstItem="UsT-Hg-qMa" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="35q-cQ-q9k"/>
-                <constraint firstItem="6Xr-1j-tqR" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="8Ae-e5-twi"/>
-                <constraint firstAttribute="trailing" secondItem="6Xr-1j-tqR" secondAttribute="trailing" id="cKY-6P-vdf"/>
-                <constraint firstItem="6Xr-1j-tqR" firstAttribute="top" secondItem="UsT-Hg-qMa" secondAttribute="bottom" id="h3D-xO-1i8"/>
-                <constraint firstAttribute="trailing" secondItem="UsT-Hg-qMa" secondAttribute="trailing" id="npq-ea-y5o"/>
-            </constraints>
             <point key="canvasLocation" x="346" y="343"/>
         </view>
     </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>

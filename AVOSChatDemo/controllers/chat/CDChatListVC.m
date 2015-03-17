@@ -152,9 +152,7 @@ static NSString *cellIdentifier = @"ContactCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     CDRoom *room = [_rooms objectAtIndex:indexPath.row];
-    CDChatRoomVC *controller = [[CDChatRoomVC alloc] initWithConv:room.conv];
-    UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:controller];
-    [self presentViewController:nav animated:YES completion:nil];
+    [CDChatRoomVC goWithConv:room.conv fromVC:self];
 }
 
 #pragma mark -- CDSessionDelegateMethods

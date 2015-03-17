@@ -48,12 +48,17 @@ static NSString* reuseIdentifier=@"Cell";
     
     self.title=@"邀请好友";
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(invite)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop                                                                                          target:self                                                                                          action:@selector(backPressed:)];
     
     [self initPotentialIds];
     int count=_potentialIds.count;
     for(int i=0;i<count;i++){
         [_selected addObject:[NSNumber numberWithBool:NO]];
     }
+}
+
+-(void)backPressed:(id)sender{
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)initPotentialIds{
@@ -72,6 +77,10 @@ static NSString* reuseIdentifier=@"Cell";
             [inviteIds addObject:[_potentialIds objectAtIndex:i]];
         }
     }
+    if(inviteIds.count==0){
+        [self backPressed:nil];
+        return;
+    }
     AVIMConversation* conv=[CDCache getCurConv];
     if([CDConvService typeOfConv:[CDCache getCurConv]]==CDConvTypeSingle){
         NSMutableArray* members=[conv.members mutableCopy];
@@ -80,8 +89,9 @@ static NSString* reuseIdentifier=@"Cell";
         [_im createConvWithUserIds:members callback:^(AVIMConversation *conversation, NSError *error) {
             [CDUtils hideNetworkIndicator];
             if([CDUtils filterError:error]){
-                CDChatRoomVC* vc=[[CDChatRoomVC alloc] initWithConv:conversation];
-                [self.navigationController setViewControllers:[NSArray arrayWithObject:vc] animated:YES];
+                UINavigationController* nav=self.navigationController;
+                [nav popToRootViewControllerAnimated:YES];
+                [CDChatRoomVC goWithConv:conversation fromNav:nav];
             }
         }];
     }else{
@@ -94,7 +104,7 @@ static NSString* reuseIdentifier=@"Cell";
                 [CDCache refreshCurConv:^(BOOL succeeded, NSError *error) {
                     [CDUtils hideNetworkIndicator];
                     if([CDUtils filterError:error]){
-                        [self.navigationController popViewControllerAnimated:YES];
+                        [self backPressed:nil];
                     }
                 }];
             }

@@ -87,23 +87,17 @@ static CDIM*instance;
     [array addObject:_imClient.clientId];
     [array addObject:userId];
     AVIMConversationQuery* q=[_imClient conversationQuery];
-    [q whereKey:@"m" sizeEqualTo:2];
-    [q whereKey:@"m" containsAllObjectsInArray:array];
+    [q whereKey:CONV_ATTR_TYPE_KEY equalTo:@(CDConvTypeSingle)];
+    [q whereKey:CONV_MEMBERS_KEY containsAllObjectsInArray:array];
     [q findConversationsWithCallback:^(NSArray *objects, NSError *error) {
         if(error){
             callback(nil,error);
         }else{
-            AVIMConversationResultBlock WithConv=^(AVIMConversation* conv,NSError* error){
-                if(error){
-                }else{
-                    callback(conv, nil);
-                }
-            };
             if (objects.count > 0) {
                 AVIMConversation *conv = [objects objectAtIndex:0];
-                WithConv(conv,nil);
+                callback(conv,nil);
             } else{
-                [self createConvWithUserId:userId callback:WithConv];
+                [self createConvWithUserId:userId callback:callback];
             }
         }
     }];

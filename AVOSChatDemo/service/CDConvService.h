@@ -10,6 +10,8 @@
 #import "CDCommon.h"
 
 #define CONV_TYPE @"type"
+#define CONV_ATTR_TYPE_KEY @"attr.type"
+#define CONV_MEMBERS_KEY @"m"
 
 @interface CDConvService : NSObject
 

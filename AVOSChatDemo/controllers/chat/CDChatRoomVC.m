@@ -81,13 +81,21 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     return self;
 }
 
++(void)goWithConv:(AVIMConversation*)conv fromVC:(UIViewController*)vc{
+    [self goWithConv:conv fromNav:vc.navigationController];
+}
+
++(void)goWithConv:(AVIMConversation*)conv fromNav:(UINavigationController*)nav{
+    CDChatRoomVC* chatRoomVC=[[CDChatRoomVC alloc] initWithConv:conv];
+    chatRoomVC.hidesBottomBarWhenPushed=YES;
+    [nav pushViewController:chatRoomVC animated:YES];
+}
+
 +(void)goWithUserId:(NSString*)userId fromVC:(UIViewController*)vc {
     CDIM* im=[CDIM sharedInstance];
     [im fetchConvWithUserId:userId callback:^(AVIMConversation *conversation, NSError *error) {
         [CDUtils filterError:error callback:^{
-            CDChatRoomVC *controller = [[CDChatRoomVC alloc] initWithConv:conversation];
-            UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:controller];
-            [vc presentViewController:nav animated:YES completion:nil];
+            [self goWithConv:conversation fromVC:vc];
         }];
     }];
 }
@@ -100,7 +108,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
                                                                style:UIBarButtonItemStyleBordered
                                                               target:nil
                                                               action:nil];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop                                                                                          target:self                                                                                          action:@selector(backPressed:)];
     [[self navigationItem] setBackBarButtonItem:backBtn];
 }
 
@@ -175,7 +182,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 }
 
 -(void)backPressed:(id)sender{
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - message data
