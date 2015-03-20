@@ -147,7 +147,7 @@ static CDIM*instance;
     dispatch_semaphore_t sema=dispatch_semaphore_create(0);
     __block NSArray* result;
     __block NSError* blockError=nil;
-    [conv queryHistoricalMessagesBeforeId:msgId timestamp:time limit:limit callback:^(NSArray *objects, NSError *error) {
+    [conv queryMessagesBeforeId:msgId timestamp:time limit:limit callback:^(NSArray *objects, NSError *error) {
         result=objects;
         blockError=error;
         dispatch_semaphore_signal(sema);

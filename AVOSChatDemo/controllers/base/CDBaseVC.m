@@ -9,20 +9,16 @@
 #import "CDBaseVC.h"
 
 @interface UIViewController ()
+
 - (CGRect)_defaultInitialViewFrame;
+
 @end
 
 @implementation CDBaseVC
 
 - (void)loadView {
     [super loadView];
-    CGRect rect;
-    if ([self respondsToSelector:@selector(_defaultInitialViewFrame)]) {
-        rect = self._defaultInitialViewFrame;
-    } else {
-        [super loadView];
-        rect = self.view.frame;
-    }
+    CGRect rect = self.view.frame;
     UIScrollView *view = [[UIScrollView alloc] initWithFrame:rect];
     self.view = view;
 }

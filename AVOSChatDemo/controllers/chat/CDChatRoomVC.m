@@ -7,7 +7,6 @@
 //
 
 #import "CDChatRoomVC.h"
-#import "QBImagePickerController.h"
 #import "UIImage+Resize.h"
 
 #import "CDConvDetailVC.h"

@@ -63,14 +63,13 @@
         [application registerUserNotificationSettings:settings];
         [application registerForRemoteNotifications];
     }
-    if(CD_DEBUG){
-        [AVAnalytics setAnalyticsEnabled:NO];
-        [AVOSCloud setVerbosePolicy:kAVVerboseShow];
-        [AVLogger addLoggerDomain:AVLoggerDomainIM];
-        [AVLogger addLoggerDomain:AVLoggerDomainCURL];
-        [AVLogger setLoggerLevelMask:AVLoggerLevelAll];
-    }
-    
+#ifdef DEBUG
+    [AVAnalytics setAnalyticsEnabled:NO];
+    [AVOSCloud setVerbosePolicy:kAVVerboseShow];
+    [AVLogger addLoggerDomain:AVLoggerDomainIM];
+    [AVLogger addLoggerDomain:AVLoggerDomainCURL];
+    [AVLogger setLoggerLevelMask:AVLoggerLevelAll];
+#endif
     return YES;
 }
 
@@ -140,7 +139,7 @@
         [AVAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
     }
     
-    NSLog(@"receiveRemoteNotification");
+    DLog(@"receiveRemoteNotification");
     //这儿你可以加入自己的代码 根据推送的数据进行相应处理
 }
 
@@ -174,11 +173,6 @@
     
     self.window.rootViewController = tab;
     
-//    [CDUpgradeService upgradeWithBlock:^(BOOL upgrade, NSString *oldVersion, NSString *newVersion) {
-//        if(upgrade && [newVersion isEqualToString:@"1.0.8"]){
-//            [CDDatabaseService upgradeToAddField];
-//        }
-//    }];
 //    AVInstallation* installation=[AVInstallation currentInstallation];
 //    AVUser* user=[AVUser currentUser];
 //    [user setObject:installation forKey:INSTALLATION];
@@ -202,10 +196,10 @@
 
     double duration=0.5;
     double delay=2;
-    if(CD_DEBUG){
-        duration=0;
-        delay=0;
-    }
+#ifdef DEBUG
+    duration=0;
+    delay=0;
+#endif
     [UIView animateWithDuration:duration delay:delay options:0
                      animations:^{
                          imgv.alpha=0.0f;
