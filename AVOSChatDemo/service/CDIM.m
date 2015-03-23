@@ -195,6 +195,8 @@ static CDIM*instance;
     DLog();
     if(message.messageId){
         [self receiveMsg:message conv:conversation];
+    }else{
+        [CDUtils alert:@"Receive Message , but MessageId is nil"];
     }
 }
 

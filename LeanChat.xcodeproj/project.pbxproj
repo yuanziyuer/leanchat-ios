@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5C6622B41A66702800BCA281 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6622B31A66702800BCA281 /* Security.framework */; };
-		700130CE1ABC0AEA0050D0F7 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700130CD1ABC0AEA0050D0F7 /* AVOSCloud.framework */; };
-		700130D01ABC0AFC0050D0F7 /* AVOSCloudIM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700130CF1ABC0AFC0050D0F7 /* AVOSCloudIM.framework */; };
 		70013B7B1ABC19DA0050D0F7 /* CDAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7001388D1ABC19D90050D0F7 /* CDAppDelegate.m */; };
 		70013B7C1ABC19DA0050D0F7 /* CDBaseNavC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138911ABC19D90050D0F7 /* CDBaseNavC.m */; };
 		70013B7D1ABC19DA0050D0F7 /* CDBaseTabC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138931ABC19D90050D0F7 /* CDBaseTabC.m */; };
@@ -423,6 +421,9 @@
 		70013D151ABC19DB0050D0F7 /* CDResizableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B751ABC19DA0050D0F7 /* CDResizableButton.m */; };
 		70013D161ABC19DB0050D0F7 /* CDSessionStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B771ABC19DA0050D0F7 /* CDSessionStateView.m */; };
 		70013D171ABC19DB0050D0F7 /* CDTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B791ABC19DA0050D0F7 /* CDTextField.m */; };
+		70013D761ABECDD70050D0F7 /* AVIMEmotionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013D751ABECDD70050D0F7 /* AVIMEmotionMessage.m */; };
+		70013DA41ABFD0C70050D0F7 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70013DA31ABFD0C70050D0F7 /* AVOSCloud.framework */; };
+		70013DA61ABFD0D70050D0F7 /* AVOSCloudIM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70013DA51ABFD0D70050D0F7 /* AVOSCloudIM.framework */; };
 		704727A71A2CFE6300690286 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 704727A61A2CFE6300690286 /* libz.dylib */; };
 		704A890F1A30F5B200D2A3C2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */; };
 		70F9A3AD1A72BC6D00195430 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F9A3A41A72A12500195430 /* AVFoundation.framework */; };
@@ -441,8 +442,6 @@
 /* Begin PBXFileReference section */
 		5C6622B31A66702800BCA281 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		618EF01A4CA30A6FAFBAC123 /* Pods-LeanChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LeanChat/Pods-LeanChat.debug.xcconfig"; sourceTree = "<group>"; };
-		700130CD1ABC0AEA0050D0F7 /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
-		700130CF1ABC0AFC0050D0F7 /* AVOSCloudIM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloudIM.framework; sourceTree = "<group>"; };
 		700130D31ABC0D5A0050D0F7 /* libPods-LeanChat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-LeanChat.a"; path = "Pods/../build/Debug-iphoneos/libPods-LeanChat.a"; sourceTree = SOURCE_ROOT; };
 		7001388C1ABC19D90050D0F7 /* CDAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAppDelegate.h; sourceTree = "<group>"; };
 		7001388D1ABC19D90050D0F7 /* CDAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAppDelegate.m; sourceTree = "<group>"; };
@@ -1093,6 +1092,10 @@
 		70013B781ABC19DA0050D0F7 /* CDTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDTextField.h; sourceTree = "<group>"; };
 		70013B791ABC19DA0050D0F7 /* CDTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDTextField.m; sourceTree = "<group>"; };
 		70013B7A1ABC19DA0050D0F7 /* CDViews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDViews.h; sourceTree = "<group>"; };
+		70013D741ABECDD70050D0F7 /* AVIMEmotionMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVIMEmotionMessage.h; sourceTree = "<group>"; };
+		70013D751ABECDD70050D0F7 /* AVIMEmotionMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVIMEmotionMessage.m; sourceTree = "<group>"; };
+		70013DA31ABFD0C70050D0F7 /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
+		70013DA51ABFD0D70050D0F7 /* AVOSCloudIM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloudIM.framework; sourceTree = "<group>"; };
 		704727A61A2CFE6300690286 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		70F9A3A41A72A12500195430 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -1118,11 +1121,11 @@
 				70F9A3AD1A72BC6D00195430 /* AVFoundation.framework in Frameworks */,
 				5C6622B41A66702800BCA281 /* Security.framework in Frameworks */,
 				704A890F1A30F5B200D2A3C2 /* QuartzCore.framework in Frameworks */,
-				700130D01ABC0AFC0050D0F7 /* AVOSCloudIM.framework in Frameworks */,
 				704727A71A2CFE6300690286 /* libz.dylib in Frameworks */,
 				8C470C9D19926019006A4E87 /* libiconv.dylib in Frameworks */,
 				8C925CB71987C20800D2750B /* libsqlite3.dylib in Frameworks */,
 				8C925C1F19876D8100D2750B /* libicucore.dylib in Frameworks */,
+				70013DA61ABFD0D70050D0F7 /* AVOSCloudIM.framework in Frameworks */,
 				8CB3085B1980FC1400BDC34D /* SystemConfiguration.framework in Frameworks */,
 				8CB308591980FBF900BDC34D /* CoreTelephony.framework in Frameworks */,
 				8CB308571980FBEC00BDC34D /* MobileCoreServices.framework in Frameworks */,
@@ -1130,7 +1133,7 @@
 				8CF21DCD197FCCC1002B9220 /* CoreGraphics.framework in Frameworks */,
 				8CF21DCF197FCCC1002B9220 /* UIKit.framework in Frameworks */,
 				8CF21DCB197FCCC1002B9220 /* Foundation.framework in Frameworks */,
-				700130CE1ABC0AEA0050D0F7 /* AVOSCloud.framework in Frameworks */,
+				70013DA41ABFD0C70050D0F7 /* AVOSCloud.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1172,7 +1175,6 @@
 			children = (
 				7001388F1ABC19D90050D0F7 /* base */,
 				700138981ABC19D90050D0F7 /* chat */,
-				7001389E1ABC19D90050D0F7 /* contact */,
 				7001389F1ABC19D90050D0F7 /* conv */,
 				700138AF1ABC19D90050D0F7 /* entry */,
 				700138B41ABC19D90050D0F7 /* friend */,
@@ -1206,13 +1208,6 @@
 				7001389D1ABC19D90050D0F7 /* CDChatRoomVC.m */,
 			);
 			path = chat;
-			sourceTree = "<group>";
-		};
-		7001389E1ABC19D90050D0F7 /* contact */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = contact;
 			sourceTree = "<group>";
 		};
 		7001389F1ABC19D90050D0F7 /* conv */ = {
@@ -1283,6 +1278,8 @@
 			isa = PBXGroup;
 			children = (
 				700138CE1ABC19D90050D0F7 /* avobject */,
+				70013D741ABECDD70050D0F7 /* AVIMEmotionMessage.h */,
+				70013D751ABECDD70050D0F7 /* AVIMEmotionMessage.m */,
 				700138D11ABC19D90050D0F7 /* CDModels.h */,
 				700138D21ABC19D90050D0F7 /* CDRoom.h */,
 				700138D31ABC19D90050D0F7 /* CDRoom.m */,
@@ -2622,9 +2619,9 @@
 		8CF21DC9197FCCC1002B9220 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				70013DA51ABFD0D70050D0F7 /* AVOSCloudIM.framework */,
+				70013DA31ABFD0C70050D0F7 /* AVOSCloud.framework */,
 				700130D31ABC0D5A0050D0F7 /* libPods-LeanChat.a */,
-				700130CF1ABC0AFC0050D0F7 /* AVOSCloudIM.framework */,
-				700130CD1ABC0AEA0050D0F7 /* AVOSCloud.framework */,
 				70F9A3A41A72A12500195430 /* AVFoundation.framework */,
 				5C6622B31A66702800BCA281 /* Security.framework */,
 				704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */,
@@ -2974,6 +2971,7 @@
 				70013C391ABC19DB0050D0F7 /* XHDisplayLocationViewController.m in Sources */,
 				70013C8C1ABC19DB0050D0F7 /* XHMessageDisplayTextView.m in Sources */,
 				70013D101ABC19DB0050D0F7 /* CDLabelButtonTableCell.m in Sources */,
+				70013D761ABECDD70050D0F7 /* AVIMEmotionMessage.m in Sources */,
 				70013B931ABC19DA0050D0F7 /* CDNewFriendVC.m in Sources */,
 				70013C431ABC19DB0050D0F7 /* XHMoreMyFavoritesTableViewController.m in Sources */,
 				70013D171ABC19DB0050D0F7 /* CDTextField.m in Sources */,
