@@ -40,7 +40,7 @@
         onlyNetwork=YES;
     }
     [CDUtils showNetworkIndicator];
-    [CDAddRequestService findAddRequestsOnlyByNetwork:onlyNetwork withCallback:^(NSArray *objects, NSError *error) {
+    [CDUserService findAddRequestsOnlyByNetwork:onlyNetwork withCallback:^(NSArray *objects, NSError *error) {
         [CDUtils hideNetworkIndicator];
         [self.refreshControl endRefreshing];
         if(error.code==kAVErrorObjectNotFound){
@@ -91,7 +91,7 @@
     CDAddRequest* addRequest=[addRequests objectAtIndex:btn.tag];
     
     [CDUtils showNetworkIndicator];
-    [CDAddRequestService agreeAddRequest:addRequest callback:^(BOOL succeeded, NSError *error) {
+    [CDUserService agreeAddRequest:addRequest callback:^(BOOL succeeded, NSError *error) {
         [CDUtils hideNetworkIndicator];
         if([CDUtils filterError:error]){
             [CDUtils alert:@"添加成功"];

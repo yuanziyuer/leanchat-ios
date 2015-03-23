@@ -7,9 +7,7 @@
 //
 
 #import "CDUserInfoVC.h"
-#import "CDAddRequestService.h"
 #import "CDChatRoomVC.h"
-#import "CDCloudService.h"
 #import "CDCache.h"
 #import "CDService.h"
 
@@ -59,7 +57,7 @@
         [CDChatRoomVC goWithUserId:self.user.objectId fromVC:self];
     }else{
         [CDUtils showNetworkIndicator];
-        [CDAddRequestService tryCreateAddRequestWithToUser:_user callback:^(BOOL succeeded, NSError *error) {
+        [CDUserService tryCreateAddRequestWithToUser:_user callback:^(BOOL succeeded, NSError *error) {
             [CDUtils hideNetworkIndicator];
             if([CDUtils filterError:error]){
                 [CDUtils alert:@"请求成功"];

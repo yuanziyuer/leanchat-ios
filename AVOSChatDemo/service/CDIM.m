@@ -224,6 +224,22 @@ static CDIM*instance;
     DLog();
 }
 
+
+-(id)convSignWithSelfId:(NSString*)selfId convid:(NSString*)convid targetIds:(NSArray*)targetIds action:(NSString*)action{
+    NSMutableDictionary* dict=[NSMutableDictionary dictionary];
+    [dict setObject:selfId forKey:@"self_id"];
+    if(convid){
+        [dict setObject:convid forKey:@"convid"];
+    }
+    if(targetIds){
+        [dict setObject:targetIds forKey:@"targetIds"];
+    }
+    if(action){
+        [dict setObject:action forKey:@"action"];
+    }
+    return [AVCloud callFunction:@"conv_sign" withParameters:dict];
+}
+
 -(AVIMSignature*)getAVSignatureWithParams:(NSDictionary*) fields peerIds:(NSArray*)peerIds{
     AVIMSignature* avSignature=[[AVIMSignature alloc] init];
     NSNumber* timestampNum=[fields objectForKey:@"timestamp"];
@@ -250,12 +266,37 @@ static CDIM*instance;
     if([action isEqualToString:@"add"]){
         action=@"invite";
     }
-    NSDictionary* dict=[CDCloudService convSignWithSelfId:clientId convid:conversationId targetIds:clientIds action:action];
+    NSDictionary* dict=[self convSignWithSelfId:clientId convid:conversationId targetIds:clientIds action:action];
     if(dict!=nil){
         return [self getAVSignatureWithParams:dict peerIds:clientIds];
     }else{
         return nil;
     }
+}
+
+#pragma mark - Message Utils
+
++(NSString*)getMsgTitle:(AVIMTypedMessage*)msg{
+    NSString* title;
+    AVIMLocationMessage* locationMsg;
+    switch (msg.mediaType) {
+        case kAVIMMessageMediaTypeText:
+            title=[CDEmotionUtils convertWithText:msg.text toEmoji:YES];;
+            break;
+        case kAVIMMessageMediaTypeAudio:
+            title=@"声音";
+            break;
+        case kAVIMMessageMediaTypeImage:
+            title=@"图片";
+            break;
+        case kAVIMMessageMediaTypeLocation:
+            locationMsg=(AVIMLocationMessage*)msg;
+            title=locationMsg.text;
+            break;
+        default:
+            break;
+    }
+    return title;
 }
 
 @end

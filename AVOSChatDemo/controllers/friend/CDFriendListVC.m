@@ -131,7 +131,7 @@ enum : NSUInteger {
 }
 
 -(void)setBadgeIncludeBadgeView:(BOOL)includeBadgeView{
-    [CDAddRequestService countAddRequestsWithBlock:^(NSInteger number, NSError *error) {
+    [CDUserService countAddRequestsWithBlock:^(NSInteger number, NSError *error) {
         [CDUtils logError:error callback:^{
             _addRequestN=number;
             int oldN=[CDLocalService getAddRequestN];

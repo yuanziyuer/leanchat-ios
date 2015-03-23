@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CDCommon.h"
+#import "CDAddRequest.h"
 
 @interface CDUserService : NSObject
 
@@ -30,5 +31,13 @@
 +(void)addFriend:(AVUser*)user callback:(AVBooleanResultBlock)callback;
 
 +(void)removeFriend:(AVUser*)user callback:(AVBooleanResultBlock)callback;
+
++(void)countAddRequestsWithBlock:(AVIntegerResultBlock)block;
+
++(void)findAddRequestsOnlyByNetwork:(BOOL)onlyNetwork withCallback:(AVArrayResultBlock)callback;
+
++(void)agreeAddRequest:(CDAddRequest*)addRequest callback:(AVBooleanResultBlock)callback;
+
++(void)tryCreateAddRequestWithToUser:(AVUser*)user callback:(AVBooleanResultBlock)callback;
 
 @end

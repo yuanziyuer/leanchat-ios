@@ -144,7 +144,7 @@ static NSString *cellIdentifier = @"ContactCell";
         cell.topLabel.text=[CDConvService nameOfConv:room.conv];
     }
     
-    cell.bottomLabel.text=[CDIMUtils getMsgDesc:room.lastMsg];
+    cell.bottomLabel.text=[CDIM getMsgTitle:room.lastMsg];
     cell.unreadCount=room.unreadCount;
     
     return cell;
