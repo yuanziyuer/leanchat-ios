@@ -6,9 +6,7 @@
 ## [Leanchat 项目构成](https://github.com/leancloud/leanchat-android/wiki)
 
 ## 运行
-
-1.  `pod install`       
-2.  用XCode打开`AVOSChatDemo.xcodeproj`
+1.  用XCode打开`AVOSChatDemo.xcodeproj`
 
 ## 开发指南
 
