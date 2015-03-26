@@ -2,7 +2,7 @@
 //  XHVoiceRecordHelper.m
 //  MessageDisplayExample
 //
-//  Created by qtone-1 on 14-5-13.
+//  Created by HUAJIE-1 on 14-5-13.
 //  Copyright (c) 2014年 曾宪华 开发团队(http://iyilunba.com ) 本人QQ:543413507 本人QQ群（142557668）. All rights reserved.
 //
 
@@ -16,7 +16,7 @@
     BOOL _isPause;
     
 #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
-	UIBackgroundTaskIdentifier _backgroundIdentifier;
+    UIBackgroundTaskIdentifier _backgroundIdentifier;
 #endif
 }
 
@@ -35,7 +35,7 @@
         self.maxRecordTime = 60.0;
         self.recordDuration = @"0";
 #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
-		_backgroundIdentifier = UIBackgroundTaskInvalid;
+        _backgroundIdentifier = UIBackgroundTaskInvalid;
 #endif
     }
     return self;
@@ -48,21 +48,21 @@
 }
 
 - (void)startBackgroundTask {
-	[self stopBackgroundTask];
-	
+    [self stopBackgroundTask];
+    
 #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
-	_backgroundIdentifier = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-		[self stopBackgroundTask];
-	}];
+    _backgroundIdentifier = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        [self stopBackgroundTask];
+    }];
 #endif
 }
 
 - (void)stopBackgroundTask {
 #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
-	if (_backgroundIdentifier != UIBackgroundTaskInvalid) {
-		[[UIApplication sharedApplication] endBackgroundTask:_backgroundIdentifier];
-		_backgroundIdentifier = UIBackgroundTaskInvalid;
-	}
+    if (_backgroundIdentifier != UIBackgroundTaskInvalid) {
+        [[UIApplication sharedApplication] endBackgroundTask:_backgroundIdentifier];
+        _backgroundIdentifier = UIBackgroundTaskInvalid;
+    }
 #endif
 }
 
@@ -83,6 +83,13 @@
     
     if (self.recorder.isRecording) {
         [self.recorder stop];
+        AVAudioSession *session = [AVAudioSession sharedInstance];
+        int flags = AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation;
+        NSError* error;
+        [session setActive:NO withOptions:flags error:&error];
+        if(error){
+            DLog(@"audioSession: %@ %ld %@", [error domain], (long)[error code], [[error userInfo] description]);
+        }
     }
     
     self.recorder = nil;
@@ -261,7 +268,7 @@
     AVAudioPlayer *play = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:recordPath] error:nil];
     DLog(@"时长:%f", play.duration);
     self.recordDuration = [NSString stringWithFormat:@"%.1f", play.duration];
-//    return play.duration;
+    //    return play.duration;
 }
 
 @end

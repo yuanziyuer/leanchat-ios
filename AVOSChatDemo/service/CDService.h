@@ -9,16 +9,17 @@
 #ifndef LeanChat_CDService_h
 #define LeanChat_CDService_h
 
-#import "CDSessionManager.h"
-#import "CDAddRequestService.h"
-#import "CDCloudService.h"
 #import "CDUtils.h"
 #import "CDEmotionUtils.h"
 #import "CDUpgradeService.h"
-#import "CDCacheService.h"
-#import "CDDatabaseService.h"
+#import "CDCache.h"
 #import "CDUserService.h"
-#import "CDSettingService.h"
 #import "CDLocalService.h"
+#import "CDIM.h"
+#import "CDFileService.h"
+#import "CDCache.h"
+#import "CDConvService.h"
+#import "CDStorage.h"
+#import "CDNotify.h"
 
 #endif

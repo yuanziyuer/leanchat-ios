@@ -8,20 +8,14 @@
 
 #import "CDAppDelegate.h"
 #import "CDCommon.h"
-#import "CDLoginController.h"
-#import "CDBaseTabBarController.h"
-#import "CDBaseNavigationController.h"
-#import "CDChatListController.h"
-#import "CDContactListController.h"
-#import "CDProfileController.h"
-#import "CDSessionManager.h"
-#import "CDChatGroup.h"
-#import "CDUpgradeService.h"
-#import "CDUtils.h"
-#import "CDEmotionUtils.h"
-#import "CDCacheService.h"
-#import "CDDatabaseService.h"
+#import "CDLoginVC.h"
+#import "CDBaseTabC.h"
+#import "CDBaseNavC.h"
+#import "CDChatListVC.h"
+#import "CDFriendListVC.h"
+#import "CDProfileVC.h"
 #import "CDModels.h"
+#import "CDService.h"
 
 @implementation CDAppDelegate
 
@@ -30,8 +24,6 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     [CDAddRequest registerSubclass];
-    [CDChatGroup registerSubclass];
-    [CDSetting registerSubclass];
 #if USE_US
     [AVOSCloud useAVCloudUS];
 #endif
@@ -71,13 +63,13 @@
         [application registerUserNotificationSettings:settings];
         [application registerForRemoteNotifications];
     }
-    if(CD_DEBUG){
-       setenv("LOG_CURL", "YES", 0);
-       setenv("LOG_IM", "YES", 0);
-       [AVOSCloud setVerbosePolicy:kAVVerboseShow];
-       [AVAnalytics setAnalyticsEnabled:NO];
-    }
-    
+#ifdef DEBUG
+    [AVAnalytics setAnalyticsEnabled:NO];
+    [AVOSCloud setVerbosePolicy:kAVVerboseShow];
+    [AVLogger addLoggerDomain:AVLoggerDomainIM];
+    [AVLogger addLoggerDomain:AVLoggerDomainCURL];
+    [AVLogger setLoggerLevelMask:AVLoggerLevelAll];
+#endif
     return YES;
 }
 
@@ -147,42 +139,40 @@
         [AVAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
     }
     
-    NSLog(@"receiveRemoteNotification");
+    DLog(@"receiveRemoteNotification");
     //这儿你可以加入自己的代码 根据推送的数据进行相应处理
 }
 
 - (UIViewController*)toLogin {
-    CDLoginController *controller = [[CDLoginController alloc] init];
+    CDLoginVC *controller = [[CDLoginVC alloc] init];
     self.window.rootViewController = controller;
     return controller;
 }
 
--(void)addItemController:(UIViewController*)itemController toTabBarController:(CDBaseTabBarController*)tab{
-    CDBaseNavigationController* nav=[[CDBaseNavigationController alloc] initWithRootViewController:itemController];
+-(void)addItemController:(UIViewController*)itemController toTabBarController:(CDBaseTabC*)tab{
+    CDBaseNavC* nav=[[CDBaseNavC alloc] initWithRootViewController:itemController];
     [tab addChildViewController:nav];
 }
 
 - (UIViewController*)toMain {
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
-    CDBaseTabBarController *tab = [[CDBaseTabBarController alloc] init];
+    CDIM* client=[CDIM sharedInstance];
+    [client open];
+    AVUser* user=[AVUser currentUser];
+    [CDCache registerUser:user];
+    CDStorage* storage=[CDStorage sharedInstance];
+    [storage setupWithUserId:user.objectId];
     
-    [self addItemController:[[CDChatListController alloc] init] toTabBarController:tab];
-    [self addItemController:[[CDContactListController alloc] init] toTabBarController:tab];
-    [self addItemController:[[CDProfileController alloc] init] toTabBarController:tab];
+    CDBaseTabC *tab = [[CDBaseTabC alloc] init];
+    
+    [self addItemController:[[CDChatListVC alloc] init] toTabBarController:tab];
+    [self addItemController:[[CDFriendListVC alloc] init] toTabBarController:tab];
+    [self addItemController:[[CDProfileVC alloc] init] toTabBarController:tab];
     
     tab.selectedIndex=0;
     
     self.window.rootViewController = tab;
     
-    CDSessionManager* man=[CDSessionManager sharedInstance];
-    [CDUpgradeService upgradeWithBlock:^(BOOL upgrade, NSString *oldVersion, NSString *newVersion) {
-        NSLog(@"upgrade =%@ oldVersion=%@ newVersion=%@",upgrade? @"YES":@"NO",oldVersion,newVersion);
-        if(upgrade && [newVersion isEqualToString:@"1.0.8"]){
-            [CDDatabaseService upgradeToAddField];
-        }
-    }];
-    [CDCacheService registerUser:[AVUser currentUser]];
-    [man openSession];
 //    AVInstallation* installation=[AVInstallation currentInstallation];
 //    AVUser* user=[AVUser currentUser];
 //    [user setObject:installation forKey:INSTALLATION];
@@ -192,15 +182,6 @@
 //        }else{
 //        }
 //    }];
-
-    // important
-    [CDGroupService findGroupsWithCallback:^(NSArray *objects, NSError *error) {
-        [CDUtils logError:error callback:^{
-            for(CDChatGroup* group in objects){
-                [CDGroupService setDelegateWithGroupId:group.objectId];
-            }
-        }];
-    } cacheFirst:YES];
     
     return tab;
 }
@@ -215,10 +196,10 @@
 
     double duration=0.5;
     double delay=2;
-    if(CD_DEBUG){
-        duration=0;
-        delay=0;
-    }
+#ifdef DEBUG
+    duration=0;
+    delay=0;
+#endif
     [UIView animateWithDuration:duration delay:delay options:0
                      animations:^{
                          imgv.alpha=0.0f;

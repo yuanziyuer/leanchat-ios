@@ -9,10 +9,7 @@
 #ifndef LeanChat_CDModels_h
 #define LeanChat_CDModels_h
 
-#import "CDMsg.h"
-#import "CDChatRoom.h"
-#import "CDSetting.h"
-#import "CDChatGroup.h"
+#import "CDRoom.h"
 #import "CDAddRequest.h"
 #import "CDUser.h"
 

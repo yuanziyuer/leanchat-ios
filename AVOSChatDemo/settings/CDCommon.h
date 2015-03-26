@@ -10,9 +10,7 @@
 #define AVOSChatDemo_CDCommon_h
 
 #import <AVOSCloud/AVOSCloud.h>
+#import <AVOSCloudIM/AVOSCloudIM.h>
 #import "CDCommonDefine.h"
-#import "CDUserService.h"
-#import "CDAddRequest.h"
-#import "CDUtils.h"
 
 #endif

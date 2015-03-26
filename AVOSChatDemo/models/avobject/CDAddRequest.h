@@ -6,13 +6,12 @@
 //  Copyright (c) 2014年 AVOS. All rights reserved.
 //
 
-#import <AVOSCloud/AVOSCloud.h>
+#import "CDCommon.h"
 
 typedef enum : NSUInteger{
-    CDAddRequestStatusWait=0,
-    CDAddRequestStatusDone
+  CDAddRequestStatusWait=0,
+  CDAddRequestStatusDone
 }CDAddRequestStatus;
-
 
 #define kAddRequestFromUser @"fromUser"
 #define kAddRequestToUser @"toUser"

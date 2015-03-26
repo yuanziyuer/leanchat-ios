@@ -7,8 +7,6 @@
 //
 
 #import "CDUtils.h"
-#import "CDCommonDefine.h"
-#import <CommonCrypto/CommonDigest.h>
 
 @implementation CDUtils
 
@@ -19,12 +17,20 @@
     [alertView show];
 }
 
-+(void)alertError:(NSError*)error{
-    [CDUtils alert:[error localizedDescription]];
++(BOOL)alertError:(NSError*)error{
+    if(error){
+        [CDUtils alert:[NSString stringWithFormat:@"%@",error]];
+        return YES;
+    }
+    return NO;
+}
+
++(BOOL)filterError:(NSError*)error{
+    return [self alertError:error]==NO;
 }
 
 +(void)filterError:(NSError*)error callback:(CDBlock)callback{
-    if(error && error.code!=kAVErrorCacheMiss){
+    if(error){
         [CDUtils alertError:error];
     }else{
         if(callback){
@@ -135,10 +141,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:name object:nil];
 }
 
-+(void)notifyGroupUpdate{
-    [CDUtils postNotification:NOTIFICATION_GROUP_UPDATED];
-}
-
 #pragma mark - view util
 
 +(UIActivityIndicatorView*)showIndicatorAtView:(UIView*)hookView{
@@ -192,9 +194,6 @@
 
 #pragma mark - AVUtil
 
-+(void)setPolicyOfAVQuery:(AVQuery*)query isNetwokOnly:(BOOL)onlyNetwork{
-    [query setCachePolicy:onlyNetwork ? kAVCachePolicyNetworkOnly : kAVCachePolicyNetworkElseCache];
-}
 
 +(NSString*)uuid{
     NSString *chars=@"abcdefghijklmnopgrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -209,20 +208,6 @@
     return result;
 }
 
-+ (int)getDurationOfAudioPath:(NSString *)path {
-    int duration;
-    NSError* error;
-    NSDictionary* fileAttrs=[[NSFileManager defaultManager] attributesOfItemAtPath:path error:&error];
-    if(error==nil){
-        unsigned long long size=[fileAttrs fileSize];
-        int oneSecSize=3000;
-        duration=(int)(size*1.0f/oneSecSize+1);
-    }else{
-        [CDUtils alertError:error];
-    }
-    return duration;
-}
-
 + (void)downloadWithUrl:(NSString *)url toPath:(NSString *)path {
     NSData* data=[[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:url]];
     NSError* error;
@@ -234,11 +219,14 @@
     }
 }
 
-+ (BOOL)connected
-{
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    return networkStatus != NotReachable;
+#pragma mark - time 
+
++(int64_t)int64OfStr:(NSString*)str{
+    return [str longLongValue];
+}
+
++(NSString*)strOfInt64:(int64_t)num{
+    return [[NSNumber numberWithLongLong:num] stringValue];
 }
 
 @end

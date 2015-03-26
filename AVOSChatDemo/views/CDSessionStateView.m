@@ -7,6 +7,15 @@
 //
 
 #import "CDSessionStateView.h"
+#import "CDReachability.h"
+
+@interface CDSessionStateView()
+
+@property CDIM* im;
+
+@property CDNotify* notify;
+
+@end
 
 @implementation CDSessionStateView
 
@@ -34,23 +43,23 @@
 }
 
 -(void)observeSessionUpdate{
-    NSNotificationCenter* center=[NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(sessionUpdated) name:NOTIFICATION_SESSION_UPDATED object:nil];
+    _im=[CDIM sharedInstance];
+    _notify=[CDNotify sharedInstance];
+    [_notify addSessionObserver:self selector:@selector(sessionUpdated)];
     [self sessionUpdated];
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
++ (BOOL)connected
+{
+    CDReachability *reachability = [CDReachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    return networkStatus != NotReachable;
 }
-*/
 
 - (void)sessionUpdated
 {
-    CDSessionManager* man=[CDSessionManager sharedInstance];
-    if([CDUtils connected]==NO || [[man getSession] isPaused]){
+    //[self connected]==NO ||
+    if([_im isOpened]==NO){
         if([_delegate respondsToSelector:@selector(onSessionBrokenWithStateView:)])
             [_delegate onSessionBrokenWithStateView:self];
     }else{
@@ -61,7 +70,7 @@
 }
 
 -(void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_SESSION_UPDATED object:nil];
+    [_notify removeSessionObserver:self];
 }
 
 @end

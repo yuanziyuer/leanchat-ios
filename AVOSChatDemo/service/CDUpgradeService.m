@@ -8,7 +8,7 @@
 
 #import "CDUpgradeService.h"
 #define CD_VERSION @"version"
-#import <AFNetworking/AFNetworking.h>
+#import "AFNetworking.h"
 
 @implementation CDUpgradeService
 

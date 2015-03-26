@@ -695,7 +695,7 @@ static CGPoint  delayOffset = {0.0};
     recorderPath = [[NSString alloc] initWithFormat:@"%@/Documents/", NSHomeDirectory()];
 //    dateFormatter.dateFormat = @"hh-mm-ss";
     dateFormatter.dateFormat = @"yyyy-MM-dd-hh-mm-ss";
-    recorderPath = [recorderPath stringByAppendingFormat:@"%@-MySound.caf", [dateFormatter stringFromDate:now]];
+    recorderPath = [recorderPath stringByAppendingFormat:@"%@-MySound.aac", [dateFormatter stringFromDate:now]];
     return recorderPath;
 }
 
