@@ -182,7 +182,11 @@ static CDStorage* _storage;
 
 -(void)insertRoomWithConvid:(NSString*)convid{
     [_dbQueue inDatabase:^(FMDatabase *db) {
-        [db executeUpdate:@"INSERT INTO rooms (convid) VALUES(?) " withArgumentsInArray:@[convid]];
+        FMResultSet* rs=[db executeQuery:@"SELECT * FROM rooms WHERE convid=?",convid];
+        if([rs next]==NO){
+            [db executeUpdate:@"INSERT INTO rooms (convid) VALUES(?) ",convid];
+        }
+        [rs close];
     }];
 }
 
