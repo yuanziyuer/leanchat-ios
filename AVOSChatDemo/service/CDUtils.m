@@ -7,6 +7,7 @@
 //
 
 #import "CDUtils.h"
+#import "CDCommon.h"
 
 @implementation CDUtils
 
@@ -19,7 +20,18 @@
 
 +(BOOL)alertError:(NSError*)error{
     if(error){
-        [CDUtils alert:[NSString stringWithFormat:@"%@",error]];
+        if(error.code==kAVIMErrorConnectionLost){
+            [CDUtils alert:@"未能连接聊天服务"];
+        }else if([error.domain isEqualToString:NSURLErrorDomain]){
+            [CDUtils alert:@"网络连接发生错误"];
+        }else{
+#ifndef DEBUG
+            [CDUtils alert:[NSString stringWithFormat:@"%@",error]];
+#else
+            NSString* info=error.localizedDescription ;
+            [CDUtils alert:info? info: [NSString stringWithFormat:@"%@",error]];
+#endif
+        }
         return YES;
     }
     return NO;

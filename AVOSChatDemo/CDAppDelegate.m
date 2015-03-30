@@ -48,7 +48,6 @@
     } else {
         nextController=[self toLogin];
     }
-    [self splashScreenAtAnchorView:nextController];
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -99,7 +98,9 @@
     if(num!=0){
         AVInstallation *currentInstallation = [AVInstallation currentInstallation];
         [currentInstallation setBadge:0];
-        [currentInstallation saveEventually];
+        [currentInstallation saveEventually:^(BOOL succeeded, NSError *error) {
+            DLog(@"%@" ,error? error:@"succeed");
+        }];
         application.applicationIconBadgeNumber=0;
     }
     [application cancelAllLocalNotifications];
@@ -186,28 +187,6 @@
     return tab;
 }
 
--(void)splashScreenAtAnchorView:(UIViewController*)anchorController{
-    UIImageView *imgv = [[UIImageView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    UIImage* image=[UIImage imageNamed:@"splash.png"];
-    imgv.image=image;
-    imgv.contentMode=UIViewContentModeScaleAspectFill;
-    imgv.userInteractionEnabled = YES;
-    [anchorController.view addSubview:imgv];
-
-    double duration=0.5;
-    double delay=2;
-#ifdef DEBUG
-    duration=0;
-    delay=0;
-#endif
-    [UIView animateWithDuration:duration delay:delay options:0
-                     animations:^{
-                         imgv.alpha=0.0f;
-                     } completion:^(BOOL finished){
-                         [imgv removeFromSuperview];
-                     }];
-    [self.window addSubview:anchorController.view];
-}
 
 - (void)removeSplash:(UIImageView *)imageView {
     [imageView removeFromSuperview];

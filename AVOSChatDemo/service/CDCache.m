@@ -144,6 +144,9 @@ static CDIM* _im;
         }else{
             for(CDRoom * room in rooms){
                 room.conv=[CDCache lookupConvById:room.convid];
+                if(room.conv==nil){
+                    [NSException raise:@"not found conv" format:nil];
+                }
             }
             NSMutableSet* userIds=[NSMutableSet set];
             for(CDRoom* room in rooms){

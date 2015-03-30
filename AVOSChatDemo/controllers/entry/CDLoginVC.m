@@ -12,6 +12,7 @@
 #import "CDRegisterVC.h"
 #import "CDBaseNavC.h"
 #import "CDAppDelegate.h"
+#import "CDService.h"
 
 @interface CDLoginVC () <UITextFieldDelegate> {
     CGPoint _originOffset;
@@ -206,21 +207,11 @@
 //    }];
     
     [AVUser logInWithUsernameInBackground:self.usernameField.text password:self.passwordField.text block:^(AVUser *user, NSError *error) {
-        if (user) {
-            //Login success
+        if([CDUtils filterError:error]){
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:KEY_ISLOGINED];
             [[NSUserDefaults standardUserDefaults] setObject:self.usernameField.text forKey:KEY_USERNAME];
-            NSLog(@"Login success");
             CDAppDelegate *delegate = (CDAppDelegate *)[UIApplication sharedApplication].delegate;
             [delegate toMain];
-        } else {
-            //Something bad has ocurred
-            NSString *errorString = [[error userInfo] objectForKey:@"error"];
-            if(errorString==nil){
-                errorString=[error localizedDescription];
-            }
-            UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorString delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            [errorAlertView show];
         }
     }];
 }
@@ -229,8 +220,7 @@
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     CDRegisterVC *vc = [[CDRegisterVC alloc] init];
     CDBaseNavC *nav = [[CDBaseNavC alloc] initWithRootViewController:vc];
-    [self presentViewController:nav animated:YES completion:^{
-    }];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 -(void)toFindPassword:(id)sender {

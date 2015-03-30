@@ -53,4 +53,12 @@
     return otherId;
 }
 
++(NSString*)titleOfConv:(AVIMConversation*)conv{
+    if([[self class] typeOfConv:conv]==CDConvTypeSingle){
+        return [self nameOfConv:conv];
+    }else{
+        return [NSString stringWithFormat:@"%@(%ld)",conv.name,(long)conv.members.count];
+    }
+}
+
 @end

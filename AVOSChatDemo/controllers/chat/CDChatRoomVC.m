@@ -279,11 +279,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 }
 
 -(void)refreshConv{
-    NSString* name=[CDConvService nameOfConv:self.conv];
-    if([CDConvService typeOfConv:self.conv]==CDConvTypeGroup){
-        name=[NSString stringWithFormat:@"%@(%d)",name,self.conv.members.count];
-    }
-    self.title=name;
+    self.title=[CDConvService titleOfConv:self.conv];
 }
 
 - (NSArray *)getXHMessages:(NSArray *)msgs {

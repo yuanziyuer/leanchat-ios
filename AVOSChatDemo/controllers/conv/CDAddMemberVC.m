@@ -89,9 +89,11 @@ static NSString* reuseIdentifier=@"Cell";
         [_im createConvWithUserIds:members callback:^(AVIMConversation *conversation, NSError *error) {
             [CDUtils hideNetworkIndicator];
             if([CDUtils filterError:error]){
-                UINavigationController* nav=self.navigationController;
-                [nav popToRootViewControllerAnimated:YES];
-                [CDChatRoomVC goWithConv:conversation fromNav:nav];
+                [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+                    UINavigationController* nav=_groupDetailVC.navigationController;
+                    [nav popToRootViewControllerAnimated:YES];
+                    [CDChatRoomVC goWithConv:conversation fromNav:nav];
+                }];
             }
         }];
     }else{

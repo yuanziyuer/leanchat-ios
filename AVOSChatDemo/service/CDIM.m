@@ -117,6 +117,7 @@ static CDIM*instance;
     AVIMConversationQuery* q=[_imClient conversationQuery];
     [q whereKey:@"attr.type" equalTo:@(CDConvTypeGroup)];
     [q whereKey:@"m" containedIn:@[user.objectId]];
+    q.limit=1000;
     [q findConversationsWithCallback:block];
 }
 
@@ -135,6 +136,7 @@ static CDIM*instance;
     if(convids.count>0){
         AVIMConversationQuery* q=[_imClient conversationQuery];
         [q whereKey:@"objectId" containedIn:[convids allObjects]];
+        q.limit=1000;  // default limit:10
         [q findConversationsWithCallback:callback];
     }else{
         callback([NSMutableArray array],nil);

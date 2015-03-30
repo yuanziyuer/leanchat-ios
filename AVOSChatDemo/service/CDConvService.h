@@ -28,4 +28,6 @@ typedef enum : NSUInteger {
 
 +(NSString*)nameOfUserIds:(NSArray*)userIds;
 
++(NSString*)titleOfConv:(AVIMConversation*)conv;
+
 @end

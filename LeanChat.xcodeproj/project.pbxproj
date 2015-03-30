@@ -110,7 +110,6 @@
 		70013BDE1ABC19DA0050D0F7 /* menu_add_voip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7001391A1ABC19D90050D0F7 /* menu_add_voip@2x.png */; };
 		70013BDF1ABC19DA0050D0F7 /* menu_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7001391B1ABC19D90050D0F7 /* menu_background@2x.png */; };
 		70013BE01ABC19DA0050D0F7 /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 7001391C1ABC19D90050D0F7 /* splash.png */; };
-		70013BE11ABC19DA0050D0F7 /* splash_back_old.png in Resources */ = {isa = PBXBuildFile; fileRef = 7001391D1ABC19D90050D0F7 /* splash_back_old.png */; };
 		70013BE21ABC19DA0050D0F7 /* contact@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7001391F1ABC19D90050D0F7 /* contact@2x.png */; };
 		70013BE31ABC19DA0050D0F7 /* profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 700139201ABC19D90050D0F7 /* profile@2x.png */; };
 		70013BE41ABC19DA0050D0F7 /* sns@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 700139211ABC19D90050D0F7 /* sns@2x.png */; };
@@ -566,7 +565,6 @@
 		7001391A1ABC19D90050D0F7 /* menu_add_voip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_add_voip@2x.png"; sourceTree = "<group>"; };
 		7001391B1ABC19D90050D0F7 /* menu_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_background@2x.png"; sourceTree = "<group>"; };
 		7001391C1ABC19D90050D0F7 /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
-		7001391D1ABC19D90050D0F7 /* splash_back_old.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_back_old.png; sourceTree = "<group>"; };
 		7001391F1ABC19D90050D0F7 /* contact@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact@2x.png"; sourceTree = "<group>"; };
 		700139201ABC19D90050D0F7 /* profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile@2x.png"; sourceTree = "<group>"; };
 		700139211ABC19D90050D0F7 /* sns@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sns@2x.png"; sourceTree = "<group>"; };
@@ -1301,7 +1299,6 @@
 				700139051ABC19D90050D0F7 /* login */,
 				700139151ABC19D90050D0F7 /* menu */,
 				7001391C1ABC19D90050D0F7 /* splash.png */,
-				7001391D1ABC19D90050D0F7 /* splash_back_old.png */,
 				7001391E1ABC19D90050D0F7 /* tabbar */,
 			);
 			path = resources;
@@ -2837,7 +2834,6 @@
 				70013CB61ABC19DB0050D0F7 /* input-bar-background@2x.png in Resources */,
 				70013BC81ABC19DA0050D0F7 /* image_placeholder@2x.png in Resources */,
 				70013B841ABC19DA0050D0F7 /* CDAddMemberVC.xib in Resources */,
-				70013BE11ABC19DA0050D0F7 /* splash_back_old.png in Resources */,
 				70013CEE1ABC19DB0050D0F7 /* sharemore_location@2x.png in Resources */,
 				70013BB21ABC19DA0050D0F7 /* u1f618.png in Resources */,
 				70013CE91ABC19DB0050D0F7 /* SenderVoiceNodePlaying001@2x.png in Resources */,
@@ -3221,7 +3217,7 @@
 			baseConfigurationReference = 618EF01A4CA30A6FAFBAC123 /* Pods-LeanChat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_IDENTITY = "";
@@ -3259,7 +3255,7 @@
 			baseConfigurationReference = C26DD6660E520345CAFCC14D /* Pods-LeanChat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_IDENTITY = "";

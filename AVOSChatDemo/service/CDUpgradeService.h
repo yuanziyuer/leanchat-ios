@@ -17,6 +17,5 @@ typedef void (^CDUpgradeBlock)(BOOL upgrade,NSString* oldVersion,NSString* newVe
 
 +(void)upgradeWithBlock:(CDUpgradeBlock)callback;
 
-+(void)findNewVersionWithBlock:(AVBooleanResultBlock)block;
 
 @end
