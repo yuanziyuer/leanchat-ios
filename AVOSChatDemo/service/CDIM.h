@@ -15,11 +15,11 @@
 
 + (instancetype)sharedInstance;
 
--(void)open;
+-(void)openWithClientId:(NSString*)clientId callback:(AVIMBooleanResultBlock)callback;
+
+- (void)closeWithCallback:(AVBooleanResultBlock)callback;
 
 -(BOOL)isOpened;
-
-- (void)close;
 
 -(void)fecthConvWithId:(NSString*)convid callback:(AVIMConversationResultBlock)callback;
 

@@ -45,18 +45,15 @@
     [CDUserService displayAvatarOfUser:user avatarView:self.avatarView];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Actions
 
 -(void)logout {
-    [[CDIM sharedInstance] close];
-    [AVUser logOut];
-    CDAppDelegate *delegate = (CDAppDelegate *)[UIApplication sharedApplication].delegate;
-    [delegate toLogin];
+    [[CDIM sharedInstance] closeWithCallback:^(BOOL succeeded, NSError *error) {
+        DLog(@"%@",error);
+        [AVUser logOut];
+        CDAppDelegate *delegate = (CDAppDelegate *)[UIApplication sharedApplication].delegate;
+        [delegate toLogin];
+    }];
 }
 
 #pragma mark - table view
@@ -70,7 +67,7 @@
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    int section=indexPath.section;
+    NSInteger section=indexPath.section;
     UITableViewCell* cell;
     switch (section) {
         case 0:

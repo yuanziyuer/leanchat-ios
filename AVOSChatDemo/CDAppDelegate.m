@@ -34,8 +34,6 @@
     if (SYSTEM_VERSION >= 7.0) {
         [[UINavigationBar appearance] setBarTintColor:NAVIGATION_COLOR];
         [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-        //[UINavigationBar appearance].opaque = YES;
-        //[UINavigationBar appearance].translucent=YES;
     } else {
         [[UINavigationBar appearance] setTintColor:NAVIGATION_COLOR];
     }
@@ -49,17 +47,9 @@
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+
+    [self registerForPushWithApplication:application];
     
-    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)]==NO) {
-        [application registerForRemoteNotificationTypes:
-         UIRemoteNotificationTypeBadge |
-         UIRemoteNotificationTypeAlert |
-         UIRemoteNotificationTypeSound];
-    } else {
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
-        [application registerUserNotificationSettings:settings];
-        [application registerForRemoteNotifications];
-    }
 #ifdef DEBUG
     [AVAnalytics setAnalyticsEnabled:NO];
     [AVOSCloud setVerbosePolicy:kAVVerboseShow];
@@ -70,6 +60,18 @@
     return YES;
 }
 
+-(void)registerForPushWithApplication:(UIApplication*)application{
+    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)]==NO) {
+        [application registerForRemoteNotificationTypes:
+         UIRemoteNotificationTypeBadge |
+         UIRemoteNotificationTypeAlert |
+         UIRemoteNotificationTypeSound];
+    } else {
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
+        [application registerUserNotificationSettings:settings];
+        [application registerForRemoteNotifications];
+    }
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application{
 }
@@ -116,21 +118,17 @@
 }
 
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-    //可选 通过统计功能追踪通过提醒打开应用的行为
     if (application.applicationState == UIApplicationStateActive) {
-        // 转换成一个本地通知，显示到通知栏，你也可以直接显示出一个alertView，只是那样稍显aggressive：）
-//        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-//        localNotification.userInfo = userInfo;
-//        localNotification.soundName = UILocalNotificationDefaultSoundName;
-//        localNotification.alertBody = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
-//        localNotification.fireDate = [NSDate date];
-//        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        localNotification.userInfo = userInfo;
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        localNotification.alertBody = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
+        localNotification.fireDate = [NSDate date];
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
     } else {
         [AVAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
     }
-    
     DLog(@"receiveRemoteNotification");
-    //这儿你可以加入自己的代码 根据推送的数据进行相应处理
 }
 
 - (void)toLogin {
@@ -145,22 +143,25 @@
 
 - (void)toMain {
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
-    CDIM* client=[CDIM sharedInstance];
-    [client open];
     AVUser* user=[AVUser currentUser];
     [CDCache registerUser:user];
     CDStorage* storage=[CDStorage sharedInstance];
     [storage setupWithUserId:user.objectId];
     
     CDBaseTabC *tab = [[CDBaseTabC alloc] init];
-    
     [self addItemController:[[CDChatListVC alloc] init] toTabBarController:tab];
     [self addItemController:[[CDFriendListVC alloc] init] toTabBarController:tab];
     [self addItemController:[[CDProfileVC alloc] init] toTabBarController:tab];
     
     tab.selectedIndex=0;
-    
-    self.window.rootViewController = tab;
+    CDIM* im=[CDIM sharedInstance];
+    WEAKSELF
+    [CDUtils showNetworkIndicator];
+    [im openWithClientId:user.objectId callback:^(BOOL succeeded, NSError *error) {
+        [CDUtils hideNetworkIndicator];
+        DLog(@"%@",error);
+        weakSelf.window.rootViewController = tab;
+    }];
     
 //    AVInstallation* installation=[AVInstallation currentInstallation];
 //    AVUser* user=[AVUser currentUser];

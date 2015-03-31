@@ -70,4 +70,6 @@
 #   define DLog(...)
 #endif
 
+#define WEAKSELF  typeof(self) __weak weakSelf=self;
+
 #endif

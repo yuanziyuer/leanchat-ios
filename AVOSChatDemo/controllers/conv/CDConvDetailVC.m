@@ -10,6 +10,7 @@
 #import "CDImageLabelCollectionCell.h"
 #import "CDChatRoomVC.h"
 #import "CDAddMemberVC.h"
+#import "CDUserInfoVC.h"
 #import "CDConvNameVC.h"
 #import "CDService.h"
 
@@ -97,7 +98,6 @@ static NSString * const reuseIdentifier = @"Cell";
                 [self.collectionView reloadData];
             } completion:^(BOOL finished) {
                 CGFloat h=self.collectionView.contentSize.height;
-                //DLog(@"%f",h)
                 if(h<CGRectGetHeight(self.view.frame)){
                     _verticalConstraint.constant=h;
                 }
@@ -133,7 +133,7 @@ static NSString * const reuseIdentifier = @"Cell";
     CGPoint p=[gestureRecognizer locationInView:self.collectionView];
     NSIndexPath* indexPath=[self.collectionView indexPathForItemAtPoint:p];
     if(indexPath==nil){
-        NSLog(@"can't not find index path");
+        DLog(@"can't not find index path");
     }else{
         if(_own){
             AVIMConversation* conv=[self conv];
@@ -180,16 +180,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -218,14 +208,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 
 #pragma mark <UICollectionViewDelegate>
 
-/*
-// Uncomment this method to specify if the specified item should be highlighted during tracking
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
-}
-*/
-
-// Uncomment this method to specify if the specified item should be selected
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSString* userId=[_groupMembers objectAtIndex:indexPath.row];
     NSString* curUserId=[AVUser currentUser].objectId;
@@ -234,13 +216,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     }
     
     AVUser* user=[CDCache lookupUser:userId];
-    [_im fetchConvWithUserId:user.objectId callback:^(AVIMConversation *conversation, NSError *error) {
-        if([CDUtils filterError:error]){
-            UINavigationController* nav=self.navigationController;
-            [nav popToRootViewControllerAnimated:YES];
-            [CDChatRoomVC goWithConv:conversation fromNav:nav];
-        }
-    }];
+    
+    CDUserInfoVC* userInfoVC=[[CDUserInfoVC alloc] initWithUser:user];
+    [self.navigationController pushViewController:userInfoVC animated:YES];
     return YES;
 }
 
@@ -300,8 +278,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     [CDUtils alert:@"已清空"];
 }
 
-
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(_type==CDConvTypeGroup){
         switch (indexPath.section) {
@@ -326,20 +302,5 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
         }
     }
 }
-
-/*
-// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
-}
-*/
 
 @end

@@ -54,18 +54,12 @@ static CDIM*instance;
     return _imClient.status==AVIMClientStatusOpened;
 }
 
--(void)open{
-    [_imClient openWithClientId:[AVUser currentUser].objectId callback:^(BOOL succeeded, NSError *error) {
-        [_notify postSessionNotify];
-        [CDUtils logError:error callback:^{
-            NSLog(@"im open succeed");
-        }];
-    }];
+-(void)openWithClientId:(NSString*)clientId callback:(AVIMBooleanResultBlock)callback{
+    [_imClient openWithClientId:clientId callback:callback];
 }
 
-- (void)close {
-    [_imClient closeWithCallback:nil];
-    instance=nil;
+- (void)closeWithCallback:(AVBooleanResultBlock)callback{
+    [_imClient closeWithCallback:callback];
 }
 
 #pragma mark - conversation
