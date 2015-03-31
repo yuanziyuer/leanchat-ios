@@ -29,24 +29,22 @@
 #endif
     [AVOSCloud setApplicationId:AVOSAppID clientKey:AVOSAppKey];
 //    [AVOSCloud setApplicationId:PublicAppId clientKey:PublicAppKey];
-    //统计应用启动情况
     [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     if (SYSTEM_VERSION >= 7.0) {
         [[UINavigationBar appearance] setBarTintColor:NAVIGATION_COLOR];
         [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-//        [UINavigationBar appearance].opaque = YES;
-//        [[UINavigationBar appearance] setTranslucent:YES];
+        //[UINavigationBar appearance].opaque = YES;
+        //[UINavigationBar appearance].translucent=YES;
     } else {
         [[UINavigationBar appearance] setTintColor:NAVIGATION_COLOR];
     }
     [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
                                                            [UIColor whiteColor], NSForegroundColorAttributeName, [UIFont boldSystemFontOfSize:17], NSFontAttributeName, nil]];
-    UIViewController* nextController;
     if ([AVUser currentUser]) {
-        nextController=[self toMain];
+        [self toMain];
     } else {
-        nextController=[self toLogin];
+        [self toLogin];
     }
     
     self.window.backgroundColor = [UIColor whiteColor];
@@ -73,28 +71,18 @@
 }
 
 
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+- (void)applicationWillResignActive:(UIApplication *)application{
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+- (void)applicationDidEnterBackground:(UIApplication *)application{
 }
 
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+- (void)applicationWillEnterForeground:(UIApplication *)application{
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    
-    int num=application.applicationIconBadgeNumber;
+    NSInteger num=application.applicationIconBadgeNumber;
     if(num!=0){
         AVInstallation *currentInstallation = [AVInstallation currentInstallation];
         [currentInstallation setBadge:0];
@@ -108,22 +96,23 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    //推送功能打开时, 注册当前的设备, 同时记录用户活跃, 方便进行有针对的推送
-    NSLog(@"didRegister");
     AVInstallation *currentInstallation = [AVInstallation currentInstallation];
-    [currentInstallation setDeviceTokenFromData:deviceToken];
-    [currentInstallation saveInBackground];
+    if(currentInstallation.deviceToken==nil){
+        //first time register
+        [currentInstallation setDeviceTokenFromData:deviceToken];
+        [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            DLog(@"%@",error);
+        }];
+    }else{
+        DLog(@"have registered");
+    }
 }
 
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
-    
-    //可选 通过统计功能追踪打开提醒失败, 或者用户不授权本应用推送
-    //[AVAnalytics event:@"开启推送失败" label:[error description]];
-    NSLog(@"error=%@",[error description]);
+    DLog(@"%@",error);
 }
 
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
@@ -144,10 +133,9 @@
     //这儿你可以加入自己的代码 根据推送的数据进行相应处理
 }
 
-- (UIViewController*)toLogin {
+- (void)toLogin {
     CDLoginVC *controller = [[CDLoginVC alloc] init];
     self.window.rootViewController = controller;
-    return controller;
 }
 
 -(void)addItemController:(UIViewController*)itemController toTabBarController:(CDBaseTabC*)tab{
@@ -155,7 +143,7 @@
     [tab addChildViewController:nav];
 }
 
-- (UIViewController*)toMain {
+- (void)toMain {
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     CDIM* client=[CDIM sharedInstance];
     [client open];
@@ -183,13 +171,6 @@
 //        }else{
 //        }
 //    }];
-    
-    return tab;
-}
-
-
-- (void)removeSplash:(UIImageView *)imageView {
-    [imageView removeFromSuperview];
 }
 
 @end
