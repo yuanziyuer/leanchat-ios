@@ -12,7 +12,10 @@
 * master 分支，使用了 LeanCloud 的实时通信服务2.0 （推荐）
 * v1 分支，使用了 LeanCloud 的实时通信服务 1.0
 
-## 如何三步加入聊天
+## 运行
+* 打开 `LeanChat.xcworkspace`
+
+## 如何三步加入IM
 1. LeanCloud 中创建应用       
 2. 创建项目，加入 LeanChatLib 作为Library，复制几个文件，      
 ![qq20150403-4](https://cloud.githubusercontent.com/assets/5022872/6982056/c766f686-da3e-11e4-9908-313d65e2016b.png)
