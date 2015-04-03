@@ -3,22 +3,14 @@
 ## 介绍
 这个示例项目是为了帮助使用 LeanCloud 的开发者快速实现具有实时通讯功能的应用。
 
-## 分支
-* master 分支，使用了 LeanCloud 的实时通信服务2.0 （推荐）
-* v1 分支，使用了 LeanCloud 的实时通信服务 1.0
-
 ## 子项目介绍
 * LeanChatLib ，聊天界面与逻辑的封装库
 * LeanChatExample，展示了如何用少量代码调用LeanChatLib，加入聊天
 * LeanChat-ios，为LeanChat IM 整个应用，包含了对 LeanChatLib 更复杂的运用。
 
-
-## 使用 LeanChatLib 需知
-1. 必须允许 LeanChatLib中的项目直接include framework里的头文件，设置选项为 YES，如图，
-![qq20150403-1](https://cloud.githubusercontent.com/assets/5022872/6982020/5d34db2a-da3e-11e4-8ef2-2521255bb923.png)
-
-2. 加入 embededLib，
-![qq20150403-3](https://cloud.githubusercontent.com/assets/5022872/6982016/3df508ac-da3e-11e4-963b-c05342579b86.png)
+## 分支
+* master 分支，使用了 LeanCloud 的实时通信服务2.0 （推荐）
+* v1 分支，使用了 LeanCloud 的实时通信服务 1.0
 
 ## 如何三步加入聊天
 1. LeanCloud 中创建应用       
@@ -81,6 +73,15 @@
 @end
 
 ```
+
+
+## 使用 LeanChatLib 需知
+1. 必须允许 LeanChatLib中的项目直接include framework里的头文件，设置选项为 YES，如图，
+![qq20150403-1](https://cloud.githubusercontent.com/assets/5022872/6982020/5d34db2a-da3e-11e4-8ef2-2521255bb923.png)
+
+2. 加入 embededLib，
+![qq20150403-3](https://cloud.githubusercontent.com/assets/5022872/6982016/3df508ac-da3e-11e4-963b-c05342579b86.png)
+
 
 ## 开发指南
 
