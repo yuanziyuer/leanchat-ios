@@ -21,10 +21,10 @@
 ![qq20150403-3](https://cloud.githubusercontent.com/assets/5022872/6982016/3df508ac-da3e-11e4-963b-c05342579b86.png)
 
 ## 如何三步加入聊天
-1. LeanCloud 中创建应用
-2. 创建项目，加入 LeanChatLib 作为Library，复制几个文件，
+1. LeanCloud 中创建应用       
+2. 创建项目，加入 LeanChatLib 作为Library，复制几个文件，      
 ![qq20150403-4](https://cloud.githubusercontent.com/assets/5022872/6982056/c766f686-da3e-11e4-9908-313d65e2016b.png)
-3. 依次在合适的地方加入以下代码，
+3. 依次在合适的地方加入以下代码，      
 
 应用启动后，
 ```objc
@@ -57,6 +57,30 @@
 ```
 
 然后，就可以像上面截图那样聊天了。
+
+至于配置用户名、用户头像，可完善下面这个 delegate，
+```objc
+@protocol CDUserModel <NSObject>
+
+-(NSString*)userId;
+-(NSString*)avatarUrl;
+-(NSString*)username;
+
+@end
+
+@protocol CDUserDelegate <NSObject>
+
+@required
+
+// run in main queue
+-(id<CDUserModel>) getUserById:(NSString*)userId;
+
+// please cache users which will be used by getUserById
+-(void)cacheUserByIds:(NSSet*)userIds block:(AVIMArrayResultBlock)block;
+
+@end
+
+```
 
 ## 开发指南
 
