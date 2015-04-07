@@ -24,10 +24,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 @property CDStorage* storage;
 
-@property NSMutableDictionary* loadedImages;
-
-@property NSMutableDictionary* avatars;
-
 @property NSMutableArray* msgs;
 
 @property CDIM* im;
@@ -62,8 +58,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         //self.allowsSendFace = NO;
         //self.allowsSendMultiMedia = NO;
         _isLoadingMsg=NO;
-        _loadedImages = [[NSMutableDictionary alloc] init];
-        _avatars=[[NSMutableDictionary alloc] init];
         _im=[CDIM sharedInstance];
         _notify=[CDNotify sharedInstance];
         _storage=[CDStorage sharedInstance];
@@ -156,20 +150,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     [self loadMsgsWithLoadMore:NO];
 }
 
--(void)cacheImageOfMsg:(AVIMImageMessage*)msg{
-    if([_loadedImages objectForKey:msg.messageId]==nil){
-        NSString* path=[_im getPathByObjectId:msg.messageId];
-        NSFileManager* fileMan=[NSFileManager defaultManager];
-        if([fileMan fileExistsAtPath:path]){
-            NSData* data=[fileMan contentsAtPath:path];
-            UIImage* image=[UIImage imageWithData:data];
-            [_loadedImages setObject:image forKey:msg.messageId];
-        }else{
-            NSLog(@"file not exists");
-        }
-    }
-}
-
 -(NSDate*)getTimestampDate:(int64_t)timestamp{
     return [NSDate dateWithTimeIntervalSince1970:timestamp/1000];
 }
@@ -191,11 +171,11 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         xhMessage=[[XHMessage alloc] initWithLocalPositionPhoto:[UIImage imageNamed:@"Fav_Cell_Loc"] geolocations:locationMsg.text location:[[CLLocation alloc] initWithLatitude:locationMsg.latitude longitude:locationMsg.longitude] sender:fromUser.username timestamp:time];
     }else if(msg.mediaType==kAVIMMessageMediaTypeImage){
         AVIMImageMessage* imageMsg=(AVIMImageMessage*)msg;
-        NSLog(@"%@",imageMsg);
-        NSString* url=imageMsg.file.url;
-        xhMessage=[[XHMessage alloc] initWithPhoto:nil thumbnailUrl:url originPhotoUrl:url sender:fromUser.username timestamp:time];
+        DLog(@"%@",imageMsg);
+        xhMessage=[[XHMessage alloc] initWithPhoto:nil thumbnailUrl:imageMsg.file.url originPhotoUrl:imageMsg.file.url sender:fromUser.username timestamp:time];
     }else{
-        DLog();
+        xhMessage=[[XHMessage alloc] initWithText:@"未知消息" sender:fromUser.username timestamp:time];
+        DLog("unkonwMessage");
     }
     xhMessage.avator=nil;
     xhMessage.avatorUrl=[fromUser avatarUrl];
@@ -339,18 +319,17 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
             }
         }
     }
-    [self.im.userDelegate cacheUserByIds:userIds block:^(NSArray *objects, NSError *error) {
-        if(error){
-            callback(NO,error);
-        }else{
-            for(AVIMTypedMessage* msg in msgs){
-                if(msg.mediaType==kAVIMMessageMediaTypeImage){
-                    [self cacheImageOfMsg:(AVIMImageMessage*)msg];
-                }
+    if([self.im.userDelegate respondsToSelector:@selector(cacheUserByIds:block:)]){
+        [self.im.userDelegate cacheUserByIds:userIds block:^(NSArray *objects, NSError *error) {
+            if(error){
+                callback(NO,error);
+            }else{
+                callback(YES,nil);
             }
-            callback(YES,nil);
-        }
-    }];
+        }];
+    }else{
+        callback(YES,nil);
+    }
 }
 
 #pragma mark - send message

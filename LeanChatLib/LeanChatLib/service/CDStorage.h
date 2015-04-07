@@ -28,8 +28,6 @@
 
 -(void)deleteMsgsByConvid:(NSString*)convid;
 
--(FMDatabaseQueue*)getDBQueue;
-
 -(NSArray*)getRooms;
 
 -(void)insertRoomWithConvid:(NSString*)convid;

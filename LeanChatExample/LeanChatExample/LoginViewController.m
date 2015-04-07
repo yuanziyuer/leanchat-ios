@@ -8,7 +8,7 @@
 
 #import "LoginViewController.h"
 #import "LCECommon.h"
-#import "CDIMService.h"
+#import "CDUserFactory.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *selfIdTextField;
@@ -19,15 +19,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //self.selfIdTextField.text=@"a";
+    self.selfIdTextField.text=@"a";
 }
 
 
 - (IBAction)login:(id)sender {
-    if(self.selfIdTextField.text.length>0){
+    NSString* selfId=self.selfIdTextField.text;
+    if(selfId.length>0){
         CDIM* im=[CDIM sharedInstance];
-        im.userDelegate=[CDIMService shareInstance];
-        [im openWithClientId:self.selfIdTextField.text callback:^(BOOL succeeded, NSError *error) {
+        im.userDelegate=[[CDUserFactory alloc] init];
+        [im openWithClientId:selfId callback:^(BOOL succeeded, NSError *error) {
             if(error){
                 DLog(@"%@",error);
             }else{
