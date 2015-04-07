@@ -16,7 +16,6 @@
 static CDIM*instance;
 
 @interface CDIM()<AVIMClientDelegate,AVIMSignatureDataSource>{
-    
 }
 
 @property CDStorage* storage;
@@ -379,7 +378,7 @@ static CDIM*instance;
 -(NSString*)uuid{
     NSString *chars=@"abcdefghijklmnopgrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     assert(chars.length==62);
-    int len=chars.length;
+    int len=(int)chars.length;
     NSMutableString* result=[[NSMutableString alloc] init];
     for(int i=0;i<24;i++){
         int p=arc4random_uniform(len);

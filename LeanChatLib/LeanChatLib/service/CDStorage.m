@@ -56,10 +56,6 @@ static CDStorage* _storage;
     }];
 }
 
--(FMDatabaseQueue*)getDBQueue{
-    return _dbQueue;
-}
-
 #pragma mark - msgs table
 
 -(NSArray*)getMsgsWithConvid:(NSString*)convid maxTime:(int64_t)time limit:(int)limit{

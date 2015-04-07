@@ -8,7 +8,7 @@
 
 #import "MainViewController.h"
 #import "LCECommon.h"
-#import "CDIMService.h"
+#import "LCEChatRoomVC.h"
 
 @interface MainViewController ()
 
@@ -21,7 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //self.otherIdTextField.text=@"b";
+    self.otherIdTextField.text=@"b";
 }
 
 - (void)didReceiveMemoryWarning {
@@ -39,8 +39,18 @@
 }
 
 - (IBAction)goChat:(id)sender {
-    if(self.otherIdTextField.text.length>0){
-        [[CDIMService shareInstance] goWithUserId:self.otherIdTextField.text fromVC:self];
+    NSString* otherId=self.otherIdTextField.text;
+    if(otherId.length>0){
+        CDIM* im=[CDIM sharedInstance];
+        WEAKSELF
+        [im fetchConvWithUserId:otherId callback:^(AVIMConversation *conversation, NSError *error) {
+            if(error){
+                DLog(@"%@",error);
+            }else{
+                LCEChatRoomVC* chatRoomVC=[[LCEChatRoomVC alloc] initWithConv:conversation];
+                [weakSelf.navigationController pushViewController:chatRoomVC animated:YES];
+            }
+        }];
     }
 }
 

@@ -13,7 +13,6 @@
 #define CONV_ATTR_TYPE_KEY @"attr.type"
 #define CONV_MEMBERS_KEY @"m"
 
-
 typedef enum : NSUInteger {
     CDConvTypeSingle = 0,
     CDConvTypeGroup,
@@ -23,9 +22,10 @@ typedef enum : NSUInteger {
 
 @required
 
+//同步方法
 -(id<CDUserModel>) getUserById:(NSString*)userId;
 
-// please cache users which will be use by getUserById
+//对于每条消息，都会调用这个方法来缓存发送者的用户信息，以便 getUserById 直接返回用户信息
 -(void)cacheUserByIds:(NSSet*)userIds block:(AVIMArrayResultBlock)block;
 
 @end
@@ -41,7 +41,6 @@ typedef enum : NSUInteger {
 @property (nonatomic,strong) id<CDUserModel> selfUser;
 
 + (instancetype)sharedInstance;
-
 
 -(void)openWithClientId:(NSString*)clientId callback:(AVIMBooleanResultBlock)callback;
 
@@ -74,6 +73,7 @@ typedef enum : NSUInteger {
 -(NSString*)tmpPath;
 
 #pragma mark - conv utils
+
 -(CDConvType)typeOfConv:(AVIMConversation*)conv;
 
 -(NSString*)otherIdOfConv:(AVIMConversation*)conv;

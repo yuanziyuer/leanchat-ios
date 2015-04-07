@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "CDCommon.h"
 
-@interface CDIMService : NSObject<CDUserDelegate>
+@interface CDIMService : NSObject
 
 +(instancetype)shareInstance;
 

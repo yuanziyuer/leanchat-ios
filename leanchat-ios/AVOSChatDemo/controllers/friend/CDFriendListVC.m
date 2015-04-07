@@ -16,9 +16,6 @@
 #import "JSBadgeView.h"
 #import "CDService.h"
 
-enum : NSUInteger {
-    kTagNameLabel = 10000,
-};
 @interface CDFriendListVC()<UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -28,7 +25,6 @@ enum : NSUInteger {
 @property (nonatomic,assign) NSInteger addRequestN;
 @property (weak, nonatomic) IBOutlet UIImageView *myNewFriendIcon;
 @property JSBadgeView* badgeView;
-
 @property UIRefreshControl* refreshControl;
 
 @end
