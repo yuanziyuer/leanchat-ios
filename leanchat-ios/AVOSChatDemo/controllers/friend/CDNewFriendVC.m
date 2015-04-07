@@ -43,7 +43,7 @@
     [CDUserService findAddRequestsOnlyByNetwork:onlyNetwork withCallback:^(NSArray *objects, NSError *error) {
         [CDUtils hideNetworkIndicator];
         [self.refreshControl endRefreshing];
-        if(error.code==kAVErrorObjectNotFound){
+        if(error.code==kAVErrorObjectNotFound || error.code==kAVErrorCacheMiss){
         }else{
             [CDUtils filterError:error callback:^{
                 addRequests=objects;

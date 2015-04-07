@@ -160,7 +160,11 @@ static UIImage* defaultAvatar;
     [q whereKey:kAddRequestStatus equalTo:@(CDAddRequestStatusWait)];
     [q countObjectsInBackgroundWithBlock:^(NSInteger number, NSError *error) {
         if(error){
-            callback(0,error);
+            if(error.code==kAVErrorObjectNotFound){
+                callback(NO,nil);
+            }else{
+                callback(NO,error);
+            }
         }else{
             if(number>0){
                 callback(YES,error);
