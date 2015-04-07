@@ -107,30 +107,6 @@ CDUserModel，
 
 然后，就可以像上面截图那样聊天了。
 
-至于配置用户名、用户头像，可完善下面这个 delegate，
-```objc
-@protocol CDUserModel <NSObject>
-
--(NSString*)userId;
--(NSString*)avatarUrl;
--(NSString*)username;
-
-@end
-
-@protocol CDUserDelegate <NSObject>
-
-@required
-
-// run in main queue
--(id<CDUserModel>) getUserById:(NSString*)userId;
-
-// please cache users which will be used by getUserById
--(void)cacheUserByIds:(NSSet*)userIds block:(AVIMArrayResultBlock)block;
-
-@end
-
-```
-
 
 ## 使用 LeanChatLib 需知
 
