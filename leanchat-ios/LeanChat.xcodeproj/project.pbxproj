@@ -161,7 +161,6 @@
 		704727A71A2CFE6300690286 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 704727A61A2CFE6300690286 /* libz.dylib */; };
 		704A890F1A30F5B200D2A3C2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */; };
 		7059E72D1ACE727B009D17AB /* CDIMService.m in Sources */ = {isa = PBXBuildFile; fileRef = 7059E72C1ACE727B009D17AB /* CDIMService.m */; };
-		7059E7401ACE85A0009D17AB /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7059E73F1ACE85A0009D17AB /* CDUser.m */; };
 		70B298AD1ACE95E100FE265E /* AddGroupMemberBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B2984E1ACE95E100FE265E /* AddGroupMemberBtn@2x.png */; };
 		70B298AE1ACE95E100FE265E /* AddGroupMemberBtnHL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B2984F1ACE95E100FE265E /* AddGroupMemberBtnHL@2x.png */; };
 		70B298AF1ACE95E100FE265E /* avator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B298501ACE95E100FE265E /* avator@2x.png */; };
@@ -500,8 +499,6 @@
 		704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7059E72B1ACE727B009D17AB /* CDIMService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIMService.h; sourceTree = "<group>"; };
 		7059E72C1ACE727B009D17AB /* CDIMService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIMService.m; sourceTree = "<group>"; };
-		7059E73E1ACE85A0009D17AB /* CDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUser.h; sourceTree = "<group>"; };
-		7059E73F1ACE85A0009D17AB /* CDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUser.m; sourceTree = "<group>"; };
 		70B2984E1ACE95E100FE265E /* AddGroupMemberBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddGroupMemberBtn@2x.png"; sourceTree = "<group>"; };
 		70B2984F1ACE95E100FE265E /* AddGroupMemberBtnHL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddGroupMemberBtnHL@2x.png"; sourceTree = "<group>"; };
 		70B298501ACE95E100FE265E /* avator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avator@2x.png"; sourceTree = "<group>"; };
@@ -774,8 +771,6 @@
 		700138CD1ABC19D90050D0F7 /* models */ = {
 			isa = PBXGroup;
 			children = (
-				7059E73E1ACE85A0009D17AB /* CDUser.h */,
-				7059E73F1ACE85A0009D17AB /* CDUser.m */,
 				700138CE1ABC19D90050D0F7 /* avobject */,
 				700138D11ABC19D90050D0F7 /* CDModels.h */,
 			);
@@ -1505,7 +1500,6 @@
 				70013C091ABC19DB0050D0F7 /* UIProgressView+AFNetworking.m in Sources */,
 				70013BF81ABC19DB0050D0F7 /* CDUtils.m in Sources */,
 				70013C001ABC19DB0050D0F7 /* AFURLResponseSerialization.m in Sources */,
-				7059E7401ACE85A0009D17AB /* CDUser.m in Sources */,
 				70013C051ABC19DB0050D0F7 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				70013D0A1ABC19DB0050D0F7 /* CDImageLabelCollectionCell.m in Sources */,
 				70013B891ABC19DA0050D0F7 /* CDConvNameVC.m in Sources */,
