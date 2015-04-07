@@ -97,6 +97,7 @@
 2. 必须允许 LeanChatLib中的项目直接include framework里的头文件，设置选项为 YES，如图，
 ![qq20150403-1](https://cloud.githubusercontent.com/assets/5022872/6982020/5d34db2a-da3e-11e4-8ef2-2521255bb923.png)       
 3. 加入 embededLib，
+
 ![qq20150407-3](https://cloud.githubusercontent.com/assets/5022872/7016302/37f2a1de-dd14-11e4-9aec-94c99b1de99b.png)
 
 ![qq20150403-3](https://cloud.githubusercontent.com/assets/5022872/6982016/3df508ac-da3e-11e4-963b-c05342579b86.png)
