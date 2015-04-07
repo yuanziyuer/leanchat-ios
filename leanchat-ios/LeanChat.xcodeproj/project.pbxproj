@@ -160,7 +160,7 @@
 		704A890F1A30F5B200D2A3C2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */; };
 		7059E72D1ACE727B009D17AB /* CDIMService.m in Sources */ = {isa = PBXBuildFile; fileRef = 7059E72C1ACE727B009D17AB /* CDIMService.m */; };
 		7059E7401ACE85A0009D17AB /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7059E73F1ACE85A0009D17AB /* CDUser.m */; };
-		7073A7BD1ACEA4E000073BC0 /* LeanChatLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7073A7BC1ACEA4E000073BC0 /* LeanChatLib.framework */; };
+		7094C1781AD3E5A800670821 /* LeanChatLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7094C1771AD3E5A800670821 /* LeanChatLib.framework */; };
 		70B298AD1ACE95E100FE265E /* AddGroupMemberBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B2984E1ACE95E100FE265E /* AddGroupMemberBtn@2x.png */; };
 		70B298AE1ACE95E100FE265E /* AddGroupMemberBtnHL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B2984F1ACE95E100FE265E /* AddGroupMemberBtnHL@2x.png */; };
 		70B298AF1ACE95E100FE265E /* avator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B298501ACE95E100FE265E /* avator@2x.png */; };
@@ -254,8 +254,6 @@
 		70B299071ACE95E100FE265E /* weChatBubble_Sending_Cavern@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B298A91ACE95E100FE265E /* weChatBubble_Sending_Cavern@2x.png */; };
 		70B299081ACE95E100FE265E /* weChatBubble_Sending_LeanChat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B298AA1ACE95E100FE265E /* weChatBubble_Sending_LeanChat@2x.png */; };
 		70B299091ACE95E100FE265E /* weChatBubble_Sending_Solid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B298AB1ACE95E100FE265E /* weChatBubble_Sending_Solid@2x.png */; };
-		70D5B1121AD3866700DEC291 /* LeanChatLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70D5B1111AD3866700DEC291 /* LeanChatLib.framework */; };
-		70D5B1131AD3866700DEC291 /* LeanChatLib.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70D5B1111AD3866700DEC291 /* LeanChatLib.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		70F9A3AD1A72BC6D00195430 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F9A3A41A72A12500195430 /* AVFoundation.framework */; };
 		8C470C9D19926019006A4E87 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C470C9C19926019006A4E87 /* libiconv.dylib */; };
 		8C925C1F19876D8100D2750B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C925C1E19876D8100D2750B /* libicucore.dylib */; };
@@ -276,7 +274,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				70D5B1131AD3866700DEC291 /* LeanChatLib.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -503,6 +500,7 @@
 		7059E73E1ACE85A0009D17AB /* CDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUser.h; sourceTree = "<group>"; };
 		7059E73F1ACE85A0009D17AB /* CDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUser.m; sourceTree = "<group>"; };
 		7073A7BC1ACEA4E000073BC0 /* LeanChatLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LeanChatLib.framework; path = "../../LeanChatLib/build/Debug-iphoneos/LeanChatLib.framework"; sourceTree = "<group>"; };
+		7094C1771AD3E5A800670821 /* LeanChatLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LeanChatLib.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/LeanChat-bawtqfedaczltxfvbjmxartzlsdw/Build/Products/Debug-iphoneos/LeanChatLib.framework"; sourceTree = "<group>"; };
 		70B2984E1ACE95E100FE265E /* AddGroupMemberBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddGroupMemberBtn@2x.png"; sourceTree = "<group>"; };
 		70B2984F1ACE95E100FE265E /* AddGroupMemberBtnHL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddGroupMemberBtnHL@2x.png"; sourceTree = "<group>"; };
 		70B298501ACE95E100FE265E /* avator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avator@2x.png"; sourceTree = "<group>"; };
@@ -597,7 +595,6 @@
 		70B298AA1ACE95E100FE265E /* weChatBubble_Sending_LeanChat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChatBubble_Sending_LeanChat@2x.png"; sourceTree = "<group>"; };
 		70B298AB1ACE95E100FE265E /* weChatBubble_Sending_Solid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChatBubble_Sending_Solid@2x.png"; sourceTree = "<group>"; };
 		70B298AC1ACE95E100FE265E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MessageDisplayKitString.strings"; sourceTree = "<group>"; };
-		70D5B1111AD3866700DEC291 /* LeanChatLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = LeanChatLib.framework; path = "/Users/lzw/Library/Developer/Xcode/DerivedData/LeanChat-bawtqfedaczltxfvbjmxartzlsdw/Build/Products/Debug-iphoneos/LeanChatLib.framework"; sourceTree = "<absolute>"; };
 		70F9A3A41A72A12500195430 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8C470C9C19926019006A4E87 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		8C925C1E19876D8100D2750B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
@@ -618,11 +615,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7073A7BD1ACEA4E000073BC0 /* LeanChatLib.framework in Frameworks */,
+				7094C1781AD3E5A800670821 /* LeanChatLib.framework in Frameworks */,
 				70F9A3AD1A72BC6D00195430 /* AVFoundation.framework in Frameworks */,
 				5C6622B41A66702800BCA281 /* Security.framework in Frameworks */,
 				704A890F1A30F5B200D2A3C2 /* QuartzCore.framework in Frameworks */,
-				70D5B1121AD3866700DEC291 /* LeanChatLib.framework in Frameworks */,
 				704727A71A2CFE6300690286 /* libz.dylib in Frameworks */,
 				8C470C9D19926019006A4E87 /* libiconv.dylib in Frameworks */,
 				8C925CB71987C20800D2750B /* libsqlite3.dylib in Frameworks */,
@@ -1173,7 +1169,6 @@
 		8CF21DBE197FCCC1002B9220 = {
 			isa = PBXGroup;
 			children = (
-				70D5B1111AD3866700DEC291 /* LeanChatLib.framework */,
 				7001388B1ABC19D90050D0F7 /* AVOSChatDemo */,
 				8CF21DC9197FCCC1002B9220 /* Frameworks */,
 				8CF21DC8197FCCC1002B9220 /* Products */,
@@ -1192,6 +1187,7 @@
 		8CF21DC9197FCCC1002B9220 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7094C1771AD3E5A800670821 /* LeanChatLib.framework */,
 				7073A7BC1ACEA4E000073BC0 /* LeanChatLib.framework */,
 				70013DA51ABFD0D70050D0F7 /* AVOSCloudIM.framework */,
 				70013DA31ABFD0C70050D0F7 /* AVOSCloud.framework */,
