@@ -7,7 +7,12 @@
 //
 
 #import "CDUserFactory.h"
-#import "CDUser.h"
+#import <LeanChatLib/LeanChatLib.h>
+
+@interface CDUserFactory ()<CDUserDelegate>
+
+@end
+
 
 @implementation CDUserFactory
 

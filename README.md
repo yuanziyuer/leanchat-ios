@@ -17,20 +17,65 @@
 
 ## 如何三步加入IM
 1. LeanCloud 中创建应用       
-2. 创建项目，加入 LeanChatLib 作为Library，复制几个文件，      
-![qq20150403-4](https://cloud.githubusercontent.com/assets/5022872/6982056/c766f686-da3e-11e4-9908-313d65e2016b.png)
-3. 依次在合适的地方加入以下代码，      
+2. 创建项目，加入 LeanChatLib 作为Library。
+3. 依次在合适的地方加入以下代码，
 
 应用启动后，
 ```objc
    [AVOSCloud setApplicationId: YourAppID clientKey: YourAppKey];
 ```
 
-登录时，
+配置一个 UserFactory，遵守 CDUserDelegate协议即可。
+
+```objc
+#import "CDUserFactory.h" #import <LeanChatLib/LeanChatLib.h>
+
+@interface CDUserFactory ()<CDUserDelegate>
+
+@end
+
+
+@implementation CDUserFactory
+
+#pragma mark - CDUserDelegate
+-(void)cacheUserByIds:(NSSet *)userIds block:(AVIMArrayResultBlock)block{
+    block(nil,nil); // don't forget it
+}
+
+-(id<CDUserModel>)getUserById:(NSString *)userId{
+    CDUser* user=[[CDUser alloc] init];
+    user.userId=userId;
+    user.username=userId;
+    user.avatarUrl=@"http://ac-x3o016bx.clouddn.com/86O7RAPx2BtTW5zgZTPGNwH9RZD5vNDtPm1YbIcu";
+    return user;
+}
+
+@end
+
+```
+
+这里的 CDUser 只是 默认的一个类，你可以在你的User对象实现 CDUserModel 协议即可。
+
+CDUserModel，
+```objc
+@protocol CDUserModel <NSObject>
+
+@required
+
+-(NSString*)userId;
+
+-(NSString*)avatarUrl;
+
+-(NSString*)username;
+
+@end
+```
+
+配置好 User 信息后，登录时调用，
 ```objc
         CDIM* im=[CDIM sharedInstance];
-        im.userDelegate=[CDIMService shareInstance];
-        [im openWithClientId:self.selfIdTextField.text callback:^(BOOL succeeded, NSError *error) {
+        im.userDelegate=[[CDUserFactory alloc] init];
+        [im openWithClientId:selfId callback:^(BOOL succeeded, NSError *error) {
             if(error){
                 DLog(@"%@",error);
             }else{
@@ -41,7 +86,16 @@
 
 和某人聊天，
 ```objc
-    [[CDIMService shareInstance] goWithUserId:self.otherIdTextField.text fromVC:self];
+        CDIM* im=[CDIM sharedInstance];
+        WEAKSELF
+        [im fetchConvWithUserId:otherId callback:^(AVIMConversation *conversation, NSError *error) {
+            if(error){
+                DLog(@"%@",error);
+            }else{
+                LCEChatRoomVC* chatRoomVC=[[LCEChatRoomVC alloc] initWithConv:conversation];
+                [weakSelf.navigationController pushViewController:chatRoomVC animated:YES];
+            }
+        }];
 ```
 
 注销时，

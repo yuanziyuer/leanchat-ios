@@ -11,7 +11,6 @@
 		70033A1E1AD3F5AB0003C408 /* LeanChatLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70033A141AD3F41B0003C408 /* LeanChatLib.framework */; };
 		70033A1F1AD3F5AB0003C408 /* LeanChatLib.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70033A141AD3F41B0003C408 /* LeanChatLib.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7073A7C21ACEA79C00073BC0 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073A7C11ACEA79C00073BC0 /* MainViewController.m */; };
-		7073A7CE1ACEB42200073BC0 /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073A7CD1ACEB42200073BC0 /* CDUser.m */; };
 		7073A8301ACEB66500073BC0 /* chat_menu_people.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073A7CF1ACEB66500073BC0 /* chat_menu_people.png */; };
 		7073A8311ACEB66500073BC0 /* AddGroupMemberBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073A7D11ACEB66500073BC0 /* AddGroupMemberBtn@2x.png */; };
 		7073A8321ACEB66500073BC0 /* AddGroupMemberBtnHL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073A7D21ACEB66500073BC0 /* AddGroupMemberBtnHL@2x.png */; };
@@ -182,8 +181,6 @@
 		7073A7C01ACEA79C00073BC0 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		7073A7C11ACEA79C00073BC0 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		7073A7C41ACEA88C00073BC0 /* LCECommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LCECommon.h; sourceTree = "<group>"; };
-		7073A7CC1ACEB42200073BC0 /* CDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUser.h; sourceTree = "<group>"; };
-		7073A7CD1ACEB42200073BC0 /* CDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUser.m; sourceTree = "<group>"; };
 		7073A7CF1ACEB66500073BC0 /* chat_menu_people.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_menu_people.png; sourceTree = "<group>"; };
 		7073A7D11ACEB66500073BC0 /* AddGroupMemberBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddGroupMemberBtn@2x.png"; sourceTree = "<group>"; };
 		7073A7D21ACEB66500073BC0 /* AddGroupMemberBtnHL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddGroupMemberBtnHL@2x.png"; sourceTree = "<group>"; };
@@ -532,8 +529,6 @@
 				7073A7CF1ACEB66500073BC0 /* chat_menu_people.png */,
 				7073A8921ACEB83A00073BC0 /* emotion */,
 				7073A7D01ACEB66500073BC0 /* Resources */,
-				7073A7CC1ACEB42200073BC0 /* CDUser.h */,
-				7073A7CD1ACEB42200073BC0 /* CDUser.m */,
 				7094C1821AD3E9AD00670821 /* CDUserFactory.h */,
 				7094C1831AD3E9AD00670821 /* CDUserFactory.m */,
 				70B299301ACEA0D400FE265E /* AppDelegate.h */,
@@ -810,7 +805,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7094C1841AD3E9AD00670821 /* CDUserFactory.m in Sources */,
-				7073A7CE1ACEB42200073BC0 /* CDUser.m in Sources */,
 				7094C17B1AD3E70100670821 /* LCEChatRoomVC.m in Sources */,
 				70B299351ACEA0D400FE265E /* LoginViewController.m in Sources */,
 				70B299321ACEA0D400FE265E /* AppDelegate.m in Sources */,

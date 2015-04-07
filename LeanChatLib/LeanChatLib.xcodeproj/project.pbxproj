@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		70033A221AD404980003C408 /* CDUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 70033A201AD404980003C408 /* CDUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		70033A231AD404980003C408 /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 70033A211AD404980003C408 /* CDUser.m */; };
 		7059DCDD1ACE4ECE009D17AB /* LeanChatLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 7059DCDC1ACE4ECE009D17AB /* LeanChatLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7059DCE31ACE4ECE009D17AB /* LeanChatLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7059DCD71ACE4ECE009D17AB /* LeanChatLib.framework */; };
 		7059DCEA1ACE4ECE009D17AB /* LeanChatLibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7059DCE91ACE4ECE009D17AB /* LeanChatLibTests.m */; };
@@ -379,6 +381,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		70033A201AD404980003C408 /* CDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUser.h; sourceTree = "<group>"; };
+		70033A211AD404980003C408 /* CDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUser.m; sourceTree = "<group>"; };
 		7059DCD71ACE4ECE009D17AB /* LeanChatLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LeanChatLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7059DCDB1ACE4ECE009D17AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7059DCDC1ACE4ECE009D17AB /* LeanChatLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeanChatLib.h; sourceTree = "<group>"; };
@@ -929,6 +933,8 @@
 		7059E71C1ACE5BAB009D17AB /* models */ = {
 			isa = PBXGroup;
 			children = (
+				70033A201AD404980003C408 /* CDUser.h */,
+				70033A211AD404980003C408 /* CDUser.m */,
 				7059E71D1ACE5BAB009D17AB /* CDRoom.h */,
 				7059E71E1ACE5BAB009D17AB /* CDRoom.m */,
 				7059E73C1ACE82AC009D17AB /* CDUserModel.h */,
@@ -1711,6 +1717,7 @@
 				7059E70C1ACE52D7009D17AB /* CDSessionStateView.h in Headers */,
 				7059E7071ACE5266009D17AB /* CDStorage.h in Headers */,
 				7059DCDD1ACE4ECE009D17AB /* LeanChatLib.h in Headers */,
+				70033A221AD404980003C408 /* CDUser.h in Headers */,
 				7059E7391ACE8070009D17AB /* CDAVOSHeaders.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2037,6 +2044,7 @@
 				70B296AF1ACE92E400FE265E /* XHEmotionManagerView.m in Sources */,
 				70B296831ACE92E300FE265E /* XHBaseCollectionViewCell.m in Sources */,
 				70B296141ACE92E200FE265E /* XHFileAttribute.m in Sources */,
+				70033A231AD404980003C408 /* CDUser.m in Sources */,
 				70B295B61ACE92E200FE265E /* UIImage+Resize.m in Sources */,
 				70B295D01ACE92E200FE265E /* XHPhotographyHelper.m in Sources */,
 				70B296121ACE92E200FE265E /* XHCacheManager.m in Sources */,
