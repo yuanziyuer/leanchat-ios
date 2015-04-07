@@ -81,7 +81,6 @@
 ## 使用 LeanChatLib 需知
 
 1. 如何引入LeanChatLib 依赖？
-
 首先，打开LeanChatLib文件夹，拖动到你的项目中，如图，
 
 ![qq20150407-1](https://cloud.githubusercontent.com/assets/5022872/7016274/b1b03672-dd13-11e4-8ddd-4c501c59dbf0.png)
@@ -93,14 +92,11 @@
 也可以建立一个workspace，使得项目依赖如图，
 
 ![qq20150407-4](https://cloud.githubusercontent.com/assets/5022872/7016296/18f0e64c-dd14-11e4-9b95-8a89616f4604.png)
-之后可以进行第二点和第三点。
 
+之后可以进行第二点和第三点。        
 2. 必须允许 LeanChatLib中的项目直接include framework里的头文件，设置选项为 YES，如图，
-
-![qq20150403-1](https://cloud.githubusercontent.com/assets/5022872/6982020/5d34db2a-da3e-11e4-8ef2-2521255bb923.png)
-
+![qq20150403-1](https://cloud.githubusercontent.com/assets/5022872/6982020/5d34db2a-da3e-11e4-8ef2-2521255bb923.png)       
 3. 加入 embededLib，
-
 ![qq20150407-3](https://cloud.githubusercontent.com/assets/5022872/7016302/37f2a1de-dd14-11e4-9aec-94c99b1de99b.png)
 
 ![qq20150403-3](https://cloud.githubusercontent.com/assets/5022872/6982016/3df508ac-da3e-11e4-963b-c05342579b86.png)
