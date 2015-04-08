@@ -20,5 +20,4 @@ FOUNDATION_EXPORT const unsigned char LeanChatLibVersionString[];
 #import "CDSessionStateView.h"
 #import "CDRoom.h"
 #import "CDStorage.h"
-#import "CDUser.h"
 #import "CDUserModel.h"

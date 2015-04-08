@@ -21,7 +21,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.otherIdTextField.text=@"b";
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,9 +40,8 @@
 - (IBAction)goChat:(id)sender {
     NSString* otherId=self.otherIdTextField.text;
     if(otherId.length>0){
-        CDIM* im=[CDIM sharedInstance];
         WEAKSELF
-        [im fetchConvWithUserId:otherId callback:^(AVIMConversation *conversation, NSError *error) {
+        [[CDIM sharedInstance] fetchConvWithUserId:otherId callback:^(AVIMConversation *conversation, NSError *error) {
             if(error){
                 DLog(@"%@",error);
             }else{

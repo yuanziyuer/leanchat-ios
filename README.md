@@ -17,7 +17,10 @@
 
 ## 如何三步加入IM
 1. LeanCloud 中创建应用       
-2. 创建项目，加入 LeanChatLib 作为Library。
+2. 创建项目，加入 LeanChatLib 作为Library。拷贝 emotion和Resources两个文件夹，
+
+![qq20150408-1 2x](https://cloud.githubusercontent.com/assets/5022872/7038546/35bcee06-dde6-11e4-922e-d01a11436d4f.png)
+
 3. 依次在合适的地方加入以下代码，
 
 应用启动后，
@@ -28,7 +31,8 @@
 配置一个 UserFactory，遵守 CDUserDelegate协议即可。
 
 ```objc
-#import "CDUserFactory.h" #import <LeanChatLib/LeanChatLib.h>
+#import "CDUserFactory.h" 
+#import <LeanChatLib/LeanChatLib.h>
 
 @interface CDUserFactory ()<CDUserDelegate>
 
@@ -54,7 +58,7 @@
 
 ```
 
-这里的 CDUser 只是 默认的一个类，你可以在你的User对象实现 CDUserModel 协议即可。
+这里的 CDUser 是应用内的User对象，你可以在你的User对象实现 CDUserModel 协议即可。
 
 CDUserModel，
 ```objc
@@ -86,9 +90,7 @@ CDUserModel，
 
 和某人聊天，
 ```objc
-        CDIM* im=[CDIM sharedInstance];
-        WEAKSELF
-        [im fetchConvWithUserId:otherId callback:^(AVIMConversation *conversation, NSError *error) {
+        [[CDIM sharedInstance] fetchConvWithUserId:otherId callback:^(AVIMConversation *conversation, NSError *error) {
             if(error){
                 DLog(@"%@",error);
             }else{

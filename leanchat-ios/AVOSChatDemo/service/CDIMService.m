@@ -11,6 +11,7 @@
 #import "CDUtils.h"
 #import "CDUserService.h"
 #import "CDConvDetailVC.h"
+#import "CDUser.h"
 
 @interface CDIMService ()<CDUserDelegate>
 
