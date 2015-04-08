@@ -9,31 +9,98 @@
 #import "CDEmotionUtils.h"
 #import "XHEmotionManager.h"
 #import "Emoji.h"
+#import "NSString+Emojize.h"
+
+#define CDSupportEmojis \
+@[@":smile:" ,\
+  @":laughing:",\
+  @":blush:",\
+  @":smiley:",\
+  @":relaxed:",\
+  @":smirk:",\
+  @":heart_eyes:",\
+  @":kissing_heart:",\
+  @":kissing_closed_eyes:",\
+  @":flushed:",\
+  @":relieved:",\
+  @":satisfied:",\
+  @":grin:",\
+  @":wink:",\
+  @":stuck_out_tongue_winking_eye:",\
+  @":stuck_out_tongue_closed_eyes:",\
+  @":grinning:",\
+  @":kissing:",\
+  @":kissing_smiling_eyes:",\
+  @":stuck_out_tongue:",\
+  @":sleeping:",\
+  @":worried:",\
+  @":frowning:",\
+  @":anguished:",\
+  @":open_mouth:",\
+  @":grimacing:",\
+  @":confused:",\
+  @":hushed:",\
+  @":expressionless:",\
+  @":unamused:",\
+  @":sweat_smile:",\
+  @":sweat:",\
+  @":disappointed_relieved:",\
+  @":weary:",\
+  @":pensive:",\
+  @":disappointed:",\
+  @":confounded:",\
+  @":fearful:",\
+  @":cold_sweat:",\
+  @":persevere:",\
+  @":cry:",\
+  @":sob:",\
+  @":joy:",\
+  @":astonished:",\
+  @":scream:",\
+  @":tired_face:",\
+  @":angry:",\
+  @":rage:",\
+  @":triumph:",\
+  @":sleepy:",\
+  @":yum:",\
+  @":mask:",\
+  @":sunglasses:",\
+  @":dizzy_face:",\
+  @":neutral_face:",\
+  @":no_mouth:",\
+  @":innocent:",\
+  @":+1:",\
+  @":-1:",\
+  @":clap:",\
+  @":point_right:",\
+  @":point_left:" \
+];
 
 @implementation CDEmotionUtils
 
-+(NSArray*)getEmotionCodes{
-    NSArray* emotionCodes=@[@"\\u1f60a",@"\\u1f60c",@"\\u1f60d",@"\\u1f60f",@"\\u1f61a",@"\\u1f61b",@"\\u1f61c",@"\\u1f61e"
-                                   ,@"\\u1f62a",@"\\u1f601",@"\\u1f602",@"\\u1f603",@"\\u1f604",@"\\u1f609",@"\\u1f612",@"\\u1f613"
-                                   ,@"\\u1f614",@"\\u1f616",@"\\u1f618",@"\\u1f620",@"\\u1f621",@"\\u1f622",@"\\u1f621",@"\\u1f622"
-                                   ,@"\\u1f623",@"\\u1f625",@"\\u1f628",@"\\u1f630",@"\\u1f631",@"\\u1f632",@"\\u1f633",@"\\u1f637"
-                                   ,@"\\u1f44d",@"\\u1f44e",@"\\u1f44f"];
-    return emotionCodes;
++ (UIImage *)imageFromString:(NSString *)string attributes:(NSDictionary *)attributes size:(CGSize)size
+{
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+    [string drawInRect:CGRectMake(0, 0, size.width, size.height) withAttributes:attributes];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
 }
 
-+(NSArray*)getEmotionManagers{
-    NSString* emotionChars=@"😄😃😊☺️😍😘😚😗😜😝😛😳😁😌😒😞😣😢😂😭😪😥😰😅😓😩😫😨😱😠😡😤😖😆😋😷😎😴😵😲😏😬😐";
-    NSArray* emotionCodes=[CDEmotionUtils getEmotionCodes];
++(NSArray*)emotionManagers{
+    NSDictionary* codeToEmoji=[NSString emojiAliases];
+    NSArray* emotionCodes=CDSupportEmojis;
     NSMutableArray *emotionManagers = [NSMutableArray array];
     for (NSInteger i = 0; i < 1; i ++) {
         XHEmotionManager *emotionManager = [[XHEmotionManager alloc] init];
-        emotionManager.emotionName = @"";
+        emotionManager.emotionName = nil;
         NSMutableArray *emotions = [NSMutableArray array];
-        for (NSInteger j = 0; j < [emotionCodes count]; j ++) {
+        for (NSInteger j = 0; j < emotionCodes.count; j ++) {
             XHEmotion* xhEmotion=[[XHEmotion alloc] init];
-            NSString* emotionCode=[emotionCodes objectAtIndex:j];
-            xhEmotion.emotionConverPhoto=[UIImage imageNamed:[emotionCode substringFromIndex:1]];
-            xhEmotion.emotionPath=emotionCode;
+            NSString* code=emotionCodes[j];
+            CGFloat emojiSize=30;
+            xhEmotion.emotionConverPhoto=[self imageFromString:codeToEmoji[code] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:25]} size:CGSizeMake(emojiSize, emojiSize)];
+            xhEmotion.emotionPath=code;
             [emotions addObject:xhEmotion];
         }
         emotionManager.emotions = emotions;
@@ -42,20 +109,22 @@
     return emotionManagers;
 }
 
-+(NSString*)convertWithText:(NSString*)text toEmoji:(BOOL)toEmoji{
++(NSString*)emojiStringFromString:(NSString*)text{
+    return [self convertString:text toEmoji:YES];
+}
+
++(NSString*)plainStringFromEmojiString:(NSString*)emojiText{
+    return [self convertString:emojiText toEmoji:NO];
+}
+
++(NSString*)convertString:(NSString*)text toEmoji:(BOOL)toEmoji{
     NSMutableString* emojiText=[[NSMutableString alloc] initWithString:text];
-    NSArray* emotionCodes=[CDEmotionUtils getEmotionCodes];
-    for(NSString* emotionCode in emotionCodes){
-        NSRange range=NSMakeRange(0, emojiText.length);
-        NSScanner* scanner=[NSScanner scannerWithString:emotionCode];
-        unsigned result=0;
-        [scanner setScanLocation:2];
-        [scanner scanHexInt:&result];
-        NSString* emoji=[Emoji emojiWithCode:result];
+    for(NSString* code in [[NSString emojiAliases] allKeys]){
+        NSString* emoji=[NSString emojiAliases][code];
         if(toEmoji){
-            [emojiText replaceOccurrencesOfString:emotionCode withString:emoji options:NSLiteralSearch range:range];
+            [emojiText replaceOccurrencesOfString:code withString:emoji options:NSLiteralSearch range:NSMakeRange(0,emojiText.length)];
         }else{
-            [emojiText replaceOccurrencesOfString:emoji withString:emotionCode options:NSLiteralSearch range:range];
+            [emojiText replaceOccurrencesOfString:emoji withString:code options:NSLiteralSearch range:NSMakeRange(0,emojiText.length)];
         }
     }
     return emojiText;

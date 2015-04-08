@@ -281,7 +281,7 @@ static CDIM*instance;
     AVIMLocationMessage* locationMsg;
     switch (msg.mediaType) {
         case kAVIMMessageMediaTypeText:
-            title=[CDEmotionUtils convertWithText:msg.text toEmoji:YES];;
+            title=[CDEmotionUtils emojiStringFromString:msg.text];
             break;
         case kAVIMMessageMediaTypeAudio:
             title=@"声音";

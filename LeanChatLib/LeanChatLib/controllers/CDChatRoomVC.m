@@ -98,7 +98,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     self.shareMenuItems = shareMenuItems;
     [self.shareMenuView reloadData];
     
-    _emotionManagers=[CDEmotionUtils getEmotionManagers];
+    _emotionManagers=[CDEmotionUtils emotionManagers];
     self.emotionManagerView.isShowEmotionStoreButton=YES;
     [self.emotionManagerView reloadData];
 }
@@ -117,6 +117,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     [_storage insertRoomWithConvid:self.conv.conversationId];
     [_storage clearUnreadWithConvid:self.conv.conversationId];
     [_notify addConvObserver:self selector:@selector(refreshConv)];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -160,7 +161,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     NSDate* time=[self getTimestampDate:msg.sendTimestamp];
     if(msg.mediaType==kAVIMMessageMediaTypeText){
         AVIMTextMessage* textMsg=(AVIMTextMessage*)msg;
-        xhMessage=[[XHMessage alloc] initWithText:[CDEmotionUtils convertWithText:textMsg.text toEmoji:YES] sender:fromUser.username timestamp:time];
+        xhMessage=[[XHMessage alloc] initWithText:[CDEmotionUtils emojiStringFromString:textMsg.text] sender:fromUser.username timestamp:time];
     }else if(msg.mediaType==kAVIMMessageMediaTypeAudio){
         AVIMAudioMessage* audioMsg=(AVIMAudioMessage*)msg;
         NSString* duration=[NSString stringWithFormat:@"%.0f",audioMsg.duration];
@@ -508,7 +509,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 //发送文本消息的回调方法
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date {
     if([text length]>0){
-        AVIMTextMessage* msg=[AVIMTextMessage messageWithText:[CDEmotionUtils convertWithText:text toEmoji:NO] attributes:nil];
+        AVIMTextMessage* msg=[AVIMTextMessage messageWithText:[CDEmotionUtils plainStringFromEmojiString:text] attributes:nil];
         [self sendMsg:msg originFilePath:nil];
         [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
     }
@@ -538,7 +539,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     NSMutableString* str=[[NSMutableString alloc] initWithString:textView.text];
     [str deleteCharactersInRange:range];
     [str insertString:emotion atIndex:range.location];
-    textView.text=[CDEmotionUtils convertWithText:str toEmoji:YES];
+    textView.text=[CDEmotionUtils emojiStringFromString:str];
     textView.selectedRange=NSMakeRange(range.location+emotion.length, 0);
     [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeEmotion];
 }

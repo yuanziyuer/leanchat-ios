@@ -10,7 +10,10 @@
 
 @interface CDEmotionUtils : NSObject
 
-+(NSArray*)getEmotionManagers;
-+(NSString*)convertWithText:(NSString*)text toEmoji:(BOOL)toEmoji;
++(NSArray*)emotionManagers;
+
++(NSString*)emojiStringFromString:(NSString*)text;
+
++(NSString*)plainStringFromEmojiString:(NSString*)emojiText;
 
 @end
