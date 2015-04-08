@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		70033A221AD404980003C408 /* CDUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 70033A201AD404980003C408 /* CDUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		70033A231AD404980003C408 /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 70033A211AD404980003C408 /* CDUser.m */; };
+		7056D4751AD4E29A008391FC /* emojis.h in Headers */ = {isa = PBXBuildFile; fileRef = 7056D4721AD4E29A008391FC /* emojis.h */; };
+		7056D4761AD4E29A008391FC /* NSString+Emojize.h in Headers */ = {isa = PBXBuildFile; fileRef = 7056D4731AD4E29A008391FC /* NSString+Emojize.h */; };
+		7056D4771AD4E29A008391FC /* NSString+Emojize.m in Sources */ = {isa = PBXBuildFile; fileRef = 7056D4741AD4E29A008391FC /* NSString+Emojize.m */; };
 		7059DCDD1ACE4ECE009D17AB /* LeanChatLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 7059DCDC1ACE4ECE009D17AB /* LeanChatLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7059DCE31ACE4ECE009D17AB /* LeanChatLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7059DCD71ACE4ECE009D17AB /* LeanChatLib.framework */; };
 		7059DCEA1ACE4ECE009D17AB /* LeanChatLibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7059DCE91ACE4ECE009D17AB /* LeanChatLibTests.m */; };
@@ -383,6 +386,9 @@
 /* Begin PBXFileReference section */
 		70033A201AD404980003C408 /* CDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUser.h; sourceTree = "<group>"; };
 		70033A211AD404980003C408 /* CDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUser.m; sourceTree = "<group>"; };
+		7056D4721AD4E29A008391FC /* emojis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = emojis.h; sourceTree = "<group>"; };
+		7056D4731AD4E29A008391FC /* NSString+Emojize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Emojize.h"; sourceTree = "<group>"; };
+		7056D4741AD4E29A008391FC /* NSString+Emojize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emojize.m"; sourceTree = "<group>"; };
 		7059DCD71ACE4ECE009D17AB /* LeanChatLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LeanChatLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7059DCDB1ACE4ECE009D17AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7059DCDC1ACE4ECE009D17AB /* LeanChatLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeanChatLib.h; sourceTree = "<group>"; };
@@ -777,6 +783,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7056D4711AD4E29A008391FC /* NSStringEmojize */ = {
+			isa = PBXGroup;
+			children = (
+				7056D4721AD4E29A008391FC /* emojis.h */,
+				7056D4731AD4E29A008391FC /* NSString+Emojize.h */,
+				7056D4741AD4E29A008391FC /* NSString+Emojize.m */,
+			);
+			path = NSStringEmojize;
+			sourceTree = "<group>";
+		};
 		7059DCCD1ACE4ECE009D17AB = {
 			isa = PBXGroup;
 			children = (
@@ -842,6 +858,7 @@
 		7059DCFC1ACE4F89009D17AB /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				7056D4711AD4E29A008391FC /* NSStringEmojize */,
 				70B293E61ACE92E100FE265E /* MessageDisplayKit */,
 				7059E38B1ACE5163009D17AB /* Reachability */,
 				7059E5531ACE5163009D17AB /* Emoji */,
@@ -1613,6 +1630,7 @@
 				70B296321ACE92E200FE265E /* XHMessageModel.h in Headers */,
 				70B296541ACE92E200FE265E /* SELineLayout.h in Headers */,
 				70B2962E1ACE92E200FE265E /* XHEmotionManager.h in Headers */,
+				7056D4761AD4E29A008391FC /* NSString+Emojize.h in Headers */,
 				70B296741ACE92E300FE265E /* XHPathCover.h in Headers */,
 				70B296641ACE92E300FE265E /* SETextMagnifierCaret.h in Headers */,
 				70B296841ACE92E300FE265E /* XHBaseTableViewCell.h in Headers */,
@@ -1665,6 +1683,7 @@
 				70B2962C1ACE92E200FE265E /* XHEmotion.h in Headers */,
 				70B296C61ACE92E400FE265E /* XHRefreshControl.h in Headers */,
 				70B2969E1ACE92E300FE265E /* XHMessageStatusView.h in Headers */,
+				7056D4751AD4E29A008391FC /* emojis.h in Headers */,
 				70B295B51ACE92E200FE265E /* UIImage+Resize.h in Headers */,
 				70B296B01ACE92E400FE265E /* XHEmotionSectionBar.h in Headers */,
 				70B296C81ACE92E400FE265E /* XHRefreshView.h in Headers */,
@@ -2029,6 +2048,7 @@
 				70B296731ACE92E300FE265E /* XHZoomingImageView.m in Sources */,
 				70B296711ACE92E300FE265E /* XHViewState.m in Sources */,
 				70B2965D1ACE92E300FE265E /* SETextEditingCaret.m in Sources */,
+				7056D4771AD4E29A008391FC /* NSString+Emojize.m in Sources */,
 				70B296651ACE92E300FE265E /* SETextMagnifierCaret.m in Sources */,
 				7059E7081ACE5266009D17AB /* CDStorage.m in Sources */,
 				70B295B01ACE92E200FE265E /* NSString+XHMD5.m in Sources */,

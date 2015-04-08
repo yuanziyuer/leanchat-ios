@@ -78,7 +78,7 @@ static CDIM*instance;
         }else{
             callback([objects objectAtIndex:0],error);
         }
-    }];;
+    }];
 }
 
 - (void)fetchConvWithUserId:(NSString *)userId callback:(AVIMConversationResultBlock)callback {

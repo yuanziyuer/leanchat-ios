@@ -46,9 +46,7 @@
     NSMutableString* emojiText=[[NSMutableString alloc] initWithString:text];
     NSArray* emotionCodes=[CDEmotionUtils getEmotionCodes];
     for(NSString* emotionCode in emotionCodes){
-        NSRange range;
-        range.location=0;
-        range.length=emojiText.length;
+        NSRange range=NSMakeRange(0, emojiText.length);
         NSScanner* scanner=[NSScanner scannerWithString:emotionCode];
         unsigned result=0;
         [scanner setScanLocation:2];
