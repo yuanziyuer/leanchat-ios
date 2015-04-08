@@ -32,8 +32,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 @property BOOL isLoadingMsg;
 
-@property UIImage* defaultAvatar;
-
 @property (nonatomic, strong) XHMessageTableViewCell *currentSelectedCell;
 
 @property (nonatomic, strong) NSArray *emotionManagers;
@@ -61,7 +59,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         _im=[CDIM sharedInstance];
         _notify=[CDNotify sharedInstance];
         _storage=[CDStorage sharedInstance];
-        _defaultAvatar=[UIImage imageNamed:@"default_user_avatar"];
     }
     return self;
 }
@@ -247,11 +244,11 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     [self runInGlobalQueue:^{
         int64_t maxTimestamp=(((int64_t)[[NSDate date] timeIntervalSince1970])+10)*1000;
         int64_t timestamp;
-        int limit;
+        NSInteger limit;
         NSString* msgId;
         if(isLoadMore==NO){
             timestamp=maxTimestamp;
-            int count=[_msgs count];
+            NSInteger count=[_msgs count];
             if(count>ONE_PAGE_SIZE){
                 // more than one page msgs, get that many msgs
                 limit=count;

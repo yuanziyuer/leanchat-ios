@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		70033A221AD404980003C408 /* CDUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 70033A201AD404980003C408 /* CDUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70033A231AD404980003C408 /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 70033A211AD404980003C408 /* CDUser.m */; };
 		7056D4751AD4E29A008391FC /* emojis.h in Headers */ = {isa = PBXBuildFile; fileRef = 7056D4721AD4E29A008391FC /* emojis.h */; };
 		7056D4761AD4E29A008391FC /* NSString+Emojize.h in Headers */ = {isa = PBXBuildFile; fileRef = 7056D4731AD4E29A008391FC /* NSString+Emojize.h */; };
 		7056D4771AD4E29A008391FC /* NSString+Emojize.m in Sources */ = {isa = PBXBuildFile; fileRef = 7056D4741AD4E29A008391FC /* NSString+Emojize.m */; };
@@ -349,8 +347,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		70033A201AD404980003C408 /* CDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUser.h; sourceTree = "<group>"; };
-		70033A211AD404980003C408 /* CDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUser.m; sourceTree = "<group>"; };
 		7056D4721AD4E29A008391FC /* emojis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = emojis.h; sourceTree = "<group>"; };
 		7056D4731AD4E29A008391FC /* NSString+Emojize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Emojize.h"; sourceTree = "<group>"; };
 		7056D4741AD4E29A008391FC /* NSString+Emojize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emojize.m"; sourceTree = "<group>"; };
@@ -879,8 +875,6 @@
 		7059E71C1ACE5BAB009D17AB /* models */ = {
 			isa = PBXGroup;
 			children = (
-				70033A201AD404980003C408 /* CDUser.h */,
-				70033A211AD404980003C408 /* CDUser.m */,
 				7059E71D1ACE5BAB009D17AB /* CDRoom.h */,
 				7059E71E1ACE5BAB009D17AB /* CDRoom.m */,
 				7059E73C1ACE82AC009D17AB /* CDUserModel.h */,
@@ -1607,7 +1601,6 @@
 				7059E70C1ACE52D7009D17AB /* CDSessionStateView.h in Headers */,
 				7059E7071ACE5266009D17AB /* CDStorage.h in Headers */,
 				7059DCDD1ACE4ECE009D17AB /* LeanChatLib.h in Headers */,
-				70033A221AD404980003C408 /* CDUser.h in Headers */,
 				7059E7391ACE8070009D17AB /* CDAVOSHeaders.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1900,7 +1893,6 @@
 				70B296AF1ACE92E400FE265E /* XHEmotionManagerView.m in Sources */,
 				70B296831ACE92E300FE265E /* XHBaseCollectionViewCell.m in Sources */,
 				70B296141ACE92E200FE265E /* XHFileAttribute.m in Sources */,
-				70033A231AD404980003C408 /* CDUser.m in Sources */,
 				70B295B61ACE92E200FE265E /* UIImage+Resize.m in Sources */,
 				70B295D01ACE92E200FE265E /* XHPhotographyHelper.m in Sources */,
 				70B296121ACE92E200FE265E /* XHCacheManager.m in Sources */,
