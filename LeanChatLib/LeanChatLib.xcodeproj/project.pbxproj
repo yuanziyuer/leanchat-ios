@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		70033A221AD404980003C408 /* CDUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 70033A201AD404980003C408 /* CDUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		70033A231AD404980003C408 /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 70033A211AD404980003C408 /* CDUser.m */; };
 		7059DCDD1ACE4ECE009D17AB /* LeanChatLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 7059DCDC1ACE4ECE009D17AB /* LeanChatLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7059DCE31ACE4ECE009D17AB /* LeanChatLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7059DCD71ACE4ECE009D17AB /* LeanChatLib.framework */; };
 		7059DCEA1ACE4ECE009D17AB /* LeanChatLibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7059DCE91ACE4ECE009D17AB /* LeanChatLibTests.m */; };
@@ -44,6 +46,8 @@
 		7059E7381ACE804F009D17AB /* CDAVOSHeaders.h in Sources */ = {isa = PBXBuildFile; fileRef = 7059E71B1ACE5B28009D17AB /* CDAVOSHeaders.h */; };
 		7059E7391ACE8070009D17AB /* CDAVOSHeaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 7059E71B1ACE5B28009D17AB /* CDAVOSHeaders.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7059E73D1ACE82AC009D17AB /* CDUserModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 7059E73C1ACE82AC009D17AB /* CDUserModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7094C18B1AD3F2B900670821 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7094C1891AD3F2B900670821 /* AVOSCloud.framework */; };
+		7094C18C1AD3F2B900670821 /* AVOSCloudIM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7094C18A1AD3F2B900670821 /* AVOSCloudIM.framework */; };
 		70B293C21ACE925C00FE265E /* u1f44d.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B293A01ACE925C00FE265E /* u1f44d.png */; };
 		70B293C31ACE925C00FE265E /* u1f44e.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B293A11ACE925C00FE265E /* u1f44e.png */; };
 		70B293C41ACE925C00FE265E /* u1f44f.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B293A21ACE925C00FE265E /* u1f44f.png */; };
@@ -358,8 +362,6 @@
 		70B2984A1ACE95C900FE265E /* weChatBubble_Sending_Cavern@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B297EC1ACE95C900FE265E /* weChatBubble_Sending_Cavern@2x.png */; };
 		70B2984B1ACE95C900FE265E /* weChatBubble_Sending_LeanChat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B297ED1ACE95C900FE265E /* weChatBubble_Sending_LeanChat@2x.png */; };
 		70B2984C1ACE95C900FE265E /* weChatBubble_Sending_Solid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B297EE1ACE95C900FE265E /* weChatBubble_Sending_Solid@2x.png */; };
-		70B2990D1ACE993600FE265E /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B2990B1ACE993600FE265E /* AVOSCloud.framework */; };
-		70B2990E1ACE993600FE265E /* AVOSCloudIM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B2990C1ACE993600FE265E /* AVOSCloudIM.framework */; };
 		70B299101ACE9A0600FE265E /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B2990F1ACE9A0600FE265E /* CoreTelephony.framework */; };
 		70B299121ACE9A0B00FE265E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B299111ACE9A0B00FE265E /* CoreLocation.framework */; };
 		70B299141ACE9A1200FE265E /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B299131ACE9A1200FE265E /* libsqlite3.dylib */; };
@@ -379,6 +381,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		70033A201AD404980003C408 /* CDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUser.h; sourceTree = "<group>"; };
+		70033A211AD404980003C408 /* CDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUser.m; sourceTree = "<group>"; };
 		7059DCD71ACE4ECE009D17AB /* LeanChatLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LeanChatLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7059DCDB1ACE4ECE009D17AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7059DCDC1ACE4ECE009D17AB /* LeanChatLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeanChatLib.h; sourceTree = "<group>"; };
@@ -420,6 +424,8 @@
 		7059E71E1ACE5BAB009D17AB /* CDRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDRoom.m; sourceTree = "<group>"; };
 		7059E7211ACE5D1B009D17AB /* CDMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDMacros.h; sourceTree = "<group>"; };
 		7059E73C1ACE82AC009D17AB /* CDUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUserModel.h; sourceTree = "<group>"; };
+		7094C1891AD3F2B900670821 /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
+		7094C18A1AD3F2B900670821 /* AVOSCloudIM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloudIM.framework; sourceTree = "<group>"; };
 		70B2939C1ACE923400FE265E /* .DS_Store */ = {isa = PBXFileReference; lastKnownFileType = file; path = .DS_Store; sourceTree = "<group>"; };
 		70B293A01ACE925C00FE265E /* u1f44d.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = u1f44d.png; sourceTree = "<group>"; };
 		70B293A11ACE925C00FE265E /* u1f44e.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = u1f44e.png; sourceTree = "<group>"; };
@@ -736,8 +742,6 @@
 		70B297ED1ACE95C900FE265E /* weChatBubble_Sending_LeanChat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChatBubble_Sending_LeanChat@2x.png"; sourceTree = "<group>"; };
 		70B297EE1ACE95C900FE265E /* weChatBubble_Sending_Solid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChatBubble_Sending_Solid@2x.png"; sourceTree = "<group>"; };
 		70B297EF1ACE95C900FE265E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MessageDisplayKitString.strings"; sourceTree = "<group>"; };
-		70B2990B1ACE993600FE265E /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
-		70B2990C1ACE993600FE265E /* AVOSCloudIM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloudIM.framework; sourceTree = "<group>"; };
 		70B2990F1ACE9A0600FE265E /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		70B299111ACE9A0B00FE265E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		70B299131ACE9A1200FE265E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -756,9 +760,9 @@
 				70B299161ACE9A2E00FE265E /* libicucore.dylib in Frameworks */,
 				70B299141ACE9A1200FE265E /* libsqlite3.dylib in Frameworks */,
 				70B299121ACE9A0B00FE265E /* CoreLocation.framework in Frameworks */,
+				7094C18B1AD3F2B900670821 /* AVOSCloud.framework in Frameworks */,
 				70B299101ACE9A0600FE265E /* CoreTelephony.framework in Frameworks */,
-				70B2990D1ACE993600FE265E /* AVOSCloud.framework in Frameworks */,
-				70B2990E1ACE993600FE265E /* AVOSCloudIM.framework in Frameworks */,
+				7094C18C1AD3F2B900670821 /* AVOSCloudIM.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -929,9 +933,11 @@
 		7059E71C1ACE5BAB009D17AB /* models */ = {
 			isa = PBXGroup;
 			children = (
+				70033A201AD404980003C408 /* CDUser.h */,
+				70033A211AD404980003C408 /* CDUser.m */,
 				7059E71D1ACE5BAB009D17AB /* CDRoom.h */,
-				7059E73C1ACE82AC009D17AB /* CDUserModel.h */,
 				7059E71E1ACE5BAB009D17AB /* CDRoom.m */,
+				7059E73C1ACE82AC009D17AB /* CDUserModel.h */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -1579,14 +1585,14 @@
 		70B2990A1ACE993600FE265E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7094C1891AD3F2B900670821 /* AVOSCloud.framework */,
+				7094C18A1AD3F2B900670821 /* AVOSCloudIM.framework */,
 				70B299191ACE9A4300FE265E /* SystemConfiguration.framework */,
 				70B299171ACE9A3A00FE265E /* MobileCoreServices.framework */,
 				70B299151ACE9A2E00FE265E /* libicucore.dylib */,
 				70B299131ACE9A1200FE265E /* libsqlite3.dylib */,
 				70B299111ACE9A0B00FE265E /* CoreLocation.framework */,
 				70B2990F1ACE9A0600FE265E /* CoreTelephony.framework */,
-				70B2990B1ACE993600FE265E /* AVOSCloud.framework */,
-				70B2990C1ACE993600FE265E /* AVOSCloudIM.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -1711,6 +1717,7 @@
 				7059E70C1ACE52D7009D17AB /* CDSessionStateView.h in Headers */,
 				7059E7071ACE5266009D17AB /* CDStorage.h in Headers */,
 				7059DCDD1ACE4ECE009D17AB /* LeanChatLib.h in Headers */,
+				70033A221AD404980003C408 /* CDUser.h in Headers */,
 				7059E7391ACE8070009D17AB /* CDAVOSHeaders.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2037,6 +2044,7 @@
 				70B296AF1ACE92E400FE265E /* XHEmotionManagerView.m in Sources */,
 				70B296831ACE92E300FE265E /* XHBaseCollectionViewCell.m in Sources */,
 				70B296141ACE92E200FE265E /* XHFileAttribute.m in Sources */,
+				70033A231AD404980003C408 /* CDUser.m in Sources */,
 				70B295B61ACE92E200FE265E /* UIImage+Resize.m in Sources */,
 				70B295D01ACE92E200FE265E /* XHPhotographyHelper.m in Sources */,
 				70B296121ACE92E200FE265E /* XHCacheManager.m in Sources */,

@@ -12,10 +12,6 @@
 #import "CDModels.h"
 #import "CDService.h"
 
-enum : NSUInteger {
-    kTagNameLabel = 10000,
-};
-
 @interface CDChatListVC ()  {
     CDPopMenu *_popMenu;
 }
@@ -144,7 +140,6 @@ static NSString *cellIdentifier = @"ContactCell";
     
     cell.bottomLabel.text=[self.im getMsgTitle:room.lastMsg];
     cell.unreadCount=room.unreadCount;
-    
     return cell;
 }
 

@@ -11,6 +11,5 @@
 
 #import <LeanChatLib/LeanChatLib.h>
 #import "CDAddRequest.h"
-#import "CDUser.h"
 
 #endif

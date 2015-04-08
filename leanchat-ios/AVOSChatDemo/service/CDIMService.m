@@ -8,12 +8,12 @@
 
 #import "CDIMService.h"
 #import "CDCache.h"
-#import "CDUser.h"
 #import "CDUtils.h"
 #import "CDUserService.h"
 #import "CDConvDetailVC.h"
+#import "CDUser.h"
 
-@interface CDIMService ()
+@interface CDIMService ()<CDUserDelegate>
 
 @property (nonatomic,strong) CDIM* im;
 
