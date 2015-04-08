@@ -35,10 +35,6 @@
 
 +(void)refreshCurConv:(AVBooleanResultBlock)callback;
 
-+(void)setFriends:(NSArray*)_friends;
-
-+(NSArray*)getFriends;
-
 +(void)cacheAndFillRooms:(NSMutableArray*)rooms callback:(AVBooleanResultBlock)callback;
 
 @end

@@ -12,9 +12,9 @@
 
 @interface CDUserService : NSObject
 
-+(void)findFriendsIsNetworkOnly:(BOOL)networkOnly callback:(AVArrayResultBlock)block;
++(void)findFriendsWithBlock:(AVArrayResultBlock)block;
 
-+(void)findFriendsWithCallback:(AVArrayResultBlock)callback;
++(void)isMyFriend:(AVUser*)user block:(AVBooleanResultBlock)block;
 
 +(void)findUsersByPartname:(NSString*)partName withBlock:(AVArrayResultBlock)block;
 

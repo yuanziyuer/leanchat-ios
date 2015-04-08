@@ -30,7 +30,7 @@
     self.title=@"群聊名称";
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveName:)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop                                                                                          target:self                                                                                          action:@selector(backPressed)];
-    self.nameTextField.text=_conv.name;
+    self.nameTextField.text=_conv.displayName;
     _im=[CDIM sharedInstance];
     _notify=[CDNotify sharedInstance]; 
 }

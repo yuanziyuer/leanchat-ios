@@ -13,4 +13,6 @@
 #import <AVOSCloudIM/AVOSCloudIM.h>
 #import <LeanChatLib/LeanChatLib.h>
 
+#define LOCAL_DEBUG NO
+
 #endif

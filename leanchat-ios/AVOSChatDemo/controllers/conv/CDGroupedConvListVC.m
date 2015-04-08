@@ -85,7 +85,7 @@ static NSString* cellIndentifier=@"cell";
         cell=[[CDImageLabelTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     AVIMConversation* conv=[convs objectAtIndex:indexPath.row];
-    cell.myLabel.text=[_im titleOfConv:conv];
+    cell.myLabel.text=conv.title;
     [cell.myImageView setImage:groupImage];
     return cell;
 }

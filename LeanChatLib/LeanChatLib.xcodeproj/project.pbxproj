@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7056D4751AD4E29A008391FC /* emojis.h in Headers */ = {isa = PBXBuildFile; fileRef = 7056D4721AD4E29A008391FC /* emojis.h */; };
-		7056D4761AD4E29A008391FC /* NSString+Emojize.h in Headers */ = {isa = PBXBuildFile; fileRef = 7056D4731AD4E29A008391FC /* NSString+Emojize.h */; };
+		7056D4751AD4E29A008391FC /* emojis.h in Headers */ = {isa = PBXBuildFile; fileRef = 7056D4721AD4E29A008391FC /* emojis.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7056D4761AD4E29A008391FC /* NSString+Emojize.h in Headers */ = {isa = PBXBuildFile; fileRef = 7056D4731AD4E29A008391FC /* NSString+Emojize.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7056D4771AD4E29A008391FC /* NSString+Emojize.m in Sources */ = {isa = PBXBuildFile; fileRef = 7056D4741AD4E29A008391FC /* NSString+Emojize.m */; };
+		7056D47A1AD51B64008391FC /* AVIMConversation+Custom.h in Headers */ = {isa = PBXBuildFile; fileRef = 7056D4781AD51B64008391FC /* AVIMConversation+Custom.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7056D47B1AD51B64008391FC /* AVIMConversation+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 7056D4791AD51B64008391FC /* AVIMConversation+Custom.m */; };
+		7056D47E1AD51CF2008391FC /* CDIMConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 7056D47C1AD51CF2008391FC /* CDIMConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7056D47F1AD51CF2008391FC /* CDIMConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7056D47D1AD51CF2008391FC /* CDIMConfig.m */; };
 		7059DCDD1ACE4ECE009D17AB /* LeanChatLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 7059DCDC1ACE4ECE009D17AB /* LeanChatLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7059DCE31ACE4ECE009D17AB /* LeanChatLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7059DCD71ACE4ECE009D17AB /* LeanChatLib.framework */; };
 		7059DCEA1ACE4ECE009D17AB /* LeanChatLibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7059DCE91ACE4ECE009D17AB /* LeanChatLibTests.m */; };
@@ -350,6 +354,10 @@
 		7056D4721AD4E29A008391FC /* emojis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = emojis.h; sourceTree = "<group>"; };
 		7056D4731AD4E29A008391FC /* NSString+Emojize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Emojize.h"; sourceTree = "<group>"; };
 		7056D4741AD4E29A008391FC /* NSString+Emojize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emojize.m"; sourceTree = "<group>"; };
+		7056D4781AD51B64008391FC /* AVIMConversation+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVIMConversation+Custom.h"; sourceTree = "<group>"; };
+		7056D4791AD51B64008391FC /* AVIMConversation+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVIMConversation+Custom.m"; sourceTree = "<group>"; };
+		7056D47C1AD51CF2008391FC /* CDIMConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIMConfig.h; sourceTree = "<group>"; };
+		7056D47D1AD51CF2008391FC /* CDIMConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIMConfig.m; sourceTree = "<group>"; };
 		7059DCD71ACE4ECE009D17AB /* LeanChatLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LeanChatLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7059DCDB1ACE4ECE009D17AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7059DCDC1ACE4ECE009D17AB /* LeanChatLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeanChatLib.h; sourceTree = "<group>"; };
@@ -846,6 +854,8 @@
 				7059E6FA1ACE5266009D17AB /* CDEmotionUtils.m */,
 				7059E6FB1ACE5266009D17AB /* CDIM.h */,
 				7059E6FC1ACE5266009D17AB /* CDIM.m */,
+				7056D47C1AD51CF2008391FC /* CDIMConfig.h */,
+				7056D47D1AD51CF2008391FC /* CDIMConfig.m */,
 				7059E6FD1ACE5266009D17AB /* CDNotify.h */,
 				7059E6FE1ACE5266009D17AB /* CDNotify.m */,
 				7059E6FF1ACE5266009D17AB /* CDStorage.h */,
@@ -878,6 +888,8 @@
 				7059E71D1ACE5BAB009D17AB /* CDRoom.h */,
 				7059E71E1ACE5BAB009D17AB /* CDRoom.m */,
 				7059E73C1ACE82AC009D17AB /* CDUserModel.h */,
+				7056D4781AD51B64008391FC /* AVIMConversation+Custom.h */,
+				7056D4791AD51B64008391FC /* AVIMConversation+Custom.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -1495,7 +1507,6 @@
 				70B296321ACE92E200FE265E /* XHMessageModel.h in Headers */,
 				70B296541ACE92E200FE265E /* SELineLayout.h in Headers */,
 				70B2962E1ACE92E200FE265E /* XHEmotionManager.h in Headers */,
-				7056D4761AD4E29A008391FC /* NSString+Emojize.h in Headers */,
 				70B296741ACE92E300FE265E /* XHPathCover.h in Headers */,
 				70B296641ACE92E300FE265E /* SETextMagnifierCaret.h in Headers */,
 				70B296841ACE92E300FE265E /* XHBaseTableViewCell.h in Headers */,
@@ -1548,7 +1559,6 @@
 				70B2962C1ACE92E200FE265E /* XHEmotion.h in Headers */,
 				70B296C61ACE92E400FE265E /* XHRefreshControl.h in Headers */,
 				70B2969E1ACE92E300FE265E /* XHMessageStatusView.h in Headers */,
-				7056D4751AD4E29A008391FC /* emojis.h in Headers */,
 				70B295B51ACE92E200FE265E /* UIImage+Resize.h in Headers */,
 				70B296B01ACE92E400FE265E /* XHEmotionSectionBar.h in Headers */,
 				70B296C81ACE92E400FE265E /* XHRefreshView.h in Headers */,
@@ -1598,6 +1608,10 @@
 				7059E7031ACE5266009D17AB /* CDIM.h in Headers */,
 				7059E7051ACE5266009D17AB /* CDNotify.h in Headers */,
 				7059E6F61ACE525F009D17AB /* CDChatRoomVC.h in Headers */,
+				7056D4761AD4E29A008391FC /* NSString+Emojize.h in Headers */,
+				7056D47A1AD51B64008391FC /* AVIMConversation+Custom.h in Headers */,
+				7056D47E1AD51CF2008391FC /* CDIMConfig.h in Headers */,
+				7056D4751AD4E29A008391FC /* emojis.h in Headers */,
 				7059E70C1ACE52D7009D17AB /* CDSessionStateView.h in Headers */,
 				7059E7071ACE5266009D17AB /* CDStorage.h in Headers */,
 				7059DCDD1ACE4ECE009D17AB /* LeanChatLib.h in Headers */,
@@ -1845,6 +1859,7 @@
 				70B296C31ACE92E400FE265E /* XHLoadMoreView.m in Sources */,
 				70B296C51ACE92E400FE265E /* XHRefreshCircleView.m in Sources */,
 				70B296AB1ACE92E400FE265E /* XHEmotionCollectionViewCell.m in Sources */,
+				7056D47B1AD51B64008391FC /* AVIMConversation+Custom.m in Sources */,
 				7059E6EF1ACE5163009D17AB /* FMDatabaseQueue.m in Sources */,
 				70B2961C1ACE92E200FE265E /* XHMessageBubbleFactory.m in Sources */,
 				70B295AC1ACE92E100FE265E /* NSString+MessageInputView.m in Sources */,
@@ -1872,6 +1887,7 @@
 				70B296A11ACE92E400FE265E /* XHMessageTableView.m in Sources */,
 				70B2966F1ACE92E300FE265E /* XHImageViewer.m in Sources */,
 				7059E6E51ACE5163009D17AB /* Emoji.m in Sources */,
+				7056D47F1AD51CF2008391FC /* CDIMConfig.m in Sources */,
 				70B295B21ACE92E200FE265E /* UIButton+XHButtonTitlePosition.m in Sources */,
 				70B2969B1ACE92E300FE265E /* XHMessageBubbleView.m in Sources */,
 				70B296731ACE92E300FE265E /* XHZoomingImageView.m in Sources */,

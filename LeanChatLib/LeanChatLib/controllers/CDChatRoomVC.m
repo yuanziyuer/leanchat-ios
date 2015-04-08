@@ -15,6 +15,8 @@
 #import "CDSessionStateView.h"
 #import "CDStorage.h"
 #import "CDEmotionUtils.h"
+#import "CDIMConfig.h"
+#import "AVIMConversation+Custom.h"
 
 #define ONE_PAGE_SIZE 20
 
@@ -27,6 +29,8 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 @property NSMutableArray* msgs;
 
 @property CDIM* im;
+
+@property CDIMConfig* imConfig;
 
 @property CDNotify* notify;
 
@@ -59,6 +63,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         _im=[CDIM sharedInstance];
         _notify=[CDNotify sharedInstance];
         _storage=[CDStorage sharedInstance];
+        _imConfig=[CDIMConfig config];
     }
     return self;
 }
@@ -153,7 +158,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 }
 
 -(XHMessage*)getXHMessageByMsg:(AVIMTypedMessage*)msg{
-    id<CDUserModel> fromUser=[self.im.userDelegate getUserById:msg.clientId];
+    id<CDUserModel> fromUser=[self.imConfig.userDelegate getUserById:msg.clientId];
     XHMessage* xhMessage;
     NSDate* time=[self getTimestampDate:msg.sendTimestamp];
     if(msg.mediaType==kAVIMMessageMediaTypeText){
@@ -186,7 +191,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     NSInteger msgStatuses[4]={AVIMMessageStatusSending,AVIMMessageStatusSent,AVIMMessageStatusDelivered,AVIMMessageStatusFailed};
     NSInteger xhMessageStatuses[4]={XHMessageStatusSending,XHMessageStatusSent,XHMessageStatusReceived,XHMessageStatusFailed};
     
-    if([self.im typeOfConv:self.conv]==CDConvTypeGroup){
+    if(self.conv.type==CDConvTypeGroup){
         if(msg.status==AVIMMessageStatusSent){
             msg.status=AVIMMessageStatusDelivered;
         }
@@ -209,7 +214,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 }
 
 -(void)refreshConv{
-    self.title=[self.im titleOfConv:self.conv];
+    self.title=self.conv.title;
 }
 
 - (NSArray *)getXHMessages:(NSArray *)msgs {
@@ -317,8 +322,8 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
             }
         }
     }
-    if([self.im.userDelegate respondsToSelector:@selector(cacheUserByIds:block:)]){
-        [self.im.userDelegate cacheUserByIds:userIds block:^(NSArray *objects, NSError *error) {
+    if([self.imConfig.userDelegate respondsToSelector:@selector(cacheUserByIds:block:)]){
+        [self.imConfig.userDelegate cacheUserByIds:userIds block:^(NSArray *objects, NSError *error) {
             if(error){
                 callback(NO,error);
             }else{

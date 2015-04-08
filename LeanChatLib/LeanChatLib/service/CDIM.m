@@ -12,13 +12,21 @@
 #import "CDNotify.h"
 #import "CDMacros.h"
 #import "CDEmotionUtils.h"
+#import "CDIMConfig.h"
 
 static CDIM*instance;
 
-@interface CDIM()<AVIMClientDelegate,AVIMSignatureDataSource>{
-}
+@interface CDIMConfig()
+
+@property (nonatomic,readwrite)NSString* selfId;
+
+@end
+
+@interface CDIM()<AVIMClientDelegate,AVIMSignatureDataSource>
 
 @property CDStorage* storage;
+
+@property CDIMConfig* imConfig;
 
 @property CDNotify* notify;
 
@@ -45,9 +53,10 @@ static CDIM*instance;
 /* 取消下面的注释，将对 im的 open ，start(create conv),kick,invite 操作签名，更安全
    可以从你的服务器获得签名，这里从云代码获取，需要部署云代码，https://github.com/leancloud/leanchat-cloudcode
 */
-        //_imClient.signatureDataSource=self;
+//        _imClient.signatureDataSource=self;
         _storage=[CDStorage sharedInstance];
         _notify=[CDNotify sharedInstance];
+        _imConfig=[CDIMConfig config];
     }
     return self;
 }
@@ -58,7 +67,7 @@ static CDIM*instance;
 
 -(void)openWithClientId:(NSString*)clientId callback:(AVIMBooleanResultBlock)callback{
     _selfId=clientId;
-    _selfUser=[self.userDelegate getUserById:_selfId];
+    _selfUser=[self.imConfig.userDelegate getUserById:clientId];
     [self.storage setupWithUserId:clientId];
     [_imClient openWithClientId:clientId callback:callback];
 }
@@ -81,13 +90,10 @@ static CDIM*instance;
     }];
 }
 
-- (void)fetchConvWithUserId:(NSString *)userId callback:(AVIMConversationResultBlock)callback {
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    [array addObject:_imClient.clientId];
-    [array addObject:userId];
+-(void)fetchConvWithMembers:(NSArray*)members type:(CDConvType)type callback:(AVIMConversationResultBlock)callback{
     AVIMConversationQuery* q=[_imClient conversationQuery];
-    [q whereKey:CONV_ATTR_TYPE_KEY equalTo:@(CDConvTypeSingle)];
-    [q whereKey:CONV_MEMBERS_KEY containsAllObjectsInArray:array];
+    [q whereKey:CONV_ATTR_TYPE_KEY equalTo:@(type)];
+    [q whereKey:CONV_MEMBERS_KEY containsAllObjectsInArray:members];
     [q findConversationsWithCallback:^(NSArray *objects, NSError *error) {
         if(error){
             callback(nil,error);
@@ -96,19 +102,29 @@ static CDIM*instance;
                 AVIMConversation *conv = [objects objectAtIndex:0];
                 callback(conv,nil);
             } else{
-                [self createConvWithUserId:userId callback:callback];
+                [self createConvWithMembers:members type:type callback:callback];
             }
         }
     }];
 }
 
--(void)createConvWithUserId:(NSString*)userId callback:(AVIMConversationResultBlock)callback{
-    [_imClient createConversationWithName:nil clientIds:@[userId] attributes:@{CONV_TYPE:@(CDConvTypeSingle)} options:AVIMConversationOptionNone callback:callback];
+-(void)fetchConvWithMembers:(NSArray*)members callback:(AVIMConversationResultBlock)callback{
+    [self fetchConvWithMembers:members type:CDConvTypeGroup callback:callback];
 }
 
--(void)createConvWithUserIds:(NSArray*)userIds callback:(AVIMConversationResultBlock)callback{
-    NSString* name=[self nameOfUserIds:userIds];
-    [_imClient createConversationWithName:name clientIds:userIds attributes:@{CONV_TYPE:@(CDConvTypeGroup)} options:AVIMConversationOptionNone callback:callback];
+- (void)fetchConvWithOtherId:(NSString *)otherId callback:(AVIMConversationResultBlock)callback {
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    [array addObject:_imClient.clientId];
+    [array addObject:otherId];
+    [self fetchConvWithMembers:array type:CDConvTypeSingle callback:callback];
+}
+
+-(void)createConvWithMembers:(NSArray*)members type:(CDConvType)type callback:(AVIMConversationResultBlock)callback{
+    NSString* name=nil;
+    if(type==CDConvTypeGroup){
+          name=[AVIMConversation nameOfUserIds:members];
+    }
+    [_imClient createConversationWithName:name clientIds:members attributes:@{CONV_TYPE:@(type)} options:AVIMConversationOptionNone callback:callback];
 }
 
 -(void)findGroupedConvsWithBlock:(AVIMArrayResultBlock)block{
@@ -130,7 +146,7 @@ static CDIM*instance;
     [conv update:dict callback:callback];
 }
 
--(void)fetchConvsWithIds:(NSSet*)convids callback:(AVIMArrayResultBlock)callback{
+-(void)fetchConvsWithConvids:(NSSet*)convids callback:(AVIMArrayResultBlock)callback{
     if(convids.count>0){
         AVIMConversationQuery* q=[_imClient conversationQuery];
         [q whereKey:@"objectId" containedIn:[convids allObjects]];
@@ -201,11 +217,11 @@ static CDIM*instance;
 }
 
 - (void)conversation:(AVIMConversation *)conversation messageDelivered:(AVIMMessage *)message{
+    DLog();
     if(message!=nil){
         [_storage updateStatus:AVIMMessageStatusDelivered byMsgId:message.messageId];
-        [_notify postMsgNotify:message];
+        [_notify postMsgNotify:(AVIMTypedMessage*)message];
     }
-    DLog();
 }
 
 - (void)conversation:(AVIMConversation *)conversation membersAdded:(NSArray *)clientIds byClientId:(NSString *)clientId{
@@ -324,56 +340,6 @@ static CDIM*instance;
     return [[self getFilesPath] stringByAppendingFormat:@"tmp"];
 }
 
-#pragma mark - conv utils
-
--(CDConvType)typeOfConv:(AVIMConversation*)conv{
-    CDConvType type=[[conv.attributes objectForKey:CONV_TYPE] intValue];
-    return type;
-}
-
--(NSString*)nameOfUserIds:(NSArray*)userIds{
-    NSMutableArray* names=[NSMutableArray array];
-    for(int i=0;i<userIds.count;i++){
-        id<CDUserModel> user=[_userDelegate getUserById:[userIds objectAtIndex:i]];
-        [names addObject:user.username];
-    }
-    return [names componentsJoinedByString:@","];
-}
-
--(NSString*)nameOfConv:(AVIMConversation*)conv{
-    if([self typeOfConv:conv]==CDConvTypeSingle){
-        NSString* otherId=[self otherIdOfConv:conv];
-        id<CDUserModel> other=[_userDelegate getUserById:otherId];
-        return other.username;
-    }else{
-        return conv.name;
-    }
-}
-
--(NSString*)otherIdOfConv:(AVIMConversation*)conv{
-    NSArray* members=conv.members;
-    if(members.count!=2){
-        [NSException raise:@"invalid conv" format:nil];
-    }
-    if([members containsObject:self.selfId]==NO){
-        [NSException raise:@"invalid conv" format:nil];
-    }
-    NSString* otherId;
-    if([members[0] isEqualToString:self.selfId]){
-        otherId=members[1];
-    }else{
-        otherId=members[0];
-    }
-    return otherId;
-}
-
--(NSString*)titleOfConv:(AVIMConversation*)conv{
-    if([self typeOfConv:conv]==CDConvTypeSingle){
-        return [self nameOfConv:conv];
-    }else{
-        return [NSString stringWithFormat:@"%@(%ld)",conv.name,(long)conv.members.count];
-    }
-}
 
 -(NSString*)uuid{
     NSString *chars=@"abcdefghijklmnopgrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

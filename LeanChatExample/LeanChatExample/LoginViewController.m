@@ -19,7 +19,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.selfIdTextField.text=@"a";
+    if(LOCAL_DEBUG){
+        self.selfIdTextField.text=@"a";
+    }
 }
 
 
@@ -27,7 +29,6 @@
     NSString* selfId=self.selfIdTextField.text;
     if(selfId.length>0){
         CDIM* im=[CDIM sharedInstance];
-        im.userDelegate=[[CDUserFactory alloc] init];
         [im openWithClientId:selfId callback:^(BOOL succeeded, NSError *error) {
             if(error){
                 DLog(@"%@",error);
