@@ -23,9 +23,10 @@
 
 3. 依次在合适的地方加入以下代码，
 
-应用启动后，
+应用启动后，初始化，以及配置 IM User
 ```objc
    [AVOSCloud setApplicationId: YourAppID clientKey: YourAppKey];
+   [CDIMConfig config].userDelegate=[[CDUserFactory alloc] init];   
 ```
 
 配置一个 UserFactory，遵守 CDUserDelegate协议即可。
@@ -75,10 +76,9 @@ CDUserModel，
 @end
 ```
 
-配置好 User 信息后，登录时调用，
+登录时调用，
 ```objc
         CDIM* im=[CDIM sharedInstance];
-        im.userDelegate=[[CDUserFactory alloc] init];
         [im openWithClientId:selfId callback:^(BOOL succeeded, NSError *error) {
             if(error){
                 DLog(@"%@",error);
@@ -90,7 +90,24 @@ CDUserModel，
 
 和某人聊天，
 ```objc
-        [[CDIM sharedInstance] fetchConvWithUserId:otherId callback:^(AVIMConversation *conversation, NSError *error) {
+        [[CDIM sharedInstance] fetchConvWithOtherId:otherId callback:^(AVIMConversation *conversation, NSError *error) {
+            if(error){
+                DLog(@"%@",error);
+            }else{
+                LCEChatRoomVC* chatRoomVC=[[LCEChatRoomVC alloc] initWithConv:conversation];
+                [weakSelf.navigationController pushViewController:chatRoomVC animated:YES];
+            }
+        }];
+```
+
+和多人群聊，
+```objc
+        CDIM* im=[CDIM sharedInstance];
+        NSMutableArray* memberIds=[NSMutableArray array];
+        [memberIds addObject:groupId1];
+        [memberIds addObject:groupId2];
+        [memberIds addObject:im.selfId];
+        [im fetchConvWithMembers:memberIds callback:^(AVIMConversation *conversation, NSError *error) {
             if(error){
                 DLog(@"%@",error);
             }else{
