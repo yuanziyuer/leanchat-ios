@@ -68,7 +68,7 @@ static NSString * const reuseIdentifier = @"Cell";
     _im=[CDIM sharedInstance];
     _notify=[CDNotify sharedInstance];
     _storage=[CDStorage sharedInstance];
-    _type=[_im typeOfConv:self.conv];
+    _type=self.conv.type;
     [_notify addConvObserver:self selector:@selector(refresh)];
     [self refresh];
     

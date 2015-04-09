@@ -13,16 +13,30 @@ static UIImage* defaultAvatar;
 
 @implementation CDUserService
 
-+(void)findFriendsIsNetworkOnly:(BOOL)networkOnly callback:(AVArrayResultBlock)callback{
++(void)findFriendsWithBlock:(AVArrayResultBlock)block{
     AVUser* user=[AVUser currentUser];
-    [user getFollowees:callback];
+    AVQuery* q=[user followeeQuery];
+    q.cachePolicy=kAVCachePolicyNetworkElseCache;
+    [q findObjectsInBackgroundWithBlock:block];
 }
 
-+(void)findFriendsWithCallback:(AVArrayResultBlock)callback{
-    AVUser* user=[AVUser currentUser];
-    AVQuery* q=[AVRelation reverseQuery:@"_User" relationKey:@"friends" childObject:user];
-    [q findObjectsInBackgroundWithBlock:callback];
-}
++(void)isMyFriend:(AVUser*)user block:(AVBooleanResultBlock)block{
+    AVUser* currentUser=[AVUser currentUser];
+    AVQuery*q=[currentUser followeeQuery];
+    [q whereKey:@"followee" equalTo:user];
+    [q findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(error){
+            block(NO,error);
+        }else{
+            if(objects.count>0){
+                block(YES,nil);
+            }else{
+                block(NO,error);
+            }
+        }
+    }];
+};
+
 
 +(NSString*)getPeerIdOfUser:(AVUser*)user{
     return user.objectId;

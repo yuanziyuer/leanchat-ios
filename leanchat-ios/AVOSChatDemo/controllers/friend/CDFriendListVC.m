@@ -106,13 +106,12 @@
 -(void)refresh:(UIRefreshControl*)refreshControl{
     BOOL networkOnly= refreshControl!=nil;
     [CDUtils showNetworkIndicator];
-    [CDUserService findFriendsIsNetworkOnly:networkOnly callback:^(NSArray *objects, NSError *error) {
+    [CDUserService findFriendsWithBlock:^(NSArray *objects, NSError *error) {
         [CDUtils stopRefreshControl:refreshControl];
         [CDUtils hideNetworkIndicator];
         CDBlock callback=^{
             self.users = [objects mutableCopy];
             [CDCache registerUsers:self.users];
-            [CDCache setFriends:objects];
             [self.tableView reloadData];
         };
         if(error && (error.code==kAVErrorCacheMiss || error.code==1)){
@@ -123,7 +122,6 @@
             [CDUtils filterError:error callback:callback];
         }
     }];
-    
     [self setBadgeIncludeBadgeView:YES];
 }
 
@@ -193,7 +191,7 @@
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if(buttonIndex==0){
-        int row=alertView.tag;
+        NSInteger row=alertView.tag;
         AVUser* user=[_users objectAtIndex:row];
         [CDUtils showNetworkIndicator];
         [CDUserService removeFriend:user callback:^(BOOL succeeded, NSError *error) {
@@ -204,4 +202,5 @@
         }];
     }
 }
+
 @end

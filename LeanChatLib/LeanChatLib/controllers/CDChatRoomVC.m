@@ -15,6 +15,8 @@
 #import "CDSessionStateView.h"
 #import "CDStorage.h"
 #import "CDEmotionUtils.h"
+#import "CDIMConfig.h"
+#import "AVIMConversation+Custom.h"
 
 #define ONE_PAGE_SIZE 20
 
@@ -28,11 +30,11 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 @property CDIM* im;
 
+@property CDIMConfig* imConfig;
+
 @property CDNotify* notify;
 
 @property BOOL isLoadingMsg;
-
-@property UIImage* defaultAvatar;
 
 @property (nonatomic, strong) XHMessageTableViewCell *currentSelectedCell;
 
@@ -61,7 +63,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         _im=[CDIM sharedInstance];
         _notify=[CDNotify sharedInstance];
         _storage=[CDStorage sharedInstance];
-        _defaultAvatar=[UIImage imageNamed:@"default_user_avatar"];
+        _imConfig=[CDIMConfig config];
     }
     return self;
 }
@@ -98,7 +100,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     self.shareMenuItems = shareMenuItems;
     [self.shareMenuView reloadData];
     
-    _emotionManagers=[CDEmotionUtils getEmotionManagers];
+    _emotionManagers=[CDEmotionUtils emotionManagers];
     self.emotionManagerView.isShowEmotionStoreButton=YES;
     [self.emotionManagerView reloadData];
 }
@@ -117,6 +119,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     [_storage insertRoomWithConvid:self.conv.conversationId];
     [_storage clearUnreadWithConvid:self.conv.conversationId];
     [_notify addConvObserver:self selector:@selector(refreshConv)];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -155,12 +158,12 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 }
 
 -(XHMessage*)getXHMessageByMsg:(AVIMTypedMessage*)msg{
-    id<CDUserModel> fromUser=[self.im.userDelegate getUserById:msg.clientId];
+    id<CDUserModel> fromUser=[self.imConfig.userDelegate getUserById:msg.clientId];
     XHMessage* xhMessage;
     NSDate* time=[self getTimestampDate:msg.sendTimestamp];
     if(msg.mediaType==kAVIMMessageMediaTypeText){
         AVIMTextMessage* textMsg=(AVIMTextMessage*)msg;
-        xhMessage=[[XHMessage alloc] initWithText:[CDEmotionUtils convertWithText:textMsg.text toEmoji:YES] sender:fromUser.username timestamp:time];
+        xhMessage=[[XHMessage alloc] initWithText:[CDEmotionUtils emojiStringFromString:textMsg.text] sender:fromUser.username timestamp:time];
     }else if(msg.mediaType==kAVIMMessageMediaTypeAudio){
         AVIMAudioMessage* audioMsg=(AVIMAudioMessage*)msg;
         NSString* duration=[NSString stringWithFormat:@"%.0f",audioMsg.duration];
@@ -188,7 +191,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     NSInteger msgStatuses[4]={AVIMMessageStatusSending,AVIMMessageStatusSent,AVIMMessageStatusDelivered,AVIMMessageStatusFailed};
     NSInteger xhMessageStatuses[4]={XHMessageStatusSending,XHMessageStatusSent,XHMessageStatusReceived,XHMessageStatusFailed};
     
-    if([self.im typeOfConv:self.conv]==CDConvTypeGroup){
+    if(self.conv.type==CDConvTypeGroup){
         if(msg.status==AVIMMessageStatusSent){
             msg.status=AVIMMessageStatusDelivered;
         }
@@ -211,7 +214,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 }
 
 -(void)refreshConv{
-    self.title=[self.im titleOfConv:self.conv];
+    self.title=self.conv.title;
 }
 
 - (NSArray *)getXHMessages:(NSArray *)msgs {
@@ -246,11 +249,11 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     [self runInGlobalQueue:^{
         int64_t maxTimestamp=(((int64_t)[[NSDate date] timeIntervalSince1970])+10)*1000;
         int64_t timestamp;
-        int limit;
+        NSInteger limit;
         NSString* msgId;
         if(isLoadMore==NO){
             timestamp=maxTimestamp;
-            int count=[_msgs count];
+            NSInteger count=[_msgs count];
             if(count>ONE_PAGE_SIZE){
                 // more than one page msgs, get that many msgs
                 limit=count;
@@ -319,8 +322,8 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
             }
         }
     }
-    if([self.im.userDelegate respondsToSelector:@selector(cacheUserByIds:block:)]){
-        [self.im.userDelegate cacheUserByIds:userIds block:^(NSArray *objects, NSError *error) {
+    if([self.imConfig.userDelegate respondsToSelector:@selector(cacheUserByIds:block:)]){
+        [self.imConfig.userDelegate cacheUserByIds:userIds block:^(NSArray *objects, NSError *error) {
             if(error){
                 callback(NO,error);
             }else{
@@ -508,7 +511,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 //发送文本消息的回调方法
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date {
     if([text length]>0){
-        AVIMTextMessage* msg=[AVIMTextMessage messageWithText:[CDEmotionUtils convertWithText:text toEmoji:NO] attributes:nil];
+        AVIMTextMessage* msg=[AVIMTextMessage messageWithText:[CDEmotionUtils plainStringFromEmojiString:text] attributes:nil];
         [self sendMsg:msg originFilePath:nil];
         [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
     }
@@ -538,7 +541,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     NSMutableString* str=[[NSMutableString alloc] initWithString:textView.text];
     [str deleteCharactersInRange:range];
     [str insertString:emotion atIndex:range.location];
-    textView.text=[CDEmotionUtils convertWithText:str toEmoji:YES];
+    textView.text=[CDEmotionUtils emojiStringFromString:str];
     textView.selectedRange=NSMakeRange(range.location+emotion.length, 0);
     [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeEmotion];
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="b5M-1R-Khf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="b5M-1R-Khf">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -93,18 +94,49 @@
                                     <action selector="goChat:" destination="tlh-gC-Dze" eventType="touchUpInside" id="sB2-gZ-BXR"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="对方 ID 1" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cQJ-Jl-JRJ">
+                                <rect key="frame" x="59" y="252" width="223" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="对方 ID 2" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EbM-Sa-IFE">
+                                <rect key="frame" x="59" y="314" width="223" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KMa-Wc-v9c">
+                                <rect key="frame" x="129" y="374" width="60" height="30"/>
+                                <state key="normal" title="群聊走起">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="goGroupChat:" destination="tlh-gC-Dze" eventType="touchUpInside" id="tOR-9I-SVf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="fbb-Lf-FyE" firstAttribute="leading" secondItem="0cX-4N-3SN" secondAttribute="leadingMargin" constant="43" id="Hah-ay-n8H"/>
+                            <constraint firstItem="EbM-Sa-IFE" firstAttribute="height" secondItem="cQJ-Jl-JRJ" secondAttribute="height" id="KRK-64-PNN"/>
+                            <constraint firstItem="cQJ-Jl-JRJ" firstAttribute="height" secondItem="fbb-Lf-FyE" secondAttribute="height" id="LSb-RZ-o9Q"/>
                             <constraint firstItem="e5i-r3-qb9" firstAttribute="top" secondItem="fbb-Lf-FyE" secondAttribute="bottom" constant="20" id="RjG-Rx-2Wc"/>
+                            <constraint firstItem="EbM-Sa-IFE" firstAttribute="width" secondItem="cQJ-Jl-JRJ" secondAttribute="width" id="T6K-FK-7nR"/>
                             <constraint firstItem="fbb-Lf-FyE" firstAttribute="top" secondItem="X7v-dk-OKd" secondAttribute="bottom" constant="31" id="bk7-Fi-8Lc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fbb-Lf-FyE" secondAttribute="trailing" constant="22" id="cx3-eR-lT2"/>
+                            <constraint firstItem="cQJ-Jl-JRJ" firstAttribute="top" secondItem="fbb-Lf-FyE" secondAttribute="bottom" constant="127" id="dMW-Zh-hZb"/>
+                            <constraint firstItem="cQJ-Jl-JRJ" firstAttribute="leading" secondItem="fbb-Lf-FyE" secondAttribute="leading" id="had-5f-MH3"/>
+                            <constraint firstAttribute="centerX" secondItem="KMa-Wc-v9c" secondAttribute="centerX" constant="1" id="k82-wk-fur"/>
+                            <constraint firstItem="EbM-Sa-IFE" firstAttribute="leading" secondItem="cQJ-Jl-JRJ" secondAttribute="leading" id="mEf-WK-bo5"/>
+                            <constraint firstItem="KMa-Wc-v9c" firstAttribute="top" secondItem="EbM-Sa-IFE" secondAttribute="bottom" constant="30" id="r5x-GJ-iDQ"/>
+                            <constraint firstItem="EbM-Sa-IFE" firstAttribute="top" secondItem="cQJ-Jl-JRJ" secondAttribute="bottom" constant="32" id="vNp-dT-9eq"/>
                             <constraint firstAttribute="centerX" secondItem="e5i-r3-qb9" secondAttribute="centerX" constant="8" id="y2V-94-8RQ"/>
+                            <constraint firstItem="cQJ-Jl-JRJ" firstAttribute="width" secondItem="fbb-Lf-FyE" secondAttribute="width" id="yDk-qC-ex5"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="wyz-zE-oYU"/>
                     <connections>
+                        <outlet property="groupId1TextField" destination="cQJ-Jl-JRJ" id="YOW-LH-nvJ"/>
+                        <outlet property="groupId2TextField" destination="EbM-Sa-IFE" id="81q-iB-pfd"/>
                         <outlet property="otherIdTextField" destination="fbb-Lf-FyE" id="nmL-Ts-Yr8"/>
                     </connections>
                 </viewController>

@@ -15,7 +15,6 @@
 static NSMutableDictionary *cachedConvs;
 static NSMutableDictionary *cachedUsers;
 static AVIMConversation* curConv;
-static NSArray* friends;
 static CDIM* _im;
 
 +(void)initialize{
@@ -64,7 +63,7 @@ static CDIM* _im;
             [uncacheConvids addObject:convid];
         }
     }
-    [_im fetchConvsWithIds:uncacheConvids callback:^(NSArray *objects, NSError *error) {
+    [_im fetchConvsWithConvids:uncacheConvids callback:^(NSArray *objects, NSError *error) {
         [CDUtils filterError:error callback:^{
             for(AVIMConversation* conv in objects){
                 [self registerConv:conv];
@@ -120,16 +119,6 @@ static CDIM* _im;
     }
 }
 
-#pragma mark - friends
-
-+(void)setFriends:(NSArray*)_friends{
-    friends=_friends;
-}
-
-+(NSArray*)getFriends{
-    return friends;
-}
-
 #pragma mark - rooms
 
 +(void)cacheAndFillRooms:(NSMutableArray*)rooms callback:(AVBooleanResultBlock)callback{
@@ -149,8 +138,8 @@ static CDIM* _im;
             }
             NSMutableSet* userIds=[NSMutableSet set];
             for(CDRoom* room in rooms){
-                if([[CDIM sharedInstance] typeOfConv:room.conv]==CDConvTypeSingle){
-                    [userIds addObject:[[CDIM sharedInstance] otherIdOfConv:room.conv]];
+                if(room.conv.type==CDConvTypeSingle){
+                    [userIds addObject:room.conv.otherId];
                 }
             }
             [CDCache cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {

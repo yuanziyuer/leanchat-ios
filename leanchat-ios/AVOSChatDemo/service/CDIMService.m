@@ -13,7 +13,7 @@
 #import "CDConvDetailVC.h"
 #import "CDUser.h"
 
-@interface CDIMService ()<CDUserDelegate>
+@interface CDIMService ()
 
 @property (nonatomic,strong) CDIM* im;
 
@@ -75,7 +75,7 @@
 
 -(void)goWithUserId:(NSString*)userId fromVC:(UIViewController*)vc {
     CDIM* im=[CDIM sharedInstance];
-    [im fetchConvWithUserId:userId callback:^(AVIMConversation *conversation, NSError *error) {
+    [im fetchConvWithOtherId:userId callback:^(AVIMConversation *conversation, NSError *error) {
         if(error){
             DLog(@"%@",error);
         }else{

@@ -155,7 +155,7 @@
     CDIM* im=[CDIM sharedInstance];
     WEAKSELF
     [CDUtils showNetworkIndicator];
-    im.userDelegate=[CDIMService shareInstance];
+    [CDIMConfig config].userDelegate=[CDIMService shareInstance];
     [im openWithClientId:user.objectId callback:^(BOOL succeeded, NSError *error) {
         [CDUtils hideNetworkIndicator];
         DLog(@"%@",error);

@@ -49,25 +49,31 @@ static NSString* reuseIdentifier=@"Cell";
     self.title=@"邀请好友";
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(invite)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop                                                                                          target:self                                                                                          action:@selector(backPressed:)];
-    
-    [self initPotentialIds];
-    int count=_potentialIds.count;
-    for(int i=0;i<count;i++){
-        [_selected addObject:[NSNumber numberWithBool:NO]];
-    }
+    [self refresh];
+}
+
+-(void)refresh{
+    WEAKSELF
+    [CDUserService findFriendsWithBlock:^(NSArray *friends, NSError *error) {
+        if([CDUtils filterError:error]){
+            [CDCache registerUsers:friends];
+            [_potentialIds removeAllObjects];
+            for(AVUser* user in friends){
+                if([[CDCache getCurConv].members containsObject:user.objectId]==NO){
+                    [_potentialIds addObject:user.objectId];
+                }
+            }
+            NSInteger count=_potentialIds.count;
+            for(int i=0;i<count;i++){
+                [_selected addObject:[NSNumber numberWithBool:NO]];
+            }
+            [weakSelf.tableView reloadData];
+        }
+    }];
 }
 
 -(void)backPressed:(id)sender{
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-}
-
--(void)initPotentialIds{
-    [_potentialIds removeAllObjects];
-    for(AVUser* user in [CDCache getFriends]){
-        if([[CDCache getCurConv].members containsObject:user.objectId]==NO){
-            [_potentialIds addObject:user.objectId];
-        }
-    }
 }
 
 -(void)invite{
@@ -82,17 +88,17 @@ static NSString* reuseIdentifier=@"Cell";
         return;
     }
     AVIMConversation* conv=[CDCache getCurConv];
-    if([_im typeOfConv:[CDCache getCurConv]]==CDConvTypeSingle){
+    if([CDCache getCurConv].type==CDConvTypeSingle){
         NSMutableArray* members=[conv.members mutableCopy];
         [members addObjectsFromArray:inviteIds];
         [CDUtils showNetworkIndicator];
-        [_im createConvWithUserIds:members callback:^(AVIMConversation *conversation, NSError *error) {
+        [_im createConvWithMembers:members type:CDConvTypeGroup callback:^(AVIMConversation *conversation, NSError *error) {
             [CDUtils hideNetworkIndicator];
             if([CDUtils filterError:error]){
                 [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
                     UINavigationController* nav=_groupDetailVC.navigationController;
                     [nav popToRootViewControllerAnimated:YES];
-                    [[CDIMService shareInstance] goWithConv:conv fromNav:nav];
+                    [[CDIMService shareInstance] goWithConv:conversation fromNav:nav];
                 }];
             }
         }];
@@ -149,7 +155,7 @@ static NSString* reuseIdentifier=@"Cell";
 
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    int pos=indexPath.row;
+    NSInteger pos=indexPath.row;
     _selected[pos]=[NSNumber numberWithBool:![_selected[pos] boolValue]];
     [self.tableView reloadData];
 }

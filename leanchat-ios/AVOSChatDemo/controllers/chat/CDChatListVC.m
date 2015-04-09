@@ -7,18 +7,15 @@
 //
 
 #import "CDChatListVC.h"
-#import "CDPopMenu.h"
 #import "CDViews.h"
 #import "CDModels.h"
 #import "CDService.h"
 
-@interface CDChatListVC ()  {
-    CDPopMenu *_popMenu;
-}
+@interface CDChatListVC ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property UIRefreshControl* refreshControl;
+@property (nonatomic,strong) UIRefreshControl* refreshControl;
 
 @property NSMutableArray* rooms;
 
@@ -53,9 +50,7 @@ static NSString *cellIdentifier = @"ContactCell";
     self.tableView.delegate=self;
     [self.tableView registerNib:[UINib nibWithNibName:nibName bundle:nil] forCellReuseIdentifier:cellIdentifier];
     
-    _refreshControl=[[UIRefreshControl alloc] init];
-    [_refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:_refreshControl];
+    [self.tableView addSubview:self.refreshControl];
     
     _networkStateView=[[CDSessionStateView alloc] initWithWidth:self.tableView.frame.size.width];
     [_networkStateView setDelegate:self];
@@ -63,6 +58,14 @@ static NSString *cellIdentifier = @"ContactCell";
     
     [_notify addMsgObserver:self selector:@selector(refresh)];
     [_notify addSessionObserver:self selector:@selector(sessionChanged)];
+}
+
+-(UIRefreshControl*)refreshControl{
+    if(_refreshControl==nil){
+        _refreshControl=[[UIRefreshControl alloc] init];
+        [_refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    }
+    return _refreshControl;
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -75,13 +78,9 @@ static NSString *cellIdentifier = @"ContactCell";
 -(void)sessionChanged{
 }
 
--(void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-}
-
 -(void)refresh{
-    [_refreshControl beginRefreshing];
-    [self refresh:_refreshControl];
+    [self.refreshControl beginRefreshing];
+    [self refresh:self.refreshControl];
 }
 
 -(void)refresh:(UIRefreshControl*)refreshControl{
@@ -117,10 +116,6 @@ static NSString *cellIdentifier = @"ContactCell";
 
 #pragma table view
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return CD_COMMON_ROW_HEIGHT;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [_rooms count];
 }
@@ -128,16 +123,14 @@ static NSString *cellIdentifier = @"ContactCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CDImageTwoLabelTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     CDRoom* room = [_rooms objectAtIndex:indexPath.row];
-    CDConvType type=[self.im typeOfConv:room.conv];
-    if(type==CDConvTypeSingle){
-        AVUser* user=[CDCache lookupUser:[self.im otherIdOfConv:room.conv]];
+    if(room.conv.type==CDConvTypeSingle){
+        AVUser* user=[CDCache lookupUser:room.conv.otherId];
         [CDUserService displayAvatarOfUser:user avatarView:cell.myImageView];
         cell.topLabel.text=user.username;
     }else{
         [cell.myImageView setImage:[UIImage imageNamed:@"group_icon"]];
-        cell.topLabel.text=[self.im nameOfConv:room.conv];
+        cell.topLabel.text=room.conv.displayName;
     }
-    
     cell.bottomLabel.text=[self.im getMsgTitle:room.lastMsg];
     cell.unreadCount=room.unreadCount;
     return cell;
