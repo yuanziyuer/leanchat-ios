@@ -17,10 +17,7 @@
 
 ## 如何三步加入IM
 1. LeanCloud 中创建应用       
-2. 创建项目，加入 LeanChatLib 作为Library。拷贝 emotion和Resources两个文件夹，
-
-![qq20150408-1 2x](https://cloud.githubusercontent.com/assets/5022872/7038546/35bcee06-dde6-11e4-922e-d01a11436d4f.png)
-
+2. 创建项目，加入 LeanChatLib 作为Library。拷贝Resources文件夹，
 3. 依次在合适的地方加入以下代码，
 
 应用启动后，初始化，以及配置 IM User
@@ -141,9 +138,10 @@ CDUserModel，
 之后可以进行第二点。        
 2. 必须允许 LeanChatLib中的项目直接include framework里的头文件，设置选项为 YES，如图，
 ![qq20150403-1](https://cloud.githubusercontent.com/assets/5022872/6982020/5d34db2a-da3e-11e4-8ef2-2521255bb923.png) 
-3.加 Linker Flags ，
+3. 加 Linker Flags ，
 ![qq20150410-2 2x](https://cloud.githubusercontent.com/assets/5022872/7089833/29ebf332-dfd1-11e4-9953-a3c7285daf76.png)
 
+4. 需要若干 Framework的支持，参考 LeanChatExample
 
 
 ## 部署 LeanChat 需知
