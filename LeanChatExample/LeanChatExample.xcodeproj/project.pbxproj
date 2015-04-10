@@ -7,12 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		70033A151AD3F41B0003C408 /* LeanChatLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70033A141AD3F41B0003C408 /* LeanChatLib.framework */; };
-		70033A1E1AD3F5AB0003C408 /* LeanChatLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70033A141AD3F41B0003C408 /* LeanChatLib.framework */; };
-		70033A1F1AD3F5AB0003C408 /* LeanChatLib.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70033A141AD3F41B0003C408 /* LeanChatLib.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		704578FD1AD7E5C600452531 /* LCEChatListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 704578FC1AD7E5C600452531 /* LCEChatListVC.m */; };
+		7045791F1AD7EFA500452531 /* LeanChatLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7045791C1AD7EF9F00452531 /* LeanChatLib.framework */; };
+		704579231AD7EFEA00452531 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 704579221AD7EFEA00452531 /* libsqlite3.dylib */; };
+		704579251AD7F00F00452531 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704579241AD7F00F00452531 /* SystemConfiguration.framework */; };
+		704579271AD7F01400452531 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704579261AD7F01400452531 /* CoreTelephony.framework */; };
+		704579291AD7F01B00452531 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704579281AD7F01B00452531 /* CoreLocation.framework */; };
+		7045792B1AD7F02500452531 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7045792A1AD7F02500452531 /* libicucore.dylib */; };
+		7045792D1AD7F02D00452531 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7045792C1AD7F02D00452531 /* MobileCoreServices.framework */; };
+		704579391AD7FEFF00452531 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704579381AD7FEFF00452531 /* ImageIO.framework */; };
+		7045793A1AD7FF0400452531 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7045792E1AD7F05B00452531 /* CoreGraphics.framework */; };
+		7045793C1AD7FF0E00452531 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7045793B1AD7FF0E00452531 /* QuartzCore.framework */; };
+		7045793E1AD7FF2700452531 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7045793D1AD7FF2700452531 /* MapKit.framework */; };
+		704579441AD7FF8A00452531 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704579431AD7FF8A00452531 /* MediaPlayer.framework */; };
+		704579501AD8016600452531 /* CDImageTwoLabelTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7045794C1AD8016600452531 /* CDImageTwoLabelTableCell.xib */; };
+		704579511AD8016600452531 /* chat_menu_people.png in Resources */ = {isa = PBXBuildFile; fileRef = 7045794D1AD8016600452531 /* chat_menu_people.png */; };
+		704579521AD8016600452531 /* group_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7045794E1AD8016600452531 /* group_icon.png */; };
+		704579531AD8016600452531 /* tabbar_chat_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7045794F1AD8016600452531 /* tabbar_chat_active@2x.png */; };
 		7056D46D1AD4DAD9008391FC /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7056D46C1AD4DAD9008391FC /* CDUser.m */; };
 		7073A7C21ACEA79C00073BC0 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073A7C11ACEA79C00073BC0 /* MainViewController.m */; };
-		7073A8301ACEB66500073BC0 /* chat_menu_people.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073A7CF1ACEB66500073BC0 /* chat_menu_people.png */; };
 		7073A8311ACEB66500073BC0 /* AddGroupMemberBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073A7D11ACEB66500073BC0 /* AddGroupMemberBtn@2x.png */; };
 		7073A8321ACEB66500073BC0 /* AddGroupMemberBtnHL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073A7D21ACEB66500073BC0 /* AddGroupMemberBtnHL@2x.png */; };
 		7073A8331ACEB66500073BC0 /* avator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073A7D31ACEB66500073BC0 /* avator@2x.png */; };
@@ -120,6 +133,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		7045791B1AD7EF9F00452531 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 704579161AD7EF9F00452531 /* LeanChatLib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7059DCD71ACE4ECE009D17AB;
+			remoteInfo = LeanChatLib;
+		};
+		7045791D1AD7EF9F00452531 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 704579161AD7EF9F00452531 /* LeanChatLib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7059DCE21ACE4ECE009D17AB;
+			remoteInfo = LeanChatLibTests;
+		};
+		704579201AD7EFA800452531 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 704579161AD7EF9F00452531 /* LeanChatLib.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7059DCD61ACE4ECE009D17AB;
+			remoteInfo = LeanChatLib;
+		};
 		70B299431ACEA0D400FE265E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 70B299211ACEA0D400FE265E /* Project object */;
@@ -129,28 +163,32 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		7073A8911ACEB78100073BC0 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				70033A1F1AD3F5AB0003C408 /* LeanChatLib.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		70033A141AD3F41B0003C408 /* LeanChatLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LeanChatLib.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/LeanChat-bawtqfedaczltxfvbjmxartzlsdw/Build/Products/Debug-iphoneos/LeanChatLib.framework"; sourceTree = "<group>"; };
+		704578FB1AD7E5C600452531 /* LCEChatListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCEChatListVC.h; sourceTree = "<group>"; };
+		704578FC1AD7E5C600452531 /* LCEChatListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCEChatListVC.m; sourceTree = "<group>"; };
+		704579161AD7EF9F00452531 /* LeanChatLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LeanChatLib.xcodeproj; path = ../LeanChatLib/LeanChatLib.xcodeproj; sourceTree = "<group>"; };
+		704579221AD7EFEA00452531 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		704579241AD7F00F00452531 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		704579261AD7F01400452531 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		704579281AD7F01B00452531 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		7045792A1AD7F02500452531 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		7045792C1AD7F02D00452531 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		7045792E1AD7F05B00452531 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		704579301AD7F0E800452531 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		704579381AD7FEFF00452531 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		7045793B1AD7FF0E00452531 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		7045793D1AD7FF2700452531 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		704579431AD7FF8A00452531 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		7045794C1AD8016600452531 /* CDImageTwoLabelTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDImageTwoLabelTableCell.xib; sourceTree = "<group>"; };
+		7045794D1AD8016600452531 /* chat_menu_people.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_menu_people.png; sourceTree = "<group>"; };
+		7045794E1AD8016600452531 /* group_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = group_icon.png; sourceTree = "<group>"; };
+		7045794F1AD8016600452531 /* tabbar_chat_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_chat_active@2x.png"; sourceTree = "<group>"; };
 		7056D46B1AD4DAD9008391FC /* CDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUser.h; sourceTree = "<group>"; };
 		7056D46C1AD4DAD9008391FC /* CDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUser.m; sourceTree = "<group>"; };
 		7073A7C01ACEA79C00073BC0 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		7073A7C11ACEA79C00073BC0 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		7073A7C41ACEA88C00073BC0 /* LCECommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LCECommon.h; sourceTree = "<group>"; };
-		7073A7CF1ACEB66500073BC0 /* chat_menu_people.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_menu_people.png; sourceTree = "<group>"; };
 		7073A7D11ACEB66500073BC0 /* AddGroupMemberBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddGroupMemberBtn@2x.png"; sourceTree = "<group>"; };
 		7073A7D21ACEB66500073BC0 /* AddGroupMemberBtnHL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddGroupMemberBtnHL@2x.png"; sourceTree = "<group>"; };
 		7073A7D31ACEB66500073BC0 /* avator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avator@2x.png"; sourceTree = "<group>"; };
@@ -271,8 +309,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70033A1E1AD3F5AB0003C408 /* LeanChatLib.framework in Frameworks */,
-				70033A151AD3F41B0003C408 /* LeanChatLib.framework in Frameworks */,
+				704579441AD7FF8A00452531 /* MediaPlayer.framework in Frameworks */,
+				7045793E1AD7FF2700452531 /* MapKit.framework in Frameworks */,
+				7045793C1AD7FF0E00452531 /* QuartzCore.framework in Frameworks */,
+				7045793A1AD7FF0400452531 /* CoreGraphics.framework in Frameworks */,
+				704579391AD7FEFF00452531 /* ImageIO.framework in Frameworks */,
+				7045792D1AD7F02D00452531 /* MobileCoreServices.framework in Frameworks */,
+				7045792B1AD7F02500452531 /* libicucore.dylib in Frameworks */,
+				704579291AD7F01B00452531 /* CoreLocation.framework in Frameworks */,
+				704579271AD7F01400452531 /* CoreTelephony.framework in Frameworks */,
+				704579251AD7F00F00452531 /* SystemConfiguration.framework in Frameworks */,
+				704579231AD7EFEA00452531 /* libsqlite3.dylib in Frameworks */,
+				7045791F1AD7EFA500452531 /* LeanChatLib.framework in Frameworks */,
 				7094C1871AD3F29200670821 /* AVOSCloud.framework in Frameworks */,
 				7094C1881AD3F29200670821 /* AVOSCloudIM.framework in Frameworks */,
 			);
@@ -288,6 +336,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		704579171AD7EF9F00452531 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7045791C1AD7EF9F00452531 /* LeanChatLib.framework */,
+				7045791E1AD7EF9F00452531 /* LeanChatLibTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7045794B1AD8016600452531 /* OtherResources */ = {
+			isa = PBXGroup;
+			children = (
+				7045794C1AD8016600452531 /* CDImageTwoLabelTableCell.xib */,
+				7045794D1AD8016600452531 /* chat_menu_people.png */,
+				7045794E1AD8016600452531 /* group_icon.png */,
+				7045794F1AD8016600452531 /* tabbar_chat_active@2x.png */,
+			);
+			path = OtherResources;
+			sourceTree = "<group>";
+		};
 		7073A7D01ACEB66500073BC0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -391,6 +459,18 @@
 		7094C16E1AD3E4A300670821 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				704579431AD7FF8A00452531 /* MediaPlayer.framework */,
+				7045793D1AD7FF2700452531 /* MapKit.framework */,
+				7045793B1AD7FF0E00452531 /* QuartzCore.framework */,
+				704579381AD7FEFF00452531 /* ImageIO.framework */,
+				704579301AD7F0E800452531 /* UIKit.framework */,
+				7045792E1AD7F05B00452531 /* CoreGraphics.framework */,
+				7045792C1AD7F02D00452531 /* MobileCoreServices.framework */,
+				7045792A1AD7F02500452531 /* libicucore.dylib */,
+				704579281AD7F01B00452531 /* CoreLocation.framework */,
+				704579261AD7F01400452531 /* CoreTelephony.framework */,
+				704579241AD7F00F00452531 /* SystemConfiguration.framework */,
+				704579221AD7EFEA00452531 /* libsqlite3.dylib */,
 				70033A141AD3F41B0003C408 /* LeanChatLib.framework */,
 				7094C1851AD3F29200670821 /* AVOSCloud.framework */,
 				7094C1861AD3F29200670821 /* AVOSCloudIM.framework */,
@@ -401,6 +481,7 @@
 		70B299201ACEA0D400FE265E = {
 			isa = PBXGroup;
 			children = (
+				704579161AD7EF9F00452531 /* LeanChatLib.xcodeproj */,
 				7094C16E1AD3E4A300670821 /* Frameworks */,
 				70B2992B1ACEA0D400FE265E /* LeanChatExample */,
 				70B299451ACEA0D400FE265E /* LeanChatExampleTests */,
@@ -420,8 +501,8 @@
 		70B2992B1ACEA0D400FE265E /* LeanChatExample */ = {
 			isa = PBXGroup;
 			children = (
+				7045794B1AD8016600452531 /* OtherResources */,
 				7073A7D01ACEB66500073BC0 /* Resources */,
-				7073A7CF1ACEB66500073BC0 /* chat_menu_people.png */,
 				7094C1821AD3E9AD00670821 /* CDUserFactory.h */,
 				7094C1831AD3E9AD00670821 /* CDUserFactory.m */,
 				7056D46B1AD4DAD9008391FC /* CDUser.h */,
@@ -430,6 +511,8 @@
 				70B299311ACEA0D400FE265E /* AppDelegate.m */,
 				70B299331ACEA0D400FE265E /* LoginViewController.h */,
 				70B299341ACEA0D400FE265E /* LoginViewController.m */,
+				704578FB1AD7E5C600452531 /* LCEChatListVC.h */,
+				704578FC1AD7E5C600452531 /* LCEChatListVC.m */,
 				7073A7C01ACEA79C00073BC0 /* MainViewController.h */,
 				7073A7C11ACEA79C00073BC0 /* MainViewController.m */,
 				7094C1791AD3E70100670821 /* LCEChatRoomVC.h */,
@@ -479,11 +562,11 @@
 				70B299251ACEA0D400FE265E /* Sources */,
 				70B299261ACEA0D400FE265E /* Frameworks */,
 				70B299271ACEA0D400FE265E /* Resources */,
-				7073A8911ACEB78100073BC0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				704579211AD7EFA800452531 /* PBXTargetDependency */,
 			);
 			name = LeanChatExample;
 			productName = LeanChatExample;
@@ -538,6 +621,12 @@
 			mainGroup = 70B299201ACEA0D400FE265E;
 			productRefGroup = 70B2992A1ACEA0D400FE265E /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 704579171AD7EF9F00452531 /* Products */;
+					ProjectRef = 704579161AD7EF9F00452531 /* LeanChatLib.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				70B299281ACEA0D400FE265E /* LeanChatExample */,
@@ -545,6 +634,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		7045791C1AD7EF9F00452531 /* LeanChatLib.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = LeanChatLib.framework;
+			remoteRef = 7045791B1AD7EF9F00452531 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7045791E1AD7EF9F00452531 /* LeanChatLibTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = LeanChatLibTests.xctest;
+			remoteRef = 7045791D1AD7EF9F00452531 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		70B299271ACEA0D400FE265E /* Resources */ = {
@@ -562,6 +668,7 @@
 				7073A83F1ACEB66500073BC0 /* face@2x.png in Resources */,
 				7073A83A1ACEB66500073BC0 /* contacts_add_photo@2x.png in Resources */,
 				70B2993D1ACEA0D400FE265E /* LaunchScreen.xib in Resources */,
+				704579501AD8016600452531 /* CDImageTwoLabelTableCell.xib in Resources */,
 				7073A85F1ACEB66500073BC0 /* RecordingSignal005@2x.png in Resources */,
 				7073A8671ACEB66500073BC0 /* section0_emotion11@2x.png in Resources */,
 				7073A8761ACEB66500073BC0 /* SenderVoiceNodePlaying001@2x.png in Resources */,
@@ -578,6 +685,7 @@
 				7073A87E1ACEB66500073BC0 /* sharemore_pic@2x.png in Resources */,
 				7073A8541ACEB66500073BC0 /* ReceiverVoiceNodePlaying000@2x.png in Resources */,
 				7073A85A1ACEB66500073BC0 /* RecordingBkg@2x.png in Resources */,
+				704579531AD8016600452531 /* tabbar_chat_active@2x.png in Resources */,
 				7073A8871ACEB66500073BC0 /* VoiceBtn_BlackHL@2x.png in Resources */,
 				7073A8411ACEB66500073BC0 /* Fav_Cell_Loc@2x.png in Resources */,
 				7073A86D1ACEB66500073BC0 /* section0_emotion2@2x.png in Resources */,
@@ -612,6 +720,7 @@
 				7073A8891ACEB66500073BC0 /* weChatBubble_Receiving_LeanChat@2x.png in Resources */,
 				7073A86C1ACEB66500073BC0 /* section0_emotion1@2x.png in Resources */,
 				7073A8341ACEB66500073BC0 /* CellBlueSelected@2x.png in Resources */,
+				704579521AD8016600452531 /* group_icon.png in Resources */,
 				7073A8451ACEB66500073BC0 /* input-bar-flat@2x.png in Resources */,
 				7073A84D1ACEB66500073BC0 /* msg_chat_voice_unread.png in Resources */,
 				7073A8741ACEB66500073BC0 /* section0_emotion9@2x.png in Resources */,
@@ -643,9 +752,9 @@
 				7073A8361ACEB66500073BC0 /* CellNotSelected@2x.png in Resources */,
 				7073A8441ACEB66500073BC0 /* input-bar-flat.png in Resources */,
 				7073A8401ACEB66500073BC0 /* face_HL@2x.png in Resources */,
+				704579511AD8016600452531 /* chat_menu_people.png in Resources */,
 				7073A8771ACEB66500073BC0 /* SenderVoiceNodePlaying002@2x.png in Resources */,
 				70B2993A1ACEA0D400FE265E /* Images.xcassets in Resources */,
-				7073A8301ACEB66500073BC0 /* chat_menu_people.png in Resources */,
 				7073A8431ACEB66500073BC0 /* input-bar-background@2x.png in Resources */,
 				7073A8611ACEB66500073BC0 /* RecordingSignal007@2x.png in Resources */,
 			);
@@ -672,6 +781,7 @@
 				70B299321ACEA0D400FE265E /* AppDelegate.m in Sources */,
 				70B2992F1ACEA0D400FE265E /* main.m in Sources */,
 				7073A7C21ACEA79C00073BC0 /* MainViewController.m in Sources */,
+				704578FD1AD7E5C600452531 /* LCEChatListVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -686,6 +796,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		704579211AD7EFA800452531 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = LeanChatLib;
+			targetProxy = 704579201AD7EFA800452531 /* PBXContainerItemProxy */;
+		};
 		70B299441ACEA0D400FE265E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 70B299281ACEA0D400FE265E /* LeanChatExample */;
@@ -805,14 +920,13 @@
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/lzw/avos/avoscloud-demo/leanchat/LeanChatLib/build/Debug-iphoneos",
 					"$(PROJECT_DIR)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/LeanChat-bawtqfedaczltxfvbjmxartzlsdw/Build/Products/Debug-iphoneos",
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = LeanChatExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -824,14 +938,13 @@
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/lzw/avos/avoscloud-demo/leanchat/LeanChatLib/build/Debug-iphoneos",
 					"$(PROJECT_DIR)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/LeanChat-bawtqfedaczltxfvbjmxartzlsdw/Build/Products/Debug-iphoneos",
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = LeanChatExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

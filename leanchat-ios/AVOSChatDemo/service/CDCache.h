@@ -21,7 +21,7 @@
 
 +(void)registerConv:(AVIMConversation*)conv;
 
-+(void)cacheUsersWithIds:(NSSet*)userIds callback:(AVArrayResultBlock)callback;
++(void)cacheUsersWithIds:(NSSet*)userIds callback:(AVBooleanResultBlock)callback;
 
 +(void)cacheConvsWithIds:(NSMutableSet*)convids callback:(AVArrayResultBlock)callback;
 

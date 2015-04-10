@@ -7,7 +7,6 @@
 //
 
 #import "CDImageTwoLabelTableCell.h"
-#import "CDUtils.h"
 
 @implementation CDImageTwoLabelTableCell
 
@@ -22,7 +21,7 @@
     [super layoutSubviews];
     if (_unreadCount > 0) {
         [self.unreadBadge setHidden:NO];
-        self.unreadBadge.badgeText=[NSString stringWithFormat:@"%d",_unreadCount];
+        self.unreadBadge.badgeText=[NSString stringWithFormat:@"%ld",_unreadCount];
     }else{
         [self.unreadBadge setHidden:YES];
     }

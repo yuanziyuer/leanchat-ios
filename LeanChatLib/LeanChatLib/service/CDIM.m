@@ -30,6 +30,8 @@ static CDIM*instance;
 
 @property CDNotify* notify;
 
+@property (nonatomic,strong) NSMutableDictionary* cachedConvs;
+
 @end
 
 @implementation CDIM
@@ -57,6 +59,7 @@ static CDIM*instance;
         _storage=[CDStorage sharedInstance];
         _notify=[CDNotify sharedInstance];
         _imConfig=[CDIMConfig config];
+        _cachedConvs=[NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -352,6 +355,60 @@ static CDIM*instance;
         [result appendString:[chars substringWithRange:range]];
     }
     return result;
+}
+
+#pragma mark - conv cache
+-(AVIMConversation*)lookupConvById:(NSString*)convid{
+    return [self.cachedConvs valueForKey:convid];
+}
+
+-(void)registerConvs:(NSArray*)convs{
+    for(AVIMConversation* conv in convs){
+        [self.cachedConvs setValue:conv forKey:conv.conversationId];
+    }
+}
+
+-(void)cacheConvsWithIds:(NSMutableSet*)convids callback:(AVArrayResultBlock)callback{
+    NSMutableSet* uncacheConvids=[[NSMutableSet alloc] init];
+    for(NSString * convid in convids){
+        if([self lookupConvById:convid]==nil){
+            [uncacheConvids addObject:convid];
+        }
+    }
+    [self fetchConvsWithConvids:uncacheConvids callback:^(NSArray *objects, NSError *error) {
+        if(error){
+            callback(nil,error);
+        }else{
+            [self registerConvs:objects];
+            callback(objects,error);
+        }
+    }];
+}
+
+-(void)cacheAndFillRooms:(NSMutableArray*)rooms callback:(AVBooleanResultBlock)callback{
+    NSMutableSet* convids=[NSMutableSet set];
+    for(CDRoom* room in rooms){
+        [convids addObject:room.convid];
+    }
+    [self cacheConvsWithIds:convids callback:^(NSArray *objects, NSError *error) {
+        if(error){
+            callback(NO,error);
+        }else{
+            for(CDRoom * room in rooms){
+                room.conv=[self lookupConvById:room.convid];
+                if(room.conv==nil){
+                    [NSException raise:@"not found conv" format:nil];
+                }
+            }
+            NSMutableSet* userIds=[NSMutableSet set];
+            for(CDRoom* room in rooms){
+                if(room.conv.type==CDConvTypeSingle){
+                    [userIds addObject:room.conv.otherId];
+                }
+            }
+            [[self imConfig].userDelegate cacheUserByIds:userIds block:callback];
+        }
+    }];
 }
 
 @end

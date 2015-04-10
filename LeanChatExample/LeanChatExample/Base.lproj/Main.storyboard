@@ -61,7 +61,6 @@
                     <navigationItem key="navigationItem" id="gsT-FU-2P0"/>
                     <connections>
                         <outlet property="selfIdTextField" destination="sjo-57-aKm" id="B5b-1d-Pf5"/>
-                        <segue destination="tlh-gC-Dze" kind="push" identifier="goMain" id="hHi-mX-rxP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -71,7 +70,7 @@
         <!--Main View Controller-->
         <scene sceneID="5Hv-69-Ani">
             <objects>
-                <viewController id="tlh-gC-Dze" customClass="MainViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="main" id="tlh-gC-Dze" customClass="MainViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="X7v-dk-OKd"/>
                         <viewControllerLayoutGuide type="bottom" id="zIp-OW-bwy"/>

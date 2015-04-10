@@ -39,12 +39,6 @@
     // Get the new view controller using [segue destinationViewController].
 }
 
--(void)dealloc{
-    [[CDIM sharedInstance] closeWithCallback:^(BOOL succeeded, NSError *error) {
-        DLog(@"%@",error);
-    }];
-}
-
 - (IBAction)goChat:(id)sender {
     NSString* otherId=self.otherIdTextField.text;
     if(otherId.length>0){

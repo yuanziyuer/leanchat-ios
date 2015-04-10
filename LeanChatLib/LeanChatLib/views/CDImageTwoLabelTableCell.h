@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CDBadgeLabel.h"
 #import "JSBadgeView.h"
 
 @interface CDImageTwoLabelTableCell : UITableViewCell

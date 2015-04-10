@@ -13,8 +13,6 @@
 		70013B7D1ABC19DA0050D0F7 /* CDBaseTabC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138931ABC19D90050D0F7 /* CDBaseTabC.m */; };
 		70013B7E1ABC19DA0050D0F7 /* CDBaseTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138951ABC19D90050D0F7 /* CDBaseTableVC.m */; };
 		70013B7F1ABC19DA0050D0F7 /* CDBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138971ABC19D90050D0F7 /* CDBaseVC.m */; };
-		70013B801ABC19DA0050D0F7 /* CDChatListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7001389A1ABC19D90050D0F7 /* CDChatListVC.m */; };
-		70013B811ABC19DA0050D0F7 /* CDChatListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7001389B1ABC19D90050D0F7 /* CDChatListVC.xib */; };
 		70013B831ABC19DA0050D0F7 /* CDAddMemberVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138A11ABC19D90050D0F7 /* CDAddMemberVC.m */; };
 		70013B841ABC19DA0050D0F7 /* CDAddMemberVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 700138A21ABC19D90050D0F7 /* CDAddMemberVC.xib */; };
 		70013B851ABC19DA0050D0F7 /* CDConvCreateVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138A41ABC19D90050D0F7 /* CDConvCreateVC.m */; };
@@ -45,7 +43,6 @@
 		70013B9E1ABC19DA0050D0F7 /* CDAddRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138D01ABC19D90050D0F7 /* CDAddRequest.m */; };
 		70013BA01ABC19DA0050D0F7 /* AppIcon60x60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 700138D61ABC19D90050D0F7 /* AppIcon60x60@2x.png */; };
 		70013BA11ABC19DA0050D0F7 /* default_user_avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 700138D81ABC19D90050D0F7 /* default_user_avatar.png */; };
-		70013BC41ABC19DA0050D0F7 /* chat_menu_people.png in Resources */ = {isa = PBXBuildFile; fileRef = 700138FD1ABC19D90050D0F7 /* chat_menu_people.png */; };
 		70013BC51ABC19DA0050D0F7 /* new_friends_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 700138FF1ABC19D90050D0F7 /* new_friends_icon.png */; };
 		70013BC71ABC19DA0050D0F7 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 700139011ABC19D90050D0F7 /* Icon@2x.png */; };
 		70013BC81ABC19DA0050D0F7 /* image_placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 700139021ABC19D90050D0F7 /* image_placeholder@2x.png */; };
@@ -103,7 +100,6 @@
 		70013C091ABC19DB0050D0F7 /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 7001396F1ABC19DA0050D0F7 /* UIProgressView+AFNetworking.m */; };
 		70013C0A1ABC19DB0050D0F7 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 700139711ABC19DA0050D0F7 /* UIRefreshControl+AFNetworking.m */; };
 		70013C0B1ABC19DB0050D0F7 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 700139731ABC19DA0050D0F7 /* UIWebView+AFNetworking.m */; };
-		70013C131ABC19DB0050D0F7 /* JSBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 700139871ABC19DA0050D0F7 /* JSBadgeView.m */; };
 		70013D061ABC19DB0050D0F7 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B591ABC19DA0050D0F7 /* UIImage+Resize.m */; };
 		70013D081ABC19DB0050D0F7 /* CDBadgeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B5F1ABC19DA0050D0F7 /* CDBadgeLabel.m */; };
 		70013D091ABC19DB0050D0F7 /* CDButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B611ABC19DA0050D0F7 /* CDButton.m */; };
@@ -111,7 +107,6 @@
 		70013D0B1ABC19DB0050D0F7 /* CDImageLabelCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70013B641ABC19DA0050D0F7 /* CDImageLabelCollectionCell.xib */; };
 		70013D0C1ABC19DB0050D0F7 /* CDImageLabelTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B661ABC19DA0050D0F7 /* CDImageLabelTableCell.m */; };
 		70013D0D1ABC19DB0050D0F7 /* CDImageLabelTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70013B671ABC19DA0050D0F7 /* CDImageLabelTableCell.xib */; };
-		70013D0E1ABC19DB0050D0F7 /* CDImageTwoLabelTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B691ABC19DA0050D0F7 /* CDImageTwoLabelTableCell.m */; };
 		70013D0F1ABC19DB0050D0F7 /* CDImageTwoLabelTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70013B6A1ABC19DA0050D0F7 /* CDImageTwoLabelTableCell.xib */; };
 		70013D101ABC19DB0050D0F7 /* CDLabelButtonTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B6C1ABC19DA0050D0F7 /* CDLabelButtonTableCell.m */; };
 		70013D111ABC19DB0050D0F7 /* CDLabelButtonTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70013B6D1ABC19DA0050D0F7 /* CDLabelButtonTableCell.xib */; };
@@ -122,8 +117,13 @@
 		70013D171ABC19DB0050D0F7 /* CDTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B791ABC19DA0050D0F7 /* CDTextField.m */; };
 		70013DA41ABFD0C70050D0F7 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70013DA31ABFD0C70050D0F7 /* AVOSCloud.framework */; };
 		70013DA61ABFD0D70050D0F7 /* AVOSCloudIM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70013DA51ABFD0D70050D0F7 /* AVOSCloudIM.framework */; };
-		70033A1B1AD3F5640003C408 /* LeanChatLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70033A161AD3F4790003C408 /* LeanChatLib.framework */; };
-		70033A1C1AD3F5640003C408 /* LeanChatLib.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70033A161AD3F4790003C408 /* LeanChatLib.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		704578F51AD7D8B100452531 /* CDConvsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 704578F41AD7D8B100452531 /* CDConvsVC.m */; };
+		704578F81AD7DA2F00452531 /* CDChatVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 704578F71AD7DA2F00452531 /* CDChatVC.m */; };
+		704578FA1AD7E28A00452531 /* chat_menu_people.png in Resources */ = {isa = PBXBuildFile; fileRef = 704578F91AD7E28A00452531 /* chat_menu_people.png */; };
+		7045795E1AD8038D00452531 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7045795D1AD8038D00452531 /* ImageIO.framework */; };
+		704579601AD8039A00452531 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7045795F1AD8039A00452531 /* MapKit.framework */; };
+		704579621AD803AD00452531 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704579611AD803AD00452531 /* MediaPlayer.framework */; };
+		704579631AD805A200452531 /* LeanChatLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7045795A1AD8036600452531 /* LeanChatLib.framework */; };
 		704727A71A2CFE6300690286 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 704727A61A2CFE6300690286 /* libz.dylib */; };
 		704A890F1A30F5B200D2A3C2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */; };
 		7056D4701AD4DB18008391FC /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7056D46F1AD4DB18008391FC /* CDUser.m */; };
@@ -231,22 +231,31 @@
 		8CB3085B1980FC1400BDC34D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CB3085A1980FC1400BDC34D /* SystemConfiguration.framework */; };
 		8CF21DCB197FCCC1002B9220 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF21DCA197FCCC1002B9220 /* Foundation.framework */; };
 		8CF21DCD197FCCC1002B9220 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF21DCC197FCCC1002B9220 /* CoreGraphics.framework */; };
-		8CF21DCF197FCCC1002B9220 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF21DCE197FCCC1002B9220 /* UIKit.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		70033A1D1AD3F5640003C408 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				70033A1C1AD3F5640003C408 /* LeanChatLib.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
+/* Begin PBXContainerItemProxy section */
+		704579591AD8036600452531 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 704579541AD8036600452531 /* LeanChatLib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7059DCD71ACE4ECE009D17AB;
+			remoteInfo = LeanChatLib;
 		};
-/* End PBXCopyFilesBuildPhase section */
+		7045795B1AD8036600452531 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 704579541AD8036600452531 /* LeanChatLib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7059DCE21ACE4ECE009D17AB;
+			remoteInfo = LeanChatLibTests;
+		};
+		704579641AD805AB00452531 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 704579541AD8036600452531 /* LeanChatLib.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7059DCD61ACE4ECE009D17AB;
+			remoteInfo = LeanChatLib;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		5C6622B31A66702800BCA281 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -262,9 +271,6 @@
 		700138951ABC19D90050D0F7 /* CDBaseTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDBaseTableVC.m; sourceTree = "<group>"; };
 		700138961ABC19D90050D0F7 /* CDBaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDBaseVC.h; sourceTree = "<group>"; };
 		700138971ABC19D90050D0F7 /* CDBaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDBaseVC.m; sourceTree = "<group>"; };
-		700138991ABC19D90050D0F7 /* CDChatListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDChatListVC.h; sourceTree = "<group>"; };
-		7001389A1ABC19D90050D0F7 /* CDChatListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDChatListVC.m; sourceTree = "<group>"; };
-		7001389B1ABC19D90050D0F7 /* CDChatListVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDChatListVC.xib; sourceTree = "<group>"; };
 		700138A01ABC19D90050D0F7 /* CDAddMemberVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAddMemberVC.h; sourceTree = "<group>"; };
 		700138A11ABC19D90050D0F7 /* CDAddMemberVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAddMemberVC.m; sourceTree = "<group>"; };
 		700138A21ABC19D90050D0F7 /* CDAddMemberVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDAddMemberVC.xib; sourceTree = "<group>"; };
@@ -311,7 +317,6 @@
 		700138D11ABC19D90050D0F7 /* CDModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDModels.h; sourceTree = "<group>"; };
 		700138D61ABC19D90050D0F7 /* AppIcon60x60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIcon60x60@2x.png"; sourceTree = "<group>"; };
 		700138D81ABC19D90050D0F7 /* default_user_avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_user_avatar.png; sourceTree = "<group>"; };
-		700138FD1ABC19D90050D0F7 /* chat_menu_people.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_menu_people.png; sourceTree = "<group>"; };
 		700138FF1ABC19D90050D0F7 /* new_friends_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = new_friends_icon.png; sourceTree = "<group>"; };
 		700139011ABC19D90050D0F7 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		700139021ABC19D90050D0F7 /* image_placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "image_placeholder@2x.png"; sourceTree = "<group>"; };
@@ -394,8 +399,6 @@
 		700139711ABC19DA0050D0F7 /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
 		700139721ABC19DA0050D0F7 /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
 		700139731ABC19DA0050D0F7 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
-		700139861ABC19DA0050D0F7 /* JSBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSBadgeView.h; sourceTree = "<group>"; };
-		700139871ABC19DA0050D0F7 /* JSBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSBadgeView.m; sourceTree = "<group>"; };
 		70013B581ABC19DA0050D0F7 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		70013B591ABC19DA0050D0F7 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		70013B5E1ABC19DA0050D0F7 /* CDBadgeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDBadgeLabel.h; sourceTree = "<group>"; };
@@ -408,8 +411,6 @@
 		70013B651ABC19DA0050D0F7 /* CDImageLabelTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDImageLabelTableCell.h; sourceTree = "<group>"; };
 		70013B661ABC19DA0050D0F7 /* CDImageLabelTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDImageLabelTableCell.m; sourceTree = "<group>"; };
 		70013B671ABC19DA0050D0F7 /* CDImageLabelTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDImageLabelTableCell.xib; sourceTree = "<group>"; };
-		70013B681ABC19DA0050D0F7 /* CDImageTwoLabelTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDImageTwoLabelTableCell.h; sourceTree = "<group>"; };
-		70013B691ABC19DA0050D0F7 /* CDImageTwoLabelTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDImageTwoLabelTableCell.m; sourceTree = "<group>"; };
 		70013B6A1ABC19DA0050D0F7 /* CDImageTwoLabelTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDImageTwoLabelTableCell.xib; sourceTree = "<group>"; };
 		70013B6B1ABC19DA0050D0F7 /* CDLabelButtonTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDLabelButtonTableCell.h; sourceTree = "<group>"; };
 		70013B6C1ABC19DA0050D0F7 /* CDLabelButtonTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDLabelButtonTableCell.m; sourceTree = "<group>"; };
@@ -428,6 +429,15 @@
 		70013DA31ABFD0C70050D0F7 /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
 		70013DA51ABFD0D70050D0F7 /* AVOSCloudIM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloudIM.framework; sourceTree = "<group>"; };
 		70033A161AD3F4790003C408 /* LeanChatLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LeanChatLib.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/LeanChat-bawtqfedaczltxfvbjmxartzlsdw/Build/Products/Debug-iphoneos/LeanChatLib.framework"; sourceTree = "<group>"; };
+		704578F31AD7D8B100452531 /* CDConvsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConvsVC.h; sourceTree = "<group>"; };
+		704578F41AD7D8B100452531 /* CDConvsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDConvsVC.m; sourceTree = "<group>"; };
+		704578F61AD7DA2F00452531 /* CDChatVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDChatVC.h; sourceTree = "<group>"; };
+		704578F71AD7DA2F00452531 /* CDChatVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDChatVC.m; sourceTree = "<group>"; };
+		704578F91AD7E28A00452531 /* chat_menu_people.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_menu_people.png; sourceTree = "<group>"; };
+		704579541AD8036600452531 /* LeanChatLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LeanChatLib.xcodeproj; path = ../LeanChatLib/LeanChatLib.xcodeproj; sourceTree = "<group>"; };
+		7045795D1AD8038D00452531 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		7045795F1AD8039A00452531 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		704579611AD803AD00452531 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		704727A61A2CFE6300690286 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7056D46E1AD4DB18008391FC /* CDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUser.h; sourceTree = "<group>"; };
@@ -548,10 +558,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				704579631AD805A200452531 /* LeanChatLib.framework in Frameworks */,
+				704579621AD803AD00452531 /* MediaPlayer.framework in Frameworks */,
+				704579601AD8039A00452531 /* MapKit.framework in Frameworks */,
+				7045795E1AD8038D00452531 /* ImageIO.framework in Frameworks */,
 				70F9A3AD1A72BC6D00195430 /* AVFoundation.framework in Frameworks */,
 				5C6622B41A66702800BCA281 /* Security.framework in Frameworks */,
 				704A890F1A30F5B200D2A3C2 /* QuartzCore.framework in Frameworks */,
-				70033A1B1AD3F5640003C408 /* LeanChatLib.framework in Frameworks */,
 				704727A71A2CFE6300690286 /* libz.dylib in Frameworks */,
 				8C470C9D19926019006A4E87 /* libiconv.dylib in Frameworks */,
 				8C925CB71987C20800D2750B /* libsqlite3.dylib in Frameworks */,
@@ -562,7 +575,6 @@
 				8CB308571980FBEC00BDC34D /* MobileCoreServices.framework in Frameworks */,
 				8CB308551980FBD900BDC34D /* CoreLocation.framework in Frameworks */,
 				8CF21DCD197FCCC1002B9220 /* CoreGraphics.framework in Frameworks */,
-				8CF21DCF197FCCC1002B9220 /* UIKit.framework in Frameworks */,
 				8CF21DCB197FCCC1002B9220 /* Foundation.framework in Frameworks */,
 				70013DA41ABFD0C70050D0F7 /* AVOSCloud.framework in Frameworks */,
 			);
@@ -632,9 +644,10 @@
 		700138981ABC19D90050D0F7 /* chat */ = {
 			isa = PBXGroup;
 			children = (
-				700138991ABC19D90050D0F7 /* CDChatListVC.h */,
-				7001389A1ABC19D90050D0F7 /* CDChatListVC.m */,
-				7001389B1ABC19D90050D0F7 /* CDChatListVC.xib */,
+				704578F31AD7D8B100452531 /* CDConvsVC.h */,
+				704578F41AD7D8B100452531 /* CDConvsVC.m */,
+				704578F61AD7DA2F00452531 /* CDChatVC.h */,
+				704578F71AD7DA2F00452531 /* CDChatVC.m */,
 			);
 			path = chat;
 			sourceTree = "<group>";
@@ -726,10 +739,10 @@
 		700138D51ABC19D90050D0F7 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				704578F91AD7E28A00452531 /* chat_menu_people.png */,
 				70B2984D1ACE95E100FE265E /* Resources */,
 				700138D61ABC19D90050D0F7 /* AppIcon60x60@2x.png */,
 				700138D71ABC19D90050D0F7 /* avatar */,
-				700138FD1ABC19D90050D0F7 /* chat_menu_people.png */,
 				700138FE1ABC19D90050D0F7 /* contact */,
 				700139011ABC19D90050D0F7 /* Icon@2x.png */,
 				700139021ABC19D90050D0F7 /* image_placeholder@2x.png */,
@@ -838,7 +851,6 @@
 			isa = PBXGroup;
 			children = (
 				7001394B1ABC19DA0050D0F7 /* AFNetworking */,
-				700139851ABC19DA0050D0F7 /* JSBadgeView */,
 				70013B581ABC19DA0050D0F7 /* UIImage+Resize.h */,
 				70013B591ABC19DA0050D0F7 /* UIImage+Resize.m */,
 			);
@@ -906,15 +918,6 @@
 			path = "UIKit+AFNetworking";
 			sourceTree = "<group>";
 		};
-		700139851ABC19DA0050D0F7 /* JSBadgeView */ = {
-			isa = PBXGroup;
-			children = (
-				700139861ABC19DA0050D0F7 /* JSBadgeView.h */,
-				700139871ABC19DA0050D0F7 /* JSBadgeView.m */,
-			);
-			path = JSBadgeView;
-			sourceTree = "<group>";
-		};
 		70013B5D1ABC19DA0050D0F7 /* views */ = {
 			isa = PBXGroup;
 			children = (
@@ -928,8 +931,6 @@
 				70013B651ABC19DA0050D0F7 /* CDImageLabelTableCell.h */,
 				70013B661ABC19DA0050D0F7 /* CDImageLabelTableCell.m */,
 				70013B671ABC19DA0050D0F7 /* CDImageLabelTableCell.xib */,
-				70013B681ABC19DA0050D0F7 /* CDImageTwoLabelTableCell.h */,
-				70013B691ABC19DA0050D0F7 /* CDImageTwoLabelTableCell.m */,
 				70013B6A1ABC19DA0050D0F7 /* CDImageTwoLabelTableCell.xib */,
 				70013B6B1ABC19DA0050D0F7 /* CDLabelButtonTableCell.h */,
 				70013B6C1ABC19DA0050D0F7 /* CDLabelButtonTableCell.m */,
@@ -947,6 +948,15 @@
 				70013B7A1ABC19DA0050D0F7 /* CDViews.h */,
 			);
 			path = views;
+			sourceTree = "<group>";
+		};
+		704579551AD8036600452531 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7045795A1AD8036600452531 /* LeanChatLib.framework */,
+				7045795C1AD8036600452531 /* LeanChatLibTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		70B2984D1ACE95E100FE265E /* Resources */ = {
@@ -1052,6 +1062,7 @@
 		8CF21DBE197FCCC1002B9220 = {
 			isa = PBXGroup;
 			children = (
+				704579541AD8036600452531 /* LeanChatLib.xcodeproj */,
 				7001388B1ABC19D90050D0F7 /* AVOSChatDemo */,
 				8CF21DC9197FCCC1002B9220 /* Frameworks */,
 				8CF21DC8197FCCC1002B9220 /* Products */,
@@ -1070,6 +1081,9 @@
 		8CF21DC9197FCCC1002B9220 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				704579611AD803AD00452531 /* MediaPlayer.framework */,
+				7045795F1AD8039A00452531 /* MapKit.framework */,
+				7045795D1AD8038D00452531 /* ImageIO.framework */,
 				70033A161AD3F4790003C408 /* LeanChatLib.framework */,
 				70013DA51ABFD0D70050D0F7 /* AVOSCloudIM.framework */,
 				70013DA31ABFD0C70050D0F7 /* AVOSCloud.framework */,
@@ -1102,11 +1116,11 @@
 				8CF21DC3197FCCC1002B9220 /* Sources */,
 				8CF21DC4197FCCC1002B9220 /* Frameworks */,
 				8CF21DC5197FCCC1002B9220 /* Resources */,
-				70033A1D1AD3F5640003C408 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				704579651AD805AB00452531 /* PBXTargetDependency */,
 			);
 			name = LeanChat;
 			productName = AVOSChatDemo;
@@ -1153,12 +1167,35 @@
 			mainGroup = 8CF21DBE197FCCC1002B9220;
 			productRefGroup = 8CF21DC8197FCCC1002B9220 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 704579551AD8036600452531 /* Products */;
+					ProjectRef = 704579541AD8036600452531 /* LeanChatLib.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8CF21DC6197FCCC1002B9220 /* LeanChat */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		7045795A1AD8036600452531 /* LeanChatLib.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = LeanChatLib.framework;
+			remoteRef = 704579591AD8036600452531 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7045795C1AD8036600452531 /* LeanChatLibTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = LeanChatLibTests.xctest;
+			remoteRef = 7045795B1AD8036600452531 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8CF21DC5197FCCC1002B9220 /* Resources */ = {
@@ -1175,7 +1212,6 @@
 				70B298E81ACE95E100FE265E /* section0_emotion1@2x.png in Resources */,
 				70B298AD1ACE95E100FE265E /* AddGroupMemberBtn@2x.png in Resources */,
 				70B298C31ACE95E100FE265E /* input-field-cover@2x.png in Resources */,
-				70013BC41ABC19DA0050D0F7 /* chat_menu_people.png in Resources */,
 				70B298DE1ACE95E100FE265E /* RecordingSignal008@2x.png in Resources */,
 				70B298F31ACE95E100FE265E /* SenderVoiceNodePlaying002@2x.png in Resources */,
 				70B298BC1ACE95E100FE265E /* face_HL@2x.png in Resources */,
@@ -1225,6 +1261,7 @@
 				70013B9B1ABC19DA0050D0F7 /* Images.xcassets in Resources */,
 				70B299051ACE95E100FE265E /* weChatBubble_Receiving_LeanChat@2x.png in Resources */,
 				70013B881ABC19DA0050D0F7 /* CDConvDetailVC.xib in Resources */,
+				704578FA1AD7E28A00452531 /* chat_menu_people.png in Resources */,
 				70B298EB1ACE95E100FE265E /* section0_emotion4@2x.png in Resources */,
 				70013B941ABC19DA0050D0F7 /* CDNewFriendVC.xib in Resources */,
 				70B298F01ACE95E100FE265E /* section0_emotion9@2x.png in Resources */,
@@ -1245,7 +1282,6 @@
 				70013BE81ABC19DA0050D0F7 /* tabbar_me_active@2x.png in Resources */,
 				70013BDF1ABC19DA0050D0F7 /* menu_background@2x.png in Resources */,
 				70013BCE1ABC19DA0050D0F7 /* blue_expand_normal@2x.png in Resources */,
-				70013B811ABC19DA0050D0F7 /* CDChatListVC.xib in Resources */,
 				70B298BB1ACE95E100FE265E /* face@2x.png in Resources */,
 				70013BE91ABC19DA0050D0F7 /* wechat@2x.png in Resources */,
 				70B298FF1ACE95E100FE265E /* sharemore_wxtalk@2x.png in Resources */,
@@ -1330,7 +1366,6 @@
 				70013BF91ABC19DB0050D0F7 /* AFHTTPRequestOperation.m in Sources */,
 				70013B7B1ABC19DA0050D0F7 /* CDAppDelegate.m in Sources */,
 				70013D151ABC19DB0050D0F7 /* CDResizableButton.m in Sources */,
-				70013B801ABC19DA0050D0F7 /* CDChatListVC.m in Sources */,
 				70013D131ABC19DB0050D0F7 /* CDPopMenuItem.m in Sources */,
 				70013D0C1ABC19DB0050D0F7 /* CDImageLabelTableCell.m in Sources */,
 				70013C081ABC19DB0050D0F7 /* UIImageView+AFNetworking.m in Sources */,
@@ -1347,6 +1382,7 @@
 				70013BFD1ABC19DB0050D0F7 /* AFSecurityPolicy.m in Sources */,
 				70013D101ABC19DB0050D0F7 /* CDLabelButtonTableCell.m in Sources */,
 				70013B931ABC19DA0050D0F7 /* CDNewFriendVC.m in Sources */,
+				704578F51AD7D8B100452531 /* CDConvsVC.m in Sources */,
 				70013D171ABC19DB0050D0F7 /* CDTextField.m in Sources */,
 				70013B8D1ABC19DA0050D0F7 /* CDLoginVC.m in Sources */,
 				70013C041ABC19DB0050D0F7 /* AFNetworkActivityIndicatorManager.m in Sources */,
@@ -1368,15 +1404,14 @@
 				70013B8F1ABC19DA0050D0F7 /* CDAddFriendVC.m in Sources */,
 				70013B8E1ABC19DA0050D0F7 /* CDRegisterVC.m in Sources */,
 				70013B7C1ABC19DA0050D0F7 /* CDBaseNavC.m in Sources */,
+				704578F81AD7DA2F00452531 /* CDChatVC.m in Sources */,
 				70013B871ABC19DA0050D0F7 /* CDConvDetailVC.m in Sources */,
-				70013C131ABC19DB0050D0F7 /* JSBadgeView.m in Sources */,
 				70013C011ABC19DB0050D0F7 /* AFURLSessionManager.m in Sources */,
 				70013BFB1ABC19DB0050D0F7 /* AFHTTPSessionManager.m in Sources */,
 				70013B7F1ABC19DA0050D0F7 /* CDBaseVC.m in Sources */,
 				70013BEC1ABC19DA0050D0F7 /* CDCache.m in Sources */,
 				70013B9D1ABC19DA0050D0F7 /* main.m in Sources */,
 				70013C0B1ABC19DB0050D0F7 /* UIWebView+AFNetworking.m in Sources */,
-				70013D0E1ABC19DB0050D0F7 /* CDImageTwoLabelTableCell.m in Sources */,
 				70013B911ABC19DA0050D0F7 /* CDFriendListVC.m in Sources */,
 				70013C071ABC19DB0050D0F7 /* UIButton+AFNetworking.m in Sources */,
 				70013D061ABC19DB0050D0F7 /* UIImage+Resize.m in Sources */,
@@ -1386,6 +1421,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		704579651AD805AB00452531 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = LeanChatLib;
+			targetProxy = 704579641AD805AB00452531 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		700138C71ABC19D90050D0F7 /* InfoPlist.strings */ = {
@@ -1519,7 +1562,7 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = LeanChat;
 				PROVISIONING_PROFILE = "c92f9f6a-c25b-4b35-acc0-4e6f54a0b08d";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1561,7 +1604,7 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = LeanChat;
 				PROVISIONING_PROFILE = "c92f9f6a-c25b-4b35-acc0-4e6f54a0b08d";
 				TARGETED_DEVICE_FAMILY = 1;

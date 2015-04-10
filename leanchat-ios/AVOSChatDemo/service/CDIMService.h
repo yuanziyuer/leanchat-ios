@@ -15,8 +15,6 @@
 
 -(void)goWithUserId:(NSString*)userId fromVC:(UIViewController*)vc;
 
--(void)goWithConv:(AVIMConversation*)conv fromVC:(UIViewController*)vc;
-
 -(void)goWithConv:(AVIMConversation*)conv fromNav:(UINavigationController*)nav;
 
 @end
