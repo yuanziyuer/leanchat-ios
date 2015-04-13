@@ -3,6 +3,8 @@
 ## 介绍
 这个示例项目是为了帮助使用 LeanCloud 的开发者快速实现具有实时通讯功能的应用。
 
+## 注意：若要集成，我们更推荐封装性更好的 [MessageDisplayKit](https://github.com/xhzengAIB/MessageDisplayKit/tree/master/Example/MessageDisplayKitLeanchatExample)
+
 ## 子项目介绍
 * LeanChatLib ，聊天界面与逻辑的封装库
 * LeanChatExample，展示了如何用少量代码调用LeanChatLib，加入聊天
