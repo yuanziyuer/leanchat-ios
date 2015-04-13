@@ -133,6 +133,11 @@ CDUserModel，
 
 ![qq20150407-1](https://cloud.githubusercontent.com/assets/5022872/7016274/b1b03672-dd13-11e4-8ddd-4c501c59dbf0.png)
 
+复制资源文件，
+
+![qq20150414-2](https://cloud.githubusercontent.com/assets/5022872/7122215/816ffc2a-e24c-11e4-997f-9cb7a547ac99.png)
+
+
 之后，项目依赖图，如，
 
 ![qq20150407-2](https://cloud.githubusercontent.com/assets/5022872/7016279/d214abe6-dd13-11e4-8c16-900593bdb33e.png)
