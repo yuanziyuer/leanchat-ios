@@ -29,7 +29,8 @@
 配置一个 UserFactory，遵守 CDUserDelegate协议即可。
 
 ```objc
-#import "CDUserFactory.h" 
+#import "CDUserFactory.h"
+
 #import <LeanChatLib/LeanChatLib.h>
 
 @interface CDUserFactory ()<CDUserDelegate>
@@ -126,7 +127,7 @@ CDUserModel，
 
 ## 使用 LeanChatLib 需知
 
-1. 如何引入LeanChatLib 依赖？
+1. 如何引入LeanChatLib 依赖
 首先，打开LeanChatLib文件夹，拖动到你的项目中，如图，
 
 ![qq20150407-1](https://cloud.githubusercontent.com/assets/5022872/7016274/b1b03672-dd13-11e4-8ddd-4c501c59dbf0.png)
@@ -134,6 +135,8 @@ CDUserModel，
 之后，项目依赖图，如，
 
 ![qq20150407-2](https://cloud.githubusercontent.com/assets/5022872/7016279/d214abe6-dd13-11e4-8c16-900593bdb33e.png)
+![3](https://cloud.githubusercontent.com/assets/6140508/7111296/981733a0-e1f0-11e4-9ff4-06f3f2c54817.png)
+
 
 之后可以进行第二点。        
 2. 必须允许 LeanChatLib中的项目直接include framework里的头文件，设置选项为 YES，如图，

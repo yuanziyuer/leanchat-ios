@@ -35,7 +35,7 @@
 #import <netdb.h>
 
 
-NSString *const kCDReachabilityChangedNotification = @"kReachabilityChangedNotification";
+NSString *const kCDReachabilityChangedNotification = @"kCDReachabilityChangedNotification";
 
 
 @interface CDReachability ()
