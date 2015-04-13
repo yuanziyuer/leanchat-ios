@@ -124,6 +124,7 @@
 		704579601AD8039A00452531 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7045795F1AD8039A00452531 /* MapKit.framework */; };
 		704579621AD803AD00452531 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704579611AD803AD00452531 /* MediaPlayer.framework */; };
 		704579631AD805A200452531 /* LeanChatLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7045795A1AD8036600452531 /* LeanChatLib.framework */; };
+		70457B181ADB9ED700452531 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 70457B171ADB9ED700452531 /* Reachability.m */; };
 		704727A71A2CFE6300690286 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 704727A61A2CFE6300690286 /* libz.dylib */; };
 		704A890F1A30F5B200D2A3C2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */; };
 		7056D4701AD4DB18008391FC /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7056D46F1AD4DB18008391FC /* CDUser.m */; };
@@ -438,6 +439,8 @@
 		7045795D1AD8038D00452531 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		7045795F1AD8039A00452531 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		704579611AD803AD00452531 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		70457B161ADB9ED700452531 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		70457B171ADB9ED700452531 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		704727A61A2CFE6300690286 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7056D46E1AD4DB18008391FC /* CDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUser.h; sourceTree = "<group>"; };
@@ -850,6 +853,7 @@
 		7001394A1ABC19DA0050D0F7 /* third_party */ = {
 			isa = PBXGroup;
 			children = (
+				70457B151ADB9ED700452531 /* Reachability */,
 				7001394B1ABC19DA0050D0F7 /* AFNetworking */,
 				70013B581ABC19DA0050D0F7 /* UIImage+Resize.h */,
 				70013B591ABC19DA0050D0F7 /* UIImage+Resize.m */,
@@ -957,6 +961,15 @@
 				7045795C1AD8036600452531 /* LeanChatLibTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		70457B151ADB9ED700452531 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				70457B161ADB9ED700452531 /* Reachability.h */,
+				70457B171ADB9ED700452531 /* Reachability.m */,
+			);
+			path = Reachability;
 			sourceTree = "<group>";
 		};
 		70B2984D1ACE95E100FE265E /* Resources */ = {
@@ -1371,6 +1384,7 @@
 				70013C081ABC19DB0050D0F7 /* UIImageView+AFNetworking.m in Sources */,
 				70013B851ABC19DA0050D0F7 /* CDConvCreateVC.m in Sources */,
 				70013C0A1ABC19DB0050D0F7 /* UIRefreshControl+AFNetworking.m in Sources */,
+				70457B181ADB9ED700452531 /* Reachability.m in Sources */,
 				70013C031ABC19DB0050D0F7 /* README.md in Sources */,
 				70013D081ABC19DB0050D0F7 /* CDBadgeLabel.m in Sources */,
 				70013B9E1ABC19DA0050D0F7 /* CDAddRequest.m in Sources */,

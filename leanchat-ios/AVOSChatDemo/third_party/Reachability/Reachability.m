@@ -25,7 +25,7 @@
  POSSIBILITY OF SUCH DAMAGE. 
  */
 
-#import "CDReachability.h"
+#import "Reachability.h"
 
 #import <sys/socket.h>
 #import <netinet/in.h>
@@ -35,10 +35,10 @@
 #import <netdb.h>
 
 
-NSString *const kCDReachabilityChangedNotification = @"kReachabilityChangedNotification";
+NSString *const kReachabilityChangedNotification = @"kReachabilityChangedNotification";
 
 
-@interface CDReachability ()
+@interface Reachability ()
 
 @property (nonatomic, assign) SCNetworkReachabilityRef  reachabilityRef;
 @property (nonatomic, strong) dispatch_queue_t          reachabilitySerialQueue;
@@ -73,7 +73,7 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 {
 #pragma unused (target)
 
-    CDReachability *reachability = ((__bridge CDReachability*)info);
+    Reachability *reachability = ((__bridge Reachability*)info);
 
     // We probably don't need an autoreleasepool here, as GCD docs state each queue has its own autorelease pool,
     // but what the heck eh?
@@ -84,13 +84,13 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 }
 
 
-@implementation CDReachability
+@implementation Reachability
 
 #pragma mark - Class Constructor Methods
 
 +(instancetype)reachabilityWithHostName:(NSString*)hostname
 {
-    return [CDReachability reachabilityWithHostname:hostname];
+    return [Reachability reachabilityWithHostname:hostname];
 }
 
 +(instancetype)reachabilityWithHostname:(NSString*)hostname
@@ -452,7 +452,7 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
     
     // this makes sure the change notification happens on the MAIN THREAD
     dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:kCDReachabilityChangedNotification 
+        [[NSNotificationCenter defaultCenter] postNotificationName:kReachabilityChangedNotification 
                                                             object:self];
     });
 }
