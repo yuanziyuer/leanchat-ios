@@ -73,7 +73,7 @@ static CDIM* _im;
     }];
 }
 
-+(void)cacheUsersWithIds:(NSSet*)userIds callback:(AVArrayResultBlock)callback{
++(void)cacheUsersWithIds:(NSSet*)userIds callback:(AVBooleanResultBlock)callback{
     NSMutableSet* uncachedUserIds=[[NSMutableSet alloc] init];
     for(NSString* userId in userIds){
         if([self lookupUser:userId]==nil){
@@ -85,10 +85,10 @@ static CDIM* _im;
             if(objects){
                 [self registerUsers:objects];
             }
-            callback(objects,error);
+            callback(YES,error);
         }];
     }else{
-        callback([[NSMutableArray alloc] init],nil);
+        callback(YES,nil);
     }
 }
 
@@ -142,13 +142,7 @@ static CDIM* _im;
                     [userIds addObject:room.conv.otherId];
                 }
             }
-            [CDCache cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
-                if(error){
-                    callback(NO,error);
-                }else{
-                    callback(YES,nil);
-                }
-            }];
+            [CDCache cacheUsersWithIds:userIds callback:callback];
         }
     }];
 }

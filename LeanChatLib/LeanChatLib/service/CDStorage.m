@@ -176,6 +176,17 @@ static CDStorage* _storage;
     return rooms;
 }
 
+-(NSInteger)countUnread{
+    __block NSInteger unreadCount=0;
+    [_dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet* rs=[db executeQuery:@"SELECT SUM(rooms.unread_count) FROM rooms"];
+        if ([rs next]) {
+            unreadCount=[rs intForColumnIndex:0];
+        }
+    }];
+    return unreadCount;
+}
+
 -(void)insertRoomWithConvid:(NSString*)convid{
     [_dbQueue inDatabase:^(FMDatabase *db) {
         FMResultSet* rs=[db executeQuery:@"SELECT * FROM rooms WHERE convid=?",convid];

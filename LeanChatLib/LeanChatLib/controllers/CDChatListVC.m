@@ -7,25 +7,32 @@
 //
 
 #import "CDChatListVC.h"
-#import "CDViews.h"
-#import "CDModels.h"
-#import "CDService.h"
+#import "CDSessionStateView.h"
+#import "CDStorage.h"
+#import "CDImageTwoLabelTableCell.h"
+#import "UIView+XHRemoteImage.h"
 
-@interface CDChatListVC ()
+@interface CDChatListVC ()<CDSessionStateProtocal>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (nonatomic) CDSessionStateView* networkStateView;
+
 @property (nonatomic,strong) UIRefreshControl* refreshControl;
 
-@property NSMutableArray* rooms;
+@property (nonatomic,strong) NSMutableArray* rooms;
 
-@property CDStorage* storage;
+@property (nonatomic,strong) CDNotify* notify;
 
-@property CDNotify* notify;
+@property (nonatomic,strong) CDIM* im;
 
-@property CDIM* im;
+@property (nonatomic,strong) CDStorage* storage;
+
+@property (nonatomic,strong) CDIMConfig* imConfig;
 
 @end
+
+static NSMutableArray* cacheConvs;
 
 @implementation CDChatListVC
 
@@ -33,12 +40,11 @@ static NSString *cellIdentifier = @"ContactCell";
 
 - (instancetype)init {
     if ((self = [super init])) {
-        self.title = @"消息";
-        self.tabBarItem.image = [UIImage imageNamed:@"tabbar_chat_active"];
         _rooms=[[NSMutableArray alloc] init];
         _im=[CDIM sharedInstance];
         _storage=[CDStorage sharedInstance];
         _notify=[CDNotify sharedInstance];
+        _imConfig=[CDIMConfig config];
     }
     return self;
 }
@@ -70,7 +76,7 @@ static NSString *cellIdentifier = @"ContactCell";
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [CDUtils runAfterSecs:0.5 block:^{
+    [self runAfterSecs:0.5 block:^{
         [self refresh:nil];
     }];
 }
@@ -83,27 +89,31 @@ static NSString *cellIdentifier = @"ContactCell";
     [self refresh:self.refreshControl];
 }
 
+-(void)stopRefreshControl:(UIRefreshControl*)refreshControl{
+    if(refreshControl!=nil && [[refreshControl class] isSubclassOfClass:[UIRefreshControl class]]){
+        [refreshControl endRefreshing];
+    }
+}
+
 -(void)refresh:(UIRefreshControl*)refreshControl{
     if([_im isOpened]==NO){
-        [CDUtils stopRefreshControl:refreshControl];
+        [self stopRefreshControl:refreshControl];
         //return;
     }
     NSMutableArray* rooms=[[_storage getRooms] mutableCopy];
-    [CDUtils showNetworkIndicator];
-    [CDCache cacheAndFillRooms:rooms callback:^(BOOL succeeded, NSError *error) {
-        [CDUtils hideNetworkIndicator];
-        [CDUtils stopRefreshControl:refreshControl];
-        if([CDUtils filterError:error]){
+    [self showNetworkIndicator];
+    [self.im cacheAndFillRooms:rooms callback:^(BOOL succeeded, NSError *error) {
+        [self hideNetworkIndicator];
+        [self stopRefreshControl:refreshControl];
+        if([self filterError:error]){
             _rooms=rooms;
             [self.tableView reloadData];
-            int totalUnreadCount=0;
+            NSInteger totalUnreadCount=0;
             for(CDRoom* room in _rooms){
                 totalUnreadCount+=room.unreadCount;
             }
-            if(totalUnreadCount>0){
-                self.tabBarItem.badgeValue=[NSString stringWithFormat:@"%d",totalUnreadCount];
-            }else{
-                self.tabBarItem.badgeValue=nil;
+            if([self.chatListDelegate respondsToSelector:@selector(setBadgeWithTotalUnreadCount:)]){
+                [self.chatListDelegate setBadgeWithTotalUnreadCount:totalUnreadCount];
             }
         }
     }];
@@ -124,9 +134,9 @@ static NSString *cellIdentifier = @"ContactCell";
     CDImageTwoLabelTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     CDRoom* room = [_rooms objectAtIndex:indexPath.row];
     if(room.conv.type==CDConvTypeSingle){
-        AVUser* user=[CDCache lookupUser:room.conv.otherId];
-        [CDUserService displayAvatarOfUser:user avatarView:cell.myImageView];
+        id<CDUserModel> user= [self.imConfig.userDelegate getUserById:room.conv.otherId];
         cell.topLabel.text=user.username;
+        [cell.myImageView setImageWithURL:[NSURL URLWithString:user.avatarUrl]];
     }else{
         [cell.myImageView setImage:[UIImage imageNamed:@"group_icon"]];
         cell.topLabel.text=room.conv.displayName;
@@ -138,17 +148,19 @@ static NSString *cellIdentifier = @"ContactCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     CDRoom *room = [_rooms objectAtIndex:indexPath.row];
-    [[CDIMService shareInstance] goWithConv:room.conv fromVC:self];
+    if([self.chatListDelegate respondsToSelector:@selector(viewController:didSelectConv:)]){
+        [self.chatListDelegate viewController:self didSelectConv:room.conv];
+    }
 }
 
 #pragma mark -- CDSessionDelegateMethods
 
 -(void)onSessionBrokenWithStateView:(CDSessionStateView *)view{
-    _tableView.tableHeaderView=view;
+    self.tableView.tableHeaderView=view;
 }
 
 -(void)onSessionFineWithStateView:(CDSessionStateView *)view{
-    _tableView.tableHeaderView=nil;
+    self.tableView.tableHeaderView=nil;
 }
 
 @end

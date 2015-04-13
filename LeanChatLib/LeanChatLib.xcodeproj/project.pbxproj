@@ -7,6 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		704578D71AD7C04B00452531 /* CDChatListVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 704578D41AD7C04B00452531 /* CDChatListVC.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		704578D91AD7C04B00452531 /* CDChatListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 704578D61AD7C04B00452531 /* CDChatListVC.m */; };
+		704578DE1AD7D02A00452531 /* MCBaseTC.m in Sources */ = {isa = PBXBuildFile; fileRef = 704578DA1AD7D02A00452531 /* MCBaseTC.m */; };
+		704578DF1AD7D02A00452531 /* MCBaseVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 704578DB1AD7D02A00452531 /* MCBaseVC.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		704578E01AD7D02A00452531 /* MCBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 704578DC1AD7D02A00452531 /* MCBaseVC.m */; };
+		704578E11AD7D02A00452531 /* MCBaseTC.h in Headers */ = {isa = PBXBuildFile; fileRef = 704578DD1AD7D02A00452531 /* MCBaseTC.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		704578EB1AD7D13B00452531 /* CDImageTwoLabelTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 704578E81AD7D13B00452531 /* CDImageTwoLabelTableCell.m */; };
+		704578EC1AD7D13B00452531 /* CDImageTwoLabelTableCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 704578E91AD7D13B00452531 /* CDImageTwoLabelTableCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		704578ED1AD7D13B00452531 /* CDImageTwoLabelTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 704578EA1AD7D13B00452531 /* CDImageTwoLabelTableCell.xib */; };
+		704578F11AD7D81400452531 /* JSBadgeView.h in Headers */ = {isa = PBXBuildFile; fileRef = 704578EF1AD7D81400452531 /* JSBadgeView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		704578F21AD7D81400452531 /* JSBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 704578F01AD7D81400452531 /* JSBadgeView.m */; };
+		704579331AD7FED700452531 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704579321AD7FED700452531 /* CoreGraphics.framework */; };
+		704579351AD7FEDD00452531 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704579341AD7FEDD00452531 /* ImageIO.framework */; };
+		704579371AD7FEF400452531 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704579361AD7FEF400452531 /* QuartzCore.framework */; };
+		704579401AD7FF2D00452531 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7045793F1AD7FF2D00452531 /* MapKit.framework */; };
+		704579421AD7FF8400452531 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704579411AD7FF8400452531 /* MediaPlayer.framework */; };
 		7056D4751AD4E29A008391FC /* emojis.h in Headers */ = {isa = PBXBuildFile; fileRef = 7056D4721AD4E29A008391FC /* emojis.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7056D4761AD4E29A008391FC /* NSString+Emojize.h in Headers */ = {isa = PBXBuildFile; fileRef = 7056D4731AD4E29A008391FC /* NSString+Emojize.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7056D4771AD4E29A008391FC /* NSString+Emojize.m in Sources */ = {isa = PBXBuildFile; fileRef = 7056D4741AD4E29A008391FC /* NSString+Emojize.m */; };
@@ -351,6 +367,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		704578D41AD7C04B00452531 /* CDChatListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDChatListVC.h; sourceTree = "<group>"; };
+		704578D61AD7C04B00452531 /* CDChatListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDChatListVC.m; sourceTree = "<group>"; };
+		704578DA1AD7D02A00452531 /* MCBaseTC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCBaseTC.m; sourceTree = "<group>"; };
+		704578DB1AD7D02A00452531 /* MCBaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCBaseVC.h; sourceTree = "<group>"; };
+		704578DC1AD7D02A00452531 /* MCBaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCBaseVC.m; sourceTree = "<group>"; };
+		704578DD1AD7D02A00452531 /* MCBaseTC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCBaseTC.h; sourceTree = "<group>"; };
+		704578E81AD7D13B00452531 /* CDImageTwoLabelTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDImageTwoLabelTableCell.m; sourceTree = "<group>"; };
+		704578E91AD7D13B00452531 /* CDImageTwoLabelTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDImageTwoLabelTableCell.h; sourceTree = "<group>"; };
+		704578EA1AD7D13B00452531 /* CDImageTwoLabelTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDImageTwoLabelTableCell.xib; sourceTree = "<group>"; };
+		704578EF1AD7D81400452531 /* JSBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSBadgeView.h; sourceTree = "<group>"; };
+		704578F01AD7D81400452531 /* JSBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSBadgeView.m; sourceTree = "<group>"; };
+		704579321AD7FED700452531 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		704579341AD7FEDD00452531 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		704579361AD7FEF400452531 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		7045793F1AD7FF2D00452531 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		704579411AD7FF8400452531 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		7056D4721AD4E29A008391FC /* emojis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = emojis.h; sourceTree = "<group>"; };
 		7056D4731AD4E29A008391FC /* NSString+Emojize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Emojize.h"; sourceTree = "<group>"; };
 		7056D4741AD4E29A008391FC /* NSString+Emojize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emojize.m"; sourceTree = "<group>"; };
@@ -695,6 +727,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				704579421AD7FF8400452531 /* MediaPlayer.framework in Frameworks */,
+				704579401AD7FF2D00452531 /* MapKit.framework in Frameworks */,
+				704579371AD7FEF400452531 /* QuartzCore.framework in Frameworks */,
+				704579351AD7FEDD00452531 /* ImageIO.framework in Frameworks */,
+				704579331AD7FED700452531 /* CoreGraphics.framework in Frameworks */,
 				70B2991A1ACE9A4300FE265E /* SystemConfiguration.framework in Frameworks */,
 				70B299181ACE9A3A00FE265E /* MobileCoreServices.framework in Frameworks */,
 				70B299161ACE9A2E00FE265E /* libicucore.dylib in Frameworks */,
@@ -717,6 +754,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		704578EE1AD7D81400452531 /* JSBadgeView */ = {
+			isa = PBXGroup;
+			children = (
+				704578EF1AD7D81400452531 /* JSBadgeView.h */,
+				704578F01AD7D81400452531 /* JSBadgeView.m */,
+			);
+			path = JSBadgeView;
+			sourceTree = "<group>";
+		};
 		7056D4711AD4E29A008391FC /* NSStringEmojize */ = {
 			isa = PBXGroup;
 			children = (
@@ -791,6 +837,7 @@
 		7059DCFC1ACE4F89009D17AB /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				704578EE1AD7D81400452531 /* JSBadgeView */,
 				7056D4711AD4E29A008391FC /* NSStringEmojize */,
 				70B293E61ACE92E100FE265E /* MessageDisplayKit */,
 				7059E38B1ACE5163009D17AB /* Reachability */,
@@ -841,6 +888,8 @@
 		7059E6F31ACE525F009D17AB /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				704578D41AD7C04B00452531 /* CDChatListVC.h */,
+				704578D61AD7C04B00452531 /* CDChatListVC.m */,
 				7059E6F41ACE525F009D17AB /* CDChatRoomVC.h */,
 				7059E6F51ACE525F009D17AB /* CDChatRoomVC.m */,
 			);
@@ -867,6 +916,13 @@
 		7059E7091ACE52D7009D17AB /* views */ = {
 			isa = PBXGroup;
 			children = (
+				704578E81AD7D13B00452531 /* CDImageTwoLabelTableCell.m */,
+				704578E91AD7D13B00452531 /* CDImageTwoLabelTableCell.h */,
+				704578EA1AD7D13B00452531 /* CDImageTwoLabelTableCell.xib */,
+				704578DB1AD7D02A00452531 /* MCBaseVC.h */,
+				704578DC1AD7D02A00452531 /* MCBaseVC.m */,
+				704578DD1AD7D02A00452531 /* MCBaseTC.h */,
+				704578DA1AD7D02A00452531 /* MCBaseTC.m */,
 				7059E70A1ACE52D7009D17AB /* CDSessionStateView.h */,
 				7059E70B1ACE52D7009D17AB /* CDSessionStateView.m */,
 			);
@@ -1479,6 +1535,11 @@
 		70B2990A1ACE993600FE265E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				704579411AD7FF8400452531 /* MediaPlayer.framework */,
+				7045793F1AD7FF2D00452531 /* MapKit.framework */,
+				704579361AD7FEF400452531 /* QuartzCore.framework */,
+				704579341AD7FEDD00452531 /* ImageIO.framework */,
+				704579321AD7FED700452531 /* CoreGraphics.framework */,
 				7094C1891AD3F2B900670821 /* AVOSCloud.framework */,
 				7094C18A1AD3F2B900670821 /* AVOSCloudIM.framework */,
 				70B299191ACE9A4300FE265E /* SystemConfiguration.framework */,
@@ -1611,6 +1672,11 @@
 				7056D4761AD4E29A008391FC /* NSString+Emojize.h in Headers */,
 				7056D47A1AD51B64008391FC /* AVIMConversation+Custom.h in Headers */,
 				7056D47E1AD51CF2008391FC /* CDIMConfig.h in Headers */,
+				704578F11AD7D81400452531 /* JSBadgeView.h in Headers */,
+				704578D71AD7C04B00452531 /* CDChatListVC.h in Headers */,
+				704578E11AD7D02A00452531 /* MCBaseTC.h in Headers */,
+				704578EC1AD7D13B00452531 /* CDImageTwoLabelTableCell.h in Headers */,
+				704578DF1AD7D02A00452531 /* MCBaseVC.h in Headers */,
 				7056D4751AD4E29A008391FC /* emojis.h in Headers */,
 				7059E70C1ACE52D7009D17AB /* CDSessionStateView.h in Headers */,
 				7059E7071ACE5266009D17AB /* CDStorage.h in Headers */,
@@ -1760,6 +1826,7 @@
 				70B2981D1ACE95C900FE265E /* RecordingSignal004@2x.png in Resources */,
 				70B297F01ACE95C900FE265E /* AddGroupMemberBtn@2x.png in Resources */,
 				70B298191ACE95C900FE265E /* RecordingBkg@2x.png in Resources */,
+				704578ED1AD7D13B00452531 /* CDImageTwoLabelTableCell.xib in Resources */,
 				70B298071ACE95C900FE265E /* keyborad@2x.png in Resources */,
 				70B298121ACE95C900FE265E /* placeholderImage@2x.png in Resources */,
 				70B298231ACE95C900FE265E /* SECoreTextView.bundle in Resources */,
@@ -1824,7 +1891,9 @@
 				70B295D41ACE92E200FE265E /* XHVoiceRecordHelper.m in Sources */,
 				70B295C01ACE92E200FE265E /* UIScrollView+XHkeyboardControl.m in Sources */,
 				70B296531ACE92E200FE265E /* SEConstants.m in Sources */,
+				704578EB1AD7D13B00452531 /* CDImageTwoLabelTableCell.m in Sources */,
 				70B296361ACE92E200FE265E /* XHStoreManager.m in Sources */,
+				704578D91AD7C04B00452531 /* CDChatListVC.m in Sources */,
 				70B295CC1ACE92E200FE265E /* XHLocationHelper.m in Sources */,
 				70B296A31ACE92E400FE265E /* XHMessageTableViewCell.m in Sources */,
 				7059E6E91ACE5163009D17AB /* FMDatabase.m in Sources */,
@@ -1885,6 +1954,7 @@
 				7059E5651ACE5163009D17AB /* CDReachability.m in Sources */,
 				70B296221ACE92E200FE265E /* XHVideoOutputSampleBufferFactory.m in Sources */,
 				70B296A11ACE92E400FE265E /* XHMessageTableView.m in Sources */,
+				704578F21AD7D81400452531 /* JSBadgeView.m in Sources */,
 				70B2966F1ACE92E300FE265E /* XHImageViewer.m in Sources */,
 				7059E6E51ACE5163009D17AB /* Emoji.m in Sources */,
 				7056D47F1AD51CF2008391FC /* CDIMConfig.m in Sources */,
@@ -1911,6 +1981,8 @@
 				70B296141ACE92E200FE265E /* XHFileAttribute.m in Sources */,
 				70B295B61ACE92E200FE265E /* UIImage+Resize.m in Sources */,
 				70B295D01ACE92E200FE265E /* XHPhotographyHelper.m in Sources */,
+				704578DE1AD7D02A00452531 /* MCBaseTC.m in Sources */,
+				704578E01AD7D02A00452531 /* MCBaseVC.m in Sources */,
 				70B296121ACE92E200FE265E /* XHCacheManager.m in Sources */,
 				70B295FC1ACE92E200FE265E /* XHMessageTableViewController.m in Sources */,
 				70B295C21ACE92E200FE265E /* UIView+XHBadgeView.m in Sources */,
@@ -1970,8 +2042,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1989,10 +2060,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MACH_O_TYPE = staticlib;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -2015,8 +2086,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2028,9 +2098,9 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MACH_O_TYPE = staticlib;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";

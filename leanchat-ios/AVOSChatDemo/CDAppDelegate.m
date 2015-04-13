@@ -11,7 +11,7 @@
 #import "CDLoginVC.h"
 #import "CDBaseTabC.h"
 #import "CDBaseNavC.h"
-#import "CDChatListVC.h"
+#import "CDConvsVC.h"
 #import "CDFriendListVC.h"
 #import "CDProfileVC.h"
 #import "CDModels.h"
@@ -146,18 +146,18 @@
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     AVUser* user=[AVUser currentUser];
     [CDCache registerUser:user];
-    CDBaseTabC *tab = [[CDBaseTabC alloc] init];
-    [self addItemController:[[CDChatListVC alloc] init] toTabBarController:tab];
-    [self addItemController:[[CDFriendListVC alloc] init] toTabBarController:tab];
-    [self addItemController:[[CDProfileVC alloc] init] toTabBarController:tab];
-    
-    tab.selectedIndex=0;
     CDIM* im=[CDIM sharedInstance];
     WEAKSELF
     [CDUtils showNetworkIndicator];
     [CDIMConfig config].userDelegate=[CDIMService shareInstance];
     [im openWithClientId:user.objectId callback:^(BOOL succeeded, NSError *error) {
         [CDUtils hideNetworkIndicator];
+        CDBaseTabC *tab = [[CDBaseTabC alloc] init];
+        [weakSelf addItemController:[[CDConvsVC alloc] init] toTabBarController:tab];
+        [weakSelf addItemController:[[CDFriendListVC alloc] init] toTabBarController:tab];
+        [weakSelf addItemController:[[CDProfileVC alloc] init] toTabBarController:tab];
+        
+        tab.selectedIndex=0;
         DLog(@"%@",error);
         weakSelf.window.rootViewController = tab;
     }];

@@ -43,6 +43,8 @@
 
 -(NSArray*)queryMsgsWithConv:(AVIMConversation*)conv msgId:(NSString*)msgId maxTime:(int64_t)time limit:(int)limit error:(NSError**)theError;
 
+-(void)cacheAndFillRooms:(NSMutableArray*)rooms callback:(AVBooleanResultBlock)callback;
+
 #pragma mark - msg utils
 
 -(NSString*)getMsgTitle:(AVIMTypedMessage*)msg;

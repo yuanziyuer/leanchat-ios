@@ -12,12 +12,11 @@
 #import "CDUserService.h"
 #import "CDConvDetailVC.h"
 #import "CDUser.h"
+#import "CDChatVC.h"
 
 @interface CDIMService ()
 
 @property (nonatomic,strong) CDIM* im;
-
-@property (nonatomic,strong) CDChatRoomVC* chatRoomVC;
 
 @end
 
@@ -42,7 +41,7 @@
 
 #pragma mark - user delegate
 
--(void)cacheUserByIds:(NSSet *)userIds block:(AVIMArrayResultBlock)block{
+-(void)cacheUserByIds:(NSSet *)userIds block:(AVBooleanResultBlock)block{
     [CDCache cacheUsersWithIds:userIds callback:block];
 }
 
@@ -59,18 +58,10 @@
     return user;
 }
 
--(void)goWithConv:(AVIMConversation*)conv fromVC:(UIViewController*)vc{
-    [self goWithConv:conv fromNav:vc.navigationController];
-}
-
 -(void)goWithConv:(AVIMConversation*)conv fromNav:(UINavigationController*)nav{
-    self.chatRoomVC=[[CDChatRoomVC alloc] initWithConv:conv];
-    self.chatRoomVC.hidesBottomBarWhenPushed=YES;
-    [CDCache setCurConv:conv];
-    UIImage* _peopleImage=[CDUtils resizeImage:[UIImage imageNamed:@"chat_menu_people"] toSize:CGSizeMake(25, 25)];
-    UIBarButtonItem* item=[[UIBarButtonItem alloc] initWithImage:_peopleImage style:UIBarButtonItemStyleDone target:self action:@selector(goChatGroupDetail:)];
-    self.chatRoomVC.navigationItem.rightBarButtonItem=item;
-    [nav pushViewController:self.chatRoomVC animated:YES];
+    CDChatVC* chatVC=[[CDChatVC alloc] initWithConv:conv];
+    chatVC.hidesBottomBarWhenPushed=YES;
+    [nav pushViewController:chatVC animated:YES];
 }
 
 -(void)goWithUserId:(NSString*)userId fromVC:(UIViewController*)vc {
@@ -79,15 +70,9 @@
         if(error){
             DLog(@"%@",error);
         }else{
-            [self goWithConv:conversation fromVC:vc];
+            [self goWithConv:conversation fromNav:vc.navigationController];
         }
     }];
 }
-
-- (void)goChatGroupDetail:(id)sender {
-    CDConvDetailVC* controller=[[CDConvDetailVC alloc] init];
-    [self.chatRoomVC.navigationController pushViewController:controller animated:YES];
-}
-
 
 @end

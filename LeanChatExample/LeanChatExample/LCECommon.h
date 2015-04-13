@@ -6,13 +6,9 @@
 //  Copyright (c) 2015年 avoscloud. All rights reserved.
 //
 
-#ifndef LeanChatExample_LCECommon_h
-#define LeanChatExample_LCECommon_h
 
 #import <AVOSCloud/AVOSCloud.h>
 #import <AVOSCloudIM/AVOSCloudIM.h>
 #import <LeanChatLib/LeanChatLib.h>
 
-#define LOCAL_DEBUG NO
-
-#endif
+#define LOCAL_DEBUG YES

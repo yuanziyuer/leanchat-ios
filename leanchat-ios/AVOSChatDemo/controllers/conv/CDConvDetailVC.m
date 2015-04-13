@@ -90,7 +90,7 @@ static NSString * const reuseIdentifier = @"Cell";
 -(void)refresh{
     AVIMConversation* conv=[self conv];
     NSSet* userIds=[NSSet setWithArray:conv.members];
-    [CDCache cacheUsersWithIds:userIds callback:^(NSArray *objects, NSError *error) {
+    [CDCache cacheUsersWithIds:userIds callback:^(BOOL succeeded, NSError *error) {
         [CDUtils filterError:error callback:^{
             _groupMembers=conv.members;
             [UIView animateWithDuration:0 animations:^{

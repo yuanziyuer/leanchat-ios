@@ -30,6 +30,8 @@
 
 -(NSArray*)getRooms;
 
+-(NSInteger)countUnread;
+
 -(void)insertRoomWithConvid:(NSString*)convid;
 
 -(void)deleteRoomByConvid:(NSString*)convid;

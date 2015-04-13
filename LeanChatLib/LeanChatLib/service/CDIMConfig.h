@@ -18,7 +18,7 @@
 -(id<CDUserModel>) getUserById:(NSString*)userId;
 
 //对于每条消息，都会调用这个方法来缓存发送者的用户信息，以便 getUserById 直接返回用户信息
--(void)cacheUserByIds:(NSSet*)userIds block:(AVIMArrayResultBlock)block;
+-(void)cacheUserByIds:(NSSet*)userIds block:(AVBooleanResultBlock)block;
 
 @end
 

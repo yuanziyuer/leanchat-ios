@@ -196,7 +196,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
             msg.status=AVIMMessageStatusDelivered;
         }
     }
-    
     if(xhMessage.bubbleMessageType==XHBubbleMessageTypeSending){
         XHMessageStatus status=XHMessageStatusReceived;
         int i;
@@ -323,13 +322,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         }
     }
     if([self.imConfig.userDelegate respondsToSelector:@selector(cacheUserByIds:block:)]){
-        [self.imConfig.userDelegate cacheUserByIds:userIds block:^(NSArray *objects, NSError *error) {
-            if(error){
-                callback(NO,error);
-            }else{
-                callback(YES,nil);
-            }
-        }];
+        [self.imConfig.userDelegate cacheUserByIds:userIds block:callback];
     }else{
         callback(YES,nil);
     }
@@ -529,7 +522,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 // 发送语音消息的回调方法
 - (void)didSendVoice:(NSString *)voicePath voiceDuration:(NSString *)voiceDuration fromSender:(NSString *)sender onDate:(NSDate *)date {
-    DLog(@"record a voice ");
     DLog(@"%@",voicePath);
     [self sendFileMsgWithPath:voicePath type:kAVIMMessageMediaTypeAudio];
 }

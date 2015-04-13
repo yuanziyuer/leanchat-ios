@@ -13,7 +13,7 @@
 #import "CDNewFriendVC.h"
 #import "CDImageLabelTableCell.h"
 #import "CDGroupedConvListVC.h"
-#import "JSBadgeView.h"
+#import <LeanChatLib/JSBadgeView.h>
 #import "CDService.h"
 
 @interface CDFriendListVC()<UIAlertViewDelegate>

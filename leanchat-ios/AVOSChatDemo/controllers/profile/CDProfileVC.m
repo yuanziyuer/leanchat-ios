@@ -12,7 +12,7 @@
 #import "CDLoginVC.h"
 #import "CDAppDelegate.h"
 #import "CDResizableButton.h"
-#import "JSBadgeView.h"
+#import <LeanChatLib/JSBadgeView.h>
 #import "CDBadgeLabel.h"
 #import "CDPushSettingVC.h"
 #import <LeanChatLib/LeanChatLib.h>
