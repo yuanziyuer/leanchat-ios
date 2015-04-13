@@ -38,7 +38,7 @@
 #define NS_ENUM(_type, _name) enum _name : _type _name; enum _name : _type
 #endif
 
-extern NSString *const kCDReachabilityChangedNotification;
+extern NSString *const kReachabilityChangedNotification;
 
 typedef NS_ENUM(NSInteger, NetworkStatus) {
     // Apple NetworkStatus Compatible Names.
@@ -47,13 +47,13 @@ typedef NS_ENUM(NSInteger, NetworkStatus) {
     ReachableViaWWAN = 1
 };
 
-@class CDReachability;
+@class Reachability;
 
-typedef void (^NetworkReachable)(CDReachability * reachability);
-typedef void (^NetworkUnreachable)(CDReachability * reachability);
+typedef void (^NetworkReachable)(Reachability * reachability);
+typedef void (^NetworkUnreachable)(Reachability * reachability);
 
 
-@interface CDReachability : NSObject
+@interface Reachability : NSObject
 
 @property (nonatomic, copy) NetworkReachable    reachableBlock;
 @property (nonatomic, copy) NetworkUnreachable  unreachableBlock;
