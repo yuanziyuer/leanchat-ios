@@ -21,7 +21,7 @@
     [super layoutSubviews];
     if (_unreadCount > 0) {
         [self.unreadBadge setHidden:NO];
-        self.unreadBadge.badgeText=[NSString stringWithFormat:@"%ld",_unreadCount];
+        self.unreadBadge.badgeText=[NSString stringWithFormat:@"%ld",(long)_unreadCount];
     }else{
         [self.unreadBadge setHidden:YES];
     }
