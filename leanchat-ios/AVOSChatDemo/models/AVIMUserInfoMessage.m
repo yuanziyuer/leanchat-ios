@@ -27,6 +27,7 @@
 
 + (instancetype)messageWithAttributes:(NSDictionary *)attributes {
     AVIMUserInfoMessage *message = [[self alloc] init];
+    message.text=@"";
     message.attributes = attributes;
     return message;
 }
