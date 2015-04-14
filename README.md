@@ -3,6 +3,8 @@
 ## 介绍
 这个示例项目是为了帮助使用 LeanCloud 的开发者快速实现具有实时通讯功能的应用。
 
+#### 注意：若要集成，我们推荐封装性更好的 [MessageDisplayKit](https://github.com/xhzengAIB/MessageDisplayKit/tree/master/Example/MessageDisplayKitLeanchatExample)
+
 ## 子项目介绍
 * LeanChatLib ，聊天界面与逻辑的封装库
 * LeanChatExample，展示了如何用少量代码调用LeanChatLib，加入聊天
@@ -130,6 +132,11 @@ CDUserModel，
 首先，打开LeanChatLib文件夹，拖动到你的项目中，如图，
 
 ![qq20150407-1](https://cloud.githubusercontent.com/assets/5022872/7016274/b1b03672-dd13-11e4-8ddd-4c501c59dbf0.png)
+
+复制资源文件，
+
+![qq20150414-2](https://cloud.githubusercontent.com/assets/5022872/7122215/816ffc2a-e24c-11e4-997f-9cb7a547ac99.png)
+
 
 之后，项目依赖图，如，
 
