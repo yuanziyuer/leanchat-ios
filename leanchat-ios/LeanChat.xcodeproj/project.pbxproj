@@ -117,6 +117,7 @@
 		70013D171ABC19DB0050D0F7 /* CDTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B791ABC19DA0050D0F7 /* CDTextField.m */; };
 		70013DA41ABFD0C70050D0F7 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70013DA31ABFD0C70050D0F7 /* AVOSCloud.framework */; };
 		70013DA61ABFD0D70050D0F7 /* AVOSCloudIM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70013DA51ABFD0D70050D0F7 /* AVOSCloudIM.framework */; };
+		701D851D1ADCD35000982D5D /* AVIMUserInfoMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 701D851C1ADCD35000982D5D /* AVIMUserInfoMessage.m */; };
 		704578F51AD7D8B100452531 /* CDConvsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 704578F41AD7D8B100452531 /* CDConvsVC.m */; };
 		704578F81AD7DA2F00452531 /* CDChatVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 704578F71AD7DA2F00452531 /* CDChatVC.m */; };
 		704578FA1AD7E28A00452531 /* chat_menu_people.png in Resources */ = {isa = PBXBuildFile; fileRef = 704578F91AD7E28A00452531 /* chat_menu_people.png */; };
@@ -430,6 +431,8 @@
 		70013DA31ABFD0C70050D0F7 /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
 		70013DA51ABFD0D70050D0F7 /* AVOSCloudIM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloudIM.framework; sourceTree = "<group>"; };
 		70033A161AD3F4790003C408 /* LeanChatLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LeanChatLib.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/LeanChat-bawtqfedaczltxfvbjmxartzlsdw/Build/Products/Debug-iphoneos/LeanChatLib.framework"; sourceTree = "<group>"; };
+		701D851B1ADCD35000982D5D /* AVIMUserInfoMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVIMUserInfoMessage.h; sourceTree = "<group>"; };
+		701D851C1ADCD35000982D5D /* AVIMUserInfoMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVIMUserInfoMessage.m; sourceTree = "<group>"; };
 		704578F31AD7D8B100452531 /* CDConvsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConvsVC.h; sourceTree = "<group>"; };
 		704578F41AD7D8B100452531 /* CDConvsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDConvsVC.m; sourceTree = "<group>"; };
 		704578F61AD7DA2F00452531 /* CDChatVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDChatVC.h; sourceTree = "<group>"; };
@@ -726,6 +729,8 @@
 				7056D46F1AD4DB18008391FC /* CDUser.m */,
 				700138CE1ABC19D90050D0F7 /* avobject */,
 				700138D11ABC19D90050D0F7 /* CDModels.h */,
+				701D851B1ADCD35000982D5D /* AVIMUserInfoMessage.h */,
+				701D851C1ADCD35000982D5D /* AVIMUserInfoMessage.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -1431,6 +1436,7 @@
 				70013D061ABC19DB0050D0F7 /* UIImage+Resize.m in Sources */,
 				7059E72D1ACE727B009D17AB /* CDIMService.m in Sources */,
 				70013D121ABC19DB0050D0F7 /* CDPopMenu.m in Sources */,
+				701D851D1ADCD35000982D5D /* AVIMUserInfoMessage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

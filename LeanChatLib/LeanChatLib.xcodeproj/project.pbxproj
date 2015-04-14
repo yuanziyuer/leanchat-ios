@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		701D853C1ADCF02100982D5D /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 701D853A1ADCF02100982D5D /* AVOSCloud.framework */; };
+		701D853D1ADCF02100982D5D /* AVOSCloudIM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 701D853B1ADCF02100982D5D /* AVOSCloudIM.framework */; };
 		704578D71AD7C04B00452531 /* CDChatListVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 704578D41AD7C04B00452531 /* CDChatListVC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		704578D91AD7C04B00452531 /* CDChatListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 704578D61AD7C04B00452531 /* CDChatListVC.m */; };
 		704578DE1AD7D02A00452531 /* MCBaseTC.m in Sources */ = {isa = PBXBuildFile; fileRef = 704578DA1AD7D02A00452531 /* MCBaseTC.m */; };
@@ -67,8 +69,6 @@
 		7059E7381ACE804F009D17AB /* CDAVOSHeaders.h in Sources */ = {isa = PBXBuildFile; fileRef = 7059E71B1ACE5B28009D17AB /* CDAVOSHeaders.h */; };
 		7059E7391ACE8070009D17AB /* CDAVOSHeaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 7059E71B1ACE5B28009D17AB /* CDAVOSHeaders.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7059E73D1ACE82AC009D17AB /* CDUserModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 7059E73C1ACE82AC009D17AB /* CDUserModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7094C18B1AD3F2B900670821 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7094C1891AD3F2B900670821 /* AVOSCloud.framework */; };
-		7094C18C1AD3F2B900670821 /* AVOSCloudIM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7094C18A1AD3F2B900670821 /* AVOSCloudIM.framework */; };
 		70B295AB1ACE92E100FE265E /* NSString+MessageInputView.h in Headers */ = {isa = PBXBuildFile; fileRef = 70B293EA1ACE92E100FE265E /* NSString+MessageInputView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		70B295AC1ACE92E100FE265E /* NSString+MessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B293EB1ACE92E100FE265E /* NSString+MessageInputView.m */; };
 		70B295AD1ACE92E200FE265E /* NSString+XHDiskSizeTransfrom.h in Headers */ = {isa = PBXBuildFile; fileRef = 70B293EC1ACE92E100FE265E /* NSString+XHDiskSizeTransfrom.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -367,6 +367,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		701D853A1ADCF02100982D5D /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
+		701D853B1ADCF02100982D5D /* AVOSCloudIM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloudIM.framework; sourceTree = "<group>"; };
 		704578D41AD7C04B00452531 /* CDChatListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDChatListVC.h; sourceTree = "<group>"; };
 		704578D61AD7C04B00452531 /* CDChatListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDChatListVC.m; sourceTree = "<group>"; };
 		704578DA1AD7D02A00452531 /* MCBaseTC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCBaseTC.m; sourceTree = "<group>"; };
@@ -431,8 +433,6 @@
 		7059E71E1ACE5BAB009D17AB /* CDRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDRoom.m; sourceTree = "<group>"; };
 		7059E7211ACE5D1B009D17AB /* CDMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDMacros.h; sourceTree = "<group>"; };
 		7059E73C1ACE82AC009D17AB /* CDUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUserModel.h; sourceTree = "<group>"; };
-		7094C1891AD3F2B900670821 /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
-		7094C18A1AD3F2B900670821 /* AVOSCloudIM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloudIM.framework; sourceTree = "<group>"; };
 		70B2939C1ACE923400FE265E /* .DS_Store */ = {isa = PBXFileReference; lastKnownFileType = file; path = .DS_Store; sourceTree = "<group>"; };
 		70B293EA1ACE92E100FE265E /* NSString+MessageInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MessageInputView.h"; sourceTree = "<group>"; };
 		70B293EB1ACE92E100FE265E /* NSString+MessageInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MessageInputView.m"; sourceTree = "<group>"; };
@@ -729,6 +729,7 @@
 			files = (
 				704579421AD7FF8400452531 /* MediaPlayer.framework in Frameworks */,
 				704579401AD7FF2D00452531 /* MapKit.framework in Frameworks */,
+				701D853D1ADCF02100982D5D /* AVOSCloudIM.framework in Frameworks */,
 				704579371AD7FEF400452531 /* QuartzCore.framework in Frameworks */,
 				704579351AD7FEDD00452531 /* ImageIO.framework in Frameworks */,
 				704579331AD7FED700452531 /* CoreGraphics.framework in Frameworks */,
@@ -737,9 +738,8 @@
 				70B299161ACE9A2E00FE265E /* libicucore.dylib in Frameworks */,
 				70B299141ACE9A1200FE265E /* libsqlite3.dylib in Frameworks */,
 				70B299121ACE9A0B00FE265E /* CoreLocation.framework in Frameworks */,
-				7094C18B1AD3F2B900670821 /* AVOSCloud.framework in Frameworks */,
 				70B299101ACE9A0600FE265E /* CoreTelephony.framework in Frameworks */,
-				7094C18C1AD3F2B900670821 /* AVOSCloudIM.framework in Frameworks */,
+				701D853C1ADCF02100982D5D /* AVOSCloud.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1535,13 +1535,13 @@
 		70B2990A1ACE993600FE265E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				701D853A1ADCF02100982D5D /* AVOSCloud.framework */,
+				701D853B1ADCF02100982D5D /* AVOSCloudIM.framework */,
 				704579411AD7FF8400452531 /* MediaPlayer.framework */,
 				7045793F1AD7FF2D00452531 /* MapKit.framework */,
 				704579361AD7FEF400452531 /* QuartzCore.framework */,
 				704579341AD7FEDD00452531 /* ImageIO.framework */,
 				704579321AD7FED700452531 /* CoreGraphics.framework */,
-				7094C1891AD3F2B900670821 /* AVOSCloud.framework */,
-				7094C18A1AD3F2B900670821 /* AVOSCloudIM.framework */,
 				70B299191ACE9A4300FE265E /* SystemConfiguration.framework */,
 				70B299171ACE9A3A00FE265E /* MobileCoreServices.framework */,
 				70B299151ACE9A2E00FE265E /* libicucore.dylib */,

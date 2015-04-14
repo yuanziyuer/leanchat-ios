@@ -9,6 +9,7 @@
 #import "CDChatVC.h"
 #import "CDCache.h"
 #import "CDConvDetailVC.h"
+#import "AVIMUserInfoMessage.h"
 
 @interface CDChatVC ()
 
@@ -27,6 +28,14 @@
     UIImage* _peopleImage=[UIImage imageNamed:@"chat_menu_people"];
     UIBarButtonItem* item=[[UIBarButtonItem alloc] initWithImage:_peopleImage style:UIBarButtonItemStyleDone target:self action:@selector(goChatGroupDetail:)];
     self.navigationItem.rightBarButtonItem=item;
+    
+}
+
+-(void)testSendCustomeMessage{
+    AVIMUserInfoMessage* userInfoMessage=[AVIMUserInfoMessage messageWithAttributes:@{@"nickname":@"lzw"}];
+    [self.conv sendMessage:userInfoMessage callback:^(BOOL succeeded, NSError *error) {
+        DLog(@"%@",error);
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

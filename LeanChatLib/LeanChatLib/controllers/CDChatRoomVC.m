@@ -42,8 +42,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 @property (nonatomic,strong) CDSessionStateView* sessionStateView;
 
-@property (nonatomic,strong) AVIMConversation* conv;
-
 @property (nonatomic,assign) BOOL sessionStateViewVisiable;
 
 @end
