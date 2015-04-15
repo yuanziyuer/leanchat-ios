@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 AVOS. All rights reserved.
 //
 
-#import "CDBaseVC.h"
-#import "CDResizableButton.h"
+#import "CDEntryVC.h"
 
-@interface CDLoginVC : CDBaseVC
+
+@interface CDLoginVC : CDEntryVC
 
 @end

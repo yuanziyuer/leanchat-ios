@@ -69,8 +69,8 @@
   @":neutral_face:",\
   @":no_mouth:",\
   @":innocent:",\
-  @":+1:",\
-  @":-1:",\
+  @":thumbsup:",\
+  @":thumbsdown:",\
   @":clap:",\
   @":point_right:",\
   @":point_left:" \

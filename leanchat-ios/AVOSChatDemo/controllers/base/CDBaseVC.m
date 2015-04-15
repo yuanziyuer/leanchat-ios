@@ -18,13 +18,12 @@
 
 - (void)loadView {
     [super loadView];
-    CGRect rect = self.view.frame;
-    UIScrollView *view = [[UIScrollView alloc] initWithFrame:rect];
-    self.view = view;
+    self.view =  [[UIScrollView alloc] initWithFrame:self.view.frame];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
 }
+
 @end

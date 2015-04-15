@@ -37,7 +37,6 @@
 		70013B981ABC19DA0050D0F7 /* CDUserInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138C51ABC19D90050D0F7 /* CDUserInfoVC.m */; };
 		70013B991ABC19DA0050D0F7 /* CDUserInfoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 700138C61ABC19D90050D0F7 /* CDUserInfoVC.xib */; };
 		70013B9A1ABC19DA0050D0F7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 700138C71ABC19D90050D0F7 /* InfoPlist.strings */; };
-		70013B9B1ABC19DA0050D0F7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 700138C91ABC19D90050D0F7 /* Images.xcassets */; };
 		70013B9C1ABC19DA0050D0F7 /* LeanChat-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 700138CA1ABC19D90050D0F7 /* LeanChat-Info.plist */; };
 		70013B9D1ABC19DA0050D0F7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138CC1ABC19D90050D0F7 /* main.m */; };
 		70013B9E1ABC19DA0050D0F7 /* CDAddRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138D01ABC19D90050D0F7 /* CDAddRequest.m */; };
@@ -48,7 +47,6 @@
 		70013BC81ABC19DA0050D0F7 /* image_placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 700139021ABC19D90050D0F7 /* image_placeholder@2x.png */; };
 		70013BC91ABC19DA0050D0F7 /* input_bg_bottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 700139031ABC19D90050D0F7 /* input_bg_bottom@2x.png */; };
 		70013BCA1ABC19DA0050D0F7 /* input_bg_top@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 700139041ABC19D90050D0F7 /* input_bg_top@2x.png */; };
-		70013BCB1ABC19DA0050D0F7 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 700139061ABC19D90050D0F7 /* background@2x.png */; };
 		70013BCC1ABC19DA0050D0F7 /* blue_expand_disable@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 700139071ABC19D90050D0F7 /* blue_expand_disable@2x.png */; };
 		70013BCD1ABC19DA0050D0F7 /* blue_expand_highlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 700139081ABC19D90050D0F7 /* blue_expand_highlight@2x.png */; };
 		70013BCE1ABC19DA0050D0F7 /* blue_expand_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 700139091ABC19D90050D0F7 /* blue_expand_normal@2x.png */; };
@@ -69,7 +67,6 @@
 		70013BDD1ABC19DA0050D0F7 /* menu_add_scan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 700139191ABC19D90050D0F7 /* menu_add_scan@2x.png */; };
 		70013BDE1ABC19DA0050D0F7 /* menu_add_voip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7001391A1ABC19D90050D0F7 /* menu_add_voip@2x.png */; };
 		70013BDF1ABC19DA0050D0F7 /* menu_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7001391B1ABC19D90050D0F7 /* menu_background@2x.png */; };
-		70013BE01ABC19DA0050D0F7 /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 7001391C1ABC19D90050D0F7 /* splash.png */; };
 		70013BE21ABC19DA0050D0F7 /* contact@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7001391F1ABC19D90050D0F7 /* contact@2x.png */; };
 		70013BE31ABC19DA0050D0F7 /* profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 700139201ABC19D90050D0F7 /* profile@2x.png */; };
 		70013BE41ABC19DA0050D0F7 /* sns@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 700139211ABC19D90050D0F7 /* sns@2x.png */; };
@@ -130,6 +127,10 @@
 		704A890F1A30F5B200D2A3C2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */; };
 		7056D4701AD4DB18008391FC /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7056D46F1AD4DB18008391FC /* CDUser.m */; };
 		7059E72D1ACE727B009D17AB /* CDIMService.m in Sources */ = {isa = PBXBuildFile; fileRef = 7059E72C1ACE727B009D17AB /* CDIMService.m */; };
+		709E54251ADE5B5900F82BB8 /* login_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 709E54241ADE5B5900F82BB8 /* login_background.png */; };
+		709E54291ADE61B600F82BB8 /* CDEntryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 709E54281ADE61B600F82BB8 /* CDEntryVC.m */; };
+		709E542B1ADE853C00F82BB8 /* group_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 709E542A1ADE853C00F82BB8 /* group_icon.png */; };
+		709E542F1ADE860C00F82BB8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 709E542E1ADE860C00F82BB8 /* Images.xcassets */; };
 		70B298AD1ACE95E100FE265E /* AddGroupMemberBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B2984E1ACE95E100FE265E /* AddGroupMemberBtn@2x.png */; };
 		70B298AE1ACE95E100FE265E /* AddGroupMemberBtnHL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B2984F1ACE95E100FE265E /* AddGroupMemberBtnHL@2x.png */; };
 		70B298AF1ACE95E100FE265E /* avator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B298501ACE95E100FE265E /* avator@2x.png */; };
@@ -310,7 +311,6 @@
 		700138C51ABC19D90050D0F7 /* CDUserInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUserInfoVC.m; sourceTree = "<group>"; };
 		700138C61ABC19D90050D0F7 /* CDUserInfoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDUserInfoVC.xib; sourceTree = "<group>"; };
 		700138C81ABC19D90050D0F7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		700138C91ABC19D90050D0F7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		700138CA1ABC19D90050D0F7 /* LeanChat-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "LeanChat-Info.plist"; sourceTree = "<group>"; };
 		700138CB1ABC19D90050D0F7 /* LeanChat-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LeanChat-Prefix.pch"; sourceTree = "<group>"; };
 		700138CC1ABC19D90050D0F7 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -324,7 +324,6 @@
 		700139021ABC19D90050D0F7 /* image_placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "image_placeholder@2x.png"; sourceTree = "<group>"; };
 		700139031ABC19D90050D0F7 /* input_bg_bottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "input_bg_bottom@2x.png"; sourceTree = "<group>"; };
 		700139041ABC19D90050D0F7 /* input_bg_top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "input_bg_top@2x.png"; sourceTree = "<group>"; };
-		700139061ABC19D90050D0F7 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
 		700139071ABC19D90050D0F7 /* blue_expand_disable@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blue_expand_disable@2x.png"; sourceTree = "<group>"; };
 		700139081ABC19D90050D0F7 /* blue_expand_highlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blue_expand_highlight@2x.png"; sourceTree = "<group>"; };
 		700139091ABC19D90050D0F7 /* blue_expand_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blue_expand_normal@2x.png"; sourceTree = "<group>"; };
@@ -345,7 +344,6 @@
 		700139191ABC19D90050D0F7 /* menu_add_scan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_add_scan@2x.png"; sourceTree = "<group>"; };
 		7001391A1ABC19D90050D0F7 /* menu_add_voip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_add_voip@2x.png"; sourceTree = "<group>"; };
 		7001391B1ABC19D90050D0F7 /* menu_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_background@2x.png"; sourceTree = "<group>"; };
-		7001391C1ABC19D90050D0F7 /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
 		7001391F1ABC19D90050D0F7 /* contact@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact@2x.png"; sourceTree = "<group>"; };
 		700139201ABC19D90050D0F7 /* profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile@2x.png"; sourceTree = "<group>"; };
 		700139211ABC19D90050D0F7 /* sns@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sns@2x.png"; sourceTree = "<group>"; };
@@ -450,6 +448,11 @@
 		7056D46F1AD4DB18008391FC /* CDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUser.m; sourceTree = "<group>"; };
 		7059E72B1ACE727B009D17AB /* CDIMService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIMService.h; sourceTree = "<group>"; };
 		7059E72C1ACE727B009D17AB /* CDIMService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIMService.m; sourceTree = "<group>"; };
+		709E54241ADE5B5900F82BB8 /* login_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_background.png; sourceTree = "<group>"; };
+		709E54271ADE61B600F82BB8 /* CDEntryVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEntryVC.h; sourceTree = "<group>"; };
+		709E54281ADE61B600F82BB8 /* CDEntryVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEntryVC.m; sourceTree = "<group>"; };
+		709E542A1ADE853C00F82BB8 /* group_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = group_icon.png; sourceTree = "<group>"; };
+		709E542E1ADE860C00F82BB8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../LeanChat/Images.xcassets; sourceTree = "<group>"; };
 		70B2984E1ACE95E100FE265E /* AddGroupMemberBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddGroupMemberBtn@2x.png"; sourceTree = "<group>"; };
 		70B2984F1ACE95E100FE265E /* AddGroupMemberBtnHL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddGroupMemberBtnHL@2x.png"; sourceTree = "<group>"; };
 		70B298501ACE95E100FE265E /* avator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avator@2x.png"; sourceTree = "<group>"; };
@@ -601,10 +604,10 @@
 		7001388B1ABC19D90050D0F7 /* AVOSChatDemo */ = {
 			isa = PBXGroup;
 			children = (
+				709E542E1ADE860C00F82BB8 /* Images.xcassets */,
 				7001388C1ABC19D90050D0F7 /* CDAppDelegate.h */,
 				7001388D1ABC19D90050D0F7 /* CDAppDelegate.m */,
 				700138C71ABC19D90050D0F7 /* InfoPlist.strings */,
-				700138C91ABC19D90050D0F7 /* Images.xcassets */,
 				700138CA1ABC19D90050D0F7 /* LeanChat-Info.plist */,
 				700138CB1ABC19D90050D0F7 /* LeanChat-Prefix.pch */,
 				700138CC1ABC19D90050D0F7 /* main.m */,
@@ -683,6 +686,8 @@
 		700138AF1ABC19D90050D0F7 /* entry */ = {
 			isa = PBXGroup;
 			children = (
+				709E54271ADE61B600F82BB8 /* CDEntryVC.h */,
+				709E54281ADE61B600F82BB8 /* CDEntryVC.m */,
 				700138B01ABC19D90050D0F7 /* CDLoginVC.h */,
 				700138B11ABC19D90050D0F7 /* CDLoginVC.m */,
 				700138B21ABC19D90050D0F7 /* CDRegisterVC.h */,
@@ -747,6 +752,7 @@
 		700138D51ABC19D90050D0F7 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				709E542A1ADE853C00F82BB8 /* group_icon.png */,
 				704578F91AD7E28A00452531 /* chat_menu_people.png */,
 				70B2984D1ACE95E100FE265E /* Resources */,
 				700138D61ABC19D90050D0F7 /* AppIcon60x60@2x.png */,
@@ -758,7 +764,6 @@
 				700139041ABC19D90050D0F7 /* input_bg_top@2x.png */,
 				700139051ABC19D90050D0F7 /* login */,
 				700139151ABC19D90050D0F7 /* menu */,
-				7001391C1ABC19D90050D0F7 /* splash.png */,
 				7001391E1ABC19D90050D0F7 /* tabbar */,
 			);
 			path = resources;
@@ -783,7 +788,7 @@
 		700139051ABC19D90050D0F7 /* login */ = {
 			isa = PBXGroup;
 			children = (
-				700139061ABC19D90050D0F7 /* background@2x.png */,
+				709E54241ADE5B5900F82BB8 /* login_background.png */,
 				700139071ABC19D90050D0F7 /* blue_expand_disable@2x.png */,
 				700139081ABC19D90050D0F7 /* blue_expand_highlight@2x.png */,
 				700139091ABC19D90050D0F7 /* blue_expand_normal@2x.png */,
@@ -1246,6 +1251,7 @@
 				70B298D31ACE95E100FE265E /* ReceiverVoiceNodePlaying003@2x.png in Resources */,
 				70B298F71ACE95E100FE265E /* sharemore_location@2x.png in Resources */,
 				70B298E61ACE95E100FE265E /* section0_emotion14@2x.png in Resources */,
+				709E542B1ADE853C00F82BB8 /* group_icon.png in Resources */,
 				70013BCA1ABC19DA0050D0F7 /* input_bg_top@2x.png in Resources */,
 				70B298B01ACE95E100FE265E /* CellBlueSelected@2x.png in Resources */,
 				70013B8C1ABC19DA0050D0F7 /* CDGroupedConvListVC.xib in Resources */,
@@ -1270,13 +1276,13 @@
 				70B298C21ACE95E100FE265E /* input-field-cover.png in Resources */,
 				70B298ED1ACE95E100FE265E /* section0_emotion6@2x.png in Resources */,
 				70B298FB1ACE95E100FE265E /* sharemore_video@2x.png in Resources */,
+				709E542F1ADE860C00F82BB8 /* Images.xcassets in Resources */,
 				70B298F11ACE95E100FE265E /* SenderVoiceNodePlaying000@2x.png in Resources */,
 				70013BDA1ABC19DA0050D0F7 /* menu_add_friend@2x.png in Resources */,
 				70013B961ABC19DA0050D0F7 /* CDProfileVC.xib in Resources */,
 				70B298F81ACE95E100FE265E /* sharemore_myfav@2x.png in Resources */,
 				70B298EF1ACE95E100FE265E /* section0_emotion8@2x.png in Resources */,
 				70B298F91ACE95E100FE265E /* sharemore_openapi@2x.png in Resources */,
-				70013B9B1ABC19DA0050D0F7 /* Images.xcassets in Resources */,
 				70B299051ACE95E100FE265E /* weChatBubble_Receiving_LeanChat@2x.png in Resources */,
 				70013B881ABC19DA0050D0F7 /* CDConvDetailVC.xib in Resources */,
 				704578FA1AD7E28A00452531 /* chat_menu_people.png in Resources */,
@@ -1296,7 +1302,6 @@
 				70B298AE1ACE95E100FE265E /* AddGroupMemberBtnHL@2x.png in Resources */,
 				70B298C51ACE95E100FE265E /* keyborad_HL@2x.png in Resources */,
 				70013B861ABC19DA0050D0F7 /* CDConvCreateVC.xib in Resources */,
-				70013BE01ABC19DA0050D0F7 /* splash.png in Resources */,
 				70013BE81ABC19DA0050D0F7 /* tabbar_me_active@2x.png in Resources */,
 				70013BDF1ABC19DA0050D0F7 /* menu_background@2x.png in Resources */,
 				70013BCE1ABC19DA0050D0F7 /* blue_expand_normal@2x.png in Resources */,
@@ -1312,9 +1317,9 @@
 				70B298C71ACE95E100FE265E /* MessageVideoPlay@2x.png in Resources */,
 				70013BA01ABC19DA0050D0F7 /* AppIcon60x60@2x.png in Resources */,
 				70B298CB1ACE95E100FE265E /* multiMedia@2x.png in Resources */,
-				70013BCB1ABC19DA0050D0F7 /* background@2x.png in Resources */,
 				70013BC71ABC19DA0050D0F7 /* Icon@2x.png in Resources */,
 				70B299071ACE95E100FE265E /* weChatBubble_Sending_Cavern@2x.png in Resources */,
+				709E54251ADE5B5900F82BB8 /* login_background.png in Resources */,
 				70B298CD1ACE95E100FE265E /* MultiSelectedPanelBkg@2x.png in Resources */,
 				70B298EC1ACE95E100FE265E /* section0_emotion5@2x.png in Resources */,
 				70013BA11ABC19DA0050D0F7 /* default_user_avatar.png in Resources */,
@@ -1414,6 +1419,7 @@
 				70013B891ABC19DA0050D0F7 /* CDConvNameVC.m in Sources */,
 				70013B7E1ABC19DA0050D0F7 /* CDBaseTableVC.m in Sources */,
 				70013BFA1ABC19DB0050D0F7 /* AFHTTPRequestOperationManager.m in Sources */,
+				709E54291ADE61B600F82BB8 /* CDEntryVC.m in Sources */,
 				70013B7D1ABC19DA0050D0F7 /* CDBaseTabC.m in Sources */,
 				70013BFF1ABC19DB0050D0F7 /* AFURLRequestSerialization.m in Sources */,
 				70013B8B1ABC19DA0050D0F7 /* CDGroupedConvListVC.m in Sources */,
@@ -1553,7 +1559,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 618EF01A4CA30A6FAFBAC123 /* Pods-LeanChat.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
@@ -1594,7 +1600,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C26DD6660E520345CAFCC14D /* Pods-LeanChat.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";

@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 AVOS. All rights reserved.
 //
 
-#import "CDBaseVC.h"
+#import "CDEntryVC.h"
 
-@interface CDRegisterVC : CDBaseVC
+@interface CDRegisterVC : CDEntryVC
 
 @end

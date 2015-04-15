@@ -55,8 +55,8 @@
 #define KEY_USERNAME @"KEY_USERNAME"
 #define KEY_ISLOGINED @"KEY_ISLOGINED"
 
-#define USERNAME_MIN_LENGTH 1
-#define PASSWORD_MIN_LENGTH 1
+#define USERNAME_MIN_LENGTH 3
+#define PASSWORD_MIN_LENGTH 3
 
 #define FROM_USER @"fromUser"
 #define TO_USER @"toUser"
