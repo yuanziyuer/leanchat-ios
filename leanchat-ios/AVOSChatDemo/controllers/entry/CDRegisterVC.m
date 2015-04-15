@@ -7,10 +7,8 @@
 //
 
 #import "CDRegisterVC.h"
-#import "CDCommon.h"
-#import "CDTextField.h"
-#import "CDAppDelegate.h"
 #import "CDUtils.h"
+#import "CDAppDelegate.h"
 
 @interface CDRegisterVC () <CDEntryVCDelegate>
 

@@ -9,6 +9,7 @@
 #import "CDBaseVC.h"
 #import "CDTextField.h"
 #import "CDResizableButton.h"
+#import "CDCommon.h"
 
 static CGFloat kEntryVCIconImageViewMarginTop=80;
 static CGFloat kEntryVCIconImageViewSize=80;
