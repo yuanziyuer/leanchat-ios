@@ -263,7 +263,6 @@
 
 /* Begin PBXFileReference section */
 		5C6622B31A66702800BCA281 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		618EF01A4CA30A6FAFBAC123 /* Pods-LeanChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LeanChat/Pods-LeanChat.debug.xcconfig"; sourceTree = "<group>"; };
 		700130D31ABC0D5A0050D0F7 /* libPods-LeanChat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-LeanChat.a"; path = "Pods/../build/Debug-iphoneos/libPods-LeanChat.a"; sourceTree = SOURCE_ROOT; };
 		7001388C1ABC19D90050D0F7 /* CDAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAppDelegate.h; sourceTree = "<group>"; };
 		7001388D1ABC19D90050D0F7 /* CDAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAppDelegate.m; sourceTree = "<group>"; };
@@ -562,7 +561,6 @@
 		8CF21DCA197FCCC1002B9220 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8CF21DCC197FCCC1002B9220 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		8CF21DCE197FCCC1002B9220 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		C26DD6660E520345CAFCC14D /* Pods-LeanChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-LeanChat/Pods-LeanChat.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -595,15 +593,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4197C40436E42BF75E9827CE /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				618EF01A4CA30A6FAFBAC123 /* Pods-LeanChat.debug.xcconfig */,
-				C26DD6660E520345CAFCC14D /* Pods-LeanChat.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		7001388B1ABC19D90050D0F7 /* AVOSChatDemo */ = {
 			isa = PBXGroup;
 			children = (
@@ -1102,7 +1091,6 @@
 				7001388B1ABC19D90050D0F7 /* AVOSChatDemo */,
 				8CF21DC9197FCCC1002B9220 /* Frameworks */,
 				8CF21DC8197FCCC1002B9220 /* Products */,
-				4197C40436E42BF75E9827CE /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1172,11 +1160,6 @@
 				CLASSPREFIX = CD;
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = AVOS;
-				TargetAttributes = {
-					8CF21DC6197FCCC1002B9220 = {
-						DevelopmentTeam = Y6X8P44TM5;
-					};
-				};
 			};
 			buildConfigurationList = 8CF21DC2197FCCC1002B9220 /* Build configuration list for PBXProject "LeanChat" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1491,7 +1474,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		8CF21DF1197FCCC1002B9220 /* Debug */ = {
+		70491C661ADF7A5200E8E295 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1509,18 +1492,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iOS Development: &#26234;&#32500; &#26446; (DQF8JZ3M7J)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				COPY_PHASE_STRIP = NO;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
-				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1528,9 +1503,49 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "fb2dce67-44f6-4edf-ad68-892643b92841";
 				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Debug;
+		};
+		70491C671ADF7A5200E8E295 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEPLOYMENT_POSTPROCESSING = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+					"/Users/lzw/avos/avoscloud-demo/leanchat/LeanChatLib/build/Debug-iphoneos",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/LeanChat-bawtqfedaczltxfvbjmxartzlsdw/Build/Products/Debug-iphoneos",
+				);
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AVOSChatDemo/LeanChat-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/$(TARGET_NAME)/third_party/ZXing",
+				);
+				INFOPLIST_FILE = "AVOSChatDemo/LeanChat-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = LeanChat;
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
@@ -1569,56 +1584,16 @@
 			};
 			name = Release;
 		};
-		8CF21DF4197FCCC1002B9220 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 618EF01A4CA30A6FAFBAC123 /* Pods-LeanChat.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
-				DEPLOYMENT_POSTPROCESSING = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-					"/Users/lzw/avos/avoscloud-demo/leanchat/LeanChatLib/build/Debug-iphoneos",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/LeanChat-bawtqfedaczltxfvbjmxartzlsdw/Build/Products/Debug-iphoneos",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AVOSChatDemo/LeanChat-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Applications/Xcode6-Beta4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
-					"$(PROJECT_DIR)/$(TARGET_NAME)/third_party/ZXing",
-				);
-				INFOPLIST_FILE = "AVOSChatDemo/LeanChat-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-					"$(PROJECT_DIR)/build/Release-iphoneos",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
-				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = LeanChat;
-				PROVISIONING_PROFILE = "c92f9f6a-c25b-4b35-acc0-4e6f54a0b08d";
-				TARGETED_DEVICE_FAMILY = 1;
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
 		8CF21DF5197FCCC1002B9220 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C26DD6660E520345CAFCC14D /* Pods-LeanChat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEPLOYMENT_POSTPROCESSING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1631,7 +1606,6 @@
 				GCC_PREFIX_HEADER = "AVOSChatDemo/LeanChat-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Applications/Xcode6-Beta4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
 					"$(PROJECT_DIR)/$(TARGET_NAME)/third_party/ZXing",
 				);
 				INFOPLIST_FILE = "AVOSChatDemo/LeanChat-Info.plist";
@@ -1640,13 +1614,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
-					"$(PROJECT_DIR)/build/Release-iphoneos",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = LeanChat;
-				PROVISIONING_PROFILE = "c92f9f6a-c25b-4b35-acc0-4e6f54a0b08d";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1658,20 +1630,20 @@
 		8CF21DC2197FCCC1002B9220 /* Build configuration list for PBXProject "LeanChat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8CF21DF1197FCCC1002B9220 /* Debug */,
 				8CF21DF2197FCCC1002B9220 /* Release */,
+				70491C661ADF7A5200E8E295 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		8CF21DF3197FCCC1002B9220 /* Build configuration list for PBXNativeTarget "LeanChat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8CF21DF4197FCCC1002B9220 /* Debug */,
 				8CF21DF5197FCCC1002B9220 /* Release */,
+				70491C671ADF7A5200E8E295 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
