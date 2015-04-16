@@ -122,7 +122,7 @@
 }
 
 -(void)toFindPassword:(id)sender {
-    [CDUtils alert:@"鞭打工程师中..."];
+    [self showHUDText:@"鞭打工程师中..."];
 }
 
 -(void)didPasswordTextFieldReturn:(CDTextField *)passwordField{

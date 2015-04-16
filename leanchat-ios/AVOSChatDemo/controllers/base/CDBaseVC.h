@@ -10,4 +10,6 @@
 
 @interface CDBaseVC : UIViewController
 
+-(void)showHUDText:(NSString*)text;
+
 @end

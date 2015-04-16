@@ -12,7 +12,7 @@
 
 @interface CDRegisterVC () <CDEntryVCDelegate>
 
-@property (nonatomic,strong) UIBarButtonItem *cancelBarButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *cancelBarButtonItem;
 @property (nonatomic, strong) UIButton *registerButton;
 
 @end

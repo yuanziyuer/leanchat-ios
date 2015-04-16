@@ -10,8 +10,6 @@
 
 @interface UIViewController ()
 
-- (CGRect)_defaultInitialViewFrame;
-
 @end
 
 @implementation CDBaseVC
@@ -24,6 +22,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+}
+
+-(void)showHUDText:(NSString*)text{
+    MBProgressHUD* hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText=text;
+    hud.margin=10.f;
+    hud.removeFromSuperViewOnHide=YES;
+    hud.mode=MBProgressHUDModeText;
+    [hud hide:YES afterDelay:2];
 }
 
 @end
