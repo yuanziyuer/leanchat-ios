@@ -33,8 +33,6 @@
 		7056D47E1AD51CF2008391FC /* CDIMConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 7056D47C1AD51CF2008391FC /* CDIMConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7056D47F1AD51CF2008391FC /* CDIMConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7056D47D1AD51CF2008391FC /* CDIMConfig.m */; };
 		7059DCDD1ACE4ECE009D17AB /* LeanChatLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 7059DCDC1ACE4ECE009D17AB /* LeanChatLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7059DCE31ACE4ECE009D17AB /* LeanChatLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7059DCD71ACE4ECE009D17AB /* LeanChatLib.framework */; };
-		7059DCEA1ACE4ECE009D17AB /* LeanChatLibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7059DCE91ACE4ECE009D17AB /* LeanChatLibTests.m */; };
 		7059E5641ACE5163009D17AB /* CDReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 7059E38C1ACE5163009D17AB /* CDReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7059E5651ACE5163009D17AB /* CDReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7059E38D1ACE5163009D17AB /* CDReachability.m */; };
 		7059E6E41ACE5163009D17AB /* Emoji.h in Headers */ = {isa = PBXBuildFile; fileRef = 7059E5541ACE5163009D17AB /* Emoji.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -356,16 +354,6 @@
 		70B2991A1ACE9A4300FE265E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B299191ACE9A4300FE265E /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		7059DCE41ACE4ECE009D17AB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7059DCCE1ACE4ECE009D17AB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7059DCD61ACE4ECE009D17AB;
-			remoteInfo = LeanChatLib;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		701D853A1ADCF02100982D5D /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
 		701D853B1ADCF02100982D5D /* AVOSCloudIM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloudIM.framework; sourceTree = "<group>"; };
@@ -395,7 +383,6 @@
 		7059DCD71ACE4ECE009D17AB /* LeanChatLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LeanChatLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7059DCDB1ACE4ECE009D17AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7059DCDC1ACE4ECE009D17AB /* LeanChatLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeanChatLib.h; sourceTree = "<group>"; };
-		7059DCE21ACE4ECE009D17AB /* LeanChatLibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LeanChatLibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7059DCE81ACE4ECE009D17AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7059DCE91ACE4ECE009D17AB /* LeanChatLibTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeanChatLibTests.m; sourceTree = "<group>"; };
 		7059E38C1ACE5163009D17AB /* CDReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDReachability.h; sourceTree = "<group>"; };
@@ -743,14 +730,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7059DCDF1ACE4ECE009D17AB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7059DCE31ACE4ECE009D17AB /* LeanChatLib.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -787,7 +766,6 @@
 			isa = PBXGroup;
 			children = (
 				7059DCD71ACE4ECE009D17AB /* LeanChatLib.framework */,
-				7059DCE21ACE4ECE009D17AB /* LeanChatLibTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1706,24 +1684,6 @@
 			productReference = 7059DCD71ACE4ECE009D17AB /* LeanChatLib.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		7059DCE11ACE4ECE009D17AB /* LeanChatLibTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7059DCF01ACE4ECE009D17AB /* Build configuration list for PBXNativeTarget "LeanChatLibTests" */;
-			buildPhases = (
-				7059DCDE1ACE4ECE009D17AB /* Sources */,
-				7059DCDF1ACE4ECE009D17AB /* Frameworks */,
-				7059DCE01ACE4ECE009D17AB /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				7059DCE51ACE4ECE009D17AB /* PBXTargetDependency */,
-			);
-			name = LeanChatLibTests;
-			productName = LeanChatLibTests;
-			productReference = 7059DCE21ACE4ECE009D17AB /* LeanChatLibTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1734,9 +1694,6 @@
 				ORGANIZATIONNAME = avoscloud;
 				TargetAttributes = {
 					7059DCD61ACE4ECE009D17AB = {
-						CreatedOnToolsVersion = 6.2;
-					};
-					7059DCE11ACE4ECE009D17AB = {
 						CreatedOnToolsVersion = 6.2;
 					};
 				};
@@ -1755,7 +1712,6 @@
 			projectRoot = "";
 			targets = (
 				7059DCD61ACE4ECE009D17AB /* LeanChatLib */,
-				7059DCE11ACE4ECE009D17AB /* LeanChatLibTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1859,13 +1815,6 @@
 				70B2982F1ACE95C900FE265E /* section0_emotion5@2x.png in Resources */,
 				70B298391ACE95C900FE265E /* sharemore_friendcard@2x.png in Resources */,
 				70B2984C1ACE95C900FE265E /* weChatBubble_Sending_Solid@2x.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7059DCE01ACE4ECE009D17AB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1994,23 +1943,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7059DCDE1ACE4ECE009D17AB /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7059DCEA1ACE4ECE009D17AB /* LeanChatLibTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		7059DCE51ACE4ECE009D17AB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7059DCD61ACE4ECE009D17AB /* LeanChatLib */;
-			targetProxy = 7059DCE41ACE4ECE009D17AB /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		70B2979E1ACE95C900FE265E /* MessageDisplayKitString.strings */ = {
@@ -2062,7 +1995,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MACH_O_TYPE = staticlib;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -2086,7 +2020,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2100,6 +2034,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MACH_O_TYPE = staticlib;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2125,7 +2060,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2156,36 +2091,6 @@
 			};
 			name = Release;
 		};
-		7059DCF11ACE4ECE009D17AB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = LeanChatLibTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		7059DCF21ACE4ECE009D17AB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = LeanChatLibTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2203,15 +2108,6 @@
 			buildConfigurations = (
 				7059DCEE1ACE4ECE009D17AB /* Debug */,
 				7059DCEF1ACE4ECE009D17AB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		7059DCF01ACE4ECE009D17AB /* Build configuration list for PBXNativeTarget "LeanChatLibTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7059DCF11ACE4ECE009D17AB /* Debug */,
-				7059DCF21ACE4ECE009D17AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

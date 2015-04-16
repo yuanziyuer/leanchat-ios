@@ -121,10 +121,10 @@
 		7045795E1AD8038D00452531 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7045795D1AD8038D00452531 /* ImageIO.framework */; };
 		704579601AD8039A00452531 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7045795F1AD8039A00452531 /* MapKit.framework */; };
 		704579621AD803AD00452531 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704579611AD803AD00452531 /* MediaPlayer.framework */; };
-		704579631AD805A200452531 /* LeanChatLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7045795A1AD8036600452531 /* LeanChatLib.framework */; };
 		70457B181ADB9ED700452531 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 70457B171ADB9ED700452531 /* Reachability.m */; };
 		704727A71A2CFE6300690286 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 704727A61A2CFE6300690286 /* libz.dylib */; };
 		70491C611ADF673F00E8E295 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 70491C601ADF673F00E8E295 /* MBProgressHUD.m */; };
+		704922AD1ADFBA9300E8E295 /* LeanChatLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704922AA1ADFB99500E8E295 /* LeanChatLib.framework */; };
 		704A890F1A30F5B200D2A3C2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */; };
 		7056D4701AD4DB18008391FC /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7056D46F1AD4DB18008391FC /* CDUser.m */; };
 		7059E72D1ACE727B009D17AB /* CDIMService.m in Sources */ = {isa = PBXBuildFile; fileRef = 7059E72C1ACE727B009D17AB /* CDIMService.m */; };
@@ -238,23 +238,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		704579591AD8036600452531 /* PBXContainerItemProxy */ = {
+		704922A91ADFB99500E8E295 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 704579541AD8036600452531 /* LeanChatLib.xcodeproj */;
+			containerPortal = 704922A51ADFB99500E8E295 /* LeanChatLib.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 7059DCD71ACE4ECE009D17AB;
 			remoteInfo = LeanChatLib;
 		};
-		7045795B1AD8036600452531 /* PBXContainerItemProxy */ = {
+		704922AB1ADFBA8C00E8E295 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 704579541AD8036600452531 /* LeanChatLib.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7059DCE21ACE4ECE009D17AB;
-			remoteInfo = LeanChatLibTests;
-		};
-		704579641AD805AB00452531 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 704579541AD8036600452531 /* LeanChatLib.xcodeproj */;
+			containerPortal = 704922A51ADFB99500E8E295 /* LeanChatLib.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 7059DCD61ACE4ECE009D17AB;
 			remoteInfo = LeanChatLib;
@@ -436,7 +429,6 @@
 		704578F61AD7DA2F00452531 /* CDChatVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDChatVC.h; sourceTree = "<group>"; };
 		704578F71AD7DA2F00452531 /* CDChatVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDChatVC.m; sourceTree = "<group>"; };
 		704578F91AD7E28A00452531 /* chat_menu_people.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_menu_people.png; sourceTree = "<group>"; };
-		704579541AD8036600452531 /* LeanChatLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LeanChatLib.xcodeproj; path = ../LeanChatLib/LeanChatLib.xcodeproj; sourceTree = "<group>"; };
 		7045795D1AD8038D00452531 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		7045795F1AD8039A00452531 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		704579611AD803AD00452531 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -445,6 +437,7 @@
 		704727A61A2CFE6300690286 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		70491C5F1ADF673F00E8E295 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		70491C601ADF673F00E8E295 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		704922A51ADFB99500E8E295 /* LeanChatLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LeanChatLib.xcodeproj; path = ../LeanChatLib/LeanChatLib.xcodeproj; sourceTree = "<group>"; };
 		704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7056D46E1AD4DB18008391FC /* CDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUser.h; sourceTree = "<group>"; };
 		7056D46F1AD4DB18008391FC /* CDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUser.m; sourceTree = "<group>"; };
@@ -568,7 +561,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				704579631AD805A200452531 /* LeanChatLib.framework in Frameworks */,
+				704922AD1ADFBA9300E8E295 /* LeanChatLib.framework in Frameworks */,
 				704579621AD803AD00452531 /* MediaPlayer.framework in Frameworks */,
 				704579601AD8039A00452531 /* MapKit.framework in Frameworks */,
 				7045795E1AD8038D00452531 /* ImageIO.framework in Frameworks */,
@@ -957,15 +950,6 @@
 			path = views;
 			sourceTree = "<group>";
 		};
-		704579551AD8036600452531 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				7045795A1AD8036600452531 /* LeanChatLib.framework */,
-				7045795C1AD8036600452531 /* LeanChatLibTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		70457B151ADB9ED700452531 /* Reachability */ = {
 			isa = PBXGroup;
 			children = (
@@ -982,6 +966,14 @@
 				70491C601ADF673F00E8E295 /* MBProgressHUD.m */,
 			);
 			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		704922A61ADFB99500E8E295 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				704922AA1ADFB99500E8E295 /* LeanChatLib.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		70B2984D1ACE95E100FE265E /* Resources */ = {
@@ -1087,7 +1079,7 @@
 		8CF21DBE197FCCC1002B9220 = {
 			isa = PBXGroup;
 			children = (
-				704579541AD8036600452531 /* LeanChatLib.xcodeproj */,
+				704922A51ADFB99500E8E295 /* LeanChatLib.xcodeproj */,
 				7001388B1ABC19D90050D0F7 /* AVOSChatDemo */,
 				8CF21DC9197FCCC1002B9220 /* Frameworks */,
 				8CF21DC8197FCCC1002B9220 /* Products */,
@@ -1144,7 +1136,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				704579651AD805AB00452531 /* PBXTargetDependency */,
+				704922AC1ADFBA8C00E8E295 /* PBXTargetDependency */,
 			);
 			name = LeanChat;
 			productName = AVOSChatDemo;
@@ -1188,8 +1180,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 704579551AD8036600452531 /* Products */;
-					ProjectRef = 704579541AD8036600452531 /* LeanChatLib.xcodeproj */;
+					ProductGroup = 704922A61ADFB99500E8E295 /* Products */;
+					ProjectRef = 704922A51ADFB99500E8E295 /* LeanChatLib.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1200,18 +1192,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		7045795A1AD8036600452531 /* LeanChatLib.framework */ = {
+		704922AA1ADFB99500E8E295 /* LeanChatLib.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = LeanChatLib.framework;
-			remoteRef = 704579591AD8036600452531 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		7045795C1AD8036600452531 /* LeanChatLibTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = LeanChatLibTests.xctest;
-			remoteRef = 7045795B1AD8036600452531 /* PBXContainerItemProxy */;
+			remoteRef = 704922A91ADFB99500E8E295 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1446,10 +1431,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		704579651AD805AB00452531 /* PBXTargetDependency */ = {
+		704922AC1ADFBA8C00E8E295 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = LeanChatLib;
-			targetProxy = 704579641AD805AB00452531 /* PBXContainerItemProxy */;
+			targetProxy = 704922AB1ADFBA8C00E8E295 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1518,7 +1503,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEPLOYMENT_POSTPROCESSING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
