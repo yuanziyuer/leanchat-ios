@@ -38,10 +38,12 @@
     [[CDIM sharedInstance] closeWithCallback:^(BOOL succeeded, NSError *error) {
         UIApplication *app = [UIApplication sharedApplication];
         [app performSelector:@selector(suspend)];
-        [self runAfterSecs:0.5 block:^{
-            exit(0);
-        }];
+        [self performSelector:@selector(exitApp:) withObject:nil afterDelay:0.5];
     }];
+}
+
+-(void)exitApp:(id)sender{
+    exit(0);
 }
 
 - (void)didReceiveMemoryWarning {
