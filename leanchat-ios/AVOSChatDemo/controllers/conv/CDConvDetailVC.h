@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "CDCommon.h"
 
-@interface CDConvDetailVC : UIViewController
+@interface CDConvDetailVC : UITableViewController
 
 @end

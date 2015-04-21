@@ -18,7 +18,6 @@
 		70013B851ABC19DA0050D0F7 /* CDConvCreateVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138A41ABC19D90050D0F7 /* CDConvCreateVC.m */; };
 		70013B861ABC19DA0050D0F7 /* CDConvCreateVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 700138A51ABC19D90050D0F7 /* CDConvCreateVC.xib */; };
 		70013B871ABC19DA0050D0F7 /* CDConvDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138A71ABC19D90050D0F7 /* CDConvDetailVC.m */; };
-		70013B881ABC19DA0050D0F7 /* CDConvDetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 700138A81ABC19D90050D0F7 /* CDConvDetailVC.xib */; };
 		70013B891ABC19DA0050D0F7 /* CDConvNameVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138AA1ABC19D90050D0F7 /* CDConvNameVC.m */; };
 		70013B8A1ABC19DA0050D0F7 /* CDConvNameVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 700138AB1ABC19D90050D0F7 /* CDConvNameVC.xib */; };
 		70013B8B1ABC19DA0050D0F7 /* CDGroupedConvListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138AD1ABC19D90050D0F7 /* CDGroupedConvListVC.m */; };
@@ -100,8 +99,6 @@
 		70013D061ABC19DB0050D0F7 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B591ABC19DA0050D0F7 /* UIImage+Resize.m */; };
 		70013D081ABC19DB0050D0F7 /* CDBadgeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B5F1ABC19DA0050D0F7 /* CDBadgeLabel.m */; };
 		70013D091ABC19DB0050D0F7 /* CDButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B611ABC19DA0050D0F7 /* CDButton.m */; };
-		70013D0A1ABC19DB0050D0F7 /* CDImageLabelCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B631ABC19DA0050D0F7 /* CDImageLabelCollectionCell.m */; };
-		70013D0B1ABC19DB0050D0F7 /* CDImageLabelCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70013B641ABC19DA0050D0F7 /* CDImageLabelCollectionCell.xib */; };
 		70013D0C1ABC19DB0050D0F7 /* CDImageLabelTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B661ABC19DA0050D0F7 /* CDImageLabelTableCell.m */; };
 		70013D0D1ABC19DB0050D0F7 /* CDImageLabelTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70013B671ABC19DA0050D0F7 /* CDImageLabelTableCell.xib */; };
 		70013D0F1ABC19DB0050D0F7 /* CDImageTwoLabelTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70013B6A1ABC19DA0050D0F7 /* CDImageTwoLabelTableCell.xib */; };
@@ -225,6 +222,8 @@
 		70B299071ACE95E100FE265E /* weChatBubble_Sending_Cavern@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B298A91ACE95E100FE265E /* weChatBubble_Sending_Cavern@2x.png */; };
 		70B299081ACE95E100FE265E /* weChatBubble_Sending_LeanChat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B298AA1ACE95E100FE265E /* weChatBubble_Sending_LeanChat@2x.png */; };
 		70B299091ACE95E100FE265E /* weChatBubble_Sending_Solid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B298AB1ACE95E100FE265E /* weChatBubble_Sending_Solid@2x.png */; };
+		70C57AB91AE50370008212B0 /* CDConvDetailMembersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70C57AB81AE50370008212B0 /* CDConvDetailMembersCell.m */; };
+		70D5FE671AE6237B00E4AA0A /* CDConvDetailMembersSubCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D5FE661AE6237B00E4AA0A /* CDConvDetailMembersSubCell.m */; };
 		70F9A3AD1A72BC6D00195430 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F9A3A41A72A12500195430 /* AVFoundation.framework */; };
 		8C470C9D19926019006A4E87 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C470C9C19926019006A4E87 /* libiconv.dylib */; };
 		8C925C1F19876D8100D2750B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C925C1E19876D8100D2750B /* libicucore.dylib */; };
@@ -275,7 +274,6 @@
 		700138A51ABC19D90050D0F7 /* CDConvCreateVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDConvCreateVC.xib; sourceTree = "<group>"; };
 		700138A61ABC19D90050D0F7 /* CDConvDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConvDetailVC.h; sourceTree = "<group>"; };
 		700138A71ABC19D90050D0F7 /* CDConvDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDConvDetailVC.m; sourceTree = "<group>"; };
-		700138A81ABC19D90050D0F7 /* CDConvDetailVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDConvDetailVC.xib; sourceTree = "<group>"; };
 		700138A91ABC19D90050D0F7 /* CDConvNameVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConvNameVC.h; sourceTree = "<group>"; };
 		700138AA1ABC19D90050D0F7 /* CDConvNameVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDConvNameVC.m; sourceTree = "<group>"; };
 		700138AB1ABC19D90050D0F7 /* CDConvNameVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDConvNameVC.xib; sourceTree = "<group>"; };
@@ -398,9 +396,6 @@
 		70013B5F1ABC19DA0050D0F7 /* CDBadgeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDBadgeLabel.m; sourceTree = "<group>"; };
 		70013B601ABC19DA0050D0F7 /* CDButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDButton.h; sourceTree = "<group>"; };
 		70013B611ABC19DA0050D0F7 /* CDButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDButton.m; sourceTree = "<group>"; };
-		70013B621ABC19DA0050D0F7 /* CDImageLabelCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDImageLabelCollectionCell.h; sourceTree = "<group>"; };
-		70013B631ABC19DA0050D0F7 /* CDImageLabelCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDImageLabelCollectionCell.m; sourceTree = "<group>"; };
-		70013B641ABC19DA0050D0F7 /* CDImageLabelCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDImageLabelCollectionCell.xib; sourceTree = "<group>"; };
 		70013B651ABC19DA0050D0F7 /* CDImageLabelTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDImageLabelTableCell.h; sourceTree = "<group>"; };
 		70013B661ABC19DA0050D0F7 /* CDImageLabelTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDImageLabelTableCell.m; sourceTree = "<group>"; };
 		70013B671ABC19DA0050D0F7 /* CDImageLabelTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDImageLabelTableCell.xib; sourceTree = "<group>"; };
@@ -542,6 +537,10 @@
 		70B298AA1ACE95E100FE265E /* weChatBubble_Sending_LeanChat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChatBubble_Sending_LeanChat@2x.png"; sourceTree = "<group>"; };
 		70B298AB1ACE95E100FE265E /* weChatBubble_Sending_Solid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChatBubble_Sending_Solid@2x.png"; sourceTree = "<group>"; };
 		70B298AC1ACE95E100FE265E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MessageDisplayKitString.strings"; sourceTree = "<group>"; };
+		70C57AB71AE50370008212B0 /* CDConvDetailMembersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConvDetailMembersCell.h; sourceTree = "<group>"; };
+		70C57AB81AE50370008212B0 /* CDConvDetailMembersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDConvDetailMembersCell.m; sourceTree = "<group>"; };
+		70D5FE651AE6237B00E4AA0A /* CDConvDetailMembersSubCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConvDetailMembersSubCell.h; sourceTree = "<group>"; };
+		70D5FE661AE6237B00E4AA0A /* CDConvDetailMembersSubCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDConvDetailMembersSubCell.m; sourceTree = "<group>"; };
 		70F9A3A41A72A12500195430 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8C470C9C19926019006A4E87 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		8C925C1E19876D8100D2750B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
@@ -657,7 +656,6 @@
 				700138A51ABC19D90050D0F7 /* CDConvCreateVC.xib */,
 				700138A61ABC19D90050D0F7 /* CDConvDetailVC.h */,
 				700138A71ABC19D90050D0F7 /* CDConvDetailVC.m */,
-				700138A81ABC19D90050D0F7 /* CDConvDetailVC.xib */,
 				700138A91ABC19D90050D0F7 /* CDConvNameVC.h */,
 				700138AA1ABC19D90050D0F7 /* CDConvNameVC.m */,
 				700138AB1ABC19D90050D0F7 /* CDConvNameVC.xib */,
@@ -921,13 +919,14 @@
 		70013B5D1ABC19DA0050D0F7 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				70C57AB71AE50370008212B0 /* CDConvDetailMembersCell.h */,
+				70C57AB81AE50370008212B0 /* CDConvDetailMembersCell.m */,
+				70D5FE651AE6237B00E4AA0A /* CDConvDetailMembersSubCell.h */,
+				70D5FE661AE6237B00E4AA0A /* CDConvDetailMembersSubCell.m */,
 				70013B5E1ABC19DA0050D0F7 /* CDBadgeLabel.h */,
 				70013B5F1ABC19DA0050D0F7 /* CDBadgeLabel.m */,
 				70013B601ABC19DA0050D0F7 /* CDButton.h */,
 				70013B611ABC19DA0050D0F7 /* CDButton.m */,
-				70013B621ABC19DA0050D0F7 /* CDImageLabelCollectionCell.h */,
-				70013B631ABC19DA0050D0F7 /* CDImageLabelCollectionCell.m */,
-				70013B641ABC19DA0050D0F7 /* CDImageLabelCollectionCell.xib */,
 				70013B651ABC19DA0050D0F7 /* CDImageLabelTableCell.h */,
 				70013B661ABC19DA0050D0F7 /* CDImageLabelTableCell.m */,
 				70013B671ABC19DA0050D0F7 /* CDImageLabelTableCell.xib */,
@@ -1265,7 +1264,6 @@
 				70B298EF1ACE95E100FE265E /* section0_emotion8@2x.png in Resources */,
 				70B298F91ACE95E100FE265E /* sharemore_openapi@2x.png in Resources */,
 				70B299051ACE95E100FE265E /* weChatBubble_Receiving_LeanChat@2x.png in Resources */,
-				70013B881ABC19DA0050D0F7 /* CDConvDetailVC.xib in Resources */,
 				704578FA1AD7E28A00452531 /* chat_menu_people.png in Resources */,
 				70B298EB1ACE95E100FE265E /* section0_emotion4@2x.png in Resources */,
 				70013B941ABC19DA0050D0F7 /* CDNewFriendVC.xib in Resources */,
@@ -1331,7 +1329,6 @@
 				70013BDC1ABC19DA0050D0F7 /* menu_add_photo@2x.png in Resources */,
 				70B298B21ACE95E100FE265E /* CellNotSelected@2x.png in Resources */,
 				70B298C91ACE95E100FE265E /* msg_chat_voice_unread.png in Resources */,
-				70013D0B1ABC19DB0050D0F7 /* CDImageLabelCollectionCell.xib in Resources */,
 				70B298F61ACE95E100FE265E /* sharemore_friendcard@2x.png in Resources */,
 				70B298B91ACE95E100FE265E /* ContactsPanelDotRect@2x.png in Resources */,
 				70B298D21ACE95E100FE265E /* ReceiverVoiceNodePlaying002@2x.png in Resources */,
@@ -1380,6 +1377,7 @@
 				70013C031ABC19DB0050D0F7 /* README.md in Sources */,
 				70013D081ABC19DB0050D0F7 /* CDBadgeLabel.m in Sources */,
 				70013B9E1ABC19DA0050D0F7 /* CDAddRequest.m in Sources */,
+				70C57AB91AE50370008212B0 /* CDConvDetailMembersCell.m in Sources */,
 				70013C061ABC19DB0050D0F7 /* UIAlertView+AFNetworking.m in Sources */,
 				70013B981ABC19DA0050D0F7 /* CDUserInfoVC.m in Sources */,
 				70013B971ABC19DA0050D0F7 /* CDPushSettingVC.m in Sources */,
@@ -1396,8 +1394,8 @@
 				70013BF81ABC19DB0050D0F7 /* CDUtils.m in Sources */,
 				70013C001ABC19DB0050D0F7 /* AFURLResponseSerialization.m in Sources */,
 				7056D4701AD4DB18008391FC /* CDUser.m in Sources */,
+				70D5FE671AE6237B00E4AA0A /* CDConvDetailMembersSubCell.m in Sources */,
 				70013C051ABC19DB0050D0F7 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
-				70013D0A1ABC19DB0050D0F7 /* CDImageLabelCollectionCell.m in Sources */,
 				70013B891ABC19DA0050D0F7 /* CDConvNameVC.m in Sources */,
 				70013B7E1ABC19DA0050D0F7 /* CDBaseTableVC.m in Sources */,
 				70013BFA1ABC19DB0050D0F7 /* AFHTTPRequestOperationManager.m in Sources */,

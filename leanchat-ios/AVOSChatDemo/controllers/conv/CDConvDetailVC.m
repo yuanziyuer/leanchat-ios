@@ -7,20 +7,20 @@
 //
 
 #import "CDConvDetailVC.h"
-#import "CDImageLabelCollectionCell.h"
 #import "CDAddMemberVC.h"
 #import "CDUserInfoVC.h"
 #import "CDConvNameVC.h"
 #import "CDService.h"
+#import "CDConvDetailMembersCell.h"
 
-@interface CDConvDetailVC ()<UICollectionViewDelegate,UICollectionViewDataSource,
-   UIGestureRecognizerDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface CDConvDetailVC ()<UIGestureRecognizerDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,CDConvDetailMembersHeaderViewDelegate>
+
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
-@property CDIM* im;
+@property (nonatomic,strong) CDConvDetailMembersCell *membersCell;
 
-@property NSArray* groupMembers;
+@property CDIM* im;
 
 @property BOOL own;
 
@@ -30,14 +30,15 @@
 
 @property CDNotify* notify;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalConstraint;
-@property (weak, nonatomic) IBOutlet UITableView *settingTableView;
+@property (nonatomic,strong) UITableViewCell* nameCell;
 
-@property UITableViewCell* nameCell;
+@property (nonatomic,strong) UITableViewCell* deleteMsgsCell;
 
-@property UITableViewCell* deleteMsgsCell;
+@property (nonatomic,strong) UITableViewCell* quitCell;
 
-@property UITableViewCell* quitCell;
+@property (nonatomic,strong) AVUser *longPressedMember;
+
+@property (nonatomic,strong) NSArray* members;
 
 @end
 
@@ -45,42 +46,59 @@
 
 static NSString * const reuseIdentifier = @"Cell";
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _im=[CDIM sharedInstance];
+        _notify=[CDNotify sharedInstance];
+        _storage=[CDStorage sharedInstance];
+        _type=self.conv.type;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     //self.clearsSelectionOnViewWillAppear = NO;
     
     self.view.backgroundColor=NORMAL_BACKGROUD_COLOR;
-    
-    NSString* nibName=NSStringFromClass([CDImageLabelCollectionCell class]);
-    [self.collectionView registerNib:[UINib nibWithNibName:nibName bundle:nil]  forCellWithReuseIdentifier:reuseIdentifier];
-    self.collectionView.backgroundColor = [UIColor whiteColor];
-    
-    [_collectionView setDataSource:self];
-    [_collectionView setDelegate:self];
-    
-    [_settingTableView setDataSource:self];
-    [_settingTableView setDelegate:self];
-    
-    UILongPressGestureRecognizer* gestureRecognizer=[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressUser:)];
-    gestureRecognizer.delegate=self;
-    [self.collectionView addGestureRecognizer:gestureRecognizer];
-    
-    _im=[CDIM sharedInstance];
-    _notify=[CDNotify sharedInstance];
-    _storage=[CDStorage sharedInstance];
-    _type=self.conv.type;
     [_notify addConvObserver:self selector:@selector(refresh)];
     [self refresh];
-    
-    _nameCell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell1"];
-    _nameCell.textLabel.text=@"群聊名称";
-    _nameCell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
-    
-    _deleteMsgsCell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell2"];
-    _deleteMsgsCell.textLabel.text=@"清空聊天记录";
-    
-    _quitCell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell3"];
-    _quitCell.textLabel.text=@"删除并退出";
+}
+
+-(CDConvDetailMembersCell*)membersCell{
+    if(_membersCell==nil){
+        _membersCell=[[CDConvDetailMembersCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[CDConvDetailMembersCell reuseIdentifier]];
+        _membersCell.membersCellDelegate=self;
+    }
+    return _membersCell;
+}
+
+-(UITableViewCell*)nameCell{
+    if(_nameCell==nil){
+        _nameCell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell1"];
+        _nameCell.textLabel.text=@"群聊名称";
+        _nameCell.detailTextLabel.text=self.conv.displayName;
+        _nameCell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+    }
+    return _nameCell;
+}
+
+-(UITableViewCell*)deleteMsgsCell{
+    if(_deleteMsgsCell==nil){
+        _deleteMsgsCell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell2"];
+        _deleteMsgsCell.textLabel.text=@"清空聊天记录";
+    }
+    return _deleteMsgsCell;
+}
+
+-(UITableViewCell*)quitCell{
+    if(_quitCell==nil){
+        _quitCell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell3"];
+        _quitCell.textLabel.text=@"删除并退出";
+    }
+    return _quitCell;
 }
 
 -(AVIMConversation*)conv{
@@ -90,25 +108,22 @@ static NSString * const reuseIdentifier = @"Cell";
 -(void)refresh{
     AVIMConversation* conv=[self conv];
     NSSet* userIds=[NSSet setWithArray:conv.members];
-    [CDCache cacheUsersWithIds:userIds callback:^(BOOL succeeded, NSError *error) {
-        [CDUtils filterError:error callback:^{
-            _groupMembers=conv.members;
-            [UIView animateWithDuration:0 animations:^{
-                [self.collectionView reloadData];
-            } completion:^(BOOL finished) {
-                CGFloat h=self.collectionView.contentSize.height;
-                if(h<CGRectGetHeight(self.view.frame)){
-                    _verticalConstraint.constant=h;
-                }
-            }];
-        }];
-    }];
+    WEAKSELF
     NSString* curUserId=[AVUser currentUser].objectId;
     _own=[conv.creator isEqualToString:curUserId];
     [self setupBarButton];
-    [_settingTableView reloadData];
-    
-    self.title=[NSString stringWithFormat:@"详情(%d人)",self.conv.members.count];
+    self.title=[NSString stringWithFormat:@"详情(%ld人)",(long)self.conv.members.count];
+    [CDCache cacheUsersWithIds:userIds callback:^(BOOL succeeded, NSError *error) {
+        [CDUtils filterError:error callback:^{
+            NSMutableArray *memberUsers=[NSMutableArray array];
+            for(NSString* userId in userIds){
+                [memberUsers addObject:[CDCache lookupUser:userId]];
+            }
+            weakSelf.members=memberUsers;
+            weakSelf.membersCell.members=memberUsers;
+            [weakSelf.tableView reloadData];
+        }];
+    }];
 }
 
 -(void)setupBarButton{
@@ -147,22 +162,6 @@ static NSString * const reuseIdentifier = @"Cell";
     }
 }
 
-- (void)alertView:(UIAlertView *)alertView
-clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if(buttonIndex==0){
-        int pos=alertView.tag;
-        NSString* userId=[self.conv.members objectAtIndex:pos];
-        [self.conv removeMembersWithClientIds:@[userId] callback:^(BOOL succeeded, NSError *error) {
-            if([CDUtils filterError:error]){
-                [CDCache refreshCurConv:^(BOOL succeeded, NSError *error) {
-                    if([CDUtils filterError:error]){
-                    }
-                }];
-            }
-        }];
-    }
-}
-
 -(void)dealloc{
     [_notify removeConvObserver:self];
 }
@@ -179,55 +178,13 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
 
-#pragma mark <UICollectionViewDataSource>
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [_groupMembers count];
-}
-
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CDImageLabelCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-    int labelTag=1;
-    int imageTag=2;
-    
-    NSString* userId=[_groupMembers objectAtIndex:indexPath.row];
-    AVUser* user=[CDCache lookupUser:userId];
-    UILabel* label=(UILabel*)[cell viewWithTag:labelTag];
-    UIImageView* imageView=(UIImageView*)[cell viewWithTag:imageTag];
-    
-    [CDUserService displayAvatarOfUser:user avatarView:imageView];
-    label.text=user.username;
-    return cell;
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake(90, 90);
-}
-
-#pragma mark <UICollectionViewDelegate>
-
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSString* userId=[_groupMembers objectAtIndex:indexPath.row];
-    NSString* curUserId=[AVUser currentUser].objectId;
-    if([curUserId isEqualToString:userId]==YES){
-        return YES;
-    }
-    
-    AVUser* user=[CDCache lookupUser:userId];
-    
-    CDUserInfoVC* userInfoVC=[[CDUserInfoVC alloc] initWithUser:user];
-    [self.navigationController pushViewController:userInfoVC animated:YES];
-    return YES;
-}
-
 #pragma mark - tableview
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if(_type==CDConvTypeGroup){
-        return 3;
+        return 4;
     }else{
-        return 1;
+        return 2;
     }
 }
 
@@ -236,23 +193,25 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell* cell;
     if(_type==CDConvTypeGroup){
         switch (indexPath.section) {
             case 0:
-                return _nameCell;
+                return self.membersCell;
             case 1:
-                return _deleteMsgsCell;
+                return self.nameCell;
             case 2:
-                return _quitCell;
+                return self.deleteMsgsCell;
+            case 3:
+                return self.quitCell;
             default:
                 break;
         }
     }else{
         switch (indexPath.section) {
             case 0:
-                return _deleteMsgsCell;
-                break;
+                return self.membersCell;
+            case 1:
+                return self.deleteMsgsCell;
             default:
                 break;
         }
@@ -265,7 +224,11 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 44;
+    if(indexPath.section==0){
+        return [CDConvDetailMembersCell heightForMembers:self.members];
+    }else{
+        return 44;
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -280,26 +243,65 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(_type==CDConvTypeGroup){
         switch (indexPath.section) {
-            case 0:{
-                   CDConvNameVC* vc=[[CDConvNameVC alloc] init];
-                   vc.detailVC=self;
-                   vc.conv=self.conv;
-                   UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:vc];
-                   [self.navigationController presentViewController:nav animated:YES completion:nil];
-                }
-                break;
-            case 1:
-                [self deleteMsgs];
+            case 1:{
+                CDConvNameVC* vc=[[CDConvNameVC alloc] init];
+                vc.detailVC=self;
+                vc.conv=self.conv;
+                UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:vc];
+                [self.navigationController presentViewController:nav animated:YES completion:nil];
+            }
                 break;
             case 2:
+                [self deleteMsgs];
+                break;
+            case 3:
                 [self quitConv];
                 break;
         }
     }else{
-        if(indexPath.section==0){
+        if(indexPath.section==1){
             [self deleteMsgs];
         }
     }
 }
+
+-(void)didLongPressMember:(AVUser *)member{
+    if(_own){
+        AVIMConversation* conv=[self conv];
+        if([member.objectId isEqualToString:conv.creator]==NO){
+            UIAlertView * alert=[[UIAlertView alloc]
+                                 initWithTitle:nil message:@"确定要踢走该成员吗？"  delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
+            self.longPressedMember=member;
+            [alert show];
+        }
+    }
+}
+
+
+- (void)alertView:(UIAlertView *)alertView
+clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if(buttonIndex==0){
+        WEAKSELF
+        [self.conv removeMembersWithClientIds:@[self.longPressedMember.objectId] callback:^(BOOL succeeded, NSError *error) {
+            weakSelf.longPressedMember=nil;
+            if([CDUtils filterError:error]){
+                [CDCache refreshCurConv:^(BOOL succeeded, NSError *error) {
+                    if([CDUtils filterError:error]){
+                    }
+                }];
+            }
+        }];
+    }
+}
+
+-(void)didSelectMember:(AVUser *)member{
+    NSString* curUserId=[AVUser currentUser].objectId;
+    if([curUserId isEqualToString:member.objectId]==YES){
+        return ;
+    }
+    CDUserInfoVC* userInfoVC=[[CDUserInfoVC alloc] initWithUser:member];
+    [self.navigationController pushViewController:userInfoVC animated:YES];
+}
+
 
 @end

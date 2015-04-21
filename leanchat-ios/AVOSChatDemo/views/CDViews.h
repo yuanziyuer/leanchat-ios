@@ -11,7 +11,6 @@
 
 #import "CDButton.h"
 #import "CDImageLabelTableCell.h"
-#import "CDImageLabelCollectionCell.h"
 #import "CDLabelButtonTableCell.h"
 #import "CDPopMenu.h"
 #import "CDPopMenuItem.h"

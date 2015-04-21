@@ -242,7 +242,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
         return ;
     }
     _isLoadingMsg=YES;
-    DLog();
     [self runInGlobalQueue:^{
         int64_t maxTimestamp=(((int64_t)[[NSDate date] timeIntervalSince1970])+10)*1000;
         int64_t timestamp;
@@ -520,7 +519,6 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 
 // 发送语音消息的回调方法
 - (void)didSendVoice:(NSString *)voicePath voiceDuration:(NSString *)voiceDuration fromSender:(NSString *)sender onDate:(NSDate *)date {
-    DLog(@"%@",voicePath);
     [self sendFileMsgWithPath:voicePath type:kAVIMMessageMediaTypeAudio];
 }
 

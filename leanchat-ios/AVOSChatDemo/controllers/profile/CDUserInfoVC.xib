@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CDUserInfoVC">
@@ -18,11 +18,8 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default_user_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="Dw9-N6-97H">
-                    <rect key="frame" x="56" y="82" width="35" height="35"/>
-                </imageView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xgK-ZO-Nkd" customClass="CDResizableButton">
-                    <rect key="frame" x="39" y="150" width="242" height="32"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xgK-ZO-Nkd" customClass="CDResizableButton">
+                    <rect key="frame" x="39" y="150" width="242" height="30"/>
                     <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                     <state key="normal" title="添加好友" backgroundImage="blue_expand_normal.png">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -30,13 +27,29 @@
                     </state>
                     <state key="highlighted" backgroundImage="blue_expand_highlight.png"/>
                 </button>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TXM-82-HaM">
-                    <rect key="frame" x="105" y="78" width="136" height="43"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TXM-82-HaM">
+                    <rect key="frame" x="135" y="78" width="76" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_user_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="Dw9-N6-97H">
+                    <rect key="frame" x="92" y="71" width="35" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="DNZ-iX-yjI"/>
+                        <constraint firstAttribute="width" constant="35" id="gv1-tD-nxR"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="xgK-ZO-Nkd" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="39" id="9FT-hi-Thl"/>
+                <constraint firstItem="xgK-ZO-Nkd" firstAttribute="top" secondItem="TXM-82-HaM" secondAttribute="bottom" constant="51" id="CkY-Ul-Hz6"/>
+                <constraint firstItem="TXM-82-HaM" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="78" id="TJo-dT-6jm"/>
+                <constraint firstAttribute="trailing" secondItem="xgK-ZO-Nkd" secondAttribute="trailing" constant="39" id="ZF8-yf-OBo"/>
+                <constraint firstAttribute="centerX" secondItem="TXM-82-HaM" secondAttribute="centerX" constant="-13" id="ash-h6-tTp"/>
+                <constraint firstItem="TXM-82-HaM" firstAttribute="centerY" secondItem="Dw9-N6-97H" secondAttribute="centerY" id="lFr-9u-IbU"/>
+                <constraint firstItem="TXM-82-HaM" firstAttribute="leading" secondItem="Dw9-N6-97H" secondAttribute="trailing" constant="8" id="xYg-2Y-RbP"/>
+            </constraints>
         </view>
     </objects>
     <resources>
