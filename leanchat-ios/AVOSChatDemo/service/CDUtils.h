@@ -13,8 +13,6 @@
 
 #define SYSTEM_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
 
-typedef void (^CDBlock)();
-
 typedef void (^Int64Block)(int64_t num);
 
 typedef void (^CDUpgradeBlock)(BOOL upgrade,NSString* oldVersion,NSString* newVersion);
@@ -41,9 +39,9 @@ typedef void (^CDUpgradeBlock)(BOOL upgrade,NSString* oldVersion,NSString* newVe
 
 +(BOOL)filterError:(NSError*)error;
 
-+(void)filterError:(NSError*)error callback:(CDBlock)callback;
++(void)filterError:(NSError*)error callback:(dispatch_block_t)callback;
 
-+(void)logError:(NSError*)error callback:(CDBlock)callbak;
++(void)logError:(NSError*)error callback:(dispatch_block_t)callbak;
 
 +(void)hideNetworkIndicatorAndAlertError:(NSError*)error;
 

@@ -56,7 +56,6 @@ static NSString* reuseIdentifier=@"Cell";
     WEAKSELF
     [CDUserService findFriendsWithBlock:^(NSArray *friends, NSError *error) {
         if([CDUtils filterError:error]){
-            [CDCache registerUsers:friends];
             [_potentialIds removeAllObjects];
             for(AVUser* user in friends){
                 if([[CDCache getCurConv].members containsObject:user.objectId]==NO){

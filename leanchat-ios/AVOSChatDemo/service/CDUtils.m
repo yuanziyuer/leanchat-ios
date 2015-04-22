@@ -42,7 +42,7 @@
     return [self alertError:error]==NO;
 }
 
-+(void)filterError:(NSError*)error callback:(CDBlock)callback{
++(void)filterError:(NSError*)error callback:(dispatch_block_t)callback{
     if(error){
         [CDUtils alertError:error];
     }else{
@@ -52,7 +52,7 @@
     }
 }
 
-+(void)logError:(NSError*)error callback:(CDBlock)callback{
++(void)logError:(NSError*)error callback:(dispatch_block_t)callback{
     if(error){
         NSLog(@"%@",[error localizedDescription]);
     }else{

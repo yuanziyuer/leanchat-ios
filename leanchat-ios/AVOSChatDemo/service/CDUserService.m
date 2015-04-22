@@ -8,6 +8,7 @@
 
 #import "CDUserService.h"
 #import "CDUtils.h"
+#import "CDCache.h"
 
 static UIImage* defaultAvatar;
 
@@ -17,7 +18,12 @@ static UIImage* defaultAvatar;
     AVUser* user=[AVUser currentUser];
     AVQuery* q=[user followeeQuery];
     q.cachePolicy=kAVCachePolicyNetworkElseCache;
-    [q findObjectsInBackgroundWithBlock:block];
+    [q findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(error==nil){
+            [CDCache registerUsers:objects];
+        }
+        block(objects,error);
+    }];
 }
 
 +(void)isMyFriend:(AVUser*)user block:(AVBooleanResultBlock)block{

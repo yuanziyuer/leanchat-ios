@@ -13,9 +13,10 @@
 #import "CDImageLabelTableCell.h"
 #import "CDUtils.h"
 
-@interface CDAddFriendVC (){
-    NSArray *users;
-}
+@interface CDAddFriendVC ()
+
+@property (nonatomic,strong) NSArray *users;
+
 @end
 
 static NSString* cellIndentifier=@"cellIndentifier";
@@ -38,7 +39,7 @@ static NSString* cellIndentifier=@"cellIndentifier";
     [CDUserService findUsersByPartname:name withBlock:^(NSArray *objects, NSError *error) {
         [CDUtils filterError:error callback:^{
             if(objects){
-                users=objects;
+                self.users=objects;
                 [_tableView reloadData];
             }
         }];
@@ -50,7 +51,7 @@ static NSString* cellIndentifier=@"cellIndentifier";
 }
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [users count];
+    return [self.users count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -58,14 +59,14 @@ static NSString* cellIndentifier=@"cellIndentifier";
     if(!cell){
         cell=[[CDImageLabelTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndentifier];
     }
-    AVUser *user=users[indexPath.row];
+    AVUser *user=self.users[indexPath.row];
     cell.myLabel.text=user.username;
     [CDUserService displayAvatarOfUser:user avatarView:cell.myImageView];
     return cell;
 }
 
 -(void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    AVUser *user=users[indexPath.row];
+    AVUser *user=self.users[indexPath.row];
     CDUserInfoVC *controller=[[CDUserInfoVC alloc] init];
     controller.user=user;
     [self.navigationController pushViewController:controller animated:YES];

@@ -19,13 +19,13 @@
 @interface CDFriendListVC()<UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *users;
+@property (nonatomic, strong) NSArray *users;
 @property (weak, nonatomic) IBOutlet UIView *myNewFriendView;
 @property (weak, nonatomic) IBOutlet UIView *groupView;
 @property (nonatomic,assign) NSInteger addRequestN;
 @property (weak, nonatomic) IBOutlet UIImageView *myNewFriendIcon;
-@property JSBadgeView* badgeView;
-@property UIRefreshControl* refreshControl;
+@property (nonatomic,strong) JSBadgeView* myNewFriendBadgeView;
+@property (nonatomic) UIRefreshControl* refreshControl;
 
 @end
 
@@ -36,7 +36,7 @@
     if ((self = [super init])) {
         self.title = @"联系人";
         self.tabBarItem.image = [UIImage imageNamed:@"tabbar_contacts_active"];
-        [self setBadgeIncludeBadgeView:NO];
+        [self setNewAddRequestBadge];
     }
     return self;
 }
@@ -46,39 +46,57 @@
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]
                                             initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                             target:self action:@selector(goAddFriend:)];
+    [self setupNewFriendAndGroupView];
+    [self setupTableView];
+    [self refresh];
+}
+
+-(void)setupTableView{
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
-    
+    [self.tableView addSubview:self.refreshControl];
+    UILongPressGestureRecognizer *recogizer=[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
+    recogizer.minimumPressDuration=1.0;
+    [self.tableView addGestureRecognizer:recogizer];
+}
+
+-(void)setupNewFriendAndGroupView{
     UITapGestureRecognizer *singleTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goNewFriend:)];
     [self.myNewFriendView addGestureRecognizer:singleTap];
     
     singleTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goGroup:)];
     [self.groupView addGestureRecognizer:singleTap];
     
-    _refreshControl=[[UIRefreshControl alloc] init];
-    [_refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:_refreshControl];
-    UILongPressGestureRecognizer *recogizer=[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
-    recogizer.minimumPressDuration=1.0;
-    [self.tableView addGestureRecognizer:recogizer];
-    
-    [self refresh];
+    self.myNewFriendBadgeView.badgeText=nil;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+-(UIRefreshControl*)refreshControl{
+    if(_refreshControl==nil){
+        _refreshControl=[[UIRefreshControl alloc] init];
+        [_refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    }
+    return _refreshControl;
+}
+
+-(JSBadgeView*)myNewFriendBadgeView{
+    if(_myNewFriendBadgeView==nil){
+        _myNewFriendBadgeView=[[JSBadgeView alloc] initWithParentView:_myNewFriendIcon alignment:JSBadgeViewAlignmentTopRight];
+        _myNewFriendBadgeView.badgeText=nil;
+    }
+    return _myNewFriendBadgeView;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - Action
 
 -(void)goNewFriend:(id)sender{
     NSUserDefaults* userDefaults=[NSUserDefaults standardUserDefaults];
     [userDefaults setObject:@(_addRequestN) forKey:@"addRequestN"];
     [userDefaults synchronize];
-    [_badgeView removeFromSuperview];
+    self.myNewFriendBadgeView.badgeText=nil;
     CDNewFriendVC *controller=[[CDNewFriendVC alloc] init];
     controller.friendListVC=self;
     controller.hidesBottomBarWhenPushed=YES;
@@ -98,58 +116,58 @@
     [[self navigationController] pushViewController:controller animated:YES];
 }
 
+#pragma mark - load data
+
 -(void)refresh{
-    [_refreshControl beginRefreshing];
-    [self refresh:_refreshControl];
+    [self refresh:nil];
 }
 
 -(void)refresh:(UIRefreshControl*)refreshControl{
-    BOOL networkOnly= refreshControl!=nil;
     [CDUtils showNetworkIndicator];
+    WEAKSELF
     [CDUserService findFriendsWithBlock:^(NSArray *objects, NSError *error) {
-        [CDUtils stopRefreshControl:refreshControl];
+        if(refreshControl){
+            [CDUtils stopRefreshControl:refreshControl];
+        }
         [CDUtils hideNetworkIndicator];
-        CDBlock callback=^{
-            self.users = [objects mutableCopy];
-            [CDCache registerUsers:self.users];
-            [self.tableView reloadData];
-        };
-        if(error && (error.code==kAVErrorCacheMiss || error.code==1)){
+        // why kAVErrorInternalServer ?
+        if(error && (error.code==kAVErrorCacheMiss || error.code==kAVErrorInternalServer)){
             // for the first start
-            objects=[NSMutableArray array];
-            callback();
+            weakSelf.users=[NSMutableArray array];
+            [weakSelf.tableView reloadData];
         }else{
-            [CDUtils filterError:error callback:callback];
+            [CDUtils filterError:error callback:^{
+                weakSelf.users=objects;
+                [weakSelf.tableView reloadData];
+            }];
         }
     }];
-    [self setBadgeIncludeBadgeView:YES];
+    [self setNewAddRequestBadge];
 }
 
--(void)setBadgeIncludeBadgeView:(BOOL)includeBadgeView{
+-(void)setNewAddRequestBadge{
+    WEAKSELF
     [CDUserService countAddRequestsWithBlock:^(NSInteger number, NSError *error) {
         [CDUtils logError:error callback:^{
             _addRequestN=number;
             NSInteger oldN=[[NSUserDefaults standardUserDefaults] integerForKey:@"addRequestN"];
             if(_addRequestN>oldN){
-                NSString* badge=[NSString stringWithFormat:@"%ld",_addRequestN-oldN];;
-                if(includeBadgeView){
-                    if(_badgeView!=nil){
-                        [_badgeView removeFromSuperview];
-                    }
-                    _badgeView=[[JSBadgeView alloc] initWithParentView:_myNewFriendIcon alignment:JSBadgeViewAlignmentTopRight];
-                    _badgeView.badgeText=badge;
+                NSString* badge=[NSString stringWithFormat:@"%ld",(long)(_addRequestN-oldN)];
+                if(weakSelf.isViewLoaded){
+                    weakSelf.myNewFriendBadgeView.badgeText=badge;
                 }
-                self.tabBarItem.badgeValue=badge;
+                weakSelf.tabBarItem.badgeValue=badge;
             }else{
-                self.tabBarItem.badgeValue=nil;
+                weakSelf.tabBarItem.badgeValue=nil;
+                if(weakSelf.isViewLoaded){
+                    weakSelf.myNewFriendBadgeView.badgeText=nil;
+                }
             }
         }];
     }];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return CD_COMMON_ROW_HEIGHT;
-}
+#pragma mark - Table View
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.users.count;
@@ -160,7 +178,7 @@
     static BOOL isRegisterNib=NO;
     if(isRegisterNib==NO){
         [tableView registerNib:[UINib nibWithNibName:@"CDImageLabelTableCell" bundle:nil]
-          forCellReuseIdentifier:cellIdentifier];
+        forCellReuseIdentifier:cellIdentifier];
     }
     CDImageLabelTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
@@ -183,7 +201,7 @@
     CGPoint point=[recognizer locationInView:self.tableView];
     NSIndexPath *path=[self.tableView indexPathForRowAtPoint:point];
     if(path!=nil && recognizer.state==UIGestureRecognizerStateBegan){
-        UIAlertView* alertView=[[UIAlertView alloc] initWithTitle:@"" message:@"解除好友关系吗" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
+        UIAlertView* alertView=[[UIAlertView alloc] initWithTitle:nil message:@"解除好友关系吗" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
         alertView.tag=path.row;
         [alertView show];
     }
@@ -194,10 +212,11 @@
         NSInteger row=alertView.tag;
         AVUser* user=[_users objectAtIndex:row];
         [CDUtils showNetworkIndicator];
+        WEAKSELF
         [CDUserService removeFriend:user callback:^(BOOL succeeded, NSError *error) {
             [CDUtils hideNetworkIndicator];
             [CDUtils filterError:error callback:^{
-                [self refresh:nil];
+                [weakSelf refresh];
             }];
         }];
     }

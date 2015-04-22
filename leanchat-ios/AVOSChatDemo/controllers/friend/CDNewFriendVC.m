@@ -92,11 +92,12 @@
     CDAddRequest* addRequest=[addRequests objectAtIndex:btn.tag];
     
     [CDUtils showNetworkIndicator];
+    WEAKSELF
     [CDUserService agreeAddRequest:addRequest callback:^(BOOL succeeded, NSError *error) {
         [CDUtils hideNetworkIndicator];
         if([CDUtils filterError:error]){
             [CDUtils alert:@"添加成功"];
-            [self refresh:sender];
+            [weakSelf refresh:sender];
             [_friendListVC refresh];
         }
     }];
