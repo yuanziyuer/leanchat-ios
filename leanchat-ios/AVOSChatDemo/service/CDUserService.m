@@ -133,19 +133,13 @@ static UIImage* defaultAvatar;
 
 #pragma mark - AddRequest
 
-
-+(void)findAddRequestsOnlyByNetwork:(BOOL)onlyNetwork withCallback:(AVArrayResultBlock)callback{
++(void)findAddRequestsWithBlock:(AVArrayResultBlock)block{
     AVUser* curUser=[AVUser currentUser];
     AVQuery *q=[CDAddRequest query];
     [q includeKey:kAddRequestFromUser];
-    [q whereKey:@"toUser" equalTo:curUser];
+    [q whereKey:kAddRequestToUser equalTo:curUser];
     [q orderByDescending:@"createdAt"];
-    if(onlyNetwork){
-        [q setCachePolicy:kAVCachePolicyNetworkOnly];
-    }else{
-        [q setCachePolicy:kAVCachePolicyNetworkElseCache];
-    }
-    [q findObjectsInBackgroundWithBlock:callback];
+    [q findObjectsInBackgroundWithBlock:block];
 }
 
 +(void)countAddRequestsWithBlock:(AVIntegerResultBlock)block{

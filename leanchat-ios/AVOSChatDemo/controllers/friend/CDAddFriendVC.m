@@ -67,8 +67,7 @@ static NSString* cellIndentifier=@"cellIndentifier";
 
 -(void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     AVUser *user=self.users[indexPath.row];
-    CDUserInfoVC *controller=[[CDUserInfoVC alloc] init];
-    controller.user=user;
+    CDUserInfoVC *controller=[[CDUserInfoVC alloc] initWithUser:user];
     [self.navigationController pushViewController:controller animated:YES];
 }
 

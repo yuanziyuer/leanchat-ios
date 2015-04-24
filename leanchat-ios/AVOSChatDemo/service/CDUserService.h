@@ -34,7 +34,7 @@
 
 +(void)countAddRequestsWithBlock:(AVIntegerResultBlock)block;
 
-+(void)findAddRequestsOnlyByNetwork:(BOOL)onlyNetwork withCallback:(AVArrayResultBlock)callback;
++(void)findAddRequestsWithBlock:(AVArrayResultBlock)block;
 
 +(void)agreeAddRequest:(CDAddRequest*)addRequest callback:(AVBooleanResultBlock)callback;
 

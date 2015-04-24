@@ -17,16 +17,17 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *actionBtn;
 
-@property CDIM* im;
+
+@property (strong,nonatomic) AVUser *user;
 
 @end
 
 @implementation CDUserInfoVC
 
 -(instancetype)initWithUser:(AVUser*)user{
-    if(self==[super init]){
+    self=[super init];
+    if(self){
         _user=user;
-        _im=[CDIM sharedInstance];
     };
     return self;
 }

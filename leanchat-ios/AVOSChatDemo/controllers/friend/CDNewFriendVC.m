@@ -7,13 +7,16 @@
 //
 
 #import "CDNewFriendVC.h"
-#import "CDViews.h"
-#import "CDService.h"
+#import "CDUserInfoVC.h"
 #import "CDUtils.h"
+#import "CDLabelButtonTableCell.h"
+#import "CDAddRequest.h"
+#import "CDUserService.h"
 
-@interface CDNewFriendVC (){
-    NSArray *addRequests;
-}
+@interface CDNewFriendVC ()
+
+@property (nonatomic,strong) NSArray *addRequests;
+
 @end
 
 @implementation CDNewFriendVC
@@ -21,33 +24,28 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title=@"新的朋友";
+    
     UIRefreshControl* refreshControl=[[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl=refreshControl;
-    self.title=@"新的朋友";
+    
     [self refresh:nil];
 }
 
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-}
-
--(void)refresh:(id)sender{
-    BOOL onlyNetwork;
-    if(sender==nil){
-        onlyNetwork=NO;
-    }else{
-        onlyNetwork=YES;
-    }
+-(void)refresh:(UIRefreshControl*)refreshControl{
     [CDUtils showNetworkIndicator];
-    [CDUserService findAddRequestsOnlyByNetwork:onlyNetwork withCallback:^(NSArray *objects, NSError *error) {
+    WEAKSELF
+    [CDUserService findAddRequestsWithBlock:^(NSArray *objects, NSError *error) {
         [CDUtils hideNetworkIndicator];
-        [self.refreshControl endRefreshing];
+        if(refreshControl){
+            [refreshControl endRefreshing];
+        }
         if(error.code==kAVErrorObjectNotFound || error.code==kAVErrorCacheMiss){
         }else{
             [CDUtils filterError:error callback:^{
-                addRequests=objects;
-                [self.tableView reloadData];
+                _addRequests=objects;
+                [weakSelf.tableView reloadData];
             }];
         }
     }];
@@ -62,7 +60,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return addRequests.count;
+    return _addRequests.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -72,7 +70,7 @@
         [tableView registerNib:[UINib nibWithNibName:@"CDLabelButtonTableCell" bundle:nil]forCellReuseIdentifier:@"cell"];
     }
     CDLabelButtonTableCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell" ];
-    CDAddRequest* addRequest=[addRequests objectAtIndex:indexPath.row];
+    CDAddRequest* addRequest=[_addRequests objectAtIndex:indexPath.row];
     cell.nameLabel.text=addRequest.fromUser.username;
     [CDUserService displayAvatarOfUser:addRequest.fromUser avatarView:cell.leftImageView];
     if(addRequest.status==CDAddRequestStatusWait){
@@ -80,27 +78,34 @@
         cell.actionBtn.tag=indexPath.row;
         [cell.actionBtn setTitle:@"同意" forState:UIControlStateNormal];
         [cell.actionBtn addTarget:self action:@selector(actionBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        cell.selectionStyle=UITableViewCellSelectionStyleNone;
     }else{
         cell.actionBtn.enabled=false;
         [cell.actionBtn setTitle:@"已同意" forState:UIControlStateNormal];
+        cell.selectionStyle=UITableViewCellSelectionStyleDefault;
     }
     return cell;
 }
 
 -(void)actionBtnClicked:(id)sender{
     UIButton *btn=(UIButton*)sender;
-    CDAddRequest* addRequest=[addRequests objectAtIndex:btn.tag];
-    
+    CDAddRequest* addRequest=[_addRequests objectAtIndex:btn.tag];
     [CDUtils showNetworkIndicator];
     WEAKSELF
     [CDUserService agreeAddRequest:addRequest callback:^(BOOL succeeded, NSError *error) {
         [CDUtils hideNetworkIndicator];
         if([CDUtils filterError:error]){
             [CDUtils alert:@"添加成功"];
-            [weakSelf refresh:sender];
+            [weakSelf refresh:nil];
             [_friendListVC refresh];
         }
     }];
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    CDAddRequest* addRequest=self.addRequests[indexPath.row];
+    CDUserInfoVC *userInfoVC=[[CDUserInfoVC alloc] initWithUser:addRequest.fromUser];
+    [self.navigationController pushViewController:userInfoVC animated:YES];
 }
 
 @end

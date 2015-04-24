@@ -11,8 +11,6 @@
 
 @interface CDUserInfoVC : UIViewController
 
-@property (weak,nonatomic) AVUser *user;
-
 -(instancetype)initWithUser:(AVUser*)user;
 
 @end
