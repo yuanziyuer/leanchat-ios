@@ -1,4 +1,4 @@
-![image](https://raw.githubusercontent.com/lzwjava/plan/master/leanchat-ios/shot.png)
+![leanchat1](https://cloud.githubusercontent.com/assets/5022872/7332357/41c39c82-eb6e-11e4-8224-9c6908c9fa75.gif)
 
 ## 介绍
 这个示例项目是为了帮助使用 LeanCloud 的开发者快速实现具有实时通讯功能的应用。
