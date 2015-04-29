@@ -1,4 +1,4 @@
-![image](https://raw.githubusercontent.com/lzwjava/plan/master/leanchat-ios/shot.png)
+![leanchat1](https://cloud.githubusercontent.com/assets/5022872/7332357/41c39c82-eb6e-11e4-8224-9c6908c9fa75.gif)
 
 ## 介绍
 这个示例项目是为了帮助使用 LeanCloud 的开发者快速实现具有实时通讯功能的应用。
@@ -6,9 +6,9 @@
 #### 注意：若要集成，我们推荐封装性更好的 [MessageDisplayKit](https://github.com/xhzengAIB/MessageDisplayKit/tree/master/Example/MessageDisplayKitLeanchatExample)
 
 ## 子项目介绍
-* LeanChatLib ，聊天界面与逻辑的封装库
-* LeanChatExample，展示了如何用少量代码调用LeanChatLib，加入聊天
-* LeanChat-ios，为LeanChat IM 整个应用，包含了对 LeanChatLib 更复杂的运用。
+* LeanChatLib ，核心的聊天逻辑和聊天界面库。有了它，可以快速集成聊天功能，支持文字、音频、图片、表情消息，消息通知。同时也有相应的 [Android 版本](https://github.com/leancloud/leanchat-android)。
+* LeanChatExample，leanchatlib 最简单的使用例子。展示了如何用少量代码调用 LeanChatLib 来加入聊天，无论是用 LeanCloud 的用户系统还是自己的用户系统。
+* LeanChat-ios，为 LeanChat 整个应用。它包含好友管理、群组管理、地理消息、附近的人、个人页面、登录注册的功能，完全基于 LeanCloud 的存储和通信功能。它也是对 LeanChatLib 更复杂的应用。
 
 ## 分支
 * master 分支，使用了 LeanCloud 的实时通信服务2.0 （推荐）
