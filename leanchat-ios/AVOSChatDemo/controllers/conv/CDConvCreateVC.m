@@ -7,7 +7,7 @@
 //
 
 #import "CDConvCreateVC.h"
-#import "CDService.h"
+#import "CDUtils.h"
 
 @interface CDConvCreateVC ()
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;

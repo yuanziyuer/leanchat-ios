@@ -13,12 +13,16 @@
 @end
 
 @implementation CDBaseTableVC
+
 - (void)loadView {
     [super loadView];
     if ([self respondsToSelector:@selector(automaticalyAdjustsScrollViewInsets)]) {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-    UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
+    if(!self.tableViewStyle){
+        self.tableViewStyle=UITableViewStylePlain;
+    }
+    UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:self.tableViewStyle];
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -35,17 +39,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
         // For insetting with a navigation bar
-        CGRect rect = self.navigationController.navigationBar.frame;
-        UIEdgeInsets insets = UIEdgeInsetsMake(CGRectGetMaxY(rect), 0, CGRectGetHeight(self.tabBarController.tabBar.bounds), 0);
-        self.tableView.contentInset = insets;
-        self.tableView.scrollIndicatorInsets = insets;
+//        CGRect rect = self.navigationController.navigationBar.frame;
+//        UIEdgeInsets insets = UIEdgeInsetsMake(CGRectGetMaxY(rect), 0, CGRectGetHeight(self.tabBarController.tabBar.bounds), 0);
+//        self.tableView.contentInset = insets;
+//        self.tableView.scrollIndicatorInsets = insets;
     }
 }
 

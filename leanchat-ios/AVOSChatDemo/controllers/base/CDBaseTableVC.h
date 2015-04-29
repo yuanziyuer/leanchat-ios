@@ -9,5 +9,9 @@
 #import "CDBaseVC.h"
 
 @interface CDBaseTableVC : CDBaseVC <UITableViewDelegate, UITableViewDataSource>
+
 @property (nonatomic, strong) UITableView *tableView;
+
+@property (nonatomic, assign) UITableViewStyle tableViewStyle;
+
 @end

@@ -7,8 +7,6 @@
 //
 
 #import "CDPushSettingVC.h"
-#import "CDModels.h"
-#import "CDService.h"
 
 @interface CDPushSettingVC ()
 

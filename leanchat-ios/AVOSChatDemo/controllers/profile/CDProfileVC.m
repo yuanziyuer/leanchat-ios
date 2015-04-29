@@ -7,28 +7,14 @@
 //
 
 #import "CDProfileVC.h"
-#import "CDService.h"
-#import "CDCommon.h"
-#import "CDLoginVC.h"
+#import "CDUserService.h"
 #import "CDAppDelegate.h"
-#import "CDResizableButton.h"
-#import <LeanChatLib/JSBadgeView.h>
-#import "CDBadgeLabel.h"
 #import "CDPushSettingVC.h"
 #import "CDWebViewVC.h"
-#import <LeanChatLib/LeanChatLib.h>
 
 @interface CDProfileVC ()
 
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
-
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) IBOutlet UITableViewCell *avatarCell;
-@property (strong, nonatomic) IBOutlet UITableViewCell *logoutCell;
-@property (strong, nonatomic) IBOutlet UITableViewCell *pushSettingCell;
-
-@property (strong, nonatomic) IBOutlet UITableViewCell *termsCell;
+@property (nonatomic, strong) NSArray *dataSource;
 
 @end
 
@@ -38,15 +24,22 @@
     if ((self = [super init])) {
         self.title = @"我";
         self.tabBarItem.image = [UIImage imageNamed:@"tabbar_me_active"];
+        self.tableViewStyle=UITableViewStyleGrouped;
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    AVUser* user=[AVUser currentUser];
-    self.nameLabel.text = user.username;
-    [CDUserService displayAvatarOfUser:user avatarView:self.avatarView];
+}
+
+#pragma mark - Propertys
+
+-(NSArray*)dataSource{
+    if(_dataSource==nil){
+        _dataSource = @[[AVUser currentUser].username,@"消息通知",@"用户协议",@"退出登录"];
+    }
+    return _dataSource;
 }
 
 #pragma mark - Actions
@@ -83,27 +76,37 @@
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSInteger section=indexPath.section;
-    UITableViewCell* cell;
-    switch (section) {
-        case 0:
-            cell=_avatarCell;
-            break;
-        case 1:
-            cell=_pushSettingCell;
-            break;
-        case 2:
-            cell=_termsCell;
-            break;
-        case 3:
-            cell=_logoutCell;
-            break;
+    static NSString *identifier=@"Cell";
+    UITableViewCell* cell=[tableView dequeueReusableCellWithIdentifier:identifier];
+    if(!cell){
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+    cell.textLabel.text=self.dataSource[indexPath.section];
+    if(indexPath.section==0){
+        [CDUserService displayBigAvatarOfUser:[AVUser currentUser] avatarView:cell.imageView];
+    }else{
+        cell.imageView.image=nil;
+    }
+    if(indexPath.section==self.dataSource.count-1){
+        cell.accessoryType=UITableViewCellAccessoryNone;
+        cell.textLabel.textAlignment=NSTextAlignmentCenter;
+    }else{
+        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+        cell.textLabel.textAlignment=NSTextAlignmentLeft;
+    }
     return cell;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.section==0){
+        return 88;
+    }else{
+        return 44;
+    }
+}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSInteger section=indexPath.section;
     switch (section) {
         case 0:
@@ -128,10 +131,11 @@
         UIActivityIndicatorView* indicator=[CDUtils showIndicatorAtView:self.view];
         UIImage* image=info[UIImagePickerControllerEditedImage];
         UIImage* rounded=[CDUtils roundImage:image toSize:CGSizeMake(100, 100) radius:10];
+        WEAKSELF
         [CDUserService saveAvatar:rounded callback:^(BOOL succeeded, NSError *error) {
             [indicator stopAnimating];
             [CDUtils filterError:error callback:^{
-                self.avatarView.image=rounded;
+                [weakSelf.tableView reloadData];
             }];
         }];
     }];

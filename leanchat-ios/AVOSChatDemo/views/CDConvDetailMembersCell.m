@@ -84,10 +84,6 @@ static NSString* kCDConvDetailMembersHeaderViewCellIndentifer=@"memberCell";
     return cell;
 }
 
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-//    return CGSizeMake(90, 90);
-//}
-
 #pragma mark <UICollectionViewDelegate>
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -95,14 +91,6 @@ static NSString* kCDConvDetailMembersHeaderViewCellIndentifer=@"memberCell";
     if([self.membersCellDelegate respondsToSelector:@selector(didSelectMember:)]){
         [self.membersCellDelegate didSelectMember:user];
     }
-
-//    NSString* userId=[self.members objectAtIndex:indexPath.row];
-//    NSString* curUserId=[AVUser currentUser].objectId;
-//    if([curUserId isEqualToString:userId]==YES){
-//        return YES;
-//    }
-//    CDUserInfoVC* userInfoVC=[[CDUserInfoVC alloc] initWithUser:user];
-//    [self.navigationController pushViewController:userInfoVC animated:YES];
     return YES;
 }
 

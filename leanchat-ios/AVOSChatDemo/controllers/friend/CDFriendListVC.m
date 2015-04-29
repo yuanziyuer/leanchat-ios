@@ -14,7 +14,9 @@
 #import "CDImageLabelTableCell.h"
 #import "CDGroupedConvListVC.h"
 #import <LeanChatLib/JSBadgeView.h>
-#import "CDService.h"
+#import "CDUtils.h"
+#import "CDUserService.h"
+#import "CDIMService.h"
 
 @interface CDFriendListVC()<UIAlertViewDelegate>
 

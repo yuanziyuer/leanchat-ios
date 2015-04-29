@@ -7,10 +7,10 @@
 //
 
 #import "CDGroupedConvListVC.h"
-#import "CDModels.h"
 #import "CDConvCreateVC.h"
-#import "CDViews.h"
-#import "CDService.h"
+#import "CDIMService.h"
+#import "CDUtils.h"
+#import "CDImageLabelTableCell.h"
 
 @interface CDGroupedConvListVC (){
     NSArray* convs;

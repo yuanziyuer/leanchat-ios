@@ -8,8 +8,11 @@
 
 #import "CDAddMemberVC.h"
 #import "CDImageLabelTableCell.h"
-#import "CDService.h"
 #import <LeanChatLib/LeanChatLib.h>
+#import "CDUserService.h"
+#import "CDCache.h"
+#import "CDUtils.h"
+#import "CDIMService.h"
 
 @interface CDAddMemberVC ()
 

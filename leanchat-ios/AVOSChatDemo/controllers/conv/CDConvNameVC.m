@@ -7,8 +7,8 @@
 //
 
 #import "CDConvNameVC.h"
-#import "CDService.h"
 #import <LeanChatLib/LeanChatLib.h>
+#import "CDUtils.h"
 
 @interface CDConvNameVC ()
 

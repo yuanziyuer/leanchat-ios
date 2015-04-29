@@ -6,10 +6,9 @@
 //  Copyright (c) 2014年 AVOS. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "CDCommon.h"
+#import "CDBaseTableVC.h"
 
-@interface CDUserInfoVC : UIViewController
+@interface CDUserInfoVC : CDBaseTableVC
 
 -(instancetype)initWithUser:(AVUser*)user;
 

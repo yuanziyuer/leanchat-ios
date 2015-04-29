@@ -8,7 +8,7 @@
 
 #import "CDCache.h"
 #import "CDUtils.h"
-#import "CDService.h"
+#import "CDUserService.h"
 
 @implementation CDCache
 

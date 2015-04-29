@@ -6,9 +6,8 @@
 //  Copyright (c) 2014 AVOS. All rights reserved.
 //
 
-#import "CDBaseVC.h"
-#import <QuartzCore/QuartzCore.h>
+#import "CDBaseTableVC.h"
 
-@interface CDProfileVC : UIViewController<UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface CDProfileVC : CDBaseTableVC<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
 @end

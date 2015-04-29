@@ -41,7 +41,7 @@
 
 -(void)setBadgeWithTotalUnreadCount:(NSInteger)totalUnreadCount{
     if(totalUnreadCount>0){
-        self.tabBarItem.badgeValue=[NSString stringWithFormat:@"%ld",totalUnreadCount];
+        self.tabBarItem.badgeValue=[NSString stringWithFormat:@"%ld",(long)totalUnreadCount];
     }else{
         self.tabBarItem.badgeValue=nil;
     }

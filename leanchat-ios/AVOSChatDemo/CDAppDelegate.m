@@ -14,9 +14,12 @@
 #import "CDConvsVC.h"
 #import "CDFriendListVC.h"
 #import "CDProfileVC.h"
-#import "CDModels.h"
-#import "CDService.h"
 #import "CDAbuseReport.h"
+#import "CDCache.h"
+
+#import "CDUtils.h"
+#import "CDAddRequest.h"
+#import "CDIMService.h"
 
 @implementation CDAppDelegate
 
@@ -159,7 +162,7 @@
         [weakSelf addItemController:[[CDFriendListVC alloc] init] toTabBarController:tab];
         [weakSelf addItemController:[[CDProfileVC alloc] init] toTabBarController:tab];
         
-        tab.selectedIndex=0;
+        tab.selectedIndex=2;
         DLog(@"%@",error);
         weakSelf.window.rootViewController = tab;
     }];

@@ -31,10 +31,8 @@
 		70013B931ABC19DA0050D0F7 /* CDNewFriendVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138BC1ABC19D90050D0F7 /* CDNewFriendVC.m */; };
 		70013B941ABC19DA0050D0F7 /* CDNewFriendVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 700138BD1ABC19D90050D0F7 /* CDNewFriendVC.xib */; };
 		70013B951ABC19DA0050D0F7 /* CDProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138C01ABC19D90050D0F7 /* CDProfileVC.m */; };
-		70013B961ABC19DA0050D0F7 /* CDProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 700138C11ABC19D90050D0F7 /* CDProfileVC.xib */; };
 		70013B971ABC19DA0050D0F7 /* CDPushSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138C31ABC19D90050D0F7 /* CDPushSettingVC.m */; };
 		70013B981ABC19DA0050D0F7 /* CDUserInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138C51ABC19D90050D0F7 /* CDUserInfoVC.m */; };
-		70013B991ABC19DA0050D0F7 /* CDUserInfoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 700138C61ABC19D90050D0F7 /* CDUserInfoVC.xib */; };
 		70013B9A1ABC19DA0050D0F7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 700138C71ABC19D90050D0F7 /* InfoPlist.strings */; };
 		70013B9C1ABC19DA0050D0F7 /* LeanChat-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 700138CA1ABC19D90050D0F7 /* LeanChat-Info.plist */; };
 		70013B9D1ABC19DA0050D0F7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138CC1ABC19D90050D0F7 /* main.m */; };
@@ -298,19 +296,16 @@
 		700138BD1ABC19D90050D0F7 /* CDNewFriendVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDNewFriendVC.xib; sourceTree = "<group>"; };
 		700138BF1ABC19D90050D0F7 /* CDProfileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDProfileVC.h; sourceTree = "<group>"; };
 		700138C01ABC19D90050D0F7 /* CDProfileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDProfileVC.m; sourceTree = "<group>"; };
-		700138C11ABC19D90050D0F7 /* CDProfileVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDProfileVC.xib; sourceTree = "<group>"; };
 		700138C21ABC19D90050D0F7 /* CDPushSettingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDPushSettingVC.h; sourceTree = "<group>"; };
 		700138C31ABC19D90050D0F7 /* CDPushSettingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDPushSettingVC.m; sourceTree = "<group>"; };
 		700138C41ABC19D90050D0F7 /* CDUserInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUserInfoVC.h; sourceTree = "<group>"; };
 		700138C51ABC19D90050D0F7 /* CDUserInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUserInfoVC.m; sourceTree = "<group>"; };
-		700138C61ABC19D90050D0F7 /* CDUserInfoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDUserInfoVC.xib; sourceTree = "<group>"; };
 		700138C81ABC19D90050D0F7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		700138CA1ABC19D90050D0F7 /* LeanChat-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "LeanChat-Info.plist"; sourceTree = "<group>"; };
 		700138CB1ABC19D90050D0F7 /* LeanChat-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LeanChat-Prefix.pch"; sourceTree = "<group>"; };
 		700138CC1ABC19D90050D0F7 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		700138CF1ABC19D90050D0F7 /* CDAddRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAddRequest.h; sourceTree = "<group>"; };
 		700138D01ABC19D90050D0F7 /* CDAddRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAddRequest.m; sourceTree = "<group>"; };
-		700138D11ABC19D90050D0F7 /* CDModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDModels.h; sourceTree = "<group>"; };
 		700138D61ABC19D90050D0F7 /* AppIcon60x60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIcon60x60@2x.png"; sourceTree = "<group>"; };
 		700138D81ABC19D90050D0F7 /* default_user_avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_user_avatar.png; sourceTree = "<group>"; };
 		700138FF1ABC19D90050D0F7 /* new_friends_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = new_friends_icon.png; sourceTree = "<group>"; };
@@ -348,7 +343,6 @@
 		700139261ABC19D90050D0F7 /* wechat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wechat@2x.png"; sourceTree = "<group>"; };
 		7001392C1ABC19D90050D0F7 /* CDCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCache.h; sourceTree = "<group>"; };
 		7001392D1ABC19D90050D0F7 /* CDCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCache.m; sourceTree = "<group>"; };
-		7001393E1ABC19D90050D0F7 /* CDService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDService.h; sourceTree = "<group>"; };
 		700139431ABC19DA0050D0F7 /* CDUserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUserService.h; sourceTree = "<group>"; };
 		700139441ABC19DA0050D0F7 /* CDUserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUserService.m; sourceTree = "<group>"; };
 		700139451ABC19DA0050D0F7 /* CDUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUtils.h; sourceTree = "<group>"; };
@@ -416,7 +410,6 @@
 		70013B751ABC19DA0050D0F7 /* CDResizableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDResizableButton.m; sourceTree = "<group>"; };
 		70013B781ABC19DA0050D0F7 /* CDTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDTextField.h; sourceTree = "<group>"; };
 		70013B791ABC19DA0050D0F7 /* CDTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDTextField.m; sourceTree = "<group>"; };
-		70013B7A1ABC19DA0050D0F7 /* CDViews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDViews.h; sourceTree = "<group>"; };
 		70013DA31ABFD0C70050D0F7 /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
 		70013DA51ABFD0D70050D0F7 /* AVOSCloudIM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloudIM.framework; sourceTree = "<group>"; };
 		70033A161AD3F4790003C408 /* LeanChatLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LeanChatLib.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/LeanChat-bawtqfedaczltxfvbjmxartzlsdw/Build/Products/Debug-iphoneos/LeanChatLib.framework"; sourceTree = "<group>"; };
@@ -713,12 +706,10 @@
 			children = (
 				700138BF1ABC19D90050D0F7 /* CDProfileVC.h */,
 				700138C01ABC19D90050D0F7 /* CDProfileVC.m */,
-				700138C11ABC19D90050D0F7 /* CDProfileVC.xib */,
 				700138C21ABC19D90050D0F7 /* CDPushSettingVC.h */,
 				700138C31ABC19D90050D0F7 /* CDPushSettingVC.m */,
 				700138C41ABC19D90050D0F7 /* CDUserInfoVC.h */,
 				700138C51ABC19D90050D0F7 /* CDUserInfoVC.m */,
-				700138C61ABC19D90050D0F7 /* CDUserInfoVC.xib */,
 			);
 			path = profile;
 			sourceTree = "<group>";
@@ -729,7 +720,6 @@
 				7056D46E1AD4DB18008391FC /* CDUser.h */,
 				7056D46F1AD4DB18008391FC /* CDUser.m */,
 				700138CE1ABC19D90050D0F7 /* avobject */,
-				700138D11ABC19D90050D0F7 /* CDModels.h */,
 				701D851B1ADCD35000982D5D /* AVIMUserInfoMessage.h */,
 				701D851C1ADCD35000982D5D /* AVIMUserInfoMessage.m */,
 			);
@@ -838,7 +828,6 @@
 			children = (
 				7001392C1ABC19D90050D0F7 /* CDCache.h */,
 				7001392D1ABC19D90050D0F7 /* CDCache.m */,
-				7001393E1ABC19D90050D0F7 /* CDService.h */,
 				700139431ABC19DA0050D0F7 /* CDUserService.h */,
 				700139441ABC19DA0050D0F7 /* CDUserService.m */,
 				700139451ABC19DA0050D0F7 /* CDUtils.h */,
@@ -959,7 +948,6 @@
 				70013B751ABC19DA0050D0F7 /* CDResizableButton.m */,
 				70013B781ABC19DA0050D0F7 /* CDTextField.h */,
 				70013B791ABC19DA0050D0F7 /* CDTextField.m */,
-				70013B7A1ABC19DA0050D0F7 /* CDViews.h */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -1274,7 +1262,6 @@
 				709E542F1ADE860C00F82BB8 /* Images.xcassets in Resources */,
 				70B298F11ACE95E100FE265E /* SenderVoiceNodePlaying000@2x.png in Resources */,
 				70013BDA1ABC19DA0050D0F7 /* menu_add_friend@2x.png in Resources */,
-				70013B961ABC19DA0050D0F7 /* CDProfileVC.xib in Resources */,
 				70B298F81ACE95E100FE265E /* sharemore_myfav@2x.png in Resources */,
 				70B298EF1ACE95E100FE265E /* section0_emotion8@2x.png in Resources */,
 				70B298F91ACE95E100FE265E /* sharemore_openapi@2x.png in Resources */,
@@ -1306,7 +1293,6 @@
 				70013BE31ABC19DA0050D0F7 /* profile@2x.png in Resources */,
 				70013BD41ABC19DA0050D0F7 /* login@2x.png in Resources */,
 				70B299001ACE95E100FE265E /* voice@2x.png in Resources */,
-				70013B991ABC19DA0050D0F7 /* CDUserInfoVC.xib in Resources */,
 				70013D111ABC19DB0050D0F7 /* CDLabelButtonTableCell.xib in Resources */,
 				70B298C71ACE95E100FE265E /* MessageVideoPlay@2x.png in Resources */,
 				70013BA01ABC19DA0050D0F7 /* AppIcon60x60@2x.png in Resources */,

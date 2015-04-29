@@ -73,40 +73,41 @@ static UIImage* defaultAvatar;
 }
 
 +(void)displayAvatarOfUser:(AVUser*)user avatarView:(UIImageView*)avatarView{
+    [self getAvatarImageOfUser:user block:^(UIImage *image) {
+        [avatarView setImage:image];
+    }];
+}
+
++(void)displayBigAvatarOfUser:(AVUser*)user avatarView:(UIImageView*)avatarView{
+    CGFloat avatarWidth=60;
+    CGSize avatarSize=CGSizeMake(avatarWidth, avatarWidth);
+    UIGraphicsBeginImageContextWithOptions(avatarSize, NO, 0.0);
+    UIImage *blank=UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    avatarView.image=blank;
+    [CDUserService getAvatarImageOfUser:user block:^(UIImage *image) {
+        UIImage *resizedImage=[CDUtils resizeImage:image toSize:avatarSize];
+        avatarView.image=resizedImage;
+    }];
+}
+
++(void)getAvatarImageOfUser:(AVUser*)user block:(void (^)(UIImage* image))block{
     AVFile* avatar=[user objectForKey:@"avatar"];
     if(avatar){
         [avatar getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
             if(error==nil){
-                UIImage* image=[UIImage imageWithData:data];
-                [avatarView setImage:image];
+                block([UIImage imageWithData:data]);
             }else{
-                UIImage* placeHolder=[UIImage imageNamed:@"default_user_avatar"];
-                [avatarView setImage:placeHolder];
+                block([self defaultAvatarOfUser:user]);
             }
         }];
     }else{
-        [avatarView setImage:[UIImage imageWithHashString:user.objectId displayString:[[user.username substringWithRange:NSMakeRange(0, 1)] capitalizedString]]];
+        block([self defaultAvatarOfUser:user]);
     }
 }
 
-+(UIImage*)getAvatarOfUser:(AVUser*)user{
-    if(defaultAvatar==nil){
-        defaultAvatar=[UIImage imageNamed:@"default_user_avatar"];
-    }
-    UIImage* image=defaultAvatar;
-    AVFile* avatarFile=[user objectForKey:@"avatar"];
-    if(avatarFile==nil){
-        [CDUtils alert:@"avatar of user is nil"];
-    }else{
-        NSError* error;
-        NSData* data=[avatarFile getData:&error];
-        if(error==nil){
-            image=[UIImage imageWithData:data];
-        }else{
-            DLog(@"%@",error);
-        }
-    }
-    return image;
++(UIImage*)defaultAvatarOfUser:(AVUser*)user{
+    return [UIImage imageWithHashString:user.objectId displayString:[[user.username substringWithRange:NSMakeRange(0, 1)] capitalizedString]];
 }
 
 +(void)saveAvatar:(UIImage*)image callback:(AVBooleanResultBlock)callback{

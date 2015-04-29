@@ -10,9 +10,10 @@
 #import "CDAddMemberVC.h"
 #import "CDUserInfoVC.h"
 #import "CDConvNameVC.h"
-#import "CDService.h"
 #import "CDConvDetailMembersCell.h"
 #import "CDConvReportAbuseVC.h"
+#import "CDCache.h"
+#import "CDUtils.h"
 
 @interface CDConvDetailVC ()<UIGestureRecognizerDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,CDConvDetailMembersHeaderViewDelegate>
 

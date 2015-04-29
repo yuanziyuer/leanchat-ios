@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CDUtils.h"
+#import "CDCommon.h"
 
 @interface CDBaseVC : UIViewController
 

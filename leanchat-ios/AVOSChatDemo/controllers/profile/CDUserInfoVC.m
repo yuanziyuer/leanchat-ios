@@ -9,14 +9,13 @@
 #import "CDUserInfoVC.h"
 #import <LeanChatLib/LeanChatLib.h>
 #import "CDCache.h"
-#import "CDService.h"
+#import "CDUserService.h"
+#import "CDUtils.h"
+#import "CDIMService.h"
 
 @interface CDUserInfoVC ()
 
-@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UIButton *actionBtn;
-
+@property (nonatomic,assign) BOOL isFriend;
 
 @property (strong,nonatomic) AVUser *user;
 
@@ -27,7 +26,9 @@
 -(instancetype)initWithUser:(AVUser*)user{
     self=[super init];
     if(self){
+        _isFriend=NO;
         _user=user;
+        self.tableViewStyle=UITableViewStyleGrouped;
     };
     return self;
 }
@@ -38,42 +39,73 @@
 {
     [super viewDidLoad];
     self.title=@"详情";
-    _nameLabel.text=_user.username;
-    [CDUserService displayAvatarOfUser:_user avatarView:self.avatarView];
     [self refresh];
 }
 
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 2;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 1;
+}
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *identifier=@"Cell";
+    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:identifier];
+    if(cell==nil){
+        cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    }
+    if(indexPath.section==1){
+        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+        if(self.isFriend){
+            cell.textLabel.text=@"开始聊天";
+        }else{
+            cell.textLabel.text=@"添加好友";
+        }
+        cell.textLabel.textAlignment=NSTextAlignmentCenter;
+    }else{
+        cell.textLabel.text=self.user.username;
+        cell.textLabel.textAlignment=NSTextAlignmentLeft;
+        cell.accessoryType=UITableViewCellAccessoryNone;
+        [CDUserService displayBigAvatarOfUser:self.user avatarView:cell.imageView];
+    }
+    return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.section==0){
+        return 88;
+    }else{
+        return 44;
+    }
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if(indexPath.section==1){
+        if(self.isFriend){
+            [[CDIMService shareInstance] goWithUserId:self.user.objectId fromVC:self];
+        }else{
+            [CDUtils showNetworkIndicator];
+            [CDUserService tryCreateAddRequestWithToUser:_user callback:^(BOOL succeeded, NSError *error) {
+                [CDUtils hideNetworkIndicator];
+                if([CDUtils filterError:error]){
+                    [CDUtils alert:@"请求成功"];
+                }
+            }];
+        }
+    }
+}
+
 -(void)refresh{
-    _actionBtn.hidden=YES;
+    WEAKSELF
     [CDUserService isMyFriend:_user block:^(BOOL isFriend, NSError *error) {
         if([CDUtils filterError:error]){
-            _actionBtn.hidden=NO;
-            if(isFriend){
-                [_actionBtn addTarget:self action:@selector(goChat) forControlEvents:UIControlEventTouchUpInside];
-                [_actionBtn setTitle:@"开始聊天" forState:UIControlStateNormal];
-            }else{
-                [_actionBtn addTarget:self action:@selector(tryAddFriend) forControlEvents:UIControlEventTouchUpInside];
-                [_actionBtn setTitle:@"添加好友" forState:UIControlStateNormal];
-            }
+            weakSelf.isFriend=isFriend;
+            [weakSelf.tableView reloadData];
         }
     }];
 }
-
-#pragma actions
-
--(void)goChat{
-    [[CDIMService shareInstance] goWithUserId:self.user.objectId fromVC:self];
-}
-
--(void)tryAddFriend{
-    [CDUtils showNetworkIndicator];
-    [CDUserService tryCreateAddRequestWithToUser:_user callback:^(BOOL succeeded, NSError *error) {
-        [CDUtils hideNetworkIndicator];
-        if([CDUtils filterError:error]){
-            [CDUtils alert:@"请求成功"];
-        }
-    }];
-}
-
 
 @end
