@@ -353,6 +353,8 @@
 		70B299161ACE9A2E00FE265E /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B299151ACE9A2E00FE265E /* libicucore.dylib */; };
 		70B299181ACE9A3A00FE265E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B299171ACE9A3A00FE265E /* MobileCoreServices.framework */; };
 		70B2991A1ACE9A4300FE265E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B299191ACE9A4300FE265E /* SystemConfiguration.framework */; };
+		70EEB0D71AF0F38B00FBF92F /* UIImage+Icon.h in Headers */ = {isa = PBXBuildFile; fileRef = 70EEB0D51AF0F38B00FBF92F /* UIImage+Icon.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		70EEB0D81AF0F38B00FBF92F /* UIImage+Icon.m in Sources */ = {isa = PBXBuildFile; fileRef = 70EEB0D61AF0F38B00FBF92F /* UIImage+Icon.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -709,6 +711,8 @@
 		70B299151ACE9A2E00FE265E /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		70B299171ACE9A3A00FE265E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		70B299191ACE9A4300FE265E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		70EEB0D51AF0F38B00FBF92F /* UIImage+Icon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Icon.h"; sourceTree = "<group>"; };
+		70EEB0D61AF0F38B00FBF92F /* UIImage+Icon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Icon.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -777,6 +781,8 @@
 				704922BD1ADFCAD700E8E295 /* CDRoom.h */,
 				704922BE1ADFCAD700E8E295 /* CDRoom.m */,
 				704922BF1ADFCAD700E8E295 /* CDUserModel.h */,
+				70EEB0D51AF0F38B00FBF92F /* UIImage+Icon.h */,
+				70EEB0D61AF0F38B00FBF92F /* UIImage+Icon.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -1671,6 +1677,7 @@
 				704924231ADFCAD700E8E295 /* XHBaseTableViewController.h in Headers */,
 				704924651ADFCAD700E8E295 /* SELinkText.h in Headers */,
 				7049240B1ADFCAD700E8E295 /* UIScrollView+XHkeyboardControl.h in Headers */,
+				70EEB0D71AF0F38B00FBF92F /* UIImage+Icon.h in Headers */,
 				704924031ADFCAD700E8E295 /* UIImage+RoundedCorner.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1850,6 +1857,7 @@
 				7049249C1ADFCAD700E8E295 /* XHMessageTextView.m in Sources */,
 				704923FA1ADFCAD700E8E295 /* NSString+XHDiskSizeTransfrom.m in Sources */,
 				704924921ADFCAD700E8E295 /* XHMessageDisplayTextView.m in Sources */,
+				70EEB0D81AF0F38B00FBF92F /* UIImage+Icon.m in Sources */,
 				7049246A1ADFCAD700E8E295 /* SETextAttachment.m in Sources */,
 				7049247E1ADFCAD700E8E295 /* XHImageViewer.m in Sources */,
 				7049243A1ADFCAD700E8E295 /* XHOperationNetworkKit.m in Sources */,

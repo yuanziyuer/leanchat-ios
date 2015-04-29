@@ -247,7 +247,7 @@
 			remoteGlobalIDString = 7059DCD71ACE4ECE009D17AB;
 			remoteInfo = LeanChatLib;
 		};
-		704922AB1ADFBA8C00E8E295 /* PBXContainerItemProxy */ = {
+		70EEB0D91AF0F6DD00FBF92F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 704922A51ADFB99500E8E295 /* LeanChatLib.xcodeproj */;
 			proxyType = 1;
@@ -1150,7 +1150,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				704922AC1ADFBA8C00E8E295 /* PBXTargetDependency */,
+				70EEB0DA1AF0F6DD00FBF92F /* PBXTargetDependency */,
 			);
 			name = LeanChat;
 			productName = AVOSChatDemo;
@@ -1447,10 +1447,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		704922AC1ADFBA8C00E8E295 /* PBXTargetDependency */ = {
+		70EEB0DA1AF0F6DD00FBF92F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = LeanChatLib;
-			targetProxy = 704922AB1ADFBA8C00E8E295 /* PBXContainerItemProxy */;
+			targetProxy = 70EEB0D91AF0F6DD00FBF92F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

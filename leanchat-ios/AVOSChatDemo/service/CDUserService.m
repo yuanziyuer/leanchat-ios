@@ -10,6 +10,7 @@
 #import "CDUtils.h"
 #import "CDCache.h"
 #import "CDAbuseReport.h"
+#import <LeanChatLib/LeanChatLib.h>
 
 static UIImage* defaultAvatar;
 
@@ -72,8 +73,6 @@ static UIImage* defaultAvatar;
 }
 
 +(void)displayAvatarOfUser:(AVUser*)user avatarView:(UIImageView*)avatarView{
-    UIImage* placeHolder=[UIImage imageNamed:@"default_user_avatar"];
-    [avatarView setImage:placeHolder];
     AVFile* avatar=[user objectForKey:@"avatar"];
     if(avatar){
         [avatar getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
@@ -81,9 +80,12 @@ static UIImage* defaultAvatar;
                 UIImage* image=[UIImage imageWithData:data];
                 [avatarView setImage:image];
             }else{
-                [CDUtils alertError:error];
+                UIImage* placeHolder=[UIImage imageNamed:@"default_user_avatar"];
+                [avatarView setImage:placeHolder];
             }
         }];
+    }else{
+        [avatarView setImage:[UIImage imageWithHashString:user.objectId displayString:[[user.username substringWithRange:NSMakeRange(0, 1)] capitalizedString]]];
     }
 }
 
