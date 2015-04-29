@@ -12,11 +12,12 @@
 
 @implementation CDUtils
 
-+(void)alert:(NSString*)msg{
++(UIAlertView*)alert:(NSString*)msg{
     UIAlertView *alertView=[[UIAlertView alloc]
                              initWithTitle:nil message:msg delegate:nil
                              cancelButtonTitle:@"好的" otherButtonTitles:nil];
     [alertView show];
+    return alertView;
 }
 
 +(BOOL)alertError:(NSError*)error{

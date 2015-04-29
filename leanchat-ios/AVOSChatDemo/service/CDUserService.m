@@ -9,6 +9,7 @@
 #import "CDUserService.h"
 #import "CDUtils.h"
 #import "CDCache.h"
+#import "CDAbuseReport.h"
 
 static UIImage* defaultAvatar;
 
@@ -206,6 +207,15 @@ static UIImage* defaultAvatar;
             }
         }
     }];
+}
+
+#pragma mark - report abuse
++(void)reportAbuseWithReason:(NSString*)reason convid:(NSString*)convid block:(AVBooleanResultBlock)block{
+    CDAbuseReport *report=[[CDAbuseReport alloc] init];
+    report.reason=reason;
+    report.convid=convid;
+    report.author=[AVUser currentUser];
+    [report saveInBackgroundWithBlock:block];
 }
 
 @end

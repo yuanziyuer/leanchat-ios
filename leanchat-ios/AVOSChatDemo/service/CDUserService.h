@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "CDCommon.h"
 #import "CDAddRequest.h"
+#import "CDAbuseReport.h"
 
 @interface CDUserService : NSObject
 
@@ -39,5 +40,7 @@
 +(void)agreeAddRequest:(CDAddRequest*)addRequest callback:(AVBooleanResultBlock)callback;
 
 +(void)tryCreateAddRequestWithToUser:(AVUser*)user callback:(AVBooleanResultBlock)callback;
+
++(void)reportAbuseWithReason:(NSString*)reason convid:(NSString*)convid block:(AVBooleanResultBlock)block;
 
 @end

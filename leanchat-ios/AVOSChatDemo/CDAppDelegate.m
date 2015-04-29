@@ -16,6 +16,7 @@
 #import "CDProfileVC.h"
 #import "CDModels.h"
 #import "CDService.h"
+#import "CDAbuseReport.h"
 
 @implementation CDAppDelegate
 
@@ -24,6 +25,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     [CDAddRequest registerSubclass];
+    [CDAbuseReport registerSubclass];
 #if USE_US
     [AVOSCloud useAVCloudUS];
 #endif

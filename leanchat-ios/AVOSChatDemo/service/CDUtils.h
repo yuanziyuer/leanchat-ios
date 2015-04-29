@@ -19,7 +19,7 @@ typedef void (^CDUpgradeBlock)(BOOL upgrade,NSString* oldVersion,NSString* newVe
 
 @interface CDUtils : NSObject
 
-+(void)alert:(NSString*)msg;
++(UIAlertView*)alert:(NSString*)msg;
 
 +(NSString*)md5OfString:(NSString*)s;
 

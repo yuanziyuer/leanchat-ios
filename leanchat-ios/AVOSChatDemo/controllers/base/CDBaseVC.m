@@ -24,6 +24,14 @@
     self.view.backgroundColor = [UIColor whiteColor];
 }
 
+-(void)showProgress{
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+}
+
+-(void)hideProgress{
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+}
+
 -(void)showHUDText:(NSString*)text{
     MBProgressHUD* hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText=text;

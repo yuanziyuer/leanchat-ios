@@ -10,6 +10,10 @@
 
 @interface CDBaseVC : UIViewController
 
+-(void)showProgress;
+
+-(void)hideProgress;
+
 -(void)showHUDText:(NSString*)text;
 
 @end

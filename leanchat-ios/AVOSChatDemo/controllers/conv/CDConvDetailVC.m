@@ -12,6 +12,7 @@
 #import "CDConvNameVC.h"
 #import "CDService.h"
 #import "CDConvDetailMembersCell.h"
+#import "CDConvReportAbuseVC.h"
 
 @interface CDConvDetailVC ()<UIGestureRecognizerDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,CDConvDetailMembersHeaderViewDelegate>
 
@@ -30,11 +31,13 @@
 
 @property CDNotify* notify;
 
-@property (nonatomic,strong) UITableViewCell* nameCell;
+@property (nonatomic,strong) UITableViewCell *nameCell;
 
-@property (nonatomic,strong) UITableViewCell* deleteMsgsCell;
+@property (nonatomic,strong) UITableViewCell *deleteMsgsCell;
 
-@property (nonatomic,strong) UITableViewCell* quitCell;
+@property (nonatomic,strong) UITableViewCell *quitCell;
+
+@property (nonatomic,strong) UITableViewCell *reportAbuseCell;
 
 @property (nonatomic,strong) AVUser *longPressedMember;
 
@@ -99,6 +102,15 @@ static NSString * const reuseIdentifier = @"Cell";
         _quitCell.textLabel.text=@"删除并退出";
     }
     return _quitCell;
+}
+
+-(UITableViewCell*)reportAbuseCell{
+    if(_reportAbuseCell==nil){
+        _reportAbuseCell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell4"];
+        _reportAbuseCell.textLabel.text=@"举报";
+        _reportAbuseCell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+    }
+    return _reportAbuseCell;
 }
 
 -(AVIMConversation*)conv{
@@ -181,10 +193,11 @@ static NSString * const reuseIdentifier = @"Cell";
 #pragma mark - tableview
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    NSInteger commonCount=3;
     if(_type==CDConvTypeGroup){
-        return 4;
+        return commonCount+2;
     }else{
-        return 2;
+        return commonCount;
     }
 }
 
@@ -203,6 +216,8 @@ static NSString * const reuseIdentifier = @"Cell";
                 return self.deleteMsgsCell;
             case 3:
                 return self.quitCell;
+            case 4:
+                return self.reportAbuseCell;
             default:
                 break;
         }
@@ -212,6 +227,8 @@ static NSString * const reuseIdentifier = @"Cell";
                 return self.membersCell;
             case 1:
                 return self.deleteMsgsCell;
+            case 2:
+                return self.reportAbuseCell;
             default:
                 break;
         }
@@ -257,10 +274,20 @@ static NSString * const reuseIdentifier = @"Cell";
             case 3:
                 [self quitConv];
                 break;
+            case 4:
+                [self goReportAbuse];
+                break;
         }
     }else{
-        if(indexPath.section==1){
-            [self deleteMsgs];
+        switch (indexPath.section) {
+            case 1:
+                [self deleteMsgs];
+                break;
+            case 2:
+                [self goReportAbuse];
+                break;
+            default:
+                break;
         }
     }
 }
@@ -303,5 +330,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     [self.navigationController pushViewController:userInfoVC animated:YES];
 }
 
+-(void)goReportAbuse{
+    CDConvReportAbuseVC *reportAbuseVC=[[CDConvReportAbuseVC alloc] initWithConvid:self.conv.conversationId];
+    [self.navigationController pushViewController:reportAbuseVC animated:YES];
+}
 
 @end

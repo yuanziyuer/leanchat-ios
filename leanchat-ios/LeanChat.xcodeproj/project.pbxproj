@@ -225,6 +225,8 @@
 		70B299091ACE95E100FE265E /* weChatBubble_Sending_Solid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B298AB1ACE95E100FE265E /* weChatBubble_Sending_Solid@2x.png */; };
 		70C57AB91AE50370008212B0 /* CDConvDetailMembersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70C57AB81AE50370008212B0 /* CDConvDetailMembersCell.m */; };
 		70D5FE671AE6237B00E4AA0A /* CDConvDetailMembersSubCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D5FE661AE6237B00E4AA0A /* CDConvDetailMembersSubCell.m */; };
+		70EEB0CE1AF0BB6600FBF92F /* CDConvReportAbuseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 70EEB0CD1AF0BB6600FBF92F /* CDConvReportAbuseVC.m */; };
+		70EEB0D41AF0BCDE00FBF92F /* CDAbuseReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 70EEB0D21AF0BCDE00FBF92F /* CDAbuseReport.m */; };
 		70F9A3AD1A72BC6D00195430 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F9A3A41A72A12500195430 /* AVFoundation.framework */; };
 		8C470C9D19926019006A4E87 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C470C9C19926019006A4E87 /* libiconv.dylib */; };
 		8C925C1F19876D8100D2750B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C925C1E19876D8100D2750B /* libicucore.dylib */; };
@@ -544,6 +546,10 @@
 		70C57AB81AE50370008212B0 /* CDConvDetailMembersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDConvDetailMembersCell.m; sourceTree = "<group>"; };
 		70D5FE651AE6237B00E4AA0A /* CDConvDetailMembersSubCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConvDetailMembersSubCell.h; sourceTree = "<group>"; };
 		70D5FE661AE6237B00E4AA0A /* CDConvDetailMembersSubCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDConvDetailMembersSubCell.m; sourceTree = "<group>"; };
+		70EEB0CC1AF0BB6600FBF92F /* CDConvReportAbuseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConvReportAbuseVC.h; sourceTree = "<group>"; };
+		70EEB0CD1AF0BB6600FBF92F /* CDConvReportAbuseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDConvReportAbuseVC.m; sourceTree = "<group>"; };
+		70EEB0D21AF0BCDE00FBF92F /* CDAbuseReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAbuseReport.m; sourceTree = "<group>"; };
+		70EEB0D31AF0BCDE00FBF92F /* CDAbuseReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAbuseReport.h; sourceTree = "<group>"; };
 		70F9A3A41A72A12500195430 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8C470C9C19926019006A4E87 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		8C925C1E19876D8100D2750B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
@@ -667,6 +673,8 @@
 				700138AC1ABC19D90050D0F7 /* CDGroupedConvListVC.h */,
 				700138AD1ABC19D90050D0F7 /* CDGroupedConvListVC.m */,
 				700138AE1ABC19D90050D0F7 /* CDGroupedConvListVC.xib */,
+				70EEB0CC1AF0BB6600FBF92F /* CDConvReportAbuseVC.h */,
+				70EEB0CD1AF0BB6600FBF92F /* CDConvReportAbuseVC.m */,
 			);
 			path = conv;
 			sourceTree = "<group>";
@@ -731,6 +739,8 @@
 		700138CE1ABC19D90050D0F7 /* avobject */ = {
 			isa = PBXGroup;
 			children = (
+				70EEB0D31AF0BCDE00FBF92F /* CDAbuseReport.h */,
+				70EEB0D21AF0BCDE00FBF92F /* CDAbuseReport.m */,
 				700138CF1ABC19D90050D0F7 /* CDAddRequest.h */,
 				700138D01ABC19D90050D0F7 /* CDAddRequest.m */,
 			);
@@ -1396,6 +1406,7 @@
 				70013B8D1ABC19DA0050D0F7 /* CDLoginVC.m in Sources */,
 				70013C041ABC19DB0050D0F7 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				70013C091ABC19DB0050D0F7 /* UIProgressView+AFNetworking.m in Sources */,
+				70EEB0D41AF0BCDE00FBF92F /* CDAbuseReport.m in Sources */,
 				70013BF81ABC19DB0050D0F7 /* CDUtils.m in Sources */,
 				70013C001ABC19DB0050D0F7 /* AFURLResponseSerialization.m in Sources */,
 				7056D4701AD4DB18008391FC /* CDUser.m in Sources */,
@@ -1409,6 +1420,7 @@
 				70013BFF1ABC19DB0050D0F7 /* AFURLRequestSerialization.m in Sources */,
 				70013B8B1ABC19DA0050D0F7 /* CDGroupedConvListVC.m in Sources */,
 				70013BF71ABC19DB0050D0F7 /* CDUserService.m in Sources */,
+				70EEB0CE1AF0BB6600FBF92F /* CDConvReportAbuseVC.m in Sources */,
 				70013D141ABC19DB0050D0F7 /* CDPopMenuItemCell.m in Sources */,
 				701011111AEF99E10046D0D8 /* CDWebViewVC.m in Sources */,
 				70013B951ABC19DA0050D0F7 /* CDProfileVC.m in Sources */,

@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+static CGFloat kCDTextFieldCommonVerticalPadding=10;
+static CGFloat kCDTextFieldCommonHorizontalPadding=10;
+
 @interface CDTextField : UITextField
 
 @property (nonatomic,assign)CGFloat verticalPadding;
