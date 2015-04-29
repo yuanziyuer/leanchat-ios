@@ -138,7 +138,7 @@ static NSString *cellIdentifier = @"ContactCell";
         cell.topLabel.text=user.username;
         [cell.myImageView setImageWithURL:[NSURL URLWithString:user.avatarUrl]];
     }else{
-        [cell.myImageView setImage:[UIImage imageNamed:@"group_icon"]];
+        [cell.myImageView setImage:room.conv.icon];
         cell.topLabel.text=room.conv.displayName;
     }
     cell.bottomLabel.text=[self.im getMsgTitle:room.lastMsg];

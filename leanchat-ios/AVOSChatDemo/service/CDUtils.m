@@ -117,6 +117,24 @@
     }
 }
 
++(UIImage*)imageWithColor:(UIColor *)color{
+    CGRect rect=CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context=UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    CGContextFillRect(context, rect);
+    UIImage *image=UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
++(UIColor*)randomColor{
+    CGFloat hue=arc4random()%256/256.0;
+    CGFloat saturation=arc4random()%128/256.0+0.5;
+    CGFloat brightness=arc4random()%128/256.0+0.5;
+    return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
+}
+
 +(NSArray*)reverseArray:(NSArray*)originArray{
     NSMutableArray* array=[NSMutableArray arrayWithCapacity:[originArray count]];
     NSEnumerator* enumerator=[originArray reverseObjectEnumerator];

@@ -31,5 +31,7 @@ typedef enum : NSUInteger {
 
 -(NSString*)title;
 
+-(UIImage*)icon;
+
 
 @end

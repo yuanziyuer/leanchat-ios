@@ -14,7 +14,6 @@
 
 @interface CDGroupedConvListVC (){
     NSArray* convs;
-    UIImage * groupImage;
     id groupUpdatedObserver;
     CDIM* _im;
 }
@@ -37,7 +36,6 @@ static NSString* cellIndentifier=@"cell";
     NSString* nibName=NSStringFromClass([CDImageLabelTableCell class]);
     UINib* nib=[UINib nibWithNibName:nibName bundle:nil];;
     [self.tableView registerNib:nib forCellReuseIdentifier:cellIndentifier];
-    groupImage=[UIImage imageNamed:@"group_icon"];
     [self refresh:nil];
     
     UIRefreshControl* refreshControl=[[UIRefreshControl alloc] init];
@@ -86,7 +84,7 @@ static NSString* cellIndentifier=@"cell";
     }
     AVIMConversation* conv=[convs objectAtIndex:indexPath.row];
     cell.myLabel.text=conv.title;
-    [cell.myImageView setImage:groupImage];
+    [cell.myImageView setImage:conv.icon];
     return cell;
 }
 

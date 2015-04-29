@@ -35,6 +35,8 @@ typedef void (^CDUpgradeBlock)(BOOL upgrade,NSString* oldVersion,NSString* newVe
 
 +(UIImage *)roundImage:(UIImage *) image toSize:(CGSize)size radius: (float) radius;
 
++(UIImage*)imageWithColor:(UIColor *)color;
+
 +(void)pickImageFromPhotoLibraryAtController:(UIViewController*)controller;
 
 +(BOOL)filterError:(NSError*)error;
@@ -45,23 +47,33 @@ typedef void (^CDUpgradeBlock)(BOOL upgrade,NSString* oldVersion,NSString* newVe
 
 +(void)hideNetworkIndicatorAndAlertError:(NSError*)error;
 
+
+
 #pragma mark - collection utils
+
 +(NSMutableArray*)setToArray:(NSMutableSet*)set;
 
 +(NSArray*)reverseArray:(NSArray*)originArray;
 
+
+
 #pragma mark - view utils
+
 +(void)setCellMarginsZero:(UITableViewCell*)cell;
 
 +(void)setTableViewMarginsZero:(UITableView*)view;
 
 +(void)stopRefreshControl:(UIRefreshControl*)refreshControl;
 
+
+
 #pragma mark - AVUtils
 
 +(NSString*)uuid;
 
+
 #pragma mark - async
+
 +(void)runInGlobalQueue:(void (^)())queue;
 
 +(void)runInMainQueue:(void (^)())queue;
@@ -71,6 +83,8 @@ typedef void (^CDUpgradeBlock)(BOOL upgrade,NSString* oldVersion,NSString* newVe
 +(void)postNotification:(NSString*)name;
 
 + (void)downloadWithUrl:(NSString *)url toPath:(NSString *)path;
+
+
 
 #pragma mark - time
 

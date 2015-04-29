@@ -60,4 +60,43 @@
     }
 }
 
+-(UIImage*)icon{
+    return [self imageWithColor:[self colorFromConversationId] size:CGSizeMake(50, 50) radius:4];
+}
+
+-(UIColor*)colorFromConversationId{
+    NSInteger length=self.conversationId.length;
+    NSInteger partLength=length/3;
+    NSString *part1,*part2,*part3;
+    part1=[self.conversationId substringWithRange:NSMakeRange(0, partLength)];
+    part2=[self.conversationId substringWithRange:NSMakeRange(partLength, partLength)];
+    part3=[self.conversationId substringWithRange:NSMakeRange(partLength*2, partLength)];
+    CGFloat hue=[self hashNumberFromString:part3]%256/256.0;
+    CGFloat saturation=[self hashNumberFromString:part2]%128/256.0+0.5;
+    CGFloat brightness=[self hashNumberFromString:part1]%128/256.0+0.5;
+    return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
+}
+
+-(NSUInteger)hashNumberFromString:(NSString*)string{
+    NSInteger hash=string.hash;
+    if(hash<0){
+        return -hash;
+    }else{
+        return hash;
+    }
+}
+
+-(UIImage*)imageWithColor:(UIColor *)color size:(CGSize)size radius:(CGFloat)radius{
+    CGRect rect=CGRectMake(0, 0, size.width, size.height);
+    UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
+    [[UIBezierPath bezierPathWithRoundedRect:rect
+                                cornerRadius:radius] addClip];
+    CGContextRef context=UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    CGContextFillRect(context, rect);
+    UIImage *image=UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
 @end

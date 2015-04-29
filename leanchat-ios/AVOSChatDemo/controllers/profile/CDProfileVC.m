@@ -127,7 +127,7 @@
     [picker dismissViewControllerAnimated:YES completion:^{
         UIActivityIndicatorView* indicator=[CDUtils showIndicatorAtView:self.view];
         UIImage* image=info[UIImagePickerControllerEditedImage];
-        UIImage* rounded=[CDUtils roundImage:image toSize:CGSizeMake(200, 200) radius:20];
+        UIImage* rounded=[CDUtils roundImage:image toSize:CGSizeMake(100, 100) radius:10];
         [CDUserService saveAvatar:rounded callback:^(BOOL succeeded, NSError *error) {
             [indicator stopAnimating];
             [CDUtils filterError:error callback:^{

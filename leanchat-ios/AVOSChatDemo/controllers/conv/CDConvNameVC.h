@@ -12,8 +12,8 @@
 
 @interface CDConvNameVC : UITableViewController
 
-@property CDConvDetailVC* detailVC;
+@property CDConvDetailVC *detailVC;
 
-@property AVIMConversation* conv;
+@property AVIMConversation *conv;
 
 @end
