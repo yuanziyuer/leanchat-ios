@@ -15,6 +15,7 @@
 #import <LeanChatLib/JSBadgeView.h>
 #import "CDBadgeLabel.h"
 #import "CDPushSettingVC.h"
+#import "CDWebViewVC.h"
 #import <LeanChatLib/LeanChatLib.h>
 
 @interface CDProfileVC ()
@@ -26,6 +27,8 @@
 @property (strong, nonatomic) IBOutlet UITableViewCell *avatarCell;
 @property (strong, nonatomic) IBOutlet UITableViewCell *logoutCell;
 @property (strong, nonatomic) IBOutlet UITableViewCell *pushSettingCell;
+
+@property (strong, nonatomic) IBOutlet UITableViewCell *termsCell;
 
 @end
 
@@ -57,10 +60,22 @@
     }];
 }
 
+-(void)goTerms{
+    CDWebViewVC *webViewVC=[[CDWebViewVC alloc] initWithURL:[NSURL URLWithString:@"https://leancloud.cn/terms.html"] title:@"用户协议"];
+    webViewVC.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController:webViewVC animated:YES];
+}
+
+-(void)goPushSetting{
+    CDPushSettingVC* controller=[[CDPushSettingVC alloc] init];
+    controller.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
 #pragma mark - table view
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 3;
+    return 4;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -78,6 +93,9 @@
             cell=_pushSettingCell;
             break;
         case 2:
+            cell=_termsCell;
+            break;
+        case 3:
             cell=_logoutCell;
             break;
     }
@@ -85,14 +103,8 @@
     return cell;
 }
 
--(void)goPushSetting{
-    CDPushSettingVC* controller=[[CDPushSettingVC alloc] init];
-    controller.hidesBottomBarWhenPushed=YES;
-    [self.navigationController pushViewController:controller animated:YES];
-}
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    int section=indexPath.section;
+    NSInteger section=indexPath.section;
     switch (section) {
         case 0:
             [CDUtils pickImageFromPhotoLibraryAtController:self];
@@ -101,6 +113,9 @@
             [self goPushSetting];
             break;
         case 2:
+            [self goTerms];
+            break;
+        case 3:
             [self logout];
             break;
     }

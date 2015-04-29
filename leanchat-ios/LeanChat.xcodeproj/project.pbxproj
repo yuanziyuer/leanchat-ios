@@ -111,6 +111,7 @@
 		70013D171ABC19DB0050D0F7 /* CDTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B791ABC19DA0050D0F7 /* CDTextField.m */; };
 		70013DA41ABFD0C70050D0F7 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70013DA31ABFD0C70050D0F7 /* AVOSCloud.framework */; };
 		70013DA61ABFD0D70050D0F7 /* AVOSCloudIM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70013DA51ABFD0D70050D0F7 /* AVOSCloudIM.framework */; };
+		701011111AEF99E10046D0D8 /* CDWebViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 701011101AEF99E10046D0D8 /* CDWebViewVC.m */; };
 		701D851D1ADCD35000982D5D /* AVIMUserInfoMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 701D851C1ADCD35000982D5D /* AVIMUserInfoMessage.m */; };
 		704578F51AD7D8B100452531 /* CDConvsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 704578F41AD7D8B100452531 /* CDConvsVC.m */; };
 		704578F81AD7DA2F00452531 /* CDChatVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 704578F71AD7DA2F00452531 /* CDChatVC.m */; };
@@ -417,6 +418,8 @@
 		70013DA31ABFD0C70050D0F7 /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
 		70013DA51ABFD0D70050D0F7 /* AVOSCloudIM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloudIM.framework; sourceTree = "<group>"; };
 		70033A161AD3F4790003C408 /* LeanChatLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LeanChatLib.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/LeanChat-bawtqfedaczltxfvbjmxartzlsdw/Build/Products/Debug-iphoneos/LeanChatLib.framework"; sourceTree = "<group>"; };
+		7010110F1AEF99E10046D0D8 /* CDWebViewVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDWebViewVC.h; sourceTree = "<group>"; };
+		701011101AEF99E10046D0D8 /* CDWebViewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDWebViewVC.m; sourceTree = "<group>"; };
 		701D851B1ADCD35000982D5D /* AVIMUserInfoMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVIMUserInfoMessage.h; sourceTree = "<group>"; };
 		701D851C1ADCD35000982D5D /* AVIMUserInfoMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVIMUserInfoMessage.m; sourceTree = "<group>"; };
 		704578F31AD7D8B100452531 /* CDConvsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConvsVC.h; sourceTree = "<group>"; };
@@ -630,6 +633,8 @@
 				700138951ABC19D90050D0F7 /* CDBaseTableVC.m */,
 				700138961ABC19D90050D0F7 /* CDBaseVC.h */,
 				700138971ABC19D90050D0F7 /* CDBaseVC.m */,
+				7010110F1AEF99E10046D0D8 /* CDWebViewVC.h */,
+				701011101AEF99E10046D0D8 /* CDWebViewVC.m */,
 			);
 			path = base;
 			sourceTree = "<group>";
@@ -1405,6 +1410,7 @@
 				70013B8B1ABC19DA0050D0F7 /* CDGroupedConvListVC.m in Sources */,
 				70013BF71ABC19DB0050D0F7 /* CDUserService.m in Sources */,
 				70013D141ABC19DB0050D0F7 /* CDPopMenuItemCell.m in Sources */,
+				701011111AEF99E10046D0D8 /* CDWebViewVC.m in Sources */,
 				70013B951ABC19DA0050D0F7 /* CDProfileVC.m in Sources */,
 				70013B8F1ABC19DA0050D0F7 /* CDAddFriendVC.m in Sources */,
 				70013B8E1ABC19DA0050D0F7 /* CDRegisterVC.m in Sources */,

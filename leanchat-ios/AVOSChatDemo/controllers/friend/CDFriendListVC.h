@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 AVOS. All rights reserved.
 //
 
-#import "CDBaseTableVC.h"
 
 @interface CDFriendListVC : UIViewController<UITableViewDataSource,UITableViewDelegate>
 

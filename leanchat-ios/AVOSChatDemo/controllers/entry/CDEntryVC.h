@@ -9,7 +9,12 @@
 #import "CDBaseVC.h"
 #import "CDTextField.h"
 #import "CDResizableButton.h"
-#import "CDCommon.h"
+#import <AVOSCloud/AVOSCloud.h>
+
+#define KEY_USERNAME @"KEY_USERNAME"
+#define USERNAME_MIN_LENGTH 3
+#define PASSWORD_MIN_LENGTH 3
+#define RGBCOLOR(r,g,b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1]
 
 static CGFloat kEntryVCIconImageViewMarginTop=80;
 static CGFloat kEntryVCIconImageViewSize=80;

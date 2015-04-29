@@ -91,25 +91,12 @@
 
 +(UIImage *)roundImage:(UIImage *) image toSize:(CGSize)size radius: (float) radius;
 {
-    
-    // Begin a new image that will be the new image with the rounded corners
-    // (here with the size of an UIImageView)
-    
     CGRect rect=CGRectMake(0, 0, size.width, size.height);
-    
     UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
-    
-    // Add a clip before drawing anything, in the shape of an rounded rect
-    
     [[UIBezierPath bezierPathWithRoundedRect:rect
                                 cornerRadius:radius] addClip];
-    // Draw your image
     [image drawInRect:rect];
-    
-    // Get the image, here setting the UIImageView image
     UIImage* rounded = UIGraphicsGetImageFromCurrentImageContext();
-    
-    // Lets forget about that we were drawing
     UIGraphicsEndImageContext();
     return rounded;
 }

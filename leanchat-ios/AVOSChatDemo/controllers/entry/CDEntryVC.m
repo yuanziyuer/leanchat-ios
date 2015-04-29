@@ -8,7 +8,6 @@
 
 #import "CDEntryVC.h"
 #import "CDTextField.h"
-#import "CDCommon.h"
 
 @interface CDEntryVC ()<UITextFieldDelegate,CDEntryVCDelegate>
 
@@ -20,7 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    self.view.frame = CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight([UIScreen mainScreen].bounds));
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeKeyboard:)];
     tap.numberOfTapsRequired = 1;

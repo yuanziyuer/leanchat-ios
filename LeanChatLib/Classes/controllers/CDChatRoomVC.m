@@ -115,14 +115,13 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
     // 设置自身用户名
     self.messageSender = [curUser username];
     [_storage insertRoomWithConvid:self.conv.conversationId];
-    [_storage clearUnreadWithConvid:self.conv.conversationId];
     [_notify addConvObserver:self selector:@selector(refreshConv)];
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [_notify addMsgObserver:self selector:@selector(loadMsg:)];
+    [_storage clearUnreadWithConvid:self.conv.conversationId];
     [self refreshConv];
     [self loadMsgsWithLoadMore:NO];
 }
@@ -130,6 +129,7 @@ typedef void(^CDNSArrayCallback)(NSArray* objects,NSError* error);
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     [_notify removeMsgObserver:self];
+    [_storage clearUnreadWithConvid:self.conv.conversationId];
     [[XHAudioPlayerHelper shareInstance] stopAudio];
 }
 

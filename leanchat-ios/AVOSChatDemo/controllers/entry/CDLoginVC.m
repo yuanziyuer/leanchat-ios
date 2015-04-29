@@ -7,13 +7,8 @@
 //
 
 #import "CDLoginVC.h"
-#import "CDCommon.h"
-#import "CDTextField.h"
 #import "CDRegisterVC.h"
-#import "CDBaseNavC.h"
 #import "CDAppDelegate.h"
-#import "CDService.h"
-#import "CDResizableButton.h"
 
 @interface CDLoginVC () <CDEntryVCDelegate>
 
@@ -86,7 +81,7 @@
         _forgotPasswordButton.frame = CGRectMake(CGRectGetWidth(self.view.frame)/2, CGRectGetHeight(self.view.frame)-kEntryVCTextFieldHeight,CGRectGetWidth(self.view.frame)/2 , kEntryVCTextFieldHeight);
         [_forgotPasswordButton setBackgroundImage:image forState:UIControlStateNormal];
         [_forgotPasswordButton setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
-        [_forgotPasswordButton setTitleColor:RGBCOLOR( 93,92,92) forState:UIControlStateNormal];
+        [_forgotPasswordButton setTitleColor:RGBCOLOR(93, 92, 92) forState:UIControlStateNormal];
         [_forgotPasswordButton setTitle:@"找回密码" forState:UIControlStateNormal];
         _forgotPasswordButton.titleLabel.font = [UIFont systemFontOfSize:15];
         [_forgotPasswordButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -98,7 +93,9 @@
 #pragma mark - Actions
 -(void)login:(id)sender {
     [AVUser logInWithUsernameInBackground:self.usernameField.text password:self.passwordField.text block:^(AVUser *user, NSError *error) {
-        if([CDUtils filterError:error]){
+        if(error){
+            [self showHUDText:error.localizedDescription];
+        }else{
             [[NSUserDefaults standardUserDefaults] setObject:self.usernameField.text forKey:KEY_USERNAME];
             CDAppDelegate *delegate = (CDAppDelegate *)[UIApplication sharedApplication].delegate;
             [delegate toMain];
@@ -109,7 +106,7 @@
 -(void)toRegister:(id)sender {
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     CDRegisterVC *vc = [[CDRegisterVC alloc] init];
-    CDBaseNavC *nav = [[CDBaseNavC alloc] initWithRootViewController:vc];
+    UINavigationController *nav=[[UINavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nav animated:YES completion:nil];
 }
 
