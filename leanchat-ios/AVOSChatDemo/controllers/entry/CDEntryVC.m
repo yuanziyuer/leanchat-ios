@@ -36,15 +36,12 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    UIScrollView *scrollView = (UIScrollView *)self.view;
-    _originOffset = scrollView.contentOffset;
+    _originOffset = self.view.frame.origin;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -132,21 +129,6 @@
 - (void)closeKeyboard:(id)sender {
     [self.usernameField resignFirstResponder];
     [self.passwordField resignFirstResponder];
-}
-
-#pragma mark - Responding to keyboard events
-- (void)keyboardWillShow:(NSNotification *)notification {
-    [self performSelector:@selector(moveUpMainView) withObject:nil afterDelay:0.1];
-}
-
-- (void)keyboardWillHide:(NSNotification *)notification{
-    UIScrollView *scrollView = (UIScrollView *)self.view;
-    [scrollView setContentOffset:_originOffset animated:YES];
-}
-
-- (void)moveUpMainView{
-    UIScrollView *scrollView = (UIScrollView *)self.view;
-    [scrollView setContentOffset:CGPointMake(0, 65) animated:YES];
 }
 
 

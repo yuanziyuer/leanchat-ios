@@ -14,8 +14,6 @@
 
 @interface CDProfileVC ()
 
-@property (nonatomic, strong) NSArray *dataSource;
-
 @end
 
 @implementation CDProfileVC
@@ -31,15 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-}
-
-#pragma mark - Propertys
-
--(NSArray*)dataSource{
-    if(_dataSource==nil){
-        _dataSource = @[[AVUser currentUser].username,@"消息通知",@"用户协议",@"退出登录"];
-    }
-    return _dataSource;
+    self.dataSource= [@[[AVUser currentUser].username,@"消息通知",@"用户协议",@"退出登录"] mutableCopy];
 }
 
 #pragma mark - Actions

@@ -28,7 +28,7 @@
     
     UIRefreshControl* refreshControl=[[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
-    self.refreshControl=refreshControl;
+    [self.tableView addSubview:refreshControl];
     
     [self refresh:nil];
 }
@@ -106,6 +106,24 @@
     CDAddRequest* addRequest=self.addRequests[indexPath.row];
     CDUserInfoVC *userInfoVC=[[CDUserInfoVC alloc] initWithUser:addRequest.fromUser];
     [self.navigationController pushViewController:userInfoVC animated:YES];
+}
+
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(editingStyle==UITableViewCellEditingStyleDelete){
+        CDAddRequest* addRequest=self.addRequests[indexPath.row];
+        [self showProgress];
+        WEAKSELF
+        [addRequest deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [weakSelf hideProgress];
+            if([weakSelf filterError:error]){
+                [weakSelf refresh:nil];
+            }
+        }];
+    }
 }
 
 @end

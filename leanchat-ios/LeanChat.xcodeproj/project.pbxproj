@@ -29,7 +29,6 @@
 		70013B911ABC19DA0050D0F7 /* CDFriendListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138B91ABC19D90050D0F7 /* CDFriendListVC.m */; };
 		70013B921ABC19DA0050D0F7 /* CDFriendListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 700138BA1ABC19D90050D0F7 /* CDFriendListVC.xib */; };
 		70013B931ABC19DA0050D0F7 /* CDNewFriendVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138BC1ABC19D90050D0F7 /* CDNewFriendVC.m */; };
-		70013B941ABC19DA0050D0F7 /* CDNewFriendVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 700138BD1ABC19D90050D0F7 /* CDNewFriendVC.xib */; };
 		70013B951ABC19DA0050D0F7 /* CDProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138C01ABC19D90050D0F7 /* CDProfileVC.m */; };
 		70013B971ABC19DA0050D0F7 /* CDPushSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138C31ABC19D90050D0F7 /* CDPushSettingVC.m */; };
 		70013B981ABC19DA0050D0F7 /* CDUserInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138C51ABC19D90050D0F7 /* CDUserInfoVC.m */; };
@@ -293,7 +292,6 @@
 		700138BA1ABC19D90050D0F7 /* CDFriendListVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDFriendListVC.xib; sourceTree = "<group>"; };
 		700138BB1ABC19D90050D0F7 /* CDNewFriendVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDNewFriendVC.h; sourceTree = "<group>"; };
 		700138BC1ABC19D90050D0F7 /* CDNewFriendVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDNewFriendVC.m; sourceTree = "<group>"; };
-		700138BD1ABC19D90050D0F7 /* CDNewFriendVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDNewFriendVC.xib; sourceTree = "<group>"; };
 		700138BF1ABC19D90050D0F7 /* CDProfileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDProfileVC.h; sourceTree = "<group>"; };
 		700138C01ABC19D90050D0F7 /* CDProfileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDProfileVC.m; sourceTree = "<group>"; };
 		700138C21ABC19D90050D0F7 /* CDPushSettingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDPushSettingVC.h; sourceTree = "<group>"; };
@@ -696,7 +694,6 @@
 				700138BA1ABC19D90050D0F7 /* CDFriendListVC.xib */,
 				700138BB1ABC19D90050D0F7 /* CDNewFriendVC.h */,
 				700138BC1ABC19D90050D0F7 /* CDNewFriendVC.m */,
-				700138BD1ABC19D90050D0F7 /* CDNewFriendVC.xib */,
 			);
 			path = friend;
 			sourceTree = "<group>";
@@ -1268,7 +1265,6 @@
 				70B299051ACE95E100FE265E /* weChatBubble_Receiving_LeanChat@2x.png in Resources */,
 				704578FA1AD7E28A00452531 /* chat_menu_people.png in Resources */,
 				70B298EB1ACE95E100FE265E /* section0_emotion4@2x.png in Resources */,
-				70013B941ABC19DA0050D0F7 /* CDNewFriendVC.xib in Resources */,
 				70B298F01ACE95E100FE265E /* section0_emotion9@2x.png in Resources */,
 				70B298E51ACE95E100FE265E /* section0_emotion13@2x.png in Resources */,
 				70013BDD1ABC19DA0050D0F7 /* menu_add_scan@2x.png in Resources */,

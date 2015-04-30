@@ -95,4 +95,20 @@ static NSString* cellIndentifier=@"cell";
     [[CDIMService shareInstance] goWithConv:conv fromNav:self.navigationController];
 }
 
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(editingStyle==UITableViewCellEditingStyleDelete){
+        AVIMConversation* conv=[convs objectAtIndex:indexPath.row];
+        WEAKSELF
+        [conv quitWithCallback:^(BOOL succeeded, NSError *error) {
+            if([CDUtils filterError:error]){
+                [weakSelf refresh:nil];
+            };
+        }];
+    }
+}
+
 @end

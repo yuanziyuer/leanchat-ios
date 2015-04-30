@@ -14,55 +14,56 @@
 
 @implementation CDBaseTableVC
 
-- (void)loadView {
-    [super loadView];
-    if ([self respondsToSelector:@selector(automaticalyAdjustsScrollViewInsets)]) {
-        self.automaticallyAdjustsScrollViewInsets = NO;
-    }
-    [self.view addSubview:self.tableView];
-}
-
-- (UITableView *)tableView {
-    if (!_tableView) {
-        if(!self.tableViewStyle){
-            self.tableViewStyle=UITableViewStylePlain;
-        }
-        _tableView = [[UITableView alloc] initWithFrame:self.view.frame style:self.tableViewStyle];
-        _tableView.delegate = self;
-        _tableView.dataSource = self;
-        _tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    }
-    return  _tableView;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.view addSubview:self.tableView];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
-//         For insetting with a navigation bar
-//        CGRect rect = self.navigationController.navigationBar.frame;
-//        UIEdgeInsets insets = UIEdgeInsetsMake(CGRectGetMaxY(rect), 0, CGRectGetHeight(self.tabBarController.tabBar.bounds), 0);
-        UIEdgeInsets insets = UIEdgeInsetsMake(0, 0, CGRectGetHeight(self.tabBarController.tabBar.bounds), 0);
-        self.tableView.contentInset = insets;
-        self.tableView.scrollIndicatorInsets = insets;
+- (CGFloat)getAdapterHeight {
+    CGFloat adapterHeight = 0;
+    if ([[[UIDevice currentDevice] systemVersion] integerValue] < 7.0) {
+        adapterHeight = 44;
     }
+    return adapterHeight;
+}
+
+-(UITableView*)tableView{
+    if(_tableView==nil){
+        CGRect tableViewFrame = self.view.bounds;
+        tableViewFrame.size.height -= (self.navigationController.viewControllers.count > 1 ? 0 : (CGRectGetHeight(self.tabBarController.tabBar.bounds)))+[self getAdapterHeight];
+        _tableView = [[UITableView alloc] initWithFrame:tableViewFrame style:self.tableViewStyle];
+        _tableView.delegate=self;
+        _tableView.dataSource=self;
+    }
+    return _tableView;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
+-(void)dealloc{
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+-(NSMutableArray*)dataSource{
+    if(_dataSource==nil){
+        _dataSource=[NSMutableArray array];
+    }
+    return _dataSource;
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return self.dataSource.count;
+}
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     return nil;
 }
 
-
 @end
+
