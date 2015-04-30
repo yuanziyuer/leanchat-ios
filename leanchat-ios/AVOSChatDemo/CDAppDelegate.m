@@ -162,7 +162,7 @@
         [weakSelf addItemController:[[CDFriendListVC alloc] init] toTabBarController:tab];
         [weakSelf addItemController:[[CDProfileVC alloc] init] toTabBarController:tab];
         
-        tab.selectedIndex=2;
+        tab.selectedIndex=0;
         DLog(@"%@",error);
         weakSelf.window.rootViewController = tab;
     }];

@@ -99,7 +99,6 @@
 		70013D091ABC19DB0050D0F7 /* CDButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B611ABC19DA0050D0F7 /* CDButton.m */; };
 		70013D0C1ABC19DB0050D0F7 /* CDImageLabelTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B661ABC19DA0050D0F7 /* CDImageLabelTableCell.m */; };
 		70013D0D1ABC19DB0050D0F7 /* CDImageLabelTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70013B671ABC19DA0050D0F7 /* CDImageLabelTableCell.xib */; };
-		70013D0F1ABC19DB0050D0F7 /* CDImageTwoLabelTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70013B6A1ABC19DA0050D0F7 /* CDImageTwoLabelTableCell.xib */; };
 		70013D101ABC19DB0050D0F7 /* CDLabelButtonTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B6C1ABC19DA0050D0F7 /* CDLabelButtonTableCell.m */; };
 		70013D111ABC19DB0050D0F7 /* CDLabelButtonTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70013B6D1ABC19DA0050D0F7 /* CDLabelButtonTableCell.xib */; };
 		70013D121ABC19DB0050D0F7 /* CDPopMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B6F1ABC19DA0050D0F7 /* CDPopMenu.m */; };
@@ -124,6 +123,7 @@
 		704A890F1A30F5B200D2A3C2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */; };
 		7056D4701AD4DB18008391FC /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7056D46F1AD4DB18008391FC /* CDUser.m */; };
 		7059E72D1ACE727B009D17AB /* CDIMService.m in Sources */ = {isa = PBXBuildFile; fileRef = 7059E72C1ACE727B009D17AB /* CDIMService.m */; };
+		707F13B11AF1D747009FE9A4 /* CDImageTwoLabelTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 707F13B01AF1D747009FE9A4 /* CDImageTwoLabelTableCell.xib */; };
 		709E54251ADE5B5900F82BB8 /* login_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 709E54241ADE5B5900F82BB8 /* login_background.png */; };
 		709E54291ADE61B600F82BB8 /* CDEntryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 709E54281ADE61B600F82BB8 /* CDEntryVC.m */; };
 		709E542B1ADE853C00F82BB8 /* group_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 709E542A1ADE853C00F82BB8 /* group_icon.png */; };
@@ -396,7 +396,6 @@
 		70013B651ABC19DA0050D0F7 /* CDImageLabelTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDImageLabelTableCell.h; sourceTree = "<group>"; };
 		70013B661ABC19DA0050D0F7 /* CDImageLabelTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDImageLabelTableCell.m; sourceTree = "<group>"; };
 		70013B671ABC19DA0050D0F7 /* CDImageLabelTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDImageLabelTableCell.xib; sourceTree = "<group>"; };
-		70013B6A1ABC19DA0050D0F7 /* CDImageTwoLabelTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDImageTwoLabelTableCell.xib; sourceTree = "<group>"; };
 		70013B6B1ABC19DA0050D0F7 /* CDLabelButtonTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDLabelButtonTableCell.h; sourceTree = "<group>"; };
 		70013B6C1ABC19DA0050D0F7 /* CDLabelButtonTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDLabelButtonTableCell.m; sourceTree = "<group>"; };
 		70013B6D1ABC19DA0050D0F7 /* CDLabelButtonTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDLabelButtonTableCell.xib; sourceTree = "<group>"; };
@@ -436,6 +435,7 @@
 		7056D46F1AD4DB18008391FC /* CDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUser.m; sourceTree = "<group>"; };
 		7059E72B1ACE727B009D17AB /* CDIMService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIMService.h; sourceTree = "<group>"; };
 		7059E72C1ACE727B009D17AB /* CDIMService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIMService.m; sourceTree = "<group>"; };
+		707F13B01AF1D747009FE9A4 /* CDImageTwoLabelTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDImageTwoLabelTableCell.xib; sourceTree = "<group>"; };
 		709E54241ADE5B5900F82BB8 /* login_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_background.png; sourceTree = "<group>"; };
 		709E54271ADE61B600F82BB8 /* CDEntryVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEntryVC.h; sourceTree = "<group>"; };
 		709E54281ADE61B600F82BB8 /* CDEntryVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEntryVC.m; sourceTree = "<group>"; };
@@ -740,6 +740,7 @@
 		700138D51ABC19D90050D0F7 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				707F13B01AF1D747009FE9A4 /* CDImageTwoLabelTableCell.xib */,
 				709E542A1ADE853C00F82BB8 /* group_icon.png */,
 				704578F91AD7E28A00452531 /* chat_menu_people.png */,
 				70B2984D1ACE95E100FE265E /* Resources */,
@@ -934,7 +935,6 @@
 				70013B651ABC19DA0050D0F7 /* CDImageLabelTableCell.h */,
 				70013B661ABC19DA0050D0F7 /* CDImageLabelTableCell.m */,
 				70013B671ABC19DA0050D0F7 /* CDImageLabelTableCell.xib */,
-				70013B6A1ABC19DA0050D0F7 /* CDImageTwoLabelTableCell.xib */,
 				70013B6B1ABC19DA0050D0F7 /* CDLabelButtonTableCell.h */,
 				70013B6C1ABC19DA0050D0F7 /* CDLabelButtonTableCell.m */,
 				70013B6D1ABC19DA0050D0F7 /* CDLabelButtonTableCell.xib */,
@@ -1328,12 +1328,12 @@
 				70B298FC1ACE95E100FE265E /* sharemore_videovoip@2x.png in Resources */,
 				70B298D11ACE95E100FE265E /* ReceiverVoiceNodePlaying001@2x.png in Resources */,
 				70013BDC1ABC19DA0050D0F7 /* menu_add_photo@2x.png in Resources */,
+				707F13B11AF1D747009FE9A4 /* CDImageTwoLabelTableCell.xib in Resources */,
 				70B298B21ACE95E100FE265E /* CellNotSelected@2x.png in Resources */,
 				70B298C91ACE95E100FE265E /* msg_chat_voice_unread.png in Resources */,
 				70B298F61ACE95E100FE265E /* sharemore_friendcard@2x.png in Resources */,
 				70B298B91ACE95E100FE265E /* ContactsPanelDotRect@2x.png in Resources */,
 				70B298D21ACE95E100FE265E /* ReceiverVoiceNodePlaying002@2x.png in Resources */,
-				70013D0F1ABC19DB0050D0F7 /* CDImageTwoLabelTableCell.xib in Resources */,
 				70B298D41ACE95E100FE265E /* ReceiverVoiceNodePlaying@2x.png in Resources */,
 				70B299091ACE95E100FE265E /* weChatBubble_Sending_Solid@2x.png in Resources */,
 				70013BD01ABC19DA0050D0F7 /* bottom_bar_selected@2x.png in Resources */,

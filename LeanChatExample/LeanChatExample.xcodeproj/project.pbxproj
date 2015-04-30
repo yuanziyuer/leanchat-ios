@@ -25,7 +25,6 @@
 		7049269F1ADFCC9A00E8E295 /* AddGroupMemberBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7049263E1ADFCC9A00E8E295 /* AddGroupMemberBtn@2x.png */; };
 		704926A01ADFCC9A00E8E295 /* AddGroupMemberBtnHL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7049263F1ADFCC9A00E8E295 /* AddGroupMemberBtnHL@2x.png */; };
 		704926A11ADFCC9A00E8E295 /* avator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 704926401ADFCC9A00E8E295 /* avator@2x.png */; };
-		704926A21ADFCC9A00E8E295 /* CDImageTwoLabelTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 704926411ADFCC9A00E8E295 /* CDImageTwoLabelTableCell.xib */; };
 		704926A31ADFCC9A00E8E295 /* CellBlueSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 704926421ADFCC9A00E8E295 /* CellBlueSelected@2x.png */; };
 		704926A41ADFCC9A00E8E295 /* CellGraySelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 704926431ADFCC9A00E8E295 /* CellGraySelected@2x.png */; };
 		704926A51ADFCC9A00E8E295 /* CellNotSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 704926441ADFCC9A00E8E295 /* CellNotSelected@2x.png */; };
@@ -119,6 +118,7 @@
 		704926FD1ADFCC9A00E8E295 /* weChatBubble_Sending_Solid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7049269D1ADFCC9A00E8E295 /* weChatBubble_Sending_Solid@2x.png */; };
 		7056D46D1AD4DAD9008391FC /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7056D46C1AD4DAD9008391FC /* CDUser.m */; };
 		7073A7C21ACEA79C00073BC0 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073A7C11ACEA79C00073BC0 /* MainViewController.m */; };
+		707F13B31AF1E7E6009FE9A4 /* CDImageTwoLabelTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 707F13B21AF1E7E6009FE9A4 /* CDImageTwoLabelTableCell.xib */; };
 		7094C17B1AD3E70100670821 /* LCEChatRoomVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7094C17A1AD3E70100670821 /* LCEChatRoomVC.m */; };
 		7094C1841AD3E9AD00670821 /* CDUserFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7094C1831AD3E9AD00670821 /* CDUserFactory.m */; };
 		7094C1871AD3F29200670821 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7094C1851AD3F29200670821 /* AVOSCloud.framework */; };
@@ -178,7 +178,6 @@
 		7049263E1ADFCC9A00E8E295 /* AddGroupMemberBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddGroupMemberBtn@2x.png"; sourceTree = "<group>"; };
 		7049263F1ADFCC9A00E8E295 /* AddGroupMemberBtnHL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddGroupMemberBtnHL@2x.png"; sourceTree = "<group>"; };
 		704926401ADFCC9A00E8E295 /* avator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avator@2x.png"; sourceTree = "<group>"; };
-		704926411ADFCC9A00E8E295 /* CDImageTwoLabelTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDImageTwoLabelTableCell.xib; sourceTree = "<group>"; };
 		704926421ADFCC9A00E8E295 /* CellBlueSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CellBlueSelected@2x.png"; sourceTree = "<group>"; };
 		704926431ADFCC9A00E8E295 /* CellGraySelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CellGraySelected@2x.png"; sourceTree = "<group>"; };
 		704926441ADFCC9A00E8E295 /* CellNotSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CellNotSelected@2x.png"; sourceTree = "<group>"; };
@@ -276,6 +275,7 @@
 		7073A7C01ACEA79C00073BC0 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		7073A7C11ACEA79C00073BC0 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		7073A7C41ACEA88C00073BC0 /* LCECommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LCECommon.h; sourceTree = "<group>"; };
+		707F13B21AF1E7E6009FE9A4 /* CDImageTwoLabelTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDImageTwoLabelTableCell.xib; sourceTree = "<group>"; };
 		7094C1791AD3E70100670821 /* LCEChatRoomVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCEChatRoomVC.h; sourceTree = "<group>"; };
 		7094C17A1AD3E70100670821 /* LCEChatRoomVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCEChatRoomVC.m; sourceTree = "<group>"; };
 		7094C1821AD3E9AD00670821 /* CDUserFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUserFactory.h; sourceTree = "<group>"; };
@@ -349,10 +349,10 @@
 		7049263D1ADFCC9A00E8E295 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				707F13B21AF1E7E6009FE9A4 /* CDImageTwoLabelTableCell.xib */,
 				7049263E1ADFCC9A00E8E295 /* AddGroupMemberBtn@2x.png */,
 				7049263F1ADFCC9A00E8E295 /* AddGroupMemberBtnHL@2x.png */,
 				704926401ADFCC9A00E8E295 /* avator@2x.png */,
-				704926411ADFCC9A00E8E295 /* CDImageTwoLabelTableCell.xib */,
 				704926421ADFCC9A00E8E295 /* CellBlueSelected@2x.png */,
 				704926431ADFCC9A00E8E295 /* CellGraySelected@2x.png */,
 				704926441ADFCC9A00E8E295 /* CellNotSelected@2x.png */,
@@ -651,7 +651,6 @@
 				704926F61ADFCC9A00E8E295 /* VoiceBtn_Black@2x.png in Resources */,
 				704926D21ADFCC9A00E8E295 /* RecordingSignal008@2x.png in Resources */,
 				704926CD1ADFCC9A00E8E295 /* RecordingSignal003@2x.png in Resources */,
-				704926A21ADFCC9A00E8E295 /* CDImageTwoLabelTableCell.xib in Resources */,
 				704926F81ADFCC9A00E8E295 /* weChatBubble_Receiving_Cavern@2x.png in Resources */,
 				704926DE1ADFCC9A00E8E295 /* section0_emotion3@2x.png in Resources */,
 				704926C51ADFCC9A00E8E295 /* ReceiverVoiceNodePlaying001@2x.png in Resources */,
@@ -688,6 +687,7 @@
 				704926A91ADFCC9A00E8E295 /* contacts_add_photo@2x.png in Resources */,
 				704926A51ADFCC9A00E8E295 /* CellNotSelected@2x.png in Resources */,
 				704579531AD8016600452531 /* tabbar_chat_active@2x.png in Resources */,
+				707F13B31AF1E7E6009FE9A4 /* CDImageTwoLabelTableCell.xib in Resources */,
 				7049269F1ADFCC9A00E8E295 /* AddGroupMemberBtn@2x.png in Resources */,
 				704579511AD8016600452531 /* chat_menu_people.png in Resources */,
 				704926FB1ADFCC9A00E8E295 /* weChatBubble_Sending_Cavern@2x.png in Resources */,

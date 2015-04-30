@@ -55,9 +55,9 @@
     UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:identifier];
     if(cell==nil){
         cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell.accessoryType=UITableViewCellAccessoryNone;
     }
     if(indexPath.section==1){
-        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
         if(self.isFriend){
             cell.textLabel.text=@"开始聊天";
         }else{
@@ -67,7 +67,6 @@
     }else{
         cell.textLabel.text=self.user.username;
         cell.textLabel.textAlignment=NSTextAlignmentLeft;
-        cell.accessoryType=UITableViewCellAccessoryNone;
         [CDUserService displayBigAvatarOfUser:self.user avatarView:cell.imageView];
     }
     return cell;

@@ -143,6 +143,14 @@ static NSString *cellIdentifier = @"ContactCell";
     }
     cell.bottomLabel.text=[self.im getMsgTitle:room.lastMsg];
     cell.unreadCount=room.unreadCount;
+    if(room.lastMsg){
+        NSDateFormatter* dateFormatter=[[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"MM-dd HH:mm"];
+        NSString* timeString=[dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:room.lastMsg.sendTimestamp/1000]];
+        cell.rightLabel.text=timeString;
+    }else{
+        cell.rightLabel.text=@"";
+    }
     return cell;
 }
 

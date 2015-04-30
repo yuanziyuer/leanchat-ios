@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 AVOS. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "CDBaseTableVC.h"
 #import "CDCommon.h"
 
-@interface CDConvDetailVC : UITableViewController
+@interface CDConvDetailVC : CDBaseTableVC
 
 @end
