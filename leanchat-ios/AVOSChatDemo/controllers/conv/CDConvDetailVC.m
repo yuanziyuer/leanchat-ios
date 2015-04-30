@@ -13,12 +13,15 @@
 #import "CDConvDetailMembersCell.h"
 #import "CDConvReportAbuseVC.h"
 #import "CDCache.h"
-#import "CDUtils.h"
 
-static NSString * kCDConvDetailVCTitleKey=@"title";
-static NSString * kCDConvDetailVCDisclosureKey=@"disclosure";
-static NSString * kCDConvDetailVCDetailKey=@"detail";
-static NSString * kCDConvDetailVCSelectorKey=@"selecotr";
+static NSString *kCDConvDetailVCTitleKey=@"title";
+static NSString *kCDConvDetailVCDisclosureKey=@"disclosure";
+static NSString *kCDConvDetailVCDetailKey=@"detail";
+static NSString *kCDConvDetailVCSelectorKey=@"selecotr";
+
+static CGFloat kCDConvDetailVCHorizontalPadding=10;
+
+static NSString *switchCellIdentifier=@"switch";
 
 @interface CDConvDetailVC ()<UIGestureRecognizerDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,CDConvDetailMembersHeaderViewDelegate>
 
@@ -41,6 +44,8 @@ static NSString * kCDConvDetailVCSelectorKey=@"selecotr";
 @property (nonatomic,strong) NSArray* members;
 
 @property (nonatomic,strong) NSArray *dataSource;
+
+@property (nonatomic,strong) UITableViewCell *switchCell;
 
 @end
 
@@ -77,16 +82,17 @@ static NSString * const reuseIdentifier = @"Cell";
     NSDictionary *dict2=@{kCDConvDetailVCTitleKey:@"举报",
                           kCDConvDetailVCDisclosureKey:@YES,
                           kCDConvDetailVCSelectorKey:NSStringFromSelector(@selector(goReportAbuse))};
+    NSDictionary *dict3=@{kCDConvDetailVCTitleKey:@"消息免打扰"};
     if(_type==CDConvTypeGroup){
         self.dataSource = @[@{kCDConvDetailVCTitleKey:@"群聊名称",
                               kCDConvDetailVCDisclosureKey:@YES,
                               kCDConvDetailVCDetailKey:self.conv.displayName,
                               kCDConvDetailVCSelectorKey:NSStringFromSelector(@selector(goChangeName))},
-                            dict1,dict2,
+                            dict3,dict1,dict2,
                             @{kCDConvDetailVCTitleKey:@"删除并退出",
                               kCDConvDetailVCSelectorKey:NSStringFromSelector(@selector(quitConv))}];
     }else{
-        self.dataSource=@[dict1,dict2];
+        self.dataSource=@[dict3,dict1,dict2];
     }
 }
 
@@ -96,6 +102,20 @@ static NSString * const reuseIdentifier = @"Cell";
         _membersCell.membersCellDelegate=self;
     }
     return _membersCell;
+}
+
+-(UITableViewCell*)switchCell{
+    if(_switchCell==nil){
+        _switchCell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:switchCellIdentifier];
+        UISwitch *theSwitch=[[UISwitch alloc] initWithFrame:CGRectZero];
+        CGRect frame=theSwitch.frame;
+        frame.origin=CGPointMake(CGRectGetWidth(self.view.frame)-CGRectGetWidth(theSwitch.frame)-kCDConvDetailVCHorizontalPadding, (44-CGRectGetHeight(theSwitch.frame))/2);
+        theSwitch.frame=frame;
+        [theSwitch addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
+        [theSwitch setOn:self.conv.muted];
+        [_switchCell addSubview:theSwitch];
+    }
+    return _switchCell;
 }
 
 -(AVIMConversation*)conv{
@@ -196,12 +216,22 @@ static NSString * const reuseIdentifier = @"Cell";
         }
         return membersCell;
     }else{
-        static NSString *identifier=@"Cell";
-        UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:identifier];
-        if(cell==nil){
-            cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
-            cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+        UITableViewCell *cell;
+        if((self.type==CDConvTypeGroup && indexPath.row==1)
+           || (self.type==CDConvTypeSingle && indexPath.row==0)){
+            cell=[tableView dequeueReusableCellWithIdentifier:switchCellIdentifier];
+            if(cell==nil){
+                cell=self.switchCell;
+            }
+        }else{
+            static NSString *identifier=@"Cell";
+            cell=[tableView dequeueReusableCellWithIdentifier:identifier];
+            if(cell==nil){
+                cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+                cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+            }
         }
+        
         NSDictionary *data=self.dataSource[indexPath.row];
         NSString *title=[data objectForKey:kCDConvDetailVCTitleKey];
         cell.textLabel.text=title;
@@ -248,8 +278,9 @@ static NSString * const reuseIdentifier = @"Cell";
         return;
     }
     NSString *selectorName=[[self.dataSource objectAtIndex:indexPath.row] objectForKey:kCDConvDetailVCSelectorKey];
-    SEL selector=NSSelectorFromString(selectorName);
-    [self performSelector:selector withObject:nil afterDelay:0];
+    if(selectorName){
+        [self performSelector:NSSelectorFromString(selectorName) withObject:nil afterDelay:0];
+    }
 }
 
 -(void)didLongPressMember:(AVUser *)member{
@@ -293,6 +324,23 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 -(void)goReportAbuse{
     CDConvReportAbuseVC *reportAbuseVC=[[CDConvReportAbuseVC alloc] initWithConvid:self.conv.conversationId];
     [self.navigationController pushViewController:reportAbuseVC animated:YES];
+}
+
+#pragma mark - Swtich
+-(void)switchValueChanged:(UISwitch*)theSwitch{
+    if([theSwitch isOn]){
+        [self.conv muteWithCallback:^(BOOL succeeded, NSError *error) {
+            if([CDUtils filterError:error]){
+                
+            }
+        }];
+    }else{
+        [self.conv unmuteWithCallback:^(BOOL succeeded, NSError *error) {
+            if([CDUtils filterError:error]){
+                
+            }
+        }];
+    }
 }
 
 @end

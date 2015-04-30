@@ -57,9 +57,6 @@
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     [self.tableView addSubview:self.refreshControl];
-    UILongPressGestureRecognizer *recogizer=[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
-    recogizer.minimumPressDuration=1.0;
-    [self.tableView addGestureRecognizer:recogizer];
 }
 
 -(void)setupNewFriendAndGroupView{
@@ -199,12 +196,14 @@
     [[CDIMService shareInstance] goWithUserId:user.objectId fromVC:self];
 }
 
--(void)handleLongPress:(UILongPressGestureRecognizer*)recognizer{
-    CGPoint point=[recognizer locationInView:self.tableView];
-    NSIndexPath *path=[self.tableView indexPathForRowAtPoint:point];
-    if(path!=nil && recognizer.state==UIGestureRecognizerStateBegan){
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(editingStyle==UITableViewCellEditingStyleDelete){
         UIAlertView* alertView=[[UIAlertView alloc] initWithTitle:nil message:@"解除好友关系吗" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
-        alertView.tag=path.row;
+        alertView.tag=indexPath.row;
         [alertView show];
     }
 }
