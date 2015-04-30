@@ -85,8 +85,7 @@ static NSString *cellIdentifier = @"ContactCell";
 }
 
 -(void)refresh{
-    [self.refreshControl beginRefreshing];
-    [self refresh:self.refreshControl];
+    [self refresh:nil];
 }
 
 -(void)stopRefreshControl:(UIRefreshControl*)refreshControl{
@@ -152,6 +151,18 @@ static NSString *cellIdentifier = @"ContactCell";
         cell.rightLabel.text=@"";
     }
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(editingStyle==UITableViewCellEditingStyleDelete){
+        CDRoom* room = [_rooms objectAtIndex:indexPath.row];
+        [_storage deleteRoomByConvid:room.conv.conversationId];
+        [self refresh];
+    }
+}
+
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    return true;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
