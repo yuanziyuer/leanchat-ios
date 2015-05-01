@@ -12,8 +12,6 @@
 
 @property (strong,nonatomic) UITableViewCell* receiveMessageCell;
 
-@property (strong,nonatomic) UISwitch* receiveSwitch;
-
 @property (nonatomic,assign) BOOL receiveOn;
 
 @end
@@ -22,9 +20,12 @@ static NSString* cellIndentifier=@"cellIndentifier";
 
 @implementation CDPushSettingVC
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (instancetype)init
 {
-    self = [super initWithStyle:UITableViewStyleGrouped];
+    self = [super init];
+    if (self) {
+        self.tableViewStyle=UITableViewStyleGrouped;
+    }
     return self;
 }
 
@@ -32,8 +33,11 @@ static NSString* cellIndentifier=@"cellIndentifier";
     [super viewDidLoad];
     [self setTitle:@"消息通知"];
     
+    _receiveOn=[self isNotificationEnabled];
+}
+
+-(BOOL)isNotificationEnabled{
     UIApplication *application = [UIApplication sharedApplication];
-    
     BOOL enabled;
     if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)]){
         // ios8
@@ -42,27 +46,7 @@ static NSString* cellIndentifier=@"cellIndentifier";
         UIRemoteNotificationType types = [application enabledRemoteNotificationTypes];
         enabled = types & UIRemoteNotificationTypeAlert;
     }
-    
-    _receiveOn=enabled;
-    self.tableView.allowsSelection=NO;
-    [self setTableViewCellInSection:0];
-    
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 40;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 44;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 10;
+    return enabled;
 }
 
 #pragma mark - Table view data source
@@ -75,31 +59,26 @@ static NSString* cellIndentifier=@"cellIndentifier";
     return 1;
 }
 
--(UISwitch*)switchView:(UITableViewCell*)cell{
-    CGFloat width=60;
-    CGFloat height=30;
-    CGFloat horizontalPad=10;
-    CGFloat verticalPad=(CGRectGetHeight(cell.frame)-height)/2;
-    UISwitch* switchView=[[UISwitch alloc] initWithFrame:CGRectMake(CGRectGetWidth(cell.frame)-width-horizontalPad, verticalPad, width, height)];
-    return  switchView;
-}
-
--(void)setTableViewCellInSection:(int)section{
-    UITableViewCell* cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIndentifier];
-    if(_receiveOn){
-      cell.detailTextLabel.text=@"已开启";
-    }else{
-      cell.detailTextLabel.text=@"已关闭";
-    }
-    cell.textLabel.text=@"接收新消息通知";
-    _receiveMessageCell=cell;
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 40;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(indexPath.section==0){
-        return _receiveMessageCell;
+    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:cellIndentifier];
+    if(cell==nil){
+        cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIndentifier];
     }
-    return nil;
+    cell.textLabel.text=@"接收新消息通知";
+    if([self isNotificationEnabled]){
+        cell.detailTextLabel.text=@"已开启";
+    }else{
+        cell.detailTextLabel.text=@"已关闭";
+    }
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{

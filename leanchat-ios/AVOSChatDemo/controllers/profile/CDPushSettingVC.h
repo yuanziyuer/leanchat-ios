@@ -6,8 +6,8 @@
 //  Copyright (c) 2015年 AVOS. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "CDBaseTableVC.h"
 
-@interface CDPushSettingVC : UITableViewController
+@interface CDPushSettingVC : CDBaseTableVC
 
 @end

@@ -14,9 +14,15 @@
 
 @implementation CDBaseVC
 
-- (void)loadView {
-    [super loadView];
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.edgesForExtendedLayout=UIRectEdgeNone;
+    }
+    return self;
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];

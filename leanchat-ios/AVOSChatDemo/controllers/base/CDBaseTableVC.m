@@ -14,6 +14,15 @@
 
 @implementation CDBaseTableVC
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.edgesForExtendedLayout=UIRectEdgeAll;
+    }
+    return self;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -30,9 +39,7 @@
 
 -(UITableView*)tableView{
     if(_tableView==nil){
-        CGRect tableViewFrame = self.view.bounds;
-        tableViewFrame.size.height -= (self.navigationController.viewControllers.count > 1 ? 0 : (CGRectGetHeight(self.tabBarController.tabBar.bounds)))+[self getAdapterHeight];
-        _tableView = [[UITableView alloc] initWithFrame:tableViewFrame style:self.tableViewStyle];
+        _tableView = [[UITableView alloc] initWithFrame:self.view.frame style:self.tableViewStyle];
         _tableView.delegate=self;
         _tableView.dataSource=self;
     }
