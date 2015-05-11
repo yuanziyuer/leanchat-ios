@@ -1,7 +1,7 @@
 ![leanchat1](https://cloud.githubusercontent.com/assets/5022872/7332357/41c39c82-eb6e-11e4-8224-9c6908c9fa75.gif)
 
 ## App Store  
-LeanChat 已经在 Apple Store 上架，可前往 https://itunes.apple.com/gb/app/leanchat/id943324553?mt=8 或搜 LeanChat。
+LeanChat 已经在 Apple Store 上架，可前往 https://itunes.apple.com/gb/app/leanchat/id943324553 或搜 LeanChat。
 
 ## 介绍
 这个示例项目是为了帮助使用 LeanCloud 的开发者快速实现具有实时通讯功能的应用。
