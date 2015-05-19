@@ -6,8 +6,6 @@ LeanChat 已经在 Apple Store 上架，可前往 https://itunes.apple.com/gb/ap
 ## 介绍
 这个示例项目全面展示了 LeanCloud 实时通讯功能的应用，但含杂着许多 UI 代码和其它功能，并不适合快速上手学习，如果你第一次接触 LeanMessage，更推荐 [LeanMessage-Demo](https://github.com/leancloud/LeanMessage-Demo) 项目。等熟悉了之后，可前往 [LeanCloud-Demos](https://github.com/leancloud/leancloud-demos) 挑选你喜欢的 IM 皮肤进行集成。集成的过程中，若遇到疑难问题，不妨再来参考 LeanChat 项目。
 
-#### 注意：若要集成，我们推荐封装性更好的 [MessageDisplayKit](https://github.com/xhzengAIB/MessageDisplayKit/tree/master/Example/MessageDisplayKitLeanchatExample)
-
 ## 子项目介绍
 * LeanChatLib ，核心的聊天逻辑和聊天界面库。有了它，可以快速集成聊天功能，支持文字、音频、图片、表情消息，消息通知。同时也有相应的 [Android 版本](https://github.com/leancloud/leanchat-android)。
 * LeanChatExample，leanchatlib 最简单的使用例子。展示了如何用少量代码调用 LeanChatLib 来加入聊天，无论是用 LeanCloud 的用户系统还是自己的用户系统。
