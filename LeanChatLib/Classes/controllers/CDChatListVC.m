@@ -7,16 +7,15 @@
 //
 
 #import "CDChatListVC.h"
-#import "CDSessionStateView.h"
+#import "CDIMClientStatusView.h"
 #import "CDStorage.h"
-#import "CDImageTwoLabelTableCell.h"
 #import "UIView+XHRemoteImage.h"
+#import "CDChatListRoomCell.h"
+#import "CDIM.h"
 
-@interface CDChatListVC () <CDSessionStateProtocal>
+@interface CDChatListVC () <CDIMClientStatusViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-
-@property (nonatomic) CDSessionStateView *networkStateView;
+@property (nonatomic) CDIMClientStatusView *clientStatusView;
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
@@ -51,19 +50,35 @@ static NSString *cellIdentifier = @"ContactCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSString *nibName = NSStringFromClass([CDImageTwoLabelTableCell class]);
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-    [self.tableView registerNib:[UINib nibWithNibName:nibName bundle:nil] forCellReuseIdentifier:cellIdentifier];
-    
+    [self.tableView registerClass:[CDChatListRoomCell class] forCellReuseIdentifier:[CDChatListRoomCell identifier]];
     [self.tableView addSubview:self.refreshControl];
     
-    _networkStateView = [[CDSessionStateView alloc] initWithWidth:self.tableView.frame.size.width];
-    [_networkStateView setDelegate:self];
-    [_networkStateView observeSessionUpdate];
+    [self.clientStatusView observeIMClientUpdate];
     
     [_notify addMsgObserver:self selector:@selector(refresh)];
     [_notify addSessionObserver:self selector:@selector(sessionChanged)];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self runAfterSecs:0.5 block: ^{
+        [self refresh:nil];
+    }];
+}
+
+- (void)dealloc {
+    [_notify removeMsgObserver:self];
+    [_notify removeSessionObserver:self];
+}
+
+#pragma mark - Propertys
+
+- (CDIMClientStatusView *)clientStatusView {
+    if (_clientStatusView == nil) {
+        _clientStatusView = [[CDIMClientStatusView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds), kCDIMClientStatusViewHight)];
+        [_clientStatusView setDelegate:self];
+    }
+    return _clientStatusView;
 }
 
 - (UIRefreshControl *)refreshControl {
@@ -74,12 +89,7 @@ static NSString *cellIdentifier = @"ContactCell";
     return _refreshControl;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self runAfterSecs:0.5 block: ^{
-        [self refresh:nil];
-    }];
-}
+#pragma mark - notification
 
 - (void)sessionChanged {
 }
@@ -87,6 +97,8 @@ static NSString *cellIdentifier = @"ContactCell";
 - (void)refresh {
     [self refresh:nil];
 }
+
+#pragma mark
 
 - (void)stopRefreshControl:(UIRefreshControl *)refreshControl {
     if (refreshControl != nil && [[refreshControl class] isSubclassOfClass:[UIRefreshControl class]]) {
@@ -117,40 +129,16 @@ static NSString *cellIdentifier = @"ContactCell";
     }];
 }
 
-- (void)dealloc {
-    [_notify removeMsgObserver:self];
-    [_notify removeSessionObserver:self];
-}
-
-#pragma table view
+#pragma mark - table view
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [_rooms count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CDImageTwoLabelTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    CDChatListRoomCell *cell = [tableView dequeueReusableCellWithIdentifier:[CDChatListRoomCell identifier]];
     CDRoom *room = [_rooms objectAtIndex:indexPath.row];
-    if (room.conv.type == CDConvTypeSingle) {
-        id <CDUserModel> user = [self.imConfig.userDelegate getUserById:room.conv.otherId];
-        cell.topLabel.text = user.username;
-        [cell.myImageView setImageWithURL:[NSURL URLWithString:user.avatarUrl]];
-    }
-    else {
-        [cell.myImageView setImage:room.conv.icon];
-        cell.topLabel.text = room.conv.displayName;
-    }
-    cell.bottomLabel.text = [self.im getMsgTitle:room.lastMsg];
-    cell.unreadCount = room.unreadCount;
-    if (room.lastMsg) {
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"MM-dd HH:mm"];
-        NSString *timeString = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:room.lastMsg.sendTimestamp / 1000]];
-        cell.rightLabel.text = timeString;
-    }
-    else {
-        cell.rightLabel.text = @"";
-    }
+    cell.room=room;
     return cell;
 }
 
@@ -173,12 +161,17 @@ static NSString *cellIdentifier = @"ContactCell";
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [CDChatListRoomCell heightOfCell];
+}
+
 #pragma mark -- CDSessionDelegateMethods
-- (void)onSessionBrokenWithStateView:(CDSessionStateView *)view {
+
+- (void)onIMClientPauseWithStateView:(CDIMClientStatusView *)view {
     self.tableView.tableHeaderView = view;
 }
 
-- (void)onSessionFineWithStateView:(CDSessionStateView *)view {
+- (void)onIMClientOpenWithStateView:(CDIMClientStatusView *)view {
     self.tableView.tableHeaderView = nil;
 }
 

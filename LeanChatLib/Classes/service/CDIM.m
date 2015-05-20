@@ -296,35 +296,6 @@ static CDIM *instance;
     }
 }
 
-#pragma mark - Message Utils
-
-- (NSString *)getMsgTitle:(AVIMTypedMessage *)msg {
-    NSString *title;
-    AVIMLocationMessage *locationMsg;
-    switch (msg.mediaType) {
-        case kAVIMMessageMediaTypeText:
-            title = [CDEmotionUtils emojiStringFromString:msg.text];
-            break;
-            
-        case kAVIMMessageMediaTypeAudio:
-            title = @"声音";
-            break;
-            
-        case kAVIMMessageMediaTypeImage:
-            title = @"图片";
-            break;
-            
-        case kAVIMMessageMediaTypeLocation:
-            locationMsg = (AVIMLocationMessage *)msg;
-            title = locationMsg.text;
-            break;
-            
-        default:
-            break;
-    }
-    return title;
-}
-
 #pragma mark - File Utils
 
 - (NSString *)getFilesPath {

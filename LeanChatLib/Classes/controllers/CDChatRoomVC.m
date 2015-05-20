@@ -12,17 +12,18 @@
 #import "XHDisplayMediaViewController.h"
 #import "XHDisplayLocationViewController.h"
 #import "XHAudioPlayerHelper.h"
-#import "CDSessionStateView.h"
+#import "CDIMClientStatusView.h"
 #import "CDStorage.h"
 #import "CDEmotionUtils.h"
 #import "CDIMConfig.h"
+#import "CDIM.h"
 #import "AVIMConversation+Custom.h"
 
 #define ONE_PAGE_SIZE 20
 
 typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
 
-@interface CDChatRoomVC () <UINavigationControllerDelegate, CDSessionStateProtocal>
+@interface CDChatRoomVC () <UINavigationControllerDelegate, CDIMClientStatusViewDelegate>
 
 @property CDStorage *storage;
 
@@ -40,7 +41,7 @@ typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
 
 @property (nonatomic, strong) NSArray *emotionManagers;
 
-@property (nonatomic, strong) CDSessionStateView *sessionStateView;
+@property (nonatomic, strong) CDIMClientStatusView *clientStatusView;
 
 @property (nonatomic, assign) BOOL sessionStateViewVisiable;
 
@@ -80,11 +81,11 @@ typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
     [[self navigationItem] setBackBarButtonItem:backBtn];
 }
 
-- (void)initSessionStateView {
-    _sessionStateView = [[CDSessionStateView alloc] initWithFrame:CGRectMake(0, 64, self.messageTableView.frame.size.width, kCDSessionStateViewHight)];
-    [_sessionStateView setDelegate:self];
+- (void)initClientStatusView {
+    _clientStatusView = [[CDIMClientStatusView alloc] initWithFrame:CGRectMake(0, 64, self.messageTableView.frame.size.width, kCDIMClientStatusViewHight)];
+    [_clientStatusView setDelegate:self];
     _sessionStateViewVisiable = NO;
-    [_sessionStateView observeSessionUpdate];
+    [_clientStatusView observeIMClientUpdate];
 }
 
 - (void)initBottomMenuAndEmotionView {
@@ -108,7 +109,7 @@ typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
     
     [self initBarButton];
     [self initBottomMenuAndEmotionView];
-    [self initSessionStateView];
+    [self initClientStatusView];
     
     id <CDUserModel> curUser = self.im.selfUser;
     // 设置自身用户名
@@ -602,18 +603,18 @@ typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
 
 #pragma mark - session state
 
-- (void)onSessionBrokenWithStateView:(CDSessionStateView *)view {
+- (void)onIMClientPauseWithStateView:(CDIMClientStatusView *)view {
     if (_sessionStateViewVisiable == NO) {
         _sessionStateViewVisiable = YES;
-        [self.view addSubview:_sessionStateView];
-        [self.view bringSubviewToFront:_sessionStateView];
+        [self.view addSubview:_clientStatusView];
+        [self.view bringSubviewToFront:_clientStatusView];
     }
 }
 
-- (void)onSessionFineWithStateView:(CDSessionStateView *)view {
+- (void)onIMClientOpenWithStateView:(CDIMClientStatusView *)view {
     if (_sessionStateViewVisiable == YES) {
         _sessionStateViewVisiable = NO;
-        [_sessionStateView removeFromSuperview];
+        [_clientStatusView removeFromSuperview];
     }
 }
 
