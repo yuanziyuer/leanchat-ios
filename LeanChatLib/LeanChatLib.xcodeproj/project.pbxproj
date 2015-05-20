@@ -246,10 +246,6 @@
 		704924B51ADFCAD700E8E295 /* CDReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 704923C51ADFCAD700E8E295 /* CDReachability.m */; };
 		704924B91ADFCAD700E8E295 /* CDIMClientStatusView.h in Headers */ = {isa = PBXBuildFile; fileRef = 704923CA1ADFCAD700E8E295 /* CDIMClientStatusView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		704924BA1ADFCAD700E8E295 /* CDIMClientStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 704923CB1ADFCAD700E8E295 /* CDIMClientStatusView.m */; };
-		704924BB1ADFCAD700E8E295 /* MCBaseTC.h in Headers */ = {isa = PBXBuildFile; fileRef = 704923CC1ADFCAD700E8E295 /* MCBaseTC.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		704924BC1ADFCAD700E8E295 /* MCBaseTC.m in Sources */ = {isa = PBXBuildFile; fileRef = 704923CD1ADFCAD700E8E295 /* MCBaseTC.m */; };
-		704924BD1ADFCAD700E8E295 /* MCBaseVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 704923CE1ADFCAD700E8E295 /* MCBaseVC.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		704924BE1ADFCAD700E8E295 /* MCBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 704923CF1ADFCAD700E8E295 /* MCBaseVC.m */; };
 		704925DE1ADFCBDB00E8E295 /* AddGroupMemberBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7049257D1ADFCBDB00E8E295 /* AddGroupMemberBtn@2x.png */; };
 		704925DF1ADFCBDB00E8E295 /* AddGroupMemberBtnHL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7049257E1ADFCBDB00E8E295 /* AddGroupMemberBtnHL@2x.png */; };
 		704925E01ADFCBDB00E8E295 /* avator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7049257F1ADFCBDB00E8E295 /* avator@2x.png */; };
@@ -596,10 +592,6 @@
 		704923C51ADFCAD700E8E295 /* CDReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDReachability.m; sourceTree = "<group>"; };
 		704923CA1ADFCAD700E8E295 /* CDIMClientStatusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIMClientStatusView.h; sourceTree = "<group>"; };
 		704923CB1ADFCAD700E8E295 /* CDIMClientStatusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIMClientStatusView.m; sourceTree = "<group>"; };
-		704923CC1ADFCAD700E8E295 /* MCBaseTC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCBaseTC.h; sourceTree = "<group>"; };
-		704923CD1ADFCAD700E8E295 /* MCBaseTC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCBaseTC.m; sourceTree = "<group>"; };
-		704923CE1ADFCAD700E8E295 /* MCBaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCBaseVC.h; sourceTree = "<group>"; };
-		704923CF1ADFCAD700E8E295 /* MCBaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCBaseVC.m; sourceTree = "<group>"; };
 		7049257D1ADFCBDB00E8E295 /* AddGroupMemberBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddGroupMemberBtn@2x.png"; sourceTree = "<group>"; };
 		7049257E1ADFCBDB00E8E295 /* AddGroupMemberBtnHL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddGroupMemberBtnHL@2x.png"; sourceTree = "<group>"; };
 		7049257F1ADFCBDB00E8E295 /* avator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avator@2x.png"; sourceTree = "<group>"; };
@@ -1360,10 +1352,6 @@
 				70E96FBA1B0C6C210098D2F6 /* CDChatListRoomCell.m */,
 				704923CA1ADFCAD700E8E295 /* CDIMClientStatusView.h */,
 				704923CB1ADFCAD700E8E295 /* CDIMClientStatusView.m */,
-				704923CC1ADFCAD700E8E295 /* MCBaseTC.h */,
-				704923CD1ADFCAD700E8E295 /* MCBaseTC.m */,
-				704923CE1ADFCAD700E8E295 /* MCBaseVC.h */,
-				704923CF1ADFCAD700E8E295 /* MCBaseVC.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -1573,7 +1561,6 @@
 				704924091ADFCAD700E8E295 /* UIImage+XHRounded.h in Headers */,
 				704924071ADFCAD700E8E295 /* UIImage+XHAnimatedFaceGif.h in Headers */,
 				704923FB1ADFCAD700E8E295 /* NSString+XHMD5.h in Headers */,
-				704924BB1ADFCAD700E8E295 /* MCBaseTC.h in Headers */,
 				704924051ADFCAD700E8E295 /* UIImage+Utility.h in Headers */,
 				7049245B1ADFCAD700E8E295 /* FLAnimatedImageView.h in Headers */,
 				704924591ADFCAD700E8E295 /* FLAnimatedImage.h in Headers */,
@@ -1640,7 +1627,6 @@
 				7049241D1ADFCAD700E8E295 /* XHVoiceCommonHelper.h in Headers */,
 				704924311ADFCAD700E8E295 /* XHMessageTableViewController.h in Headers */,
 				704923D01ADFCAD700E8E295 /* CDAVOSHeaders.h in Headers */,
-				704924BD1ADFCAD700E8E295 /* MCBaseVC.h in Headers */,
 				704924671ADFCAD700E8E295 /* SESelectionGrabber.h in Headers */,
 				7049241B1ADFCAD700E8E295 /* XHPhotographyHelper.h in Headers */,
 				7049248D1ADFCAD700E8E295 /* XHBubblePhotoImageView.h in Headers */,
@@ -1879,7 +1865,6 @@
 				704924981ADFCAD700E8E295 /* XHMessageTableViewCell.m in Sources */,
 				7049247C1ADFCAD700E8E295 /* SETextView.m in Sources */,
 				704924721ADFCAD700E8E295 /* SETextLayout.m in Sources */,
-				704924BE1ADFCAD700E8E295 /* MCBaseVC.m in Sources */,
 				704923FE1ADFCAD700E8E295 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				7049241E1ADFCAD700E8E295 /* XHVoiceCommonHelper.m in Sources */,
 				704924281ADFCAD700E8E295 /* XHBaseViewController.m in Sources */,
@@ -1925,7 +1910,6 @@
 				704923E31ADFCAD700E8E295 /* CDNotify.m in Sources */,
 				7049240E1ADFCAD700E8E295 /* UIView+XHBadgeView.m in Sources */,
 				70E96FBC1B0C6C210098D2F6 /* CDChatListRoomCell.m in Sources */,
-				704924BC1ADFCAD700E8E295 /* MCBaseTC.m in Sources */,
 				7049242C1ADFCAD700E8E295 /* XHDisplayLocationViewController.m in Sources */,
 				704924421ADFCAD700E8E295 /* XHMessageVoiceFactory.m in Sources */,
 				704924B31ADFCAD700E8E295 /* NSString+Emojize.m in Sources */,

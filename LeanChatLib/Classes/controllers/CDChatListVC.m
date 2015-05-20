@@ -12,12 +12,11 @@
 #import "UIView+XHRemoteImage.h"
 #import "CDChatListRoomCell.h"
 #import "CDIM.h"
+#import "CDMacros.h"
 
 @interface CDChatListVC () <CDIMClientStatusViewDelegate>
 
 @property (nonatomic) CDIMClientStatusView *clientStatusView;
-
-@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @property (nonatomic, strong) NSMutableArray *rooms;
 
@@ -51,9 +50,9 @@ static NSString *cellIdentifier = @"ContactCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.tableView registerClass:[CDChatListRoomCell class] forCellReuseIdentifier:[CDChatListRoomCell identifier]];
-    [self.tableView addSubview:self.refreshControl];
     
     [self.clientStatusView observeIMClientUpdate];
+    self.refreshControl = [self getRefreshControl];
     
     [_notify addMsgObserver:self selector:@selector(refresh)];
     [_notify addSessionObserver:self selector:@selector(sessionChanged)];
@@ -61,9 +60,10 @@ static NSString *cellIdentifier = @"ContactCell";
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self runAfterSecs:0.5 block: ^{
-        [self refresh:nil];
-    }];
+    WEAKSELF
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+         [weakSelf refresh:nil];
+    });
 }
 
 - (void)dealloc {
@@ -81,12 +81,11 @@ static NSString *cellIdentifier = @"ContactCell";
     return _clientStatusView;
 }
 
-- (UIRefreshControl *)refreshControl {
-    if (_refreshControl == nil) {
-        _refreshControl = [[UIRefreshControl alloc] init];
-        [_refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
-    }
-    return _refreshControl;
+- (UIRefreshControl *)getRefreshControl {
+    UIRefreshControl *refreshConrol;
+    refreshConrol = [[UIRefreshControl alloc] init];
+    [refreshConrol addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    return refreshConrol;
 }
 
 #pragma mark - notification
@@ -106,14 +105,22 @@ static NSString *cellIdentifier = @"ContactCell";
     }
 }
 
+- (BOOL)filterError:(NSError *)error {
+    if (error) {
+        [[[UIAlertView alloc]
+          initWithTitle:nil message:[NSString stringWithFormat:@"%@", error] delegate:nil
+          cancelButtonTitle:@"确定" otherButtonTitles:nil] show];
+        return NO;
+    }
+    return YES;
+}
+
 - (void)refresh:(UIRefreshControl *)refreshControl {
     if ([_im isOpened] == NO) {
         [self stopRefreshControl:refreshControl];
         //return;
     }
-    [self showNetworkIndicator];
     [self.im findRecentRoomsWithBlock: ^(NSArray *objects, NSError *error) {
-        [self hideNetworkIndicator];
         [self stopRefreshControl:refreshControl];
         if ([self filterError:error]) {
             _rooms = objects;

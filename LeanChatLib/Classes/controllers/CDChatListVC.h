@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 AVOS. All rights reserved.
 //
 
-#import "MCBaseTC.h"
 #import "AVIMConversation+Custom.h"
 
 @class CDChatListVC;
@@ -19,7 +18,7 @@
 
 @end
 
-@interface CDChatListVC : MCBaseTC
+@interface CDChatListVC : UITableViewController
 
 @property (nonatomic, strong) id <CDChatListVCDelegate> chatListDelegate;
 

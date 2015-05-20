@@ -49,11 +49,12 @@
     CGContextSetFillColorWithColor(context, color.CGColor);
     CGContextFillRect(context, rect);
     UIFont *font = [UIFont systemFontOfSize:30];
-    CGFloat fontHeight = font.pointSize;
-    CGFloat yOffset = (rect.size.height - fontHeight) / 2.0 - 3;
+    CGFloat yOffset = (rect.size.height - font.pointSize) / 2.0 - 3;
     CGRect textRect = CGRectMake(0, yOffset, rect.size.width, rect.size.height - yOffset);
+    
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
     paragraphStyle.alignment = NSTextAlignmentCenter;
+    
     [string drawInRect:textRect withAttributes:@{ NSFontAttributeName: font,                                                           NSParagraphStyleAttributeName: paragraphStyle, NSForegroundColorAttributeName:[UIColor whiteColor] }];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
