@@ -603,7 +603,7 @@ typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
 
 #pragma mark - session state
 
-- (void)onIMClientPauseWithStateView:(CDIMClientStatusView *)view {
+- (void)onIMClientPauseWithStatusView:(CDIMClientStatusView *)view {
     if (_sessionStateViewVisiable == NO) {
         _sessionStateViewVisiable = YES;
         [self.view addSubview:_clientStatusView];
@@ -611,7 +611,7 @@ typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
     }
 }
 
-- (void)onIMClientOpenWithStateView:(CDIMClientStatusView *)view {
+- (void)onIMClientOpenWithStatusView:(CDIMClientStatusView *)view {
     if (_sessionStateViewVisiable == YES) {
         _sessionStateViewVisiable = NO;
         [_clientStatusView removeFromSuperview];

@@ -78,12 +78,12 @@ static CGFloat kCDHorizontalLittleSpacing = 5;
 
 - (void)imClientStatusUpdate:(id)sender {
     if ([[CDIM sharedInstance] isOpened] == NO) {
-        if ([_delegate respondsToSelector:@selector(onIMClientPauseWithStateView:)])
-            [_delegate onIMClientPauseWithStateView:self];
+        if ([_delegate respondsToSelector:@selector(onIMClientPauseWithStatusView:)])
+            [_delegate onIMClientPauseWithStatusView:self];
     }
     else {
-        if ([_delegate respondsToSelector:@selector(onIMClientOpenWithStateView:)]) {
-            [_delegate onIMClientOpenWithStateView:self];
+        if ([_delegate respondsToSelector:@selector(onIMClientOpenWithStatusView:)]) {
+            [_delegate onIMClientOpenWithStatusView:self];
         }
     }
 }

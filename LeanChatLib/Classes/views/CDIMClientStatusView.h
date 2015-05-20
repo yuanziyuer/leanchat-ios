@@ -18,9 +18,9 @@ static CGFloat kCDIMClientStatusViewHight = 44;
 
 @optional
 
-- (void)onIMClientPauseWithStateView:(CDIMClientStatusView *)view;
+- (void)onIMClientPauseWithStatusView:(CDIMClientStatusView *)view;
 
-- (void)onIMClientOpenWithStateView:(CDIMClientStatusView *)view;
+- (void)onIMClientOpenWithStatusView:(CDIMClientStatusView *)view;
 
 @end
 

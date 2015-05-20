@@ -174,11 +174,11 @@ static NSString *cellIdentifier = @"ContactCell";
 
 #pragma mark -- CDSessionDelegateMethods
 
-- (void)onIMClientPauseWithStateView:(CDIMClientStatusView *)view {
+- (void)onIMClientPauseWithStatusView:(CDIMClientStatusView *)view {
     self.tableView.tableHeaderView = view;
 }
 
-- (void)onIMClientOpenWithStateView:(CDIMClientStatusView *)view {
+- (void)onIMClientOpenWithStatusView:(CDIMClientStatusView *)view {
     self.tableView.tableHeaderView = nil;
 }
 
