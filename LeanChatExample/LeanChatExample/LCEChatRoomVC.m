@@ -16,9 +16,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIImage* _peopleImage=[UIImage imageNamed:@"chat_menu_people"];
-    UIBarButtonItem* item=[[UIBarButtonItem alloc] initWithImage:_peopleImage style:UIBarButtonItemStyleDone target:self action:@selector(goChatGroupDetail:)];
-    self.navigationItem.rightBarButtonItem=item;
+    UIImage *_peopleImage = [UIImage imageNamed:@"chat_menu_people"];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:_peopleImage style:UIBarButtonItemStyleDone target:self action:@selector(goChatGroupDetail:)];
+    self.navigationItem.rightBarButtonItem = item;
 }
 
 - (void)goChatGroupDetail:(id)sender {

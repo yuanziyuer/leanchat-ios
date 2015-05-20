@@ -19,8 +19,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-   [AVOSCloud setApplicationId: @"xcalhck83o10dntwh8ft3z5kvv0xc25p6t3jqbe5zlkkdsib" clientKey: @"m9fzwse7od89gvcnk1dmdq4huprjvghjtiug1u2zu073zn99"];
-    [CDIMConfig config].userDelegate=[[CDUserFactory alloc] init];
+    [AVOSCloud setApplicationId:@"xcalhck83o10dntwh8ft3z5kvv0xc25p6t3jqbe5zlkkdsib" clientKey:@"m9fzwse7od89gvcnk1dmdq4huprjvghjtiug1u2zu073zn99"];
+    [CDIMConfig config].userDelegate = [[CDUserFactory alloc] init];
     
 #ifdef DEBUG
     [AVAnalytics setCrashReportEnabled:NO];

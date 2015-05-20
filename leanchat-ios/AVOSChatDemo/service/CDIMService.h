@@ -9,12 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "CDCommon.h"
 
-@interface CDIMService : NSObject<CDUserDelegate>
+@interface CDIMService : NSObject <CDUserDelegate>
 
-+(instancetype)shareInstance;
++ (instancetype)shareInstance;
 
--(void)goWithUserId:(NSString*)userId fromVC:(UIViewController*)vc;
+- (void)goWithUserId:(NSString *)userId fromVC:(UIViewController *)vc;
 
--(void)goWithConv:(AVIMConversation*)conv fromNav:(UINavigationController*)nav;
+- (void)goWithConv:(AVIMConversation *)conv fromNav:(UINavigationController *)nav;
 
 @end

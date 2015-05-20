@@ -10,26 +10,27 @@
 
 @implementation CDImageTwoLabelTableCell
 
--(instancetype)init{
-    self=[self init];
-    if(self){
+- (instancetype)init {
+    self = [self init];
+    if (self) {
     }
     return self;
 }
 
--(void)layoutSubviews{
+- (void)layoutSubviews {
     [super layoutSubviews];
     if (_unreadCount > 0) {
         [self.unreadBadge setHidden:NO];
-        self.unreadBadge.badgeText=[NSString stringWithFormat:@"%ld",(long)_unreadCount];
-    }else{
+        self.unreadBadge.badgeText = [NSString stringWithFormat:@"%ld", (long)_unreadCount];
+    }
+    else {
         [self.unreadBadge setHidden:YES];
     }
 }
 
--(JSBadgeView*)unreadBadge{
-    if(_unreadBadge==nil){
-        _unreadBadge=[[JSBadgeView alloc] initWithParentView:_myImageView alignment:JSBadgeViewAlignmentTopRight];
+- (JSBadgeView *)unreadBadge {
+    if (_unreadBadge == nil) {
+        _unreadBadge = [[JSBadgeView alloc] initWithParentView:_myImageView alignment:JSBadgeViewAlignmentTopRight];
     }
     return _unreadBadge;
 }
@@ -40,7 +41,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 

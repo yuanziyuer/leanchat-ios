@@ -17,24 +17,23 @@
 
 @implementation CDChatVC
 
--(instancetype)initWithConv:(AVIMConversation *)conv{
-    self=[super initWithConv:conv];
+- (instancetype)initWithConv:(AVIMConversation *)conv {
+    self = [super initWithConv:conv];
     [CDCache setCurConv:conv];
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIImage* _peopleImage=[UIImage imageNamed:@"chat_menu_people"];
-    UIBarButtonItem* item=[[UIBarButtonItem alloc] initWithImage:_peopleImage style:UIBarButtonItemStyleDone target:self action:@selector(goChatGroupDetail:)];
-    self.navigationItem.rightBarButtonItem=item;
-    
+    UIImage *_peopleImage = [UIImage imageNamed:@"chat_menu_people"];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:_peopleImage style:UIBarButtonItemStyleDone target:self action:@selector(goChatGroupDetail:)];
+    self.navigationItem.rightBarButtonItem = item;
 }
 
--(void)testSendCustomeMessage{
-    AVIMUserInfoMessage* userInfoMessage=[AVIMUserInfoMessage messageWithAttributes:@{@"nickname":@"lzw"}];
-    [self.conv sendMessage:userInfoMessage callback:^(BOOL succeeded, NSError *error) {
-        DLog(@"%@",error);
+- (void)testSendCustomeMessage {
+    AVIMUserInfoMessage *userInfoMessage = [AVIMUserInfoMessage messageWithAttributes:@{ @"nickname":@"lzw" }];
+    [self.conv sendMessage:userInfoMessage callback: ^(BOOL succeeded, NSError *error) {
+        DLog(@"%@", error);
     }];
 }
 
@@ -42,9 +41,8 @@
     [super didReceiveMemoryWarning];
 }
 
-
 - (void)goChatGroupDetail:(id)sender {
-    CDConvDetailVC* controller=[[CDConvDetailVC alloc] init];
+    CDConvDetailVC *controller = [[CDConvDetailVC alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
 }
 

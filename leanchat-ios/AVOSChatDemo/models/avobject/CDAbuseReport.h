@@ -8,12 +8,12 @@
 
 #import <AVOSCloud/AVOSCloud.h>
 
-@interface CDAbuseReport : AVObject<AVSubclassing>
+@interface CDAbuseReport : AVObject <AVSubclassing>
 
-@property (nonatomic,strong) NSString *reason;
+@property (nonatomic, strong) NSString *reason;
 
-@property (nonatomic,strong) NSString *convid;
+@property (nonatomic, strong) NSString *convid;
 
-@property (nonatomic,strong) AVUser *author;
+@property (nonatomic, strong) AVUser *author;
 
 @end

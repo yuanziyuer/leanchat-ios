@@ -15,24 +15,24 @@
 
 @interface CDNotify : NSObject
 
-+(instancetype)sharedInstance;
++ (instancetype)sharedInstance;
 
--(void)addConvObserver:(id)target selector:(SEL)selector;
+- (void)addConvObserver:(id)target selector:(SEL)selector;
 
--(void)removeConvObserver:(id)target;
+- (void)removeConvObserver:(id)target;
 
--(void)postConvNotify;
+- (void)postConvNotify;
 
--(void)addMsgObserver:(id)target selector:(SEL)selector;
+- (void)addMsgObserver:(id)target selector:(SEL)selector;
 
--(void)removeMsgObserver:(id)target;
+- (void)removeMsgObserver:(id)target;
 
--(void)postMsgNotify:(AVIMTypedMessage*)msg;
+- (void)postMsgNotify:(AVIMTypedMessage *)msg;
 
--(void)addSessionObserver:(id)target selector:(SEL)selector;
+- (void)addSessionObserver:(id)target selector:(SEL)selector;
 
--(void)removeSessionObserver:(id)target;
+- (void)removeSessionObserver:(id)target;
 
--(void)postSessionNotify;
+- (void)postSessionNotify;
 
 @end

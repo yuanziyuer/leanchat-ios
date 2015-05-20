@@ -14,7 +14,7 @@
 @dynamic author;
 @dynamic convid;
 
-+(NSString*)parseClassName{
++ (NSString *)parseClassName {
     return @"AbuseReport";
 }
 

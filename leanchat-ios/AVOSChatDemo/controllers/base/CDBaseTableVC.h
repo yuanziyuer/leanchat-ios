@@ -10,10 +10,10 @@
 
 @interface CDBaseTableVC : CDBaseVC <UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic,strong) UITableView* tableView;
+@property (nonatomic, strong) UITableView *tableView;
 
-@property (nonatomic,assign) UITableViewStyle tableViewStyle;
+@property (nonatomic, assign) UITableViewStyle tableViewStyle;
 
-@property (nonatomic,strong) NSMutableArray* dataSource;
+@property (nonatomic, strong) NSMutableArray *dataSource;
 
 @end

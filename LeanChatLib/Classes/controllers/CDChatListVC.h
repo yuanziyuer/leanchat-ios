@@ -13,14 +13,14 @@
 
 @protocol CDChatListVCDelegate <NSObject>
 
--(void)setBadgeWithTotalUnreadCount:(NSInteger)totalUnreadCount;
+- (void)setBadgeWithTotalUnreadCount:(NSInteger)totalUnreadCount;
 
--(void)viewController:(UIViewController*)viewController didSelectConv:(AVIMConversation*)conv;
+- (void)viewController:(UIViewController *)viewController didSelectConv:(AVIMConversation *)conv;
 
 @end
 
 @interface CDChatListVC : MCBaseTC
 
-@property (nonatomic,strong) id<CDChatListVCDelegate> chatListDelegate;
+@property (nonatomic, strong) id <CDChatListVCDelegate> chatListDelegate;
 
 @end

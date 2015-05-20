@@ -8,16 +8,16 @@
 
 #import "CDCommon.h"
 
-typedef enum : NSUInteger{
-  CDAddRequestStatusWait=0,
-  CDAddRequestStatusDone
-}CDAddRequestStatus;
+typedef enum : NSUInteger {
+    CDAddRequestStatusWait = 0,
+    CDAddRequestStatusDone
+} CDAddRequestStatus;
 
 #define kAddRequestFromUser @"fromUser"
 #define kAddRequestToUser @"toUser"
 #define kAddRequestStatus @"status"
 
-@interface CDAddRequest : AVObject<AVSubclassing>
+@interface CDAddRequest : AVObject <AVSubclassing>
 
 @property AVUser *fromUser;
 @property AVUser *toUser;

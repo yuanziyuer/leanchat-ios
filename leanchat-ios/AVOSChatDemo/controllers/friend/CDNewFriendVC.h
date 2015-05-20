@@ -11,6 +11,6 @@
 
 @interface CDNewFriendVC : CDBaseTableVC
 
-@property CDFriendListVC* friendListVC;
+@property CDFriendListVC *friendListVC;
 
 @end

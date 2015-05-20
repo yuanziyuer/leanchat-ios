@@ -10,19 +10,19 @@
 
 @interface CDWebViewVC ()
 
-@property (nonatomic,strong) UIWebView *webView;
+@property (nonatomic, strong) UIWebView *webView;
 
-@property (nonatomic,strong) NSURL *url;
+@property (nonatomic, strong) NSURL *url;
 
 @end
 
 @implementation CDWebViewVC
 
--(instancetype)initWithURL:(NSURL*)url title:(NSString*)title{
-    self=[super init];
-    if(self){
-        _url=url;
-        self.title=title;
+- (instancetype)initWithURL:(NSURL *)url title:(NSString *)title {
+    self = [super init];
+    if (self) {
+        _url = url;
+        self.title = title;
     }
     return self;
 }
@@ -30,13 +30,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.webView];
-    NSURLRequest *request=[NSURLRequest requestWithURL:self.url];
+    NSURLRequest *request = [NSURLRequest requestWithURL:self.url];
     [self.webView loadRequest:request];
 }
 
--(UIWebView*)webView{
-    if(_webView==nil){
-        _webView=[[UIWebView alloc] initWithFrame:self.view.frame];
+- (UIWebView *)webView {
+    if (_webView == nil) {
+        _webView = [[UIWebView alloc] initWithFrame:self.view.frame];
     }
     return _webView;
 }

@@ -8,12 +8,12 @@
 
 #import "CDBaseVC.h"
 
-static CGFloat kCDConvReportAbuseVCHorizontalPadding=10;
-static CGFloat kCDConvReportAbuseVCVerticalPadding=10;
-static CGFloat kCDConvReportAbuseVCInputTextFieldHeight=100;
+static CGFloat kCDConvReportAbuseVCHorizontalPadding = 10;
+static CGFloat kCDConvReportAbuseVCVerticalPadding = 10;
+static CGFloat kCDConvReportAbuseVCInputTextFieldHeight = 100;
 
 @interface CDConvReportAbuseVC : CDBaseVC
 
-- (instancetype)initWithConvid:(NSString*)convid;
+- (instancetype)initWithConvid:(NSString *)convid;
 
 @end

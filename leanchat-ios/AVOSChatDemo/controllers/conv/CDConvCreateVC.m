@@ -19,28 +19,28 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title=@"创建群组";
-    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(createNewGroup)];
-    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(backPressed)];
+    self.title = @"创建群组";
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(createNewGroup)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(backPressed)];
 }
 
--(void)backPressed{
+- (void)backPressed {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)createNewGroup{
-    NSString* name=[self.nameTextField text];
-    if([name length]>0){
-        UIActivityIndicatorView* indicator=[CDUtils showIndicatorAtView:self.view];
-//        [CDGroupService saveNewGroupWithName:name withCallback:^(AVGroup *group, NSError *error) {
-//            [indicator stopAnimating];
-//            if(error){
-//                [CDUtils alertError:error];
-//            }else{
-//                [self backPressed];
-//                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_GROUP_UPDATED object:self];
-//            }
-//        }];
+- (void)createNewGroup {
+    NSString *name = [self.nameTextField text];
+    if ([name length] > 0) {
+        UIActivityIndicatorView *indicator = [CDUtils showIndicatorAtView:self.view];
+        //        [CDGroupService saveNewGroupWithName:name withCallback:^(AVGroup *group, NSError *error) {
+        //            [indicator stopAnimating];
+        //            if(error){
+        //                [CDUtils alertError:error];
+        //            }else{
+        //                [self backPressed];
+        //                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_GROUP_UPDATED object:self];
+        //            }
+        //        }];
     }
 }
 

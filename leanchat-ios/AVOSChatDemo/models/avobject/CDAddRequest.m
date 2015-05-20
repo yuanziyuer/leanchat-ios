@@ -14,9 +14,8 @@
 @dynamic toUser;
 @dynamic status;
 
-+(NSString *)parseClassName{
++ (NSString *)parseClassName {
     return @"AddRequest";
 }
-
 
 @end

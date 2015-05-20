@@ -9,25 +9,25 @@
 #import <UIKit/UIKit.h>
 #import "CDCommon.h"
 
-static CGFloat kCDConvDetailMembersCellLineSpacing=10;
-static CGFloat kCDConvDetailMembersCellInterItemSpacing=20;
+static CGFloat kCDConvDetailMembersCellLineSpacing = 10;
+static CGFloat kCDConvDetailMembersCellInterItemSpacing = 20;
 
 @protocol CDConvDetailMembersHeaderViewDelegate <NSObject>
 
--(void)didSelectMember:(AVUser*)member;
+- (void)didSelectMember:(AVUser *)member;
 
--(void)didLongPressMember:(AVUser*)member;
+- (void)didLongPressMember:(AVUser *)member;
 
 @end
 
 @interface CDConvDetailMembersCell : UITableViewCell
 
-@property (nonatomic,strong) NSArray* members;
+@property (nonatomic, strong) NSArray *members;
 
-@property (nonatomic,strong) id<CDConvDetailMembersHeaderViewDelegate> membersCellDelegate;
+@property (nonatomic, strong) id <CDConvDetailMembersHeaderViewDelegate> membersCellDelegate;
 
-+(CGFloat)heightForMembers:(NSArray*)members;
++ (CGFloat)heightForMembers:(NSArray *)members;
 
-+(NSString*)reuseIdentifier;
++ (NSString *)reuseIdentifier;
 
 @end

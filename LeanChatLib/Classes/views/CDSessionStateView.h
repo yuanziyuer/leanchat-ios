@@ -10,7 +10,7 @@
 #import "CDIM.h"
 #import "CDNotify.h"
 
-static CGFloat kCDSessionStateViewHight=44;
+static CGFloat kCDSessionStateViewHight = 44;
 
 @class CDSessionStateView;
 
@@ -19,20 +19,20 @@ static CGFloat kCDSessionStateViewHight=44;
 
 @optional
 
--(void)onSessionBrokenWithStateView:(CDSessionStateView*)view;
+- (void)onSessionBrokenWithStateView:(CDSessionStateView *)view;
 
--(void)onSessionFineWithStateView:(CDSessionStateView*)view;
+- (void)onSessionFineWithStateView:(CDSessionStateView *)view;
 
 @end
 
 @interface CDSessionStateView : UIView
 
-@property(nonatomic)UITableView* tableView;
+@property (nonatomic) UITableView *tableView;
 
-@property id<CDSessionStateProtocal> delegate;
+@property id <CDSessionStateProtocal> delegate;
 
--(instancetype)initWithWidth:(CGFloat)width;
+- (instancetype)initWithWidth:(CGFloat)width;
 
--(void)observeSessionUpdate;
+- (void)observeSessionUpdate;
 
 @end

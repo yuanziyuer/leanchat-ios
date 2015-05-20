@@ -7,8 +7,8 @@
 //
 
 
-@interface CDFriendListVC : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface CDFriendListVC : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
--(void)refresh;
+- (void)refresh;
 
 @end

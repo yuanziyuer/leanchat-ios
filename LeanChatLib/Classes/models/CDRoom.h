@@ -11,13 +11,12 @@
 
 @interface CDRoom : NSObject
 
-@property NSString* convid;
+@property NSString *convid;
 
-@property AVIMConversation* conv;
+@property AVIMConversation *conv;
 
-@property AVIMTypedMessage* lastMsg;
+@property AVIMTypedMessage *lastMsg;
 
 @property NSInteger unreadCount;
 
 @end
-

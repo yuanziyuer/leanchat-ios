@@ -12,26 +12,26 @@
 
 @interface CDBaseVC : UIViewController
 
--(void)showNetworkIndicator;
+- (void)showNetworkIndicator;
 
--(void)hideNetworkIndicator;
+- (void)hideNetworkIndicator;
 
--(void)showProgress;
+- (void)showProgress;
 
--(void)hideProgress;
+- (void)hideProgress;
 
--(void)alert:(NSString*)msg;
+- (void)alert:(NSString *)msg;
 
--(BOOL)alertError:(NSError*)error;
+- (BOOL)alertError:(NSError *)error;
 
--(BOOL)filterError:(NSError*)error;
+- (BOOL)filterError:(NSError *)error;
 
--(void)runInMainQueue:(void (^)())queue;
+- (void)runInMainQueue:(void (^)())queue;
 
--(void)runInGlobalQueue:(void (^)())queue;
+- (void)runInGlobalQueue:(void (^)())queue;
 
--(void)runAfterSecs:(float)secs block:(void (^)())block;
+- (void)runAfterSecs:(float)secs block:(void (^)())block;
 
--(void)showHUDText:(NSString*)text;
+- (void)showHUDText:(NSString *)text;
 
 @end

@@ -10,6 +10,6 @@
 
 @interface UIImage (Icon)
 
-+(UIImage*)imageWithHashString:(NSString*)hashString displayString:(NSString*)displayString;
++ (UIImage *)imageWithHashString:(NSString *)hashString displayString:(NSString *)displayString;
 
 @end

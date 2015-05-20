@@ -21,13 +21,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title=@"注册";
+    self.title = @"注册";
     self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
     [self.view addSubview:self.registerButton];
 }
 
--(UIBarButtonItem*)cancelBarButtonItem{
-    if(_cancelBarButtonItem==nil){
+- (UIBarButtonItem *)cancelBarButtonItem {
+    if (_cancelBarButtonItem == nil) {
         UIImage *image = [UIImage imageNamed:@"cancel"];
         UIImage *selectedImage = [UIImage imageNamed:@"cancel_selected"];
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -40,12 +40,12 @@
     return _cancelBarButtonItem;
 }
 
--(UIButton*)registerButton{
-    if(_registerButton==nil){
-        UIImage* normalImage= [[UIImage imageNamed:@"blue_expand_normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
-        UIImage* highlightImage = [[UIImage imageNamed:@"blue_expand_highlight"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
+- (UIButton *)registerButton {
+    if (_registerButton == nil) {
+        UIImage *normalImage = [[UIImage imageNamed:@"blue_expand_normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
+        UIImage *highlightImage = [[UIImage imageNamed:@"blue_expand_highlight"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
         _registerButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _registerButton.frame=CGRectMake(CGRectGetMinX(self.usernameField.frame), CGRectGetMaxY(self.passwordField.frame)+kEntryVCVerticalSpacing, CGRectGetWidth(self.usernameField.frame), CGRectGetHeight(self.usernameField.frame));
+        _registerButton.frame = CGRectMake(CGRectGetMinX(self.usernameField.frame), CGRectGetMaxY(self.passwordField.frame) + kEntryVCVerticalSpacing, CGRectGetWidth(self.usernameField.frame), CGRectGetHeight(self.usernameField.frame));
         [_registerButton setBackgroundImage:normalImage forState:UIControlStateNormal];
         [_registerButton setBackgroundImage:highlightImage forState:UIControlStateHighlighted];
         [_registerButton setBackgroundImage:highlightImage forState:UIControlStateDisabled];
@@ -57,49 +57,46 @@
     return _registerButton;
 }
 
-
 #pragma mark - Actions
 
-- (void)cancel:(id)sender{
-    [self dismissViewControllerAnimated:YES completion:^{
+- (void)cancel:(id)sender {
+    [self dismissViewControllerAnimated:YES completion: ^{
         [[UIApplication sharedApplication] setStatusBarHidden:YES];
     }];
 }
 
--(void)registerAVUser:(id)sender
-{
+- (void)registerAVUser:(id)sender {
     AVUser *user = [AVUser user];
     user.username = self.usernameField.text;
     user.password = self.passwordField.text;
     [user setFetchWhenSave:YES];
-    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        [CDUtils filterError:error callback:^{
+    [user signUpInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
+        [CDUtils filterError:error callback: ^{
             [[NSUserDefaults standardUserDefaults] setObject:self.usernameField.text forKey:KEY_USERNAME];
-            [self dismissViewControllerAnimated:NO completion:^{
+            [self dismissViewControllerAnimated:NO completion: ^{
                 CDAppDelegate *delegate = (CDAppDelegate *)[UIApplication sharedApplication].delegate;
                 [delegate toMain];
             }];
         }];
     }];
-    
-    
 }
 
-- (void)changeButtonState{
-    if(self.usernameField.text.length >= USERNAME_MIN_LENGTH && self.passwordField.text.length >= PASSWORD_MIN_LENGTH){
+- (void)changeButtonState {
+    if (self.usernameField.text.length >= USERNAME_MIN_LENGTH && self.passwordField.text.length >= PASSWORD_MIN_LENGTH) {
         self.registerButton.enabled = YES;
-    }else {
+    }
+    else {
         self.registerButton.enabled = NO;
     }
 }
 
--(void)didPasswordTextFieldReturn:(CDTextField *)passwordField{
-    if(self.registerButton.enabled){
+- (void)didPasswordTextFieldReturn:(CDTextField *)passwordField {
+    if (self.registerButton.enabled) {
         [self registerAVUser:nil];
     }
 }
 
--(void)textFieldDidChange:(UITextField *)textField{
+- (void)textFieldDidChange:(UITextField *)textField {
     [self changeButtonState];
 }
 

@@ -21,26 +21,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if(LOCAL_DEBUG){
-        self.selfIdTextField.text=@"a";
+    if (LOCAL_DEBUG) {
+        self.selfIdTextField.text = @"a";
     }
 }
 
-
 - (IBAction)login:(id)sender {
-    NSString* selfId=self.selfIdTextField.text;
-    if(selfId.length>0){
-        CDIM* im=[CDIM sharedInstance];
-        [im openWithClientId:selfId callback:^(BOOL succeeded, NSError *error) {
-            if(error){
-                DLog(@"%@",error);
-            }else{
-                UITabBarController* tabbarController=[[UITabBarController alloc] init];
-                LCEChatListVC* chatListVC=[[LCEChatListVC alloc] init];
-                UINavigationController* nav=[[UINavigationController alloc] initWithRootViewController:chatListVC];
+    NSString *selfId = self.selfIdTextField.text;
+    if (selfId.length > 0) {
+        CDIM *im = [CDIM sharedInstance];
+        [im openWithClientId:selfId callback: ^(BOOL succeeded, NSError *error) {
+            if (error) {
+                DLog(@"%@", error);
+            }
+            else {
+                UITabBarController *tabbarController = [[UITabBarController alloc] init];
+                LCEChatListVC *chatListVC = [[LCEChatListVC alloc] init];
+                UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:chatListVC];
                 [tabbarController addChildViewController:nav];
-                AppDelegate* appDelegate=[UIApplication sharedApplication].delegate;
-                appDelegate.window.rootViewController=tabbarController;
+                AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+                appDelegate.window.rootViewController = tabbarController;
             }
         }];
     }

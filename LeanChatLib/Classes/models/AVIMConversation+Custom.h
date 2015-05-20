@@ -19,19 +19,19 @@ typedef enum : NSUInteger {
     CDConvTypeGroup,
 } CDConvType;
 
-@interface AVIMConversation(Custom)
+@interface AVIMConversation (Custom)
 
--(CDConvType)type;
+- (CDConvType)type;
 
--(NSString*)otherId;
+- (NSString *)otherId;
 
--(NSString*)displayName;
+- (NSString *)displayName;
 
-+(NSString*)nameOfUserIds:(NSArray*)userIds;
++ (NSString *)nameOfUserIds:(NSArray *)userIds;
 
--(NSString*)title;
+- (NSString *)title;
 
--(UIImage*)icon;
+- (UIImage *)icon;
 
 
 @end

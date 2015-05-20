@@ -16,9 +16,9 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 
-@property CDIM* im;
+@property CDIM *im;
 
-@property CDNotify* notify;
+@property CDNotify *notify;
 
 @end
 
@@ -27,28 +27,28 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title=@"群聊名称";
-    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveName:)];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop                                                                                          target:self                                                                                          action:@selector(backPressed)];
-    self.nameTextField.text=_conv.displayName;
-    _im=[CDIM sharedInstance];
-    _notify=[CDNotify sharedInstance]; 
+    self.title = @"群聊名称";
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveName:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(backPressed)];
+    self.nameTextField.text = _conv.displayName;
+    _im = [CDIM sharedInstance];
+    _notify = [CDNotify sharedInstance];
 }
 
--(void)backPressed{
+- (void)backPressed {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)saveName:(id)sender{
-    if(_nameTextField.text.length>0){
-         AVIMConversationUpdateBuilder* updateBuilder=[_conv newUpdateBuilder];
-         [updateBuilder setName:_nameTextField.text];
-         [_conv update:[updateBuilder dictionary] callback:^(BOOL succeeded, NSError *error) {
-             if([CDUtils filterError:error]){
-                 [_notify postConvNotify];
-                 [self backPressed];
-             }
-         }];
+- (void)saveName:(id)sender {
+    if (_nameTextField.text.length > 0) {
+        AVIMConversationUpdateBuilder *updateBuilder = [_conv newUpdateBuilder];
+        [updateBuilder setName:_nameTextField.text];
+        [_conv update:[updateBuilder dictionary] callback: ^(BOOL succeeded, NSError *error) {
+            if ([CDUtils filterError:error]) {
+                [_notify postConvNotify];
+                [self backPressed];
+            }
+        }];
     }
 }
 
@@ -70,6 +70,5 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     return _tableCell;
 }
-
 
 @end

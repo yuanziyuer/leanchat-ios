@@ -11,30 +11,30 @@
 
 @interface CDCache : NSObject
 
-+ (void)registerUsers:(NSArray*)users;
++ (void)registerUsers:(NSArray *)users;
 
-+ (void)registerUser:(AVUser*)user;
++ (void)registerUser:(AVUser *)user;
 
-+ (AVUser *)lookupUser:(NSString*)userId;
++ (AVUser *)lookupUser:(NSString *)userId;
 
-+(AVIMConversation*)lookupConvById:(NSString*)convid;
++ (AVIMConversation *)lookupConvById:(NSString *)convid;
 
-+(void)registerConv:(AVIMConversation*)conv;
++ (void)registerConv:(AVIMConversation *)conv;
 
-+(void)cacheUsersWithIds:(NSSet*)userIds callback:(AVBooleanResultBlock)callback;
++ (void)cacheUsersWithIds:(NSSet *)userIds callback:(AVBooleanResultBlock)callback;
 
-+(void)cacheConvsWithIds:(NSMutableSet*)convids callback:(AVArrayResultBlock)callback;
++ (void)cacheConvsWithIds:(NSMutableSet *)convids callback:(AVArrayResultBlock)callback;
 
-+(void)registerConvs:(NSArray*)convs;
++ (void)registerConvs:(NSArray *)convs;
 
 #pragma mark - current conv
 
-+(void)setCurConv:(AVIMConversation*)conv;
++ (void)setCurConv:(AVIMConversation *)conv;
 
-+(AVIMConversation*)getCurConv;
++ (AVIMConversation *)getCurConv;
 
-+(void)refreshCurConv:(AVBooleanResultBlock)callback;
++ (void)refreshCurConv:(AVBooleanResultBlock)callback;
 
-+(void)cacheAndFillRooms:(NSMutableArray*)rooms callback:(AVBooleanResultBlock)callback;
++ (void)cacheAndFillRooms:(NSMutableArray *)rooms callback:(AVBooleanResultBlock)callback;
 
 @end

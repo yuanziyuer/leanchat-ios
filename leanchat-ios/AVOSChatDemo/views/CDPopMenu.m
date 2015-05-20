@@ -39,20 +39,20 @@
     if (![self.currentSuperView.subviews containsObject:self]) {
         self.alpha = 0.0;
         [self.currentSuperView addSubview:self];
-        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations: ^{
             self.alpha = 1.0;
-        } completion:^(BOOL finished) {
-            
+        } completion: ^(BOOL finished) {
         }];
-    } else {
+    }
+    else {
         [self dismissPopMenuAnimatedOnMenuSelected:NO];
     }
 }
 
 - (void)dismissPopMenuAnimatedOnMenuSelected:(BOOL)selected {
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations: ^{
         self.alpha = 0.0;
-    } completion:^(BOOL finished) {
+    } completion: ^(BOOL finished) {
         if (selected) {
             if (self.popMenuDismissed) {
                 self.popMenuDismissed(self.indexPath.row, self.menus[self.indexPath.row]);
@@ -106,7 +106,7 @@
     return self;
 }
 
-- (instancetype)initWithObjects:(id)firstObj, ... NS_REQUIRES_NIL_TERMINATION {
+- (instancetype)initWithObjects:(id)firstObj, ...NS_REQUIRES_NIL_TERMINATION {
     self = [super init];
     if (self) {
         NSMutableArray *menuItems = [[NSMutableArray alloc] init];
@@ -115,7 +115,7 @@
         if (firstObj) {
             [menuItems addObject:firstObj];
             va_start(argumentList, firstObj);
-            while((eachItem = va_arg(argumentList, CDPopMenuItem *))) {
+            while ((eachItem = va_arg(argumentList, CDPopMenuItem *))) {
                 [menuItems addObject:eachItem];
             }
             va_end(argumentList);
@@ -131,7 +131,8 @@
     CGPoint localPoint = [touch locationInView:self];
     if (CGRectContainsPoint(self.menuTableView.frame, localPoint)) {
         [self hitTest:localPoint withEvent:event];
-    } else {
+    }
+    else {
         [self dismissPopMenuAnimatedOnMenuSelected:NO];
     }
 }

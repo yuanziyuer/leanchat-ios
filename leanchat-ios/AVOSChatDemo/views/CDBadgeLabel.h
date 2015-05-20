@@ -11,6 +11,6 @@
 
 @interface CDBadgeLabel : UILabel
 
--(void)setNormalStyle;
+- (void)setNormalStyle;
 
 @end

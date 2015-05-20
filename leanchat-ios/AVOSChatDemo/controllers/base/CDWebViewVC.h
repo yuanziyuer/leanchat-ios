@@ -10,6 +10,6 @@
 
 @interface CDWebViewVC : CDBaseVC
 
--(instancetype)initWithURL:(NSURL*)url title:(NSString*)title;
+- (instancetype)initWithURL:(NSURL *)url title:(NSString *)title;
 
 @end

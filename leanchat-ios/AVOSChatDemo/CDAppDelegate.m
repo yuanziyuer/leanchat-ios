@@ -23,8 +23,7 @@
 
 @implementation CDAppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     [CDAddRequest registerSubclass];
@@ -33,27 +32,29 @@
     [AVOSCloud useAVCloudUS];
 #endif
     [AVOSCloud setApplicationId:AVOSAppID clientKey:AVOSAppKey];
-//    [AVOSCloud setApplicationId:CloudAppId clientKey:CloudAppKey];
-//    [AVOSCloud setApplicationId:PublicAppId clientKey:PublicAppKey];
+    //    [AVOSCloud setApplicationId:CloudAppId clientKey:CloudAppKey];
+    //    [AVOSCloud setApplicationId:PublicAppId clientKey:PublicAppKey];
     [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     if (SYSTEM_VERSION >= 7.0) {
         [[UINavigationBar appearance] setBarTintColor:NAVIGATION_COLOR];
         [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    } else {
+    }
+    else {
         [[UINavigationBar appearance] setTintColor:NAVIGATION_COLOR];
     }
-    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
-                                                           [UIColor whiteColor], NSForegroundColorAttributeName, [UIFont boldSystemFontOfSize:17], NSFontAttributeName, nil]];
+    [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                          [UIColor whiteColor], NSForegroundColorAttributeName, [UIFont boldSystemFontOfSize:17], NSFontAttributeName, nil]];
     if ([AVUser currentUser]) {
         [self toMain];
-    } else {
+    }
+    else {
         [self toLogin];
     }
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-
+    
     [self registerForPushWithApplication:application];
     
 #ifdef DEBUG
@@ -66,64 +67,64 @@
     return YES;
 }
 
--(void)registerForPushWithApplication:(UIApplication*)application{
-    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)]==NO) {
+- (void)registerForPushWithApplication:(UIApplication *)application {
+    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)] == NO) {
         [application registerForRemoteNotificationTypes:
          UIRemoteNotificationTypeBadge |
          UIRemoteNotificationTypeAlert |
          UIRemoteNotificationTypeSound];
-    } else {
+    }
+    else {
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
         [application registerUserNotificationSettings:settings];
         [application registerForRemoteNotifications];
     }
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application{
+- (void)applicationWillResignActive:(UIApplication *)application {
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application{
+- (void)applicationDidEnterBackground:(UIApplication *)application {
 }
 
-- (void)applicationWillEnterForeground:(UIApplication *)application{
+- (void)applicationWillEnterForeground:(UIApplication *)application {
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    NSInteger num=application.applicationIconBadgeNumber;
-    if(num!=0){
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    NSInteger num = application.applicationIconBadgeNumber;
+    if (num != 0) {
         AVInstallation *currentInstallation = [AVInstallation currentInstallation];
         [currentInstallation setBadge:0];
-        [currentInstallation saveEventually:^(BOOL succeeded, NSError *error) {
-            DLog(@"%@" ,error? error:@"succeed");
+        [currentInstallation saveEventually: ^(BOOL succeeded, NSError *error) {
+            DLog(@"%@", error ? error : @"succeed");
         }];
-        application.applicationIconBadgeNumber=0;
+        application.applicationIconBadgeNumber = 0;
     }
     [application cancelAllLocalNotifications];
 }
 
-- (void)applicationWillTerminate:(UIApplication *)application
-{
+- (void)applicationWillTerminate:(UIApplication *)application {
 }
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     AVInstallation *currentInstallation = [AVInstallation currentInstallation];
-    if(currentInstallation.deviceToken==nil){
+    if (currentInstallation.deviceToken == nil) {
         //first time register
         [currentInstallation setDeviceTokenFromData:deviceToken];
-        [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            DLog(@"%@",error);
+        [currentInstallation saveInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
+            DLog(@"%@", error);
         }];
-    }else{
+    }
+    else {
         DLog(@"have registered");
     }
 }
 
--(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
-    DLog(@"%@",error);
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    DLog(@"%@", error);
 }
 
--(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     if (application.applicationState == UIApplicationStateActive) {
         UILocalNotification *localNotification = [[UILocalNotification alloc] init];
         localNotification.userInfo = userInfo;
@@ -131,7 +132,8 @@
         localNotification.alertBody = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
         localNotification.fireDate = [NSDate date];
         [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-    } else {
+    }
+    else {
         [AVAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
     }
     DLog(@"receiveRemoteNotification");
@@ -142,40 +144,40 @@
     self.window.rootViewController = controller;
 }
 
--(void)addItemController:(UIViewController*)itemController toTabBarController:(CDBaseTabC*)tab{
-    CDBaseNavC* nav=[[CDBaseNavC alloc] initWithRootViewController:itemController];
+- (void)addItemController:(UIViewController *)itemController toTabBarController:(CDBaseTabC *)tab {
+    CDBaseNavC *nav = [[CDBaseNavC alloc] initWithRootViewController:itemController];
     [tab addChildViewController:nav];
 }
 
 - (void)toMain {
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
-    AVUser* user=[AVUser currentUser];
+    AVUser *user = [AVUser currentUser];
     [CDCache registerUser:user];
-    CDIM* im=[CDIM sharedInstance];
+    CDIM *im = [CDIM sharedInstance];
     WEAKSELF
     [CDUtils showNetworkIndicator];
-    [CDIMConfig config].userDelegate=[CDIMService shareInstance];
-    [im openWithClientId:user.objectId callback:^(BOOL succeeded, NSError *error) {
+    [CDIMConfig config].userDelegate = [CDIMService shareInstance];
+    [im openWithClientId:user.objectId callback: ^(BOOL succeeded, NSError *error) {
         [CDUtils hideNetworkIndicator];
         CDBaseTabC *tab = [[CDBaseTabC alloc] init];
         [weakSelf addItemController:[[CDConvsVC alloc] init] toTabBarController:tab];
         [weakSelf addItemController:[[CDFriendListVC alloc] init] toTabBarController:tab];
         [weakSelf addItemController:[[CDProfileVC alloc] init] toTabBarController:tab];
         
-        tab.selectedIndex=0;
-        DLog(@"%@",error);
+        tab.selectedIndex = 0;
+        DLog(@"%@", error);
         weakSelf.window.rootViewController = tab;
     }];
     
-//    AVInstallation* installation=[AVInstallation currentInstallation];
-//    AVUser* user=[AVUser currentUser];
-//    [user setObject:installation forKey:INSTALLATION];
-//    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//        if(error){
-//            [CDUtils logError:error callback:nil];
-//        }else{
-//        }
-//    }];
+    //    AVInstallation* installation=[AVInstallation currentInstallation];
+    //    AVUser* user=[AVUser currentUser];
+    //    [user setObject:installation forKey:INSTALLATION];
+    //    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    //        if(error){
+    //            [CDUtils logError:error callback:nil];
+    //        }else{
+    //        }
+    //    }];
 }
 
 @end

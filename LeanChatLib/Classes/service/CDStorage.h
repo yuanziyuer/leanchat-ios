@@ -12,33 +12,33 @@
 
 @interface CDStorage : NSObject
 
-+(instancetype)sharedInstance;
++ (instancetype)sharedInstance;
 
--(void)close;
+- (void)close;
 
--(void)setupWithUserId:(NSString*)userId;
+- (void)setupWithUserId:(NSString *)userId;
 
--(NSArray*)getMsgsWithConvid:(NSString*)convid maxTime:(int64_t)time limit:(int)limit;
+- (NSArray *)getMsgsWithConvid:(NSString *)convid maxTime:(int64_t)time limit:(int)limit;
 
--(int64_t)insertMsg:(AVIMTypedMessage*)msg;
+- (int64_t)insertMsg:(AVIMTypedMessage *)msg;
 
--(BOOL)updateStatus:(AVIMMessageStatus)status byMsgId:(NSString*)msgId;
+- (BOOL)updateStatus:(AVIMMessageStatus)status byMsgId:(NSString *)msgId;
 
--(BOOL)updateFailedMsg:(AVIMTypedMessage*)msg byTmpId:(NSString*)tmpId;
+- (BOOL)updateFailedMsg:(AVIMTypedMessage *)msg byTmpId:(NSString *)tmpId;
 
--(void)deleteMsgsByConvid:(NSString*)convid;
+- (void)deleteMsgsByConvid:(NSString *)convid;
 
--(NSArray*)getRooms;
+- (NSArray *)getRooms;
 
--(NSInteger)countUnread;
+- (NSInteger)countUnread;
 
--(void)insertRoomWithConvid:(NSString*)convid;
+- (void)insertRoomWithConvid:(NSString *)convid;
 
--(void)deleteRoomByConvid:(NSString*)convid;
+- (void)deleteRoomByConvid:(NSString *)convid;
 
--(void)incrementUnreadWithConvid:(NSString*)convid;
+- (void)incrementUnreadWithConvid:(NSString *)convid;
 
--(void)clearUnreadWithConvid:(NSString*)convid;
+- (void)clearUnreadWithConvid:(NSString *)convid;
 
 
 @end

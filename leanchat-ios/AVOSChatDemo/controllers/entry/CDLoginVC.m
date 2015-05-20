@@ -29,7 +29,7 @@
     [self.view addSubview:self.forgotPasswordButton];
 }
 
-- (void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.usernameField.text = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USERNAME];
     [self changeButtonState];
@@ -42,29 +42,29 @@
 
 #pragma mark - Propertys
 
--(CDResizableButton*)loginButton{
-    if(_loginButton==nil){
-        _loginButton=[[CDResizableButton alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.usernameField.frame),CGRectGetMaxY(self.passwordField.frame)+kEntryVCVerticalSpacing,CGRectGetWidth(self.usernameField.frame),CGRectGetHeight(self.usernameField.frame))];
+- (CDResizableButton *)loginButton {
+    if (_loginButton == nil) {
+        _loginButton = [[CDResizableButton alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.usernameField.frame), CGRectGetMaxY(self.passwordField.frame) + kEntryVCVerticalSpacing, CGRectGetWidth(self.usernameField.frame), CGRectGetHeight(self.usernameField.frame))];
         [_loginButton setTitle:@"登录" forState:UIControlStateNormal];
         [_loginButton setBackgroundImage:[UIImage imageNamed:@"blue_expand_normal"] forState:UIControlStateNormal];
         [_loginButton setBackgroundImage:[UIImage imageNamed:@"blue_expand_highlight"] forState:UIControlStateHighlighted];
         [_loginButton setBackgroundImage:[UIImage imageNamed:@"blue_expand_normal"] forState:UIControlStateDisabled];
-        _loginButton.enabled=NO;
+        _loginButton.enabled = NO;
         [_loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_loginButton addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _loginButton;
 }
 
--(UIButton*)registerButton{
-    if(_registerButton==nil){
-        UIImage* image = [[UIImage imageNamed:@"bottom_bar_normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
+- (UIButton *)registerButton {
+    if (_registerButton == nil) {
+        UIImage *image = [[UIImage imageNamed:@"bottom_bar_normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
         UIImage *selectedImage = [[UIImage imageNamed:@"bottom_bar_selected"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
         _registerButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _registerButton.frame = CGRectMake(0, CGRectGetHeight(self.view.frame)-kEntryVCTextFieldHeight, CGRectGetWidth(self.view.frame)/2, kEntryVCTextFieldHeight);
+        _registerButton.frame = CGRectMake(0, CGRectGetHeight(self.view.frame) - kEntryVCTextFieldHeight, CGRectGetWidth(self.view.frame) / 2, kEntryVCTextFieldHeight);
         [_registerButton setBackgroundImage:image forState:UIControlStateNormal];
         [_registerButton setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
-        [_registerButton setTitleColor:RGBCOLOR( 93,92,92) forState:UIControlStateNormal];
+        [_registerButton setTitleColor:RGBCOLOR(93, 92, 92) forState:UIControlStateNormal];
         [_registerButton setTitle:@"注册账号" forState:UIControlStateNormal];
         _registerButton.titleLabel.font = [UIFont systemFontOfSize:15];
         [_registerButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -73,12 +73,12 @@
     return _registerButton;
 }
 
--(UIButton*)forgotPasswordButton{
-    if(_forgotPasswordButton==nil){
-        UIImage* image = [[UIImage imageNamed:@"bottom_bar_normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
+- (UIButton *)forgotPasswordButton {
+    if (_forgotPasswordButton == nil) {
+        UIImage *image = [[UIImage imageNamed:@"bottom_bar_normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
         UIImage *selectedImage = [[UIImage imageNamed:@"bottom_bar_selected"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
         _forgotPasswordButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _forgotPasswordButton.frame = CGRectMake(CGRectGetWidth(self.view.frame)/2, CGRectGetHeight(self.view.frame)-kEntryVCTextFieldHeight,CGRectGetWidth(self.view.frame)/2 , kEntryVCTextFieldHeight);
+        _forgotPasswordButton.frame = CGRectMake(CGRectGetWidth(self.view.frame) / 2, CGRectGetHeight(self.view.frame) - kEntryVCTextFieldHeight, CGRectGetWidth(self.view.frame) / 2, kEntryVCTextFieldHeight);
         [_forgotPasswordButton setBackgroundImage:image forState:UIControlStateNormal];
         [_forgotPasswordButton setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
         [_forgotPasswordButton setTitleColor:RGBCOLOR(93, 92, 92) forState:UIControlStateNormal];
@@ -91,11 +91,12 @@
 }
 
 #pragma mark - Actions
--(void)login:(id)sender {
-    [AVUser logInWithUsernameInBackground:self.usernameField.text password:self.passwordField.text block:^(AVUser *user, NSError *error) {
-        if(error){
+- (void)login:(id)sender {
+    [AVUser logInWithUsernameInBackground:self.usernameField.text password:self.passwordField.text block: ^(AVUser *user, NSError *error) {
+        if (error) {
             [self showHUDText:error.localizedDescription];
-        }else{
+        }
+        else {
             [[NSUserDefaults standardUserDefaults] setObject:self.usernameField.text forKey:KEY_USERNAME];
             CDAppDelegate *delegate = (CDAppDelegate *)[UIApplication sharedApplication].delegate;
             [delegate toMain];
@@ -103,32 +104,33 @@
     }];
 }
 
--(void)toRegister:(id)sender {
+- (void)toRegister:(id)sender {
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     CDRegisterVC *vc = [[CDRegisterVC alloc] init];
-    UINavigationController *nav=[[UINavigationController alloc] initWithRootViewController:vc];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-- (void)changeButtonState{
-    if(self.usernameField.text.length >= USERNAME_MIN_LENGTH && self.passwordField.text.length >= PASSWORD_MIN_LENGTH){
+- (void)changeButtonState {
+    if (self.usernameField.text.length >= USERNAME_MIN_LENGTH && self.passwordField.text.length >= PASSWORD_MIN_LENGTH) {
         self.loginButton.enabled = YES;
-    }else {
+    }
+    else {
         self.loginButton.enabled = NO;
     }
 }
 
--(void)toFindPassword:(id)sender {
+- (void)toFindPassword:(id)sender {
     [self showHUDText:@"鞭打工程师中..."];
 }
 
--(void)didPasswordTextFieldReturn:(CDTextField *)passwordField{
-    if(self.registerButton.enabled){
+- (void)didPasswordTextFieldReturn:(CDTextField *)passwordField {
+    if (self.registerButton.enabled) {
         [self login:nil];
     }
 }
 
--(void)textFieldDidChange:(UITextField *)textField{
+- (void)textFieldDidChange:(UITextField *)textField {
     [self changeButtonState];
 }
 

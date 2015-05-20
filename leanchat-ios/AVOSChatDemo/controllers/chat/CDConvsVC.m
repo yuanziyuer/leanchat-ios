@@ -10,19 +10,18 @@
 #import "CDUtils.h"
 #import "CDIMService.h"
 
-@interface CDConvsVC ()<CDChatListVCDelegate>
+@interface CDConvsVC () <CDChatListVCDelegate>
 
 @end
 
 @implementation CDConvsVC
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         self.title = @"消息";
         self.tabBarItem.image = [UIImage imageNamed:@"tabbar_chat_active"];
-        self.chatListDelegate=self;
+        self.chatListDelegate = self;
     }
     return self;
 }
@@ -35,15 +34,16 @@
     [super didReceiveMemoryWarning];
 }
 
--(void)viewController:(UIViewController *)viewController didSelectConv:(AVIMConversation *)conv{
+- (void)viewController:(UIViewController *)viewController didSelectConv:(AVIMConversation *)conv {
     [[CDIMService shareInstance] goWithConv:conv fromNav:viewController.navigationController];
 }
 
--(void)setBadgeWithTotalUnreadCount:(NSInteger)totalUnreadCount{
-    if(totalUnreadCount>0){
-        self.tabBarItem.badgeValue=[NSString stringWithFormat:@"%ld",(long)totalUnreadCount];
-    }else{
-        self.tabBarItem.badgeValue=nil;
+- (void)setBadgeWithTotalUnreadCount:(NSInteger)totalUnreadCount {
+    if (totalUnreadCount > 0) {
+        self.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", (long)totalUnreadCount];
+    }
+    else {
+        self.tabBarItem.badgeValue = nil;
     }
 }
 

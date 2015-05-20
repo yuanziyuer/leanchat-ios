@@ -10,6 +10,6 @@
 
 @interface CDUserInfoVC : CDBaseTableVC
 
--(instancetype)initWithUser:(AVUser*)user;
+- (instancetype)initWithUser:(AVUser *)user;
 
 @end

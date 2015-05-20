@@ -10,11 +10,11 @@
 
 @implementation CDIMConfig
 
-+(CDIMConfig*)config{
-    static CDIMConfig* imConfig;
++ (CDIMConfig *)config {
+    static CDIMConfig *imConfig;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        imConfig=[[CDIMConfig alloc] init];
+        imConfig = [[CDIMConfig alloc] init];
     });
     return imConfig;
 }

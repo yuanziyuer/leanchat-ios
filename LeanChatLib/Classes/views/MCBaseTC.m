@@ -19,11 +19,11 @@
     [self.view addSubview:self.tableView];
 }
 
--(UITableView*)tableView{
-    if(_tableView==nil){
+- (UITableView *)tableView {
+    if (_tableView == nil) {
         _tableView = [[UITableView alloc] initWithFrame:self.view.frame style:self.tableViewStyle];
-        _tableView.delegate=self;
-        _tableView.dataSource=self;
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
     }
     return _tableView;
 }
@@ -32,25 +32,25 @@
     [super didReceiveMemoryWarning];
 }
 
--(void)dealloc{
+- (void)dealloc {
 }
 
--(NSMutableArray*)dataSource{
-    if(_dataSource==nil){
-        _dataSource=[NSMutableArray array];
+- (NSMutableArray *)dataSource {
+    if (_dataSource == nil) {
+        _dataSource = [NSMutableArray array];
     }
     return _dataSource;
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataSource.count;
 }
 
--(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     return nil;
 }
 

@@ -11,8 +11,8 @@
 
 @interface CDChatRoomVC : XHMessageTableViewController
 
-@property (nonatomic,strong) AVIMConversation* conv;
+@property (nonatomic, strong) AVIMConversation *conv;
 
--(instancetype)initWithConv:(AVIMConversation*)conv;
+- (instancetype)initWithConv:(AVIMConversation *)conv;
 
 @end

@@ -11,12 +11,12 @@
 @implementation CDTextField
 // placeholder position
 - (CGRect)textRectForBounds:(CGRect)bounds {
-    return CGRectInset( bounds , _horizontalPadding , _verticalPadding );
+    return CGRectInset(bounds, _horizontalPadding, _verticalPadding);
 }
 
 // text position
 - (CGRect)editingRectForBounds:(CGRect)bounds {
-    return CGRectInset( bounds , _horizontalPadding , _verticalPadding );
+    return CGRectInset(bounds, _horizontalPadding, _verticalPadding);
 }
 
 @end

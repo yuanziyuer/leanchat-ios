@@ -13,50 +13,50 @@
 
 @interface CDConvReportAbuseVC ()
 
-@property (nonatomic,strong) CDTextField *inputTextField;
+@property (nonatomic, strong) CDTextField *inputTextField;
 
-@property (nonatomic,strong) NSString *convid;
+@property (nonatomic, strong) NSString *convid;
 
 @end
 
 @implementation CDConvReportAbuseVC
 
 
-- (instancetype)initWithConvid:(NSString*)convid;
+- (instancetype)initWithConvid:(NSString *)convid;
 {
     self = [super init];
     if (self) {
-        _convid=convid;
+        _convid = convid;
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title=@"举报";
-    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStylePlain target:self action:@selector(submit:)];
+    self.title = @"举报";
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStylePlain target:self action:@selector(submit:)];
     [self.view addSubview:self.inputTextField];
 }
 
--(CDTextField*)inputTextField{
-    if(_inputTextField==nil){
-        _inputTextField=[[CDTextField alloc] initWithFrame:CGRectMake(kCDConvReportAbuseVCHorizontalPadding, kCDConvReportAbuseVCVerticalPadding, CGRectGetWidth(self.view.frame)-2*kCDConvReportAbuseVCHorizontalPadding, kCDConvReportAbuseVCInputTextFieldHeight)];
-        _inputTextField.borderStyle=UITextBorderStyleRoundedRect;
-        _inputTextField.horizontalPadding=kCDTextFieldCommonHorizontalPadding;
-        _inputTextField.verticalPadding=kCDTextFieldCommonVerticalPadding;
-        _inputTextField.placeholder=@"请输入举报原因";
+- (CDTextField *)inputTextField {
+    if (_inputTextField == nil) {
+        _inputTextField = [[CDTextField alloc] initWithFrame:CGRectMake(kCDConvReportAbuseVCHorizontalPadding, kCDConvReportAbuseVCVerticalPadding, CGRectGetWidth(self.view.frame) - 2 * kCDConvReportAbuseVCHorizontalPadding, kCDConvReportAbuseVCInputTextFieldHeight)];
+        _inputTextField.borderStyle = UITextBorderStyleRoundedRect;
+        _inputTextField.horizontalPadding = kCDTextFieldCommonHorizontalPadding;
+        _inputTextField.verticalPadding = kCDTextFieldCommonVerticalPadding;
+        _inputTextField.placeholder = @"请输入举报原因";
     }
     return _inputTextField;
 }
 
--(void)submit:(id)sender{
-    if(self.inputTextField.text.length>0){
+- (void)submit:(id)sender {
+    if (self.inputTextField.text.length > 0) {
         [self showProgress];
-        WEAKSELF
-        DLog(@"%@",self.inputTextField.text);
-        [CDUserService reportAbuseWithReason:self.inputTextField.text convid:self.convid block:^(BOOL succeeded, NSError *error) {
+        WEAKSELF DLog(@"%@", self.inputTextField.text);
+        
+        [CDUserService reportAbuseWithReason:self.inputTextField.text convid:self.convid block: ^(BOOL succeeded, NSError *error) {
             [weakSelf hideProgress];
-            if([CDUtils filterError:error]){
+            if ([CDUtils filterError:error]) {
                 [CDUtils alert:@"感谢您的举报，我们将尽快处理。"];
                 [weakSelf.navigationController popViewControllerAnimated:YES];
             }

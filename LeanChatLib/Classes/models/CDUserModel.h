@@ -12,10 +12,10 @@
 
 @required
 
--(NSString*)userId;
+- (NSString *)userId;
 
--(NSString*)avatarUrl;
+- (NSString *)avatarUrl;
 
--(NSString*)username;
+- (NSString *)username;
 
 @end

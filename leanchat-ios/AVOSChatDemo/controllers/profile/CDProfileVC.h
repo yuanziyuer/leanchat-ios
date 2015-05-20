@@ -8,6 +8,6 @@
 
 #import "CDBaseTableVC.h"
 
-@interface CDProfileVC : CDBaseTableVC<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface CDProfileVC : CDBaseTableVC <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @end

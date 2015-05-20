@@ -15,72 +15,72 @@
 
 typedef void (^Int64Block)(int64_t num);
 
-typedef void (^CDUpgradeBlock)(BOOL upgrade,NSString* oldVersion,NSString* newVersion);
+typedef void (^CDUpgradeBlock)(BOOL upgrade, NSString *oldVersion, NSString *newVersion);
 
 @interface CDUtils : NSObject
 
-+(UIAlertView*)alert:(NSString*)msg;
++ (UIAlertView *)alert:(NSString *)msg;
 
-+(NSString*)md5OfString:(NSString*)s;
++ (NSString *)md5OfString:(NSString *)s;
 
-+(BOOL)alertError:(NSError*)error;
++ (BOOL)alertError:(NSError *)error;
 
-+(UIActivityIndicatorView*)showIndicatorAtView:(UIView*)hookView;
++ (UIActivityIndicatorView *)showIndicatorAtView:(UIView *)hookView;
 
-+(void)showNetworkIndicator;
++ (void)showNetworkIndicator;
 
-+(void)hideNetworkIndicator;
++ (void)hideNetworkIndicator;
 
 + (UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)newSize;
 
-+(UIImage *)roundImage:(UIImage *) image toSize:(CGSize)size radius: (float) radius;
++ (UIImage *)roundImage:(UIImage *)image toSize:(CGSize)size radius:(float)radius;
 
-+(UIImage*)imageWithColor:(UIColor *)color;
++ (UIImage *)imageWithColor:(UIColor *)color;
 
-+(void)pickImageFromPhotoLibraryAtController:(UIViewController*)controller;
++ (void)pickImageFromPhotoLibraryAtController:(UIViewController *)controller;
 
-+(BOOL)filterError:(NSError*)error;
++ (BOOL)filterError:(NSError *)error;
 
-+(void)filterError:(NSError*)error callback:(dispatch_block_t)callback;
++ (void)filterError:(NSError *)error callback:(dispatch_block_t)callback;
 
-+(void)logError:(NSError*)error callback:(dispatch_block_t)callbak;
++ (void)logError:(NSError *)error callback:(dispatch_block_t)callbak;
 
-+(void)hideNetworkIndicatorAndAlertError:(NSError*)error;
++ (void)hideNetworkIndicatorAndAlertError:(NSError *)error;
 
 
 
 #pragma mark - collection utils
 
-+(NSMutableArray*)setToArray:(NSMutableSet*)set;
++ (NSMutableArray *)setToArray:(NSMutableSet *)set;
 
-+(NSArray*)reverseArray:(NSArray*)originArray;
++ (NSArray *)reverseArray:(NSArray *)originArray;
 
 
 
 #pragma mark - view utils
 
-+(void)setCellMarginsZero:(UITableViewCell*)cell;
++ (void)setCellMarginsZero:(UITableViewCell *)cell;
 
-+(void)setTableViewMarginsZero:(UITableView*)view;
++ (void)setTableViewMarginsZero:(UITableView *)view;
 
-+(void)stopRefreshControl:(UIRefreshControl*)refreshControl;
++ (void)stopRefreshControl:(UIRefreshControl *)refreshControl;
 
 
 
 #pragma mark - AVUtils
 
-+(NSString*)uuid;
++ (NSString *)uuid;
 
 
 #pragma mark - async
 
-+(void)runInGlobalQueue:(void (^)())queue;
++ (void)runInGlobalQueue:(void (^)())queue;
 
-+(void)runInMainQueue:(void (^)())queue;
++ (void)runInMainQueue:(void (^)())queue;
 
-+(void)runAfterSecs:(float)secs block:(void (^)())block;
++ (void)runAfterSecs:(float)secs block:(void (^)())block;
 
-+(void)postNotification:(NSString*)name;
++ (void)postNotification:(NSString *)name;
 
 + (void)downloadWithUrl:(NSString *)url toPath:(NSString *)path;
 
@@ -88,12 +88,12 @@ typedef void (^CDUpgradeBlock)(BOOL upgrade,NSString* oldVersion,NSString* newVe
 
 #pragma mark - time
 
-+(int64_t)int64OfStr:(NSString*)str;
++ (int64_t)int64OfStr:(NSString *)str;
 
-+(NSString*)strOfInt64:(int64_t)num;
++ (NSString *)strOfInt64:(int64_t)num;
 
-+(NSString*)currentVersion;
++ (NSString *)currentVersion;
 
-+(void)upgradeWithBlock:(CDUpgradeBlock)callback;
++ (void)upgradeWithBlock:(CDUpgradeBlock)callback;
 
 @end

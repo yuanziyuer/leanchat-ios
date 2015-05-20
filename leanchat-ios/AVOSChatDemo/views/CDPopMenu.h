@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "CDPopMenuItem.h"
 
-typedef void(^PopMenuEventBlock)(NSInteger index, CDPopMenuItem *menuItem);
+typedef void (^PopMenuEventBlock)(NSInteger index, CDPopMenuItem *menuItem);
 
 @interface CDPopMenu : UIView
 - (instancetype)initWithMenus:(NSArray *)menus;
 
-- (instancetype)initWithObjects:(id)firstObj, ... NS_REQUIRES_NIL_TERMINATION;
+- (instancetype)initWithObjects:(id)firstObj, ...NS_REQUIRES_NIL_TERMINATION;
 
 - (void)showMenuAtPoint:(CGPoint)point;
 

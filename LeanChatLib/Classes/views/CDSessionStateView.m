@@ -9,19 +9,19 @@
 #import "CDSessionStateView.h"
 #import "CDReachability.h"
 
-@interface CDSessionStateView()
+@interface CDSessionStateView ()
 
-@property CDIM* im;
+@property CDIM *im;
 
-@property CDNotify* notify;
+@property CDNotify *notify;
 
 @end
 
 @implementation CDSessionStateView
 
--(instancetype)initWithFrame:(CGRect)frame{
-    self=[super initWithFrame:frame];
-    if(self){
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
         self.backgroundColor = [UIColor colorWithRed:255 / 255.0 green:199 / 255.0 blue:199 / 255.0 alpha:1];
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, (self.frame.size.height - 20) / 2, 20, 20)];
@@ -38,38 +38,37 @@
     return self;
 }
 
--(instancetype)initWithWidth:(CGFloat)width{
+- (instancetype)initWithWidth:(CGFloat)width {
     return [self initWithFrame:CGRectMake(0, 0, width, kCDSessionStateViewHight)];
 }
 
--(void)observeSessionUpdate{
-    _im=[CDIM sharedInstance];
-    _notify=[CDNotify sharedInstance];
+- (void)observeSessionUpdate {
+    _im = [CDIM sharedInstance];
+    _notify = [CDNotify sharedInstance];
     [_notify addSessionObserver:self selector:@selector(sessionUpdated)];
     [self sessionUpdated];
 }
 
-+ (BOOL)connected
-{
++ (BOOL)connected {
     CDReachability *reachability = [CDReachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
     return networkStatus != NotReachable;
 }
 
-- (void)sessionUpdated
-{
+- (void)sessionUpdated {
     //[self connected]==NO ||
-    if([_im isOpened]==NO){
-        if([_delegate respondsToSelector:@selector(onSessionBrokenWithStateView:)])
+    if ([_im isOpened] == NO) {
+        if ([_delegate respondsToSelector:@selector(onSessionBrokenWithStateView:)])
             [_delegate onSessionBrokenWithStateView:self];
-    }else{
-        if([_delegate respondsToSelector:@selector(onSessionFineWithStateView:)]){
+    }
+    else {
+        if ([_delegate respondsToSelector:@selector(onSessionFineWithStateView:)]) {
             [_delegate onSessionFineWithStateView:self];
         }
     }
 }
 
--(void)dealloc{
+- (void)dealloc {
     [_notify removeSessionObserver:self];
 }
 

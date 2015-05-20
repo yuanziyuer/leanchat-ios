@@ -10,7 +10,7 @@
 
 @implementation AVIMUserInfoMessage
 
-+(void)load{
++ (void)load {
     [self registerSubclass];
 }
 
@@ -21,13 +21,13 @@
     return self;
 }
 
-+ (AVIMMessageMediaType)classMediaType{
++ (AVIMMessageMediaType)classMediaType {
     return kAVIMMessageMediaTypeUserInfo;
 }
 
 + (instancetype)messageWithAttributes:(NSDictionary *)attributes {
     AVIMUserInfoMessage *message = [[self alloc] init];
-    message.text=@"";
+    message.text = @"";
     message.attributes = attributes;
     return message;
 }

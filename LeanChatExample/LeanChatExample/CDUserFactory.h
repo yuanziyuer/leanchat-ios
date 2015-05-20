@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <LeanChatLib/LeanChatLib.h>
 
-@interface CDUserFactory : NSObject<CDUserDelegate>
+@interface CDUserFactory : NSObject <CDUserDelegate>
 
 @end

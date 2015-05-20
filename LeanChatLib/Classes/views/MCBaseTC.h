@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "MCBaseVC.h"
 
-@interface MCBaseTC : MCBaseVC<UITableViewDataSource,UITableViewDelegate>
+@interface MCBaseTC : MCBaseVC <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic,strong) UITableView* tableView;
+@property (nonatomic, strong) UITableView *tableView;
 
-@property (nonatomic,assign) UITableViewStyle tableViewStyle;
+@property (nonatomic, assign) UITableViewStyle tableViewStyle;
 
-@property (nonatomic,strong) NSMutableArray* dataSource;
+@property (nonatomic, strong) NSMutableArray *dataSource;
 
 @end

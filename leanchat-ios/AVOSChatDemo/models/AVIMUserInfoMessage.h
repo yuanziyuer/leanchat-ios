@@ -10,7 +10,7 @@
 
 #define kAVIMMessageMediaTypeUserInfo 1
 
-@interface AVIMUserInfoMessage : AVIMTypedMessage<AVIMTypedMessageSubclassing>
+@interface AVIMUserInfoMessage : AVIMTypedMessage <AVIMTypedMessageSubclassing>
 
 + (instancetype)messageWithAttributes:(NSDictionary *)attributes;
 

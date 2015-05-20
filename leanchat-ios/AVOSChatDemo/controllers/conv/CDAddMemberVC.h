@@ -11,6 +11,6 @@
 
 @interface CDAddMemberVC : UITableViewController
 
-@property CDConvDetailVC* groupDetailVC;
+@property CDConvDetailVC *groupDetailVC;
 
 @end

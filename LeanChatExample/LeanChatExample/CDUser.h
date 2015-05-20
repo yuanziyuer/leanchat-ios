@@ -9,12 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <LeanChatLib/LeanChatLib.h>
 
-@interface CDUser : NSObject<CDUserModel>
+@interface CDUser : NSObject <CDUserModel>
 
-@property (nonatomic,strong) NSString* userId;
+@property (nonatomic, strong) NSString *userId;
 
-@property (nonatomic,strong) NSString* username;
+@property (nonatomic, strong) NSString *username;
 
-@property (nonatomic,strong) NSString* avatarUrl;
+@property (nonatomic, strong) NSString *avatarUrl;
 
 @end

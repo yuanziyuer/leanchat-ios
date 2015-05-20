@@ -11,18 +11,16 @@
 @implementation CDResizableButton
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect {
+ // Drawing code
+ }
+ */
 
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
+- (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
-    if (self)
-    {
+    if (self) {
         [self setImage:[self imageForState:UIControlStateNormal] forState:UIControlStateNormal];
         [self setImage:[self imageForState:UIControlStateHighlighted] forState:UIControlStateHighlighted];
         [self setImage:[self imageForState:UIControlStateSelected] forState:UIControlStateSelected];
@@ -36,11 +34,9 @@
     return self;
 }
 
-- (void)setImage:(UIImage *)inImage forState:(UIControlState)inState
-{
+- (void)setImage:(UIImage *)inImage forState:(UIControlState)inState {
     UIEdgeInsets edgeInsets = UIEdgeInsetsMake(ceilf(inImage.size.height / 2), ceilf(inImage.size.width / 2), ceilf(inImage.size.height / 2), ceilf(inImage.size.width / 2));
-    if ([inImage respondsToSelector:@selector(resizableImageWithCapInsets:)])
-    {
+    if ([inImage respondsToSelector:@selector(resizableImageWithCapInsets:)]) {
         // iOS 5
         inImage = [inImage resizableImageWithCapInsets:edgeInsets];
     }
@@ -50,11 +46,9 @@
     [super setImage:inImage forState:inState];
 }
 
-- (void)setBackgroundImage:(UIImage *)inImage forState:(UIControlState)inState
-{
+- (void)setBackgroundImage:(UIImage *)inImage forState:(UIControlState)inState {
     UIEdgeInsets edgeInsets = UIEdgeInsetsMake(ceilf(inImage.size.height / 2), ceilf(inImage.size.width / 2), ceilf(inImage.size.height / 2), ceilf(inImage.size.width / 2));
-    if ([inImage respondsToSelector:@selector(resizableImageWithCapInsets:)])
-    {
+    if ([inImage respondsToSelector:@selector(resizableImageWithCapInsets:)]) {
         // iOS 5
         inImage = [inImage resizableImageWithCapInsets:edgeInsets];
     }
