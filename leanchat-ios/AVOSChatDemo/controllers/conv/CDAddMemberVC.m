@@ -97,9 +97,7 @@ static NSString *reuseIdentifier = @"Cell";
             [CDUtils hideNetworkIndicator];
             if ([CDUtils filterError:error]) {
                 [self.presentingViewController dismissViewControllerAnimated:YES completion: ^{
-                    UINavigationController *nav = _groupDetailVC.navigationController;
-                    [nav popToRootViewControllerAnimated:YES];
-                    [[CDIMService shareInstance] goWithConv:conversation fromNav:nav];
+                    [[CDIMService shareInstance] goWithConv:conversation fromNav:_groupDetailVC.navigationController];
                 }];
             }
         }];

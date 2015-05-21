@@ -18,7 +18,7 @@
 
 - (void)setupWithUserId:(NSString *)userId;
 
-- (NSArray *)getMsgsWithConvid:(NSString *)convid maxTime:(int64_t)time limit:(int)limit;
+- (NSArray *)getMsgsWithConvid:(NSString *)convid maxTime:(int64_t)time limit:(NSInteger)limit ;
 
 - (int64_t)insertMsg:(AVIMTypedMessage *)msg;
 

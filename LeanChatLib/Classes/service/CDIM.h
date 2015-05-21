@@ -45,10 +45,6 @@
 
 - (void)findRecentRoomsWithBlock:(AVArrayResultBlock)block;
 
-#pragma mark - msg utils
-
-- (NSString *)getMsgTitle:(AVIMTypedMessage *)msg;
-
 #pragma mark - path utils
 
 - (NSString *)getPathByObjectId:(NSString *)objectId;

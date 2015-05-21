@@ -94,7 +94,7 @@ static CDIM *instance;
 
 - (void)fetchConvWithMembers:(NSArray *)members type:(CDConvType)type callback:(AVIMConversationResultBlock)callback {
     AVIMConversationQuery *q = [_imClient conversationQuery];
-    [q whereKey:CONV_ATTR_TYPE_KEY equalTo:@(type)];
+    [q whereKey:AVIMAttr(CONV_TYPE) equalTo:@(type)];
     [q whereKey:CONV_MEMBERS_KEY containsAllObjectsInArray:members];
     [q findConversationsWithCallback: ^(NSArray *objects, NSError *error) {
         if (error) {
@@ -133,8 +133,8 @@ static CDIM *instance;
 
 - (void)findGroupedConvsWithBlock:(AVIMArrayResultBlock)block {
     AVIMConversationQuery *q = [_imClient conversationQuery];
-    [q whereKey:@"attr.type" equalTo:@(CDConvTypeGroup)];
-    [q whereKey:@"m" containedIn:@[self.selfId]];
+    [q whereKey:AVIMAttr(CONV_TYPE) equalTo:@(CDConvTypeGroup)];
+    [q whereKey:CONV_MEMBERS_KEY containedIn:@[self.selfId]];
     q.limit = 1000;
     [q findConversationsWithCallback:block];
 }

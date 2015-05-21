@@ -59,6 +59,7 @@
 }
 
 - (void)goWithConv:(AVIMConversation *)conv fromNav:(UINavigationController *)nav {
+    [nav popToRootViewControllerAnimated:NO];
     CDChatVC *chatVC = [[CDChatVC alloc] initWithConv:conv];
     chatVC.hidesBottomBarWhenPushed = YES;
     [nav pushViewController:chatVC animated:YES];

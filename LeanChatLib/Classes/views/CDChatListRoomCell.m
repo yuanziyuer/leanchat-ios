@@ -13,7 +13,7 @@
 #import "UIView+XHRemoteImage.h"
 #import "CDEmotionUtils.h"
 
-static CGFloat kCDImageSize = 40;
+static CGFloat kCDImageSize = 35;
 static CGFloat kCDVerticalSpacing = 8;
 static CGFloat kCDHorizontalSpacing = 10;
 static CGFloat kCDTimestampeLabelWidth = 100;

@@ -10,6 +10,8 @@
 #import "CDCache.h"
 #import "CDConvDetailVC.h"
 #import "AVIMUserInfoMessage.h"
+#import "CDUserInfoVC.h"
+#import "CDCache.h"
 
 @interface CDChatVC ()
 
@@ -44,6 +46,14 @@
 - (void)goChatGroupDetail:(id)sender {
     CDConvDetailVC *controller = [[CDConvDetailVC alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (void)didSelectedAvatorOnMessage:(id<XHMessageModel>)message atIndexPath:(NSIndexPath *)indexPath {
+    AVIMTypedMessage *msg = self.msgs[indexPath.row];
+    if ([msg.clientId isEqualToString:self.im.selfId] == NO) {
+        CDUserInfoVC *userInfoVC = [[CDUserInfoVC alloc] initWithUser:[CDCache lookupUser:msg.clientId]];
+        [self.navigationController pushViewController:userInfoVC animated:YES];
+    }
 }
 
 @end

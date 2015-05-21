@@ -57,7 +57,7 @@ static CDStorage *_storage;
 
 #pragma mark - msgs table
 
-- (NSArray *)getMsgsWithConvid:(NSString *)convid maxTime:(int64_t)time limit:(int)limit {
+- (NSArray *)getMsgsWithConvid:(NSString *)convid maxTime:(int64_t)time limit:(NSInteger)limit {
     __block NSArray *msgs = nil;
     [_dbQueue inDatabase: ^(FMDatabase *db) {
         NSString *timeStr = [self strOfInt64:time];

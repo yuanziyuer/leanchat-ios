@@ -16,7 +16,6 @@
 #import "CDStorage.h"
 #import "CDEmotionUtils.h"
 #import "CDIMConfig.h"
-#import "CDIM.h"
 #import "AVIMConversation+Custom.h"
 
 #define ONE_PAGE_SIZE 20
@@ -25,25 +24,19 @@ typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
 
 @interface CDChatRoomVC () <UINavigationControllerDelegate, CDIMClientStatusViewDelegate>
 
-@property CDStorage *storage;
+@property (nonatomic, strong) CDStorage *storage;
 
-@property NSMutableArray *msgs;
+@property (nonatomic, strong) CDIMConfig *imConfig;
 
-@property CDIM *im;
+@property (nonatomic, strong) CDNotify *notify;
 
-@property CDIMConfig *imConfig;
-
-@property CDNotify *notify;
-
-@property BOOL isLoadingMsg;
+@property (nonatomic, assign) BOOL isLoadingMsg;
 
 @property (nonatomic, strong) XHMessageTableViewCell *currentSelectedCell;
 
 @property (nonatomic, strong) NSArray *emotionManagers;
 
 @property (nonatomic, strong) CDIMClientStatusView *clientStatusView;
-
-@property (nonatomic, assign) BOOL sessionStateViewVisiable;
 
 @end
 
@@ -81,11 +74,14 @@ typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
     [[self navigationItem] setBackBarButtonItem:backBtn];
 }
 
-- (void)initClientStatusView {
-    _clientStatusView = [[CDIMClientStatusView alloc] initWithFrame:CGRectMake(0, 64, self.messageTableView.frame.size.width, kCDIMClientStatusViewHight)];
-    [_clientStatusView setDelegate:self];
-    _sessionStateViewVisiable = NO;
-    [_clientStatusView observeIMClientUpdate];
+#pragma mark - Propertys 
+
+- (CDIMClientStatusView *)clientStatusView {
+    if (_clientStatusView == nil) {
+        _clientStatusView = [[CDIMClientStatusView alloc] initWithFrame:CGRectMake(0, 64, self.messageTableView.frame.size.width, kCDIMClientStatusViewHight)];
+        [_clientStatusView setDelegate:self];
+    }
+    return _clientStatusView;
 }
 
 - (void)initBottomMenuAndEmotionView {
@@ -109,11 +105,13 @@ typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
     
     [self initBarButton];
     [self initBottomMenuAndEmotionView];
-    [self initClientStatusView];
+    [self.view addSubview:self.clientStatusView];
+    [self.clientStatusView observeIMClientUpdate];
     
     id <CDUserModel> curUser = self.im.selfUser;
     // 设置自身用户名
     self.messageSender = [curUser username];
+    
     [_storage insertRoomWithConvid:self.conv.conversationId];
     [_notify addConvObserver:self selector:@selector(refreshConv)];
 }
@@ -335,69 +333,6 @@ typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
     }
 }
 
-#pragma mark - send message
-
-- (void)sendFileMsgWithPath:(NSString *)path type:(AVIMMessageMediaType)type {
-    AVIMTypedMessage *msg;
-    if (type == kAVIMMessageMediaTypeImage) {
-        msg = [AVIMImageMessage messageWithText:nil attachedFilePath:path attributes:nil];
-    }
-    else {
-        msg = [AVIMAudioMessage messageWithText:nil attachedFilePath:path attributes:nil];
-    }
-    [self sendMsg:msg originFilePath:path];
-}
-
-- (void)sendImage:(UIImage *)image {
-    NSData *imageData = UIImageJPEGRepresentation(image, 0.6);
-    NSString *path = [_im tmpPath];
-    NSError *error;
-    [imageData writeToFile:path options:NSDataWritingAtomic error:&error];
-    if (error == nil) {
-        [self sendFileMsgWithPath:path type:kAVIMMessageMediaTypeImage];
-    }
-    else {
-        [self alert:@"write image to file error"];
-    }
-}
-
-- (void)sendLocationWithLatitude:(double)latitude longitude:(double)longitude address:(NSString *)address {
-    AVIMLocationMessage *locMsg = [AVIMLocationMessage messageWithText:nil latitude:latitude longitude:longitude attributes:nil];
-    [self sendMsg:locMsg originFilePath:nil];
-}
-
-- (void)sendMsg:(AVIMTypedMessage *)msg originFilePath:(NSString *)path {
-    [self.conv sendMessage:msg options:AVIMMessageSendOptionRequestReceipt callback: ^(BOOL succeeded, NSError *error) {
-        if (error) {
-            // 赋值一个临时的messageId，因为发送失败，messageId，sendTimestamp不能从服务端获取
-            // resend 成功的时候再改过来
-            msg.messageId = [self.im uuid];
-            msg.sendTimestamp = [[NSDate date] timeIntervalSince1970] * 1000;
-        }
-        if (path && error == nil) {
-            NSString *newPath = [_im getPathByObjectId:msg.messageId];
-            NSError *error1;
-            [[NSFileManager defaultManager] moveItemAtPath:path toPath:newPath error:&error1];
-            DLog(@"%@", newPath);
-        }
-        [_storage insertMsg:msg];
-        [self loadMsgsWithLoadMore:NO];
-    }];
-}
-
-- (void)resendMsg:(AVIMTypedMessage *)msg {
-    NSString *tmpId = msg.messageId;
-    [self.conv sendMessage:msg options:AVIMMessageSendOptionRequestReceipt callback: ^(BOOL succeeded, NSError *error) {
-        if (error) {
-            [self alertError:error];
-        }
-        else {
-            [_storage updateFailedMsg:msg byTmpId:tmpId];
-        }
-        [self loadMsgsWithLoadMore:NO];
-    }];
-}
-
 #pragma mark - XHMessageTableViewCell delegate
 
 - (void)multiMediaMessageDidSelectedOnMessage:(id <XHMessageModel> )message atIndexPath:(NSIndexPath *)indexPath onMessageTableViewCell:(XHMessageTableViewCell *)messageTableViewCell {
@@ -463,11 +398,6 @@ typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
 
 - (void)didSelectedAvatorOnMessage:(id <XHMessageModel> )message atIndexPath:(NSIndexPath *)indexPath {
     DLog(@"indexPath : %@", indexPath);
-    //    XHContact *contact = [[XHContact alloc] init];
-    //    contact.contactName = [message sender];
-    //    contact.contactIntroduction = @"自定义描述，这个需要和业务逻辑挂钩";
-    //    XHContactDetailTableViewController *contactDetailTableViewController = [[XHContactDetailTableViewController alloc] initWithContact:contact];
-    //    [self.navigationController pushViewController:contactDetailTableViewController animated:YES];
 }
 
 - (void)menuDidSelectedAtBubbleMessageMenuSelecteType:(XHBubbleMessageMenuSelecteType)bubbleMessageMenuSelecteType {
@@ -515,6 +445,71 @@ typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
     [self loadMsgsWithLoadMore:YES];
 }
 
+#pragma mark - send message
+
+- (void)sendFileMsgWithPath:(NSString *)path type:(AVIMMessageMediaType)type {
+    AVIMTypedMessage *msg;
+    if (type == kAVIMMessageMediaTypeImage) {
+        msg = [AVIMImageMessage messageWithText:nil attachedFilePath:path attributes:nil];
+    }
+    else {
+        msg = [AVIMAudioMessage messageWithText:nil attachedFilePath:path attributes:nil];
+    }
+    [self sendMsg:msg originFilePath:path];
+}
+
+- (void)sendImage:(UIImage *)image {
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.6);
+    NSString *path = [_im tmpPath];
+    NSError *error;
+    [imageData writeToFile:path options:NSDataWritingAtomic error:&error];
+    if (error == nil) {
+        [self sendFileMsgWithPath:path type:kAVIMMessageMediaTypeImage];
+    }
+    else {
+        [self alert:@"write image to file error"];
+    }
+}
+
+- (void)sendLocationWithLatitude:(double)latitude longitude:(double)longitude address:(NSString *)address {
+    AVIMLocationMessage *locMsg = [AVIMLocationMessage messageWithText:nil latitude:latitude longitude:longitude attributes:nil];
+    [self sendMsg:locMsg originFilePath:nil];
+}
+
+- (void)sendMsg:(AVIMTypedMessage *)msg originFilePath:(NSString *)path {
+    [self.conv sendMessage:msg options:AVIMMessageSendOptionRequestReceipt callback: ^(BOOL succeeded, NSError *error) {
+        if (error) {
+            // 赋值一个临时的messageId，因为发送失败，messageId，sendTimestamp不能从服务端获取
+            // resend 成功的时候再改过来
+            msg.messageId = [self.im uuid];
+            msg.sendTimestamp = [[NSDate date] timeIntervalSince1970] * 1000;
+        }
+        if (path && error == nil) {
+            NSString *newPath = [_im getPathByObjectId:msg.messageId];
+            NSError *error1;
+            [[NSFileManager defaultManager] moveItemAtPath:path toPath:newPath error:&error1];
+            DLog(@"%@", newPath);
+        }
+        [_storage insertMsg:msg];
+        [self loadMsgsWithLoadMore:NO];
+    }];
+}
+
+- (void)resendMsg:(AVIMTypedMessage *)msg {
+    NSString *tmpId = msg.messageId;
+    [self.conv sendMessage:msg options:AVIMMessageSendOptionRequestReceipt callback: ^(BOOL succeeded, NSError *error) {
+        if (error) {
+            [self alertError:error];
+        }
+        else {
+            [_storage updateFailedMsg:msg byTmpId:tmpId];
+        }
+        [self loadMsgsWithLoadMore:NO];
+    }];
+}
+
+#pragma mark - didSend delegate
+
 //发送文本消息的回调方法
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date {
     if ([text length] > 0) {
@@ -554,6 +549,8 @@ typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
 - (void)didSendGeoLocationsPhoto:(UIImage *)geoLocationsPhoto geolocations:(NSString *)geolocations location:(CLLocation *)location fromSender:(NSString *)sender onDate:(NSDate *)date {
     [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeLocalPosition];
 }
+
+#pragma mark -  ui config
 
 // 是否显示时间轴Label的回调方法
 - (BOOL)shouldDisplayTimestampForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -601,21 +598,14 @@ typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
     [super didSelecteShareMenuItem:shareMenuItem atIndex:index];
 }
 
-#pragma mark - session state
+#pragma mark - client status
 
 - (void)onIMClientPauseWithStatusView:(CDIMClientStatusView *)view {
-    if (_sessionStateViewVisiable == NO) {
-        _sessionStateViewVisiable = YES;
-        [self.view addSubview:_clientStatusView];
-        [self.view bringSubviewToFront:_clientStatusView];
-    }
+    _clientStatusView.hidden = NO;
 }
 
 - (void)onIMClientOpenWithStatusView:(CDIMClientStatusView *)view {
-    if (_sessionStateViewVisiable == YES) {
-        _sessionStateViewVisiable = NO;
-        [_clientStatusView removeFromSuperview];
-    }
+    _clientStatusView.hidden = YES;
 }
 
 #pragma mark - alert error

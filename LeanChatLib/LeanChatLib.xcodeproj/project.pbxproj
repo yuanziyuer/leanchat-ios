@@ -732,9 +732,9 @@
 		704922B01ADFCAD700E8E295 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				704922B91ADFCAD700E8E295 /* LeanChatLib.h */,
 				704922B11ADFCAD700E8E295 /* common */,
 				704922B41ADFCAD700E8E295 /* controllers */,
-				704922B91ADFCAD700E8E295 /* LeanChatLib.h */,
 				704922BA1ADFCAD700E8E295 /* models */,
 				704922C01ADFCAD700E8E295 /* service */,
 				704922CB1ADFCAD700E8E295 /* vendor */,

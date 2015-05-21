@@ -89,6 +89,7 @@ static NSString *cellIndentifier = @"cell";
 }
 
 #pragma mark - Table view delegate
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     AVIMConversation *conv = [convs objectAtIndex:indexPath.row];
     [[CDIMService shareInstance] goWithConv:conv fromNav:self.navigationController];
