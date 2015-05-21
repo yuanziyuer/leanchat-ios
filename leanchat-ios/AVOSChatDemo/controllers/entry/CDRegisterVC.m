@@ -7,7 +7,6 @@
 //
 
 #import "CDRegisterVC.h"
-#import "CDUtils.h"
 #import "CDAppDelegate.h"
 #import "CDEntryActionButton.h"
 
@@ -65,13 +64,13 @@
     user.password = self.passwordField.text;
     [user setFetchWhenSave:YES];
     [user signUpInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
-        [CDUtils filterError:error callback: ^{
+        if ([self filterError:error]) {
             [[NSUserDefaults standardUserDefaults] setObject:self.usernameField.text forKey:KEY_USERNAME];
             [self dismissViewControllerAnimated:NO completion: ^{
                 CDAppDelegate *delegate = (CDAppDelegate *)[UIApplication sharedApplication].delegate;
                 [delegate toMain];
             }];
-        }];
+        }
     }];
 }
 
