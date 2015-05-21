@@ -109,6 +109,8 @@
 		70013DA61ABFD0D70050D0F7 /* AVOSCloudIM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70013DA51ABFD0D70050D0F7 /* AVOSCloudIM.framework */; };
 		701011111AEF99E10046D0D8 /* CDWebViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 701011101AEF99E10046D0D8 /* CDWebViewVC.m */; };
 		701D851D1ADCD35000982D5D /* AVIMUserInfoMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 701D851C1ADCD35000982D5D /* AVIMUserInfoMessage.m */; };
+		702D606F1B0D92D7001C2631 /* CDEntryBottomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 702D606E1B0D92D7001C2631 /* CDEntryBottomButton.m */; };
+		702D60721B0D95BD001C2631 /* CDEntryActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 702D60711B0D95BD001C2631 /* CDEntryActionButton.m */; };
 		704578F51AD7D8B100452531 /* CDConvsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 704578F41AD7D8B100452531 /* CDConvsVC.m */; };
 		704578F81AD7DA2F00452531 /* CDChatVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 704578F71AD7DA2F00452531 /* CDChatVC.m */; };
 		704578FA1AD7E28A00452531 /* chat_menu_people.png in Resources */ = {isa = PBXBuildFile; fileRef = 704578F91AD7E28A00452531 /* chat_menu_people.png */; };
@@ -413,6 +415,10 @@
 		701011101AEF99E10046D0D8 /* CDWebViewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDWebViewVC.m; sourceTree = "<group>"; };
 		701D851B1ADCD35000982D5D /* AVIMUserInfoMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVIMUserInfoMessage.h; sourceTree = "<group>"; };
 		701D851C1ADCD35000982D5D /* AVIMUserInfoMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVIMUserInfoMessage.m; sourceTree = "<group>"; };
+		702D606D1B0D92D7001C2631 /* CDEntryBottomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEntryBottomButton.h; sourceTree = "<group>"; };
+		702D606E1B0D92D7001C2631 /* CDEntryBottomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEntryBottomButton.m; sourceTree = "<group>"; };
+		702D60701B0D95BD001C2631 /* CDEntryActionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEntryActionButton.h; sourceTree = "<group>"; };
+		702D60711B0D95BD001C2631 /* CDEntryActionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEntryActionButton.m; sourceTree = "<group>"; };
 		704578F31AD7D8B100452531 /* CDConvsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConvsVC.h; sourceTree = "<group>"; };
 		704578F41AD7D8B100452531 /* CDConvsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDConvsVC.m; sourceTree = "<group>"; };
 		704578F61AD7DA2F00452531 /* CDChatVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDChatVC.h; sourceTree = "<group>"; };
@@ -942,6 +948,10 @@
 				70013B751ABC19DA0050D0F7 /* CDResizableButton.m */,
 				70013B781ABC19DA0050D0F7 /* CDTextField.h */,
 				70013B791ABC19DA0050D0F7 /* CDTextField.m */,
+				702D606D1B0D92D7001C2631 /* CDEntryBottomButton.h */,
+				702D606E1B0D92D7001C2631 /* CDEntryBottomButton.m */,
+				702D60701B0D95BD001C2631 /* CDEntryActionButton.h */,
+				702D60711B0D95BD001C2631 /* CDEntryActionButton.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -1358,6 +1368,7 @@
 				70013D091ABC19DB0050D0F7 /* CDButton.m in Sources */,
 				70013BFE1ABC19DB0050D0F7 /* AFURLConnectionOperation.m in Sources */,
 				70013BF91ABC19DB0050D0F7 /* AFHTTPRequestOperation.m in Sources */,
+				702D60721B0D95BD001C2631 /* CDEntryActionButton.m in Sources */,
 				70013B7B1ABC19DA0050D0F7 /* CDAppDelegate.m in Sources */,
 				70013D151ABC19DB0050D0F7 /* CDResizableButton.m in Sources */,
 				70013D131ABC19DB0050D0F7 /* CDPopMenuItem.m in Sources */,
@@ -1368,6 +1379,7 @@
 				70013C0A1ABC19DB0050D0F7 /* UIRefreshControl+AFNetworking.m in Sources */,
 				70457B181ADB9ED700452531 /* Reachability.m in Sources */,
 				70013C031ABC19DB0050D0F7 /* README.md in Sources */,
+				702D606F1B0D92D7001C2631 /* CDEntryBottomButton.m in Sources */,
 				70013D081ABC19DB0050D0F7 /* CDBadgeLabel.m in Sources */,
 				70013B9E1ABC19DA0050D0F7 /* CDAddRequest.m in Sources */,
 				70C57AB91AE50370008212B0 /* CDConvDetailMembersCell.m in Sources */,

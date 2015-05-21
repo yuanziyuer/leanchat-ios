@@ -9,12 +9,14 @@
 #import "CDLoginVC.h"
 #import "CDRegisterVC.h"
 #import "CDAppDelegate.h"
+#import "CDEntryBottomButton.h"
+#import "CDEntryActionButton.h"
 
 @interface CDLoginVC () <CDEntryVCDelegate>
 
-@property (nonatomic, strong) CDResizableButton *loginButton;
-@property (nonatomic, strong) UIButton *registerButton;
-@property (nonatomic, strong) UIButton *forgotPasswordButton;
+@property (nonatomic, strong) CDEntryActionButton *loginButton;
+@property (nonatomic, strong) CDEntryBottomButton *registerButton;
+@property (nonatomic, strong) CDEntryBottomButton *forgotPasswordButton;
 
 @end
 
@@ -44,13 +46,9 @@
 
 - (CDResizableButton *)loginButton {
     if (_loginButton == nil) {
-        _loginButton = [[CDResizableButton alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.usernameField.frame), CGRectGetMaxY(self.passwordField.frame) + kEntryVCVerticalSpacing, CGRectGetWidth(self.usernameField.frame), CGRectGetHeight(self.usernameField.frame))];
+        _loginButton = [[CDEntryActionButton alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.usernameField.frame), CGRectGetMaxY(self.passwordField.frame) + kEntryVCVerticalSpacing, CGRectGetWidth(self.usernameField.frame), CGRectGetHeight(self.usernameField.frame))];
         [_loginButton setTitle:@"登录" forState:UIControlStateNormal];
-        [_loginButton setBackgroundImage:[UIImage imageNamed:@"blue_expand_normal"] forState:UIControlStateNormal];
-        [_loginButton setBackgroundImage:[UIImage imageNamed:@"blue_expand_highlight"] forState:UIControlStateHighlighted];
-        [_loginButton setBackgroundImage:[UIImage imageNamed:@"blue_expand_normal"] forState:UIControlStateDisabled];
         _loginButton.enabled = NO;
-        [_loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_loginButton addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _loginButton;
@@ -58,16 +56,8 @@
 
 - (UIButton *)registerButton {
     if (_registerButton == nil) {
-        UIImage *image = [[UIImage imageNamed:@"bottom_bar_normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
-        UIImage *selectedImage = [[UIImage imageNamed:@"bottom_bar_selected"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
-        _registerButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _registerButton.frame = CGRectMake(0, CGRectGetHeight(self.view.frame) - kEntryVCTextFieldHeight, CGRectGetWidth(self.view.frame) / 2, kEntryVCTextFieldHeight);
-        [_registerButton setBackgroundImage:image forState:UIControlStateNormal];
-        [_registerButton setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
-        [_registerButton setTitleColor:RGBCOLOR(93, 92, 92) forState:UIControlStateNormal];
+        _registerButton = [[CDEntryBottomButton alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.frame) - kEntryVCTextFieldHeight, CGRectGetWidth(self.view.frame) / 2, kEntryVCTextFieldHeight)];
         [_registerButton setTitle:@"注册账号" forState:UIControlStateNormal];
-        _registerButton.titleLabel.font = [UIFont systemFontOfSize:15];
-        [_registerButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_registerButton addTarget:self action:@selector(toRegister:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _registerButton;
@@ -75,16 +65,8 @@
 
 - (UIButton *)forgotPasswordButton {
     if (_forgotPasswordButton == nil) {
-        UIImage *image = [[UIImage imageNamed:@"bottom_bar_normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
-        UIImage *selectedImage = [[UIImage imageNamed:@"bottom_bar_selected"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
-        _forgotPasswordButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _forgotPasswordButton.frame = CGRectMake(CGRectGetWidth(self.view.frame) / 2, CGRectGetHeight(self.view.frame) - kEntryVCTextFieldHeight, CGRectGetWidth(self.view.frame) / 2, kEntryVCTextFieldHeight);
-        [_forgotPasswordButton setBackgroundImage:image forState:UIControlStateNormal];
-        [_forgotPasswordButton setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
-        [_forgotPasswordButton setTitleColor:RGBCOLOR(93, 92, 92) forState:UIControlStateNormal];
+        _forgotPasswordButton = [[CDEntryBottomButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame) / 2, CGRectGetHeight(self.view.frame) - kEntryVCTextFieldHeight, CGRectGetWidth(self.view.frame) / 2, kEntryVCTextFieldHeight)];
         [_forgotPasswordButton setTitle:@"找回密码" forState:UIControlStateNormal];
-        _forgotPasswordButton.titleLabel.font = [UIFont systemFontOfSize:15];
-        [_forgotPasswordButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_forgotPasswordButton addTarget:self action:@selector(toFindPassword:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _forgotPasswordButton;

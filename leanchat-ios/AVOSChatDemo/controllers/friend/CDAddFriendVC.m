@@ -29,8 +29,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
     [_searchBar setDelegate:self];
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
-    UINib *nib = [UINib nibWithNibName:NSStringFromClass([CDImageLabelTableCell class]) bundle:nil];
-    [self.tableView registerNib:nib forCellReuseIdentifier:cellIndentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([CDImageLabelTableCell class]) bundle:nil] forCellReuseIdentifier:cellIndentifier];
     [self searchUser:@""];
 }
 
@@ -65,8 +64,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    AVUser *user = self.users[indexPath.row];
-    CDUserInfoVC *controller = [[CDUserInfoVC alloc] initWithUser:user];
+    CDUserInfoVC *controller = [[CDUserInfoVC alloc] initWithUser:self.users[indexPath.row]];
     [self.navigationController pushViewController:controller animated:YES];
 }
 

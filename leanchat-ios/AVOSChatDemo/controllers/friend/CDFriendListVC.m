@@ -27,7 +27,7 @@
 @property (nonatomic, assign) NSInteger addRequestN;
 @property (weak, nonatomic) IBOutlet UIImageView *myNewFriendIcon;
 @property (nonatomic, strong) JSBadgeView *myNewFriendBadgeView;
-@property (nonatomic) UIRefreshControl *refreshControl;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end
 

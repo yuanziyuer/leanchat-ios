@@ -9,11 +9,12 @@
 #import "CDRegisterVC.h"
 #import "CDUtils.h"
 #import "CDAppDelegate.h"
+#import "CDEntryActionButton.h"
 
 @interface CDRegisterVC () <CDEntryVCDelegate>
 
 @property (nonatomic, strong) UIBarButtonItem *cancelBarButtonItem;
-@property (nonatomic, strong) UIButton *registerButton;
+@property (nonatomic, strong) CDEntryActionButton *registerButton;
 
 @end
 
@@ -42,16 +43,9 @@
 
 - (UIButton *)registerButton {
     if (_registerButton == nil) {
-        UIImage *normalImage = [[UIImage imageNamed:@"blue_expand_normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
-        UIImage *highlightImage = [[UIImage imageNamed:@"blue_expand_highlight"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
-        _registerButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _registerButton.frame = CGRectMake(CGRectGetMinX(self.usernameField.frame), CGRectGetMaxY(self.passwordField.frame) + kEntryVCVerticalSpacing, CGRectGetWidth(self.usernameField.frame), CGRectGetHeight(self.usernameField.frame));
-        [_registerButton setBackgroundImage:normalImage forState:UIControlStateNormal];
-        [_registerButton setBackgroundImage:highlightImage forState:UIControlStateHighlighted];
-        [_registerButton setBackgroundImage:highlightImage forState:UIControlStateDisabled];
+        _registerButton = [[CDEntryActionButton alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.usernameField.frame), CGRectGetMaxY(self.passwordField.frame) + kEntryVCVerticalSpacing, CGRectGetWidth(self.usernameField.frame), CGRectGetHeight(self.usernameField.frame))];
         _registerButton.enabled = NO;
         [_registerButton setTitle:@"注册" forState:UIControlStateNormal];
-        [_registerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_registerButton addTarget:self action:@selector(registerAVUser:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _registerButton;
