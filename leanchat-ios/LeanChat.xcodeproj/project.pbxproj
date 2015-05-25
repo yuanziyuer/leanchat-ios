@@ -14,9 +14,6 @@
 		70013B7E1ABC19DA0050D0F7 /* CDBaseTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138951ABC19D90050D0F7 /* CDBaseTableVC.m */; };
 		70013B7F1ABC19DA0050D0F7 /* CDBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138971ABC19D90050D0F7 /* CDBaseVC.m */; };
 		70013B831ABC19DA0050D0F7 /* CDAddMemberVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138A11ABC19D90050D0F7 /* CDAddMemberVC.m */; };
-		70013B841ABC19DA0050D0F7 /* CDAddMemberVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 700138A21ABC19D90050D0F7 /* CDAddMemberVC.xib */; };
-		70013B851ABC19DA0050D0F7 /* CDConvCreateVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138A41ABC19D90050D0F7 /* CDConvCreateVC.m */; };
-		70013B861ABC19DA0050D0F7 /* CDConvCreateVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 700138A51ABC19D90050D0F7 /* CDConvCreateVC.xib */; };
 		70013B871ABC19DA0050D0F7 /* CDConvDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138A71ABC19D90050D0F7 /* CDConvDetailVC.m */; };
 		70013B891ABC19DA0050D0F7 /* CDConvNameVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 700138AA1ABC19D90050D0F7 /* CDConvNameVC.m */; };
 		70013B8A1ABC19DA0050D0F7 /* CDConvNameVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 700138AB1ABC19D90050D0F7 /* CDConvNameVC.xib */; };
@@ -270,10 +267,6 @@
 		700138971ABC19D90050D0F7 /* CDBaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDBaseVC.m; sourceTree = "<group>"; };
 		700138A01ABC19D90050D0F7 /* CDAddMemberVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAddMemberVC.h; sourceTree = "<group>"; };
 		700138A11ABC19D90050D0F7 /* CDAddMemberVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAddMemberVC.m; sourceTree = "<group>"; };
-		700138A21ABC19D90050D0F7 /* CDAddMemberVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDAddMemberVC.xib; sourceTree = "<group>"; };
-		700138A31ABC19D90050D0F7 /* CDConvCreateVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConvCreateVC.h; sourceTree = "<group>"; };
-		700138A41ABC19D90050D0F7 /* CDConvCreateVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDConvCreateVC.m; sourceTree = "<group>"; };
-		700138A51ABC19D90050D0F7 /* CDConvCreateVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDConvCreateVC.xib; sourceTree = "<group>"; };
 		700138A61ABC19D90050D0F7 /* CDConvDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConvDetailVC.h; sourceTree = "<group>"; };
 		700138A71ABC19D90050D0F7 /* CDConvDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDConvDetailVC.m; sourceTree = "<group>"; };
 		700138A91ABC19D90050D0F7 /* CDConvNameVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConvNameVC.h; sourceTree = "<group>"; };
@@ -659,10 +652,6 @@
 			children = (
 				700138A01ABC19D90050D0F7 /* CDAddMemberVC.h */,
 				700138A11ABC19D90050D0F7 /* CDAddMemberVC.m */,
-				700138A21ABC19D90050D0F7 /* CDAddMemberVC.xib */,
-				700138A31ABC19D90050D0F7 /* CDConvCreateVC.h */,
-				700138A41ABC19D90050D0F7 /* CDConvCreateVC.m */,
-				700138A51ABC19D90050D0F7 /* CDConvCreateVC.xib */,
 				700138A61ABC19D90050D0F7 /* CDConvDetailVC.h */,
 				700138A71ABC19D90050D0F7 /* CDConvDetailVC.m */,
 				700138A91ABC19D90050D0F7 /* CDConvNameVC.h */,
@@ -1306,7 +1295,6 @@
 				70B298B81ACE95E100FE265E /* contacts_add_voip@2x.png in Resources */,
 				70B298AE1ACE95E100FE265E /* AddGroupMemberBtnHL@2x.png in Resources */,
 				70B298C51ACE95E100FE265E /* keyborad_HL@2x.png in Resources */,
-				70013B861ABC19DA0050D0F7 /* CDConvCreateVC.xib in Resources */,
 				70013BE81ABC19DA0050D0F7 /* tabbar_me_active@2x.png in Resources */,
 				70013BDF1ABC19DA0050D0F7 /* menu_background@2x.png in Resources */,
 				70013BCE1ABC19DA0050D0F7 /* blue_expand_normal@2x.png in Resources */,
@@ -1330,7 +1318,6 @@
 				70B299031ACE95E100FE265E /* VoiceBtn_BlackHL@2x.png in Resources */,
 				70013BC81ABC19DA0050D0F7 /* image_placeholder@2x.png in Resources */,
 				70B298F51ACE95E100FE265E /* SenderVoiceNodePlaying@2x.png in Resources */,
-				70013B841ABC19DA0050D0F7 /* CDAddMemberVC.xib in Resources */,
 				70B298CF1ACE95E100FE265E /* placeholderImage@2x.png in Resources */,
 				70B298FA1ACE95E100FE265E /* sharemore_pic@2x.png in Resources */,
 				70B298B51ACE95E100FE265E /* contacts_add_newmessage@2x.png in Resources */,
@@ -1396,7 +1383,6 @@
 				70013D0C1ABC19DB0050D0F7 /* CDImageLabelTableCell.m in Sources */,
 				70491C611ADF673F00E8E295 /* MBProgressHUD.m in Sources */,
 				70013C081ABC19DB0050D0F7 /* UIImageView+AFNetworking.m in Sources */,
-				70013B851ABC19DA0050D0F7 /* CDConvCreateVC.m in Sources */,
 				70013C0A1ABC19DB0050D0F7 /* UIRefreshControl+AFNetworking.m in Sources */,
 				70457B181ADB9ED700452531 /* Reachability.m in Sources */,
 				70013C031ABC19DB0050D0F7 /* README.md in Sources */,

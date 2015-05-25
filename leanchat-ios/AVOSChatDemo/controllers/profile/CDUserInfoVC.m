@@ -89,12 +89,10 @@
             [[CDIMService shareInstance] goWithUserId:self.user.objectId fromVC:self];
         }
         else {
-            [CDUtils showNetworkIndicator];
+            [self showProgress];
             [CDUserService tryCreateAddRequestWithToUser:_user callback: ^(BOOL succeeded, NSError *error) {
-                [CDUtils hideNetworkIndicator];
-                if ([CDUtils filterError:error]) {
-                    [CDUtils alert:@"请求成功"];
-                }
+                [self hideProgress];
+                [self alertError:error];
             }];
         }
     }
@@ -103,7 +101,7 @@
 - (void)refresh {
     WEAKSELF
     [CDUserService isMyFriend : _user block : ^(BOOL isFriend, NSError *error) {
-        if ([CDUtils filterError:error]) {
+        if ([self filterError:error]) {
             weakSelf.isFriend = isFriend;
             [weakSelf.tableView reloadData];
         }

@@ -46,7 +46,7 @@
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                           [UIColor whiteColor], NSForegroundColorAttributeName, [UIFont boldSystemFontOfSize:17], NSFontAttributeName, nil]];
     if ([AVUser currentUser]) {
-        [self toMain];
+        [self toMain:nil];
     }
     else {
         [self toLogin];
@@ -149,16 +149,14 @@
     [tab addChildViewController:nav];
 }
 
-- (void)toMain {
+- (void)toMain:(CDBaseVC *)vc {
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     AVUser *user = [AVUser currentUser];
     [CDCache registerUser:user];
     CDIM *im = [CDIM sharedInstance];
     WEAKSELF
-    [CDUtils showNetworkIndicator];
     [CDIMConfig config].userDelegate = [CDIMService shareInstance];
     [im openWithClientId:user.objectId callback: ^(BOOL succeeded, NSError *error) {
-        [CDUtils hideNetworkIndicator];
         CDBaseTabC *tab = [[CDBaseTabC alloc] init];
         [weakSelf addItemController:[[CDConvsVC alloc] init] toTabBarController:tab];
         [weakSelf addItemController:[[CDFriendListVC alloc] init] toTabBarController:tab];

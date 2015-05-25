@@ -14,6 +14,7 @@
 #import "CDUtils.h"
 #import "CDIMService.h"
 
+
 @interface CDAddMemberVC ()
 
 @property NSMutableArray *selected;
@@ -44,20 +45,22 @@ static NSString *reuseIdentifier = @"Cell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSString *nibName = NSStringFromClass([CDImageLabelTableCell class]);
-    UINib *nib = [UINib nibWithNibName:nibName bundle:nil];
-    [self.tableView registerNib:nib forCellReuseIdentifier:reuseIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([CDImageLabelTableCell class]) bundle:nil] forCellReuseIdentifier:reuseIdentifier];
     
     self.title = @"邀请好友";
+    [self initBarButton];
+    [self refresh];
+}
+
+- (void)initBarButton {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(invite)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(backPressed:)];
-    [self refresh];
 }
 
 - (void)refresh {
     WEAKSELF
-    [CDUserService findFriendsWithBlock : ^(NSArray *friends, NSError *error) {
-        if ([CDUtils filterError:error]) {
+    [CDUserService findFriendsWithBlock: ^(NSArray *friends, NSError *error) {
+        if ([self filterError:error]) {
             [_potentialIds removeAllObjects];
             for (AVUser *user in friends) {
                 if ([[CDCache getCurConv].members containsObject:user.objectId] == NO) {
@@ -92,10 +95,10 @@ static NSString *reuseIdentifier = @"Cell";
     if ([CDCache getCurConv].type == CDConvTypeSingle) {
         NSMutableArray *members = [conv.members mutableCopy];
         [members addObjectsFromArray:inviteIds];
-        [CDUtils showNetworkIndicator];
+        [self showProgress];
         [_im createConvWithMembers:members type:CDConvTypeGroup callback: ^(AVIMConversation *conversation, NSError *error) {
-            [CDUtils hideNetworkIndicator];
-            if ([CDUtils filterError:error]) {
+            [self hideProgress];
+            if ([self filterError:error]) {
                 [self.presentingViewController dismissViewControllerAnimated:YES completion: ^{
                     [[CDIMService shareInstance] goWithConv:conversation fromNav:_groupDetailVC.navigationController];
                 }];
@@ -103,16 +106,16 @@ static NSString *reuseIdentifier = @"Cell";
         }];
     }
     else {
-        [CDUtils showNetworkIndicator];
+        [self showProgress];
         [conv addMembersWithClientIds:inviteIds callback: ^(BOOL succeeded, NSError *error) {
             if (error) {
-                [CDUtils hideNetworkIndicator];
-                [CDUtils alertError:error];
+                [self hideProgress];
+                [self alertError:error];
             }
             else {
                 [CDCache refreshCurConv: ^(BOOL succeeded, NSError *error) {
-                    [CDUtils hideNetworkIndicator];
-                    if ([CDUtils filterError:error]) {
+                    [self hideProgress];
+                    if ([self filterError:error]) {
                         [self backPressed:nil];
                     }
                 }];

@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "CDConvDetailVC.h"
+#import "CDBaseTableVC.h"
 
-@interface CDAddMemberVC : UITableViewController
+@interface CDAddMemberVC : CDBaseTableVC
 
 @property CDConvDetailVC *groupDetailVC;
 

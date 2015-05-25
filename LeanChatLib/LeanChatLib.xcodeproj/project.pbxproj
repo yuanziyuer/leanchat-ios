@@ -338,9 +338,9 @@
 		7049263A1ADFCBDB00E8E295 /* weChatBubble_Sending_Cavern@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 704925DA1ADFCBDB00E8E295 /* weChatBubble_Sending_Cavern@2x.png */; };
 		7049263B1ADFCBDB00E8E295 /* weChatBubble_Sending_LeanChat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 704925DB1ADFCBDB00E8E295 /* weChatBubble_Sending_LeanChat@2x.png */; };
 		7049263C1ADFCBDB00E8E295 /* weChatBubble_Sending_Solid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 704925DC1ADFCBDB00E8E295 /* weChatBubble_Sending_Solid@2x.png */; };
-		707ED36A1B130ACD0050BB89 /* LZStatusView.h in Headers */ = {isa = PBXBuildFile; fileRef = 707ED3681B130ACD0050BB89 /* LZStatusView.h */; };
+		707ED36A1B130ACD0050BB89 /* LZStatusView.h in Headers */ = {isa = PBXBuildFile; fileRef = 707ED3681B130ACD0050BB89 /* LZStatusView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		707ED36B1B130ACD0050BB89 /* LZStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 707ED3691B130ACD0050BB89 /* LZStatusView.m */; };
-		707ED3701B1317DA0050BB89 /* LZConversationCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 707ED36E1B1317DA0050BB89 /* LZConversationCell.h */; };
+		707ED3701B1317DA0050BB89 /* LZConversationCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 707ED36E1B1317DA0050BB89 /* LZConversationCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		707ED3711B1317DA0050BB89 /* LZConversationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 707ED36F1B1317DA0050BB89 /* LZConversationCell.m */; };
 		70B299101ACE9A0600FE265E /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B2990F1ACE9A0600FE265E /* CoreTelephony.framework */; };
 		70B299121ACE9A0B00FE265E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B299111ACE9A0B00FE265E /* CoreLocation.framework */; };
@@ -1646,7 +1646,6 @@
 				7049248D1ADFCAD700E8E295 /* XHBubblePhotoImageView.h in Headers */,
 				7049246B1ADFCAD700E8E295 /* SETextEditingCaret.h in Headers */,
 				7049248F1ADFCAD700E8E295 /* XHMessageBubbleView.h in Headers */,
-				707ED3701B1317DA0050BB89 /* LZConversationCell.h in Headers */,
 				704924AF1ADFCAD700E8E295 /* XHRefreshView.h in Headers */,
 				704924AD1ADFCAD700E8E295 /* XHRefreshControl.h in Headers */,
 				704924111ADFCAD700E8E295 /* XHAudioPlayerHelper.h in Headers */,
@@ -1667,7 +1666,6 @@
 				7049243F1ADFCAD700E8E295 /* XHMessageVideoConverPhotoFactory.h in Headers */,
 				704923F51ADFCAD700E8E295 /* JSBadgeView.h in Headers */,
 				7049245D1ADFCAD700E8E295 /* LKBadgeView.h in Headers */,
-				707ED36A1B130ACD0050BB89 /* LZStatusView.h in Headers */,
 				704923E01ADFCAD700E8E295 /* CDIMConfig.h in Headers */,
 				704923DC1ADFCAD700E8E295 /* CDEmotionUtils.h in Headers */,
 				7049247F1ADFCAD700E8E295 /* XHViewState.h in Headers */,
@@ -1677,6 +1675,8 @@
 				704924651ADFCAD700E8E295 /* SELinkText.h in Headers */,
 				7049240B1ADFCAD700E8E295 /* UIScrollView+XHkeyboardControl.h in Headers */,
 				70EEB0D71AF0F38B00FBF92F /* UIImage+Icon.h in Headers */,
+				707ED3701B1317DA0050BB89 /* LZConversationCell.h in Headers */,
+				707ED36A1B130ACD0050BB89 /* LZStatusView.h in Headers */,
 				704924031ADFCAD700E8E295 /* UIImage+RoundedCorner.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

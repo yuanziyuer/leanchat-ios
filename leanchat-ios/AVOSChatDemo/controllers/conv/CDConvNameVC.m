@@ -8,7 +8,6 @@
 
 #import "CDConvNameVC.h"
 #import <LeanChatLib/LeanChatLib.h>
-#import "CDUtils.h"
 
 @interface CDConvNameVC ()
 
@@ -16,13 +15,22 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 
-@property CDIM *im;
+@property (nonatomic, strong) CDIM *im;
 
-@property CDNotify *notify;
+@property (nonatomic, strong) CDNotify *notify;
 
 @end
 
 @implementation CDConvNameVC
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.tableViewStyle = UITableViewStyleGrouped;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -44,7 +52,7 @@
         AVIMConversationUpdateBuilder *updateBuilder = [_conv newUpdateBuilder];
         [updateBuilder setName:_nameTextField.text];
         [_conv update:[updateBuilder dictionary] callback: ^(BOOL succeeded, NSError *error) {
-            if ([CDUtils filterError:error]) {
+            if ([self filterError:error]) {
                 [_notify postConvNotify];
                 [self backPressed];
             }

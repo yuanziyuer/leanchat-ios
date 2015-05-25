@@ -12,50 +12,6 @@
 
 @implementation CDUtils
 
-+ (UIAlertView *)alert:(NSString *)msg {
-    UIAlertView *alertView = [[UIAlertView alloc]
-                              initWithTitle:nil message:msg delegate:nil
-                              cancelButtonTitle   :@"好的" otherButtonTitles:nil];
-    [alertView show];
-    return alertView;
-}
-
-+ (BOOL)alertError:(NSError *)error {
-    if (error) {
-        if (error.code == kAVIMErrorConnectionLost) {
-            [CDUtils alert:@"未能连接聊天服务"];
-        }
-        else if ([error.domain isEqualToString:NSURLErrorDomain]) {
-            [CDUtils alert:@"网络连接发生错误"];
-        }
-        else {
-#ifndef DEBUG
-            [CDUtils alert:[NSString stringWithFormat:@"%@", error]];
-#else
-            NSString *info = error.localizedDescription;
-            [CDUtils alert:info ? info : [NSString stringWithFormat:@"%@", error]];
-#endif
-        }
-        return YES;
-    }
-    return NO;
-}
-
-+ (BOOL)filterError:(NSError *)error {
-    return [self alertError:error] == NO;
-}
-
-+ (void)filterError:(NSError *)error callback:(dispatch_block_t)callback {
-    if (error) {
-        [CDUtils alertError:error];
-    }
-    else {
-        if (callback) {
-            callback();
-        }
-    }
-}
-
 + (void)logError:(NSError *)error callback:(dispatch_block_t)callback {
     if (error) {
         NSLog(@"%@", [error localizedDescription]);
@@ -116,9 +72,6 @@
         ctrler.sourceType = srcType;
         [controller presentViewController:ctrler animated:YES completion:nil];
     }
-    else {
-        [CDUtils alert:@"no image picker available"];
-    }
 }
 
 + (UIImage *)imageWithColor:(UIColor *)color {
@@ -174,21 +127,6 @@
     indicator.hidden = NO;
     [indicator startAnimating];
     return indicator;
-}
-
-+ (void)showNetworkIndicator {
-    UIApplication *app = [UIApplication sharedApplication];
-    app.networkActivityIndicatorVisible = YES;
-}
-
-+ (void)hideNetworkIndicator {
-    UIApplication *app = [UIApplication sharedApplication];
-    app.networkActivityIndicatorVisible = NO;
-}
-
-+ (void)hideNetworkIndicatorAndAlertError:(NSError *)error {
-    [self hideNetworkIndicator];
-    [CDUtils alertError:error];
 }
 
 + (void)setCellMarginsZero:(UITableViewCell *)cell {

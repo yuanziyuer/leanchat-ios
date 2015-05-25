@@ -33,20 +33,20 @@
 }
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
-    [CDUtils showNetworkIndicator];
+    [self showProgress];
     WEAKSELF
     [CDUserService findAddRequestsWithBlock : ^(NSArray *objects, NSError *error) {
-        [CDUtils hideNetworkIndicator];
+        [self hideProgress];
         if (refreshControl) {
             [refreshControl endRefreshing];
         }
         if (error.code == kAVErrorObjectNotFound || error.code == kAVErrorCacheMiss) {
         }
         else {
-            [CDUtils filterError:error callback: ^{
+            if ([self filterError:error]) {
                 _addRequests = objects;
                 [weakSelf.tableView reloadData];
-            }];
+            }
         }
     }];
 }
@@ -88,13 +88,12 @@
 - (void)actionBtnClicked:(id)sender {
     UIButton *btn = (UIButton *)sender;
     CDAddRequest *addRequest = [_addRequests objectAtIndex:btn.tag];
-    [CDUtils showNetworkIndicator];
-    WEAKSELF
+    [self showProgress];
     [CDUserService agreeAddRequest : addRequest callback : ^(BOOL succeeded, NSError *error) {
-        [CDUtils hideNetworkIndicator];
-        if ([CDUtils filterError:error]) {
-            [CDUtils alert:@"添加成功"];
-            [weakSelf refresh:nil];
+        [self hideProgress];
+        if ([self filterError:error]) {
+            [self alert:@"添加成功a"];
+            [self refresh:nil];
             [_friendListVC refresh];
         }
     }];

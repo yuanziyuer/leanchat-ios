@@ -7,7 +7,6 @@
 //
 
 #import "CDBaseTableVC.h"
-#import "CDCommon.h"
 
 @interface CDConvDetailVC : CDBaseTableVC
 

@@ -64,26 +64,28 @@ static CDIM *_im;
         }
     }
     [_im fetchConvsWithConvids:uncacheConvids callback: ^(NSArray *objects, NSError *error) {
-        [CDUtils filterError:error callback: ^{
+        if (error) {
+            callback(nil, error);
+        } else {
             for (AVIMConversation *conv in objects) {
                 [self registerConv:conv];
             }
             callback(objects, error);
-        }];
+        }
     }];
 }
 
 + (void)cacheUsersWithIds:(NSSet *)userIds callback:(AVBooleanResultBlock)callback {
     NSMutableSet *uncachedUserIds = [[NSMutableSet alloc] init];
     for (NSString *userId in userIds) {
-        if ([self lookupUser:userId] == nil) {
+        if ([CDCache lookupUser:userId] == nil) {
             [uncachedUserIds addObject:userId];
         }
     }
     if ([uncachedUserIds count] > 0) {
         [CDUserService findUsersByIds:[[NSMutableArray alloc] initWithArray:[uncachedUserIds allObjects]] callback: ^(NSArray *objects, NSError *error) {
             if (objects) {
-                [self registerUsers:objects];
+                [CDCache registerUsers:objects];
             }
             callback(YES, error);
         }];

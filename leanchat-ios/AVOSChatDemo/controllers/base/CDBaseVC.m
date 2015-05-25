@@ -37,16 +37,29 @@
     [alertView show];
 }
 
--(BOOL)alertError:(NSError*)error{
-    if(error){
-        [self alert:[NSString stringWithFormat:@"%@",error]];
+- (BOOL)alertError:(NSError *)error {
+    if (error) {
+        if (error.code == kAVIMErrorConnectionLost) {
+            [self alert:@"未能连接聊天服务"];
+        }
+        else if ([error.domain isEqualToString:NSURLErrorDomain]) {
+            [self alert:@"网络连接发生错误"];
+        }
+        else {
+#ifndef DEBUG
+            [CDUtils alert:[NSString stringWithFormat:@"%@", error]];
+#else
+            NSString *info = error.localizedDescription;
+            [self alert:info ? info : [NSString stringWithFormat:@"%@", error]];
+#endif
+        }
         return YES;
     }
     return NO;
 }
 
--(BOOL)filterError:(NSError*)error{
-    return [self alertError:error]==NO;
+- (BOOL)filterError:(NSError *)error {
+    return [self alertError:error] == NO;
 }
 
 -(void)showNetworkIndicator{

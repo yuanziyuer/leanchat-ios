@@ -35,12 +35,12 @@ static NSString *cellIndentifier = @"cellIndentifier";
 
 - (void)searchUser:(NSString *)name {
     [CDUserService findUsersByPartname:name withBlock: ^(NSArray *objects, NSError *error) {
-        [CDUtils filterError:error callback: ^{
+        if ([self filterError:error]) {
             if (objects) {
                 self.users = objects;
                 [_tableView reloadData];
             }
-        }];
+        }
     }];
 }
 

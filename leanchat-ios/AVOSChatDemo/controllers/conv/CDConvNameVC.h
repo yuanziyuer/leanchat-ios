@@ -10,7 +10,7 @@
 #import "CDCommon.h"
 #import "CDConvDetailVC.h"
 
-@interface CDConvNameVC : UITableViewController
+@interface CDConvNameVC : CDBaseTableVC
 
 @property CDConvDetailVC *detailVC;
 

@@ -51,7 +51,6 @@
 
 - (void)goPushSetting {
     CDPushSettingVC *controller = [[CDPushSettingVC alloc] init];
-    controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -130,9 +129,9 @@
         WEAKSELF
         [CDUserService saveAvatar : rounded callback : ^(BOOL succeeded, NSError *error) {
             [indicator stopAnimating];
-            [CDUtils filterError:error callback: ^{
+            if ([self filterError:error]) {
                 [weakSelf.tableView reloadData];
-            }];
+            }
         }];
     }];
 }

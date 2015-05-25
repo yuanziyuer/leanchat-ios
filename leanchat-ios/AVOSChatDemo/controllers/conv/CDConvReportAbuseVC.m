@@ -56,8 +56,8 @@
         
         [CDUserService reportAbuseWithReason:self.inputTextField.text convid:self.convid block: ^(BOOL succeeded, NSError *error) {
             [weakSelf hideProgress];
-            if ([CDUtils filterError:error]) {
-                [CDUtils alert:@"感谢您的举报，我们将尽快处理。"];
+            if ([self filterError:error]) {
+                [self alert:@"感谢您的举报，我们将尽快处理。"];
                 [weakSelf.navigationController popViewControllerAnimated:YES];
             }
         }];

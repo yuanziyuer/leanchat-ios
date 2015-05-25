@@ -7,7 +7,6 @@
 //
 
 #import "CDGroupedConvListVC.h"
-#import "CDConvCreateVC.h"
 #import "CDIMService.h"
 #import "CDUtils.h"
 #import "CDImageLabelTableCell.h"
@@ -32,7 +31,6 @@ static NSString *cellIndentifier = @"cell";
     _im = [CDIM sharedInstance];
     _notify = [CDNotify sharedInstance];
     self.title = @"群组";
-    //    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(goNewGroup)];
     NSString *nibName = NSStringFromClass([CDImageLabelTableCell class]);
     UINib *nib = [UINib nibWithNibName:nibName bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:cellIndentifier];
@@ -40,7 +38,7 @@ static NSString *cellIndentifier = @"cell";
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
-    self.refreshControl = refreshControl;
+    [self.view addSubview:refreshControl];
     
     [_notify addConvObserver:self selector:@selector(refresh:)];
 }
@@ -55,12 +53,6 @@ static NSString *cellIndentifier = @"cell";
         convs = objects;
         [self.tableView reloadData];
     }];
-}
-
-- (void)goNewGroup {
-    CDConvCreateVC *controller = [[CDConvCreateVC alloc] init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
-    [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -104,7 +96,7 @@ static NSString *cellIndentifier = @"cell";
         AVIMConversation *conv = [convs objectAtIndex:indexPath.row];
         WEAKSELF
         [conv quitWithCallback : ^(BOOL succeeded, NSError *error) {
-            if ([CDUtils filterError:error]) {
+            if ([self filterError:error]) {
                 [weakSelf refresh:nil];
             }
         }];

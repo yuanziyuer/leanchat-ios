@@ -98,20 +98,17 @@
     self.myNewFriendBadgeView.badgeText = nil;
     CDNewFriendVC *controller = [[CDNewFriendVC alloc] init];
     controller.friendListVC = self;
-    controller.hidesBottomBarWhenPushed = YES;
     [[self navigationController] pushViewController:controller animated:YES];
     self.tabBarItem.badgeValue = nil;
 }
 
 - (void)goGroup:(id)sender {
     CDGroupedConvListVC *controller = [[CDGroupedConvListVC alloc] init];
-    controller.hidesBottomBarWhenPushed = YES;
     [[self navigationController] pushViewController:controller animated:YES];
 }
 
 - (void)goAddFriend:(UIBarButtonItem *)buttonItem {
     CDAddFriendVC *controller = [[CDAddFriendVC alloc] init];
-    controller.hidesBottomBarWhenPushed = YES;
     [[self navigationController] pushViewController:controller animated:YES];
 }
 
@@ -122,13 +119,13 @@
 }
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
-    [CDUtils showNetworkIndicator];
+    [self showProgress];
     WEAKSELF
     [CDUserService findFriendsWithBlock : ^(NSArray *objects, NSError *error) {
         if (refreshControl) {
             [CDUtils stopRefreshControl:refreshControl];
         }
-        [CDUtils hideNetworkIndicator];
+        [weakSelf hideProgress];
         // why kAVErrorInternalServer ?
         if (error && (error.code == kAVErrorCacheMiss || error.code == kAVErrorInternalServer)) {
             // for the first start
@@ -136,10 +133,10 @@
             [weakSelf.tableView reloadData];
         }
         else {
-            [CDUtils filterError:error callback: ^{
+            if ([self filterError:error]) {
                 weakSelf.users = objects;
                 [weakSelf.tableView reloadData];
-            }];
+            }
         }
     }];
     [self setNewAddRequestBadge];
@@ -214,13 +211,13 @@
     if (buttonIndex == 0) {
         NSInteger row = alertView.tag;
         AVUser *user = [_users objectAtIndex:row];
-        [CDUtils showNetworkIndicator];
+        [self showProgress];
         WEAKSELF
         [CDUserService removeFriend : user callback : ^(BOOL succeeded, NSError *error) {
-            [CDUtils hideNetworkIndicator];
-            [CDUtils filterError:error callback: ^{
+            [self hideProgress];
+            if ([self filterError:error]) {
                 [weakSelf refresh];
-            }];
+            }
         }];
     }
 }

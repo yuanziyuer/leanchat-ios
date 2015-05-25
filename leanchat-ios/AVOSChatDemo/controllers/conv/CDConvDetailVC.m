@@ -9,6 +9,7 @@
 #import "CDConvDetailVC.h"
 #import "CDAddMemberVC.h"
 #import "CDUserInfoVC.h"
+#import "CDBaseNavC.h"
 #import "CDConvNameVC.h"
 #import "CDConvDetailMembersCell.h"
 #import "CDConvReportAbuseVC.h"
@@ -67,7 +68,12 @@ static NSString *const reuseIdentifier = @"Cell";
     [super viewDidLoad];
     [_notify addConvObserver:self selector:@selector(refresh)];
     [self setupDatasource];
+    [self setupBarButton];
     [self refresh];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
 }
 
 - (void)setupDatasource {
@@ -129,10 +135,9 @@ static NSString *const reuseIdentifier = @"Cell";
     WEAKSELF
     NSString *curUserId = [AVUser currentUser].objectId;
     _own = [conv.creator isEqualToString:curUserId];
-    [self setupBarButton];
     self.title = [NSString stringWithFormat:@"详情(%ld人)", (long)self.conv.members.count];
     [CDCache cacheUsersWithIds:userIds callback: ^(BOOL succeeded, NSError *error) {
-        [CDUtils filterError:error callback: ^{
+        if ([self filterError:error]) {
             NSMutableArray *memberUsers = [NSMutableArray array];
             for (NSString *userId in userIds) {
                 [memberUsers addObject:[CDCache lookupUser:userId]];
@@ -140,7 +145,7 @@ static NSString *const reuseIdentifier = @"Cell";
             weakSelf.members = memberUsers;
             weakSelf.membersCell.members = memberUsers;
             [weakSelf.tableView reloadData];
-        }];
+        }
     }];
 }
 
@@ -254,10 +259,9 @@ static NSString *const reuseIdentifier = @"Cell";
                 if (confirm) {
                     WEAKSELF
                     [self.conv removeMembersWithClientIds : @[member.objectId] callback : ^(BOOL succeeded, NSError *error) {
-                        if ([CDUtils filterError:error]) {
+                        if ([self filterError:error]) {
                             [CDCache refreshCurConv: ^(BOOL succeeded, NSError *error) {
-                                if ([CDUtils filterError:error]) {
-                                }
+                                [self alertError:error];
                             }];
                         }
                     }];
@@ -288,14 +292,14 @@ static NSString *const reuseIdentifier = @"Cell";
 
 - (void)deleteMsgs {
     [_storage deleteMsgsByConvid:self.conv.conversationId];
-    [CDUtils alert:@"已清空"];
+    [self alert:@"已清空"];
 }
 
 - (void)goChangeName {
     CDConvNameVC *vc = [[CDConvNameVC alloc] init];
     vc.detailVC = self;
     vc.conv = self.conv;
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    CDBaseNavC *nav = [[CDBaseNavC alloc] initWithRootViewController:vc];
     [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
 
@@ -308,7 +312,7 @@ static NSString *const reuseIdentifier = @"Cell";
 
 - (void)quitConv {
     [self.conv quitWithCallback: ^(BOOL succeeded, NSError *error) {
-        if ([CDUtils filterError:error]) {
+        if ([self filterError:error]) {
             [_storage deleteRoomByConvid:self.conv.conversationId];
             [self.navigationController popToRootViewControllerAnimated:YES];
         }

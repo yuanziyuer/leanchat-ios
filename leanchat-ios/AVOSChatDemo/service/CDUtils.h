@@ -19,17 +19,9 @@ typedef void (^CDUpgradeBlock)(BOOL upgrade, NSString *oldVersion, NSString *new
 
 @interface CDUtils : NSObject
 
-+ (UIAlertView *)alert:(NSString *)msg;
-
 + (NSString *)md5OfString:(NSString *)s;
 
-+ (BOOL)alertError:(NSError *)error;
-
 + (UIActivityIndicatorView *)showIndicatorAtView:(UIView *)hookView;
-
-+ (void)showNetworkIndicator;
-
-+ (void)hideNetworkIndicator;
 
 + (UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)newSize;
 
@@ -39,14 +31,7 @@ typedef void (^CDUpgradeBlock)(BOOL upgrade, NSString *oldVersion, NSString *new
 
 + (void)pickImageFromPhotoLibraryAtController:(UIViewController *)controller;
 
-+ (BOOL)filterError:(NSError *)error;
-
-+ (void)filterError:(NSError *)error callback:(dispatch_block_t)callback;
-
 + (void)logError:(NSError *)error callback:(dispatch_block_t)callbak;
-
-+ (void)hideNetworkIndicatorAndAlertError:(NSError *)error;
-
 
 
 #pragma mark - collection utils

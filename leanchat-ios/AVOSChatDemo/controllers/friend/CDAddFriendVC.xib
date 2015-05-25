@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CDAddFriendVC">
@@ -19,11 +19,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Q46-aB-ggu">
-                    <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                     <textInputTraits key="textInputTraits"/>
                 </searchBar>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kWF-aI-yUN">
-                    <rect key="frame" x="0.0" y="109" width="320" height="459"/>
+                    <rect key="frame" x="0.0" y="45" width="320" height="523"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
             </subviews>
@@ -32,7 +32,7 @@
                 <constraint firstItem="kWF-aI-yUN" firstAttribute="top" secondItem="Q46-aB-ggu" secondAttribute="bottom" constant="1" id="1Cp-m3-g1C"/>
                 <constraint firstAttribute="trailing" secondItem="Q46-aB-ggu" secondAttribute="trailing" id="4oc-xc-6c1"/>
                 <constraint firstAttribute="bottom" secondItem="kWF-aI-yUN" secondAttribute="bottom" id="8U7-0m-Ffw"/>
-                <constraint firstItem="Q46-aB-ggu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="RQR-4j-pkS"/>
+                <constraint firstItem="Q46-aB-ggu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="RQR-4j-pkS"/>
                 <constraint firstItem="Q46-aB-ggu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="aA5-yW-vB5"/>
                 <constraint firstAttribute="trailing" secondItem="kWF-aI-yUN" secondAttribute="trailing" id="jSn-uA-tHN"/>
                 <constraint firstItem="kWF-aI-yUN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="sjB-qJ-EqE"/>

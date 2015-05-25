@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CDBaseTableVC.h"
 
-@interface CDGroupedConvListVC : UITableViewController
+@interface CDGroupedConvListVC : CDBaseTableVC
 
 @end

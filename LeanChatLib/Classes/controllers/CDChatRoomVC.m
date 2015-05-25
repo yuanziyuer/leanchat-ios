@@ -12,6 +12,7 @@
 #import "XHDisplayMediaViewController.h"
 #import "XHDisplayLocationViewController.h"
 #import "XHAudioPlayerHelper.h"
+
 #import "LZStatusView.h"
 #import "CDStorage.h"
 #import "CDEmotionUtils.h"
@@ -19,11 +20,9 @@
 #import "AVIMConversation+Custom.h"
 #import "CDNotify.h"
 
-#define ONE_PAGE_SIZE 20
+static NSInteger const kOnePageSize = 20;
 
-typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
-
-@interface CDChatRoomVC () <UINavigationControllerDelegate>
+@interface CDChatRoomVC ()
 
 @property (nonatomic, strong) CDStorage *storage;
 
@@ -255,12 +254,12 @@ typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
         if (isLoadMore == NO) {
             timestamp = maxTimestamp;
             NSInteger count = [_msgs count];
-            if (count > ONE_PAGE_SIZE) {
+            if (count > kOnePageSize) {
                 // more than one page msgs, get that many msgs
                 limit = count;
             }
             else {
-                limit = ONE_PAGE_SIZE;
+                limit = kOnePageSize;
             }
         }
         else {
@@ -274,7 +273,7 @@ typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
             else {
                 timestamp = maxTimestamp;
             }
-            limit = ONE_PAGE_SIZE;
+            limit = kOnePageSize;
         }
         NSMutableArray *msgs = [[_storage getMsgsWithConvid:self.conv.conversationId maxTime:timestamp limit:limit] mutableCopy];
         
