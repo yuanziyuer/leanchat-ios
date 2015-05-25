@@ -252,22 +252,19 @@ static NSString *const reuseIdentifier = @"Cell";
 }
 
 - (void)didLongPressMember:(AVUser *)member {
-    if (_own) {
-        AVIMConversation *conv = [self conv];
-        if ([member.objectId isEqualToString:conv.creator] == NO) {
-            [self.alertViewHelper showAlertViewWithMessage:@"确定要踢走该成员吗？" block:^(BOOL confirm, NSString *text) {
-                if (confirm) {
-                    WEAKSELF
-                    [self.conv removeMembersWithClientIds : @[member.objectId] callback : ^(BOOL succeeded, NSError *error) {
-                        if ([self filterError:error]) {
-                            [CDCache refreshCurConv: ^(BOOL succeeded, NSError *error) {
-                                [self alertError:error];
-                            }];
-                        }
-                    }];
-                }
-            }];
-        }
+    AVIMConversation *conv = [self conv];
+    if ([member.objectId isEqualToString:conv.creator] == NO) {
+        [self.alertViewHelper showAlertViewWithMessage:@"确定要踢走该成员吗？" block:^(BOOL confirm, NSString *text) {
+            if (confirm) {
+                [self.conv removeMembersWithClientIds : @[member.objectId] callback : ^(BOOL succeeded, NSError *error) {
+                    if ([self filterError:error]) {
+                        [CDCache refreshCurConv: ^(BOOL succeeded, NSError *error) {
+                            [self alertError:error];
+                        }];
+                    }
+                }];
+            }
+        }];
     }
 }
 
