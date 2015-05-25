@@ -58,19 +58,25 @@ static CDIM *instance;
         _notify = [CDNotify sharedInstance];
         _imConfig = [CDIMConfig config];
         _cachedConvs = [NSMutableDictionary dictionary];
+        [self updateConnectStatus];
     }
     return self;
 }
 
-- (BOOL)isOpened {
-    return _imClient.status == AVIMClientStatusOpened;
+- (void)dealloc {
+    [_imClient removeObserver:self forKeyPath:@"status"];
 }
 
 - (void)openWithClientId:(NSString *)clientId callback:(AVIMBooleanResultBlock)callback {
     _selfId = clientId;
     _selfUser = [self.imConfig.userDelegate getUserById:clientId];
     [self.storage setupWithUserId:clientId];
-    [_imClient openWithClientId:clientId callback:callback];
+    [_imClient openWithClientId:clientId callback:^(BOOL succeeded, NSError *error) {
+        [self updateConnectStatus];
+        if (callback) {
+            callback(succeeded, error);
+        }
+    }];
 }
 
 - (void)closeWithCallback:(AVBooleanResultBlock)callback {
@@ -192,18 +198,21 @@ static CDIM *instance;
 #pragma mark - AVIMClientDelegate
 
 - (void)imClientPaused:(AVIMClient *)imClient {
-    DLog();
-    [_notify postSessionNotify];
+    [self updateConnectStatus];
 }
 
 - (void)imClientResuming:(AVIMClient *)imClient {
-    DLog();
-    [_notify postSessionNotify];
+    [self updateConnectStatus];
 }
 
 - (void)imClientResumed:(AVIMClient *)imClient {
-    DLog();
-    [_notify postSessionNotify];
+    [self updateConnectStatus];
+}
+
+#pragma mark - status
+
+- (void)updateConnectStatus {
+    self.connect = self.imClient.status == AVIMClientStatusOpened;
 }
 
 #pragma mark - AVIMMessageDelegate

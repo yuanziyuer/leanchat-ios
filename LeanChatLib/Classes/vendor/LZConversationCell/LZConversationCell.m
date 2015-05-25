@@ -9,14 +9,14 @@
 #import "LZConversationCell.h"
 #import "JSBadgeView.h"
 
-static CGFloat kCDImageSize = 35;
-static CGFloat kCDVerticalSpacing = 8;
-static CGFloat kCDHorizontalSpacing = 10;
-static CGFloat kCDTimestampeLabelWidth = 100;
+static CGFloat kLZImageSize = 35;
+static CGFloat kLZVerticalSpacing = 8;
+static CGFloat kLZHorizontalSpacing = 10;
+static CGFloat kLZTimestampeLabelWidth = 100;
 
-static CGFloat kCDNameLabelHeightProportion = 3.0 / 5;
-static CGFloat kCDNameLabelHeight;
-static CGFloat kCDMessageLabelHeight;
+static CGFloat kLZNameLabelHeightProportion = 3.0 / 5;
+static CGFloat kLZNameLabelHeight;
+static CGFloat kLZMessageLabelHeight;
 
 
 @interface LZConversationCell ()
@@ -27,13 +27,24 @@ static CGFloat kCDMessageLabelHeight;
 
 @implementation LZConversationCell
 
++ (LZConversationCell *)dequeueOrCreateCellByTableView :(UITableView *)tableView {
+    LZConversationCell *cell = [tableView dequeueReusableCellWithIdentifier:[LZConversationCell identifier]];
+    if (cell == nil) {
+        cell = [[LZConversationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[[self class] identifier]];
+    }
+    return cell;
+}
+
++ (void)registerCellToTableView: (UITableView *)tableView {
+    [tableView registerClass:[LZConversationCell class] forCellReuseIdentifier:[[self class] identifier]];
+}
 
 + (NSString *)identifier {
     return NSStringFromClass([LZConversationCell class]);
 }
 
 + (CGFloat)heightOfCell {
-    return kCDImageSize + kCDVerticalSpacing * 2;
+    return kLZImageSize + kLZVerticalSpacing * 2;
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -45,8 +56,8 @@ static CGFloat kCDMessageLabelHeight;
 }
 
 - (void)setup {
-    kCDNameLabelHeight = kCDImageSize * kCDNameLabelHeightProportion;
-    kCDMessageLabelHeight = kCDImageSize - kCDNameLabelHeight;
+    kLZNameLabelHeight = kLZImageSize * kLZNameLabelHeightProportion;
+    kLZMessageLabelHeight = kLZImageSize - kLZNameLabelHeight;
     
     [self addSubview:self.avatarImageView];
     [self addSubview:self.timestampLabel];
@@ -56,14 +67,14 @@ static CGFloat kCDMessageLabelHeight;
 
 - (UIImageView *)avatarImageView {
     if (_avatarImageView == nil) {
-        _avatarImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kCDHorizontalSpacing, kCDVerticalSpacing, kCDImageSize, kCDImageSize)];
+        _avatarImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kLZHorizontalSpacing, kLZVerticalSpacing, kLZImageSize, kLZImageSize)];
     }
     return _avatarImageView;
 }
 
 - (UILabel *)timestampLabel {
     if (_timestampLabel == nil) {
-        _timestampLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth([UIScreen mainScreen].bounds) - kCDHorizontalSpacing - kCDTimestampeLabelWidth, CGRectGetMinY(_avatarImageView.frame), kCDTimestampeLabelWidth, kCDNameLabelHeight)];
+        _timestampLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth([UIScreen mainScreen].bounds) - kLZHorizontalSpacing - kLZTimestampeLabelWidth, CGRectGetMinY(_avatarImageView.frame), kLZTimestampeLabelWidth, kLZNameLabelHeight)];
         _timestampLabel.font = [UIFont systemFontOfSize:13];
         _timestampLabel.textAlignment = NSTextAlignmentRight;
         _timestampLabel.textColor = [UIColor grayColor];
@@ -73,7 +84,7 @@ static CGFloat kCDMessageLabelHeight;
 
 - (UILabel *)nameLabel {
     if (_nameLabel == nil) {
-        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_avatarImageView.frame) + kCDHorizontalSpacing, CGRectGetMinY(_avatarImageView.frame), CGRectGetMinX(_timestampLabel.frame) - kCDHorizontalSpacing * 3 - kCDImageSize, kCDNameLabelHeight)];
+        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_avatarImageView.frame) + kLZHorizontalSpacing, CGRectGetMinY(_avatarImageView.frame), CGRectGetMinX(_timestampLabel.frame) - kLZHorizontalSpacing * 3 - kLZImageSize, kLZNameLabelHeight)];
         _nameLabel.font = [UIFont systemFontOfSize:17];
     }
     return _nameLabel;
@@ -81,7 +92,7 @@ static CGFloat kCDMessageLabelHeight;
 
 - (UILabel *)messageLabel {
     if (_messageLabel == nil) {
-        _messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_nameLabel.frame), CGRectGetMaxY(_nameLabel.frame), CGRectGetWidth([UIScreen mainScreen].bounds)- 3 * kCDHorizontalSpacing - kCDImageSize, kCDMessageLabelHeight)];
+        _messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_nameLabel.frame), CGRectGetMaxY(_nameLabel.frame), CGRectGetWidth([UIScreen mainScreen].bounds)- 3 * kLZHorizontalSpacing - kLZImageSize, kLZMessageLabelHeight)];
         _messageLabel.font = [UIFont systemFontOfSize:14];
         _messageLabel.textColor = [UIColor grayColor];
     }

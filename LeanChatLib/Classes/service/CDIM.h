@@ -19,13 +19,13 @@
 
 @property (nonatomic, strong) id <CDUserModel> selfUser;
 
+@property (nonatomic, assign) BOOL connect;
+
 + (instancetype)sharedInstance;
 
 - (void)openWithClientId:(NSString *)clientId callback:(AVIMBooleanResultBlock)callback;
 
 - (void)closeWithCallback:(AVBooleanResultBlock)callback;
-
-- (BOOL)isOpened;
 
 - (void)fecthConvWithId:(NSString *)convid callback:(AVIMConversationResultBlock)callback;
 

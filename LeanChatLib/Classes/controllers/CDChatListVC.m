@@ -7,7 +7,7 @@
 //
 
 #import "CDChatListVC.h"
-#import "CDIMClientStatusView.h"
+#import "LZStatusView.h"
 #import "CDStorage.h"
 #import "UIView+XHRemoteImage.h"
 #import "LZConversationCell.h"
@@ -17,10 +17,11 @@
 #import "CDIMConfig.h"
 #import "UIView+XHRemoteImage.h"
 #import "CDEmotionUtils.h"
+#import "CDNotify.h"
 
-@interface CDChatListVC () <CDIMClientStatusViewDelegate>
+@interface CDChatListVC ()
 
-@property (nonatomic) CDIMClientStatusView *clientStatusView;
+@property (nonatomic) LZStatusView *clientStatusView;
 
 @property (nonatomic, strong) NSMutableArray *rooms;
 
@@ -53,34 +54,32 @@ static NSString *cellIdentifier = @"ContactCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.tableView registerClass:[LZConversationCell class] forCellReuseIdentifier:[LZConversationCell identifier]];
-    
-    [self.clientStatusView observeIMClientUpdate];
+    [LZConversationCell registerCellToTableView:self.tableView];
     self.refreshControl = [self getRefreshControl];
-    
-    [_notify addMsgObserver:self selector:@selector(refresh)];
-    [_notify addSessionObserver:self selector:@selector(sessionChanged)];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [_notify addMsgObserver:self selector:@selector(refresh)];
+    [self.im addObserver:self forKeyPath:@"connect" options:NSKeyValueObservingOptionNew context:NULL];
+    [self updateStatusView];
     WEAKSELF
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
          [weakSelf refresh:nil];
     });
 }
 
-- (void)dealloc {
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [_im removeObserver:self forKeyPath:@"connect"];
     [_notify removeMsgObserver:self];
-    [_notify removeSessionObserver:self];
 }
 
 #pragma mark - Propertys
 
-- (CDIMClientStatusView *)clientStatusView {
+- (LZStatusView *)clientStatusView {
     if (_clientStatusView == nil) {
-        _clientStatusView = [[CDIMClientStatusView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds), kCDIMClientStatusViewHight)];
-        [_clientStatusView setDelegate:self];
+        _clientStatusView = [[LZStatusView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds), kLZStatusViewHight)];
     }
     return _clientStatusView;
 }
@@ -93,9 +92,6 @@ static NSString *cellIdentifier = @"ContactCell";
 }
 
 #pragma mark - notification
-
-- (void)sessionChanged {
-}
 
 - (void)refresh {
     [self refresh:nil];
@@ -120,10 +116,6 @@ static NSString *cellIdentifier = @"ContactCell";
 }
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
-    if ([_im isOpened] == NO) {
-        [self stopRefreshControl:refreshControl];
-        //return;
-    }
     [self.im findRecentRoomsWithBlock: ^(NSArray *objects, NSError *error) {
         [self stopRefreshControl:refreshControl];
         if ([self filterError:error]) {
@@ -173,7 +165,7 @@ static NSString *cellIdentifier = @"ContactCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LZConversationCell *cell = [tableView dequeueReusableCellWithIdentifier:[LZConversationCell identifier]];
+    LZConversationCell *cell = [LZConversationCell dequeueOrCreateCellByTableView:tableView];
     CDRoom *room = [_rooms objectAtIndex:indexPath.row];
     if (room.conv.type == CDConvTypeSingle) {
         id <CDUserModel> user = [[CDIMConfig config].userDelegate getUserById:room.conv.otherId];
@@ -221,14 +213,20 @@ static NSString *cellIdentifier = @"ContactCell";
     return [LZConversationCell heightOfCell];
 }
 
-#pragma mark -- CDSessionDelegateMethods
+#pragma mark - connect
 
-- (void)onIMClientPauseWithStatusView:(CDIMClientStatusView *)view {
-    self.tableView.tableHeaderView = view;
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (object == self.im && [keyPath isEqualToString:@"status"]) {
+        [self updateStatusView];
+    }
 }
 
-- (void)onIMClientOpenWithStatusView:(CDIMClientStatusView *)view {
-    self.tableView.tableHeaderView = nil;
+- (void)updateStatusView {
+    if (self.im.connect) {
+        self.tableView.tableHeaderView = nil ;
+    }else {
+        self.tableView.tableHeaderView = self.clientStatusView;
+    }
 }
 
 @end

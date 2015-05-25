@@ -10,9 +10,11 @@
 
 @interface LZConversationCell : UITableViewCell
 
-+ (NSString *)identifier;
-
 + (CGFloat)heightOfCell;
+
++ (LZConversationCell *)dequeueOrCreateCellByTableView :(UITableView *)tableView;
+
++ (void)registerCellToTableView: (UITableView *)tableView ;
 
 @property (nonatomic, strong) UIImageView *avatarImageView;
 @property (nonatomic, strong) UILabel *nameLabel;

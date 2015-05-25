@@ -11,7 +11,6 @@
 
 #define NOTIFICATION_MESSAGE_UPDATED @"NOTIFICATION_MESSAGE_UPDATED"
 #define NOTIFICATION_CONV_UPDATED @"NOTIFICATION _CONV_UPDATED"
-#define NOTIFICATION_SESSION_UPDATED @"NOTIFICATION_SESSION_UPDATED"
 
 @interface CDNotify : NSObject
 
@@ -29,10 +28,5 @@
 
 - (void)postMsgNotify:(AVIMTypedMessage *)msg;
 
-- (void)addSessionObserver:(id)target selector:(SEL)selector;
-
-- (void)removeSessionObserver:(id)target;
-
-- (void)postSessionNotify;
 
 @end

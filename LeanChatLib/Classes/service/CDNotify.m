@@ -63,16 +63,4 @@ static CDNotify *_notify;
     [_center postNotificationName:NOTIFICATION_MESSAGE_UPDATED object:msg];
 }
 
-- (void)addSessionObserver:(id)target selector:(SEL)selector {
-    [_center addObserver:target selector:selector name:NOTIFICATION_SESSION_UPDATED object:nil];
-}
-
-- (void)removeSessionObserver:(id)target {
-    [_center removeObserver:target name:NOTIFICATION_SESSION_UPDATED object:nil];
-}
-
-- (void)postSessionNotify {
-    [_center postNotificationName:NOTIFICATION_SESSION_UPDATED object:nil];
-}
-
 @end

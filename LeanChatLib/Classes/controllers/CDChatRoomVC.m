@@ -12,17 +12,18 @@
 #import "XHDisplayMediaViewController.h"
 #import "XHDisplayLocationViewController.h"
 #import "XHAudioPlayerHelper.h"
-#import "CDIMClientStatusView.h"
+#import "LZStatusView.h"
 #import "CDStorage.h"
 #import "CDEmotionUtils.h"
 #import "CDIMConfig.h"
 #import "AVIMConversation+Custom.h"
+#import "CDNotify.h"
 
 #define ONE_PAGE_SIZE 20
 
 typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
 
-@interface CDChatRoomVC () <UINavigationControllerDelegate, CDIMClientStatusViewDelegate>
+@interface CDChatRoomVC () <UINavigationControllerDelegate>
 
 @property (nonatomic, strong) CDStorage *storage;
 
@@ -36,7 +37,7 @@ typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
 
 @property (nonatomic, strong) NSArray *emotionManagers;
 
-@property (nonatomic, strong) CDIMClientStatusView *clientStatusView;
+@property (nonatomic, strong) LZStatusView *clientStatusView;
 
 @end
 
@@ -76,10 +77,9 @@ typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
 
 #pragma mark - Propertys 
 
-- (CDIMClientStatusView *)clientStatusView {
+- (LZStatusView *)clientStatusView {
     if (_clientStatusView == nil) {
-        _clientStatusView = [[CDIMClientStatusView alloc] initWithFrame:CGRectMake(0, 64, self.messageTableView.frame.size.width, kCDIMClientStatusViewHight)];
-        [_clientStatusView setDelegate:self];
+        _clientStatusView = [[LZStatusView alloc] initWithFrame:CGRectMake(0, 64, self.messageTableView.frame.size.width, kLZStatusViewHight)];
     }
     return _clientStatusView;
 }
@@ -106,35 +106,36 @@ typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
     [self initBarButton];
     [self initBottomMenuAndEmotionView];
     [self.view addSubview:self.clientStatusView];
-    [self.clientStatusView observeIMClientUpdate];
-    
+    self.clientStatusView.hidden = YES;
     id <CDUserModel> curUser = self.im.selfUser;
     // 设置自身用户名
     self.messageSender = [curUser username];
     
     [_storage insertRoomWithConvid:self.conv.conversationId];
-    [_notify addConvObserver:self selector:@selector(refreshConv)];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [_notify addMsgObserver:self selector:@selector(loadMsg:)];
+    [_notify addConvObserver:self selector:@selector(refreshConv)];
     [_storage clearUnreadWithConvid:self.conv.conversationId];
     [self refreshConv];
     [self loadMsgsWithLoadMore:NO];
+    [self.im addObserver:self forKeyPath:@"connect" options:NSKeyValueObservingOptionNew context:NULL];
+    [self updateStatusView];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [_notify removeMsgObserver:self];
+    [_notify removeConvObserver:self];
     [_storage clearUnreadWithConvid:self.conv.conversationId];
+    [self.im removeObserver:self forKeyPath:@"connect"];
     [[XHAudioPlayerHelper shareInstance] stopAudio];
 }
 
 - (void)dealloc {
-    self.emotionManagers = nil;
     [[XHAudioPlayerHelper shareInstance] setDelegate:nil];
-    [_notify removeConvObserver:self];
 }
 
 #pragma mark - prev and next controller
@@ -600,12 +601,18 @@ typedef void (^CDNSArrayCallback)(NSArray *objects, NSError *error);
 
 #pragma mark - client status
 
-- (void)onIMClientPauseWithStatusView:(CDIMClientStatusView *)view {
-    _clientStatusView.hidden = NO;
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (object == self.im && [keyPath isEqualToString:@"connect"]) {
+        [self updateStatusView];
+    }
 }
 
-- (void)onIMClientOpenWithStatusView:(CDIMClientStatusView *)view {
-    _clientStatusView.hidden = YES;
+- (void)updateStatusView {
+    if (self.im.connect) {
+        self.clientStatusView.hidden = YES;
+    }else {
+        self.clientStatusView.hidden = NO;
+    }
 }
 
 #pragma mark - alert error
