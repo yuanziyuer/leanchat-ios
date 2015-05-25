@@ -6,12 +6,8 @@
 //  Copyright (c) 2015年 iOS软件开发工程师 曾宪华 热衷于简洁的UI QQ:543413507 http://www.pailixiu.com/blog   http://www.pailixiu.com/Jack/personal. All rights reserved.
 //
 
-#import "CDChatListRoomCell.h"
+#import "LZConversationCell.h"
 #import "JSBadgeView.h"
-#import "AVIMConversation+Custom.h"
-#import "CDIMConfig.h"
-#import "UIView+XHRemoteImage.h"
-#import "CDEmotionUtils.h"
 
 static CGFloat kCDImageSize = 35;
 static CGFloat kCDVerticalSpacing = 8;
@@ -23,21 +19,17 @@ static CGFloat kCDNameLabelHeight;
 static CGFloat kCDMessageLabelHeight;
 
 
-@interface CDChatListRoomCell ()
+@interface LZConversationCell ()
 
-@property (nonatomic, strong) UIImageView *avatarImageView;
-@property (nonatomic, strong) UILabel *nameLabel;
-@property (nonatomic, strong) UILabel *messageLabel;
 @property (nonatomic, strong) JSBadgeView *badgeView;
-@property (nonatomic, strong) UILabel *timestampLabel;
 
 @end
 
-@implementation CDChatListRoomCell
+@implementation LZConversationCell
 
 
 + (NSString *)identifier {
-    return NSStringFromClass([CDChatListRoomCell class]);
+    return NSStringFromClass([LZConversationCell class]);
 }
 
 + (CGFloat)heightOfCell {
@@ -103,63 +95,12 @@ static CGFloat kCDMessageLabelHeight;
     return _badgeView;
 }
 
-#pragma mark
-
-- (NSString *)getMessageTitle:(AVIMTypedMessage *)msg {
-    NSString *title;
-    AVIMLocationMessage *locationMsg;
-    switch (msg.mediaType) {
-        case kAVIMMessageMediaTypeText:
-            title = [CDEmotionUtils emojiStringFromString:msg.text];
-            break;
-            
-        case kAVIMMessageMediaTypeAudio:
-            title = @"声音";
-            break;
-            
-        case kAVIMMessageMediaTypeImage:
-            title = @"图片";
-            break;
-            
-        case kAVIMMessageMediaTypeLocation:
-            locationMsg = (AVIMLocationMessage *)msg;
-            title = locationMsg.text;
-            break;
-        default:
-            break;
-    }
-    return title;
-}
-
-
-- (void)setRoom:(CDRoom *)room {
-    _room = room;
-    
-    if (room.conv.type == CDConvTypeSingle) {
-        id <CDUserModel> user = [[CDIMConfig config].userDelegate getUserById:room.conv.otherId];
-        self.nameLabel.text = user.username;
-        [self.avatarImageView setImageWithURL:[NSURL URLWithString:user.avatarUrl]];
-    }
-    else {
-        [self.avatarImageView setImage:room.conv.icon];
-        self.nameLabel.text = room.conv.displayName;
-    }
-    self.messageLabel.text = [self getMessageTitle:room.lastMsg];
-    
-    if (room.unreadCount > 0) {
-        self.badgeView.badgeText = [NSString stringWithFormat:@"%ld", (long)room.unreadCount];
+- (void)setUnreadCount:(NSInteger)unreadCount {
+    if (unreadCount > 0) {
+        self.badgeView.badgeText = [NSString stringWithFormat:@"%ld", (long)unreadCount];
     }
     else {
         self.badgeView.badgeText = nil;
-    }
-    if (room.lastMsg) {
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"MM-dd HH:mm"];
-        NSString *timeString = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:room.lastMsg.sendTimestamp / 1000]];
-        self.timestampLabel.text = timeString;
-    }
-    else {
-        self.timestampLabel.text = @"";
     }
 }
 

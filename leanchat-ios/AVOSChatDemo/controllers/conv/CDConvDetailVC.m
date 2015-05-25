@@ -13,39 +13,37 @@
 #import "CDConvDetailMembersCell.h"
 #import "CDConvReportAbuseVC.h"
 #import "CDCache.h"
+#import "AlertViewHelper.h"
 
 static NSString *kCDConvDetailVCTitleKey = @"title";
 static NSString *kCDConvDetailVCDisclosureKey = @"disclosure";
 static NSString *kCDConvDetailVCDetailKey = @"detail";
-static NSString *kCDConvDetailVCSelectorKey = @"selecotr";
+static NSString *kCDConvDetailVCSelectorKey = @"selector";
+static NSString *kCDConvDetailVCSwitchKey = @"switch";
 
-static CGFloat kCDConvDetailVCHorizontalPadding = 10;
-
-static NSString *switchCellIdentifier = @"switch";
-
-@interface CDConvDetailVC () <UIGestureRecognizerDelegate, UIAlertViewDelegate, UITableViewDelegate, UITableViewDataSource, CDConvDetailMembersHeaderViewDelegate>
+@interface CDConvDetailVC () <UIGestureRecognizerDelegate, UITableViewDelegate, UITableViewDataSource, CDConvDetailMembersHeaderViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (nonatomic, strong) CDConvDetailMembersCell *membersCell;
 
-@property CDIM *im;
+@property (nonatomic, strong) CDIM *im;
 
-@property BOOL own;
+@property (nonatomic, assign) BOOL own;
 
-@property CDConvType type;
+@property (nonatomic, assign) CDConvType type;
 
-@property CDStorage *storage;
+@property (nonatomic, strong) CDStorage *storage;
 
-@property CDNotify *notify;
-
-@property (nonatomic, strong) AVUser *longPressedMember;
+@property (nonatomic, strong) CDNotify *notify;
 
 @property (nonatomic, strong) NSArray *members;
 
-@property (nonatomic, strong) NSArray *dataSource;
-
 @property (nonatomic, strong) UITableViewCell *switchCell;
+
+@property (nonatomic, strong) UISwitch *muteSwitch;
+
+@property (nonatomic, strong) AlertViewHelper *alertViewHelper;
 
 @end
 
@@ -67,9 +65,6 @@ static NSString *const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //self.clearsSelectionOnViewWillAppear = NO;
-    
-    self.view.backgroundColor = NORMAL_BACKGROUD_COLOR;
     [_notify addConvObserver:self selector:@selector(refresh)];
     [self setupDatasource];
     [self refresh];
@@ -81,20 +76,22 @@ static NSString *const reuseIdentifier = @"Cell";
     NSDictionary *dict2 = @{ kCDConvDetailVCTitleKey:@"举报",
                              kCDConvDetailVCDisclosureKey:@YES,
                              kCDConvDetailVCSelectorKey:NSStringFromSelector(@selector(goReportAbuse)) };
-    NSDictionary *dict3 = @{ kCDConvDetailVCTitleKey:@"消息免打扰" };
+    NSDictionary *dict3 = @{ kCDConvDetailVCTitleKey:@"消息免打扰", kCDConvDetailVCSwitchKey:@YES };
     if (_type == CDConvTypeGroup) {
-        self.dataSource = @[@{ kCDConvDetailVCTitleKey:@"群聊名称",
-                               kCDConvDetailVCDisclosureKey:@YES,
-                               kCDConvDetailVCDetailKey:self.conv.displayName,
-                               kCDConvDetailVCSelectorKey:NSStringFromSelector(@selector(goChangeName)) },
-                            dict3, dict1, dict2,
-                            @{ kCDConvDetailVCTitleKey:@"删除并退出",
-                               kCDConvDetailVCSelectorKey:NSStringFromSelector(@selector(quitConv)) }];
+        self.dataSource = [@[@{ kCDConvDetailVCTitleKey:@"群聊名称",
+                                kCDConvDetailVCDisclosureKey:@YES,
+                                kCDConvDetailVCDetailKey:self.conv.displayName,
+                                kCDConvDetailVCSelectorKey:NSStringFromSelector(@selector(goChangeName)) },
+                             dict3, dict1, dict2,
+                             @{ kCDConvDetailVCTitleKey:@"删除并退出",
+                                kCDConvDetailVCSelectorKey:NSStringFromSelector(@selector(quitConv)) }] mutableCopy];
     }
     else {
-        self.dataSource = @[dict3, dict1, dict2];
+        self.dataSource = [@[dict3, dict1, dict2] mutableCopy];
     }
 }
+
+#pragma mark - Propertys
 
 - (CDConvDetailMembersCell *)membersCell {
     if (_membersCell == nil) {
@@ -104,23 +101,27 @@ static NSString *const reuseIdentifier = @"Cell";
     return _membersCell;
 }
 
-- (UITableViewCell *)switchCell {
-    if (_switchCell == nil) {
-        _switchCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:switchCellIdentifier];
-        UISwitch *theSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
-        CGRect frame = theSwitch.frame;
-        frame.origin = CGPointMake(CGRectGetWidth(self.view.frame) - CGRectGetWidth(theSwitch.frame) - kCDConvDetailVCHorizontalPadding, (44 - CGRectGetHeight(theSwitch.frame)) / 2);
-        theSwitch.frame = frame;
-        [theSwitch addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
-        [theSwitch setOn:self.conv.muted];
-        [_switchCell addSubview:theSwitch];
+- (UISwitch *)muteSwitch {
+    if (_muteSwitch == nil) {
+        _muteSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+        [_muteSwitch addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
+        [_muteSwitch setOn:self.conv.muted];
     }
-    return _switchCell;
+    return _muteSwitch;
 }
 
 - (AVIMConversation *)conv {
     return [CDCache getCurConv];
 }
+
+- (AlertViewHelper *)alertViewHelper {
+    if (_alertViewHelper == nil) {
+        _alertViewHelper = [[AlertViewHelper alloc] init];
+    }
+    return _alertViewHelper;
+}
+
+#pragma mark
 
 - (void)refresh {
     AVIMConversation *conv = [self conv];
@@ -148,51 +149,12 @@ static NSString *const reuseIdentifier = @"Cell";
     self.navigationItem.rightBarButtonItem = addMember;
 }
 
-- (void)quitConv {
-    [self.conv quitWithCallback: ^(BOOL succeeded, NSError *error) {
-        if ([CDUtils filterError:error]) {
-            [_storage deleteRoomByConvid:self.conv.conversationId];
-            [self.navigationController popToRootViewControllerAnimated:YES];
-        }
-    }];
-}
-
-- (void)longPressUser:(UILongPressGestureRecognizer *)gestureRecognizer {
-    if (gestureRecognizer.state != UIGestureRecognizerStateBegan) {
-        return;
-    }
-    CGPoint p = [gestureRecognizer locationInView:self.collectionView];
-    NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:p];
-    if (indexPath == nil) {
-        DLog(@"can't not find index path");
-    }
-    else {
-        if (_own) {
-            AVIMConversation *conv = [self conv];
-            NSString *userId = [conv.members objectAtIndex:indexPath.row];
-            if ([userId isEqualToString:conv.creator] == NO) {
-                UIAlertView *alert = [[UIAlertView alloc]
-                                      initWithTitle:nil message:@"确定要踢走该成员吗？"  delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
-                alert.tag = indexPath.row;
-                [alert show];
-            }
-        }
-    }
-}
-
 - (void)dealloc {
     [_notify removeConvObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-}
-
-- (void)addMember {
-    CDAddMemberVC *controller = [[CDAddMemberVC alloc] init];
-    controller.groupDetailVC = self;
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
-    [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
 
 #pragma mark - tableview
@@ -220,20 +182,10 @@ static NSString *const reuseIdentifier = @"Cell";
     }
     else {
         UITableViewCell *cell;
-        if ((self.type == CDConvTypeGroup && indexPath.row == 1)
-            || (self.type == CDConvTypeSingle && indexPath.row == 0)) {
-            cell = [tableView dequeueReusableCellWithIdentifier:switchCellIdentifier];
-            if (cell == nil) {
-                cell = self.switchCell;
-            }
-        }
-        else {
-            static NSString *identifier = @"Cell";
-            cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            }
+        static NSString *identifier = @"Cell";
+        cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
         }
         
         NSDictionary *data = self.dataSource[indexPath.row];
@@ -253,6 +205,12 @@ static NSString *const reuseIdentifier = @"Cell";
         else {
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
+        BOOL isSwitch = [[data objectForKey:kCDConvDetailVCSwitchKey] boolValue];
+        if (isSwitch) {
+            cell.accessoryView = self.muteSwitch;
+        } else {
+            cell.accessoryView = nil;
+        }
         return cell;
     }
 }
@@ -263,6 +221,68 @@ static NSString *const reuseIdentifier = @"Cell";
     }
     else {
         return 44;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 0) {
+        return;
+    }
+    NSString *selectorName = [[self.dataSource objectAtIndex:indexPath.row] objectForKey:kCDConvDetailVCSelectorKey];
+    if (selectorName) {
+        [self performSelector:NSSelectorFromString(selectorName) withObject:nil afterDelay:0];
+    }
+}
+
+#pragma mark - member cell delegate
+
+- (void)didSelectMember:(AVUser *)member {
+    NSString *curUserId = [AVUser currentUser].objectId;
+    if ([curUserId isEqualToString:member.objectId] == YES) {
+        return;
+    }
+    CDUserInfoVC *userInfoVC = [[CDUserInfoVC alloc] initWithUser:member];
+    [self.navigationController pushViewController:userInfoVC animated:YES];
+}
+
+- (void)didLongPressMember:(AVUser *)member {
+    if (_own) {
+        AVIMConversation *conv = [self conv];
+        if ([member.objectId isEqualToString:conv.creator] == NO) {
+            [self.alertViewHelper showAlertViewWithMessage:@"确定要踢走该成员吗？" block:^(BOOL confirm, NSString *text) {
+                if (confirm) {
+                    WEAKSELF
+                    [self.conv removeMembersWithClientIds : @[member.objectId] callback : ^(BOOL succeeded, NSError *error) {
+                        if ([CDUtils filterError:error]) {
+                            [CDCache refreshCurConv: ^(BOOL succeeded, NSError *error) {
+                                if ([CDUtils filterError:error]) {
+                                }
+                            }];
+                        }
+                    }];
+                }
+            }];
+        }
+    }
+}
+
+#pragma mark - Action
+
+- (void)goReportAbuse {
+    CDConvReportAbuseVC *reportAbuseVC = [[CDConvReportAbuseVC alloc] initWithConvid:self.conv.conversationId];
+    [self.navigationController pushViewController:reportAbuseVC animated:YES];
+}
+
+- (void)switchValueChanged:(UISwitch *)theSwitch {
+    AVBooleanResultBlock block = ^(BOOL succeeded, NSError *error) {
+        [self alertError:error];
+    };
+    if ([theSwitch isOn]) {
+        [self.conv muteWithCallback:block];
+    }
+    else {
+        [self.conv unmuteWithCallback:block];
     }
 }
 
@@ -279,73 +299,20 @@ static NSString *const reuseIdentifier = @"Cell";
     [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section == 0) {
-        return;
-    }
-    NSString *selectorName = [[self.dataSource objectAtIndex:indexPath.row] objectForKey:kCDConvDetailVCSelectorKey];
-    if (selectorName) {
-        [self performSelector:NSSelectorFromString(selectorName) withObject:nil afterDelay:0];
-    }
+- (void)addMember {
+    CDAddMemberVC *controller = [[CDAddMemberVC alloc] init];
+    controller.groupDetailVC = self;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
+    [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
 
-- (void)didLongPressMember:(AVUser *)member {
-    if (_own) {
-        AVIMConversation *conv = [self conv];
-        if ([member.objectId isEqualToString:conv.creator] == NO) {
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle:nil message:@"确定要踢走该成员吗？"  delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
-            self.longPressedMember = member;
-            [alert show];
+- (void)quitConv {
+    [self.conv quitWithCallback: ^(BOOL succeeded, NSError *error) {
+        if ([CDUtils filterError:error]) {
+            [_storage deleteRoomByConvid:self.conv.conversationId];
+            [self.navigationController popToRootViewControllerAnimated:YES];
         }
-    }
-}
-
-- (void)       alertView:(UIAlertView *)alertView
-    clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-        WEAKSELF
-        [self.conv removeMembersWithClientIds : @[self.longPressedMember.objectId] callback : ^(BOOL succeeded, NSError *error) {
-            weakSelf.longPressedMember = nil;
-            if ([CDUtils filterError:error]) {
-                [CDCache refreshCurConv: ^(BOOL succeeded, NSError *error) {
-                    if ([CDUtils filterError:error]) {
-                    }
-                }];
-            }
-        }];
-    }
-}
-
-- (void)didSelectMember:(AVUser *)member {
-    NSString *curUserId = [AVUser currentUser].objectId;
-    if ([curUserId isEqualToString:member.objectId] == YES) {
-        return;
-    }
-    CDUserInfoVC *userInfoVC = [[CDUserInfoVC alloc] initWithUser:member];
-    [self.navigationController pushViewController:userInfoVC animated:YES];
-}
-
-- (void)goReportAbuse {
-    CDConvReportAbuseVC *reportAbuseVC = [[CDConvReportAbuseVC alloc] initWithConvid:self.conv.conversationId];
-    [self.navigationController pushViewController:reportAbuseVC animated:YES];
-}
-
-#pragma mark - Swtich
-- (void)switchValueChanged:(UISwitch *)theSwitch {
-    if ([theSwitch isOn]) {
-        [self.conv muteWithCallback: ^(BOOL succeeded, NSError *error) {
-            if ([CDUtils filterError:error]) {
-            }
-        }];
-    }
-    else {
-        [self.conv unmuteWithCallback: ^(BOOL succeeded, NSError *error) {
-            if ([CDUtils filterError:error]) {
-            }
-        }];
-    }
+    }];
 }
 
 @end

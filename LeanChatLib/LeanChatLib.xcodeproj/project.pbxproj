@@ -340,14 +340,14 @@
 		7049263A1ADFCBDB00E8E295 /* weChatBubble_Sending_Cavern@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 704925DA1ADFCBDB00E8E295 /* weChatBubble_Sending_Cavern@2x.png */; };
 		7049263B1ADFCBDB00E8E295 /* weChatBubble_Sending_LeanChat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 704925DB1ADFCBDB00E8E295 /* weChatBubble_Sending_LeanChat@2x.png */; };
 		7049263C1ADFCBDB00E8E295 /* weChatBubble_Sending_Solid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 704925DC1ADFCBDB00E8E295 /* weChatBubble_Sending_Solid@2x.png */; };
+		70705D6C1B1101CD0057F14E /* LZConversationCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 70705D6A1B1101CD0057F14E /* LZConversationCell.h */; };
+		70705D6D1B1101CD0057F14E /* LZConversationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70705D6B1B1101CD0057F14E /* LZConversationCell.m */; };
 		70B299101ACE9A0600FE265E /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B2990F1ACE9A0600FE265E /* CoreTelephony.framework */; };
 		70B299121ACE9A0B00FE265E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B299111ACE9A0B00FE265E /* CoreLocation.framework */; };
 		70B299141ACE9A1200FE265E /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B299131ACE9A1200FE265E /* libsqlite3.dylib */; };
 		70B299161ACE9A2E00FE265E /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B299151ACE9A2E00FE265E /* libicucore.dylib */; };
 		70B299181ACE9A3A00FE265E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B299171ACE9A3A00FE265E /* MobileCoreServices.framework */; };
 		70B2991A1ACE9A4300FE265E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B299191ACE9A4300FE265E /* SystemConfiguration.framework */; };
-		70E96FBB1B0C6C210098D2F6 /* CDChatListRoomCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 70E96FB91B0C6C210098D2F6 /* CDChatListRoomCell.h */; };
-		70E96FBC1B0C6C210098D2F6 /* CDChatListRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E96FBA1B0C6C210098D2F6 /* CDChatListRoomCell.m */; };
 		70EEB0D71AF0F38B00FBF92F /* UIImage+Icon.h in Headers */ = {isa = PBXBuildFile; fileRef = 70EEB0D51AF0F38B00FBF92F /* UIImage+Icon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		70EEB0D81AF0F38B00FBF92F /* UIImage+Icon.m in Sources */ = {isa = PBXBuildFile; fileRef = 70EEB0D61AF0F38B00FBF92F /* UIImage+Icon.m */; };
 /* End PBXBuildFile section */
@@ -692,6 +692,8 @@
 		7059DCE81ACE4ECE009D17AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7059DCE91ACE4ECE009D17AB /* LeanChatLibTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeanChatLibTests.m; sourceTree = "<group>"; };
 		7059E7131ACE5650009D17AB /* LeanChatLib-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LeanChatLib-Prefix.pch"; sourceTree = "<group>"; };
+		70705D6A1B1101CD0057F14E /* LZConversationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZConversationCell.h; sourceTree = "<group>"; };
+		70705D6B1B1101CD0057F14E /* LZConversationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZConversationCell.m; sourceTree = "<group>"; };
 		70B2939C1ACE923400FE265E /* .DS_Store */ = {isa = PBXFileReference; lastKnownFileType = file; path = .DS_Store; sourceTree = "<group>"; };
 		70B2990F1ACE9A0600FE265E /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		70B299111ACE9A0B00FE265E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -699,8 +701,6 @@
 		70B299151ACE9A2E00FE265E /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		70B299171ACE9A3A00FE265E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		70B299191ACE9A4300FE265E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		70E96FB91B0C6C210098D2F6 /* CDChatListRoomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDChatListRoomCell.h; sourceTree = "<group>"; };
-		70E96FBA1B0C6C210098D2F6 /* CDChatListRoomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDChatListRoomCell.m; sourceTree = "<group>"; };
 		70EEB0D51AF0F38B00FBF92F /* UIImage+Icon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Icon.h"; sourceTree = "<group>"; };
 		70EEB0D61AF0F38B00FBF92F /* UIImage+Icon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Icon.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -732,12 +732,12 @@
 		704922B01ADFCAD700E8E295 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				704922CB1ADFCAD700E8E295 /* vendor */,
 				704922B91ADFCAD700E8E295 /* LeanChatLib.h */,
 				704922B11ADFCAD700E8E295 /* common */,
 				704922B41ADFCAD700E8E295 /* controllers */,
 				704922BA1ADFCAD700E8E295 /* models */,
 				704922C01ADFCAD700E8E295 /* service */,
-				704922CB1ADFCAD700E8E295 /* vendor */,
 				704923C61ADFCAD700E8E295 /* views */,
 			);
 			path = Classes;
@@ -797,6 +797,7 @@
 		704922CB1ADFCAD700E8E295 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				70705D691B1101CD0057F14E /* LZConversationCell */,
 				704922CC1ADFCAD700E8E295 /* Emoji */,
 				704922D11ADFCAD700E8E295 /* fmdb */,
 				704922DD1ADFCAD700E8E295 /* JSBadgeView */,
@@ -1348,8 +1349,6 @@
 		704923C61ADFCAD700E8E295 /* views */ = {
 			isa = PBXGroup;
 			children = (
-				70E96FB91B0C6C210098D2F6 /* CDChatListRoomCell.h */,
-				70E96FBA1B0C6C210098D2F6 /* CDChatListRoomCell.m */,
 				704923CA1ADFCAD700E8E295 /* CDIMClientStatusView.h */,
 				704923CB1ADFCAD700E8E295 /* CDIMClientStatusView.m */,
 			);
@@ -1512,6 +1511,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		70705D691B1101CD0057F14E /* LZConversationCell */ = {
+			isa = PBXGroup;
+			children = (
+				70705D6A1B1101CD0057F14E /* LZConversationCell.h */,
+				70705D6B1B1101CD0057F14E /* LZConversationCell.m */,
+			);
+			path = LZConversationCell;
+			sourceTree = "<group>";
+		};
 		70B2990A1ACE993600FE265E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1587,7 +1595,6 @@
 				704923EC1ADFCAD700E8E295 /* FMDatabaseAdditions.h in Headers */,
 				704924451ADFCAD700E8E295 /* XHFoundationMacro.h in Headers */,
 				704924971ADFCAD700E8E295 /* XHMessageTableViewCell.h in Headers */,
-				70E96FBB1B0C6C210098D2F6 /* CDChatListRoomCell.h in Headers */,
 				7049247D1ADFCAD700E8E295 /* XHImageViewer.h in Headers */,
 				704923FD1ADFCAD700E8E295 /* UIButton+XHButtonTitlePosition.h in Headers */,
 				704924251ADFCAD700E8E295 /* XHPullRefreshTableViewController.h in Headers */,
@@ -1631,6 +1638,7 @@
 				7049241B1ADFCAD700E8E295 /* XHPhotographyHelper.h in Headers */,
 				7049248D1ADFCAD700E8E295 /* XHBubblePhotoImageView.h in Headers */,
 				7049246B1ADFCAD700E8E295 /* SETextEditingCaret.h in Headers */,
+				70705D6C1B1101CD0057F14E /* LZConversationCell.h in Headers */,
 				7049248F1ADFCAD700E8E295 /* XHMessageBubbleView.h in Headers */,
 				704924AF1ADFCAD700E8E295 /* XHRefreshView.h in Headers */,
 				704924AD1ADFCAD700E8E295 /* XHRefreshControl.h in Headers */,
@@ -1909,7 +1917,6 @@
 				704924A01ADFCAD700E8E295 /* XHEmotionCollectionViewCell.m in Sources */,
 				704923E31ADFCAD700E8E295 /* CDNotify.m in Sources */,
 				7049240E1ADFCAD700E8E295 /* UIView+XHBadgeView.m in Sources */,
-				70E96FBC1B0C6C210098D2F6 /* CDChatListRoomCell.m in Sources */,
 				7049242C1ADFCAD700E8E295 /* XHDisplayLocationViewController.m in Sources */,
 				704924421ADFCAD700E8E295 /* XHMessageVoiceFactory.m in Sources */,
 				704924B31ADFCAD700E8E295 /* NSString+Emojize.m in Sources */,
@@ -1929,6 +1936,7 @@
 				7049249E1ADFCAD700E8E295 /* XHVoiceRecordHUD.m in Sources */,
 				7049243E1ADFCAD700E8E295 /* XHMessageBubbleFactory.m in Sources */,
 				704924641ADFCAD700E8E295 /* SELineLayout.m in Sources */,
+				70705D6D1B1101CD0057F14E /* LZConversationCell.m in Sources */,
 				7049244F1ADFCAD700E8E295 /* XHEmotion.m in Sources */,
 				704924BA1ADFCAD700E8E295 /* CDIMClientStatusView.m in Sources */,
 				704924661ADFCAD700E8E295 /* SELinkText.m in Sources */,

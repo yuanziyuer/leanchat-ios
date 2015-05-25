@@ -7,14 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CDRoom.h"
 
-@interface CDChatListRoomCell : UITableViewCell
+@interface LZConversationCell : UITableViewCell
 
 + (NSString *)identifier;
 
 + (CGFloat)heightOfCell;
 
-@property (nonatomic, strong) CDRoom *room;
+@property (nonatomic, strong) UIImageView *avatarImageView;
+@property (nonatomic, strong) UILabel *nameLabel;
+@property (nonatomic, strong) UILabel *messageLabel;
+@property (nonatomic, assign) NSInteger unreadCount;
+@property (nonatomic, strong) UILabel *timestampLabel;
+
 
 @end

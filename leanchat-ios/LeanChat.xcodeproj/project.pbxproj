@@ -93,7 +93,6 @@
 		70013C091ABC19DB0050D0F7 /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 7001396F1ABC19DA0050D0F7 /* UIProgressView+AFNetworking.m */; };
 		70013C0A1ABC19DB0050D0F7 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 700139711ABC19DA0050D0F7 /* UIRefreshControl+AFNetworking.m */; };
 		70013C0B1ABC19DB0050D0F7 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 700139731ABC19DA0050D0F7 /* UIWebView+AFNetworking.m */; };
-		70013D061ABC19DB0050D0F7 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B591ABC19DA0050D0F7 /* UIImage+Resize.m */; };
 		70013D081ABC19DB0050D0F7 /* CDBadgeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B5F1ABC19DA0050D0F7 /* CDBadgeLabel.m */; };
 		70013D091ABC19DB0050D0F7 /* CDButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B611ABC19DA0050D0F7 /* CDButton.m */; };
 		70013D0C1ABC19DB0050D0F7 /* CDImageLabelTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70013B661ABC19DA0050D0F7 /* CDImageLabelTableCell.m */; };
@@ -124,6 +123,8 @@
 		704A890F1A30F5B200D2A3C2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704A890E1A30F5B200D2A3C2 /* QuartzCore.framework */; };
 		7056D4701AD4DB18008391FC /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7056D46F1AD4DB18008391FC /* CDUser.m */; };
 		7059E72D1ACE727B009D17AB /* CDIMService.m in Sources */ = {isa = PBXBuildFile; fileRef = 7059E72C1ACE727B009D17AB /* CDIMService.m */; };
+		70705D7D1B12385E0057F14E /* AlertViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 70705D7C1B12385E0057F14E /* AlertViewHelper.m */; };
+		70705D811B12387A0057F14E /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 70705D801B12387A0057F14E /* UIImage+Resize.m */; };
 		709E54251ADE5B5900F82BB8 /* login_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 709E54241ADE5B5900F82BB8 /* login_background.png */; };
 		709E54291ADE61B600F82BB8 /* CDEntryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 709E54281ADE61B600F82BB8 /* CDEntryVC.m */; };
 		709E542B1ADE853C00F82BB8 /* group_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 709E542A1ADE853C00F82BB8 /* group_icon.png */; };
@@ -386,8 +387,6 @@
 		700139711ABC19DA0050D0F7 /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
 		700139721ABC19DA0050D0F7 /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
 		700139731ABC19DA0050D0F7 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
-		70013B581ABC19DA0050D0F7 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
-		70013B591ABC19DA0050D0F7 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		70013B5E1ABC19DA0050D0F7 /* CDBadgeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDBadgeLabel.h; sourceTree = "<group>"; };
 		70013B5F1ABC19DA0050D0F7 /* CDBadgeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDBadgeLabel.m; sourceTree = "<group>"; };
 		70013B601ABC19DA0050D0F7 /* CDButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDButton.h; sourceTree = "<group>"; };
@@ -438,6 +437,10 @@
 		7056D46F1AD4DB18008391FC /* CDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUser.m; sourceTree = "<group>"; };
 		7059E72B1ACE727B009D17AB /* CDIMService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIMService.h; sourceTree = "<group>"; };
 		7059E72C1ACE727B009D17AB /* CDIMService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIMService.m; sourceTree = "<group>"; };
+		70705D7B1B12385E0057F14E /* AlertViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertViewHelper.h; sourceTree = "<group>"; };
+		70705D7C1B12385E0057F14E /* AlertViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertViewHelper.m; sourceTree = "<group>"; };
+		70705D7F1B12387A0057F14E /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
+		70705D801B12387A0057F14E /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		709E54241ADE5B5900F82BB8 /* login_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_background.png; sourceTree = "<group>"; };
 		709E54271ADE61B600F82BB8 /* CDEntryVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEntryVC.h; sourceTree = "<group>"; };
 		709E54281ADE61B600F82BB8 /* CDEntryVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEntryVC.m; sourceTree = "<group>"; };
@@ -851,11 +854,11 @@
 		7001394A1ABC19DA0050D0F7 /* third_party */ = {
 			isa = PBXGroup;
 			children = (
+				70705D7E1B12387A0057F14E /* UIImage+Resize */,
+				70705D7A1B12385E0057F14E /* AlertViewHelper */,
 				70491C5E1ADF673F00E8E295 /* MBProgressHUD */,
 				70457B151ADB9ED700452531 /* Reachability */,
 				7001394B1ABC19DA0050D0F7 /* AFNetworking */,
-				70013B581ABC19DA0050D0F7 /* UIImage+Resize.h */,
-				70013B591ABC19DA0050D0F7 /* UIImage+Resize.m */,
 			);
 			path = third_party;
 			sourceTree = "<group>";
@@ -980,6 +983,24 @@
 				704922AA1ADFB99500E8E295 /* LeanChatLib.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		70705D7A1B12385E0057F14E /* AlertViewHelper */ = {
+			isa = PBXGroup;
+			children = (
+				70705D7B1B12385E0057F14E /* AlertViewHelper.h */,
+				70705D7C1B12385E0057F14E /* AlertViewHelper.m */,
+			);
+			path = AlertViewHelper;
+			sourceTree = "<group>";
+		};
+		70705D7E1B12387A0057F14E /* UIImage+Resize */ = {
+			isa = PBXGroup;
+			children = (
+				70705D7F1B12387A0057F14E /* UIImage+Resize.h */,
+				70705D801B12387A0057F14E /* UIImage+Resize.m */,
+			);
+			path = "UIImage+Resize";
 			sourceTree = "<group>";
 		};
 		70B2984D1ACE95E100FE265E /* Resources */ = {
@@ -1391,6 +1412,7 @@
 				70013BFD1ABC19DB0050D0F7 /* AFSecurityPolicy.m in Sources */,
 				70013D101ABC19DB0050D0F7 /* CDLabelButtonTableCell.m in Sources */,
 				70013B931ABC19DA0050D0F7 /* CDNewFriendVC.m in Sources */,
+				70705D7D1B12385E0057F14E /* AlertViewHelper.m in Sources */,
 				704578F51AD7D8B100452531 /* CDConvsVC.m in Sources */,
 				70013D171ABC19DB0050D0F7 /* CDTextField.m in Sources */,
 				70013B8D1ABC19DA0050D0F7 /* CDLoginVC.m in Sources */,
@@ -1413,6 +1435,7 @@
 				70EEB0CE1AF0BB6600FBF92F /* CDConvReportAbuseVC.m in Sources */,
 				70013D141ABC19DB0050D0F7 /* CDPopMenuItemCell.m in Sources */,
 				701011111AEF99E10046D0D8 /* CDWebViewVC.m in Sources */,
+				70705D811B12387A0057F14E /* UIImage+Resize.m in Sources */,
 				70013B951ABC19DA0050D0F7 /* CDProfileVC.m in Sources */,
 				70013B8F1ABC19DA0050D0F7 /* CDAddFriendVC.m in Sources */,
 				70013B8E1ABC19DA0050D0F7 /* CDRegisterVC.m in Sources */,
@@ -1427,7 +1450,6 @@
 				70013C0B1ABC19DB0050D0F7 /* UIWebView+AFNetworking.m in Sources */,
 				70013B911ABC19DA0050D0F7 /* CDFriendListVC.m in Sources */,
 				70013C071ABC19DB0050D0F7 /* UIButton+AFNetworking.m in Sources */,
-				70013D061ABC19DB0050D0F7 /* UIImage+Resize.m in Sources */,
 				7059E72D1ACE727B009D17AB /* CDIMService.m in Sources */,
 				70013D121ABC19DB0050D0F7 /* CDPopMenu.m in Sources */,
 				701D851D1ADCD35000982D5D /* AVIMUserInfoMessage.m in Sources */,

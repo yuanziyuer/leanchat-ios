@@ -10,9 +10,13 @@
 #import "CDIMClientStatusView.h"
 #import "CDStorage.h"
 #import "UIView+XHRemoteImage.h"
-#import "CDChatListRoomCell.h"
+#import "LZConversationCell.h"
 #import "CDIM.h"
 #import "CDMacros.h"
+#import "AVIMConversation+Custom.h"
+#import "CDIMConfig.h"
+#import "UIView+XHRemoteImage.h"
+#import "CDEmotionUtils.h"
 
 @interface CDChatListVC () <CDIMClientStatusViewDelegate>
 
@@ -49,7 +53,7 @@ static NSString *cellIdentifier = @"ContactCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.tableView registerClass:[CDChatListRoomCell class] forCellReuseIdentifier:[CDChatListRoomCell identifier]];
+    [self.tableView registerClass:[LZConversationCell class] forCellReuseIdentifier:[LZConversationCell identifier]];
     
     [self.clientStatusView observeIMClientUpdate];
     self.refreshControl = [self getRefreshControl];
@@ -142,10 +146,55 @@ static NSString *cellIdentifier = @"ContactCell";
     return [_rooms count];
 }
 
+- (NSString *)getMessageTitle:(AVIMTypedMessage *)msg {
+    NSString *title;
+    AVIMLocationMessage *locationMsg;
+    switch (msg.mediaType) {
+        case kAVIMMessageMediaTypeText:
+            title = [CDEmotionUtils emojiStringFromString:msg.text];
+            break;
+            
+        case kAVIMMessageMediaTypeAudio:
+            title = @"声音";
+            break;
+            
+        case kAVIMMessageMediaTypeImage:
+            title = @"图片";
+            break;
+            
+        case kAVIMMessageMediaTypeLocation:
+            locationMsg = (AVIMLocationMessage *)msg;
+            title = locationMsg.text;
+            break;
+        default:
+            break;
+    }
+    return title;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CDChatListRoomCell *cell = [tableView dequeueReusableCellWithIdentifier:[CDChatListRoomCell identifier]];
+    LZConversationCell *cell = [tableView dequeueReusableCellWithIdentifier:[LZConversationCell identifier]];
     CDRoom *room = [_rooms objectAtIndex:indexPath.row];
-    cell.room=room;
+    if (room.conv.type == CDConvTypeSingle) {
+        id <CDUserModel> user = [[CDIMConfig config].userDelegate getUserById:room.conv.otherId];
+        cell.nameLabel.text = user.username;
+        [cell.avatarImageView setImageWithURL:[NSURL URLWithString:user.avatarUrl]];
+    }
+    else {
+        [cell.avatarImageView setImage:room.conv.icon];
+        cell.nameLabel.text = room.conv.displayName;
+    }
+    cell.messageLabel.text = [self getMessageTitle:room.lastMsg];
+    if (room.lastMsg) {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"MM-dd HH:mm"];
+        NSString *timeString = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:room.lastMsg.sendTimestamp / 1000]];
+        cell.timestampLabel.text = timeString;
+    }
+    else {
+        cell.timestampLabel.text = @"";
+    }
+    cell.unreadCount = room.unreadCount;
     return cell;
 }
 
@@ -169,7 +218,7 @@ static NSString *cellIdentifier = @"ContactCell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [CDChatListRoomCell heightOfCell];
+    return [LZConversationCell heightOfCell];
 }
 
 #pragma mark -- CDSessionDelegateMethods

@@ -63,10 +63,11 @@
     user.username = self.usernameField.text;
     user.password = self.passwordField.text;
     [user setFetchWhenSave:YES];
+    WEAKSELF
     [user signUpInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
-        if ([self filterError:error]) {
+        if ([weakSelf filterError:error]) {
             [[NSUserDefaults standardUserDefaults] setObject:self.usernameField.text forKey:KEY_USERNAME];
-            [self dismissViewControllerAnimated:NO completion: ^{
+            [weakSelf dismissViewControllerAnimated:NO completion: ^{
                 CDAppDelegate *delegate = (CDAppDelegate *)[UIApplication sharedApplication].delegate;
                 [delegate toMain];
             }];
