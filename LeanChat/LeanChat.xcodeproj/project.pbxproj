@@ -346,7 +346,6 @@
 			children = (
 				7073FC411B14718C006F2692 /* base */,
 				7073FC4C1B14718C006F2692 /* chat */,
-				7073FC511B14718C006F2692 /* contact */,
 				7073FC521B14718C006F2692 /* conv */,
 				7073FC5F1B14718C006F2692 /* entry */,
 				7073FC661B14718C006F2692 /* friend */,
@@ -381,13 +380,6 @@
 				7073FC501B14718C006F2692 /* CDConvsVC.m */,
 			);
 			path = chat;
-			sourceTree = "<group>";
-		};
-		7073FC511B14718C006F2692 /* contact */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = contact;
 			sourceTree = "<group>";
 		};
 		7073FC521B14718C006F2692 /* conv */ = {
