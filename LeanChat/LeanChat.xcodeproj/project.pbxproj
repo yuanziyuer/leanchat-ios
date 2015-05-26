@@ -24,7 +24,6 @@
 		7073FCB31B14718C006F2692 /* CDConvNameVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7073FC591B14718C006F2692 /* CDConvNameVC.xib */; };
 		7073FCB41B14718C006F2692 /* CDConvReportAbuseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC5B1B14718C006F2692 /* CDConvReportAbuseVC.m */; };
 		7073FCB51B14718C006F2692 /* CDGroupedConvListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC5D1B14718C006F2692 /* CDGroupedConvListVC.m */; };
-		7073FCB61B14718C006F2692 /* CDGroupedConvListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7073FC5E1B14718C006F2692 /* CDGroupedConvListVC.xib */; };
 		7073FCB71B14718C006F2692 /* CDEntryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC611B14718C006F2692 /* CDEntryVC.m */; };
 		7073FCB81B14718C006F2692 /* CDLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC631B14718C006F2692 /* CDLoginVC.m */; };
 		7073FCB91B14718C006F2692 /* CDRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC651B14718C006F2692 /* CDRegisterVC.m */; };
@@ -146,7 +145,6 @@
 		7073FC5B1B14718C006F2692 /* CDConvReportAbuseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDConvReportAbuseVC.m; sourceTree = "<group>"; };
 		7073FC5C1B14718C006F2692 /* CDGroupedConvListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDGroupedConvListVC.h; sourceTree = "<group>"; };
 		7073FC5D1B14718C006F2692 /* CDGroupedConvListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDGroupedConvListVC.m; sourceTree = "<group>"; };
-		7073FC5E1B14718C006F2692 /* CDGroupedConvListVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDGroupedConvListVC.xib; sourceTree = "<group>"; };
 		7073FC601B14718C006F2692 /* CDEntryVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEntryVC.h; sourceTree = "<group>"; };
 		7073FC611B14718C006F2692 /* CDEntryVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEntryVC.m; sourceTree = "<group>"; };
 		7073FC621B14718C006F2692 /* CDLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDLoginVC.h; sourceTree = "<group>"; };
@@ -406,7 +404,6 @@
 				7073FC5B1B14718C006F2692 /* CDConvReportAbuseVC.m */,
 				7073FC5C1B14718C006F2692 /* CDGroupedConvListVC.h */,
 				7073FC5D1B14718C006F2692 /* CDGroupedConvListVC.m */,
-				7073FC5E1B14718C006F2692 /* CDGroupedConvListVC.xib */,
 			);
 			path = conv;
 			sourceTree = "<group>";
@@ -738,7 +735,6 @@
 			files = (
 				7073FD0F1B147458006F2692 /* AppIcon60x60@2x.png in Resources */,
 				7073FD231B147458006F2692 /* login_selected@2x.png in Resources */,
-				7073FCB61B14718C006F2692 /* CDGroupedConvListVC.xib in Resources */,
 				7073FD171B147458006F2692 /* input_bg_top@2x.png in Resources */,
 				7073FD291B147458006F2692 /* menu_add_photo@2x.png in Resources */,
 				7073FD221B147458006F2692 /* login_disabled@2x.png in Resources */,

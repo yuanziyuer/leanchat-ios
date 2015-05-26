@@ -38,7 +38,7 @@ static NSString *cellIndentifier = @"cell";
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
-    [self.view addSubview:refreshControl];
+    [self.tableView addSubview:refreshControl];
     
     [_notify addConvObserver:self selector:@selector(refresh:)];
 }
