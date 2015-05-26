@@ -16,7 +16,19 @@ LeanChat 已经在 Apple Store 上架，可前往 https://itunes.apple.com/gb/ap
 * v1 分支，使用了 LeanCloud 的实时通信服务 1.0
 
 ## 运行
-* 打开 `LeanChat.xcworkspace`
+LeanChatExample(推荐):
+```bash
+  cd LeanChatExample
+  pod install
+  open LeanChatExample.workspace
+```
+
+LeanChat:
+```bash
+  cd LeanChat
+  pod install
+  open LeanChat.workspace
+```
 
 ## 如何三步加入IM
 1. LeanCloud 中创建应用       
@@ -126,34 +138,6 @@ CDUserModel，
 ```
 
 然后，就可以像上面截图那样聊天了。
-
-
-## 使用 LeanChatLib 需知
-
-1. 如何引入LeanChatLib 依赖
-首先，打开LeanChatLib文件夹，拖动到你的项目中，如图，
-
-![qq20150407-1](https://cloud.githubusercontent.com/assets/5022872/7016274/b1b03672-dd13-11e4-8ddd-4c501c59dbf0.png)
-
-复制资源文件，
-
-![qq20150414-2](https://cloud.githubusercontent.com/assets/5022872/7122215/816ffc2a-e24c-11e4-997f-9cb7a547ac99.png)
-
-
-之后，项目依赖图，如，
-
-![qq20150407-2](https://cloud.githubusercontent.com/assets/5022872/7016279/d214abe6-dd13-11e4-8c16-900593bdb33e.png)
-![3](https://cloud.githubusercontent.com/assets/6140508/7111296/981733a0-e1f0-11e4-9ff4-06f3f2c54817.png)
-
-
-之后可以进行第二点。        
-2. 必须允许 LeanChatLib中的项目直接include framework里的头文件，设置选项为 YES，如图，
-![qq20150403-1](https://cloud.githubusercontent.com/assets/5022872/6982020/5d34db2a-da3e-11e4-8ef2-2521255bb923.png) 
-3. 加 Linker Flags ，
-![qq20150410-2 2x](https://cloud.githubusercontent.com/assets/5022872/7089833/29ebf332-dfd1-11e4-9953-a3c7285daf76.png)
-
-4. 需要若干 Framework的支持，参考 LeanChatExample
-
 
 ## 部署 LeanChat 需知
 
