@@ -17,6 +17,7 @@ LeanChat 已经在 Apple Store 上架，可前往 https://itunes.apple.com/gb/ap
 
 ## 运行
 * 打开 `LeanChat.xcworkspace`
+* 先 Build LeanChatLib，再 Build LeanChat 或 LeanChatLibExmaple
 
 ## 如何三步加入IM
 1. LeanCloud 中创建应用       
