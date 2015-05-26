@@ -30,9 +30,16 @@ LeanChat:
   open LeanChat.workspace
 ```
 
+## LeanChatLib 介绍
+
+封装了最近对话页面和聊天页面，LeanChat 和 LeanChatExample 项目都依赖于它。可通过以下方式安装，
+```
+    pod 'LeanChatLib'
+```
+
 ## 如何三步加入IM
 1. LeanCloud 中创建应用       
-2. 创建项目，加入 LeanChatLib 作为Library。拷贝Resources文件夹，
+2. 加入 LeanChatLib 的 pod 依赖
 3. 依次在合适的地方加入以下代码，
 
 应用启动后，初始化，以及配置 IM User
@@ -151,7 +158,7 @@ CDUserModel，
 
 [Wiki](https://github.com/leancloud/leanchat-android/wiki)
 
-## [更多介绍](https://github.com/leancloud/leanchat-android)
+[更多介绍](https://github.com/leancloud/leanchat-android)
 
 ## 致谢
 
