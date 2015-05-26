@@ -14,7 +14,7 @@
 #import "CDConvDetailMembersCell.h"
 #import "CDConvReportAbuseVC.h"
 #import "CDCache.h"
-#import "AlertViewHelper.h"
+#import "LZAlertViewHelper.h"
 
 static NSString *kCDConvDetailVCTitleKey = @"title";
 static NSString *kCDConvDetailVCDisclosureKey = @"disclosure";
@@ -44,7 +44,7 @@ static NSString *kCDConvDetailVCSwitchKey = @"switch";
 
 @property (nonatomic, strong) UISwitch *muteSwitch;
 
-@property (nonatomic, strong) AlertViewHelper *alertViewHelper;
+@property (nonatomic, strong) LZAlertViewHelper *alertViewHelper;
 
 @end
 
@@ -120,9 +120,9 @@ static NSString *const reuseIdentifier = @"Cell";
     return [CDCache getCurConv];
 }
 
-- (AlertViewHelper *)alertViewHelper {
+- (LZAlertViewHelper *)alertViewHelper {
     if (_alertViewHelper == nil) {
-        _alertViewHelper = [[AlertViewHelper alloc] init];
+        _alertViewHelper = [[LZAlertViewHelper alloc] init];
     }
     return _alertViewHelper;
 }

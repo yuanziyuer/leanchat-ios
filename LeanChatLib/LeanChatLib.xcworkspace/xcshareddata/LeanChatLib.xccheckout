@@ -5,9 +5,9 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>59A0FBD3-335F-412A-BCC7-CADFA999FA3B</string>
+	<string>9EF2AF2D-5F5B-40E1-AC92-37BAC2077BA3</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>LeanChatLib</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>3FB232A6DFBF51988CE8982F113F876CD542B7BC</key>
@@ -16,13 +16,13 @@
 		<string>github.com:avoscloud/avoscloud-demo.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>LeanChatLibrary/LeanChatLib/LeanChatLib.xcodeproj/project.xcworkspace</string>
+	<string>LeanChatLib/LeanChatLib.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>3FB232A6DFBF51988CE8982F113F876CD542B7BC</key>
-		<string>../../../..</string>
+		<string>../..</string>
 		<key>8ACFE5037BBA7C3DB34C943CA65881B264CE6E1A</key>
-		<string>../../../../..</string>
+		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>github.com:lzwjava/leanchat-ios.git</string>

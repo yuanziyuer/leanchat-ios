@@ -2,8 +2,8 @@
 //  LeanChatLibTests.m
 //  LeanChatLibTests
 //
-//  Created by lzw on 15/4/3.
-//  Copyright (c) 2015年 avoscloud. All rights reserved.
+//  Created by lzw on 15/5/26.
+//  Copyright (c) 2015年 lzwjava@LeanCloud QQ: 651142978. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
