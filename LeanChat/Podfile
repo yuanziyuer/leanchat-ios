@@ -8,6 +8,7 @@ target 'LeanChat' do
     pod 'MBProgressHUD'
     pod 'LZAlertViewHelper'
     pod 'JSBadgeView'
+    pod 'LZMembersCell'
 end
 
 target 'LeanChatTests' do

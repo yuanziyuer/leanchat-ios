@@ -45,8 +45,6 @@
 		7073FCC91B14718C006F2692 /* CDUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC881B14718C006F2692 /* CDUtils.m */; };
 		7073FCCA1B14718C006F2692 /* CDBadgeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC8E1B14718C006F2692 /* CDBadgeLabel.m */; };
 		7073FCCB1B14718C006F2692 /* CDButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC901B14718C006F2692 /* CDButton.m */; };
-		7073FCCC1B14718C006F2692 /* CDConvDetailMembersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC921B14718C006F2692 /* CDConvDetailMembersCell.m */; };
-		7073FCCD1B14718C006F2692 /* CDConvDetailMembersSubCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC941B14718C006F2692 /* CDConvDetailMembersSubCell.m */; };
 		7073FCCE1B14718C006F2692 /* CDEntryActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC961B14718C006F2692 /* CDEntryActionButton.m */; };
 		7073FCCF1B14718C006F2692 /* CDEntryBottomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC981B14718C006F2692 /* CDEntryBottomButton.m */; };
 		7073FCD01B14718C006F2692 /* CDImageLabelTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC9A1B14718C006F2692 /* CDImageLabelTableCell.m */; };
@@ -187,10 +185,6 @@
 		7073FC8E1B14718C006F2692 /* CDBadgeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDBadgeLabel.m; sourceTree = "<group>"; };
 		7073FC8F1B14718C006F2692 /* CDButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDButton.h; sourceTree = "<group>"; };
 		7073FC901B14718C006F2692 /* CDButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDButton.m; sourceTree = "<group>"; };
-		7073FC911B14718C006F2692 /* CDConvDetailMembersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConvDetailMembersCell.h; sourceTree = "<group>"; };
-		7073FC921B14718C006F2692 /* CDConvDetailMembersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDConvDetailMembersCell.m; sourceTree = "<group>"; };
-		7073FC931B14718C006F2692 /* CDConvDetailMembersSubCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConvDetailMembersSubCell.h; sourceTree = "<group>"; };
-		7073FC941B14718C006F2692 /* CDConvDetailMembersSubCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDConvDetailMembersSubCell.m; sourceTree = "<group>"; };
 		7073FC951B14718C006F2692 /* CDEntryActionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEntryActionButton.h; sourceTree = "<group>"; };
 		7073FC961B14718C006F2692 /* CDEntryActionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEntryActionButton.m; sourceTree = "<group>"; };
 		7073FC971B14718C006F2692 /* CDEntryBottomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEntryBottomButton.h; sourceTree = "<group>"; };
@@ -495,10 +489,6 @@
 				7073FC8E1B14718C006F2692 /* CDBadgeLabel.m */,
 				7073FC8F1B14718C006F2692 /* CDButton.h */,
 				7073FC901B14718C006F2692 /* CDButton.m */,
-				7073FC911B14718C006F2692 /* CDConvDetailMembersCell.h */,
-				7073FC921B14718C006F2692 /* CDConvDetailMembersCell.m */,
-				7073FC931B14718C006F2692 /* CDConvDetailMembersSubCell.h */,
-				7073FC941B14718C006F2692 /* CDConvDetailMembersSubCell.m */,
 				7073FC951B14718C006F2692 /* CDEntryActionButton.h */,
 				7073FC961B14718C006F2692 /* CDEntryActionButton.m */,
 				7073FC971B14718C006F2692 /* CDEntryBottomButton.h */,
@@ -832,7 +822,6 @@
 				7073FCD81B14718C006F2692 /* CDTextField.m in Sources */,
 				7073FCCA1B14718C006F2692 /* CDBadgeLabel.m in Sources */,
 				7073FCC31B14718C006F2692 /* CDAbuseReport.m in Sources */,
-				7073FCCC1B14718C006F2692 /* CDConvDetailMembersCell.m in Sources */,
 				7073FCCB1B14718C006F2692 /* CDButton.m in Sources */,
 				7073FCDB1B1471A4006F2692 /* CDAppDelegate.m in Sources */,
 				7073FCAA1B14718C006F2692 /* CDBaseTabC.m in Sources */,
@@ -860,7 +849,6 @@
 				7073FCD61B14718C006F2692 /* CDPopMenuItemCell.m in Sources */,
 				7073FCBA1B14718C006F2692 /* CDAddFriendVC.m in Sources */,
 				7073FCB11B14718C006F2692 /* CDConvDetailVC.m in Sources */,
-				7073FCCD1B14718C006F2692 /* CDConvDetailMembersSubCell.m in Sources */,
 				7073FCB91B14718C006F2692 /* CDRegisterVC.m in Sources */,
 				7073FCC01B14718C006F2692 /* CDPushSettingVC.m in Sources */,
 				7073FCAF1B14718C006F2692 /* CDConvsVC.m in Sources */,

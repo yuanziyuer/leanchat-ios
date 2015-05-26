@@ -11,9 +11,10 @@
 #import "CDUserInfoVC.h"
 #import "CDBaseNavC.h"
 #import "CDConvNameVC.h"
-#import "CDConvDetailMembersCell.h"
+#import <LZMembersCell/LZMembersCell.h>
 #import "CDConvReportAbuseVC.h"
 #import "CDCache.h"
+#import "CDUserService.h"
 #import "LZAlertViewHelper.h"
 
 static NSString *kCDConvDetailVCTitleKey = @"title";
@@ -22,11 +23,11 @@ static NSString *kCDConvDetailVCDetailKey = @"detail";
 static NSString *kCDConvDetailVCSelectorKey = @"selector";
 static NSString *kCDConvDetailVCSwitchKey = @"switch";
 
-@interface CDConvDetailVC () <UIGestureRecognizerDelegate, UITableViewDelegate, UITableViewDataSource, CDConvDetailMembersHeaderViewDelegate>
+@interface CDConvDetailVC () <UIGestureRecognizerDelegate, UITableViewDelegate, UITableViewDataSource, LZMembersCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
-@property (nonatomic, strong) CDConvDetailMembersCell *membersCell;
+@property (nonatomic, strong) LZMembersCell *membersCell;
 
 @property (nonatomic, strong) CDIM *im;
 
@@ -38,7 +39,7 @@ static NSString *kCDConvDetailVCSwitchKey = @"switch";
 
 @property (nonatomic, strong) CDNotify *notify;
 
-@property (nonatomic, strong) NSArray *members;
+@property (nonatomic, strong) NSArray *displayMembers;
 
 @property (nonatomic, strong) UITableViewCell *switchCell;
 
@@ -99,14 +100,6 @@ static NSString *const reuseIdentifier = @"Cell";
 
 #pragma mark - Propertys
 
-- (CDConvDetailMembersCell *)membersCell {
-    if (_membersCell == nil) {
-        _membersCell = [[CDConvDetailMembersCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[CDConvDetailMembersCell reuseIdentifier]];
-        _membersCell.membersCellDelegate = self;
-    }
-    return _membersCell;
-}
-
 - (UISwitch *)muteSwitch {
     if (_muteSwitch == nil) {
         _muteSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
@@ -129,6 +122,13 @@ static NSString *const reuseIdentifier = @"Cell";
 
 #pragma mark
 
+- (LZMember *)memberFromUser:(AVUser *)user {
+    LZMember *member = [[LZMember alloc] init];
+    member.memberId = user.objectId;
+    member.memberName = user.username;
+    return member;
+}
+
 - (void)refresh {
     AVIMConversation *conv = [self conv];
     NSSet *userIds = [NSSet setWithArray:conv.members];
@@ -138,12 +138,12 @@ static NSString *const reuseIdentifier = @"Cell";
     self.title = [NSString stringWithFormat:@"详情(%ld人)", (long)self.conv.members.count];
     [CDCache cacheUsersWithIds:userIds callback: ^(BOOL succeeded, NSError *error) {
         if ([self filterError:error]) {
-            NSMutableArray *memberUsers = [NSMutableArray array];
+            NSMutableArray *displayMembers = [NSMutableArray array];
             for (NSString *userId in userIds) {
-                [memberUsers addObject:[CDCache lookupUser:userId]];
+                [displayMembers addObject:[self memberFromUser:[CDCache lookupUser:userId]]];
             }
-            weakSelf.members = memberUsers;
-            weakSelf.membersCell.members = memberUsers;
+            weakSelf.displayMembers = displayMembers;
+            
             [weakSelf.tableView reloadData];
         }
     }];
@@ -179,11 +179,10 @@ static NSString *const reuseIdentifier = @"Cell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        CDConvDetailMembersCell *membersCell = [tableView dequeueReusableCellWithIdentifier:[CDConvDetailMembersCell reuseIdentifier]];
-        if (membersCell == nil) {
-            membersCell = self.membersCell;
-        }
-        return membersCell;
+        LZMembersCell *cell = [LZMembersCell dequeueOrCreateCellByTableView:tableView];
+        cell.members = self.displayMembers;
+        cell.membersCellDelegate = self;
+        return cell;
     }
     else {
         UITableViewCell *cell;
@@ -222,7 +221,7 @@ static NSString *const reuseIdentifier = @"Cell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return [CDConvDetailMembersCell heightForMembers:self.members];
+        return [LZMembersCell heightForMemberCount:self.displayMembers.count];
     }
     else {
         return 44;
@@ -242,18 +241,19 @@ static NSString *const reuseIdentifier = @"Cell";
 
 #pragma mark - member cell delegate
 
-- (void)didSelectMember:(AVUser *)member {
+- (void)didSelectMember:(LZMember *)member {
+    AVUser *user = [CDCache lookupUser:member.memberId];
     NSString *curUserId = [AVUser currentUser].objectId;
-    if ([curUserId isEqualToString:member.objectId] == YES) {
+    if ([curUserId isEqualToString:user.objectId] == YES) {
         return;
     }
-    CDUserInfoVC *userInfoVC = [[CDUserInfoVC alloc] initWithUser:member];
+    CDUserInfoVC *userInfoVC = [[CDUserInfoVC alloc] initWithUser:user];
     [self.navigationController pushViewController:userInfoVC animated:YES];
 }
 
-- (void)didLongPressMember:(AVUser *)member {
-    AVIMConversation *conv = [self conv];
-    if ([member.objectId isEqualToString:conv.creator] == NO) {
+- (void)didLongPressMember:(LZMember *)user {
+    AVUser *member = [CDCache lookupUser:user.memberId];
+    if ([member.objectId isEqualToString:self.conv.creator] == NO) {
         [self.alertViewHelper showAlertViewWithMessage:@"确定要踢走该成员吗？" block:^(BOOL confirm, NSString *text) {
             if (confirm) {
                 [self.conv removeMembersWithClientIds : @[member.objectId] callback : ^(BOOL succeeded, NSError *error) {
@@ -268,6 +268,10 @@ static NSString *const reuseIdentifier = @"Cell";
     }
 }
 
+- (void)displayAvatarOfMember:(LZMember *)member atImageView:(UIImageView *)imageView {
+    AVUser *user = [CDCache lookupUser:member.memberId];
+    [CDUserService displayAvatarOfUser:user avatarView:imageView];
+}
 #pragma mark - Action
 
 - (void)goReportAbuse {
