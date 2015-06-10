@@ -6,7 +6,7 @@ target 'LeanChat' do
     pod 'AVOSCloudIM'
     pod 'LeanChatLib'
     pod 'MBProgressHUD'
-    pod 'LZAlertViewHelper'
+    pod 'LZAlertViewHelper' , '~> 0.0.2'
     pod 'JSBadgeView'
     pod 'LZMembersCell'
 end

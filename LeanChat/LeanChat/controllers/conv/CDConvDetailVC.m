@@ -254,7 +254,7 @@ static NSString *const reuseIdentifier = @"Cell";
 - (void)didLongPressMember:(LZMember *)user {
     AVUser *member = [CDCache lookupUser:user.memberId];
     if ([member.objectId isEqualToString:self.conv.creator] == NO) {
-        [self.alertViewHelper showAlertViewWithMessage:@"确定要踢走该成员吗？" block:^(BOOL confirm, NSString *text) {
+        [self.alertViewHelper showConfirmAlertViewWithMessage:@"确定要踢走该成员吗？" block:^(BOOL confirm, NSString *text) {
             if (confirm) {
                 [self.conv removeMembersWithClientIds : @[member.objectId] callback : ^(BOOL succeeded, NSError *error) {
                     if ([self filterError:error]) {
