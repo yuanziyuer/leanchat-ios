@@ -6,33 +6,29 @@
 //  Copyright (c) 2015年 AVOS. All rights reserved.
 //
 
-#import "CDPushSettingVC.h"
+#import "LZPushSettingViewController.h"
 
-@interface CDPushSettingVC ()
+static CGFloat kHorizontalSpacing = 40;
+static CGFloat kFooterHeight = 40;
+
+@interface LZPushSettingViewController ()
 
 @property (strong, nonatomic) UITableViewCell *receiveMessageCell;
 
-@property (nonatomic, assign) BOOL receiveOn;
+@property (nonatomic, strong) UILabel *tipsLabel;
 
 @end
 
-static NSString *cellIndentifier = @"cellIndentifier";
-
-@implementation CDPushSettingVC
+@implementation LZPushSettingViewController
 
 - (instancetype)init {
-    self = [super init];
-    if (self) {
-        self.tableViewStyle = UITableViewStyleGrouped;
-    }
+    self = [super initWithStyle:UITableViewStyleGrouped];
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:@"消息通知"];
-    
-    _receiveOn = [self isNotificationEnabled];
 }
 
 - (BOOL)isNotificationEnabled {
@@ -60,10 +56,11 @@ static NSString *cellIndentifier = @"cellIndentifier";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 40;
+    return kFooterHeight;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellIndentifier = @"cellIndentifier";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIndentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIndentifier];
@@ -84,18 +81,25 @@ static NSString *cellIndentifier = @"cellIndentifier";
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     if (section == 0) {
-        CGFloat pad = 30;
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(pad, 0, tableView.frame.size.width - 2 * pad, 40)];
-        label.bounds = CGRectInset(label.frame, 20, 20);
-        [label setFont:[UIFont systemFontOfSize:10]];
-        [label setTextColor:[UIColor grayColor]];
-        label.lineBreakMode = NSLineBreakByWordWrapping;
-        label.textAlignment = NSTextAlignmentCenter;
-        label.numberOfLines = 0;
-        label.text = @"如果你要关闭或开启 LeanChat 的新消息通知，请在 iPhone 的\"设置\"-\"通知\"功能中，找到应用程序 LeanChat 更改。";
-        return label;
+        return self.tipsLabel;
     }
     return nil;
 }
+
+- (UILabel *)tipsLabel {
+    if (_tipsLabel == nil) {
+        _tipsLabel = [[UILabel alloc] initWithFrame:CGRectMake(kHorizontalSpacing, 0, CGRectGetWidth([UIScreen mainScreen].bounds) - 2 * kHorizontalSpacing, kFooterHeight)];
+        [_tipsLabel setFont:[UIFont systemFontOfSize:10]];
+        [_tipsLabel setTextColor:[UIColor grayColor]];
+        _tipsLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        _tipsLabel.textAlignment = NSTextAlignmentCenter;
+        _tipsLabel.numberOfLines = 0;
+        NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
+        _tipsLabel.text = [NSString stringWithFormat:@"如果你要关闭或开启%@的新消息通知，请在 iPhone 的\"设置\"-\"通知\"功能中，找到应用程序%@更改。", appName, appName];
+    }
+    return _tipsLabel;
+}
+
+
 
 @end

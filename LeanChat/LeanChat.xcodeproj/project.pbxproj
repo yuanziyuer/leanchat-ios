@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1FAD25EBE59E07248BD0F7D5 /* libPods-LeanChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF79D434DB9DF2EFE3DD51B2 /* libPods-LeanChat.a */; };
+		7067800B1B2363F3002F1413 /* LZPushSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7067800A1B2363F3002F1413 /* LZPushSettingViewController.m */; };
 		7073FC1D1B147048006F2692 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC1C1B147048006F2692 /* main.m */; };
 		7073FC281B147048006F2692 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7073FC271B147048006F2692 /* Images.xcassets */; };
 		7073FC371B147048006F2692 /* LeanChatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC361B147048006F2692 /* LeanChatTests.m */; };
@@ -33,7 +34,6 @@
 		7073FCBD1B14718C006F2692 /* CDFriendListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7073FC6C1B14718C006F2692 /* CDFriendListVC.xib */; };
 		7073FCBE1B14718C006F2692 /* CDNewFriendVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC6E1B14718C006F2692 /* CDNewFriendVC.m */; };
 		7073FCBF1B14718C006F2692 /* CDProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC711B14718C006F2692 /* CDProfileVC.m */; };
-		7073FCC01B14718C006F2692 /* CDPushSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC731B14718C006F2692 /* CDPushSettingVC.m */; };
 		7073FCC11B14718C006F2692 /* CDUserInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC751B14718C006F2692 /* CDUserInfoVC.m */; };
 		7073FCC21B14718C006F2692 /* AVIMUserInfoMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC781B14718C006F2692 /* AVIMUserInfoMessage.m */; };
 		7073FCC31B14718C006F2692 /* CDAbuseReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC7B1B14718C006F2692 /* CDAbuseReport.m */; };
@@ -111,6 +111,8 @@
 
 /* Begin PBXFileReference section */
 		4A71AD2EA525F79828723CA0 /* Pods-LeanChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-LeanChat/Pods-LeanChat.release.xcconfig"; sourceTree = "<group>"; };
+		706780091B2363F3002F1413 /* LZPushSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZPushSettingViewController.h; sourceTree = "<group>"; };
+		7067800A1B2363F3002F1413 /* LZPushSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZPushSettingViewController.m; sourceTree = "<group>"; };
 		7073FC171B147048006F2692 /* LeanChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeanChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7073FC1B1B147048006F2692 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7073FC1C1B147048006F2692 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -159,8 +161,6 @@
 		7073FC6E1B14718C006F2692 /* CDNewFriendVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDNewFriendVC.m; sourceTree = "<group>"; };
 		7073FC701B14718C006F2692 /* CDProfileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDProfileVC.h; sourceTree = "<group>"; };
 		7073FC711B14718C006F2692 /* CDProfileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDProfileVC.m; sourceTree = "<group>"; };
-		7073FC721B14718C006F2692 /* CDPushSettingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDPushSettingVC.h; sourceTree = "<group>"; };
-		7073FC731B14718C006F2692 /* CDPushSettingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDPushSettingVC.m; sourceTree = "<group>"; };
 		7073FC741B14718C006F2692 /* CDUserInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUserInfoVC.h; sourceTree = "<group>"; };
 		7073FC751B14718C006F2692 /* CDUserInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUserInfoVC.m; sourceTree = "<group>"; };
 		7073FC771B14718C006F2692 /* AVIMUserInfoMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVIMUserInfoMessage.h; sourceTree = "<group>"; };
@@ -271,6 +271,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		706780071B2363C5002F1413 /* vendor */ = {
+			isa = PBXGroup;
+			children = (
+				706780081B2363F3002F1413 /* LZPushSettingViewController */,
+			);
+			path = vendor;
+			sourceTree = "<group>";
+		};
+		706780081B2363F3002F1413 /* LZPushSettingViewController */ = {
+			isa = PBXGroup;
+			children = (
+				706780091B2363F3002F1413 /* LZPushSettingViewController.h */,
+				7067800A1B2363F3002F1413 /* LZPushSettingViewController.m */,
+			);
+			path = LZPushSettingViewController;
+			sourceTree = "<group>";
+		};
 		7073FC0E1B147048006F2692 = {
 			isa = PBXGroup;
 			children = (
@@ -296,6 +313,7 @@
 			children = (
 				7073FCD91B1471A4006F2692 /* CDAppDelegate.h */,
 				7073FCDA1B1471A4006F2692 /* CDAppDelegate.m */,
+				706780071B2363C5002F1413 /* vendor */,
 				7073FCDD1B147431006F2692 /* resources */,
 				7073FC401B14718C006F2692 /* controllers */,
 				7073FC761B14718C006F2692 /* models */,
@@ -427,8 +445,6 @@
 			children = (
 				7073FC701B14718C006F2692 /* CDProfileVC.h */,
 				7073FC711B14718C006F2692 /* CDProfileVC.m */,
-				7073FC721B14718C006F2692 /* CDPushSettingVC.h */,
-				7073FC731B14718C006F2692 /* CDPushSettingVC.m */,
 				7073FC741B14718C006F2692 /* CDUserInfoVC.h */,
 				7073FC751B14718C006F2692 /* CDUserInfoVC.m */,
 			);
@@ -846,11 +862,11 @@
 				7073FCAC1B14718C006F2692 /* CDBaseVC.m in Sources */,
 				7073FCB01B14718C006F2692 /* CDAddMemberVC.m in Sources */,
 				7073FCBC1B14718C006F2692 /* CDFriendListVC.m in Sources */,
+				7067800B1B2363F3002F1413 /* LZPushSettingViewController.m in Sources */,
 				7073FCD61B14718C006F2692 /* CDPopMenuItemCell.m in Sources */,
 				7073FCBA1B14718C006F2692 /* CDAddFriendVC.m in Sources */,
 				7073FCB11B14718C006F2692 /* CDConvDetailVC.m in Sources */,
 				7073FCB91B14718C006F2692 /* CDRegisterVC.m in Sources */,
-				7073FCC01B14718C006F2692 /* CDPushSettingVC.m in Sources */,
 				7073FCAF1B14718C006F2692 /* CDConvsVC.m in Sources */,
 				7073FCCE1B14718C006F2692 /* CDEntryActionButton.m in Sources */,
 			);
