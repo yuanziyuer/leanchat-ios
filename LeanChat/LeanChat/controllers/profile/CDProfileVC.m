@@ -7,7 +7,7 @@
 //
 
 #import "CDProfileVC.h"
-#import "CDUserService.h"
+#import "CDUserManager.h"
 #import "CDAppDelegate.h"
 #import "LZPushSettingViewController.h"
 #import "CDWebViewVC.h"
@@ -72,7 +72,7 @@
     }
     cell.textLabel.text = self.dataSource[indexPath.section];
     if (indexPath.section == 0) {
-        [CDUserService displayBigAvatarOfUser:[AVUser currentUser] avatarView:cell.imageView];
+        [[CDUserManager manager] displayBigAvatarOfUser:[AVUser currentUser] avatarView:cell.imageView];
     }
     else {
         cell.imageView.image = nil;
@@ -127,7 +127,7 @@
         UIImage *image = info[UIImagePickerControllerEditedImage];
         UIImage *rounded = [CDUtils roundImage:image toSize:CGSizeMake(100, 100) radius:10];
         WEAKSELF
-        [CDUserService saveAvatar : rounded callback : ^(BOOL succeeded, NSError *error) {
+        [[CDUserManager manager] saveAvatar : rounded callback : ^(BOOL succeeded, NSError *error) {
             [indicator stopAnimating];
             if ([self filterError:error]) {
                 [weakSelf.tableView reloadData];

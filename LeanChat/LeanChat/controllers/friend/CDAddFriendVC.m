@@ -7,7 +7,7 @@
 //
 
 #import "CDAddFriendVC.h"
-#import "CDUserService.h"
+#import "CDUserManager.h"
 #import "CDBaseNavC.h"
 #import "CDUserInfoVC.h"
 #import "CDImageLabelTableCell.h"
@@ -34,7 +34,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
 }
 
 - (void)searchUser:(NSString *)name {
-    [CDUserService findUsersByPartname:name withBlock: ^(NSArray *objects, NSError *error) {
+    [[CDUserManager manager] findUsersByPartname:name withBlock: ^(NSArray *objects, NSError *error) {
         if ([self filterError:error]) {
             if (objects) {
                 self.users = objects;
@@ -59,7 +59,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
     }
     AVUser *user = self.users[indexPath.row];
     cell.myLabel.text = user.username;
-    [CDUserService displayAvatarOfUser:user avatarView:cell.myImageView];
+    [[CDUserManager manager] displayAvatarOfUser:user avatarView:cell.myImageView];
     return cell;
 }
 

@@ -8,10 +8,10 @@
 
 #import "CDUserInfoVC.h"
 #import <LeanChatLib/LeanChatLib.h>
-#import "CDCache.h"
-#import "CDUserService.h"
+#import "CDCacheManager.h"
+#import "CDUserManager.h"
 #import "CDUtils.h"
-#import "CDIMService.h"
+#import "CDIMManager.h"
 
 @interface CDUserInfoVC ()
 
@@ -68,7 +68,7 @@
     else {
         cell.textLabel.text = self.user.username;
         cell.textLabel.textAlignment = NSTextAlignmentLeft;
-        [CDUserService displayBigAvatarOfUser:self.user avatarView:cell.imageView];
+        [[CDUserManager manager] displayBigAvatarOfUser:self.user avatarView:cell.imageView];
     }
     return cell;
 }
@@ -86,11 +86,11 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 1) {
         if (self.isFriend) {
-            [[CDIMService shareInstance] goWithUserId:self.user.objectId fromVC:self];
+            [[CDIMManager manager] goWithUserId:self.user.objectId fromVC:self];
         }
         else {
             [self showProgress];
-            [CDUserService tryCreateAddRequestWithToUser:_user callback: ^(BOOL succeeded, NSError *error) {
+            [[CDUserManager manager] tryCreateAddRequestWithToUser:_user callback: ^(BOOL succeeded, NSError *error) {
                 [self hideProgress];
                 [self alertError:error];
             }];
@@ -100,7 +100,7 @@
 
 - (void)refresh {
     WEAKSELF
-    [CDUserService isMyFriend : _user block : ^(BOOL isFriend, NSError *error) {
+    [[CDUserManager manager] isMyFriend : _user block : ^(BOOL isFriend, NSError *error) {
         if ([self filterError:error]) {
             weakSelf.isFriend = isFriend;
             [weakSelf.tableView reloadData];

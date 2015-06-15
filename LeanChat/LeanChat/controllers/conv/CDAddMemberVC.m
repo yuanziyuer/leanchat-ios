@@ -9,10 +9,10 @@
 #import "CDAddMemberVC.h"
 #import "CDImageLabelTableCell.h"
 #import <LeanChatLib/LeanChatLib.h>
-#import "CDUserService.h"
-#import "CDCache.h"
+#import "CDUserManager.h"
+#import "CDCacheManager.h"
 #import "CDUtils.h"
-#import "CDIMService.h"
+#import "CDIMManager.h"
 
 
 @interface CDAddMemberVC ()
@@ -59,11 +59,11 @@ static NSString *reuseIdentifier = @"Cell";
 
 - (void)refresh {
     WEAKSELF
-    [CDUserService findFriendsWithBlock: ^(NSArray *friends, NSError *error) {
+    [[CDUserManager manager] findFriendsWithBlock: ^(NSArray *friends, NSError *error) {
         if ([self filterError:error]) {
             [_potentialIds removeAllObjects];
             for (AVUser *user in friends) {
-                if ([[CDCache getCurConv].members containsObject:user.objectId] == NO) {
+                if ([[[CDCacheManager manager] getCurConv].members containsObject:user.objectId] == NO) {
                     [_potentialIds addObject:user.objectId];
                 }
             }
@@ -91,8 +91,8 @@ static NSString *reuseIdentifier = @"Cell";
         [self backPressed:nil];
         return;
     }
-    AVIMConversation *conv = [CDCache getCurConv];
-    if ([CDCache getCurConv].type == CDConvTypeSingle) {
+    AVIMConversation *conv = [[CDCacheManager manager] getCurConv];
+    if ([[CDCacheManager manager] getCurConv].type == CDConvTypeSingle) {
         NSMutableArray *members = [conv.members mutableCopy];
         [members addObjectsFromArray:inviteIds];
         [self showProgress];
@@ -100,7 +100,7 @@ static NSString *reuseIdentifier = @"Cell";
             [self hideProgress];
             if ([self filterError:error]) {
                 [self.presentingViewController dismissViewControllerAnimated:YES completion: ^{
-                    [[CDIMService shareInstance] goWithConv:conversation fromNav:_groupDetailVC.navigationController];
+                    [[CDIMManager manager] goWithConv:conversation fromNav:_groupDetailVC.navigationController];
                 }];
             }
         }];
@@ -113,7 +113,7 @@ static NSString *reuseIdentifier = @"Cell";
                 [self alertError:error];
             }
             else {
-                [CDCache refreshCurConv: ^(BOOL succeeded, NSError *error) {
+                [[CDCacheManager manager] refreshCurConv: ^(BOOL succeeded, NSError *error) {
                     [self hideProgress];
                     if ([self filterError:error]) {
                         [self backPressed:nil];
@@ -145,8 +145,8 @@ static NSString *reuseIdentifier = @"Cell";
         cell = [[CDImageLabelTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     }
     NSString *userId = [_potentialIds objectAtIndex:indexPath.row];
-    AVUser *user = [CDCache lookupUser:userId];
-    [CDUserService displayAvatarOfUser:user avatarView:cell.myImageView];
+    AVUser *user = [[CDCacheManager manager] lookupUser:userId];
+    [[CDUserManager manager] displayAvatarOfUser:user avatarView:cell.myImageView];
     cell.myLabel.text = user.username;
     if ([_selected[indexPath.row] boolValue]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;

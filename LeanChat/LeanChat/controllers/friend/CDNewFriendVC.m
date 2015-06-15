@@ -11,7 +11,7 @@
 #import "CDUtils.h"
 #import "CDLabelButtonTableCell.h"
 #import "CDAddRequest.h"
-#import "CDUserService.h"
+#import "CDUserManager.h"
 
 @interface CDNewFriendVC ()
 
@@ -35,7 +35,7 @@
 - (void)refresh:(UIRefreshControl *)refreshControl {
     [self showProgress];
     WEAKSELF
-    [CDUserService findAddRequestsWithBlock : ^(NSArray *objects, NSError *error) {
+    [[CDUserManager manager] findAddRequestsWithBlock : ^(NSArray *objects, NSError *error) {
         [self hideProgress];
         if (refreshControl) {
             [refreshControl endRefreshing];
@@ -69,7 +69,7 @@
     CDLabelButtonTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     CDAddRequest *addRequest = [_addRequests objectAtIndex:indexPath.row];
     cell.nameLabel.text = addRequest.fromUser.username;
-    [CDUserService displayAvatarOfUser:addRequest.fromUser avatarView:cell.leftImageView];
+    [[CDUserManager manager] displayAvatarOfUser:addRequest.fromUser avatarView:cell.leftImageView];
     if (addRequest.status == CDAddRequestStatusWait) {
         cell.actionBtn.enabled = true;
         cell.actionBtn.tag = indexPath.row;
@@ -89,7 +89,7 @@
     UIButton *btn = (UIButton *)sender;
     CDAddRequest *addRequest = [_addRequests objectAtIndex:btn.tag];
     [self showProgress];
-    [CDUserService agreeAddRequest : addRequest callback : ^(BOOL succeeded, NSError *error) {
+    [[CDUserManager manager] agreeAddRequest : addRequest callback : ^(BOOL succeeded, NSError *error) {
         [self hideProgress];
         if ([self filterError:error]) {
             [self alert:@"添加成功a"];

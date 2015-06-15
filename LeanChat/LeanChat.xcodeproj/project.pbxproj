@@ -39,10 +39,6 @@
 		7073FCC31B14718C006F2692 /* CDAbuseReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC7B1B14718C006F2692 /* CDAbuseReport.m */; };
 		7073FCC41B14718C006F2692 /* CDAddRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC7D1B14718C006F2692 /* CDAddRequest.m */; };
 		7073FCC51B14718C006F2692 /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC7F1B14718C006F2692 /* CDUser.m */; };
-		7073FCC61B14718C006F2692 /* CDCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC821B14718C006F2692 /* CDCache.m */; };
-		7073FCC71B14718C006F2692 /* CDIMService.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC841B14718C006F2692 /* CDIMService.m */; };
-		7073FCC81B14718C006F2692 /* CDUserService.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC861B14718C006F2692 /* CDUserService.m */; };
-		7073FCC91B14718C006F2692 /* CDUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC881B14718C006F2692 /* CDUtils.m */; };
 		7073FCCA1B14718C006F2692 /* CDBadgeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC8E1B14718C006F2692 /* CDBadgeLabel.m */; };
 		7073FCCB1B14718C006F2692 /* CDButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC901B14718C006F2692 /* CDButton.m */; };
 		7073FCCE1B14718C006F2692 /* CDEntryActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC961B14718C006F2692 /* CDEntryActionButton.m */; };
@@ -97,6 +93,10 @@
 		7073FD341B147458006F2692 /* tabbar_discover_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073FD0B1B147458006F2692 /* tabbar_discover_active@2x.png */; };
 		7073FD351B147458006F2692 /* tabbar_me_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073FD0C1B147458006F2692 /* tabbar_me_active@2x.png */; };
 		7073FD361B147458006F2692 /* wechat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073FD0D1B147458006F2692 /* wechat@2x.png */; };
+		70DC7DB21B2F531F0047B7AB /* CDCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC7DAB1B2F531F0047B7AB /* CDCacheManager.m */; };
+		70DC7DB31B2F531F0047B7AB /* CDIMManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC7DAD1B2F531F0047B7AB /* CDIMManager.m */; };
+		70DC7DB41B2F531F0047B7AB /* CDUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC7DAF1B2F531F0047B7AB /* CDUserManager.m */; };
+		70DC7DB51B2F531F0047B7AB /* CDUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC7DB11B2F531F0047B7AB /* CDUtils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -171,14 +171,6 @@
 		7073FC7D1B14718C006F2692 /* CDAddRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAddRequest.m; sourceTree = "<group>"; };
 		7073FC7E1B14718C006F2692 /* CDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUser.h; sourceTree = "<group>"; };
 		7073FC7F1B14718C006F2692 /* CDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUser.m; sourceTree = "<group>"; };
-		7073FC811B14718C006F2692 /* CDCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCache.h; sourceTree = "<group>"; };
-		7073FC821B14718C006F2692 /* CDCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCache.m; sourceTree = "<group>"; };
-		7073FC831B14718C006F2692 /* CDIMService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIMService.h; sourceTree = "<group>"; };
-		7073FC841B14718C006F2692 /* CDIMService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIMService.m; sourceTree = "<group>"; };
-		7073FC851B14718C006F2692 /* CDUserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUserService.h; sourceTree = "<group>"; };
-		7073FC861B14718C006F2692 /* CDUserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUserService.m; sourceTree = "<group>"; };
-		7073FC871B14718C006F2692 /* CDUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUtils.h; sourceTree = "<group>"; };
-		7073FC881B14718C006F2692 /* CDUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUtils.m; sourceTree = "<group>"; };
 		7073FC8A1B14718C006F2692 /* CDCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCommon.h; sourceTree = "<group>"; };
 		7073FC8B1B14718C006F2692 /* CDCommonDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCommonDefine.h; sourceTree = "<group>"; };
 		7073FC8D1B14718C006F2692 /* CDBadgeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDBadgeLabel.h; sourceTree = "<group>"; };
@@ -248,6 +240,14 @@
 		7073FD0B1B147458006F2692 /* tabbar_discover_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_discover_active@2x.png"; sourceTree = "<group>"; };
 		7073FD0C1B147458006F2692 /* tabbar_me_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_me_active@2x.png"; sourceTree = "<group>"; };
 		7073FD0D1B147458006F2692 /* wechat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wechat@2x.png"; sourceTree = "<group>"; };
+		70DC7DAA1B2F531F0047B7AB /* CDCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCacheManager.h; sourceTree = "<group>"; };
+		70DC7DAB1B2F531F0047B7AB /* CDCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCacheManager.m; sourceTree = "<group>"; };
+		70DC7DAC1B2F531F0047B7AB /* CDIMManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIMManager.h; sourceTree = "<group>"; };
+		70DC7DAD1B2F531F0047B7AB /* CDIMManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIMManager.m; sourceTree = "<group>"; };
+		70DC7DAE1B2F531F0047B7AB /* CDUserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUserManager.h; sourceTree = "<group>"; };
+		70DC7DAF1B2F531F0047B7AB /* CDUserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUserManager.m; sourceTree = "<group>"; };
+		70DC7DB01B2F531F0047B7AB /* CDUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUtils.h; sourceTree = "<group>"; };
+		70DC7DB11B2F531F0047B7AB /* CDUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUtils.m; sourceTree = "<group>"; };
 		91EC9DF56C410F2764E79F62 /* Pods-LeanChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LeanChat/Pods-LeanChat.debug.xcconfig"; sourceTree = "<group>"; };
 		EF79D434DB9DF2EFE3DD51B2 /* libPods-LeanChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LeanChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -317,7 +317,7 @@
 				7073FCDD1B147431006F2692 /* resources */,
 				7073FC401B14718C006F2692 /* controllers */,
 				7073FC761B14718C006F2692 /* models */,
-				7073FC801B14718C006F2692 /* service */,
+				70DC7DA91B2F531F0047B7AB /* manager */,
 				7073FC891B14718C006F2692 /* settings */,
 				7073FC8C1B14718C006F2692 /* views */,
 				7073FC271B147048006F2692 /* Images.xcassets */,
@@ -454,9 +454,9 @@
 		7073FC761B14718C006F2692 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				7073FC791B14718C006F2692 /* avobject */,
 				7073FC771B14718C006F2692 /* AVIMUserInfoMessage.h */,
 				7073FC781B14718C006F2692 /* AVIMUserInfoMessage.m */,
-				7073FC791B14718C006F2692 /* avobject */,
 				7073FC7E1B14718C006F2692 /* CDUser.h */,
 				7073FC7F1B14718C006F2692 /* CDUser.m */,
 			);
@@ -472,21 +472,6 @@
 				7073FC7D1B14718C006F2692 /* CDAddRequest.m */,
 			);
 			path = avobject;
-			sourceTree = "<group>";
-		};
-		7073FC801B14718C006F2692 /* service */ = {
-			isa = PBXGroup;
-			children = (
-				7073FC811B14718C006F2692 /* CDCache.h */,
-				7073FC821B14718C006F2692 /* CDCache.m */,
-				7073FC831B14718C006F2692 /* CDIMService.h */,
-				7073FC841B14718C006F2692 /* CDIMService.m */,
-				7073FC851B14718C006F2692 /* CDUserService.h */,
-				7073FC861B14718C006F2692 /* CDUserService.m */,
-				7073FC871B14718C006F2692 /* CDUtils.h */,
-				7073FC881B14718C006F2692 /* CDUtils.m */,
-			);
-			path = service;
 			sourceTree = "<group>";
 		};
 		7073FC891B14718C006F2692 /* settings */ = {
@@ -630,6 +615,21 @@
 				7073FD0D1B147458006F2692 /* wechat@2x.png */,
 			);
 			path = tabbar;
+			sourceTree = "<group>";
+		};
+		70DC7DA91B2F531F0047B7AB /* manager */ = {
+			isa = PBXGroup;
+			children = (
+				70DC7DAA1B2F531F0047B7AB /* CDCacheManager.h */,
+				70DC7DAB1B2F531F0047B7AB /* CDCacheManager.m */,
+				70DC7DAC1B2F531F0047B7AB /* CDIMManager.h */,
+				70DC7DAD1B2F531F0047B7AB /* CDIMManager.m */,
+				70DC7DAE1B2F531F0047B7AB /* CDUserManager.h */,
+				70DC7DAF1B2F531F0047B7AB /* CDUserManager.m */,
+				70DC7DB01B2F531F0047B7AB /* CDUtils.h */,
+				70DC7DB11B2F531F0047B7AB /* CDUtils.m */,
+			);
+			path = manager;
 			sourceTree = "<group>";
 		};
 		B215B044676D1B59F414465D /* Frameworks */ = {
@@ -827,12 +827,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7073FCC81B14718C006F2692 /* CDUserService.m in Sources */,
+				70DC7DB31B2F531F0047B7AB /* CDIMManager.m in Sources */,
+				70DC7DB21B2F531F0047B7AB /* CDCacheManager.m in Sources */,
 				7073FCB71B14718C006F2692 /* CDEntryVC.m in Sources */,
 				7073FCD71B14718C006F2692 /* CDResizableButton.m in Sources */,
 				7073FC1D1B147048006F2692 /* main.m in Sources */,
 				7073FCAD1B14718C006F2692 /* CDWebViewVC.m in Sources */,
 				7073FCD21B14718C006F2692 /* CDLabelButtonTableCell.m in Sources */,
+				70DC7DB41B2F531F0047B7AB /* CDUserManager.m in Sources */,
 				7073FCB81B14718C006F2692 /* CDLoginVC.m in Sources */,
 				7073FCAB1B14718C006F2692 /* CDBaseTableVC.m in Sources */,
 				7073FCD81B14718C006F2692 /* CDTextField.m in Sources */,
@@ -843,15 +845,13 @@
 				7073FCAA1B14718C006F2692 /* CDBaseTabC.m in Sources */,
 				7073FCC11B14718C006F2692 /* CDUserInfoVC.m in Sources */,
 				7073FCD41B14718C006F2692 /* CDPopMenu.m in Sources */,
+				70DC7DB51B2F531F0047B7AB /* CDUtils.m in Sources */,
 				7073FCC21B14718C006F2692 /* AVIMUserInfoMessage.m in Sources */,
 				7073FCA91B14718C006F2692 /* CDBaseNavC.m in Sources */,
-				7073FCC71B14718C006F2692 /* CDIMService.m in Sources */,
-				7073FCC91B14718C006F2692 /* CDUtils.m in Sources */,
 				7073FCB21B14718C006F2692 /* CDConvNameVC.m in Sources */,
 				7073FCBE1B14718C006F2692 /* CDNewFriendVC.m in Sources */,
 				7073FCD51B14718C006F2692 /* CDPopMenuItem.m in Sources */,
 				7073FCCF1B14718C006F2692 /* CDEntryBottomButton.m in Sources */,
-				7073FCC61B14718C006F2692 /* CDCache.m in Sources */,
 				7073FCD01B14718C006F2692 /* CDImageLabelTableCell.m in Sources */,
 				7073FCBF1B14718C006F2692 /* CDProfileVC.m in Sources */,
 				7073FCB51B14718C006F2692 /* CDGroupedConvListVC.m in Sources */,

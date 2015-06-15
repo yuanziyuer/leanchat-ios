@@ -6,27 +6,27 @@
 //  Copyright (c) 2015年 AVOS. All rights reserved.
 //
 
-#import "CDIMService.h"
-#import "CDCache.h"
+#import "CDIMManager.h"
+#import "CDCacheManager.h"
 #import "CDUtils.h"
-#import "CDUserService.h"
+#import "CDUserManager.h"
 #import "CDConvDetailVC.h"
 #import "CDUser.h"
 #import "CDChatVC.h"
 
-@interface CDIMService ()
+@interface CDIMManager ()
 
 @property (nonatomic, strong) CDIM *im;
 
 @end
 
-@implementation CDIMService
+@implementation CDIMManager
 
-+ (instancetype)shareInstance {
-    static CDIMService *imService;
++ (instancetype)manager {
+    static CDIMManager *imService;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        imService = [[CDIMService alloc] init];
+        imService = [[CDIMManager alloc] init];
     });
     return imService;
 }
@@ -42,12 +42,12 @@
 #pragma mark - user delegate
 
 - (void)cacheUserByIds:(NSSet *)userIds block:(AVBooleanResultBlock)block {
-    [CDCache cacheUsersWithIds:userIds callback:block];
+    [[CDCacheManager manager] cacheUsersWithIds:userIds callback:block];
 }
 
 - (id <CDUserModel> )getUserById:(NSString *)userId {
     CDUser *user = [[CDUser alloc] init];
-    AVUser *avUser = [CDCache lookupUser:userId];
+    AVUser *avUser = [[CDCacheManager manager] lookupUser:userId];
     if (user == nil) {
         [NSException raise:@"user is nil" format:nil];
     }
@@ -66,8 +66,7 @@
 }
 
 - (void)goWithUserId:(NSString *)userId fromVC:(UIViewController *)vc {
-    CDIM *im = [CDIM sharedInstance];
-    [im fetchConvWithOtherId:userId callback: ^(AVIMConversation *conversation, NSError *error) {
+    [[CDIM sharedInstance] fetchConvWithOtherId:userId callback: ^(AVIMConversation *conversation, NSError *error) {
         if (error) {
             DLog(@"%@", error);
         }

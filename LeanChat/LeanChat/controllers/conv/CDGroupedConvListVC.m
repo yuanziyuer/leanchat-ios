@@ -7,7 +7,7 @@
 //
 
 #import "CDGroupedConvListVC.h"
-#import "CDIMService.h"
+#import "CDIMManager.h"
 #import "CDUtils.h"
 #import "CDImageLabelTableCell.h"
 
@@ -84,7 +84,7 @@ static NSString *cellIndentifier = @"cell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     AVIMConversation *conv = [convs objectAtIndex:indexPath.row];
-    [[CDIMService shareInstance] goWithConv:conv fromNav:self.navigationController];
+    [[CDIMManager manager] goWithConv:conv fromNav:self.navigationController];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

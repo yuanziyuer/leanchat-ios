@@ -15,8 +15,8 @@
 #import "CDGroupedConvListVC.h"
 #import <JSBadgeView/JSBadgeView.h>
 #import "CDUtils.h"
-#import "CDUserService.h"
-#import "CDIMService.h"
+#import "CDUserManager.h"
+#import "CDIMManager.h"
 
 @interface CDFriendListVC () <UIAlertViewDelegate>
 
@@ -121,7 +121,7 @@
 - (void)refresh:(UIRefreshControl *)refreshControl {
     [self showProgress];
     WEAKSELF
-    [CDUserService findFriendsWithBlock : ^(NSArray *objects, NSError *error) {
+    [[CDUserManager manager] findFriendsWithBlock : ^(NSArray *objects, NSError *error) {
         if (refreshControl) {
             [CDUtils stopRefreshControl:refreshControl];
         }
@@ -144,7 +144,7 @@
 
 - (void)setNewAddRequestBadge {
     WEAKSELF
-    [CDUserService countAddRequestsWithBlock : ^(NSInteger number, NSError *error) {
+    [[CDUserManager manager] countAddRequestsWithBlock : ^(NSInteger number, NSError *error) {
         [CDUtils logError:error callback: ^{
             _addRequestN = number;
             NSInteger oldN = [[NSUserDefaults standardUserDefaults] integerForKey:@"addRequestN"];
@@ -186,13 +186,13 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     CDImageLabelTableCell *tableCell = (CDImageLabelTableCell *)cell;
     AVUser *user = [self.users objectAtIndex:indexPath.row];
-    [CDUserService displayAvatarOfUser:user avatarView:tableCell.myImageView];
+    [[CDUserManager manager] displayAvatarOfUser:user avatarView:tableCell.myImageView];
     tableCell.myLabel.text = user.username;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     AVUser *user = [self.users objectAtIndex:indexPath.row];
-    [[CDIMService shareInstance] goWithUserId:user.objectId fromVC:self];
+    [[CDIMManager manager] goWithUserId:user.objectId fromVC:self];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -213,7 +213,7 @@
         AVUser *user = [_users objectAtIndex:row];
         [self showProgress];
         WEAKSELF
-        [CDUserService removeFriend : user callback : ^(BOOL succeeded, NSError *error) {
+        [[CDUserManager manager] removeFriend : user callback : ^(BOOL succeeded, NSError *error) {
             [self hideProgress];
             if ([self filterError:error]) {
                 [weakSelf refresh];

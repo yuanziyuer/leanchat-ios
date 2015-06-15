@@ -13,8 +13,8 @@
 #import "CDConvNameVC.h"
 #import <LZMembersCell/LZMembersCell.h>
 #import "CDConvReportAbuseVC.h"
-#import "CDCache.h"
-#import "CDUserService.h"
+#import "CDCacheManager.h"
+#import "CDUserManager.h"
 #import "LZAlertViewHelper.h"
 
 static NSString *kCDConvDetailVCTitleKey = @"title";
@@ -110,7 +110,7 @@ static NSString *const reuseIdentifier = @"Cell";
 }
 
 - (AVIMConversation *)conv {
-    return [CDCache getCurConv];
+    return [[CDCacheManager manager] getCurConv];
 }
 
 - (LZAlertViewHelper *)alertViewHelper {
@@ -136,11 +136,11 @@ static NSString *const reuseIdentifier = @"Cell";
     NSString *curUserId = [AVUser currentUser].objectId;
     _own = [conv.creator isEqualToString:curUserId];
     self.title = [NSString stringWithFormat:@"详情(%ld人)", (long)self.conv.members.count];
-    [CDCache cacheUsersWithIds:userIds callback: ^(BOOL succeeded, NSError *error) {
+    [[CDCacheManager manager] cacheUsersWithIds:userIds callback: ^(BOOL succeeded, NSError *error) {
         if ([self filterError:error]) {
             NSMutableArray *displayMembers = [NSMutableArray array];
             for (NSString *userId in userIds) {
-                [displayMembers addObject:[self memberFromUser:[CDCache lookupUser:userId]]];
+                [displayMembers addObject:[self memberFromUser:[[CDCacheManager manager] lookupUser:userId]]];
             }
             weakSelf.displayMembers = displayMembers;
             
@@ -242,7 +242,7 @@ static NSString *const reuseIdentifier = @"Cell";
 #pragma mark - member cell delegate
 
 - (void)didSelectMember:(LZMember *)member {
-    AVUser *user = [CDCache lookupUser:member.memberId];
+    AVUser *user = [[CDCacheManager manager] lookupUser:member.memberId];
     NSString *curUserId = [AVUser currentUser].objectId;
     if ([curUserId isEqualToString:user.objectId] == YES) {
         return;
@@ -252,13 +252,13 @@ static NSString *const reuseIdentifier = @"Cell";
 }
 
 - (void)didLongPressMember:(LZMember *)user {
-    AVUser *member = [CDCache lookupUser:user.memberId];
+    AVUser *member = [[CDCacheManager manager] lookupUser:user.memberId];
     if ([member.objectId isEqualToString:self.conv.creator] == NO) {
         [self.alertViewHelper showConfirmAlertViewWithMessage:@"确定要踢走该成员吗？" block:^(BOOL confirm, NSString *text) {
             if (confirm) {
                 [self.conv removeMembersWithClientIds : @[member.objectId] callback : ^(BOOL succeeded, NSError *error) {
                     if ([self filterError:error]) {
-                        [CDCache refreshCurConv: ^(BOOL succeeded, NSError *error) {
+                        [[CDCacheManager manager] refreshCurConv: ^(BOOL succeeded, NSError *error) {
                             [self alertError:error];
                         }];
                     }
@@ -269,8 +269,8 @@ static NSString *const reuseIdentifier = @"Cell";
 }
 
 - (void)displayAvatarOfMember:(LZMember *)member atImageView:(UIImageView *)imageView {
-    AVUser *user = [CDCache lookupUser:member.memberId];
-    [CDUserService displayAvatarOfUser:user avatarView:imageView];
+    AVUser *user = [[CDCacheManager manager] lookupUser:member.memberId];
+    [[CDUserManager manager] displayAvatarOfUser:user avatarView:imageView];
 }
 #pragma mark - Action
 

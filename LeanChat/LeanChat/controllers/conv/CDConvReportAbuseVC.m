@@ -8,7 +8,7 @@
 
 #import "CDConvReportAbuseVC.h"
 #import "CDTextField.h"
-#import "CDUserService.h"
+#import "CDUserManager.h"
 #import "CDUtils.h"
 
 @interface CDConvReportAbuseVC ()
@@ -54,7 +54,7 @@
         [self showProgress];
         WEAKSELF DLog(@"%@", self.inputTextField.text);
         
-        [CDUserService reportAbuseWithReason:self.inputTextField.text convid:self.convid block: ^(BOOL succeeded, NSError *error) {
+        [[CDUserManager manager] reportAbuseWithReason:self.inputTextField.text convid:self.convid block: ^(BOOL succeeded, NSError *error) {
             [weakSelf hideProgress];
             if ([self filterError:error]) {
                 [self alert:@"感谢您的举报，我们将尽快处理。"];

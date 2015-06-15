@@ -6,29 +6,40 @@
 //  Copyright (c) 2014年 AVOS. All rights reserved.
 //
 
-#import "CDUserService.h"
+#import "CDUserManager.h"
 #import "CDUtils.h"
-#import "CDCache.h"
+#import "CDCacheManager.h"
 #import "CDAbuseReport.h"
 #import <LeanChatLib/LeanChatLib.h>
 
 static UIImage *defaultAvatar;
 
-@implementation CDUserService
+static CDUserManager *userManager;
 
-+ (void)findFriendsWithBlock:(AVArrayResultBlock)block {
+@implementation CDUserManager
+
++ (instancetype)manager {
+    static dispatch_once_t token ;
+    dispatch_once(&token, ^{
+        userManager = [[CDUserManager alloc] init];
+    });
+    return userManager;
+}
+
+
+- (void)findFriendsWithBlock:(AVArrayResultBlock)block {
     AVUser *user = [AVUser currentUser];
     AVQuery *q = [user followeeQuery];
     q.cachePolicy = kAVCachePolicyNetworkElseCache;
     [q findObjectsInBackgroundWithBlock: ^(NSArray *objects, NSError *error) {
         if (error == nil) {
-            [CDCache registerUsers:objects];
+            [[CDCacheManager manager] registerUsers:objects];
         }
         block(objects, error);
     }];
 }
 
-+ (void)isMyFriend:(AVUser *)user block:(AVBooleanResultBlock)block {
+- (void)isMyFriend:(AVUser *)user block:(AVBooleanResultBlock)block {
     AVUser *currentUser = [AVUser currentUser];
     AVQuery *q = [currentUser followeeQuery];
     [q whereKey:@"followee" equalTo:user];
@@ -47,12 +58,12 @@ static UIImage *defaultAvatar;
     }];
 }
 
-+ (NSString *)getPeerIdOfUser:(AVUser *)user {
+- (NSString *)getPeerIdOfUser:(AVUser *)user {
     return user.objectId;
 }
 
 // should exclude friends
-+ (void)findUsersByPartname:(NSString *)partName withBlock:(AVArrayResultBlock)block {
+- (void)findUsersByPartname:(NSString *)partName withBlock:(AVArrayResultBlock)block {
     AVQuery *q = [AVUser query];
     [q setCachePolicy:kAVCachePolicyNetworkElseCache];
     [q whereKey:@"username" containsString:partName];
@@ -62,7 +73,7 @@ static UIImage *defaultAvatar;
     [q findObjectsInBackgroundWithBlock:block];
 }
 
-+ (void)findUsersByIds:(NSArray *)userIds callback:(AVArrayResultBlock)callback {
+- (void)findUsersByIds:(NSArray *)userIds callback:(AVArrayResultBlock)callback {
     if ([userIds count] > 0) {
         AVQuery *q = [AVUser query];
         [q setCachePolicy:kAVCachePolicyNetworkElseCache];
@@ -74,26 +85,26 @@ static UIImage *defaultAvatar;
     }
 }
 
-+ (void)displayAvatarOfUser:(AVUser *)user avatarView:(UIImageView *)avatarView {
+- (void)displayAvatarOfUser:(AVUser *)user avatarView:(UIImageView *)avatarView {
     [self getAvatarImageOfUser:user block: ^(UIImage *image) {
         [avatarView setImage:image];
     }];
 }
 
-+ (void)displayBigAvatarOfUser:(AVUser *)user avatarView:(UIImageView *)avatarView {
+- (void)displayBigAvatarOfUser:(AVUser *)user avatarView:(UIImageView *)avatarView {
     CGFloat avatarWidth = 60;
     CGSize avatarSize = CGSizeMake(avatarWidth, avatarWidth);
     UIGraphicsBeginImageContextWithOptions(avatarSize, NO, 0.0);
     UIImage *blank = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     avatarView.image = blank;
-    [CDUserService getAvatarImageOfUser:user block: ^(UIImage *image) {
+    [[CDUserManager manager] getAvatarImageOfUser:user block: ^(UIImage *image) {
         UIImage *resizedImage = [CDUtils resizeImage:image toSize:avatarSize];
         avatarView.image = resizedImage;
     }];
 }
 
-+ (void)getAvatarImageOfUser:(AVUser *)user block:(void (^)(UIImage *image))block {
+- (void)getAvatarImageOfUser:(AVUser *)user block:(void (^)(UIImage *image))block {
     AVFile *avatar = [user objectForKey:@"avatar"];
     if (avatar) {
         [avatar getDataInBackgroundWithBlock: ^(NSData *data, NSError *error) {
@@ -110,11 +121,11 @@ static UIImage *defaultAvatar;
     }
 }
 
-+ (UIImage *)defaultAvatarOfUser:(AVUser *)user {
+- (UIImage *)defaultAvatarOfUser:(AVUser *)user {
     return [UIImage imageWithHashString:user.objectId displayString:[[user.username substringWithRange:NSMakeRange(0, 1)] capitalizedString]];
 }
 
-+ (void)saveAvatar:(UIImage *)image callback:(AVBooleanResultBlock)callback {
+- (void)saveAvatar:(UIImage *)image callback:(AVBooleanResultBlock)callback {
     NSData *data = UIImagePNGRepresentation(image);
     AVFile *file = [AVFile fileWithData:data];
     [file saveInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
@@ -130,19 +141,19 @@ static UIImage *defaultAvatar;
     }];
 }
 
-+ (void)addFriend:(AVUser *)user callback:(AVBooleanResultBlock)callback {
+- (void)addFriend:(AVUser *)user callback:(AVBooleanResultBlock)callback {
     AVUser *curUser = [AVUser currentUser];
     [curUser follow:user.objectId andCallback:callback];
 }
 
-+ (void)removeFriend:(AVUser *)user callback:(AVBooleanResultBlock)callback {
+- (void)removeFriend:(AVUser *)user callback:(AVBooleanResultBlock)callback {
     AVUser *curUser = [AVUser currentUser];
     [curUser unfollow:user.objectId andCallback:callback];
 }
 
 #pragma mark - AddRequest
 
-+ (void)findAddRequestsWithBlock:(AVArrayResultBlock)block {
+- (void)findAddRequestsWithBlock:(AVArrayResultBlock)block {
     AVUser *curUser = [AVUser currentUser];
     AVQuery *q = [CDAddRequest query];
     [q includeKey:kAddRequestFromUser];
@@ -151,7 +162,7 @@ static UIImage *defaultAvatar;
     [q findObjectsInBackgroundWithBlock:block];
 }
 
-+ (void)countAddRequestsWithBlock:(AVIntegerResultBlock)block {
+- (void)countAddRequestsWithBlock:(AVIntegerResultBlock)block {
     AVQuery *q = [CDAddRequest query];
     AVUser *user = [AVUser currentUser];
     [q whereKey:TO_USER equalTo:user];
@@ -159,8 +170,8 @@ static UIImage *defaultAvatar;
     [q countObjectsInBackgroundWithBlock:block];
 }
 
-+ (void)agreeAddRequest:(CDAddRequest *)addRequest callback:(AVBooleanResultBlock)callback {
-    [CDUserService addFriend:addRequest.fromUser callback: ^(BOOL succeeded, NSError *error) {
+- (void)agreeAddRequest:(CDAddRequest *)addRequest callback:(AVBooleanResultBlock)callback {
+    [[CDUserManager manager] addFriend:addRequest.fromUser callback: ^(BOOL succeeded, NSError *error) {
         if (error) {
             if (error.code != kAVErrorDuplicateValue) {
                 callback(NO, error);
@@ -177,7 +188,7 @@ static UIImage *defaultAvatar;
     }];
 }
 
-+ (void)haveWaitAddRequestWithToUser:(AVUser *)toUser callback:(AVBooleanResultBlock)callback {
+- (void)haveWaitAddRequestWithToUser:(AVUser *)toUser callback:(AVBooleanResultBlock)callback {
     AVUser *user = [AVUser currentUser];
     AVQuery *q = [CDAddRequest query];
     [q whereKey:kAddRequestFromUser equalTo:user];
@@ -203,7 +214,7 @@ static UIImage *defaultAvatar;
     }];
 }
 
-+ (void)tryCreateAddRequestWithToUser:(AVUser *)user callback:(AVBooleanResultBlock)callback {
+- (void)tryCreateAddRequestWithToUser:(AVUser *)user callback:(AVBooleanResultBlock)callback {
     [self haveWaitAddRequestWithToUser:user callback: ^(BOOL succeeded, NSError *error) {
         if (error) {
             callback(NO, error);
@@ -225,7 +236,7 @@ static UIImage *defaultAvatar;
 }
 
 #pragma mark - report abuse
-+ (void)reportAbuseWithReason:(NSString *)reason convid:(NSString *)convid block:(AVBooleanResultBlock)block {
+- (void)reportAbuseWithReason:(NSString *)reason convid:(NSString *)convid block:(AVBooleanResultBlock)block {
     CDAbuseReport *report = [[CDAbuseReport alloc] init];
     report.reason = reason;
     report.convid = convid;
