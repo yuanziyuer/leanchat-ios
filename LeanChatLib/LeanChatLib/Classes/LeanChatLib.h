@@ -21,7 +21,6 @@ FOUNDATION_EXPORT const unsigned char LeanChatLibVersionString[];
 #import "CDStorage.h"
 #import "CDIMConfig.h"
 #import "CDUserModel.h"
-#import "CDNotify.h"
 #import "AVIMConversation+Custom.h"
 #import "UIImage+Icon.h"
 #import "CDChatListVC.h"
