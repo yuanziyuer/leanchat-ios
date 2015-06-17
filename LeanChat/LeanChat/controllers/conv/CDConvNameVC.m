@@ -7,17 +7,14 @@
 //
 
 #import "CDConvNameVC.h"
-#import <LeanChatLib/LeanChatLib.h>
+#import <LeanChatLib/CDNotify.h>
+#import <LeanChatLib/AVIMConversation+Custom.h>
 
 @interface CDConvNameVC ()
 
 @property (strong, nonatomic) IBOutlet UITableViewCell *tableCell;
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
-
-@property (nonatomic, strong) CDIM *im;
-
-@property (nonatomic, strong) CDNotify *notify;
 
 @end
 
@@ -39,8 +36,6 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveName:)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(backPressed)];
     self.nameTextField.text = _conv.displayName;
-    _im = [CDIM sharedInstance];
-    _notify = [CDNotify sharedInstance];
 }
 
 - (void)backPressed {
@@ -53,7 +48,7 @@
         [updateBuilder setName:_nameTextField.text];
         [_conv update:[updateBuilder dictionary] callback: ^(BOOL succeeded, NSError *error) {
             if ([self filterError:error]) {
-                [_notify postConvNotify];
+                [[CDNotify sharedInstance] postConvNotify];
                 [self backPressed];
             }
         }];

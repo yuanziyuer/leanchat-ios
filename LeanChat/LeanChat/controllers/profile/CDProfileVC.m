@@ -11,6 +11,7 @@
 #import "CDAppDelegate.h"
 #import "LZPushSettingViewController.h"
 #import "CDWebViewVC.h"
+#import <LeanChatLib/CDIM.h>
 
 @interface CDProfileVC ()
 

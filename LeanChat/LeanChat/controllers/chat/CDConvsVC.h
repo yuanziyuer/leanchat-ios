@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 AVOS. All rights reserved.
 //
 
-#import <LeanChatLib/LeanChatLib.h>
+#import <LeanChatLib/CDChatListVC.h>
 
 @interface CDConvsVC : CDChatListVC
 

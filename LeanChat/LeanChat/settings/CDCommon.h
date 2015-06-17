@@ -11,7 +11,6 @@
 
 #import <AVOSCloud/AVOSCloud.h>
 #import <AVOSCloudIM/AVOSCloudIM.h>
-#import <LeanChatLib/LeanChatLib.h>
 #import "CDCommonDefine.h"
 
 #endif

@@ -9,6 +9,9 @@
 #import "CDCacheManager.h"
 #import "CDUtils.h"
 #import "CDUserManager.h"
+#import <LeanChatLib/CDRoom.h>
+#import <LeanChatLib/CDIM.h>
+#import <LeanChatLib/CDNotify.h>
 
 static CDCacheManager *cacheManager;
 

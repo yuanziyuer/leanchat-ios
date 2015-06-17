@@ -11,10 +11,10 @@ Pod::Spec.new do |s|
   s.source_files = 'LeanChatLib/LeanChatLib/Classes/**/*.{h,m}'
   s.resources    = 'LeanChatLib/LeanChatLib/Resources/*'
 	s.libraries    = 'icucore','sqlite3'
-   s.requires_arc = true
-   s.dependency 'JSBadgeView'
-   s.dependency 'AVOSCloud'
-   s.dependency 'AVOSCloudIM'
-   s.dependency 'FMDB' 
-   s.dependency 'LZConversationCell'
+  s.requires_arc = true
+  s.dependency 'JSBadgeView'
+  s.dependency 'AVOSCloud'
+  s.dependency 'AVOSCloudIM'
+  s.dependency 'FMDB' 
+  s.dependency 'LZConversationCell'
 end

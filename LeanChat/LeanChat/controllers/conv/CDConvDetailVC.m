@@ -16,6 +16,9 @@
 #import "CDCacheManager.h"
 #import "CDUserManager.h"
 #import "LZAlertViewHelper.h"
+#import <LeanChatLib/CDIM.h>
+#import <LeanChatLib/CDStorage.h>
+#import <LeanChatLib/CDNotify.h>
 
 static NSString *kCDConvDetailVCTitleKey = @"title";
 static NSString *kCDConvDetailVCDisclosureKey = @"disclosure";

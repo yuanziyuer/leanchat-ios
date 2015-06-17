@@ -7,7 +7,6 @@
 //
 
 #import "CDUserInfoVC.h"
-#import <LeanChatLib/LeanChatLib.h>
 #import "CDCacheManager.h"
 #import "CDUserManager.h"
 #import "CDUtils.h"

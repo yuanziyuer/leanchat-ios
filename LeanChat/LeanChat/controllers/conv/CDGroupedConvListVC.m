@@ -10,14 +10,13 @@
 #import "CDIMManager.h"
 #import "CDUtils.h"
 #import "CDImageLabelTableCell.h"
+#import <LeanChatLib/CDNotify.h>
+#import <LeanChatLib/CDIM.h>
 
 @interface CDGroupedConvListVC () {
     NSArray *convs;
     id groupUpdatedObserver;
-    CDIM *_im;
 }
-
-@property CDNotify *notify;
 
 @end
 
@@ -28,8 +27,6 @@ static NSString *cellIndentifier = @"cell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     convs = [[NSMutableArray alloc] init];
-    _im = [CDIM sharedInstance];
-    _notify = [CDNotify sharedInstance];
     self.title = @"群组";
     NSString *nibName = NSStringFromClass([CDImageLabelTableCell class]);
     UINib *nib = [UINib nibWithNibName:nibName bundle:nil];
@@ -40,15 +37,15 @@ static NSString *cellIndentifier = @"cell";
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refreshControl];
     
-    [_notify addConvObserver:self selector:@selector(refresh:)];
+    [[CDNotify sharedInstance] addConvObserver:self selector:@selector(refresh:)];
 }
 
 - (void)dealloc {
-    [_notify removeConvObserver:self];
+    [[CDNotify sharedInstance] removeConvObserver:self];
 }
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
-    [_im findGroupedConvsWithBlock: ^(NSArray *objects, NSError *error) {
+    [[CDIM sharedInstance] findGroupedConvsWithBlock: ^(NSArray *objects, NSError *error) {
         [CDUtils stopRefreshControl:refreshControl];
         convs = objects;
         [self.tableView reloadData];

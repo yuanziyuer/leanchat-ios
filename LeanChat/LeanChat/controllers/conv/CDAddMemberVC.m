@@ -8,11 +8,11 @@
 
 #import "CDAddMemberVC.h"
 #import "CDImageLabelTableCell.h"
-#import <LeanChatLib/LeanChatLib.h>
 #import "CDUserManager.h"
 #import "CDCacheManager.h"
 #import "CDUtils.h"
 #import "CDIMManager.h"
+#import <LeanChatLib/CDIM.h>
 
 
 @interface CDAddMemberVC ()
@@ -20,10 +20,6 @@
 @property NSMutableArray *selected;
 
 @property NSMutableArray *potentialIds;
-
-@property CDNotify *notify;
-
-@property CDIM *im;
 
 @end
 
@@ -36,8 +32,6 @@ static NSString *reuseIdentifier = @"Cell";
     if (self) {
         _selected = [NSMutableArray array];
         _potentialIds = [NSMutableArray array];
-        _im = [CDIM sharedInstance];
-        _notify = [CDNotify sharedInstance];
     }
     return self;
 }
@@ -96,7 +90,7 @@ static NSString *reuseIdentifier = @"Cell";
         NSMutableArray *members = [conv.members mutableCopy];
         [members addObjectsFromArray:inviteIds];
         [self showProgress];
-        [_im createConvWithMembers:members type:CDConvTypeGroup callback: ^(AVIMConversation *conversation, NSError *error) {
+        [[CDIM sharedInstance] createConvWithMembers:members type:CDConvTypeGroup callback: ^(AVIMConversation *conversation, NSError *error) {
             [self hideProgress];
             if ([self filterError:error]) {
                 [self.presentingViewController dismissViewControllerAnimated:YES completion: ^{
