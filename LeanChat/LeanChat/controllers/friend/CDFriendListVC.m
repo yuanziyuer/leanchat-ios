@@ -16,7 +16,7 @@
 #import <JSBadgeView/JSBadgeView.h>
 #import "CDUtils.h"
 #import "CDUserManager.h"
-#import "CDIMManager.h"
+#import "CDIMService.h"
 
 @interface CDFriendListVC () <UIAlertViewDelegate>
 
@@ -192,7 +192,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     AVUser *user = [self.users objectAtIndex:indexPath.row];
-    [[CDIMManager manager] goWithUserId:user.objectId fromVC:self];
+    [[CDIMService service] goWithUserId:user.objectId fromVC:self];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

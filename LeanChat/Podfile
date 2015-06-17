@@ -2,13 +2,13 @@
 # platform :ios, '6.0'
 
 target 'LeanChat' do
-    pod 'AVOSCloud'
-    pod 'AVOSCloudIM'
-    pod 'LeanChatLib'
-    pod 'MBProgressHUD'
+    pod 'AVOSCloud', '~> 3.1.2.4'
+    pod 'AVOSCloudIM', '~> 3.1.2.4'
+    pod 'LeanChatLib' , :path => '../'
+    pod 'MBProgressHUD', '~> 0.9.1'
     pod 'LZAlertViewHelper' , '~> 0.0.2'
-    pod 'JSBadgeView'
-    pod 'LZMembersCell'
+    pod 'JSBadgeView', '~> 1.4'
+    pod 'LZMembersCell', '~> 0.0.2'
 end
 
 target 'LeanChatTests' do

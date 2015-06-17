@@ -10,7 +10,7 @@
 #import "CDCacheManager.h"
 #import "CDUserManager.h"
 #import "CDUtils.h"
-#import "CDIMManager.h"
+#import "CDIMService.h"
 
 @interface CDUserInfoVC ()
 
@@ -85,7 +85,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 1) {
         if (self.isFriend) {
-            [[CDIMManager manager] goWithUserId:self.user.objectId fromVC:self];
+            [[CDIMService service] goWithUserId:self.user.objectId fromVC:self];
         }
         else {
             [self showProgress];

@@ -8,7 +8,7 @@
 
 #import "CDConvsVC.h"
 #import "CDUtils.h"
-#import "CDIMManager.h"
+#import "CDIMService.h"
 
 @interface CDConvsVC () <CDChatListVCDelegate>
 
@@ -35,7 +35,7 @@
 }
 
 - (void)viewController:(UIViewController *)viewController didSelectConv:(AVIMConversation *)conv {
-    [[CDIMManager manager] goWithConv:conv fromNav:viewController.navigationController];
+    [[CDIMService service] goWithConv:conv fromNav:viewController.navigationController];
 }
 
 - (void)setBadgeWithTotalUnreadCount:(NSInteger)totalUnreadCount {

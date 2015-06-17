@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 AVOS. All rights reserved.
 //
 
-#import "CDIMManager.h"
+#import "CDIMService.h"
 #import "CDCacheManager.h"
 #import "CDUtils.h"
 #import "CDUserManager.h"
@@ -14,29 +14,19 @@
 #import "CDUser.h"
 #import "CDChatVC.h"
 
-@interface CDIMManager ()
-
-@property (nonatomic, strong) CDIM *im;
+@interface CDIMService ()
 
 @end
 
-@implementation CDIMManager
+@implementation CDIMService
 
-+ (instancetype)manager {
-    static CDIMManager *imService;
++ (instancetype)service {
+    static CDIMService *imService;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        imService = [[CDIMManager alloc] init];
+        imService = [[CDIMService alloc] init];
     });
     return imService;
-}
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        self.im = [CDIM sharedInstance];
-    }
-    return self;
 }
 
 #pragma mark - user delegate

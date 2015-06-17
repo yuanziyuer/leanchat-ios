@@ -11,7 +11,6 @@
 #import "CDUserManager.h"
 #import <LeanChatLib/CDRoom.h>
 #import <LeanChatLib/CDIM.h>
-#import <LeanChatLib/CDNotify.h>
 
 static CDCacheManager *cacheManager;
 
@@ -133,7 +132,7 @@ static CDCacheManager *cacheManager;
             }
             else {
                 [self setCurConv:conversation];
-                [[CDNotify sharedInstance] postConvNotify];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationConversationUpdated object:nil];
                 callback(YES, nil);
             }
         }];

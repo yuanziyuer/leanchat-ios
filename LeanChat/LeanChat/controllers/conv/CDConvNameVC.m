@@ -7,8 +7,8 @@
 //
 
 #import "CDConvNameVC.h"
-#import <LeanChatLib/CDNotify.h>
 #import <LeanChatLib/AVIMConversation+Custom.h>
+#import <LeanChatLib/CDIM.h>
 
 @interface CDConvNameVC ()
 
@@ -48,7 +48,7 @@
         [updateBuilder setName:_nameTextField.text];
         [_conv update:[updateBuilder dictionary] callback: ^(BOOL succeeded, NSError *error) {
             if ([self filterError:error]) {
-                [[CDNotify sharedInstance] postConvNotify];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationConversationUpdated object:nil];
                 [self backPressed];
             }
         }];

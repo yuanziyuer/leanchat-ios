@@ -10,9 +10,9 @@
 #import "CDCommon.h"
 #import <LeanChatLib/CDIM.h>
 
-@interface CDIMManager : NSObject <CDUserDelegate>
+@interface CDIMService : NSObject <CDUserDelegate>
 
-+ (instancetype)manager;
++ (instancetype)service;
 
 - (void)goWithUserId:(NSString *)userId fromVC:(UIViewController *)vc;
 - (void)goWithConv:(AVIMConversation *)conv fromNav:(UINavigationController *)nav;

@@ -18,7 +18,6 @@
 #import "CDEmotionUtils.h"
 #import "CDIMConfig.h"
 #import "AVIMConversation+Custom.h"
-#import "CDNotify.h"
 
 static NSInteger const kOnePageSize = 20;
 
@@ -28,9 +27,7 @@ static NSInteger const kOnePageSize = 20;
 
 @property (nonatomic, strong) CDIMConfig *imConfig;
 
-@property (nonatomic, strong) CDNotify *notify;
-
-@property (nonatomic, assign) BOOL isLoadingMsg;
+@property (atomic, assign) BOOL isLoadingMsg;
 
 @property (nonatomic, strong) XHMessageTableViewCell *currentSelectedCell;
 
@@ -52,8 +49,6 @@ static NSInteger const kOnePageSize = 20;
         //self.allowsSendFace = NO;
         //self.allowsSendMultiMedia = NO;
         _isLoadingMsg = NO;
-        _im = [CDIM sharedInstance];
-        _notify = [CDNotify sharedInstance];
         _storage = [CDStorage sharedInstance];
         _imConfig = [CDIMConfig config];
     }
@@ -106,7 +101,7 @@ static NSInteger const kOnePageSize = 20;
     [self initBottomMenuAndEmotionView];
     [self.view addSubview:self.clientStatusView];
     self.clientStatusView.hidden = YES;
-    id <CDUserModel> curUser = self.im.selfUser;
+    id <CDUserModel> curUser = [CDIM sharedInstance].selfUser;
     // 设置自身用户名
     self.messageSender = [curUser username];
     
@@ -115,21 +110,21 @@ static NSInteger const kOnePageSize = 20;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [_notify addMsgObserver:self selector:@selector(loadMsg:)];
-    [_notify addConvObserver:self selector:@selector(refreshConv)];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessage:) name:kCDNotificationMessageReceived object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshConv) name:kCDNotificationConversationUpdated object:nil];
     [_storage clearUnreadWithConvid:self.conv.conversationId];
     [self refreshConv];
-    [self loadMsgsWithLoadMore:NO];
-    [self.im addObserver:self forKeyPath:@"connect" options:NSKeyValueObservingOptionNew context:NULL];
+    [self loadMessagesWhenInit];
+    [[CDIM sharedInstance] addObserver:self forKeyPath:@"connect" options:NSKeyValueObservingOptionNew context:NULL];
     [self updateStatusView];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [_notify removeMsgObserver:self];
-    [_notify removeConvObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationMessageReceived object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationConversationUpdated object:nil];
     [_storage clearUnreadWithConvid:self.conv.conversationId];
-    [self.im removeObserver:self forKeyPath:@"connect"];
+    [[CDIM sharedInstance] removeObserver:self forKeyPath:@"connect"];
     [[XHAudioPlayerHelper shareInstance] stopAudio];
 }
 
@@ -144,10 +139,6 @@ static NSInteger const kOnePageSize = 20;
 }
 
 #pragma mark - message data
-
-- (void)loadMsg:(NSNotification *)notification {
-    [self loadMsgsWithLoadMore:NO];
-}
 
 - (NSDate *)getTimestampDate:(int64_t)timestamp {
     return [NSDate dateWithTimeIntervalSince1970:timestamp / 1000];
@@ -164,7 +155,7 @@ static NSInteger const kOnePageSize = 20;
     else if (msg.mediaType == kAVIMMessageMediaTypeAudio) {
         AVIMAudioMessage *audioMsg = (AVIMAudioMessage *)msg;
         NSString *duration = [NSString stringWithFormat:@"%.0f", audioMsg.duration];
-        NSString *voicePath = [_im getPathByObjectId:audioMsg.messageId];
+        NSString *voicePath = [[CDIM sharedInstance] getPathByObjectId:audioMsg.messageId];
         xhMessage = [[XHMessage alloc] initWithVoicePath:voicePath voiceUrl:nil voiceDuration:duration sender:fromUser.username timestamp:time];
     }
     else if (msg.mediaType == kAVIMMessageMediaTypeLocation) {
@@ -183,7 +174,7 @@ static NSInteger const kOnePageSize = 20;
     xhMessage.avator = nil;
     xhMessage.avatorUrl = [fromUser avatarUrl];
     
-    if ([_im.selfId isEqualToString:msg.clientId]) {
+    if ([[CDIM sharedInstance].selfId isEqualToString:msg.clientId]) {
         xhMessage.bubbleMessageType = XHBubbleMessageTypeSending;
     }
     else {
@@ -237,100 +228,99 @@ static NSInteger const kOnePageSize = 20;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), queue);
 }
 
-- (void)loadMsgsWithLoadMore:(BOOL)isLoadMore {
-    if (_isLoadingMsg) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-            [self loadMsgsWithLoadMore:isLoadMore];
-        });
-        NSLog(@"loading msg and return");
-        return;
-    }
-    _isLoadingMsg = YES;
-    [self runInGlobalQueue: ^{
-        int64_t maxTimestamp = (((int64_t)[[NSDate date] timeIntervalSince1970]) + 10) * 1000;
-        int64_t timestamp;
-        NSInteger limit;
-        NSString *msgId;
-        if (isLoadMore == NO) {
-            timestamp = maxTimestamp;
-            NSInteger count = [_msgs count];
-            if (count > kOnePageSize) {
-                // more than one page msgs, get that many msgs
-                limit = count;
-            }
-            else {
-                limit = kOnePageSize;
-            }
-        }
-        else {
-            if ([self.messages count] > 0) {
-                XHMessage *firstMsg = [self.messages objectAtIndex:0];
-                NSDate *date = firstMsg.timestamp;
-                timestamp = [date timeIntervalSince1970] * 1000;
-                AVIMTypedMessage *msg = [self.msgs objectAtIndex:0];
-                msgId = msg.messageId;
-            }
-            else {
-                timestamp = maxTimestamp;
-            }
-            limit = kOnePageSize;
-        }
-        NSMutableArray *msgs = [[_storage getMsgsWithConvid:self.conv.conversationId maxTime:timestamp limit:limit] mutableCopy];
-        
-        // 注释上面一行，取消掉下面几行的注释，消息记录将从远程服务器获取
-        //
-        //        NSError* error;
-        //        NSArray* arrayMsgs=[_im queryMsgsWithConv:self.conv msgId:msgId maxTime:timestamp limit:limit error:&error];
-        //        if(error){
-        //            return ;
-        //        }
-        //        NSMutableArray* msgs=[arrayMsgs mutableCopy];
-        
-        [self cacheMsgs:msgs callback: ^(BOOL succeeded, NSError *error) {
-            [self runInMainQueue: ^{
-                if ([self filterError:error]) {
-                    NSMutableArray *xhMsgs = [[self getXHMessages:msgs] mutableCopy];
-                    if (isLoadMore == NO) {
-                        self.messages = xhMsgs;
-                        _msgs = msgs;
-                        [self.messageTableView reloadData];
-                        [self scrollToBottomAnimated:NO];
-                        _isLoadingMsg = NO;
-                    }
-                    else {
-                        NSMutableArray *newMsgs = [NSMutableArray arrayWithArray:msgs];
-                        [newMsgs addObjectsFromArray:_msgs];
-                        _msgs = newMsgs;
-                        [self insertOldMessages:xhMsgs completion: ^{
-                            _isLoadingMsg = NO;
-                        }];
-                    }
-                }
+#pragma mark - query messages
+
+- (void)queryAndCacheMessagesWithTimestamp:(int64_t)timestamp block:(AVIMArrayResultBlock)block {
+    [[CDIM sharedInstance] queryTypedMessagesWithConversation:self.conv timestamp:timestamp limit:kOnePageSize block:^(NSArray *msgs, NSError *error) {
+        if (error) {
+            block(msgs, error);
+        } else {
+            [self cacheMsgs:msgs callback:^(BOOL succeeded, NSError *error) {
+                block (msgs, error);
             }];
-        }];
+        }
     }];
 }
 
+- (void)loadMessagesWhenInit {
+    if (self.isLoadingMsg) {
+        return;
+    } else {
+        self.isLoadingMsg = YES;
+        [self queryAndCacheMessagesWithTimestamp:0 block:^(NSArray *msgs, NSError *error) {
+            if ([self filterError:error]) {
+                NSMutableArray *xhMsgs = [[self getXHMessages:msgs] mutableCopy];
+                self.messages = xhMsgs;
+                _msgs = msgs;
+                [self.messageTableView reloadData];
+                [self scrollToBottomAnimated:NO];
+            }
+            self.isLoadingMsg = NO;
+        }];
+    }
+}
+
+- (void)loadOldMessages{
+    if (self.messages.count == 0 || self.isLoadingMsg) {
+        return;
+    } else {
+        self.isLoadingMsg = YES;
+        AVIMTypedMessage *msg = [self.msgs objectAtIndex:0];
+        int64_t timestamp = msg.sendTimestamp;
+        [self queryAndCacheMessagesWithTimestamp:timestamp block:^(NSArray *msgs, NSError *error) {
+            if ([self filterError:error]) {
+                NSMutableArray *xhMsgs = [[self getXHMessages:msgs] mutableCopy];
+                NSMutableArray *newMsgs = [NSMutableArray arrayWithArray:msgs];
+                [newMsgs addObjectsFromArray:_msgs];
+                _msgs = newMsgs;
+                [self insertOldMessages:xhMsgs completion: ^{
+                }];
+            }
+            self.isLoadingMsg = NO;
+        }];
+    }
+}
+
 - (void)cacheMsgs:(NSArray *)msgs callback:(AVBooleanResultBlock)callback {
-    __block NSMutableSet *userIds = [[NSMutableSet alloc] init];
-    for (AVIMTypedMessage *msg in msgs) {
-        [userIds addObject:msg.clientId];
-        if (msg.mediaType == kAVIMMessageMediaTypeImage ||
-            msg.mediaType == kAVIMMessageMediaTypeAudio) {
-            NSString *path = [_im getPathByObjectId:msg.messageId];
-            NSFileManager *fileMan = [NSFileManager defaultManager];
-            if ([fileMan fileExistsAtPath:path] == NO) {
-                NSData *data = [msg.file getData];
-                [data writeToFile:path atomically:YES];
+    [self runInGlobalQueue:^{
+        __block NSMutableSet *userIds = [[NSMutableSet alloc] init];
+        for (AVIMTypedMessage *msg in msgs) {
+            [userIds addObject:msg.clientId];
+            if (msg.mediaType == kAVIMMessageMediaTypeImage ||
+                msg.mediaType == kAVIMMessageMediaTypeAudio) {
+                NSString *path = [[CDIM sharedInstance] getPathByObjectId:msg.messageId];
+                NSFileManager *fileMan = [NSFileManager defaultManager];
+                if ([fileMan fileExistsAtPath:path] == NO) {
+                    NSData *data = [msg.file getData];
+                    [data writeToFile:path atomically:YES];
+                }
             }
         }
-    }
-    if ([self.imConfig.userDelegate respondsToSelector:@selector(cacheUserByIds:block:)]) {
-        [self.imConfig.userDelegate cacheUserByIds:userIds block:callback];
-    }
-    else {
-        callback(YES, nil);
-    }
+        if ([self.imConfig.userDelegate respondsToSelector:@selector(cacheUserByIds:block:)]) {
+            [self.imConfig.userDelegate cacheUserByIds:userIds block:^(BOOL succeeded, NSError *error) {
+                [self runInMainQueue:^{
+                    callback(succeeded, error);
+                }];
+            }];
+        } else {
+            [self runInMainQueue:^{
+                callback(YES, nil);
+            }];
+        }
+    }];
+}
+
+- (void)insertMessage:(AVIMTypedMessage *)message {
+    [self cacheMsgs:@[message] callback:^(BOOL succeeded, NSError *error) {
+        if ([self filterError:error]) {
+            XHMessage *xhMessage = [self getXHMessageByMsg:message];
+            [self.msgs addObject:message];
+            [self.messages addObject:xhMessage];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.msgs.count -1 inSection:0];
+            [self.messageTableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
+            [self scrollToBottomAnimated:YES];
+        }
+    }];
 }
 
 #pragma mark - XHMessageTableViewCell delegate
@@ -442,7 +432,7 @@ static NSInteger const kOnePageSize = 20;
 }
 
 - (void)loadMoreMessagesScrollTotop {
-    [self loadMsgsWithLoadMore:YES];
+    [self loadOldMessages];
 }
 
 #pragma mark - send message
@@ -460,7 +450,7 @@ static NSInteger const kOnePageSize = 20;
 
 - (void)sendImage:(UIImage *)image {
     NSData *imageData = UIImageJPEGRepresentation(image, 0.6);
-    NSString *path = [_im tmpPath];
+    NSString *path = [[CDIM sharedInstance] tmpPath];
     NSError *error;
     [imageData writeToFile:path options:NSDataWritingAtomic error:&error];
     if (error == nil) {
@@ -481,17 +471,18 @@ static NSInteger const kOnePageSize = 20;
         if (error) {
             // 赋值一个临时的messageId，因为发送失败，messageId，sendTimestamp不能从服务端获取
             // resend 成功的时候再改过来
-            msg.messageId = [self.im uuid];
+            msg.messageId = [[CDIM sharedInstance] uuid];
             msg.sendTimestamp = [[NSDate date] timeIntervalSince1970] * 1000;
         }
         if (path && error == nil) {
-            NSString *newPath = [_im getPathByObjectId:msg.messageId];
+            NSString *newPath = [[CDIM sharedInstance] getPathByObjectId:msg.messageId];
             NSError *error1;
             [[NSFileManager defaultManager] moveItemAtPath:path toPath:newPath error:&error1];
             DLog(@"%@", newPath);
         }
-        [_storage insertMsg:msg];
-        [self loadMsgsWithLoadMore:NO];
+        [self insertMessage:msg];
+//        [_storage insertMsg:msg];
+//        [self loadMsgsWithLoadMore:NO];
     }];
 }
 
@@ -502,10 +493,17 @@ static NSInteger const kOnePageSize = 20;
             [self alertError:error];
         }
         else {
-            [_storage updateFailedMsg:msg byTmpId:tmpId];
+//            [_storage updateFailedMsg:msg byTmpId:tmpId];
         }
-        [self loadMsgsWithLoadMore:NO];
+//        [self loadMsgsWithLoadMore:NO];
     }];
+}
+
+- (void)receiveMessage:(NSNotification *)notification {
+    AVIMTypedMessage *message = notification.object;
+    if ([message.conversationId isEqualToString:self.conv.conversationId]) {
+        [self insertMessage:message];
+    }
 }
 
 #pragma mark - didSend delegate
@@ -601,13 +599,13 @@ static NSInteger const kOnePageSize = 20;
 #pragma mark - client status
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (object == self.im && [keyPath isEqualToString:@"connect"]) {
+    if (object == [CDIM sharedInstance] && [keyPath isEqualToString:@"connect"]) {
         [self updateStatusView];
     }
 }
 
 - (void)updateStatusView {
-    if (self.im.connect) {
+    if ([CDIM sharedInstance].connect) {
         self.clientStatusView.hidden = YES;
     }else {
         self.clientStatusView.hidden = NO;

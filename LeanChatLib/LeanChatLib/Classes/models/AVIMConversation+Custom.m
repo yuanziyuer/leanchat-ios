@@ -41,12 +41,11 @@
     if (members.count != 2) {
         [NSException raise:@"invalid conv" format:nil];
     }
-    CDIM *im = [CDIM sharedInstance];
-    if ([members containsObject:im.selfId] == NO) {
+    if ([members containsObject:[CDIM sharedInstance].selfId] == NO) {
         [NSException raise:@"invalid conv" format:nil];
     }
     NSString *otherId;
-    if ([members[0] isEqualToString:im.selfId]) {
+    if ([members[0] isEqualToString:[CDIM sharedInstance].selfId]) {
         otherId = members[1];
     }
     else {

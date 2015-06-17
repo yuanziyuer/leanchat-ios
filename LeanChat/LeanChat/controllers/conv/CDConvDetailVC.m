@@ -18,7 +18,6 @@
 #import "LZAlertViewHelper.h"
 #import <LeanChatLib/CDIM.h>
 #import <LeanChatLib/CDStorage.h>
-#import <LeanChatLib/CDNotify.h>
 
 static NSString *kCDConvDetailVCTitleKey = @"title";
 static NSString *kCDConvDetailVCDisclosureKey = @"disclosure";
@@ -32,15 +31,11 @@ static NSString *kCDConvDetailVCSwitchKey = @"switch";
 
 @property (nonatomic, strong) LZMembersCell *membersCell;
 
-@property (nonatomic, strong) CDIM *im;
-
 @property (nonatomic, assign) BOOL own;
 
 @property (nonatomic, assign) CDConvType type;
 
 @property (nonatomic, strong) CDStorage *storage;
-
-@property (nonatomic, strong) CDNotify *notify;
 
 @property (nonatomic, strong) NSArray *displayMembers;
 
@@ -59,8 +54,6 @@ static NSString *const reuseIdentifier = @"Cell";
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _im = [CDIM sharedInstance];
-        _notify = [CDNotify sharedInstance];
         _storage = [CDStorage sharedInstance];
         _type = self.conv.type;
         self.tableViewStyle = UITableViewStyleGrouped;
@@ -70,7 +63,7 @@ static NSString *const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [_notify addConvObserver:self selector:@selector(refresh)];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:kCDNotificationConversationUpdated object:nil];
     [self setupDatasource];
     [self setupBarButton];
     [self refresh];
@@ -158,7 +151,7 @@ static NSString *const reuseIdentifier = @"Cell";
 }
 
 - (void)dealloc {
-    [_notify removeConvObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationConversationUpdated object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -295,7 +288,7 @@ static NSString *const reuseIdentifier = @"Cell";
 }
 
 - (void)deleteMsgs {
-    [_storage deleteMsgsByConvid:self.conv.conversationId];
+//    [_storage deleteMsgsByConvid:self.conv.conversationId];
     [self alert:@"已清空"];
 }
 

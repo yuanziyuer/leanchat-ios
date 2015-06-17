@@ -93,7 +93,7 @@
 		7073FD351B147458006F2692 /* tabbar_me_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073FD0C1B147458006F2692 /* tabbar_me_active@2x.png */; };
 		7073FD361B147458006F2692 /* wechat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073FD0D1B147458006F2692 /* wechat@2x.png */; };
 		70DC7DB21B2F531F0047B7AB /* CDCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC7DAB1B2F531F0047B7AB /* CDCacheManager.m */; };
-		70DC7DB31B2F531F0047B7AB /* CDIMManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC7DAD1B2F531F0047B7AB /* CDIMManager.m */; };
+		70DC7DB31B2F531F0047B7AB /* CDIMService.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC7DAD1B2F531F0047B7AB /* CDIMService.m */; };
 		70DC7DB41B2F531F0047B7AB /* CDUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC7DAF1B2F531F0047B7AB /* CDUserManager.m */; };
 		70DC7DB51B2F531F0047B7AB /* CDUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC7DB11B2F531F0047B7AB /* CDUtils.m */; };
 /* End PBXBuildFile section */
@@ -240,8 +240,8 @@
 		7073FD0D1B147458006F2692 /* wechat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wechat@2x.png"; sourceTree = "<group>"; };
 		70DC7DAA1B2F531F0047B7AB /* CDCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCacheManager.h; sourceTree = "<group>"; };
 		70DC7DAB1B2F531F0047B7AB /* CDCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCacheManager.m; sourceTree = "<group>"; };
-		70DC7DAC1B2F531F0047B7AB /* CDIMManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIMManager.h; sourceTree = "<group>"; };
-		70DC7DAD1B2F531F0047B7AB /* CDIMManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIMManager.m; sourceTree = "<group>"; };
+		70DC7DAC1B2F531F0047B7AB /* CDIMService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIMService.h; sourceTree = "<group>"; };
+		70DC7DAD1B2F531F0047B7AB /* CDIMService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIMService.m; sourceTree = "<group>"; };
 		70DC7DAE1B2F531F0047B7AB /* CDUserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUserManager.h; sourceTree = "<group>"; };
 		70DC7DAF1B2F531F0047B7AB /* CDUserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUserManager.m; sourceTree = "<group>"; };
 		70DC7DB01B2F531F0047B7AB /* CDUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUtils.h; sourceTree = "<group>"; };
@@ -587,8 +587,8 @@
 			children = (
 				70DC7DAA1B2F531F0047B7AB /* CDCacheManager.h */,
 				70DC7DAB1B2F531F0047B7AB /* CDCacheManager.m */,
-				70DC7DAC1B2F531F0047B7AB /* CDIMManager.h */,
-				70DC7DAD1B2F531F0047B7AB /* CDIMManager.m */,
+				70DC7DAC1B2F531F0047B7AB /* CDIMService.h */,
+				70DC7DAD1B2F531F0047B7AB /* CDIMService.m */,
 				70DC7DAE1B2F531F0047B7AB /* CDUserManager.h */,
 				70DC7DAF1B2F531F0047B7AB /* CDUserManager.m */,
 				70DC7DB01B2F531F0047B7AB /* CDUtils.h */,
@@ -791,7 +791,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70DC7DB31B2F531F0047B7AB /* CDIMManager.m in Sources */,
+				70DC7DB31B2F531F0047B7AB /* CDIMService.m in Sources */,
 				70DC7DB21B2F531F0047B7AB /* CDCacheManager.m in Sources */,
 				7073FCB71B14718C006F2692 /* CDEntryVC.m in Sources */,
 				7073FCD71B14718C006F2692 /* CDResizableButton.m in Sources */,

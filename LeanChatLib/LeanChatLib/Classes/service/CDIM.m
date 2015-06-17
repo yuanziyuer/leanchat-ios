@@ -9,7 +9,6 @@
 #import "CDIM.h"
 #import "CDRoom.h"
 #import "CDStorage.h"
-#import "CDNotify.h"
 #import "CDMacros.h"
 #import "CDEmotionUtils.h"
 #import "CDIMConfig.h"
@@ -28,8 +27,6 @@ static CDIM *instance;
 
 @property CDIMConfig *imConfig;
 
-@property CDNotify *notify;
-
 @property (nonatomic, strong) NSMutableDictionary *cachedConvs;
 
 @end
@@ -39,9 +36,10 @@ static CDIM *instance;
 #pragma mark - lifecycle
 
 + (instancetype)sharedInstance {
-    if (instance == nil) {
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
         instance = [[CDIM alloc] init];
-    }
+    });
     return instance;
 }
 
@@ -55,7 +53,6 @@ static CDIM *instance;
          */
         //        _imClient.signatureDataSource=self;
         _storage = [CDStorage sharedInstance];
-        _notify = [CDNotify sharedInstance];
         _imConfig = [CDIMConfig config];
         _cachedConvs = [NSMutableDictionary dictionary];
         [self updateConnectStatus];
@@ -170,29 +167,29 @@ static CDIM *instance;
 
 #pragma mark - query msgs
 
-- (NSArray *)queryMsgsWithConv:(AVIMConversation *)conv msgId:(NSString *)msgId maxTime:(int64_t)time limit:(int)limit error:(NSError **)theError {
-    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-    __block NSArray *result;
-    __block NSError *blockError = nil;
-    [conv queryMessagesBeforeId:msgId timestamp:time limit:limit callback: ^(NSArray *objects, NSError *error) {
-        result = objects;
-        blockError = error;
-        dispatch_semaphore_signal(sema);
-    }];
-    dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-    *theError = blockError;
-    if (blockError == nil) {
+- (void)queryTypedMessagesWithConversation:(AVIMConversation *)conversation timestamp:(int64_t)timestamp limit:(NSInteger)limit block:(AVIMArrayResultBlock)block {
+    AVIMArrayResultBlock callback = ^(NSArray *messages, NSError *error) {
+        NSMutableArray *typedMessages = [NSMutableArray array];
+        for (AVIMTypedMessage *message in messages) {
+            if ([message isKindOfClass:[AVIMTypedMessage class]]) {
+                [typedMessages addObject:message];
+            }
+        }
+        block(typedMessages, error);
+    };
+    if(timestamp == 0) {
+        [conversation queryMessagesWithLimit:limit callback:callback];
+    } else {
+        [conversation queryMessagesBeforeId:nil timestamp:timestamp limit:limit callback:callback];
     }
-    return result;
 }
 
 #pragma mark - send or receive message
 
 - (void)receiveMsg:(AVIMTypedMessage *)msg conv:(AVIMConversation *)conv {
     [_storage insertRoomWithConvid:conv.conversationId];
-    [_storage insertMsg:msg];
     [_storage incrementUnreadWithConvid:conv.conversationId];
-    [_notify postMsgNotify:msg];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationMessageReceived object:msg];
 }
 
 #pragma mark - AVIMClientDelegate
@@ -234,8 +231,7 @@ static CDIM *instance;
 - (void)conversation:(AVIMConversation *)conversation messageDelivered:(AVIMMessage *)message {
     DLog();
     if (message != nil) {
-        [_storage updateStatus:AVIMMessageStatusDelivered byMsgId:message.messageId];
-        [_notify postMsgNotify:(AVIMTypedMessage *)message];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationMessageDelivered object:message];
     }
 }
 
@@ -344,6 +340,7 @@ static CDIM *instance;
 }
 
 #pragma mark - conv cache
+
 - (AVIMConversation *)lookupConvById:(NSString *)convid {
     return [self.cachedConvs valueForKey:convid];
 }
@@ -398,6 +395,10 @@ static CDIM *instance;
             for (CDRoom *room in filterRooms) {
                 if (room.conv.type == CDConvTypeSingle) {
                     [userIds addObject:room.conv.otherId];
+                }
+                NSArray *lastestMessages = [room.conv queryMessagesFromCacheWithLimit:1];
+                if (lastestMessages.count > 0) {
+                    room.lastMsg = lastestMessages[0];
                 }
             }
             [[weakSelf imConfig].userDelegate cacheUserByIds:userIds block: ^(BOOL succeeded, NSError *error) {

@@ -7,10 +7,9 @@
 //
 
 #import "CDGroupedConvListVC.h"
-#import "CDIMManager.h"
+#import "CDIMService.h"
 #import "CDUtils.h"
 #import "CDImageLabelTableCell.h"
-#import <LeanChatLib/CDNotify.h>
 #import <LeanChatLib/CDIM.h>
 
 @interface CDGroupedConvListVC () {
@@ -37,11 +36,11 @@ static NSString *cellIndentifier = @"cell";
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refreshControl];
     
-    [[CDNotify sharedInstance] addConvObserver:self selector:@selector(refresh:)];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh:) name:kCDNotificationConversationUpdated object:nil];
 }
 
 - (void)dealloc {
-    [[CDNotify sharedInstance] removeConvObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationConversationUpdated object:nil];
 }
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
@@ -81,7 +80,7 @@ static NSString *cellIndentifier = @"cell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     AVIMConversation *conv = [convs objectAtIndex:indexPath.row];
-    [[CDIMManager manager] goWithConv:conv fromNav:self.navigationController];
+    [[CDIMService service] goWithConv:conv fromNav:self.navigationController];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

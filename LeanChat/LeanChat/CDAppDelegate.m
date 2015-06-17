@@ -19,7 +19,7 @@
 
 #import "CDUtils.h"
 #import "CDAddRequest.h"
-#import "CDIMManager.h"
+#import "CDIMService.h"
 
 @implementation CDAppDelegate
 
@@ -153,10 +153,9 @@
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     AVUser *user = [AVUser currentUser];
     [[CDCacheManager manager] registerUser:user];
-    CDIM *im = [CDIM sharedInstance];
     WEAKSELF
-    [CDIMConfig config].userDelegate = [CDIMManager manager];
-    [im openWithClientId:user.objectId callback: ^(BOOL succeeded, NSError *error) {
+    [CDIMConfig config].userDelegate = [CDIMService service];
+    [[CDIM sharedInstance] openWithClientId:user.objectId callback: ^(BOOL succeeded, NSError *error) {
         CDBaseTabC *tab = [[CDBaseTabC alloc] init];
         [weakSelf addItemController:[[CDConvsVC alloc] init] toTabBarController:tab];
         [weakSelf addItemController:[[CDFriendListVC alloc] init] toTabBarController:tab];

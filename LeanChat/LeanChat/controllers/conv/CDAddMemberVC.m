@@ -11,7 +11,7 @@
 #import "CDUserManager.h"
 #import "CDCacheManager.h"
 #import "CDUtils.h"
-#import "CDIMManager.h"
+#import "CDIMService.h"
 #import <LeanChatLib/CDIM.h>
 
 
@@ -94,7 +94,7 @@ static NSString *reuseIdentifier = @"Cell";
             [self hideProgress];
             if ([self filterError:error]) {
                 [self.presentingViewController dismissViewControllerAnimated:YES completion: ^{
-                    [[CDIMManager manager] goWithConv:conversation fromNav:_groupDetailVC.navigationController];
+                    [[CDIMService service] goWithConv:conversation fromNav:_groupDetailVC.navigationController];
                 }];
             }
         }];
