@@ -2,11 +2,10 @@
 # platform :ios, '6.0'
 
 target 'LeanChatLib' do
-    pod 'AVOSCloud'
-    pod 'AVOSCloudIM'
-    pod 'JSBadgeView'
-    pod 'FMDB'
-    pod 'LZConversationCell'
+    pod 'AVOSCloud', '~> 3.1.2.4'
+    pod 'AVOSCloudIM', '~> 3.1.2.4'
+    pod 'JSBadgeView', '~> 1.4.1'
+    pod 'LZConversationCell', '~> 0.0.1'
 end
 
 target 'LeanChatLibTests' do

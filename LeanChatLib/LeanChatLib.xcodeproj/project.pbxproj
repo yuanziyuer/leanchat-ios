@@ -30,8 +30,6 @@
 		7073FAE01B14689C006F2692 /* CDIM.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073F9781B14689B006F2692 /* CDIM.m */; };
 		7073FAE11B14689C006F2692 /* CDIMConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 7073F9791B14689B006F2692 /* CDIMConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7073FAE21B14689C006F2692 /* CDIMConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073F97A1B14689B006F2692 /* CDIMConfig.m */; };
-		7073FAE31B14689C006F2692 /* CDNotify.h in Headers */ = {isa = PBXBuildFile; fileRef = 7073F97B1B14689B006F2692 /* CDNotify.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7073FAE41B14689C006F2692 /* CDNotify.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073F97C1B14689B006F2692 /* CDNotify.m */; };
 		7073FAE51B14689C006F2692 /* CDStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 7073F97D1B14689B006F2692 /* CDStorage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7073FAE61B14689C006F2692 /* CDStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073F97E1B14689B006F2692 /* CDStorage.m */; };
 		7073FAE71B14689C006F2692 /* Emoji.h in Headers */ = {isa = PBXBuildFile; fileRef = 7073F9811B14689B006F2692 /* Emoji.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -366,8 +364,6 @@
 		7073F9781B14689B006F2692 /* CDIM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIM.m; sourceTree = "<group>"; };
 		7073F9791B14689B006F2692 /* CDIMConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIMConfig.h; sourceTree = "<group>"; };
 		7073F97A1B14689B006F2692 /* CDIMConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIMConfig.m; sourceTree = "<group>"; };
-		7073F97B1B14689B006F2692 /* CDNotify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDNotify.h; sourceTree = "<group>"; };
-		7073F97C1B14689B006F2692 /* CDNotify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDNotify.m; sourceTree = "<group>"; };
 		7073F97D1B14689B006F2692 /* CDStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDStorage.h; sourceTree = "<group>"; };
 		7073F97E1B14689B006F2692 /* CDStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDStorage.m; sourceTree = "<group>"; };
 		7073F9811B14689B006F2692 /* Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Emoji.h; sourceTree = "<group>"; };
@@ -745,9 +741,9 @@
 		7073F9621B14689B006F2692 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				7073F96B1B14689B006F2692 /* LeanChatLib.h */,
 				7073F9631B14689B006F2692 /* common */,
 				7073F9661B14689B006F2692 /* controllers */,
-				7073F96B1B14689B006F2692 /* LeanChatLib.h */,
 				7073F96C1B14689B006F2692 /* models */,
 				7073F9741B14689B006F2692 /* service */,
 				7073F97F1B14689B006F2692 /* vendor */,
@@ -798,8 +794,6 @@
 				7073F9781B14689B006F2692 /* CDIM.m */,
 				7073F9791B14689B006F2692 /* CDIMConfig.h */,
 				7073F97A1B14689B006F2692 /* CDIMConfig.m */,
-				7073F97B1B14689B006F2692 /* CDNotify.h */,
-				7073F97C1B14689B006F2692 /* CDNotify.m */,
 				7073F97D1B14689B006F2692 /* CDStorage.h */,
 				7073F97E1B14689B006F2692 /* CDStorage.m */,
 			);
@@ -1514,7 +1508,6 @@
 				7073FB211B14689C006F2692 /* XHDisplayLocationViewController.h in Headers */,
 				7073FBA31B14689C006F2692 /* XHRefreshControl.h in Headers */,
 				7073FAE71B14689C006F2692 /* Emoji.h in Headers */,
-				7073FAE31B14689C006F2692 /* CDNotify.h in Headers */,
 				7073FAE51B14689C006F2692 /* CDStorage.h in Headers */,
 				7073FB571B14689C006F2692 /* SEConstants.h in Headers */,
 				7073FB671B14689C006F2692 /* SETextLayout.h in Headers */,
@@ -1888,7 +1881,6 @@
 				7073FAE61B14689C006F2692 /* CDStorage.m in Sources */,
 				7073FADC1B14689C006F2692 /* UIImage+Icon.m in Sources */,
 				7073FB4E1B14689C006F2692 /* XHStoreManager.m in Sources */,
-				7073FAE41B14689C006F2692 /* CDNotify.m in Sources */,
 				7073FB8C1B14689C006F2692 /* XHMessageTableView.m in Sources */,
 				7073FAFA1B14689C006F2692 /* UIImage+RoundedCorner.m in Sources */,
 				7073FB501B14689C006F2692 /* FLAnimatedImage.m in Sources */,

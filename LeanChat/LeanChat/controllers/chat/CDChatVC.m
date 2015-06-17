@@ -50,7 +50,7 @@
 
 - (void)didSelectedAvatorOnMessage:(id<XHMessageModel>)message atIndexPath:(NSIndexPath *)indexPath {
     AVIMTypedMessage *msg = self.msgs[indexPath.row];
-    if ([msg.clientId isEqualToString:self.im.selfId] == NO) {
+    if ([msg.clientId isEqualToString:[CDIM sharedInstance].selfId] == NO) {
         CDUserInfoVC *userInfoVC = [[CDUserInfoVC alloc] initWithUser:[[CDCacheManager manager] lookupUser:msg.clientId]];
         [self.navigationController pushViewController:userInfoVC animated:YES];
     }
