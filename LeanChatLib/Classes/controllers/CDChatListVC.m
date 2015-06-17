@@ -14,7 +14,6 @@
 #import "CDIM.h"
 #import "CDMacros.h"
 #import "AVIMConversation+Custom.h"
-#import "CDIMConfig.h"
 #import "UIView+XHRemoteImage.h"
 #import "CDEmotionUtils.h"
 #import <DateTools/DateTools.h>
@@ -153,7 +152,7 @@ static NSString *cellIdentifier = @"ContactCell";
     LZConversationCell *cell = [LZConversationCell dequeueOrCreateCellByTableView:tableView];
     CDRoom *room = [_rooms objectAtIndex:indexPath.row];
     if (room.conv.type == CDConvTypeSingle) {
-        id <CDUserModel> user = [[CDIMConfig config].userDelegate getUserById:room.conv.otherId];
+        id <CDUserModel> user = [[CDIM sharedInstance].userDelegate getUserById:room.conv.otherId];
         cell.nameLabel.text = user.username;
         [cell.avatarImageView setImageWithURL:[NSURL URLWithString:user.avatarUrl]];
     }

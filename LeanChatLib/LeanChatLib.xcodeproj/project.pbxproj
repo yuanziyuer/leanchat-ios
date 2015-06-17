@@ -326,8 +326,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		285AA576CA76F102D937CC44 /* Pods-LeanChatLib.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChatLib.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LeanChatLib/Pods-LeanChatLib.debug.xcconfig"; sourceTree = "<group>"; };
-		3B4A2758DA67EA79C7F4FC31 /* Pods-LeanChatLib.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChatLib.release.xcconfig"; path = "Pods/Target Support Files/Pods-LeanChatLib/Pods-LeanChatLib.release.xcconfig"; sourceTree = "<group>"; };
+		14029BC841D3D9C4DA01CF23 /* Pods-LeanChatLib.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChatLib.debug.xcconfig"; path = "../LeanChat/Pods/Target Support Files/Pods-LeanChatLib/Pods-LeanChatLib.debug.xcconfig"; sourceTree = "<group>"; };
 		706E0B2F1B31F52400F9C891 /* CDAVOSHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAVOSHeaders.h; sourceTree = "<group>"; };
 		706E0B301B31F52400F9C891 /* CDMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDMacros.h; sourceTree = "<group>"; };
 		706E0B321B31F52400F9C891 /* CDChatListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDChatListVC.h; sourceTree = "<group>"; };
@@ -645,6 +644,7 @@
 		706E0C981B31F52600F9C891 /* weChatBubble_Sending_Solid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChatBubble_Sending_Solid@2x.png"; sourceTree = "<group>"; };
 		706E0C991B31F52600F9C891 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MessageDisplayKitString.strings"; sourceTree = "<group>"; };
 		7073F9461B1467F5006F2692 /* LeanChatLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LeanChatLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF3B153861628DF9233DA0E1 /* Pods-LeanChatLib.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChatLib.release.xcconfig"; path = "../LeanChat/Pods/Target Support Files/Pods-LeanChatLib/Pods-LeanChatLib.release.xcconfig"; sourceTree = "<group>"; };
 		D436797F4699DACEE94063D4 /* libPods-LeanChatLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LeanChatLib.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -1379,8 +1379,8 @@
 		71DFC3752E2A51F108329BC6 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				285AA576CA76F102D937CC44 /* Pods-LeanChatLib.debug.xcconfig */,
-				3B4A2758DA67EA79C7F4FC31 /* Pods-LeanChatLib.release.xcconfig */,
+				14029BC841D3D9C4DA01CF23 /* Pods-LeanChatLib.debug.xcconfig */,
+				AF3B153861628DF9233DA0E1 /* Pods-LeanChatLib.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1706,7 +1706,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LeanChatLib/Pods-LeanChatLib-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/../LeanChat/Pods/Target Support Files/Pods-LeanChatLib/Pods-LeanChatLib-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1929,7 +1929,7 @@
 		};
 		7073F95D1B1467F6006F2692 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 285AA576CA76F102D937CC44 /* Pods-LeanChatLib.debug.xcconfig */;
+			baseConfigurationReference = 14029BC841D3D9C4DA01CF23 /* Pods-LeanChatLib.debug.xcconfig */;
 			buildSettings = {
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1946,7 +1946,7 @@
 		};
 		7073F95E1B1467F6006F2692 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B4A2758DA67EA79C7F4FC31 /* Pods-LeanChatLib.release.xcconfig */;
+			baseConfigurationReference = AF3B153861628DF9233DA0E1 /* Pods-LeanChatLib.release.xcconfig */;
 			buildSettings = {
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;

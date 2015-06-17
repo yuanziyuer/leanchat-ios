@@ -20,22 +20,10 @@
 		70B299381ACEA0D400FE265E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70B299361ACEA0D400FE265E /* Main.storyboard */; };
 		70B2993A1ACEA0D400FE265E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70B299391ACEA0D400FE265E /* Images.xcassets */; };
 		70B2993D1ACEA0D400FE265E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70B2993B1ACEA0D400FE265E /* LaunchScreen.xib */; };
-		70B299491ACEA0D400FE265E /* LeanChatExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B299481ACEA0D400FE265E /* LeanChatExampleTests.m */; };
 		829728760D3E0958FE02E3FB /* libPods-LeanChatExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2366EDB0DE6FA3709EC96443 /* libPods-LeanChatExample.a */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		70B299431ACEA0D400FE265E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 70B299211ACEA0D400FE265E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 70B299281ACEA0D400FE265E;
-			remoteInfo = LeanChatExample;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		01E5BBA3CA24A82679D3D9B7 /* Pods-LeanChatExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChatExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-LeanChatExample/Pods-LeanChatExample.release.xcconfig"; sourceTree = "<group>"; };
 		2366EDB0DE6FA3709EC96443 /* libPods-LeanChatExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LeanChatExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		704578FB1AD7E5C600452531 /* LCEChatListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCEChatListVC.h; sourceTree = "<group>"; };
 		704578FC1AD7E5C600452531 /* LCEChatListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCEChatListVC.m; sourceTree = "<group>"; };
@@ -60,10 +48,8 @@
 		70B299371ACEA0D400FE265E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		70B299391ACEA0D400FE265E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		70B2993C1ACEA0D400FE265E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		70B299421ACEA0D400FE265E /* LeanChatExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LeanChatExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		70B299471ACEA0D400FE265E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		70B299481ACEA0D400FE265E /* LeanChatExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeanChatExampleTests.m; sourceTree = "<group>"; };
-		88D476A52A26270869EB64DB /* Pods-LeanChatExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChatExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LeanChatExample/Pods-LeanChatExample.debug.xcconfig"; sourceTree = "<group>"; };
+		DC9529AA1B4FC87158160308 /* Pods-LeanChatExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChatExample.debug.xcconfig"; path = "../LeanChat/Pods/Target Support Files/Pods-LeanChatExample/Pods-LeanChatExample.debug.xcconfig"; sourceTree = "<group>"; };
+		ECD6209CD470CEA9BE2346B2 /* Pods-LeanChatExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChatExample.release.xcconfig"; path = "../LeanChat/Pods/Target Support Files/Pods-LeanChatExample/Pods-LeanChatExample.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,13 +58,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				829728760D3E0958FE02E3FB /* libPods-LeanChatExample.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		70B2993F1ACEA0D400FE265E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,7 +86,6 @@
 			children = (
 				7094C16E1AD3E4A300670821 /* Frameworks */,
 				70B2992B1ACEA0D400FE265E /* LeanChatExample */,
-				70B299451ACEA0D400FE265E /* LeanChatExampleTests */,
 				70B2992A1ACEA0D400FE265E /* Products */,
 				C30B19F5E95317870899F54D /* Pods */,
 			);
@@ -117,7 +95,6 @@
 			isa = PBXGroup;
 			children = (
 				70B299291ACEA0D400FE265E /* LeanChatExample.app */,
-				70B299421ACEA0D400FE265E /* LeanChatExampleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -158,28 +135,11 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		70B299451ACEA0D400FE265E /* LeanChatExampleTests */ = {
-			isa = PBXGroup;
-			children = (
-				70B299481ACEA0D400FE265E /* LeanChatExampleTests.m */,
-				70B299461ACEA0D400FE265E /* Supporting Files */,
-			);
-			path = LeanChatExampleTests;
-			sourceTree = "<group>";
-		};
-		70B299461ACEA0D400FE265E /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				70B299471ACEA0D400FE265E /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		C30B19F5E95317870899F54D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				88D476A52A26270869EB64DB /* Pods-LeanChatExample.debug.xcconfig */,
-				01E5BBA3CA24A82679D3D9B7 /* Pods-LeanChatExample.release.xcconfig */,
+				DC9529AA1B4FC87158160308 /* Pods-LeanChatExample.debug.xcconfig */,
+				ECD6209CD470CEA9BE2346B2 /* Pods-LeanChatExample.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -206,24 +166,6 @@
 			productReference = 70B299291ACEA0D400FE265E /* LeanChatExample.app */;
 			productType = "com.apple.product-type.application";
 		};
-		70B299411ACEA0D400FE265E /* LeanChatExampleTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 70B2994F1ACEA0D400FE265E /* Build configuration list for PBXNativeTarget "LeanChatExampleTests" */;
-			buildPhases = (
-				70B2993E1ACEA0D400FE265E /* Sources */,
-				70B2993F1ACEA0D400FE265E /* Frameworks */,
-				70B299401ACEA0D400FE265E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				70B299441ACEA0D400FE265E /* PBXTargetDependency */,
-			);
-			name = LeanChatExampleTests;
-			productName = LeanChatExampleTests;
-			productReference = 70B299421ACEA0D400FE265E /* LeanChatExampleTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -235,10 +177,6 @@
 				TargetAttributes = {
 					70B299281ACEA0D400FE265E = {
 						CreatedOnToolsVersion = 6.2;
-					};
-					70B299411ACEA0D400FE265E = {
-						CreatedOnToolsVersion = 6.2;
-						TestTargetID = 70B299281ACEA0D400FE265E;
 					};
 				};
 			};
@@ -257,7 +195,6 @@
 			projectRoot = "";
 			targets = (
 				70B299281ACEA0D400FE265E /* LeanChatExample */,
-				70B299411ACEA0D400FE265E /* LeanChatExampleTests */,
 			);
 		};
 /* End PBXProject section */
@@ -272,13 +209,6 @@
 				704579531AD8016600452531 /* tabbar_chat_active@2x.png in Resources */,
 				704579511AD8016600452531 /* chat_menu_people.png in Resources */,
 				70B2993A1ACEA0D400FE265E /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		70B299401ACEA0D400FE265E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,7 +227,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LeanChatExample/Pods-LeanChatExample-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/../LeanChat/Pods/Target Support Files/Pods-LeanChatExample/Pods-LeanChatExample-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F7848B19082D002003942795 /* Check Pods Manifest.lock */ = {
@@ -333,23 +263,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		70B2993E1ACEA0D400FE265E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				70B299491ACEA0D400FE265E /* LeanChatExampleTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		70B299441ACEA0D400FE265E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 70B299281ACEA0D400FE265E /* LeanChatExample */;
-			targetProxy = 70B299431ACEA0D400FE265E /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		70B299361ACEA0D400FE265E /* Main.storyboard */ = {
@@ -449,7 +363,7 @@
 		};
 		70B2994D1ACEA0D400FE265E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 88D476A52A26270869EB64DB /* Pods-LeanChatExample.debug.xcconfig */;
+			baseConfigurationReference = DC9529AA1B4FC87158160308 /* Pods-LeanChatExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
@@ -467,7 +381,7 @@
 		};
 		70B2994E1ACEA0D400FE265E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 01E5BBA3CA24A82679D3D9B7 /* Pods-LeanChatExample.release.xcconfig */;
+			baseConfigurationReference = ECD6209CD470CEA9BE2346B2 /* Pods-LeanChatExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
@@ -480,40 +394,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		70B299501ACEA0D400FE265E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = LeanChatExampleTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LeanChatExample.app/LeanChatExample";
-			};
-			name = Debug;
-		};
-		70B299511ACEA0D400FE265E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = LeanChatExampleTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LeanChatExample.app/LeanChatExample";
 			};
 			name = Release;
 		};
@@ -534,15 +414,6 @@
 			buildConfigurations = (
 				70B2994D1ACEA0D400FE265E /* Debug */,
 				70B2994E1ACEA0D400FE265E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		70B2994F1ACEA0D400FE265E /* Build configuration list for PBXNativeTarget "LeanChatExampleTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				70B299501ACEA0D400FE265E /* Debug */,
-				70B299511ACEA0D400FE265E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

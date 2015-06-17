@@ -154,7 +154,7 @@
     AVUser *user = [AVUser currentUser];
     [[CDCacheManager manager] registerUser:user];
     WEAKSELF
-    [CDIMConfig config].userDelegate = [CDIMService service];
+    [CDIM sharedInstance].userDelegate = [CDIMService service];
     [[CDIM sharedInstance] openWithClientId:user.objectId callback: ^(BOOL succeeded, NSError *error) {
         CDBaseTabC *tab = [[CDBaseTabC alloc] init];
         [weakSelf addItemController:[[CDConvsVC alloc] init] toTabBarController:tab];

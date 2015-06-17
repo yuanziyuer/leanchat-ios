@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../LeanChatLib/LeanChatLib.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../LeanChatExample/LeanChatExample.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:LeanChat.xcodeproj">
    </FileRef>
    <FileRef

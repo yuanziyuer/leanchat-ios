@@ -11,15 +11,8 @@
 #import "CDStorage.h"
 #import "CDMacros.h"
 #import "CDEmotionUtils.h"
-#import "CDIMConfig.h"
 
 static CDIM *instance;
-
-@interface CDIMConfig ()
-
-@property (nonatomic, readwrite) NSString *selfId;
-
-@end
 
 @interface CDIM () <AVIMClientDelegate, AVIMSignatureDataSource>
 
@@ -63,7 +56,7 @@ static CDIM *instance;
 
 - (void)openWithClientId:(NSString *)clientId callback:(AVIMBooleanResultBlock)callback {
     _selfId = clientId;
-    _selfUser = [[CDIMConfig config].userDelegate getUserById:clientId];
+    _selfUser = [self.userDelegate getUserById:clientId];
     [[CDStorage storage] setupWithUserId:clientId];
     [[AVIMClient defaultClient] openWithClientId:clientId callback:^(BOOL succeeded, NSError *error) {
         [self updateConnectStatus];
@@ -401,7 +394,7 @@ static CDIM *instance;
             NSArray *sortedRooms = [filterRooms sortedArrayUsingComparator:^NSComparisonResult(CDRoom *room1, CDRoom *room2) {
                 return room2.lastMsg.sendTimestamp - room1.lastMsg.sendTimestamp;
             }];
-            [[CDIMConfig config].userDelegate cacheUserByIds:userIds block: ^(BOOL succeeded, NSError *error) {
+            [self.userDelegate cacheUserByIds:userIds block: ^(BOOL succeeded, NSError *error) {
                 if (error) {
                     block(nil, error);
                 }

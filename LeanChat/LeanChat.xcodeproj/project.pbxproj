@@ -11,7 +11,6 @@
 		7067800B1B2363F3002F1413 /* LZPushSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7067800A1B2363F3002F1413 /* LZPushSettingViewController.m */; };
 		7073FC1D1B147048006F2692 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC1C1B147048006F2692 /* main.m */; };
 		7073FC281B147048006F2692 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7073FC271B147048006F2692 /* Images.xcassets */; };
-		7073FC371B147048006F2692 /* LeanChatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC361B147048006F2692 /* LeanChatTests.m */; };
 		7073FCA91B14718C006F2692 /* CDBaseNavC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC431B14718C006F2692 /* CDBaseNavC.m */; };
 		7073FCAA1B14718C006F2692 /* CDBaseTabC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC451B14718C006F2692 /* CDBaseTabC.m */; };
 		7073FCAB1B14718C006F2692 /* CDBaseTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC471B14718C006F2692 /* CDBaseTableVC.m */; };
@@ -98,16 +97,6 @@
 		70DC7DB51B2F531F0047B7AB /* CDUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC7DB11B2F531F0047B7AB /* CDUtils.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		7073FC311B147048006F2692 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7073FC0F1B147048006F2692 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7073FC161B147048006F2692;
-			remoteInfo = LeanChat;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		4A71AD2EA525F79828723CA0 /* Pods-LeanChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-LeanChat/Pods-LeanChat.release.xcconfig"; sourceTree = "<group>"; };
 		706780091B2363F3002F1413 /* LZPushSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZPushSettingViewController.h; sourceTree = "<group>"; };
@@ -116,9 +105,6 @@
 		7073FC1B1B147048006F2692 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7073FC1C1B147048006F2692 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7073FC271B147048006F2692 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		7073FC301B147048006F2692 /* LeanChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LeanChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7073FC351B147048006F2692 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7073FC361B147048006F2692 /* LeanChatTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeanChatTests.m; sourceTree = "<group>"; };
 		7073FC421B14718C006F2692 /* CDBaseNavC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDBaseNavC.h; sourceTree = "<group>"; };
 		7073FC431B14718C006F2692 /* CDBaseNavC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDBaseNavC.m; sourceTree = "<group>"; };
 		7073FC441B14718C006F2692 /* CDBaseTabC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDBaseTabC.h; sourceTree = "<group>"; };
@@ -259,13 +245,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7073FC2D1B147048006F2692 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -290,7 +269,6 @@
 			isa = PBXGroup;
 			children = (
 				7073FC191B147048006F2692 /* LeanChat */,
-				7073FC331B147048006F2692 /* LeanChatTests */,
 				7073FC181B147048006F2692 /* Products */,
 				D35BDE7D616EEF87BC0C5FA0 /* Pods */,
 				B215B044676D1B59F414465D /* Frameworks */,
@@ -301,7 +279,6 @@
 			isa = PBXGroup;
 			children = (
 				7073FC171B147048006F2692 /* LeanChat.app */,
-				7073FC301B147048006F2692 /* LeanChatTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -330,23 +307,6 @@
 				7073FCDC1B1471BF006F2692 /* LeanChat-Prefix.pch */,
 				7073FC1B1B147048006F2692 /* Info.plist */,
 				7073FC1C1B147048006F2692 /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		7073FC331B147048006F2692 /* LeanChatTests */ = {
-			isa = PBXGroup;
-			children = (
-				7073FC361B147048006F2692 /* LeanChatTests.m */,
-				7073FC341B147048006F2692 /* Supporting Files */,
-			);
-			path = LeanChatTests;
-			sourceTree = "<group>";
-		};
-		7073FC341B147048006F2692 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				7073FC351B147048006F2692 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -636,24 +596,6 @@
 			productReference = 7073FC171B147048006F2692 /* LeanChat.app */;
 			productType = "com.apple.product-type.application";
 		};
-		7073FC2F1B147048006F2692 /* LeanChatTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7073FC3D1B147048006F2692 /* Build configuration list for PBXNativeTarget "LeanChatTests" */;
-			buildPhases = (
-				7073FC2C1B147048006F2692 /* Sources */,
-				7073FC2D1B147048006F2692 /* Frameworks */,
-				7073FC2E1B147048006F2692 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				7073FC321B147048006F2692 /* PBXTargetDependency */,
-			);
-			name = LeanChatTests;
-			productName = LeanChatTests;
-			productReference = 7073FC301B147048006F2692 /* LeanChatTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -665,10 +607,6 @@
 				TargetAttributes = {
 					7073FC161B147048006F2692 = {
 						CreatedOnToolsVersion = 6.3.1;
-					};
-					7073FC2F1B147048006F2692 = {
-						CreatedOnToolsVersion = 6.3.1;
-						TestTargetID = 7073FC161B147048006F2692;
 					};
 				};
 			};
@@ -686,7 +624,6 @@
 			projectRoot = "";
 			targets = (
 				7073FC161B147048006F2692 /* LeanChat */,
-				7073FC2F1B147048006F2692 /* LeanChatTests */,
 			);
 		};
 /* End PBXProject section */
@@ -741,13 +678,6 @@
 				7073FD1C1B147458006F2692 /* bottom_bar_selected@2x.png in Resources */,
 				7073FC281B147048006F2692 /* Images.xcassets in Resources */,
 				7073FD181B147458006F2692 /* blue_expand_disable@2x.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7073FC2E1B147048006F2692 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -836,23 +766,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7073FC2C1B147048006F2692 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7073FC371B147048006F2692 /* LeanChatTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		7073FC321B147048006F2692 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7073FC161B147048006F2692 /* LeanChat */;
-			targetProxy = 7073FC311B147048006F2692 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		7073FC381B147048006F2692 /* Debug */ = {
@@ -963,40 +877,6 @@
 			};
 			name = Release;
 		};
-		7073FC3E1B147048006F2692 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = LeanChatTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LeanChat.app/LeanChat";
-			};
-			name = Debug;
-		};
-		7073FC3F1B147048006F2692 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = LeanChatTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LeanChat.app/LeanChat";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1014,15 +894,6 @@
 			buildConfigurations = (
 				7073FC3B1B147048006F2692 /* Debug */,
 				7073FC3C1B147048006F2692 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		7073FC3D1B147048006F2692 /* Build configuration list for PBXNativeTarget "LeanChatTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7073FC3E1B147048006F2692 /* Debug */,
-				7073FC3F1B147048006F2692 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

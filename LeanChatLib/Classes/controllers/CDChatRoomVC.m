@@ -16,7 +16,6 @@
 #import "LZStatusView.h"
 #import "CDStorage.h"
 #import "CDEmotionUtils.h"
-#import "CDIMConfig.h"
 #import "AVIMConversation+Custom.h"
 
 static NSInteger const kOnePageSize = 20;
@@ -140,7 +139,7 @@ static NSInteger const kOnePageSize = 20;
 }
 
 - (XHMessage *)getXHMessageByMsg:(AVIMTypedMessage *)msg {
-    id <CDUserModel> fromUser = [[CDIMConfig config].userDelegate getUserById:msg.clientId];
+    id <CDUserModel> fromUser = [[CDIM sharedInstance].userDelegate getUserById:msg.clientId];
     XHMessage *xhMessage;
     NSDate *time = [self getTimestampDate:msg.sendTimestamp];
     if (msg.mediaType == kAVIMMessageMediaTypeText) {
@@ -291,8 +290,8 @@ static NSInteger const kOnePageSize = 20;
                 }
             }
         }
-        if ([[CDIMConfig config].userDelegate respondsToSelector:@selector(cacheUserByIds:block:)]) {
-            [[CDIMConfig config].userDelegate cacheUserByIds:userIds block:^(BOOL succeeded, NSError *error) {
+        if ([[CDIM sharedInstance].userDelegate respondsToSelector:@selector(cacheUserByIds:block:)]) {
+            [[CDIM sharedInstance].userDelegate cacheUserByIds:userIds block:^(BOOL succeeded, NSError *error) {
                 [self runInMainQueue:^{
                     callback(succeeded, error);
                 }];

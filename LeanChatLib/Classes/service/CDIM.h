@@ -15,7 +15,21 @@ static NSString *const kCDNotificationMessageReceived = @"MessageReceived";
 static NSString *const kCDNotificationMessageDelivered = @"MessageDelivered";
 static NSString *const kCDNotificationConversationUpdated = @"ConversationUpdated";
 
+@protocol CDUserDelegate <NSObject>
+
+@required
+
+//同步方法
+- (id <CDUserModel> )getUserById:(NSString *)userId;
+
+//对于每条消息，都会调用这个方法来缓存发送者的用户信息，以便 getUserById 直接返回用户信息
+- (void)cacheUserByIds:(NSSet *)userIds block:(AVBooleanResultBlock)block;
+
+@end
+
 @interface CDIM : NSObject
+
+@property (nonatomic, strong) id <CDUserDelegate> userDelegate;
 
 @property (nonatomic, strong, readonly) NSString *selfId;
 @property (nonatomic, strong) id <CDUserModel> selfUser;
