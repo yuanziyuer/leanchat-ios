@@ -23,10 +23,6 @@ static NSInteger const kOnePageSize = 20;
 
 @interface CDChatRoomVC ()
 
-@property (nonatomic, strong) CDStorage *storage;
-
-@property (nonatomic, strong) CDIMConfig *imConfig;
-
 @property (atomic, assign) BOOL isLoadingMsg;
 
 @property (nonatomic, strong) XHMessageTableViewCell *currentSelectedCell;
@@ -49,8 +45,6 @@ static NSInteger const kOnePageSize = 20;
         //self.allowsSendFace = NO;
         //self.allowsSendMultiMedia = NO;
         _isLoadingMsg = NO;
-        _storage = [CDStorage sharedInstance];
-        _imConfig = [CDIMConfig config];
     }
     return self;
 }
@@ -104,15 +98,13 @@ static NSInteger const kOnePageSize = 20;
     id <CDUserModel> curUser = [CDIM sharedInstance].selfUser;
     // 设置自身用户名
     self.messageSender = [curUser username];
-    
-    [_storage insertRoomWithConvid:self.conv.conversationId];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessage:) name:kCDNotificationMessageReceived object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshConv) name:kCDNotificationConversationUpdated object:nil];
-    [_storage clearUnreadWithConvid:self.conv.conversationId];
+    [[CDStorage storage] clearUnreadWithConvid:self.conv.conversationId];
     [self refreshConv];
     [self loadMessagesWhenInit];
     [[CDIM sharedInstance] addObserver:self forKeyPath:@"connect" options:NSKeyValueObservingOptionNew context:NULL];
@@ -123,7 +115,7 @@ static NSInteger const kOnePageSize = 20;
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationMessageReceived object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationConversationUpdated object:nil];
-    [_storage clearUnreadWithConvid:self.conv.conversationId];
+    [[CDStorage storage] clearUnreadWithConvid:self.conv.conversationId];
     [[CDIM sharedInstance] removeObserver:self forKeyPath:@"connect"];
     [[XHAudioPlayerHelper shareInstance] stopAudio];
 }
@@ -145,7 +137,7 @@ static NSInteger const kOnePageSize = 20;
 }
 
 - (XHMessage *)getXHMessageByMsg:(AVIMTypedMessage *)msg {
-    id <CDUserModel> fromUser = [self.imConfig.userDelegate getUserById:msg.clientId];
+    id <CDUserModel> fromUser = [[CDIMConfig config].userDelegate getUserById:msg.clientId];
     XHMessage *xhMessage;
     NSDate *time = [self getTimestampDate:msg.sendTimestamp];
     if (msg.mediaType == kAVIMMessageMediaTypeText) {
@@ -296,8 +288,8 @@ static NSInteger const kOnePageSize = 20;
                 }
             }
         }
-        if ([self.imConfig.userDelegate respondsToSelector:@selector(cacheUserByIds:block:)]) {
-            [self.imConfig.userDelegate cacheUserByIds:userIds block:^(BOOL succeeded, NSError *error) {
+        if ([[CDIMConfig config].userDelegate respondsToSelector:@selector(cacheUserByIds:block:)]) {
+            [[CDIMConfig config].userDelegate cacheUserByIds:userIds block:^(BOOL succeeded, NSError *error) {
                 [self runInMainQueue:^{
                     callback(succeeded, error);
                 }];
@@ -480,6 +472,7 @@ static NSInteger const kOnePageSize = 20;
             [[NSFileManager defaultManager] moveItemAtPath:path toPath:newPath error:&error1];
             DLog(@"%@", newPath);
         }
+        [[CDStorage storage] insertRoomWithConvid:self.conv.conversationId];
         [self insertMessage:msg];
 //        [_storage insertMsg:msg];
 //        [self loadMsgsWithLoadMore:NO];

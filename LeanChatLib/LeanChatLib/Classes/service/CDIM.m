@@ -52,7 +52,7 @@ static CDIM *instance;
          可以从你的服务器获得签名，这里从云代码获取，需要部署云代码，https://github.com/leancloud/leanchat-cloudcode
          */
         //        _imClient.signatureDataSource=self;
-        _storage = [CDStorage sharedInstance];
+        _storage = [CDStorage storage];
         _imConfig = [CDIMConfig config];
         _cachedConvs = [NSMutableDictionary dictionary];
         [self updateConnectStatus];
@@ -401,12 +401,15 @@ static CDIM *instance;
                     room.lastMsg = lastestMessages[0];
                 }
             }
+            NSArray *sortedRooms = [filterRooms sortedArrayUsingComparator:^NSComparisonResult(CDRoom *room1, CDRoom *room2) {
+                return room2.lastMsg.sendTimestamp - room1.lastMsg.sendTimestamp;
+            }];
             [[weakSelf imConfig].userDelegate cacheUserByIds:userIds block: ^(BOOL succeeded, NSError *error) {
                 if (error) {
                     block(nil, error);
                 }
                 else {
-                    block(filterRooms, error);
+                    block(sortedRooms, error);
                 }
             }];
         }

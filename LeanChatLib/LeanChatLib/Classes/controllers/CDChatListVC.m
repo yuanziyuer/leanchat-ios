@@ -106,12 +106,9 @@ static NSString *cellIdentifier = @"ContactCell";
     [[CDIM sharedInstance] findRecentRoomsWithBlock: ^(NSArray *objects, NSError *error) {
         [self stopRefreshControl:refreshControl];
         if ([self filterError:error]) {
-            _rooms = objects;
+            _rooms = [objects mutableCopy];
             [self.tableView reloadData];
-            NSInteger totalUnreadCount = 0;
-            for (CDRoom *room in _rooms) {
-                totalUnreadCount += room.unreadCount;
-            }
+            NSInteger totalUnreadCount = [[CDStorage storage] countUnread];
             if ([self.chatListDelegate respondsToSelector:@selector(setBadgeWithTotalUnreadCount:)]) {
                 [self.chatListDelegate setBadgeWithTotalUnreadCount:totalUnreadCount];
             }
@@ -180,7 +177,7 @@ static NSString *cellIdentifier = @"ContactCell";
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         CDRoom *room = [_rooms objectAtIndex:indexPath.row];
-        [[CDStorage sharedInstance] deleteRoomByConvid:room.conv.conversationId];
+        [[CDStorage storage] deleteRoomByConvid:room.conv.conversationId];
         [self refresh];
     }
 }

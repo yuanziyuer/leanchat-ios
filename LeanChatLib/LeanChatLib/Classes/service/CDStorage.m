@@ -7,106 +7,127 @@
 //
 
 #import "CDStorage.h"
-#import "CDMacros.h"
 
-#define ROOMS_TABLE_SQL @"CREATE TABLE IF NOT EXISTS `rooms` (`id` INTEGER PRIMARY KEY AUTOINCREMENT,`convid` VARCHAR(63) UNIQUE NOT NULL,`unread_count` INTEGER DEFAULT 0)"
+static CDStorage *storageInstance;
 
-#define FIELD_ID @"id"
-#define FIELD_CONVID @"convid"
-#define FIELD_UNREAD_COUNT @"unread_count"
+@interface CDStorage ()
 
-static CDStorage *_storage;
+@property (nonatomic, strong) NSString *plistPath;
 
-@interface CDStorage () {
-}
-
-@property FMDatabaseQueue *dbQueue;
+@property (nonatomic, strong) NSMutableArray *rooms;
 
 @end
 
 @implementation CDStorage
 
-+ (instancetype)sharedInstance {
-    if (_storage == nil) {
-        _storage = [[CDStorage alloc] init];
++ (instancetype)storage {
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
+        storageInstance = [[CDStorage alloc] init];
+    });
+    return storageInstance;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.rooms = [NSMutableArray array];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationGoBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
     }
-    return _storage;
+    return self;
 }
 
-- (void)close {
-    _storage = nil;
+- (void)applicationGoBackground {
+    [self saveData];
 }
 
-- (NSString *)dbPathWithUserId:(NSString *)userId {
+- (NSString *)plistPathWithUserId:(NSString *)userId{
     NSString *libPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    return [libPath stringByAppendingPathComponent:[NSString stringWithFormat:@"chat_%@", userId]];
+    return [libPath stringByAppendingPathComponent:[NSString stringWithFormat:@"chat_%@.plist", userId]];
+}
+
+- (void)saveData {
+    if (self.plistPath) {
+        [NSKeyedArchiver archiveRootObject:self.rooms toFile:self.plistPath];
+    }
+}
+
+- (NSArray *)readFromPath:(NSString *)path {
+    BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:path];
+    if (exists) {
+        return [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    } else {
+        return [NSArray array];
+    }
 }
 
 - (void)setupWithUserId:(NSString *)userId {
-    _dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self dbPathWithUserId:userId]];
-    [_dbQueue inDatabase: ^(FMDatabase *db) {
-        [db executeUpdate:ROOMS_TABLE_SQL];
-    }];
+    self.plistPath = [self plistPathWithUserId:userId];
+    NSLog(@"plistPath = %@", self.plistPath);
+    self.rooms = [[self readFromPath:self.plistPath] mutableCopy];
+    if (self.rooms == nil) {
+        self.rooms = [NSMutableArray array];
+    }
+}
+
+- (void)dealloc {
+    [self saveData];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)close {
+    [self saveData];
 }
 
 #pragma mark - rooms table
 
-- (CDRoom *)getRoomByResultSet:(FMResultSet *)rs {
-    CDRoom *room = [[CDRoom alloc] init];
-    room.convid = [rs stringForColumn:FIELD_CONVID];
-    room.unreadCount = [rs intForColumn:FIELD_UNREAD_COUNT];
-    return room;
-}
-
 - (NSArray *)getRooms {
-    NSMutableArray *rooms = [NSMutableArray array];
-    [_dbQueue inDatabase: ^(FMDatabase *db) {
-        FMResultSet *rs = [db executeQuery:@"SELECT * FROM rooms LEFT JOIN (SELECT msgs.object,MAX(time) as time ,msgs.convid as msg_convid FROM msgs GROUP BY msgs.convid) ON rooms.convid=msg_convid ORDER BY time DESC"];
-        while ([rs next]) {
-            [rooms addObject:[self getRoomByResultSet:rs]];
-        }
-        [rs close];
-    }];
-    return rooms;
+    return self.rooms;
 }
 
 - (NSInteger)countUnread {
     __block NSInteger unreadCount = 0;
-    [_dbQueue inDatabase: ^(FMDatabase *db) {
-        FMResultSet *rs = [db executeQuery:@"SELECT SUM(rooms.unread_count) FROM rooms"];
-        if ([rs next]) {
-            unreadCount = [rs intForColumnIndex:0];
-        }
-    }];
+    for (CDRoom *room in self.rooms) {
+        unreadCount += room.unreadCount;
+    }
     return unreadCount;
 }
 
-- (void)insertRoomWithConvid:(NSString *)convid {
-    [_dbQueue inDatabase: ^(FMDatabase *db) {
-        FMResultSet *rs = [db executeQuery:@"SELECT * FROM rooms WHERE convid=?", convid];
-        if ([rs next] == NO) {
-            [db executeUpdate:@"INSERT INTO rooms (convid) VALUES(?) ", convid];
+- (CDRoom *)findRoomWithConvid:(NSString *)convid {
+    for (CDRoom *room in self.rooms) {
+        if ([room.convid isEqualToString:convid]) {
+            return room;
         }
-        [rs close];
-    }];
+    }
+    return nil;
+}
+
+- (void)insertRoomWithConvid:(NSString *)convid {
+    CDRoom *room = [self findRoomWithConvid:convid];
+    if (room == nil) {
+        CDRoom *room = [[CDRoom alloc] init];
+        room.convid = convid;
+        room.unreadCount = 0;
+        [self.rooms addObject:room];
+    }
 }
 
 - (void)deleteRoomByConvid:(NSString *)convid {
-    [_dbQueue inDatabase: ^(FMDatabase *db) {
-        [db executeUpdate:@"DELETE FROM rooms WHERE convid=?" withArgumentsInArray:@[convid]];
-    }];
+    CDRoom *room = [self findRoomWithConvid:convid];
+    [self.rooms removeObject:room];
 }
 
 - (void)incrementUnreadWithConvid:(NSString *)convid {
-    [_dbQueue inDatabase: ^(FMDatabase *db) {
-        [db executeUpdate:@"UPDATE rooms SET unread_count=unread_count+1 WHERE convid=?" withArgumentsInArray:@[convid]];
-    }];
+    CDRoom *room = [self findRoomWithConvid:convid];
+    if (room) {
+        room.unreadCount ++;
+    }
 }
 
 - (void)clearUnreadWithConvid:(NSString *)convid {
-    [_dbQueue inDatabase: ^(FMDatabase *db) {
-        [db executeUpdate:@"UPDATE rooms SET unread_count=0 WHERE convid=?" withArgumentsInArray:@[convid]];
-    }];
+    CDRoom *room = [self findRoomWithConvid:convid];
+    room.unreadCount = 0;
 }
 
 @end

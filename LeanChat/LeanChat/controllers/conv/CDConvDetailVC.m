@@ -54,7 +54,7 @@ static NSString *const reuseIdentifier = @"Cell";
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _storage = [CDStorage sharedInstance];
+        _storage = [CDStorage storage];
         _type = self.conv.type;
         self.tableViewStyle = UITableViewStyleGrouped;
     }
