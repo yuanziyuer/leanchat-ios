@@ -20,7 +20,7 @@
 
 @interface CDChatListVC ()
 
-@property (nonatomic) LZStatusView *clientStatusView;
+@property (nonatomic, strong) LZStatusView *clientStatusView;
 
 @property (nonatomic, strong) NSMutableArray *rooms;
 

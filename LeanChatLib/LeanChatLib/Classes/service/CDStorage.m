@@ -63,6 +63,9 @@ static CDStorage *storageInstance;
 }
 
 - (void)setupWithUserId:(NSString *)userId {
+    if (self.rooms.count > 0) {
+        [self saveData];
+    }
     self.plistPath = [self plistPathWithUserId:userId];
     NSLog(@"plistPath = %@", self.plistPath);
     self.rooms = [[self readFromPath:self.plistPath] mutableCopy];

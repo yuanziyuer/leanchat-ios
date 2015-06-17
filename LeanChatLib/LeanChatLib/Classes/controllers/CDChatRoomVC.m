@@ -115,6 +115,9 @@ static NSInteger const kOnePageSize = 20;
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationMessageReceived object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationConversationUpdated object:nil];
+    if (self.msgs.count > 0) {
+        [[CDStorage storage] insertRoomWithConvid:self.conv.conversationId];
+    }
     [[CDStorage storage] clearUnreadWithConvid:self.conv.conversationId];
     [[CDIM sharedInstance] removeObserver:self forKeyPath:@"connect"];
     [[XHAudioPlayerHelper shareInstance] stopAudio];
@@ -472,7 +475,6 @@ static NSInteger const kOnePageSize = 20;
             [[NSFileManager defaultManager] moveItemAtPath:path toPath:newPath error:&error1];
             DLog(@"%@", newPath);
         }
-        [[CDStorage storage] insertRoomWithConvid:self.conv.conversationId];
         [self insertMessage:msg];
 //        [_storage insertMsg:msg];
 //        [self loadMsgsWithLoadMore:NO];
