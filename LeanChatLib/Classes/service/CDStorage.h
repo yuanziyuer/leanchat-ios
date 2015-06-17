@@ -13,8 +13,6 @@
 
 + (instancetype)storage;
 
-- (void)close;
-
 - (void)setupWithUserId:(NSString *)userId;
 
 - (NSArray *)getRooms;
@@ -24,6 +22,5 @@
 - (void)deleteRoomByConvid:(NSString *)convid;
 - (void)incrementUnreadWithConvid:(NSString *)convid;
 - (void)clearUnreadWithConvid:(NSString *)convid;
-
 
 @end

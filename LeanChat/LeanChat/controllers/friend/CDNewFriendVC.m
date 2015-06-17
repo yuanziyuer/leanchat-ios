@@ -100,6 +100,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     CDAddRequest *addRequest = self.addRequests[indexPath.row];
     CDUserInfoVC *userInfoVC = [[CDUserInfoVC alloc] initWithUser:addRequest.fromUser];
     [self.navigationController pushViewController:userInfoVC animated:YES];

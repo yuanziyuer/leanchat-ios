@@ -7,6 +7,7 @@
 //
 
 #import "CDStorage.h"
+#import "CDMacros.h"
 
 static CDStorage *storageInstance;
 
@@ -28,20 +29,6 @@ static CDStorage *storageInstance;
     return storageInstance;
 }
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        self.rooms = [NSMutableArray array];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationGoBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
-    }
-    return self;
-}
-
-- (void)applicationGoBackground {
-    [self saveData];
-}
-
 - (NSString *)plistPathWithUserId:(NSString *)userId{
     NSString *libPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     return [libPath stringByAppendingPathComponent:[NSString stringWithFormat:@"chat_%@.plist", userId]];
@@ -53,34 +40,18 @@ static CDStorage *storageInstance;
     }
 }
 
-- (NSArray *)readFromPath:(NSString *)path {
-    BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:path];
-    if (exists) {
-        return [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-    } else {
-        return [NSArray array];
-    }
-}
-
 - (void)setupWithUserId:(NSString *)userId {
     if (self.rooms.count > 0) {
         [self saveData];
     }
     self.plistPath = [self plistPathWithUserId:userId];
-    NSLog(@"plistPath = %@", self.plistPath);
-    self.rooms = [[self readFromPath:self.plistPath] mutableCopy];
-    if (self.rooms == nil) {
+    DLog(@"plistPath = %@", self.plistPath);
+    if (![[NSFileManager defaultManager] fileExistsAtPath:self.plistPath]) {
         self.rooms = [NSMutableArray array];
+        [self saveData];
+    } else {
+        self.rooms = [[NSKeyedUnarchiver unarchiveObjectWithFile:self.plistPath] mutableCopy];
     }
-}
-
-- (void)dealloc {
-    [self saveData];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)close {
-    [self saveData];
 }
 
 #pragma mark - rooms table
@@ -113,24 +84,28 @@ static CDStorage *storageInstance;
         room.convid = convid;
         room.unreadCount = 0;
         [self.rooms addObject:room];
+        [self saveData];
     }
 }
 
 - (void)deleteRoomByConvid:(NSString *)convid {
     CDRoom *room = [self findRoomWithConvid:convid];
     [self.rooms removeObject:room];
+    [self saveData];
 }
 
 - (void)incrementUnreadWithConvid:(NSString *)convid {
     CDRoom *room = [self findRoomWithConvid:convid];
     if (room) {
         room.unreadCount ++;
+        [self saveData];
     }
 }
 
 - (void)clearUnreadWithConvid:(NSString *)convid {
     CDRoom *room = [self findRoomWithConvid:convid];
     room.unreadCount = 0;
+    [self saveData];
 }
 
 @end

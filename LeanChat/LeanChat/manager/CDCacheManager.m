@@ -126,7 +126,7 @@ static CDCacheManager *cacheManager;
 
 - (void)refreshCurConv:(AVBooleanResultBlock)callback {
     if ([self getCurConv] != nil) {
-        [[CDIM sharedInstance] fecthConvWithId:[self getCurConv].conversationId callback: ^(AVIMConversation *conversation, NSError *error) {
+        [[CDIM sharedInstance] fecthConvWithConvid:[self getCurConv].conversationId callback: ^(AVIMConversation *conversation, NSError *error) {
             if (error) {
                 callback(NO, error);
             }

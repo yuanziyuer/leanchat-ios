@@ -17,20 +17,21 @@ static NSString *const kCDNotificationConversationUpdated = @"ConversationUpdate
 
 @interface CDIM : NSObject
 
-@property (nonatomic, strong) AVIMClient *imClient;
 @property (nonatomic, strong, readonly) NSString *selfId;
 @property (nonatomic, strong) id <CDUserModel> selfUser;
 @property (nonatomic, assign) BOOL connect;
 
 + (instancetype)sharedInstance;
 
+- (AVIMClient *)imClient;
+
 - (void)openWithClientId:(NSString *)clientId callback:(AVIMBooleanResultBlock)callback;
 - (void)closeWithCallback:(AVBooleanResultBlock)callback;
 
-- (void)fecthConvWithId:(NSString *)convid callback:(AVIMConversationResultBlock)callback;
+- (void)fecthConvWithConvid:(NSString *)convid callback:(AVIMConversationResultBlock)callback;
+- (void)fetchConvsWithConvids:(NSSet *)convids callback:(AVIMArrayResultBlock)callback;
 - (void)fetchConvWithOtherId:(NSString *)otherId callback:(AVIMConversationResultBlock)callback;
 - (void)fetchConvWithMembers:(NSArray *)members callback:(AVIMConversationResultBlock)callback;
-- (void)fetchConvsWithConvids:(NSSet *)convids callback:(AVIMArrayResultBlock)callback;
 - (void)findGroupedConvsWithBlock:(AVIMArrayResultBlock)block;
 
 - (void)createConvWithMembers:(NSArray *)members type:(CDConvType)type callback:(AVIMConversationResultBlock)callback;

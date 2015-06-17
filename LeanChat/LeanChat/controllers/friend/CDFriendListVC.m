@@ -191,6 +191,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     AVUser *user = [self.users objectAtIndex:indexPath.row];
     [[CDIMService service] goWithUserId:user.objectId fromVC:self];
 }

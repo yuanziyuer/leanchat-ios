@@ -17,6 +17,7 @@
 #import "CDIMConfig.h"
 #import "UIView+XHRemoteImage.h"
 #import "CDEmotionUtils.h"
+#import <DateTools/DateTools.h>
 
 @interface CDChatListVC ()
 
@@ -162,10 +163,7 @@ static NSString *cellIdentifier = @"ContactCell";
     }
     cell.messageLabel.text = [self getMessageTitle:room.lastMsg];
     if (room.lastMsg) {
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"MM-dd HH:mm"];
-        NSString *timeString = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:room.lastMsg.sendTimestamp / 1000]];
-        cell.timestampLabel.text = timeString;
+        cell.timestampLabel.text = [[NSDate dateWithTimeIntervalSince1970:room.lastMsg.sendTimestamp / 1000] timeAgoSinceNow];
     }
     else {
         cell.timestampLabel.text = @"";
@@ -187,6 +185,7 @@ static NSString *cellIdentifier = @"ContactCell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     CDRoom *room = [_rooms objectAtIndex:indexPath.row];
     if ([self.chatListDelegate respondsToSelector:@selector(viewController:didSelectConv:)]) {
         [self.chatListDelegate viewController:self didSelectConv:room.conv];

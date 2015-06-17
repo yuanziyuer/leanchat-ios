@@ -35,8 +35,6 @@ static NSString *kCDConvDetailVCSwitchKey = @"switch";
 
 @property (nonatomic, assign) CDConvType type;
 
-@property (nonatomic, strong) CDStorage *storage;
-
 @property (nonatomic, strong) NSArray *displayMembers;
 
 @property (nonatomic, strong) UITableViewCell *switchCell;
@@ -54,7 +52,6 @@ static NSString *const reuseIdentifier = @"Cell";
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _storage = [CDStorage storage];
         _type = self.conv.type;
         self.tableViewStyle = UITableViewStyleGrouped;
     }
@@ -310,7 +307,7 @@ static NSString *const reuseIdentifier = @"Cell";
 - (void)quitConv {
     [self.conv quitWithCallback: ^(BOOL succeeded, NSError *error) {
         if ([self filterError:error]) {
-            [_storage deleteRoomByConvid:self.conv.conversationId];
+            [[CDStorage storage] deleteRoomByConvid:self.conv.conversationId];
             [self.navigationController popToRootViewControllerAnimated:YES];
         }
     }];

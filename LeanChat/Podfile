@@ -7,7 +7,7 @@ target 'LeanChat' do
     pod 'LeanChatLib' , :path => '../'
     pod 'MBProgressHUD', '~> 0.9.1'
     pod 'LZAlertViewHelper' , '~> 0.0.2'
-    pod 'JSBadgeView', '~> 1.4'
+    pod 'JSBadgeView', '~> 1.4.1'
     pod 'LZMembersCell', '~> 0.0.2'
 end
 
