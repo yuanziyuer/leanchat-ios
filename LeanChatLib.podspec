@@ -12,8 +12,8 @@ Pod::Spec.new do |s|
   s.resources    = 'LeanChatLib/LeanChatLib/Resources/*'
 	s.libraries    = 'icucore','sqlite3'
   s.requires_arc = true
-  s.dependency 'JSBadgeView'
-  s.dependency 'AVOSCloud'
-  s.dependency 'AVOSCloudIM'
-  s.dependency 'LZConversationCell'
+  s.dependency 'JSBadgeView', '~> 1.4.1'
+  s.dependency 'AVOSCloud', '~> 3.1.2.4'
+  s.dependency 'AVOSCloudIM', '~> 3.1.2.4'
+  s.dependency 'LZConversationCell', '~> 0.0.1'
 end
