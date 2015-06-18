@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "LCECommon.h"
 #import "CDUserFactory.h"
 
 @interface AppDelegate ()
@@ -23,7 +22,6 @@
     [CDIM sharedInstance].userDelegate = [[CDUserFactory alloc] init];
     
 #ifdef DEBUG
-    [AVAnalytics setCrashReportEnabled:NO];
     [AVAnalytics setAnalyticsEnabled:NO];
     [AVOSCloud setVerbosePolicy:kAVVerboseShow];
     [AVLogger addLoggerDomain:AVLoggerDomainIM];

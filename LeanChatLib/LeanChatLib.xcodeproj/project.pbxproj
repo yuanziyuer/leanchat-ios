@@ -26,8 +26,6 @@
 		706E0CA91B31F52600F9C891 /* CDEmotionUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 706E0B411B31F52400F9C891 /* CDEmotionUtils.m */; };
 		706E0CAA1B31F52600F9C891 /* CDIM.h in Headers */ = {isa = PBXBuildFile; fileRef = 706E0B421B31F52400F9C891 /* CDIM.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		706E0CAB1B31F52600F9C891 /* CDIM.m in Sources */ = {isa = PBXBuildFile; fileRef = 706E0B431B31F52400F9C891 /* CDIM.m */; };
-		706E0CAC1B31F52600F9C891 /* CDIMConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 706E0B441B31F52400F9C891 /* CDIMConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		706E0CAD1B31F52600F9C891 /* CDIMConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 706E0B451B31F52400F9C891 /* CDIMConfig.m */; };
 		706E0CAE1B31F52600F9C891 /* CDStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 706E0B461B31F52500F9C891 /* CDStorage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		706E0CAF1B31F52600F9C891 /* CDStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 706E0B471B31F52500F9C891 /* CDStorage.m */; };
 		706E0CB01B31F52600F9C891 /* Emoji.h in Headers */ = {isa = PBXBuildFile; fileRef = 706E0B4A1B31F52500F9C891 /* Emoji.h */; };
@@ -345,8 +343,6 @@
 		706E0B411B31F52400F9C891 /* CDEmotionUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEmotionUtils.m; sourceTree = "<group>"; };
 		706E0B421B31F52400F9C891 /* CDIM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIM.h; sourceTree = "<group>"; };
 		706E0B431B31F52400F9C891 /* CDIM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIM.m; sourceTree = "<group>"; };
-		706E0B441B31F52400F9C891 /* CDIMConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIMConfig.h; sourceTree = "<group>"; };
-		706E0B451B31F52400F9C891 /* CDIMConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIMConfig.m; sourceTree = "<group>"; };
 		706E0B461B31F52500F9C891 /* CDStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDStorage.h; sourceTree = "<group>"; };
 		706E0B471B31F52500F9C891 /* CDStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDStorage.m; sourceTree = "<group>"; };
 		706E0B4A1B31F52500F9C891 /* Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Emoji.h; sourceTree = "<group>"; };
@@ -663,9 +659,9 @@
 		706E0B2D1B31F52400F9C891 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				706E0B361B31F52400F9C891 /* LeanChatLib.h */,
 				706E0B2E1B31F52400F9C891 /* common */,
 				706E0B311B31F52400F9C891 /* controllers */,
-				706E0B361B31F52400F9C891 /* LeanChatLib.h */,
 				706E0B371B31F52400F9C891 /* models */,
 				706E0B3F1B31F52400F9C891 /* service */,
 				706E0B481B31F52500F9C891 /* vendor */,
@@ -714,8 +710,6 @@
 				706E0B411B31F52400F9C891 /* CDEmotionUtils.m */,
 				706E0B421B31F52400F9C891 /* CDIM.h */,
 				706E0B431B31F52400F9C891 /* CDIM.m */,
-				706E0B441B31F52400F9C891 /* CDIMConfig.h */,
-				706E0B451B31F52400F9C891 /* CDIMConfig.m */,
 				706E0B461B31F52500F9C891 /* CDStorage.h */,
 				706E0B471B31F52500F9C891 /* CDStorage.m */,
 			);
@@ -1400,7 +1394,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				706E0CAC1B31F52600F9C891 /* CDIMConfig.h in Headers */,
 				706E0CA31B31F52600F9C891 /* CDRoom.h in Headers */,
 				706E0C9C1B31F52600F9C891 /* CDChatListVC.h in Headers */,
 				706E0CAE1B31F52600F9C891 /* CDStorage.h in Headers */,
@@ -1734,7 +1727,6 @@
 				706E0D6D1B31F52600F9C891 /* XHRefreshControl.m in Sources */,
 				706E0D671B31F52600F9C891 /* XHShareMenuView.m in Sources */,
 				706E0D5B1B31F52600F9C891 /* XHMessageTextView.m in Sources */,
-				706E0CAD1B31F52600F9C891 /* CDIMConfig.m in Sources */,
 				706E0D451B31F52600F9C891 /* XHSoundManager.m in Sources */,
 				706E0CCB1B31F52600F9C891 /* UIScrollView+XHkeyboardControl.m in Sources */,
 				706E0CFB1B31F52600F9C891 /* XHMessageAvatorFactory.m in Sources */,

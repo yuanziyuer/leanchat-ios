@@ -7,7 +7,6 @@
 //
 
 #import "LoginViewController.h"
-#import "LCECommon.h"
 #import "CDUserFactory.h"
 #import "LCEChatListVC.h"
 #import "AppDelegate.h"
@@ -21,9 +20,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (LOCAL_DEBUG) {
-        self.selfIdTextField.text = @"a";
-    }
 }
 
 - (IBAction)login:(id)sender {

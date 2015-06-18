@@ -7,13 +7,29 @@
 //
 
 #import "CDUserFactory.h"
-#import "CDUser.h"
+
+
+@interface CDUser : NSObject <CDUserModel>
+
+@property (nonatomic, strong) NSString *userId;
+
+@property (nonatomic, strong) NSString *username;
+
+@property (nonatomic, strong) NSString *avatarUrl;
+
+@end
+
+@implementation CDUser
+
+@end
+
 
 @implementation CDUserFactory
 
 #pragma mark - CDUserDelegate
-- (void)cacheUserByIds:(NSSet *)userIds block:(AVIMArrayResultBlock)block {
-    block(nil, nil); // don't forget it
+
+- (void)cacheUserByIds:(NSSet *)userIds block:(AVBooleanResultBlock)block {
+    block(YES, nil); // don't forget it
 }
 
 - (id <CDUserModel> )getUserById:(NSString *)userId {
