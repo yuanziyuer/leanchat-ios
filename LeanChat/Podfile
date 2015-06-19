@@ -26,5 +26,3 @@ target 'LeanChatExample' do
     xcodeproj '../LeanChatExample/LeanChatExample.xcodeproj'
     pod 'LeanChatLib' , :path => '../'
 end
-
-

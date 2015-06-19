@@ -102,6 +102,7 @@ static NSInteger const kOnePageSize = 20;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessage:) name:kCDNotificationMessageReceived object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMessageDelivered:) name:kCDNotificationMessageDelivered object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshConv) name:kCDNotificationConversationUpdated object:nil];
     [[CDStorage storage] clearUnreadWithConvid:self.conv.conversationId];
     [self refreshConv];
@@ -497,6 +498,28 @@ static NSInteger const kOnePageSize = 20;
     AVIMTypedMessage *message = notification.object;
     if ([message.conversationId isEqualToString:self.conv.conversationId]) {
         [self insertMessage:message];
+    }
+}
+
+- (void)onMessageDelivered:(NSNotification *)notification {
+    AVIMTypedMessage *message = notification.object;
+    if ([message.conversationId isEqualToString:self.conv.conversationId]) {
+        AVIMTypedMessage *foundMessage;
+        NSInteger pos;
+        for (pos = 0; pos < self.msgs.count; pos++) {
+            AVIMTypedMessage *msg = self.msgs[pos];
+            if ([msg.messageId isEqualToString:message.messageId]) {
+                foundMessage = msg;
+                break;
+            }
+        }
+        if (foundMessage !=nil) {
+            foundMessage.status = AVIMMessageStatusDelivered;
+            XHMessage *xhMsg = [self getXHMessageByMsg:foundMessage];
+            [self.messages setObject:xhMsg atIndexedSubscript:pos];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:pos inSection:0];
+            [self.messageTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
     }
 }
 
