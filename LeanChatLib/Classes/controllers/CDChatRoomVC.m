@@ -266,12 +266,14 @@ static NSInteger const kOnePageSize = 20;
             if ([self filterError:error]) {
                 NSMutableArray *xhMsgs = [[self getXHMessages:msgs] mutableCopy];
                 NSMutableArray *newMsgs = [NSMutableArray arrayWithArray:msgs];
-                [newMsgs addObjectsFromArray:_msgs];
-                _msgs = newMsgs;
+                [newMsgs addObjectsFromArray:self.msgs];
+                self.msgs = newMsgs;
                 [self insertOldMessages:xhMsgs completion: ^{
+                    self.isLoadingMsg = NO;
                 }];
+            } else {
+                self.isLoadingMsg = NO;
             }
-            self.isLoadingMsg = NO;
         }];
     }
 }
@@ -306,15 +308,21 @@ static NSInteger const kOnePageSize = 20;
 }
 
 - (void)insertMessage:(AVIMTypedMessage *)message {
+    if (self.isLoadingMsg) {
+        [self performSelector:@selector(insertMessage:) withObject:message afterDelay:1];
+        return;
+    }
+    self.isLoadingMsg = YES;
     [self cacheMsgs:@[message] callback:^(BOOL succeeded, NSError *error) {
         if ([self filterError:error]) {
             XHMessage *xhMessage = [self getXHMessageByMsg:message];
             [self.msgs addObject:message];
             [self.messages addObject:xhMessage];
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.msgs.count -1 inSection:0];
-            [self.messageTableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
+            [self.messageTableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             [self scrollToBottomAnimated:YES];
         }
+        self.isLoadingMsg = NO;
     }];
 }
 
@@ -518,7 +526,8 @@ static NSInteger const kOnePageSize = 20;
             XHMessage *xhMsg = [self getXHMessageByMsg:foundMessage];
             [self.messages setObject:xhMsg atIndexedSubscript:pos];
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:pos inSection:0];
-            [self.messageTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.messageTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            [self scrollToBottomAnimated:YES];
         }
     }
 }

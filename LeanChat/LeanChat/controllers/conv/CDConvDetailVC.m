@@ -265,6 +265,7 @@ static NSString *const reuseIdentifier = @"Cell";
     AVUser *user = [[CDCacheManager manager] lookupUser:member.memberId];
     [[CDUserManager manager] displayAvatarOfUser:user avatarView:imageView];
 }
+
 #pragma mark - Action
 
 - (void)goReportAbuse {

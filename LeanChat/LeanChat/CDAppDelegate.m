@@ -45,6 +45,9 @@
     }
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                           [UIColor whiteColor], NSForegroundColorAttributeName, [UIFont boldSystemFontOfSize:17], NSFontAttributeName, nil]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
     if ([AVUser currentUser]) {
         [self toMain];
     }
@@ -52,17 +55,11 @@
         [self toLogin];
     }
     
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
-    
     [self registerForPushWithApplication:application];
     
 #ifdef DEBUG
     [AVAnalytics setAnalyticsEnabled:NO];
-    [AVOSCloud setVerbosePolicy:kAVVerboseShow];
-    [AVLogger addLoggerDomain:AVLoggerDomainIM];
-    [AVLogger addLoggerDomain:AVLoggerDomainCURL];
-    [AVLogger setLoggerLevelMask:AVLoggerLevelAll];
+    [AVOSCloud setAllLogsEnabled:YES];
 #endif
     return YES;
 }
@@ -95,7 +92,7 @@
     if (num != 0) {
         AVInstallation *currentInstallation = [AVInstallation currentInstallation];
         [currentInstallation setBadge:0];
-        [currentInstallation saveEventually: ^(BOOL succeeded, NSError *error) {
+        [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             DLog(@"%@", error ? error : @"succeed");
         }];
         application.applicationIconBadgeNumber = 0;
@@ -165,16 +162,6 @@
         DLog(@"%@", error);
         weakSelf.window.rootViewController = tab;
     }];
-    
-    //    AVInstallation* installation=[AVInstallation currentInstallation];
-    //    AVUser* user=[AVUser currentUser];
-    //    [user setObject:installation forKey:INSTALLATION];
-    //    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-    //        if(error){
-    //            [CDUtils logError:error callback:nil];
-    //        }else{
-    //        }
-    //    }];
 }
 
 @end

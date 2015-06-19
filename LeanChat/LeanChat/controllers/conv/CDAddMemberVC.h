@@ -12,6 +12,6 @@
 
 @interface CDAddMemberVC : CDBaseTableVC
 
-@property CDConvDetailVC *groupDetailVC;
+@property (nonatomic) CDConvDetailVC *groupDetailVC;
 
 @end
