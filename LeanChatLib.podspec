@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "LeanChatLib"
-  s.version      = "0.1.2"
+  s.version      = "0.1.3"
   s.summary      = "An IM App like WeChat App has to send text, pictures, audio, video, location messaging, managing address book, more interesting features."
   s.homepage     = "https://github.com/leancloud/leanchat-ios"
   s.license      = "MIT"
