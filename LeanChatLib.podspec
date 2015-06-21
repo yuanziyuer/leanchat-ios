@@ -10,10 +10,10 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '7.0'
   s.source_files = 'LeanChatLib/Classes/**/*.{h,m}'
   s.resources    = 'LeanChatLib/Resources/*'
-	s.libraries    = 'icucore','sqlite3'
+  s.libraries    = 'icucore','sqlite3'
   s.requires_arc = true
   s.dependency 'AVOSCloud', '~> 3.1.2.4'
   s.dependency 'AVOSCloudIM', '~> 3.1.2.4'
   s.dependency 'LZConversationCell', '~> 0.0.1'
-	s.dependency 'DateTools' , '~> 1.5.0'
+  s.dependency 'DateTools' , '~> 1.5.0'
 end
