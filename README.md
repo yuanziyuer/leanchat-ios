@@ -160,6 +160,10 @@ CDUserModel，
 
 [更多介绍](https://github.com/leancloud/leanchat-android)
 
+## 技术支持
+
+关于此项目的问题，可提 [issue](https://github.com/leancloud/leanchat-ios/issues)。
+
 ## 致谢
 
 感谢曾宪华大神的 [MessageDisplayKit](https://github.com/xhzengAIB/MessageDisplayKit) 开源库。
