@@ -51,7 +51,6 @@ static CDIM *instance;
 }
 
 - (void)dealloc {
-    [[AVIMClient defaultClient] removeObserver:self forKeyPath:@"status"];
 }
 
 - (void)openWithClientId:(NSString *)clientId callback:(AVIMBooleanResultBlock)callback {

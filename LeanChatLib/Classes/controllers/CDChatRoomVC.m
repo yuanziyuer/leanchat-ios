@@ -87,6 +87,7 @@ static NSInteger const kOnePageSize = 20;
     [self.emotionManagerView reloadData];
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

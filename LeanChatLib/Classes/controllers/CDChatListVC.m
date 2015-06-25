@@ -198,7 +198,7 @@ static NSString *cellIdentifier = @"ContactCell";
 #pragma mark - connect
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (object == [CDIM sharedInstance] && [keyPath isEqualToString:@"status"]) {
+    if (object == [CDIM sharedInstance] && [keyPath isEqualToString:@"connect"]) {
         [self updateStatusView];
     }
 }
