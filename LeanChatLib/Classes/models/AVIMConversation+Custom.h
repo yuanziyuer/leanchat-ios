@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 avoscloud. All rights reserved.
 //
 
-#import <CDAVOSHeaders.h>
+#import <AVOSCloudIM/AVOSCloudIM.h>
 
 #define CONV_TYPE @"type"
 

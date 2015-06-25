@@ -7,7 +7,6 @@
 //
 
 #import "CDConvNameVC.h"
-#import <LeanChatLib/AVIMConversation+Custom.h>
 #import <LeanChatLib/CDIM.h>
 
 @interface CDConvNameVC ()

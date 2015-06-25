@@ -7,7 +7,6 @@
 //
 
 #import "MainViewController.h"
-#import "LCECommon.h"
 #import "LCEChatRoomVC.h"
 
 @interface MainViewController ()
@@ -24,11 +23,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (LOCAL_DEBUG) {
-        self.otherIdTextField.text = @"b";
-        self.groupId1TextField.text = @"c";
-        self.groupId2TextField.text = @"d";
-    }
 }
 
 - (void)didReceiveMemoryWarning {

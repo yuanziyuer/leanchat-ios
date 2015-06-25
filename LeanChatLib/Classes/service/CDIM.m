@@ -41,7 +41,6 @@ static CDIM *instance;
          */
         //        _imClient.signatureDataSource=self;
         _cachedConvs = [NSMutableDictionary dictionary];
-        [self updateConnectStatus];
     }
     return self;
 }
@@ -88,6 +87,8 @@ static CDIM *instance;
     AVIMConversationQuery *q = [[AVIMClient defaultClient] conversationQuery];
     [q whereKey:AVIMAttr(CONV_TYPE) equalTo:@(type)];
     [q whereKey:kAVIMKeyMember containsAllObjectsInArray:members];
+    [q orderByDescending:@"createdAt"];
+    q.limit = 1;
     [q findConversationsWithCallback: ^(NSArray *objects, NSError *error) {
         if (error) {
             callback(nil, error);
@@ -364,7 +365,6 @@ static CDIM *instance;
     for (CDRoom *room in rooms) {
         [convids addObject:room.convid];
     }
-    WEAKSELF
     [self cacheConvsWithIds : convids callback : ^(NSArray *objects, NSError *error) {
         if (error) {
             block(nil, error);

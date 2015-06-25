@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CDAVOSHeaders.h"
 #import "CDUserModel.h"
 #import "AVIMConversation+Custom.h"
 

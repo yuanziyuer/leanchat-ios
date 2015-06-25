@@ -27,6 +27,4 @@
 - (AVIMConversation *)getCurConv;
 - (void)refreshCurConv:(AVBooleanResultBlock)callback;
 
-- (void)cacheAndFillRooms:(NSMutableArray *)rooms callback:(AVBooleanResultBlock)callback;
-
 @end

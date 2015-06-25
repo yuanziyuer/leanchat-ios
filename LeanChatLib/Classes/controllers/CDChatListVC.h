@@ -7,6 +7,7 @@
 //
 
 #import "AVIMConversation+Custom.h"
+#import "CDRoom.h"
 
 @class CDChatListVC;
 

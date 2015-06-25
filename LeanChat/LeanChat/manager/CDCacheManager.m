@@ -9,8 +9,8 @@
 #import "CDCacheManager.h"
 #import "CDUtils.h"
 #import "CDUserManager.h"
-#import <LeanChatLib/CDRoom.h>
 #import <LeanChatLib/CDIM.h>
+#import <LeanChatLib/CDChatListVC.h>
 
 static CDCacheManager *cacheManager;
 
@@ -142,33 +142,5 @@ static CDCacheManager *cacheManager;
     }
 }
 
-#pragma mark - rooms
-
-- (void)cacheAndFillRooms:(NSMutableArray *)rooms callback:(AVBooleanResultBlock)callback {
-    NSMutableSet *convids = [NSMutableSet set];
-    for (CDRoom *room in rooms) {
-        [convids addObject:room.convid];
-    }
-    [[CDCacheManager manager] cacheConvsWithIds:convids callback: ^(NSArray *objects, NSError *error) {
-        if (error) {
-            callback(NO, error);
-        }
-        else {
-            for (CDRoom *room in rooms) {
-                room.conv = [[CDCacheManager manager] lookupConvById:room.convid];
-                if (room.conv == nil) {
-                    [NSException raise:@"not found conv" format:nil];
-                }
-            }
-            NSMutableSet *userIds = [NSMutableSet set];
-            for (CDRoom *room in rooms) {
-                if (room.conv.type == CDConvTypeSingle) {
-                    [userIds addObject:room.conv.otherId];
-                }
-            }
-            [[CDCacheManager manager] cacheUsersWithIds:userIds callback:callback];
-        }
-    }];
-}
 
 @end

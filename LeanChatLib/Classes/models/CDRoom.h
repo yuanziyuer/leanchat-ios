@@ -6,8 +6,7 @@
 //  Copyright (c) 2014年 AVOS. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "CDAVOSHeaders.h"
+#import <AVOSCloudIM/AVOSCloudIM.h>
 
 @interface CDRoom : NSObject<NSCoding>
 

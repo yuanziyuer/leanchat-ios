@@ -10,7 +10,7 @@
 #import "CDUtils.h"
 #import "CDCacheManager.h"
 #import "CDAbuseReport.h"
-#import <LeanChatLib/UIImage+Icon.h>
+#import "UIImage+Icon.h"
 
 static UIImage *defaultAvatar;
 
