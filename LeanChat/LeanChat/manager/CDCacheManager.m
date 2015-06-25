@@ -9,7 +9,7 @@
 #import "CDCacheManager.h"
 #import "CDUtils.h"
 #import "CDUserManager.h"
-#import <LeanChatLib/CDIM.h>
+#import <LeanChatLib/CDChatManager.h>
 #import <LeanChatLib/CDChatListVC.h>
 
 static CDCacheManager *cacheManager;
@@ -81,7 +81,7 @@ static CDCacheManager *cacheManager;
             [uncacheConvids addObject:convid];
         }
     }
-    [[CDIM sharedInstance] fetchConvsWithConvids:uncacheConvids callback: ^(NSArray *objects, NSError *error) {
+    [[CDChatManager manager] fetchConvsWithConvids:uncacheConvids callback: ^(NSArray *objects, NSError *error) {
         if (error) {
             callback(nil, error);
         } else {
@@ -126,7 +126,7 @@ static CDCacheManager *cacheManager;
 
 - (void)refreshCurConv:(AVBooleanResultBlock)callback {
     if ([self getCurConv] != nil) {
-        [[CDIM sharedInstance] fecthConvWithConvid:[self getCurConv].conversationId callback: ^(AVIMConversation *conversation, NSError *error) {
+        [[CDChatManager manager] fecthConvWithConvid:[self getCurConv].conversationId callback: ^(AVIMConversation *conversation, NSError *error) {
             if (error) {
                 callback(NO, error);
             }

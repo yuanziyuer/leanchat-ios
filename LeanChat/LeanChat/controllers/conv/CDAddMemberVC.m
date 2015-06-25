@@ -12,7 +12,7 @@
 #import "CDCacheManager.h"
 #import "CDUtils.h"
 #import "CDIMService.h"
-#import <LeanChatLib/CDIM.h>
+#import <LeanChatLib/CDChatManager.h>
 
 
 @interface CDAddMemberVC ()
@@ -90,7 +90,7 @@ static NSString *reuseIdentifier = @"Cell";
         NSMutableArray *members = [conv.members mutableCopy];
         [members addObjectsFromArray:inviteIds];
         [self showProgress];
-        [[CDIM sharedInstance] createConvWithMembers:members type:CDConvTypeGroup callback: ^(AVIMConversation *conversation, NSError *error) {
+        [[CDChatManager manager] createConvWithMembers:members type:CDConvTypeGroup callback: ^(AVIMConversation *conversation, NSError *error) {
             [self hideProgress];
             if ([self filterError:error]) {
                 [self.presentingViewController dismissViewControllerAnimated:YES completion: ^{

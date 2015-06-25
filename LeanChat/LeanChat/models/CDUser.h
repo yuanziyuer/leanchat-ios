@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <LeanChatLib/CDIM.h>
+#import <LeanChatLib/CDChatManager.h>
 
 @interface CDUser : NSObject <CDUserModel>
 

@@ -56,7 +56,7 @@
 }
 
 - (void)goWithUserId:(NSString *)userId fromVC:(UIViewController *)vc {
-    [[CDIM sharedInstance] fetchConvWithOtherId:userId callback: ^(AVIMConversation *conversation, NSError *error) {
+    [[CDChatManager manager] fetchConvWithOtherId:userId callback: ^(AVIMConversation *conversation, NSError *error) {
         if (error) {
             DLog(@"%@", error);
         }

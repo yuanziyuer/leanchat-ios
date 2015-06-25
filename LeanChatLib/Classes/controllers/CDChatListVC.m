@@ -10,7 +10,7 @@
 #import "LZStatusView.h"
 #import "UIView+XHRemoteImage.h"
 #import "LZConversationCell.h"
-#import "CDIM.h"
+#import "CDChatManager.h"
 #import "CDMacros.h"
 #import "AVIMConversation+Custom.h"
 #import "UIView+XHRemoteImage.h"
@@ -106,7 +106,7 @@ static NSString *cellIdentifier = @"ContactCell";
 }
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
-    [[CDIM sharedInstance] findRecentConversationsWithBlock:^(NSArray *conversations, NSInteger totalUnreadCount, NSError *error) {
+    [[CDChatManager manager] findRecentConversationsWithBlock:^(NSArray *conversations, NSInteger totalUnreadCount, NSError *error) {
         [self stopRefreshControl:refreshControl];
         if ([self filterError:error]) {
             self.conversations = conversations;
@@ -154,7 +154,7 @@ static NSString *cellIdentifier = @"ContactCell";
     LZConversationCell *cell = [LZConversationCell dequeueOrCreateCellByTableView:tableView];
     AVIMConversation *conversation = [self.conversations objectAtIndex:indexPath.row];
     if (conversation.type == CDConvTypeSingle) {
-        id <CDUserModel> user = [[CDIM sharedInstance].userDelegate getUserById:conversation.otherId];
+        id <CDUserModel> user = [[CDChatManager manager].userDelegate getUserById:conversation.otherId];
         cell.nameLabel.text = user.username;
         [cell.avatarImageView setImageWithURL:[NSURL URLWithString:user.avatarUrl]];
     }
@@ -176,7 +176,7 @@ static NSString *cellIdentifier = @"ContactCell";
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         AVIMConversation *conversations = [self.conversations objectAtIndex:indexPath.row];
-        [[CDIM sharedInstance] deleteUnreadByConversationId:conversations.conversationId];
+        [[CDChatManager manager] deleteUnreadByConversationId:conversations.conversationId];
         [self refresh];
     }
 }
@@ -200,7 +200,7 @@ static NSString *cellIdentifier = @"ContactCell";
 #pragma mark - connect
 
 - (void)updateStatusView {
-    if ([CDIM sharedInstance].connect) {
+    if ([CDChatManager manager].connect) {
         self.tableView.tableHeaderView = nil ;
     }else {
         self.tableView.tableHeaderView = self.clientStatusView;

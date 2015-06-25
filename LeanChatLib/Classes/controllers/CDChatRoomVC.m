@@ -94,7 +94,7 @@ static NSInteger const kOnePageSize = 20;
     [self initBottomMenuAndEmotionView];
     [self.view addSubview:self.clientStatusView];
     self.clientStatusView.hidden = YES;
-    id <CDUserModel> curUser = [CDIM sharedInstance].selfUser;
+    id <CDUserModel> curUser = [CDChatManager manager].selfUser;
     // 设置自身用户名
     self.messageSender = [curUser username];
 }
@@ -121,7 +121,7 @@ static NSInteger const kOnePageSize = 20;
     
     if (self.msgs.count > 0) {
         // implicitly insert
-        [[CDIM sharedInstance] setZeroUnreadWithConversationId:self.conv.conversationId];
+        [[CDChatManager manager] setZeroUnreadWithConversationId:self.conv.conversationId];
     }
     [[XHAudioPlayerHelper shareInstance] stopAudio];
 }
@@ -143,7 +143,7 @@ static NSInteger const kOnePageSize = 20;
 }
 
 - (XHMessage *)getXHMessageByMsg:(AVIMTypedMessage *)msg {
-    id <CDUserModel> fromUser = [[CDIM sharedInstance].userDelegate getUserById:msg.clientId];
+    id <CDUserModel> fromUser = [[CDChatManager manager].userDelegate getUserById:msg.clientId];
     XHMessage *xhMessage;
     NSDate *time = [self getTimestampDate:msg.sendTimestamp];
     if (msg.mediaType == kAVIMMessageMediaTypeText) {
@@ -153,7 +153,7 @@ static NSInteger const kOnePageSize = 20;
     else if (msg.mediaType == kAVIMMessageMediaTypeAudio) {
         AVIMAudioMessage *audioMsg = (AVIMAudioMessage *)msg;
         NSString *duration = [NSString stringWithFormat:@"%.0f", audioMsg.duration];
-        NSString *voicePath = [[CDIM sharedInstance] getPathByObjectId:audioMsg.messageId];
+        NSString *voicePath = [[CDChatManager manager] getPathByObjectId:audioMsg.messageId];
         xhMessage = [[XHMessage alloc] initWithVoicePath:voicePath voiceUrl:nil voiceDuration:duration sender:fromUser.username timestamp:time];
     }
     else if (msg.mediaType == kAVIMMessageMediaTypeLocation) {
@@ -172,7 +172,7 @@ static NSInteger const kOnePageSize = 20;
     xhMessage.avator = nil;
     xhMessage.avatorUrl = [fromUser avatarUrl];
     
-    if ([[CDIM sharedInstance].selfId isEqualToString:msg.clientId]) {
+    if ([[CDChatManager manager].selfId isEqualToString:msg.clientId]) {
         xhMessage.bubbleMessageType = XHBubbleMessageTypeSending;
     }
     else {
@@ -229,7 +229,7 @@ static NSInteger const kOnePageSize = 20;
 #pragma mark - query messages
 
 - (void)queryAndCacheMessagesWithTimestamp:(int64_t)timestamp block:(AVIMArrayResultBlock)block {
-    [[CDIM sharedInstance] queryTypedMessagesWithConversation:self.conv timestamp:timestamp limit:kOnePageSize block:^(NSArray *msgs, NSError *error) {
+    [[CDChatManager manager] queryTypedMessagesWithConversation:self.conv timestamp:timestamp limit:kOnePageSize block:^(NSArray *msgs, NSError *error) {
         if (error) {
             block(msgs, error);
         } else {
@@ -288,7 +288,7 @@ static NSInteger const kOnePageSize = 20;
             [userIds addObject:msg.clientId];
             if (msg.mediaType == kAVIMMessageMediaTypeImage ||
                 msg.mediaType == kAVIMMessageMediaTypeAudio) {
-                NSString *path = [[CDIM sharedInstance] getPathByObjectId:msg.messageId];
+                NSString *path = [[CDChatManager manager] getPathByObjectId:msg.messageId];
                 NSFileManager *fileMan = [NSFileManager defaultManager];
                 if ([fileMan fileExistsAtPath:path] == NO) {
                     NSData *data = [msg.file getData];
@@ -296,8 +296,8 @@ static NSInteger const kOnePageSize = 20;
                 }
             }
         }
-        if ([[CDIM sharedInstance].userDelegate respondsToSelector:@selector(cacheUserByIds:block:)]) {
-            [[CDIM sharedInstance].userDelegate cacheUserByIds:userIds block:^(BOOL succeeded, NSError *error) {
+        if ([[CDChatManager manager].userDelegate respondsToSelector:@selector(cacheUserByIds:block:)]) {
+            [[CDChatManager manager].userDelegate cacheUserByIds:userIds block:^(BOOL succeeded, NSError *error) {
                 [self runInMainQueue:^{
                     callback(succeeded, error);
                 }];
@@ -456,7 +456,7 @@ static NSInteger const kOnePageSize = 20;
 
 - (void)sendImage:(UIImage *)image {
     NSData *imageData = UIImageJPEGRepresentation(image, 0.6);
-    NSString *path = [[CDIM sharedInstance] tmpPath];
+    NSString *path = [[CDChatManager manager] tmpPath];
     NSError *error;
     [imageData writeToFile:path options:NSDataWritingAtomic error:&error];
     if (error == nil) {
@@ -477,11 +477,11 @@ static NSInteger const kOnePageSize = 20;
         if (error) {
             // 赋值一个临时的messageId，因为发送失败，messageId，sendTimestamp不能从服务端获取
             // resend 成功的时候再改过来
-            msg.messageId = [[CDIM sharedInstance] uuid];
+            msg.messageId = [[CDChatManager manager] uuid];
             msg.sendTimestamp = [[NSDate date] timeIntervalSince1970] * 1000;
         }
         if (path && error == nil) {
-            NSString *newPath = [[CDIM sharedInstance] getPathByObjectId:msg.messageId];
+            NSString *newPath = [[CDChatManager manager] getPathByObjectId:msg.messageId];
             NSError *error1;
             [[NSFileManager defaultManager] moveItemAtPath:path toPath:newPath error:&error1];
             DLog(@"%@", newPath);
@@ -628,13 +628,13 @@ static NSInteger const kOnePageSize = 20;
 #pragma mark - client status
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (object == [CDIM sharedInstance] && [keyPath isEqualToString:@"connect"]) {
+    if (object == [CDChatManager manager] && [keyPath isEqualToString:@"connect"]) {
         [self updateStatusView];
     }
 }
 
 - (void)updateStatusView {
-    if ([CDIM sharedInstance].connect) {
+    if ([CDChatManager manager].connect) {
         self.clientStatusView.hidden = YES;
     }else {
         self.clientStatusView.hidden = NO;

@@ -7,7 +7,7 @@
 //
 
 #import "AVIMConversation+Custom.h"
-#import "CDIM.h"
+#import "CDChatManager.h"
 #import "UIImage+Icon.h"
 #import <objc/runtime.h>
 
@@ -36,7 +36,7 @@
 + (NSString *)nameOfUserIds:(NSArray *)userIds {
     NSMutableArray *names = [NSMutableArray array];
     for (int i = 0; i < userIds.count; i++) {
-        id <CDUserModel> user = [[CDIM sharedInstance].userDelegate getUserById:[userIds objectAtIndex:i]];
+        id <CDUserModel> user = [[CDChatManager manager].userDelegate getUserById:[userIds objectAtIndex:i]];
         [names addObject:user.username];
     }
     return [names componentsJoinedByString:@","];
@@ -45,7 +45,7 @@
 - (NSString *)displayName {
     if ([self type] == CDConvTypeSingle) {
         NSString *otherId = [self otherId];
-        id <CDUserModel> other = [[CDIM sharedInstance].userDelegate getUserById:otherId];
+        id <CDUserModel> other = [[CDChatManager manager].userDelegate getUserById:otherId];
         return other.username;
     }
     else {
@@ -58,11 +58,11 @@
     if (members.count != 2) {
         [NSException raise:@"invalid conv" format:nil];
     }
-    if ([members containsObject:[CDIM sharedInstance].selfId] == NO) {
+    if ([members containsObject:[CDChatManager manager].selfId] == NO) {
         [NSException raise:@"invalid conv" format:nil];
     }
     NSString *otherId;
-    if ([members[0] isEqualToString:[CDIM sharedInstance].selfId]) {
+    if ([members[0] isEqualToString:[CDChatManager manager].selfId]) {
         otherId = members[1];
     }
     else {

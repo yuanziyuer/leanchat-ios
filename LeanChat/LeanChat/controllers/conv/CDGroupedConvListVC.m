@@ -10,7 +10,7 @@
 #import "CDIMService.h"
 #import "CDUtils.h"
 #import "CDImageLabelTableCell.h"
-#import <LeanChatLib/CDIM.h>
+#import <LeanChatLib/CDChatManager.h>
 
 @interface CDGroupedConvListVC () {
     NSArray *convs;
@@ -44,7 +44,7 @@ static NSString *cellIndentifier = @"cell";
 }
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
-    [[CDIM sharedInstance] findGroupedConvsWithBlock: ^(NSArray *objects, NSError *error) {
+    [[CDChatManager manager] findGroupedConvsWithBlock: ^(NSArray *objects, NSError *error) {
         [CDUtils stopRefreshControl:refreshControl];
         convs = objects;
         [self.tableView reloadData];

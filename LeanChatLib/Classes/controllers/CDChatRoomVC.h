@@ -7,7 +7,7 @@
 //
 
 #import "XHMessageTableViewController.h"
-#import "CDIM.h"
+#import "CDChatManager.h"
 
 @interface CDChatRoomVC : XHMessageTableViewController
 

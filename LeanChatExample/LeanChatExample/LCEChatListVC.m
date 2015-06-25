@@ -34,7 +34,7 @@
 }
 
 - (void)logout:(id)sender {
-    [[CDIM sharedInstance] closeWithCallback: ^(BOOL succeeded, NSError *error) {
+    [[CDChatManager manager] closeWithCallback: ^(BOOL succeeded, NSError *error) {
         UIApplication *app = [UIApplication sharedApplication];
         [app performSelector:@selector(suspend)];
         [self performSelector:@selector(exitApp:) withObject:nil afterDelay:0.5];

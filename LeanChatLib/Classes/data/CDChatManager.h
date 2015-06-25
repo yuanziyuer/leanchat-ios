@@ -1,5 +1,5 @@
 //
-//  CDIMClient.h
+//  CDChatManager.h
 //  LeanChat
 //
 //  Created by lzw on 15/1/21.
@@ -29,7 +29,7 @@ typedef void (^CDRecentConversationsCallback)(NSArray *conversations, NSInteger 
 
 @end
 
-@interface CDIM : NSObject
+@interface CDChatManager : NSObject
 
 @property (nonatomic, strong) id <CDUserDelegate> userDelegate;
 
@@ -37,7 +37,7 @@ typedef void (^CDRecentConversationsCallback)(NSArray *conversations, NSInteger 
 @property (nonatomic, strong) id <CDUserModel> selfUser;
 @property (nonatomic, assign, readonly) BOOL connect;
 
-+ (instancetype)sharedInstance;
++ (instancetype)manager;
 
 - (AVIMClient *)imClient;
 

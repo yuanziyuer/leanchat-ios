@@ -37,7 +37,7 @@
     NSString *otherId = self.otherIdTextField.text;
     if (otherId.length > 0) {
         WEAKSELF
-        [[CDIM sharedInstance] fetchConvWithOtherId : otherId callback : ^(AVIMConversation *conversation, NSError *error) {
+        [[CDChatManager manager] fetchConvWithOtherId : otherId callback : ^(AVIMConversation *conversation, NSError *error) {
             if (error) {
                 DLog(@"%@", error);
             }
@@ -54,7 +54,7 @@
     NSString *groupId2 = self.groupId2TextField.text;
     if (groupId1.length > 0 && groupId2.length > 0) {
         WEAKSELF
-        CDIM *im = [CDIM sharedInstance];
+        CDChatManager *im = [CDChatManager manager];
         NSMutableArray *memberIds = [NSMutableArray array];
         [memberIds addObject:groupId1];
         [memberIds addObject:groupId2];

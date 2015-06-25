@@ -11,7 +11,7 @@
 #import "CDAppDelegate.h"
 #import "LZPushSettingViewController.h"
 #import "CDWebViewVC.h"
-#import <LeanChatLib/CDIM.h>
+#import <LeanChatLib/CDChatManager.h>
 
 @interface CDProfileVC ()
 
@@ -36,7 +36,7 @@
 #pragma mark - Actions
 
 - (void)logout {
-    [[CDIM sharedInstance] closeWithCallback: ^(BOOL succeeded, NSError *error) {
+    [[CDChatManager manager] closeWithCallback: ^(BOOL succeeded, NSError *error) {
         DLog(@"%@", error);
         [AVUser logOut];
         CDAppDelegate *delegate = (CDAppDelegate *)[UIApplication sharedApplication].delegate;

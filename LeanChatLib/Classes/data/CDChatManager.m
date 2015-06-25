@@ -1,18 +1,18 @@
 //
-//  CDIMClient.m
+//  CDChatManager.m
 //  LeanChat
 //
 //  Created by lzw on 15/1/21.
 //  Copyright (c) 2015年 AVOS. All rights reserved.
 //
 
-#import "CDIM.h"
+#import "CDChatManager.h"
 #import "CDMacros.h"
 #import "CDEmotionUtils.h"
 
-static CDIM *instance;
+static CDChatManager *instance;
 
-@interface CDIM () <AVIMClientDelegate, AVIMSignatureDataSource>
+@interface CDChatManager () <AVIMClientDelegate, AVIMSignatureDataSource>
 
 @property (nonatomic, assign, readwrite) BOOL connect;
 @property (nonatomic, strong) NSMutableDictionary *cachedConvs;
@@ -21,14 +21,14 @@ static CDIM *instance;
 
 @end
 
-@implementation CDIM
+@implementation CDChatManager
 
 #pragma mark - lifecycle
 
-+ (instancetype)sharedInstance {
++ (instancetype)manager {
     static dispatch_once_t token;
     dispatch_once(&token, ^{
-        instance = [[CDIM alloc] init];
+        instance = [[CDChatManager alloc] init];
     });
     return instance;
 }
