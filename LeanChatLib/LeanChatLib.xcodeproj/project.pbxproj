@@ -18,15 +18,11 @@
 		706E0CA01B31F52600F9C891 /* LeanChatLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 706E0B361B31F52400F9C891 /* LeanChatLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		706E0CA11B31F52600F9C891 /* AVIMConversation+Custom.h in Headers */ = {isa = PBXBuildFile; fileRef = 706E0B381B31F52400F9C891 /* AVIMConversation+Custom.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		706E0CA21B31F52600F9C891 /* AVIMConversation+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 706E0B391B31F52400F9C891 /* AVIMConversation+Custom.m */; };
-		706E0CA31B31F52600F9C891 /* CDRoom.h in Headers */ = {isa = PBXBuildFile; fileRef = 706E0B3A1B31F52400F9C891 /* CDRoom.h */; };
-		706E0CA41B31F52600F9C891 /* CDRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 706E0B3B1B31F52400F9C891 /* CDRoom.m */; };
 		706E0CA51B31F52600F9C891 /* CDUserModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 706E0B3C1B31F52400F9C891 /* CDUserModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		706E0CA81B31F52600F9C891 /* CDEmotionUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 706E0B401B31F52400F9C891 /* CDEmotionUtils.h */; };
 		706E0CA91B31F52600F9C891 /* CDEmotionUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 706E0B411B31F52400F9C891 /* CDEmotionUtils.m */; };
 		706E0CAA1B31F52600F9C891 /* CDIM.h in Headers */ = {isa = PBXBuildFile; fileRef = 706E0B421B31F52400F9C891 /* CDIM.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		706E0CAB1B31F52600F9C891 /* CDIM.m in Sources */ = {isa = PBXBuildFile; fileRef = 706E0B431B31F52400F9C891 /* CDIM.m */; };
-		706E0CAE1B31F52600F9C891 /* CDStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 706E0B461B31F52500F9C891 /* CDStorage.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		706E0CAF1B31F52600F9C891 /* CDStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 706E0B471B31F52500F9C891 /* CDStorage.m */; };
 		706E0CB01B31F52600F9C891 /* Emoji.h in Headers */ = {isa = PBXBuildFile; fileRef = 706E0B4A1B31F52500F9C891 /* Emoji.h */; };
 		706E0CB11B31F52600F9C891 /* Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = 706E0B4B1B31F52500F9C891 /* Emoji.m */; };
 		706E0CB21B31F52600F9C891 /* EmojiEmoticons.h in Headers */ = {isa = PBXBuildFile; fileRef = 706E0B4C1B31F52500F9C891 /* EmojiEmoticons.h */; };
@@ -332,15 +328,11 @@
 		706E0B361B31F52400F9C891 /* LeanChatLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeanChatLib.h; sourceTree = "<group>"; };
 		706E0B381B31F52400F9C891 /* AVIMConversation+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVIMConversation+Custom.h"; sourceTree = "<group>"; };
 		706E0B391B31F52400F9C891 /* AVIMConversation+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVIMConversation+Custom.m"; sourceTree = "<group>"; };
-		706E0B3A1B31F52400F9C891 /* CDRoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDRoom.h; sourceTree = "<group>"; };
-		706E0B3B1B31F52400F9C891 /* CDRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDRoom.m; sourceTree = "<group>"; };
 		706E0B3C1B31F52400F9C891 /* CDUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUserModel.h; sourceTree = "<group>"; };
 		706E0B401B31F52400F9C891 /* CDEmotionUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEmotionUtils.h; sourceTree = "<group>"; };
 		706E0B411B31F52400F9C891 /* CDEmotionUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEmotionUtils.m; sourceTree = "<group>"; };
 		706E0B421B31F52400F9C891 /* CDIM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIM.h; sourceTree = "<group>"; };
 		706E0B431B31F52400F9C891 /* CDIM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDIM.m; sourceTree = "<group>"; };
-		706E0B461B31F52500F9C891 /* CDStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDStorage.h; sourceTree = "<group>"; };
-		706E0B471B31F52500F9C891 /* CDStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDStorage.m; sourceTree = "<group>"; };
 		706E0B4A1B31F52500F9C891 /* Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Emoji.h; sourceTree = "<group>"; };
 		706E0B4B1B31F52500F9C891 /* Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Emoji.m; sourceTree = "<group>"; };
 		706E0B4C1B31F52500F9C891 /* EmojiEmoticons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmojiEmoticons.h; sourceTree = "<group>"; };
@@ -688,8 +680,6 @@
 			children = (
 				706E0B381B31F52400F9C891 /* AVIMConversation+Custom.h */,
 				706E0B391B31F52400F9C891 /* AVIMConversation+Custom.m */,
-				706E0B3A1B31F52400F9C891 /* CDRoom.h */,
-				706E0B3B1B31F52400F9C891 /* CDRoom.m */,
 				706E0B3C1B31F52400F9C891 /* CDUserModel.h */,
 			);
 			path = models;
@@ -702,8 +692,6 @@
 				706E0B411B31F52400F9C891 /* CDEmotionUtils.m */,
 				706E0B421B31F52400F9C891 /* CDIM.h */,
 				706E0B431B31F52400F9C891 /* CDIM.m */,
-				706E0B461B31F52500F9C891 /* CDStorage.h */,
-				706E0B471B31F52500F9C891 /* CDStorage.m */,
 			);
 			path = service;
 			sourceTree = "<group>";
@@ -1379,13 +1367,11 @@
 			files = (
 				70271C3C1B3BE72E0030CD6C /* UIImage+Icon.h in Headers */,
 				706E0C9C1B31F52600F9C891 /* CDChatListVC.h in Headers */,
-				706E0CAE1B31F52600F9C891 /* CDStorage.h in Headers */,
 				706E0CAA1B31F52600F9C891 /* CDIM.h in Headers */,
 				706E0CA01B31F52600F9C891 /* LeanChatLib.h in Headers */,
 				706E0CA51B31F52600F9C891 /* CDUserModel.h in Headers */,
 				706E0C9E1B31F52600F9C891 /* CDChatRoomVC.h in Headers */,
 				706E0CA11B31F52600F9C891 /* AVIMConversation+Custom.h in Headers */,
-				706E0CA31B31F52600F9C891 /* CDRoom.h in Headers */,
 				706E0CCC1B31F52600F9C891 /* UIView+XHBadgeView.h in Headers */,
 				706E0CE61B31F52600F9C891 /* XHBaseViewController.h in Headers */,
 				706E0D361B31F52600F9C891 /* SETextSelection.h in Headers */,
@@ -1754,7 +1740,6 @@
 				706E0D2F1B31F52600F9C891 /* SETextInput.m in Sources */,
 				706E0CCD1B31F52600F9C891 /* UIView+XHBadgeView.m in Sources */,
 				706E0D191B31F52600F9C891 /* FLAnimatedImage.m in Sources */,
-				706E0CAF1B31F52600F9C891 /* CDStorage.m in Sources */,
 				706E0CF31B31F52600F9C891 /* XHCacheManager.m in Sources */,
 				706E0D2D1B31F52600F9C891 /* SETextGeometry.m in Sources */,
 				706E0CFD1B31F52600F9C891 /* XHMessageBubbleFactory.m in Sources */,
@@ -1791,7 +1776,6 @@
 				706E0C9D1B31F52600F9C891 /* CDChatListVC.m in Sources */,
 				706E0CDF1B31F52600F9C891 /* XHVoiceRecordHelper.m in Sources */,
 				706E0D211B31F52600F9C891 /* SEConstants.m in Sources */,
-				706E0CA41B31F52600F9C891 /* CDRoom.m in Sources */,
 				706E0CB31B31F52600F9C891 /* EmojiEmoticons.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

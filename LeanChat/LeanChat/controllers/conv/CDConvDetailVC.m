@@ -17,7 +17,6 @@
 #import "CDUserManager.h"
 #import "LZAlertViewHelper.h"
 #import <LeanChatLib/CDIM.h>
-#import <LeanChatLib/CDStorage.h>
 
 static NSString *kCDConvDetailVCTitleKey = @"title";
 static NSString *kCDConvDetailVCDisclosureKey = @"disclosure";
@@ -308,7 +307,7 @@ static NSString *const reuseIdentifier = @"Cell";
 - (void)quitConv {
     [self.conv quitWithCallback: ^(BOOL succeeded, NSError *error) {
         if ([self filterError:error]) {
-            [[CDStorage storage] deleteRoomByConvid:self.conv.conversationId];
+            [[CDIM sharedInstance] deleteUnreadByConversationId:self.conv.conversationId];
             [self.navigationController popToRootViewControllerAnimated:YES];
         }
     }];

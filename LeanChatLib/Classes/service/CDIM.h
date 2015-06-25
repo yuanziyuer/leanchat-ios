@@ -15,6 +15,8 @@ static NSString *const kCDNotificationMessageDelivered = @"MessageDelivered";
 static NSString *const kCDNotificationConversationUpdated = @"ConversationUpdated";
 static NSString *const kCDNotificationConnectivityUpdated = @"ConnectStatus";
 
+typedef void (^CDRecentConversationsCallback)(NSArray *conversations, NSInteger totalUnreadCount,  NSError *error);
+
 @protocol CDUserDelegate <NSObject>
 
 @required
@@ -53,7 +55,10 @@ static NSString *const kCDNotificationConnectivityUpdated = @"ConnectStatus";
 
 - (void)queryTypedMessagesWithConversation:(AVIMConversation *)conversation timestamp:(int64_t)timestamp limit:(NSInteger)limit block:(AVIMArrayResultBlock)block;
 
-- (void)findRecentRoomsWithBlock:(AVArrayResultBlock)block;
+- (void)findRecentConversationsWithBlock:(CDRecentConversationsCallback)block;
+- (void)setZeroUnreadWithConversationId:(NSString *)conversationId;
+- (void)deleteUnreadByConversationId:(NSString *)conversationId;
+- (void)incrementUnreadWithConversationId:(NSString *)conversationId;
 
 - (NSString *)getPathByObjectId:(NSString *)objectId;
 - (NSString *)tmpPath;

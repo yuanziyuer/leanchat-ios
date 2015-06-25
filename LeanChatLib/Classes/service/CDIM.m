@@ -7,8 +7,6 @@
 //
 
 #import "CDIM.h"
-#import "CDRoom.h"
-#import "CDStorage.h"
 #import "CDMacros.h"
 #import "CDEmotionUtils.h"
 
@@ -17,8 +15,9 @@ static CDIM *instance;
 @interface CDIM () <AVIMClientDelegate, AVIMSignatureDataSource>
 
 @property (nonatomic, assign, readwrite) BOOL connect;
-
 @property (nonatomic, strong) NSMutableDictionary *cachedConvs;
+@property (nonatomic, strong) NSString *plistPath;
+@property (nonatomic, strong) NSMutableDictionary *conversationUnreads;
 
 @end
 
@@ -57,7 +56,7 @@ static CDIM *instance;
 - (void)openWithClientId:(NSString *)clientId callback:(AVIMBooleanResultBlock)callback {
     _selfId = clientId;
     _selfUser = [self.userDelegate getUserById:clientId];
-    [[CDStorage storage] setupWithUserId:clientId];
+    [self setupUnreadsWithUserId:_selfId];
     [[AVIMClient defaultClient] openWithClientId:clientId callback:^(BOOL succeeded, NSError *error) {
         [self updateConnectStatus];
         if (callback) {
@@ -179,8 +178,7 @@ static CDIM *instance;
 #pragma mark - send or receive message
 
 - (void)receiveMsg:(AVIMTypedMessage *)msg conv:(AVIMConversation *)conv {
-    [[CDStorage storage] insertRoomWithConvid:conv.conversationId];
-    [[CDStorage storage] incrementUnreadWithConvid:conv.conversationId];
+    [self incrementUnreadWithConversationId:conv.conversationId];
     [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationMessageReceived object:msg];
 }
 
@@ -201,11 +199,8 @@ static CDIM *instance;
 #pragma mark - status
 
 - (void)updateConnectStatus {
-    BOOL before = self.connect;
     self.connect = [AVIMClient defaultClient].status == AVIMClientStatusOpened;
-    if (before != self.connect) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationConnectivityUpdated object:@(self.connect)];
-    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationConnectivityUpdated object:@(self.connect)];
 }
 
 #pragma mark - AVIMMessageDelegate
@@ -365,50 +360,91 @@ static CDIM *instance;
     }];
 }
 
-- (void)findRecentRoomsWithBlock:(AVArrayResultBlock)block {
-    NSMutableArray *rooms = [[[CDStorage storage] getRooms] mutableCopy];
-    NSMutableSet *convids = [NSMutableSet set];
-    for (CDRoom *room in rooms) {
-        [convids addObject:room.convid];
-    }
+- (void)findRecentConversationsWithBlock:(CDRecentConversationsCallback)block {
+    NSMutableSet *convids = [NSMutableSet setWithArray:[self.conversationUnreads allKeys]];
     [self cacheConvsWithIds : convids callback : ^(NSArray *objects, NSError *error) {
         if (error) {
-            block(nil, error);
+            block(nil,0, error);
         }
         else {
-            NSMutableArray *filterRooms = [NSMutableArray array];
-            for (CDRoom *room in rooms) {
-                room.conv = [self lookupConvById:room.convid];
-                if (room.conv) {
-                    [filterRooms addObject:room];
-                }
-                else {
-                    [NSException raise:@"IM" format:@"conv is nil"];
-                }
+            NSMutableArray *recentConversations = [NSMutableArray array];
+            for (NSString *convid in convids) {
+                [recentConversations addObject:[self lookupConvById:convid]];
             }
             NSMutableSet *userIds = [NSMutableSet set];
-            for (CDRoom *room in filterRooms) {
-                if (room.conv.type == CDConvTypeSingle) {
-                    [userIds addObject:room.conv.otherId];
+            NSUInteger totalUnreadCount = 0;
+            for (AVIMConversation *conversation in recentConversations) {
+                if (conversation.type == CDConvTypeSingle) {
+                    [userIds addObject:conversation.otherId];
                 }
-                NSArray *lastestMessages = [room.conv queryMessagesFromCacheWithLimit:1];
+                NSArray *lastestMessages = [conversation queryMessagesFromCacheWithLimit:1];
                 if (lastestMessages.count > 0) {
-                    room.lastMsg = lastestMessages[0];
+                    conversation.lastMessage = lastestMessages[0];
                 }
+                conversation.unreadCount = [self.conversationUnreads[conversation.conversationId] intValue];
+                totalUnreadCount += conversation.unreadCount;
             }
-            NSArray *sortedRooms = [filterRooms sortedArrayUsingComparator:^NSComparisonResult(CDRoom *room1, CDRoom *room2) {
-                return room2.lastMsg.sendTimestamp - room1.lastMsg.sendTimestamp;
+            NSArray *sortedRooms = [recentConversations sortedArrayUsingComparator:^NSComparisonResult(AVIMConversation *conv1, AVIMConversation *conv2) {
+                return conv2.lastMessage.sendTimestamp - conv1.lastMessage.sendTimestamp;
             }];
             [self.userDelegate cacheUserByIds:userIds block: ^(BOOL succeeded, NSError *error) {
                 if (error) {
-                    block(nil, error);
+                    block(nil,0, error);
                 }
                 else {
-                    block(sortedRooms, error);
+                    block(sortedRooms, totalUnreadCount, error);
                 }
             }];
         }
     }];
+}
+
+#pragma mark - rooms
+
+
+- (NSString *)plistPathWithUserId:(NSString *)userId{
+    NSString *libPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    return [libPath stringByAppendingPathComponent:[NSString stringWithFormat:@"conversation_unreads_%@.plist", userId]];
+}
+
+- (void)saveData {
+    if (self.plistPath) {
+        [self.conversationUnreads writeToFile:self.plistPath atomically:YES];
+    }
+}
+
+- (void)setupUnreadsWithUserId:(NSString *)userId {
+    if (self.conversationUnreads.count > 0) {
+        [self saveData];
+    }
+    self.plistPath = [self plistPathWithUserId:userId];
+    DLog(@"plistPath = %@", self.plistPath);
+    if (![[NSFileManager defaultManager] fileExistsAtPath:self.plistPath]) {
+        self.conversationUnreads = [NSMutableDictionary dictionary];
+        [self saveData];
+    } else {
+        self.conversationUnreads = [[NSMutableDictionary alloc] initWithContentsOfFile:self.plistPath];
+    }
+}
+
+#pragma mark - rooms
+
+- (void)setZeroUnreadWithConversationId:(NSString *)conversationId {
+    self.conversationUnreads[conversationId] = @0;
+    [self saveData];
+}
+
+- (void)deleteUnreadByConversationId:(NSString *)conversationId {
+    [self.conversationUnreads removeObjectForKey:conversationId];
+    [self saveData];
+}
+
+- (void)incrementUnreadWithConversationId:(NSString *)conversationId {
+    if (!self.conversationUnreads[conversationId]) {
+        self.conversationUnreads[conversationId] = @0;
+    }
+    self.conversationUnreads[conversationId] = @([self.conversationUnreads[conversationId] intValue] + 1);
+    [self saveData];
 }
 
 @end

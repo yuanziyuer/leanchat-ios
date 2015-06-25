@@ -8,7 +8,6 @@
 
 #import "CDChatListVC.h"
 #import "LZStatusView.h"
-#import "CDStorage.h"
 #import "UIView+XHRemoteImage.h"
 #import "LZConversationCell.h"
 #import "CDIM.h"
@@ -22,7 +21,7 @@
 
 @property (nonatomic, strong) LZStatusView *clientStatusView;
 
-@property (nonatomic, strong) NSMutableArray *rooms;
+@property (nonatomic, strong) NSMutableArray *conversations;
 
 @end
 
@@ -34,7 +33,7 @@ static NSString *cellIdentifier = @"ContactCell";
 
 - (instancetype)init {
     if ((self = [super init])) {
-        _rooms = [[NSMutableArray alloc] init];
+        _conversations = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -43,23 +42,27 @@ static NSString *cellIdentifier = @"ContactCell";
     [super viewDidLoad];
     [LZConversationCell registerCellToTableView:self.tableView];
     self.refreshControl = [self getRefreshControl];
+    // 当在联系人 Tab 的时候，收到消息，badge 增加，所以需要一直监听
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:kCDNotificationMessageReceived object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:kCDNotificationMessageReceived object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateStatusView) name:kCDNotificationConnectivityUpdated object:nil];
-    [self updateStatusView];
-    WEAKSELF
+    // 刷新 unread badge 和新增的对话
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-         [weakSelf refresh:nil];
+        [self refresh:nil];
     });
+    [self updateStatusView];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationMessageReceived object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationConnectivityUpdated object:nil];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationMessageReceived object:nil];
 }
 
 #pragma mark - Propertys
@@ -103,12 +106,11 @@ static NSString *cellIdentifier = @"ContactCell";
 }
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
-    [[CDIM sharedInstance] findRecentRoomsWithBlock: ^(NSArray *objects, NSError *error) {
+    [[CDIM sharedInstance] findRecentConversationsWithBlock:^(NSArray *conversations, NSInteger totalUnreadCount, NSError *error) {
         [self stopRefreshControl:refreshControl];
         if ([self filterError:error]) {
-            _rooms = [objects mutableCopy];
+            self.conversations = conversations;
             [self.tableView reloadData];
-            NSInteger totalUnreadCount = [[CDStorage storage] countUnread];
             if ([self.chatListDelegate respondsToSelector:@selector(setBadgeWithTotalUnreadCount:)]) {
                 [self.chatListDelegate setBadgeWithTotalUnreadCount:totalUnreadCount];
             }
@@ -119,7 +121,7 @@ static NSString *cellIdentifier = @"ContactCell";
 #pragma mark - table view
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_rooms count];
+    return [self.conversations count];
 }
 
 - (NSString *)getMessageTitle:(AVIMTypedMessage *)msg {
@@ -150,31 +152,31 @@ static NSString *cellIdentifier = @"ContactCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LZConversationCell *cell = [LZConversationCell dequeueOrCreateCellByTableView:tableView];
-    CDRoom *room = [_rooms objectAtIndex:indexPath.row];
-    if (room.conv.type == CDConvTypeSingle) {
-        id <CDUserModel> user = [[CDIM sharedInstance].userDelegate getUserById:room.conv.otherId];
+    AVIMConversation *conversation = [self.conversations objectAtIndex:indexPath.row];
+    if (conversation.type == CDConvTypeSingle) {
+        id <CDUserModel> user = [[CDIM sharedInstance].userDelegate getUserById:conversation.otherId];
         cell.nameLabel.text = user.username;
         [cell.avatarImageView setImageWithURL:[NSURL URLWithString:user.avatarUrl]];
     }
     else {
-        [cell.avatarImageView setImage:room.conv.icon];
-        cell.nameLabel.text = room.conv.displayName;
+        [cell.avatarImageView setImage:conversation.icon];
+        cell.nameLabel.text = conversation.displayName;
     }
-    cell.messageLabel.text = [self getMessageTitle:room.lastMsg];
-    if (room.lastMsg) {
-        cell.timestampLabel.text = [[NSDate dateWithTimeIntervalSince1970:room.lastMsg.sendTimestamp / 1000] timeAgoSinceNow];
+    cell.messageLabel.text = [self getMessageTitle:conversation.lastMessage];
+    if (conversation.lastMessage) {
+        cell.timestampLabel.text = [[NSDate dateWithTimeIntervalSince1970:conversation.lastMessage.sendTimestamp / 1000] timeAgoSinceNow];
     }
     else {
         cell.timestampLabel.text = @"";
     }
-    cell.unreadCount = room.unreadCount;
+    cell.unreadCount = conversation.unreadCount;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        CDRoom *room = [_rooms objectAtIndex:indexPath.row];
-        [[CDStorage storage] deleteRoomByConvid:room.conv.conversationId];
+        AVIMConversation *conversations = [self.conversations objectAtIndex:indexPath.row];
+        [[CDIM sharedInstance] deleteUnreadByConversationId:conversations.conversationId];
         [self refresh];
     }
 }
@@ -185,9 +187,9 @@ static NSString *cellIdentifier = @"ContactCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    CDRoom *room = [_rooms objectAtIndex:indexPath.row];
+    AVIMConversation *conversation = [self.conversations objectAtIndex:indexPath.row];
     if ([self.chatListDelegate respondsToSelector:@selector(viewController:didSelectConv:)]) {
-        [self.chatListDelegate viewController:self didSelectConv:room.conv];
+        [self.chatListDelegate viewController:self didSelectConv:conversation];
     }
 }
 

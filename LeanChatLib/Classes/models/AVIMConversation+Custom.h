@@ -17,17 +17,15 @@ typedef enum : NSUInteger {
 
 @interface AVIMConversation (Custom)
 
+@property (nonatomic, strong) AVIMTypedMessage *lastMessage;;
+@property (nonatomic, assign) NSInteger unreadCount;
+
 - (CDConvType)type;
-
 - (NSString *)otherId;
-
 - (NSString *)displayName;
-
-+ (NSString *)nameOfUserIds:(NSArray *)userIds;
-
 - (NSString *)title;
-
 - (UIImage *)icon;
 
++ (NSString *)nameOfUserIds:(NSArray *)userIds;
 
 @end

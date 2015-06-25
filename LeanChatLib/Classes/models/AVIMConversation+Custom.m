@@ -9,8 +9,25 @@
 #import "AVIMConversation+Custom.h"
 #import "CDIM.h"
 #import "UIImage+Icon.h"
+#import <objc/runtime.h>
 
 @implementation AVIMConversation (Custom)
+
+- (AVIMTypedMessage *)lastMessage {
+    return objc_getAssociatedObject(self, @selector(lastMessage));
+}
+
+- (void)setLastMessage:(AVIMTypedMessage *)lastMessage {
+    objc_setAssociatedObject(self, @selector(lastMessage), lastMessage, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSInteger)unreadCount {
+    return [objc_getAssociatedObject(self, @selector(unreadCount)) intValue];
+}
+
+- (void)setUnreadCount:(NSInteger)unreadCount {
+    objc_setAssociatedObject(self, @selector(unreadCount), @(unreadCount), OBJC_ASSOCIATION_ASSIGN);
+}
 
 - (CDConvType)type {
     return [[self.attributes objectForKey:CONV_TYPE] intValue];

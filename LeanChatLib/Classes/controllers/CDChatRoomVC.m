@@ -14,7 +14,6 @@
 #import "XHAudioPlayerHelper.h"
 
 #import "LZStatusView.h"
-#import "CDStorage.h"
 #import "CDEmotionUtils.h"
 #import "AVIMConversation+Custom.h"
 
@@ -107,8 +106,6 @@ static NSInteger const kOnePageSize = 20;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMessageDelivered:) name:kCDNotificationMessageDelivered object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshConv) name:kCDNotificationConversationUpdated object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateStatusView) name:kCDNotificationConnectivityUpdated object:nil];
-    
-    [[CDStorage storage] clearUnreadWithConvid:self.conv.conversationId];
     [self refreshConv];
     [self loadMessagesWhenInit];
     [self updateStatusView];
@@ -123,9 +120,9 @@ static NSInteger const kOnePageSize = 20;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationConnectivityUpdated object:nil];
     
     if (self.msgs.count > 0) {
-        [[CDStorage storage] insertRoomWithConvid:self.conv.conversationId];
+        // implicitly insert
+        [[CDIM sharedInstance] setZeroUnreadWithConversationId:self.conv.conversationId];
     }
-    [[CDStorage storage] clearUnreadWithConvid:self.conv.conversationId];
     [[XHAudioPlayerHelper shareInstance] stopAudio];
 }
 
