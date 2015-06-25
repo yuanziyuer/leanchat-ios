@@ -48,7 +48,7 @@ static NSString *cellIdentifier = @"ContactCell";
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:kCDNotificationMessageReceived object:nil];
-    [[CDIM sharedInstance] addObserver:self forKeyPath:@"connect" options:NSKeyValueObservingOptionNew context:NULL];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateStatusView) name:kCDNotificationConnectivityUpdated object:nil];
     [self updateStatusView];
     WEAKSELF
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -58,8 +58,8 @@ static NSString *cellIdentifier = @"ContactCell";
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [[CDIM sharedInstance] removeObserver:self forKeyPath:@"connect"];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationMessageReceived object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationConnectivityUpdated object:nil];
 }
 
 #pragma mark - Propertys
@@ -196,12 +196,6 @@ static NSString *cellIdentifier = @"ContactCell";
 }
 
 #pragma mark - connect
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (object == [CDIM sharedInstance] && [keyPath isEqualToString:@"connect"]) {
-        [self updateStatusView];
-    }
-}
 
 - (void)updateStatusView {
     if ([CDIM sharedInstance].connect) {

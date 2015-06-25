@@ -102,25 +102,30 @@ static NSInteger const kOnePageSize = 20;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessage:) name:kCDNotificationMessageReceived object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMessageDelivered:) name:kCDNotificationMessageDelivered object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshConv) name:kCDNotificationConversationUpdated object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateStatusView) name:kCDNotificationConnectivityUpdated object:nil];
+    
     [[CDStorage storage] clearUnreadWithConvid:self.conv.conversationId];
     [self refreshConv];
     [self loadMessagesWhenInit];
-    [[CDIM sharedInstance] addObserver:self forKeyPath:@"connect" options:NSKeyValueObservingOptionNew context:NULL];
     [self updateStatusView];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationMessageReceived object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationMessageDelivered object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationConversationUpdated object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationConnectivityUpdated object:nil];
+    
     if (self.msgs.count > 0) {
         [[CDStorage storage] insertRoomWithConvid:self.conv.conversationId];
     }
     [[CDStorage storage] clearUnreadWithConvid:self.conv.conversationId];
-    [[CDIM sharedInstance] removeObserver:self forKeyPath:@"connect"];
     [[XHAudioPlayerHelper shareInstance] stopAudio];
 }
 

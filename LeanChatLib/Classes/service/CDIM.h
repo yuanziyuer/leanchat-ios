@@ -13,6 +13,7 @@
 static NSString *const kCDNotificationMessageReceived = @"MessageReceived";
 static NSString *const kCDNotificationMessageDelivered = @"MessageDelivered";
 static NSString *const kCDNotificationConversationUpdated = @"ConversationUpdated";
+static NSString *const kCDNotificationConnectivityUpdated = @"ConnectStatus";
 
 @protocol CDUserDelegate <NSObject>
 
@@ -32,7 +33,7 @@ static NSString *const kCDNotificationConversationUpdated = @"ConversationUpdate
 
 @property (nonatomic, strong, readonly) NSString *selfId;
 @property (nonatomic, strong) id <CDUserModel> selfUser;
-@property (nonatomic, assign) BOOL connect;
+@property (nonatomic, assign, readonly) BOOL connect;
 
 + (instancetype)sharedInstance;
 

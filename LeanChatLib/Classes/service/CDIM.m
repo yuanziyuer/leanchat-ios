@@ -16,6 +16,8 @@ static CDIM *instance;
 
 @interface CDIM () <AVIMClientDelegate, AVIMSignatureDataSource>
 
+@property (nonatomic, assign, readwrite) BOOL connect;
+
 @property (nonatomic, strong) NSMutableDictionary *cachedConvs;
 
 @end
@@ -199,7 +201,11 @@ static CDIM *instance;
 #pragma mark - status
 
 - (void)updateConnectStatus {
+    BOOL before = self.connect;
     self.connect = [AVIMClient defaultClient].status == AVIMClientStatusOpened;
+    if (before != self.connect) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationConnectivityUpdated object:@(self.connect)];
+    }
 }
 
 #pragma mark - AVIMMessageDelegate
