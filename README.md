@@ -34,7 +34,7 @@ LeanChat 已经在 App Store 上架，可前往 https://itunes.apple.com/gb/app/
 
 封装了最近对话页面和聊天页面，LeanChat 和 LeanChatExample 项目都依赖于它。可通过以下方式安装，
 ```
-    pod 'LeanChatLib'
+    pod 'LeanChatLib', '~> 0.1.5'
 ```
 
 ## 如何三步加入IM
@@ -44,8 +44,8 @@ LeanChat 已经在 App Store 上架，可前往 https://itunes.apple.com/gb/app/
 
 应用启动后，初始化，以及配置 IM User
 ```objc
-   [AVOSCloud setApplicationId: YourAppID clientKey: YourAppKey];
-   [CDIM sharedInstance].userDelegate=[[CDUserFactory alloc] init];   
+    [AVOSCloud setApplicationId:@"YourAppId" clientKey:@"YourAppKey"];
+    [CDChatManager manager].userDelegate = [[CDUserFactory alloc] init];
 ```
 
 配置一个 UserFactory，遵守 CDUserDelegate协议即可。
@@ -98,23 +98,24 @@ CDUserModel，
 
 登录时调用，
 ```objc
-        CDIM* im=[CDIM sharedInstance];
-        [im openWithClientId:selfId callback:^(BOOL succeeded, NSError *error) {
-            if(error){
-                DLog(@"%@",error);
-            }else{
-                [self performSegueWithIdentifier:@"goMain" sender:sender];
+        [[CDChatManager manager] openWithClientId:selfId callback: ^(BOOL succeeded, NSError *error) {
+            if (error) {
+                DLog(@"%@", error);
+            }
+            else {
+               //go Main Controller
             }
         }];
 ```
 
 和某人聊天，
 ```objc
-        [[CDIM sharedInstance] fetchConvWithOtherId:otherId callback:^(AVIMConversation *conversation, NSError *error) {
-            if(error){
-                DLog(@"%@",error);
-            }else{
-                LCEChatRoomVC* chatRoomVC=[[LCEChatRoomVC alloc] initWithConv:conversation];
+        [[CDChatManager manager] fetchConvWithOtherId : otherId callback : ^(AVIMConversation *conversation, NSError *error) {
+            if (error) {
+                DLog(@"%@", error);
+            }
+            else {
+                LCEChatRoomVC *chatRoomVC = [[LCEChatRoomVC alloc] initWithConv:conversation];
                 [weakSelf.navigationController pushViewController:chatRoomVC animated:YES];
             }
         }];
@@ -122,16 +123,16 @@ CDUserModel，
 
 和多人群聊，
 ```objc
-        CDIM* im=[CDIM sharedInstance];
-        NSMutableArray* memberIds=[NSMutableArray array];
+        NSMutableArray *memberIds = [NSMutableArray array];
         [memberIds addObject:groupId1];
         [memberIds addObject:groupId2];
-        [memberIds addObject:im.selfId];
-        [im fetchConvWithMembers:memberIds callback:^(AVIMConversation *conversation, NSError *error) {
-            if(error){
-                DLog(@"%@",error);
-            }else{
-                LCEChatRoomVC* chatRoomVC=[[LCEChatRoomVC alloc] initWithConv:conversation];
+        [memberIds addObject:[CDChatManager manager].selfId];
+        [[CDChatManager manager] fetchConvWithMembers:memberIds callback: ^(AVIMConversation *conversation, NSError *error) {
+            if (error) {
+                DLog(@"%@", error);
+            }
+            else {
+                LCEChatRoomVC *chatRoomVC = [[LCEChatRoomVC alloc] initWithConv:conversation];
                 [weakSelf.navigationController pushViewController:chatRoomVC animated:YES];
             }
         }];
@@ -139,8 +140,8 @@ CDUserModel，
 
 注销时，
 ```objc
-    [[CDIM sharedInstance] closeWithCallback:^(BOOL succeeded, NSError *error) {
-        DLog(@"%@",error);
+    [[CDChatManager manager] closeWithCallback: ^(BOOL succeeded, NSError *error) {
+        
     }];
 ```
 

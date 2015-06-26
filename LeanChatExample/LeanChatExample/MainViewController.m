@@ -54,12 +54,11 @@
     NSString *groupId2 = self.groupId2TextField.text;
     if (groupId1.length > 0 && groupId2.length > 0) {
         WEAKSELF
-        CDChatManager *im = [CDChatManager manager];
         NSMutableArray *memberIds = [NSMutableArray array];
         [memberIds addObject:groupId1];
         [memberIds addObject:groupId2];
-        [memberIds addObject:im.selfId];
-        [im fetchConvWithMembers:memberIds callback: ^(AVIMConversation *conversation, NSError *error) {
+        [memberIds addObject:[CDChatManager manager].selfId];
+        [[CDChatManager manager] fetchConvWithMembers:memberIds callback: ^(AVIMConversation *conversation, NSError *error) {
             if (error) {
                 DLog(@"%@", error);
             }

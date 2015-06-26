@@ -28,6 +28,7 @@
 
 #pragma mark - CDUserDelegate
 
+// cache users that will be use in getUserById
 - (void)cacheUserByIds:(NSSet *)userIds block:(AVBooleanResultBlock)block {
     block(YES, nil); // don't forget it
 }

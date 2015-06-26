@@ -25,8 +25,7 @@
 - (IBAction)login:(id)sender {
     NSString *selfId = self.selfIdTextField.text;
     if (selfId.length > 0) {
-        CDChatManager *im = [CDChatManager manager];
-        [im openWithClientId:selfId callback: ^(BOOL succeeded, NSError *error) {
+        [[CDChatManager manager] openWithClientId:selfId callback: ^(BOOL succeeded, NSError *error) {
             if (error) {
                 DLog(@"%@", error);
             }
