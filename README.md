@@ -26,10 +26,6 @@ LeanChat 已经在 App Store 上架，可前往 https://itunes.apple.com/gb/app/
 * LeanChatExample，leanchatlib 最简单的使用例子。展示了如何用少量代码调用 LeanChatLib 来加入聊天，无论是用 LeanCloud 的用户系统还是自己的用户系统。
 * LeanChat-ios，为 LeanChat 整个应用。它包含好友管理、群组管理、地理消息、附近的人、个人页面、登录注册的功能，完全基于 LeanCloud 的存储和通信功能。它也是对 LeanChatLib 更复杂的应用。
 
-## 分支
-* master 分支，使用了 LeanCloud 的实时通信服务2.0 （推荐）
-* v1 分支，使用了 LeanCloud 的实时通信服务 1.0
-
 ## LeanChatLib 介绍
 
 封装了最近对话页面和聊天页面，LeanChat 和 LeanChatExample 项目都依赖于它。可通过以下方式安装，
@@ -39,7 +35,7 @@ LeanChat 已经在 App Store 上架，可前往 https://itunes.apple.com/gb/app/
 
 ## 如何三步加入IM
 1. LeanCloud 中创建应用       
-2. 加入 LeanChatLib 的 pod 依赖
+2. 加入 LeanChatLib 的 pod 依赖，或拖动 LeanChatLib 的代码文件进项目，改 UI 和调整功能方便些。
 3. 依次在合适的地方加入以下代码，
 
 应用启动后，初始化，以及配置 IM User
@@ -157,13 +153,11 @@ CDUserModel，
 
 [实时通信服务开发指南](https://leancloud.cn/docs/realtime_v2.html)
 
-[Wiki](https://github.com/leancloud/leanchat-android/wiki)
-
 [更多介绍](https://github.com/leancloud/leanchat-android)
 
 ## 技术支持
 
-关于此项目的问题，可提 [issue](https://github.com/leancloud/leanchat-ios/issues)。
+关于此项目的问题，欢迎提 [issues](https://github.com/leancloud/leanchat-ios/issues)，或者[搜索工单](https://ticket.leancloud.cn/search?content=LeanChat) 。
 
 ## 致谢
 
