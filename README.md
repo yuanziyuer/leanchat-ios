@@ -30,7 +30,7 @@ LeanChat 已经在 App Store 上架，可前往 https://itunes.apple.com/gb/app/
 
 封装了最近对话页面和聊天页面，LeanChat 和 LeanChatExample 项目都依赖于它。可通过以下方式安装，
 ```
-    pod 'LeanChatLib', '~> 0.1.5'
+    pod 'LeanChatLib', '0.1.6'
 ```
 
 ## 如何三步加入IM
