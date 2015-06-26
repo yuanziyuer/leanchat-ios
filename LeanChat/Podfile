@@ -5,21 +5,21 @@ workspace 'LeanChat.xcworkspace'
 
 target 'LeanChatLib' do
     xcodeproj '../LeanChatLib/LeanChatLib.xcodeproj'
-    pod 'AVOSCloud', '~> 3.1.2.4'
-    pod 'AVOSCloudIM', '~> 3.1.2.4'
-    pod 'LZConversationCell', '~> 0.0.1'
-    pod 'DateTools' , '~> 1.5.0'
+    pod 'AVOSCloud', '3.1.2.4'
+    pod 'AVOSCloudIM', '3.1.2.4'
+    pod 'LZConversationCell', '0.0.1'
+    pod 'DateTools' , '1.5.0'
 end
 
 target 'LeanChat' do
     xcodeproj 'LeanChat.xcodeproj'
-    pod 'AVOSCloud', '~> 3.1.2.4'
-    pod 'AVOSCloudIM', '~> 3.1.2.4'
+    pod 'AVOSCloud', '3.1.2.4'
+    pod 'AVOSCloudIM', '3.1.2.4'
     pod 'LeanChatLib' , :path => '../'
-    pod 'MBProgressHUD', '~> 0.9.1'
-    pod 'LZAlertViewHelper' , '~> 0.0.2'
-    pod 'JSBadgeView', '~> 1.4.1'
-    pod 'LZMembersCell', '~> 0.0.2'
+    pod 'MBProgressHUD', '0.9.1'
+    pod 'LZAlertViewHelper' , '0.0.2'
+    pod 'JSBadgeView', '1.4.1'
+    pod 'LZMembersCell', '0.0.2'
 end
 
 target 'LeanChatExample' do
