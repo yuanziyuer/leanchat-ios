@@ -3,7 +3,7 @@
 //  LeanChat
 //
 //  Created by lzw on 14/12/3.
-//  Copyright (c) 2014年 AVOS. All rights reserved.
+//  Copyright (c) 2014年 LeanCloud. All rights reserved.
 //
 
 #import "CDCacheManager.h"

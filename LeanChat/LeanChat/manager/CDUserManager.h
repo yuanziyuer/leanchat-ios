@@ -1,9 +1,9 @@
 //
 //  UserService.h
-//  AVOSChatDemo
+//  LeanChat
 //
 //  Created by lzw on 14-10-22.
-//  Copyright (c) 2014年 AVOS. All rights reserved.
+//  Copyright (c) 2014年 LeanCloud. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

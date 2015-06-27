@@ -3,7 +3,7 @@
 //  LeanChat
 //
 //  Created by lzw on 15/2/5.
-//  Copyright (c) 2015年 AVOS. All rights reserved.
+//  Copyright (c) 2015年 LeanCloud. All rights reserved.
 //
 
 #import "CDConvNameVC.h"
@@ -34,7 +34,7 @@
     self.title = @"群聊名称";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveName:)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(backPressed)];
-    self.nameTextField.text = _conv.displayName;
+    self.nameTextField.text = self.conv.displayName;
 }
 
 - (void)backPressed {
@@ -42,10 +42,12 @@
 }
 
 - (void)saveName:(id)sender {
-    if (_nameTextField.text.length > 0) {
-        AVIMConversationUpdateBuilder *updateBuilder = [_conv newUpdateBuilder];
-        [updateBuilder setName:_nameTextField.text];
-        [_conv update:[updateBuilder dictionary] callback: ^(BOOL succeeded, NSError *error) {
+    if (self.nameTextField.text.length > 0) {
+        [self showProgress];
+        AVIMConversationUpdateBuilder *updateBuilder = [self.conv newUpdateBuilder];
+        [updateBuilder setName:self.nameTextField.text];
+        [self.conv update:[updateBuilder dictionary] callback: ^(BOOL succeeded, NSError *error) {
+            [self hideProgress];
             if ([self filterError:error]) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationConversationUpdated object:nil];
                 [self backPressed];
@@ -70,7 +72,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return _tableCell;
+    return self.tableCell;
 }
 
 @end

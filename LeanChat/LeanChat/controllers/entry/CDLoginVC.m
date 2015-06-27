@@ -1,9 +1,9 @@
 //
 //  CDLoginController.m
-//  AVOSChatDemo
+//  LeanChat
 //
 //  Created by Qihe Bian on 7/24/14.
-//  Copyright (c) 2014 AVOS. All rights reserved.
+//  Copyright (c) 2014 LeanCloud. All rights reserved.
 //
 
 #import "CDLoginVC.h"
@@ -11,6 +11,7 @@
 #import "CDAppDelegate.h"
 #import "CDEntryBottomButton.h"
 #import "CDEntryActionButton.h"
+#import "CDBaseNavC.h"
 
 @interface CDLoginVC () <CDEntryVCDelegate>
 
@@ -89,7 +90,7 @@
 - (void)toRegister:(id)sender {
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     CDRegisterVC *vc = [[CDRegisterVC alloc] init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    CDBaseNavC *nav = [[CDBaseNavC alloc] initWithRootViewController:vc];
     [self presentViewController:nav animated:YES completion:nil];
 }
 

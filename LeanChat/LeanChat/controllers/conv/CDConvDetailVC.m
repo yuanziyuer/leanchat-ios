@@ -1,18 +1,19 @@
 //
 //  CDGroupDetailController.m
-//  AVOSChatDemo
+//  LeanChat
 //
 //  Created by lzw on 14/11/6.
-//  Copyright (c) 2014年 AVOS. All rights reserved.
+//  Copyright (c) 2014年 LeanCloud. All rights reserved.
 //
 
+#import "CDBaseNavC.h"
 #import "CDConvDetailVC.h"
 #import "CDAddMemberVC.h"
 #import "CDUserInfoVC.h"
-#import "CDBaseNavC.h"
 #import "CDConvNameVC.h"
-#import <LZMembersCell/LZMembersCell.h>
 #import "CDConvReportAbuseVC.h"
+#import <LZMembersCell/LZMembersCell.h>
+
 #import "CDCacheManager.h"
 #import "CDUserManager.h"
 #import "LZAlertViewHelper.h"
@@ -24,6 +25,8 @@ static NSString *kCDConvDetailVCDetailKey = @"detail";
 static NSString *kCDConvDetailVCSelectorKey = @"selector";
 static NSString *kCDConvDetailVCSwitchKey = @"switch";
 
+static NSString *const reuseIdentifier = @"Cell";
+
 @interface CDConvDetailVC () <UIGestureRecognizerDelegate, UITableViewDelegate, UITableViewDataSource, LZMembersCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -31,8 +34,6 @@ static NSString *kCDConvDetailVCSwitchKey = @"switch";
 @property (nonatomic, strong) LZMembersCell *membersCell;
 
 @property (nonatomic, assign) BOOL own;
-
-@property (nonatomic, assign) CDConvType type;
 
 @property (nonatomic, strong) NSArray *displayMembers;
 
@@ -46,12 +47,9 @@ static NSString *kCDConvDetailVCSwitchKey = @"switch";
 
 @implementation CDConvDetailVC
 
-static NSString *const reuseIdentifier = @"Cell";
-
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _type = self.conv.type;
         self.tableViewStyle = UITableViewStyleGrouped;
     }
     return self;
@@ -65,28 +63,24 @@ static NSString *const reuseIdentifier = @"Cell";
     [self refresh];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-
 - (void)setupDatasource {
-    NSDictionary *dict1 = @{ kCDConvDetailVCTitleKey:@"清空聊天记录",
-                             kCDConvDetailVCSelectorKey:NSStringFromSelector(@selector(deleteMsgs)) };
+//    NSDictionary *dict1 = @{ kCDConvDetailVCTitleKey:@"清空聊天记录",
+//                             kCDConvDetailVCSelectorKey:NSStringFromSelector(@selector(deleteMsgs)) };
     NSDictionary *dict2 = @{ kCDConvDetailVCTitleKey:@"举报",
                              kCDConvDetailVCDisclosureKey:@YES,
                              kCDConvDetailVCSelectorKey:NSStringFromSelector(@selector(goReportAbuse)) };
     NSDictionary *dict3 = @{ kCDConvDetailVCTitleKey:@"消息免打扰", kCDConvDetailVCSwitchKey:@YES };
-    if (_type == CDConvTypeGroup) {
+    if (self.conv.type == CDConvTypeGroup) {
         self.dataSource = [@[@{ kCDConvDetailVCTitleKey:@"群聊名称",
                                 kCDConvDetailVCDisclosureKey:@YES,
                                 kCDConvDetailVCDetailKey:self.conv.displayName,
                                 kCDConvDetailVCSelectorKey:NSStringFromSelector(@selector(goChangeName)) },
-                             dict3, dict1, dict2,
+                             dict3, dict2,
                              @{ kCDConvDetailVCTitleKey:@"删除并退出",
                                 kCDConvDetailVCSelectorKey:NSStringFromSelector(@selector(quitConv)) }] mutableCopy];
     }
     else {
-        self.dataSource = [@[dict3, dict1, dict2] mutableCopy];
+        self.dataSource = [@[dict3, dict2] mutableCopy];
     }
 }
 
@@ -122,21 +116,19 @@ static NSString *const reuseIdentifier = @"Cell";
 }
 
 - (void)refresh {
-    AVIMConversation *conv = [self conv];
-    NSSet *userIds = [NSSet setWithArray:conv.members];
-    WEAKSELF
-    NSString *curUserId = [AVUser currentUser].objectId;
-    _own = [conv.creator isEqualToString:curUserId];
+    NSSet *userIds = [NSSet setWithArray:self.conv.members];
+    self.own = [self.conv.creator isEqualToString:[AVUser currentUser].objectId];
     self.title = [NSString stringWithFormat:@"详情(%ld人)", (long)self.conv.members.count];
+    [self showProgress];
     [[CDCacheManager manager] cacheUsersWithIds:userIds callback: ^(BOOL succeeded, NSError *error) {
+        [self hideProgress];
         if ([self filterError:error]) {
             NSMutableArray *displayMembers = [NSMutableArray array];
             for (NSString *userId in userIds) {
                 [displayMembers addObject:[self memberFromUser:[[CDCacheManager manager] lookupUser:userId]]];
             }
-            weakSelf.displayMembers = displayMembers;
-            
-            [weakSelf.tableView reloadData];
+            self.displayMembers = displayMembers;
+            [self.tableView reloadData];
         }
     }];
 }
@@ -235,8 +227,7 @@ static NSString *const reuseIdentifier = @"Cell";
 
 - (void)didSelectMember:(LZMember *)member {
     AVUser *user = [[CDCacheManager manager] lookupUser:member.memberId];
-    NSString *curUserId = [AVUser currentUser].objectId;
-    if ([curUserId isEqualToString:user.objectId] == YES) {
+    if ([[AVUser currentUser].objectId isEqualToString:user.objectId] == YES) {
         return;
     }
     CDUserInfoVC *userInfoVC = [[CDUserInfoVC alloc] initWithUser:user];
@@ -300,7 +291,7 @@ static NSString *const reuseIdentifier = @"Cell";
 - (void)addMember {
     CDAddMemberVC *controller = [[CDAddMemberVC alloc] init];
     controller.groupDetailVC = self;
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
+    CDBaseNavC *nav = [[CDBaseNavC alloc] initWithRootViewController:controller];
     [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
 

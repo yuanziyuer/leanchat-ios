@@ -1,9 +1,9 @@
 //
 //  Utils.m
-//  AVOSChatDemo
+//  LeanChat
 //
 //  Created by lzw on 14-10-24.
-//  Copyright (c) 2014年 AVOS. All rights reserved.
+//  Copyright (c) 2014年 LeanCloud. All rights reserved.
 //
 
 #import "CDUtils.h"

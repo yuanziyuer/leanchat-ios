@@ -1,13 +1,14 @@
 //
 //  CDGroupAddMemberController.m
-//  AVOSChatDemo
+//  LeanChat
 //
 //  Created by lzw on 14/11/7.
-//  Copyright (c) 2014年 AVOS. All rights reserved.
+//  Copyright (c) 2014年 LeanCloud. All rights reserved.
 //
 
 #import "CDAddMemberVC.h"
 #import "CDImageLabelTableCell.h"
+
 #import "CDUserManager.h"
 #import "CDCacheManager.h"
 #import "CDUtils.h"
@@ -53,17 +54,16 @@ static NSString *reuseIdentifier = @"Cell";
 
 - (void)refresh {
     WEAKSELF
-    [[CDUserManager manager] findFriendsWithBlock: ^(NSArray *friends, NSError *error) {
+    [[CDUserManager manager] findFriendsWithBlock:^(NSArray *friends, NSError *error) {
         if ([self filterError:error]) {
-            [_potentialIds removeAllObjects];
+            [self.potentialIds removeAllObjects];
             for (AVUser *user in friends) {
                 if ([[[CDCacheManager manager] getCurConv].members containsObject:user.objectId] == NO) {
-                    [_potentialIds addObject:user.objectId];
+                    [self.potentialIds addObject:user.objectId];
                 }
             }
-            NSInteger count = _potentialIds.count;
-            for (int i = 0; i < count; i++) {
-                [_selected addObject:[NSNumber numberWithBool:NO]];
+            for (int i = 0; i < self.potentialIds.count; i++) {
+                [self.selected addObject:[NSNumber numberWithBool:NO]];
             }
             [weakSelf.tableView reloadData];
         }
@@ -76,9 +76,9 @@ static NSString *reuseIdentifier = @"Cell";
 
 - (void)invite {
     NSMutableArray *inviteIds = [[NSMutableArray alloc] init];
-    for (int i = 0; i < _selected.count; i++) {
-        if ([_selected[i] boolValue]) {
-            [inviteIds addObject:[_potentialIds objectAtIndex:i]];
+    for (int i = 0; i < self.selected.count; i++) {
+        if ([self.selected[i] boolValue]) {
+            [inviteIds addObject:[self.potentialIds objectAtIndex:i]];
         }
     }
     if (inviteIds.count == 0) {
@@ -102,11 +102,9 @@ static NSString *reuseIdentifier = @"Cell";
     else {
         [self showProgress];
         [conv addMembersWithClientIds:inviteIds callback: ^(BOOL succeeded, NSError *error) {
-            if (error) {
-                [self hideProgress];
-                [self alertError:error];
-            }
-            else {
+            [self hideProgress];
+            if ([self filterError:error]) {
+                [self showProgress];
                 [[CDCacheManager manager] refreshCurConv: ^(BOOL succeeded, NSError *error) {
                     [self hideProgress];
                     if ([self filterError:error]) {
@@ -130,7 +128,7 @@ static NSString *reuseIdentifier = @"Cell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _potentialIds.count;
+    return self.potentialIds.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -138,11 +136,11 @@ static NSString *reuseIdentifier = @"Cell";
     if (cell == nil) {
         cell = [[CDImageLabelTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     }
-    NSString *userId = [_potentialIds objectAtIndex:indexPath.row];
+    NSString *userId = [self.potentialIds objectAtIndex:indexPath.row];
     AVUser *user = [[CDCacheManager manager] lookupUser:userId];
     [[CDUserManager manager] displayAvatarOfUser:user avatarView:cell.myImageView];
     cell.myLabel.text = user.username;
-    if ([_selected[indexPath.row] boolValue]) {
+    if ([self.selected[indexPath.row] boolValue]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
     else {
@@ -154,7 +152,7 @@ static NSString *reuseIdentifier = @"Cell";
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger pos = indexPath.row;
-    _selected[pos] = [NSNumber numberWithBool:![_selected[pos] boolValue]];
+    self.selected[pos] = [NSNumber numberWithBool:![self.selected[pos] boolValue]];
     [self.tableView reloadData];
 }
 

@@ -1,9 +1,9 @@
 //
 //  CDBaseNavigationController.m
-//  AVOSChatDemo
+//  LeanChat
 //
 //  Created by Qihe Bian on 7/24/14.
-//  Copyright (c) 2014 AVOS. All rights reserved.
+//  Copyright (c) 2014 LeanCloud. All rights reserved.
 //
 
 #import "CDBaseNavC.h"
@@ -16,6 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationBar.barStyle = UIBarStyleBlack;
 }
 
 - (void)didReceiveMemoryWarning {

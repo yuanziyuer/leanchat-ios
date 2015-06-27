@@ -3,11 +3,11 @@
 //  LeanChat
 //
 //  Created by lzw on 15/2/5.
-//  Copyright (c) 2015年 AVOS. All rights reserved.
+//  Copyright (c) 2015年 LeanCloud. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "CDCommon.h"
+#import "CDBaseTableVC.h"
 #import "CDConvDetailVC.h"
 
 @interface CDConvNameVC : CDBaseTableVC

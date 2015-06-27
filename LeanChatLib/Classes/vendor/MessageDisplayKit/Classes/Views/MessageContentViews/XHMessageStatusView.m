@@ -3,7 +3,7 @@
 //  LeanChat
 //
 //  Created by lzw on 14/12/30.
-//  Copyright (c) 2014年 AVOS. All rights reserved.
+//  Copyright (c) 2014年 LeanCloud. All rights reserved.
 //
 
 #import "XHMessageStatusView.h"

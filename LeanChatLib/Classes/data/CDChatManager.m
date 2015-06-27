@@ -3,7 +3,7 @@
 //  LeanChat
 //
 //  Created by lzw on 15/1/21.
-//  Copyright (c) 2015年 AVOS. All rights reserved.
+//  Copyright (c) 2015年 LeanCloud. All rights reserved.
 //
 
 #import "CDChatManager.h"
@@ -333,13 +333,40 @@ static CDChatManager *instance;
 
 #pragma mark - conv cache
 
-- (AVIMConversation *)lookupConvById:(NSString *)convid {
-    return [self.cachedConvs valueForKey:convid];
+- (NSString *)localKeyWithConvid:(NSString *)convid {
+    return [NSString stringWithFormat:@"conv_%@", convid];
 }
 
-- (void)registerConvs:(NSArray *)convs {
-    for (AVIMConversation *conv in convs) {
-        [self.cachedConvs setValue:conv forKey:conv.conversationId];
+- (NSString *)convidFromLocalKey:(NSString *)localKey {
+    return [localKey substringFromIndex:5];
+}
+
+- (AVIMConversation *)getConversationFromLocalByConvid:(NSString *)convid{
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:[self localKeyWithConvid:convid]];
+    if (data != nil) {
+        AVIMKeyedConversation *keyedConversation = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        return [[AVIMClient defaultClient] conversationWithKeyedConversation:keyedConversation];
+    } else {
+        return nil;
+    }
+}
+
+- (void)saveConversationsToLocal:(NSArray *)conversations {
+    for (AVIMConversation *conversation in conversations) {
+        AVIMKeyedConversation *keydConversation = [conversation keyedConversation];
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:keydConversation];
+        [[NSUserDefaults standardUserDefaults] setObject:data forKey:[self localKeyWithConvid:conversation.conversationId]];
+    }
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (AVIMConversation *)lookupConvById:(NSString *)convid {
+    AVIMConversation *conversation = [[AVIMClient defaultClient] conversationForId:convid];
+    if (conversation.members == nil || conversation.members.count == 0) {
+        // not memory cache, then found in file cache
+        return [self getConversationFromLocalByConvid:convid];
+    } else {
+        return conversation;
     }
 }
 
@@ -355,7 +382,7 @@ static CDChatManager *instance;
             callback(nil, error);
         }
         else {
-            [self registerConvs:objects];
+            [self saveConversationsToLocal:objects];
             callback(objects, error);
         }
     }];

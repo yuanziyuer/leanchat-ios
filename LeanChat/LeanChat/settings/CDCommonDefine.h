@@ -1,13 +1,13 @@
 //
 //  CDCommonDefine.h
-//  AVOSChatDemo
+//  LeanChat
 //
 //  Created by Qihe Bian on 7/24/14.
-//  Copyright (c) 2014 AVOS. All rights reserved.
+//  Copyright (c) 2014 LeanCloud. All rights reserved.
 //
 
-#ifndef AVOSChatDemo_CDCommonDefine_h
-#define AVOSChatDemo_CDCommonDefine_h
+#ifndef LeanChat_CDCommonDefine_h
+#define LeanChat_CDCommonDefine_h
 
 #define USE_US 0
 #if !USE_US

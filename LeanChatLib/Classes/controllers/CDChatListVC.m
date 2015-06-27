@@ -1,9 +1,9 @@
 //
 //  CDChatListController.m
-//  AVOSChatDemo
+//  LeanChat
 //
 //  Created by Qihe Bian on 7/25/14.
-//  Copyright (c) 2014 AVOS. All rights reserved.
+//  Copyright (c) 2014 LeanCloud. All rights reserved.
 //
 
 #import "CDChatListVC.h"
