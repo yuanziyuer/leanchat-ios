@@ -20,6 +20,7 @@
 #import "CDUtils.h"
 #import "CDAddRequest.h"
 #import "CDIMService.h"
+#import "LZPushManager.h"
 
 @implementation CDAppDelegate
 
@@ -55,27 +56,13 @@
         [self toLogin];
     }
     
-    [self registerForPushWithApplication:application];
+    [[LZPushManager manager] registerForRemoteNotification];
     
 #ifdef DEBUG
     [AVAnalytics setAnalyticsEnabled:NO];
     [AVOSCloud setAllLogsEnabled:YES];
 #endif
     return YES;
-}
-
-- (void)registerForPushWithApplication:(UIApplication *)application {
-    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)] == NO) {
-        [application registerForRemoteNotificationTypes:
-         UIRemoteNotificationTypeBadge |
-         UIRemoteNotificationTypeAlert |
-         UIRemoteNotificationTypeSound];
-    }
-    else {
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
-        [application registerUserNotificationSettings:settings];
-        [application registerForRemoteNotifications];
-    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -88,33 +75,14 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    NSInteger num = application.applicationIconBadgeNumber;
-    if (num != 0) {
-        AVInstallation *currentInstallation = [AVInstallation currentInstallation];
-        [currentInstallation setBadge:0];
-        [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            DLog(@"%@", error ? error : @"succeed");
-        }];
-        application.applicationIconBadgeNumber = 0;
-    }
-    [application cancelAllLocalNotifications];
+    [[LZPushManager manager] cleanBadge];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
 }
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    AVInstallation *currentInstallation = [AVInstallation currentInstallation];
-    if (currentInstallation.deviceToken == nil) {
-        //first time register
-        [currentInstallation setDeviceTokenFromData:deviceToken];
-        [currentInstallation saveInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
-            DLog(@"%@", error);
-        }];
-    }
-    else {
-        DLog(@"have registered");
-    }
+    [[LZPushManager manager] saveInstallationWithDeviceToken:deviceToken];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
@@ -123,12 +91,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     if (application.applicationState == UIApplicationStateActive) {
-        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        localNotification.userInfo = userInfo;
-        localNotification.soundName = UILocalNotificationDefaultSoundName;
-        localNotification.alertBody = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
-        localNotification.fireDate = [NSDate date];
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+        // 应用在前台时收到推送，只能来自于普通的推送，而非离线消息推送
     }
     else {
         [AVAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];

@@ -88,6 +88,7 @@ static CDChatManager *instance;
     AVIMConversationQuery *q = [[AVIMClient defaultClient] conversationQuery];
     [q whereKey:AVIMAttr(CONV_TYPE) equalTo:@(type)];
     [q whereKey:kAVIMKeyMember containsAllObjectsInArray:members];
+    [q whereKey:kAVIMKeyMember sizeEqualTo:members.count];
     [q orderByDescending:@"createdAt"];
     q.limit = 1;
     [q findConversationsWithCallback: ^(NSArray *objects, NSError *error) {

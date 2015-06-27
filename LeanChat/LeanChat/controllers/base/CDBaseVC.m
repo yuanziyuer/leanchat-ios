@@ -80,6 +80,16 @@
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
+
+-(void)showHUDText:(NSString*)text{
+    MBProgressHUD* hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText=text;
+    hud.margin=10.f;
+    hud.removeFromSuperViewOnHide=YES;
+    hud.mode=MBProgressHUDModeText;
+    [hud hide:YES afterDelay:2];
+}
+
 -(void)runInMainQueue:(void (^)())queue{
     dispatch_async(dispatch_get_main_queue(), queue);
 }
@@ -90,15 +100,6 @@
 
 -(void)runAfterSecs:(float)secs block:(void (^)())block{
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, secs*NSEC_PER_SEC), dispatch_get_main_queue(), block);
-}
-
--(void)showHUDText:(NSString*)text{
-    MBProgressHUD* hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText=text;
-    hud.margin=10.f;
-    hud.removeFromSuperViewOnHide=YES;
-    hud.mode=MBProgressHUDModeText;
-    [hud hide:YES afterDelay:2];
 }
 
 @end

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1FAD25EBE59E07248BD0F7D5 /* libPods-LeanChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF79D434DB9DF2EFE3DD51B2 /* libPods-LeanChat.a */; };
+		700E6A151B3D2B4E00675021 /* LZPushManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 700E6A141B3D2B4E00675021 /* LZPushManager.m */; };
 		7067800B1B2363F3002F1413 /* LZPushSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7067800A1B2363F3002F1413 /* LZPushSettingViewController.m */; };
 		7073FC1D1B147048006F2692 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC1C1B147048006F2692 /* main.m */; };
 		7073FC281B147048006F2692 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7073FC271B147048006F2692 /* Images.xcassets */; };
@@ -99,6 +100,8 @@
 
 /* Begin PBXFileReference section */
 		4A71AD2EA525F79828723CA0 /* Pods-LeanChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-LeanChat/Pods-LeanChat.release.xcconfig"; sourceTree = "<group>"; };
+		700E6A131B3D2B4E00675021 /* LZPushManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZPushManager.h; sourceTree = "<group>"; };
+		700E6A141B3D2B4E00675021 /* LZPushManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZPushManager.m; sourceTree = "<group>"; };
 		706780091B2363F3002F1413 /* LZPushSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZPushSettingViewController.h; sourceTree = "<group>"; };
 		7067800A1B2363F3002F1413 /* LZPushSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZPushSettingViewController.m; sourceTree = "<group>"; };
 		7073FC171B147048006F2692 /* LeanChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeanChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -248,9 +251,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		700E6A121B3D2B4E00675021 /* LZPushManager */ = {
+			isa = PBXGroup;
+			children = (
+				700E6A131B3D2B4E00675021 /* LZPushManager.h */,
+				700E6A141B3D2B4E00675021 /* LZPushManager.m */,
+			);
+			path = LZPushManager;
+			sourceTree = "<group>";
+		};
 		706780071B2363C5002F1413 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				700E6A121B3D2B4E00675021 /* LZPushManager */,
 				706780081B2363F3002F1413 /* LZPushSettingViewController */,
 			);
 			path = vendor;
@@ -746,6 +759,7 @@
 				7073FCBE1B14718C006F2692 /* CDNewFriendVC.m in Sources */,
 				7073FCD51B14718C006F2692 /* CDPopMenuItem.m in Sources */,
 				7073FCCF1B14718C006F2692 /* CDEntryBottomButton.m in Sources */,
+				700E6A151B3D2B4E00675021 /* LZPushManager.m in Sources */,
 				7073FCD01B14718C006F2692 /* CDImageLabelTableCell.m in Sources */,
 				7073FCBF1B14718C006F2692 /* CDProfileVC.m in Sources */,
 				7073FCB51B14718C006F2692 /* CDGroupedConvListVC.m in Sources */,
