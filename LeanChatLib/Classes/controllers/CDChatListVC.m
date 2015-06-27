@@ -49,11 +49,11 @@ static NSString *cellIdentifier = @"ContactCell";
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateStatusView) name:kCDNotificationConnectivityUpdated object:nil];
+    [self updateStatusView];
     // 刷新 unread badge 和新增的对话
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self refresh:nil];
     });
-    [self updateStatusView];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -65,7 +65,7 @@ static NSString *cellIdentifier = @"ContactCell";
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationMessageReceived object:nil];
 }
 
-#pragma mark - Propertys
+#pragma mark - client status view
 
 - (LZStatusView *)clientStatusView {
     if (_clientStatusView == nil) {
@@ -74,20 +74,40 @@ static NSString *cellIdentifier = @"ContactCell";
     return _clientStatusView;
 }
 
+- (void)updateStatusView {
+    if ([CDChatManager manager].connect) {
+        self.tableView.tableHeaderView = nil ;
+    }else {
+        self.tableView.tableHeaderView = self.clientStatusView;
+    }
+}
+
 - (UIRefreshControl *)getRefreshControl {
-    UIRefreshControl *refreshConrol;
-    refreshConrol = [[UIRefreshControl alloc] init];
+    UIRefreshControl *refreshConrol = [[UIRefreshControl alloc] init];
     [refreshConrol addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     return refreshConrol;
 }
 
-#pragma mark - notification
+#pragma mark - refresh
 
 - (void)refresh {
     [self refresh:nil];
 }
 
-#pragma mark
+- (void)refresh:(UIRefreshControl *)refreshControl {
+    [[CDChatManager manager] findRecentConversationsWithBlock:^(NSArray *conversations, NSInteger totalUnreadCount, NSError *error) {
+        [self stopRefreshControl:refreshControl];
+        if ([self filterError:error]) {
+            self.conversations = conversations;
+            [self.tableView reloadData];
+            if ([self.chatListDelegate respondsToSelector:@selector(setBadgeWithTotalUnreadCount:)]) {
+                [self.chatListDelegate setBadgeWithTotalUnreadCount:totalUnreadCount];
+            }
+        }
+    }];
+}
+
+#pragma mark - utils
 
 - (void)stopRefreshControl:(UIRefreshControl *)refreshControl {
     if (refreshControl != nil && [[refreshControl class] isSubclassOfClass:[UIRefreshControl class]]) {
@@ -105,49 +125,10 @@ static NSString *cellIdentifier = @"ContactCell";
     return YES;
 }
 
-- (void)refresh:(UIRefreshControl *)refreshControl {
-    [[CDChatManager manager] findRecentConversationsWithBlock:^(NSArray *conversations, NSInteger totalUnreadCount, NSError *error) {
-        [self stopRefreshControl:refreshControl];
-        if ([self filterError:error]) {
-            self.conversations = conversations;
-            [self.tableView reloadData];
-            if ([self.chatListDelegate respondsToSelector:@selector(setBadgeWithTotalUnreadCount:)]) {
-                [self.chatListDelegate setBadgeWithTotalUnreadCount:totalUnreadCount];
-            }
-        }
-    }];
-}
-
 #pragma mark - table view
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.conversations count];
-}
-
-- (NSString *)getMessageTitle:(AVIMTypedMessage *)msg {
-    NSString *title;
-    AVIMLocationMessage *locationMsg;
-    switch (msg.mediaType) {
-        case kAVIMMessageMediaTypeText:
-            title = [CDEmotionUtils emojiStringFromString:msg.text];
-            break;
-            
-        case kAVIMMessageMediaTypeAudio:
-            title = @"声音";
-            break;
-            
-        case kAVIMMessageMediaTypeImage:
-            title = @"图片";
-            break;
-            
-        case kAVIMMessageMediaTypeLocation:
-            locationMsg = (AVIMLocationMessage *)msg;
-            title = locationMsg.text;
-            break;
-        default:
-            break;
-    }
-    return title;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -197,14 +178,34 @@ static NSString *cellIdentifier = @"ContactCell";
     return [LZConversationCell heightOfCell];
 }
 
-#pragma mark - connect
+#pragma mark - message 
 
-- (void)updateStatusView {
-    if ([CDChatManager manager].connect) {
-        self.tableView.tableHeaderView = nil ;
-    }else {
-        self.tableView.tableHeaderView = self.clientStatusView;
+
+- (NSString *)getMessageTitle:(AVIMTypedMessage *)msg {
+    NSString *title;
+    AVIMLocationMessage *locationMsg;
+    switch (msg.mediaType) {
+        case kAVIMMessageMediaTypeText:
+            title = [CDEmotionUtils emojiStringFromString:msg.text];
+            break;
+            
+        case kAVIMMessageMediaTypeAudio:
+            title = @"声音";
+            break;
+            
+        case kAVIMMessageMediaTypeImage:
+            title = @"图片";
+            break;
+            
+        case kAVIMMessageMediaTypeLocation:
+            locationMsg = (AVIMLocationMessage *)msg;
+            title = locationMsg.text;
+            break;
+        default:
+            break;
     }
+    return title;
 }
+
 
 @end

@@ -554,7 +554,7 @@ static NSInteger const kOnePageSize = 20;
     return xhMessage;
 }
 
-- (NSArray *)getXHMessages:(NSArray *)msgs {
+- (NSMutableArray *)getXHMessages:(NSArray *)msgs {
     NSMutableArray *messages = [[NSMutableArray alloc] init];
     for (AVIMTypedMessage *msg in msgs) {
         XHMessage *xhMsg = [self getXHMessageByMsg:msg];
@@ -586,7 +586,7 @@ static NSInteger const kOnePageSize = 20;
         self.isLoadingMsg = YES;
         [self queryAndCacheMessagesWithTimestamp:0 block:^(NSArray *msgs, NSError *error) {
             if ([self filterError:error]) {
-                NSMutableArray *xhMsgs = [[self getXHMessages:msgs] mutableCopy];
+                NSMutableArray *xhMsgs = [self getXHMessages:msgs];
                 self.messages = xhMsgs;
                 _msgs = msgs;
                 [self.messageTableView reloadData];
