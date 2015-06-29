@@ -178,8 +178,7 @@ static NSString *cellIdentifier = @"ContactCell";
     return [LZConversationCell heightOfCell];
 }
 
-#pragma mark - message 
-
+#pragma mark - message
 
 - (NSString *)getMessageTitle:(AVIMTypedMessage *)msg {
     NSString *title;
