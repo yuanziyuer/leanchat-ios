@@ -157,6 +157,19 @@ static CDChatManager *instance;
     }
 }
 
+#pragma mark - utils
+
+- (void)sendWelcomeMessageToOther:(NSString *)other text:(NSString *)text block:(AVBooleanResultBlock)block {
+    [self fetchConvWithOtherId:other callback:^(AVIMConversation *conversation, NSError *error) {
+        if (error) {
+            block(NO, error);
+        } else {
+            AVIMTextMessage *textMessage = [AVIMTextMessage messageWithText:text attributes:nil];
+            [conversation sendMessage:textMessage callback:block];
+        }
+    }];
+}
+
 #pragma mark - query msgs
 
 - (void)queryTypedMessagesWithConversation:(AVIMConversation *)conversation timestamp:(int64_t)timestamp limit:(NSInteger)limit block:(AVIMArrayResultBlock)block {

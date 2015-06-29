@@ -12,6 +12,7 @@
 #import "CDLabelButtonTableCell.h"
 #import "CDAddRequest.h"
 #import "CDUserManager.h"
+#import <LeanChatLib/CDChatManager.h>
 
 @interface CDNewFriendVC ()
 
@@ -92,9 +93,13 @@
     [[CDUserManager manager] agreeAddRequest : addRequest callback : ^(BOOL succeeded, NSError *error) {
         [self hideProgress];
         if ([self filterError:error]) {
-            [self alert:@"添加成功a"];
-            [self refresh:nil];
-            [_friendListVC refresh];
+            [self showProgress];
+            [[CDChatManager manager] sendWelcomeMessageToOther:addRequest.fromUser.objectId text:@"我们已经是好友了，来聊天吧" block:^(BOOL succeeded, NSError *error) {
+                [self hideProgress];
+                [self showHUDText:@"添加成功"];
+                [self refresh:nil];
+                [self.friendListVC refresh];
+            }];
         }
     }];
 }

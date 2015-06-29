@@ -11,6 +11,7 @@
 #import "CDUserManager.h"
 #import "CDUtils.h"
 #import "CDIMService.h"
+#import "LZPushManager.h"
 
 @interface CDUserInfoVC ()
 
@@ -29,24 +30,12 @@
     return self;
 }
 
-#pragma lifecycle
+#pragma mark - lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"详情";
     [self refresh];
-}
-
-- (void)goChat {
-    [[CDIMService service] goWithUserId:self.user.objectId fromVC:self];
-}
-
-- (void)tryCreateAddRequest {
-    [self showProgress];
-    [[CDUserManager manager] tryCreateAddRequestWithToUser:_user callback: ^(BOOL succeeded, NSError *error) {
-        [self hideProgress];
-        [self alertError:error];
-    }];
 }
 
 - (void)refresh {
@@ -68,6 +57,27 @@
                 }
                 [self.dataSource addObject:@[@{ kMutipleSectionTitleKey: title , kMutipleSectionSelectorKey:selector }]];
                 [self.tableView reloadData];
+            }];
+        }
+    }];
+}
+
+#pragma mark - actions
+
+- (void)goChat {
+    [[CDIMService service] goWithUserId:self.user.objectId fromVC:self];
+}
+
+- (void)tryCreateAddRequest {
+    [self showProgress];
+    [[CDUserManager manager] tryCreateAddRequestWithToUser:self.user callback: ^(BOOL succeeded, NSError *error) {
+        [self hideProgress];
+        if ([self filterError:error]) {
+            [self showProgress];
+            NSString *text = [NSString stringWithFormat:@"%@ 申请加你为好友", self.user.username];
+            [[LZPushManager manager] pushMessage:text userIds:@[self.user.objectId] block:^(BOOL succeeded, NSError *error) {
+                [self hideProgress];
+                [self showHUDText:@"申请成功"];
             }];
         }
     }];

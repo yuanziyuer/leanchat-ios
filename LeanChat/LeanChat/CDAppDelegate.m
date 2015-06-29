@@ -59,6 +59,7 @@
     [[LZPushManager manager] registerForRemoteNotification];
     
 #ifdef DEBUG
+    [AVPush setProductionMode:NO];
     [AVAnalytics setAnalyticsEnabled:NO];
     [AVOSCloud setAllLogsEnabled:YES];
 #endif
