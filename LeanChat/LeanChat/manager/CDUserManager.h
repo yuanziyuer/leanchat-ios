@@ -22,9 +22,9 @@
 - (NSString *)getPeerIdOfUser:(AVUser *)user;
 - (void)findUsersByIds:(NSArray *)userIds callback:(AVArrayResultBlock)callback;
 
+- (void)getBigAvatarimageOfUser:(AVUser *)user block:(void (^)(UIImage *image))block;
 - (void)displayAvatarOfUser:(AVUser *)user avatarView:(UIImageView *)avatarView;
 - (void)getAvatarImageOfUser:(AVUser *)user block:(void (^)(UIImage *image))block;
-- (void)displayBigAvatarOfUser:(AVUser *)user avatarView:(UIImageView *)avatarView;
 - (void)saveAvatar:(UIImage *)image callback:(AVBooleanResultBlock)callback;
 
 - (void)addFriend:(AVUser *)user callback:(AVBooleanResultBlock)callback;

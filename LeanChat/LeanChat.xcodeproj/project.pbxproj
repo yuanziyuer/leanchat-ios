@@ -92,6 +92,22 @@
 		7073FD341B147458006F2692 /* tabbar_discover_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073FD0B1B147458006F2692 /* tabbar_discover_active@2x.png */; };
 		7073FD351B147458006F2692 /* tabbar_me_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073FD0C1B147458006F2692 /* tabbar_me_active@2x.png */; };
 		7073FD361B147458006F2692 /* wechat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073FD0D1B147458006F2692 /* wechat@2x.png */; };
+		70B1C50B1B413A1300DCEC8D /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B1C4F31B413A1300DCEC8D /* back@2x.png */; };
+		70B1C50C1B413A1300DCEC8D /* bg_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B1C4F41B413A1300DCEC8D /* bg_1@2x.png */; };
+		70B1C50D1B413A1300DCEC8D /* bg_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B1C4F51B413A1300DCEC8D /* bg_2@2x.png */; };
+		70B1C50E1B413A1300DCEC8D /* btn_feedback@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B1C4F61B413A1300DCEC8D /* btn_feedback@2x.png */; };
+		70B1C50F1B413A1300DCEC8D /* btn_feedback_new@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B1C4F71B413A1300DCEC8D /* btn_feedback_new@2x.png */; };
+		70B1C5101B413A1300DCEC8D /* LCHttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B1C4F91B413A1300DCEC8D /* LCHttpClient.m */; };
+		70B1C5111B413A1300DCEC8D /* LCUserFeedbackAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B1C4FB1B413A1300DCEC8D /* LCUserFeedbackAgent.m */; };
+		70B1C5121B413A1300DCEC8D /* LCUserFeedbackLeftCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B1C4FD1B413A1300DCEC8D /* LCUserFeedbackLeftCell.m */; };
+		70B1C5131B413A1300DCEC8D /* LCUserFeedbackReply.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B1C4FF1B413A1300DCEC8D /* LCUserFeedbackReply.m */; };
+		70B1C5141B413A1300DCEC8D /* LCUserFeedbackRightCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B1C5011B413A1300DCEC8D /* LCUserFeedbackRightCell.m */; };
+		70B1C5151B413A1300DCEC8D /* LCUserFeedbackThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B1C5031B413A1300DCEC8D /* LCUserFeedbackThread.m */; };
+		70B1C5161B413A1300DCEC8D /* LCUserFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B1C5061B413A1300DCEC8D /* LCUserFeedbackViewController.m */; };
+		70B1C5171B413A1300DCEC8D /* LCUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B1C5081B413A1300DCEC8D /* LCUtils.m */; };
+		70B1C5181B413A1300DCEC8D /* warning@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B1C50A1B413A1300DCEC8D /* warning@2x.png */; };
+		70B1C51B1B413E1500DCEC8D /* MCMutipleSectionTC.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B1C5191B413E1500DCEC8D /* MCMutipleSectionTC.m */; };
+		70B1C51E1B41430500DCEC8D /* MCPhotographyHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B1C51D1B41430500DCEC8D /* MCPhotographyHelper.m */; };
 		70DC7DB21B2F531F0047B7AB /* CDCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC7DAB1B2F531F0047B7AB /* CDCacheManager.m */; };
 		70DC7DB31B2F531F0047B7AB /* CDIMService.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC7DAD1B2F531F0047B7AB /* CDIMService.m */; };
 		70DC7DB41B2F531F0047B7AB /* CDUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC7DAF1B2F531F0047B7AB /* CDUserManager.m */; };
@@ -227,6 +243,34 @@
 		7073FD0B1B147458006F2692 /* tabbar_discover_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_discover_active@2x.png"; sourceTree = "<group>"; };
 		7073FD0C1B147458006F2692 /* tabbar_me_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_me_active@2x.png"; sourceTree = "<group>"; };
 		7073FD0D1B147458006F2692 /* wechat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wechat@2x.png"; sourceTree = "<group>"; };
+		70B1C4F31B413A1300DCEC8D /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
+		70B1C4F41B413A1300DCEC8D /* bg_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_1@2x.png"; sourceTree = "<group>"; };
+		70B1C4F51B413A1300DCEC8D /* bg_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_2@2x.png"; sourceTree = "<group>"; };
+		70B1C4F61B413A1300DCEC8D /* btn_feedback@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_feedback@2x.png"; sourceTree = "<group>"; };
+		70B1C4F71B413A1300DCEC8D /* btn_feedback_new@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_feedback_new@2x.png"; sourceTree = "<group>"; };
+		70B1C4F81B413A1300DCEC8D /* LCHttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCHttpClient.h; sourceTree = "<group>"; };
+		70B1C4F91B413A1300DCEC8D /* LCHttpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCHttpClient.m; sourceTree = "<group>"; };
+		70B1C4FA1B413A1300DCEC8D /* LCUserFeedbackAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCUserFeedbackAgent.h; sourceTree = "<group>"; };
+		70B1C4FB1B413A1300DCEC8D /* LCUserFeedbackAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCUserFeedbackAgent.m; sourceTree = "<group>"; };
+		70B1C4FC1B413A1300DCEC8D /* LCUserFeedbackLeftCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCUserFeedbackLeftCell.h; sourceTree = "<group>"; };
+		70B1C4FD1B413A1300DCEC8D /* LCUserFeedbackLeftCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCUserFeedbackLeftCell.m; sourceTree = "<group>"; };
+		70B1C4FE1B413A1300DCEC8D /* LCUserFeedbackReply.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCUserFeedbackReply.h; sourceTree = "<group>"; };
+		70B1C4FF1B413A1300DCEC8D /* LCUserFeedbackReply.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCUserFeedbackReply.m; sourceTree = "<group>"; };
+		70B1C5001B413A1300DCEC8D /* LCUserFeedbackRightCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCUserFeedbackRightCell.h; sourceTree = "<group>"; };
+		70B1C5011B413A1300DCEC8D /* LCUserFeedbackRightCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCUserFeedbackRightCell.m; sourceTree = "<group>"; };
+		70B1C5021B413A1300DCEC8D /* LCUserFeedbackThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCUserFeedbackThread.h; sourceTree = "<group>"; };
+		70B1C5031B413A1300DCEC8D /* LCUserFeedbackThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCUserFeedbackThread.m; sourceTree = "<group>"; };
+		70B1C5041B413A1300DCEC8D /* LCUserFeedbackThread_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCUserFeedbackThread_Internal.h; sourceTree = "<group>"; };
+		70B1C5051B413A1300DCEC8D /* LCUserFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCUserFeedbackViewController.h; sourceTree = "<group>"; };
+		70B1C5061B413A1300DCEC8D /* LCUserFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCUserFeedbackViewController.m; sourceTree = "<group>"; };
+		70B1C5071B413A1300DCEC8D /* LCUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCUtils.h; sourceTree = "<group>"; };
+		70B1C5081B413A1300DCEC8D /* LCUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCUtils.m; sourceTree = "<group>"; };
+		70B1C5091B413A1300DCEC8D /* LeanCloudFeedback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeanCloudFeedback.h; sourceTree = "<group>"; };
+		70B1C50A1B413A1300DCEC8D /* warning@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "warning@2x.png"; sourceTree = "<group>"; };
+		70B1C5191B413E1500DCEC8D /* MCMutipleSectionTC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCMutipleSectionTC.m; sourceTree = "<group>"; };
+		70B1C51A1B413E1500DCEC8D /* MCMutipleSectionTC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCMutipleSectionTC.h; sourceTree = "<group>"; };
+		70B1C51C1B41430500DCEC8D /* MCPhotographyHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPhotographyHelper.h; sourceTree = "<group>"; };
+		70B1C51D1B41430500DCEC8D /* MCPhotographyHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPhotographyHelper.m; sourceTree = "<group>"; };
 		70DC7DAA1B2F531F0047B7AB /* CDCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCacheManager.h; sourceTree = "<group>"; };
 		70DC7DAB1B2F531F0047B7AB /* CDCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCacheManager.m; sourceTree = "<group>"; };
 		70DC7DAC1B2F531F0047B7AB /* CDIMService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDIMService.h; sourceTree = "<group>"; };
@@ -263,6 +307,7 @@
 		706780071B2363C5002F1413 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				70B1C4F21B413A1300DCEC8D /* LeanCloudFeedback */,
 				700E6A121B3D2B4E00675021 /* LZPushManager */,
 				706780081B2363F3002F1413 /* LZPushSettingViewController */,
 			);
@@ -350,6 +395,8 @@
 				7073FC491B14718C006F2692 /* CDBaseVC.m */,
 				7073FC4A1B14718C006F2692 /* CDWebViewVC.h */,
 				7073FC4B1B14718C006F2692 /* CDWebViewVC.m */,
+				70B1C5191B413E1500DCEC8D /* MCMutipleSectionTC.m */,
+				70B1C51A1B413E1500DCEC8D /* MCMutipleSectionTC.h */,
 			);
 			path = base;
 			sourceTree = "<group>";
@@ -555,6 +602,37 @@
 			path = tabbar;
 			sourceTree = "<group>";
 		};
+		70B1C4F21B413A1300DCEC8D /* LeanCloudFeedback */ = {
+			isa = PBXGroup;
+			children = (
+				70B1C4F31B413A1300DCEC8D /* back@2x.png */,
+				70B1C4F41B413A1300DCEC8D /* bg_1@2x.png */,
+				70B1C4F51B413A1300DCEC8D /* bg_2@2x.png */,
+				70B1C4F61B413A1300DCEC8D /* btn_feedback@2x.png */,
+				70B1C4F71B413A1300DCEC8D /* btn_feedback_new@2x.png */,
+				70B1C4F81B413A1300DCEC8D /* LCHttpClient.h */,
+				70B1C4F91B413A1300DCEC8D /* LCHttpClient.m */,
+				70B1C4FA1B413A1300DCEC8D /* LCUserFeedbackAgent.h */,
+				70B1C4FB1B413A1300DCEC8D /* LCUserFeedbackAgent.m */,
+				70B1C4FC1B413A1300DCEC8D /* LCUserFeedbackLeftCell.h */,
+				70B1C4FD1B413A1300DCEC8D /* LCUserFeedbackLeftCell.m */,
+				70B1C4FE1B413A1300DCEC8D /* LCUserFeedbackReply.h */,
+				70B1C4FF1B413A1300DCEC8D /* LCUserFeedbackReply.m */,
+				70B1C5001B413A1300DCEC8D /* LCUserFeedbackRightCell.h */,
+				70B1C5011B413A1300DCEC8D /* LCUserFeedbackRightCell.m */,
+				70B1C5021B413A1300DCEC8D /* LCUserFeedbackThread.h */,
+				70B1C5031B413A1300DCEC8D /* LCUserFeedbackThread.m */,
+				70B1C5041B413A1300DCEC8D /* LCUserFeedbackThread_Internal.h */,
+				70B1C5051B413A1300DCEC8D /* LCUserFeedbackViewController.h */,
+				70B1C5061B413A1300DCEC8D /* LCUserFeedbackViewController.m */,
+				70B1C5071B413A1300DCEC8D /* LCUtils.h */,
+				70B1C5081B413A1300DCEC8D /* LCUtils.m */,
+				70B1C5091B413A1300DCEC8D /* LeanCloudFeedback.h */,
+				70B1C50A1B413A1300DCEC8D /* warning@2x.png */,
+			);
+			path = LeanCloudFeedback;
+			sourceTree = "<group>";
+		};
 		70DC7DA91B2F531F0047B7AB /* manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -566,6 +644,8 @@
 				70DC7DAF1B2F531F0047B7AB /* CDUserManager.m */,
 				70DC7DB01B2F531F0047B7AB /* CDUtils.h */,
 				70DC7DB11B2F531F0047B7AB /* CDUtils.m */,
+				70B1C51C1B41430500DCEC8D /* MCPhotographyHelper.h */,
+				70B1C51D1B41430500DCEC8D /* MCPhotographyHelper.m */,
 			);
 			path = manager;
 			sourceTree = "<group>";
@@ -648,8 +728,10 @@
 			files = (
 				7073FD0F1B147458006F2692 /* AppIcon60x60@2x.png in Resources */,
 				7073FD231B147458006F2692 /* login_selected@2x.png in Resources */,
+				70B1C50D1B413A1300DCEC8D /* bg_2@2x.png in Resources */,
 				7073FD171B147458006F2692 /* input_bg_top@2x.png in Resources */,
 				7073FD291B147458006F2692 /* menu_add_photo@2x.png in Resources */,
+				70B1C50C1B413A1300DCEC8D /* bg_1@2x.png in Resources */,
 				7073FD221B147458006F2692 /* login_disabled@2x.png in Resources */,
 				7073FD2C1B147458006F2692 /* menu_background@2x.png in Resources */,
 				7073FD2E1B147458006F2692 /* splash_screen.png in Resources */,
@@ -657,6 +739,7 @@
 				7073FD141B147458006F2692 /* Icon@2x.png in Resources */,
 				7073FCB31B14718C006F2692 /* CDConvNameVC.xib in Resources */,
 				7073FD351B147458006F2692 /* tabbar_me_active@2x.png in Resources */,
+				70B1C50E1B413A1300DCEC8D /* btn_feedback@2x.png in Resources */,
 				7073FD2A1B147458006F2692 /* menu_add_scan@2x.png in Resources */,
 				7073FD271B147458006F2692 /* menu_add_friend@2x.png in Resources */,
 				7073FD301B147458006F2692 /* profile@2x.png in Resources */,
@@ -671,6 +754,8 @@
 				7073FD321B147458006F2692 /* tabbar_chat_active@2x.png in Resources */,
 				7073FD251B147458006F2692 /* ok_selected@2x.png in Resources */,
 				7073FCBB1B14718C006F2692 /* CDAddFriendVC.xib in Resources */,
+				70B1C5181B413A1300DCEC8D /* warning@2x.png in Resources */,
+				70B1C50B1B413A1300DCEC8D /* back@2x.png in Resources */,
 				7073FCD11B14718C006F2692 /* CDImageLabelTableCell.xib in Resources */,
 				7073FD2F1B147458006F2692 /* contact@2x.png in Resources */,
 				7073FD361B147458006F2692 /* wechat@2x.png in Resources */,
@@ -689,6 +774,7 @@
 				7073FD281B147458006F2692 /* menu_add_newmessage@2x.png in Resources */,
 				7073FD211B147458006F2692 /* login_background.png in Resources */,
 				7073FD1C1B147458006F2692 /* bottom_bar_selected@2x.png in Resources */,
+				70B1C50F1B413A1300DCEC8D /* btn_feedback_new@2x.png in Resources */,
 				7073FC281B147048006F2692 /* Images.xcassets in Resources */,
 				7073FD181B147458006F2692 /* blue_expand_disable@2x.png in Resources */,
 			);
@@ -739,17 +825,22 @@
 				7073FCB71B14718C006F2692 /* CDEntryVC.m in Sources */,
 				7073FCD71B14718C006F2692 /* CDResizableButton.m in Sources */,
 				7073FC1D1B147048006F2692 /* main.m in Sources */,
+				70B1C5141B413A1300DCEC8D /* LCUserFeedbackRightCell.m in Sources */,
+				70B1C5121B413A1300DCEC8D /* LCUserFeedbackLeftCell.m in Sources */,
 				7073FCAD1B14718C006F2692 /* CDWebViewVC.m in Sources */,
 				7073FCD21B14718C006F2692 /* CDLabelButtonTableCell.m in Sources */,
+				70B1C5161B413A1300DCEC8D /* LCUserFeedbackViewController.m in Sources */,
 				70DC7DB41B2F531F0047B7AB /* CDUserManager.m in Sources */,
 				7073FCB81B14718C006F2692 /* CDLoginVC.m in Sources */,
 				7073FCAB1B14718C006F2692 /* CDBaseTableVC.m in Sources */,
 				7073FCD81B14718C006F2692 /* CDTextField.m in Sources */,
 				7073FCCA1B14718C006F2692 /* CDBadgeLabel.m in Sources */,
+				70B1C51B1B413E1500DCEC8D /* MCMutipleSectionTC.m in Sources */,
 				7073FCC31B14718C006F2692 /* CDAbuseReport.m in Sources */,
 				7073FCCB1B14718C006F2692 /* CDButton.m in Sources */,
 				7073FCDB1B1471A4006F2692 /* CDAppDelegate.m in Sources */,
 				7073FCAA1B14718C006F2692 /* CDBaseTabC.m in Sources */,
+				70B1C5171B413A1300DCEC8D /* LCUtils.m in Sources */,
 				7073FCC11B14718C006F2692 /* CDUserInfoVC.m in Sources */,
 				7073FCD41B14718C006F2692 /* CDPopMenu.m in Sources */,
 				70DC7DB51B2F531F0047B7AB /* CDUtils.m in Sources */,
@@ -770,12 +861,17 @@
 				7073FCAC1B14718C006F2692 /* CDBaseVC.m in Sources */,
 				7073FCB01B14718C006F2692 /* CDAddMemberVC.m in Sources */,
 				7073FCBC1B14718C006F2692 /* CDFriendListVC.m in Sources */,
+				70B1C5131B413A1300DCEC8D /* LCUserFeedbackReply.m in Sources */,
 				7067800B1B2363F3002F1413 /* LZPushSettingViewController.m in Sources */,
+				70B1C5151B413A1300DCEC8D /* LCUserFeedbackThread.m in Sources */,
 				7073FCD61B14718C006F2692 /* CDPopMenuItemCell.m in Sources */,
 				7073FCBA1B14718C006F2692 /* CDAddFriendVC.m in Sources */,
+				70B1C5101B413A1300DCEC8D /* LCHttpClient.m in Sources */,
 				7073FCB11B14718C006F2692 /* CDConvDetailVC.m in Sources */,
+				70B1C51E1B41430500DCEC8D /* MCPhotographyHelper.m in Sources */,
 				7073FCB91B14718C006F2692 /* CDRegisterVC.m in Sources */,
 				7073FCAF1B14718C006F2692 /* CDConvsVC.m in Sources */,
+				70B1C5111B413A1300DCEC8D /* LCUserFeedbackAgent.m in Sources */,
 				7073FCCE1B14718C006F2692 /* CDEntryActionButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

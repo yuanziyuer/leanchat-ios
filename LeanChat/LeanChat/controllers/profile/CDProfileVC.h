@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 LeanCloud. All rights reserved.
 //
 
-#import "CDBaseTableVC.h"
+#import "MCMutipleSectionTC.h"
 
-@interface CDProfileVC : CDBaseTableVC <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface CDProfileVC : MCMutipleSectionTC
 
 @end

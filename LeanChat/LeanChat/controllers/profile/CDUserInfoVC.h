@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 LeanCloud. All rights reserved.
 //
 
-#import "CDBaseTableVC.h"
+#import "MCMutipleSectionTC.h"
 
-@interface CDUserInfoVC : CDBaseTableVC
+@interface CDUserInfoVC : MCMutipleSectionTC
 
 - (instancetype)initWithUser:(AVUser *)user;
 

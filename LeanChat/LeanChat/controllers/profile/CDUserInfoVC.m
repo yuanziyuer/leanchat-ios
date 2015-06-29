@@ -14,8 +14,6 @@
 
 @interface CDUserInfoVC ()
 
-@property (nonatomic, assign) BOOL isFriend;
-
 @property (strong, nonatomic) AVUser *user;
 
 @end
@@ -25,7 +23,6 @@
 - (instancetype)initWithUser:(AVUser *)user {
     self = [super init];
     if (self) {
-        _isFriend = NO;
         _user = user;
         self.tableViewStyle = UITableViewStyleGrouped;
     }
@@ -40,69 +37,38 @@
     [self refresh];
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+- (void)goChat {
+    [[CDIMService service] goWithUserId:self.user.objectId fromVC:self];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *identifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        cell.accessoryType = UITableViewCellAccessoryNone;
-    }
-    if (indexPath.section == 1) {
-        if (self.isFriend) {
-            cell.textLabel.text = @"开始聊天";
-        }
-        else {
-            cell.textLabel.text = @"添加好友";
-        }
-        cell.textLabel.textAlignment = NSTextAlignmentCenter;
-    }
-    else {
-        cell.textLabel.text = self.user.username;
-        cell.textLabel.textAlignment = NSTextAlignmentLeft;
-        [[CDUserManager manager] displayBigAvatarOfUser:self.user avatarView:cell.imageView];
-    }
-    return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        return 88;
-    }
-    else {
-        return 44;
-    }
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section == 1) {
-        if (self.isFriend) {
-            [[CDIMService service] goWithUserId:self.user.objectId fromVC:self];
-        }
-        else {
-            [self showProgress];
-            [[CDUserManager manager] tryCreateAddRequestWithToUser:_user callback: ^(BOOL succeeded, NSError *error) {
-                [self hideProgress];
-                [self alertError:error];
-            }];
-        }
-    }
+- (void)tryCreateAddRequest {
+    [self showProgress];
+    [[CDUserManager manager] tryCreateAddRequestWithToUser:_user callback: ^(BOOL succeeded, NSError *error) {
+        [self hideProgress];
+        [self alertError:error];
+    }];
 }
 
 - (void)refresh {
-    WEAKSELF
+    [self showProgress];
     [[CDUserManager manager] isMyFriend : _user block : ^(BOOL isFriend, NSError *error) {
+        [self hideProgress];
         if ([self filterError:error]) {
-            weakSelf.isFriend = isFriend;
-            [weakSelf.tableView reloadData];
+            [[CDUserManager manager] getBigAvatarimageOfUser:_user block:^(UIImage *image) {
+                self.dataSource =[NSMutableArray array];
+                [self.dataSource addObject:@[@{kMutipleSectionImageKey:image, kMutipleSectionTitleKey:self.user.username}]];
+                NSString *title;
+                NSString *selector;
+                if (isFriend) {
+                    title = @"开始聊天";
+                    selector = NSStringFromSelector(@selector(goChat));
+                } else {
+                    title = @"添加好友";
+                    selector = NSStringFromSelector(@selector(tryCreateAddRequest));
+                }
+                [self.dataSource addObject:@[@{ kMutipleSectionTitleKey: title , kMutipleSectionSelectorKey:selector }]];
+                [self.tableView reloadData];
+            }];
         }
     }];
 }

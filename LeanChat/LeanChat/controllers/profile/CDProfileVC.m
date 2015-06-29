@@ -12,8 +12,11 @@
 #import "LZPushSettingViewController.h"
 #import "CDWebViewVC.h"
 #import <LeanChatLib/CDChatManager.h>
+#import "MCPhotographyHelper.h"
 
 @interface CDProfileVC ()
+
+@property (nonatomic, strong) MCPhotographyHelper *photographyHelper;
 
 @end
 
@@ -30,10 +33,45 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.dataSource = [@[[AVUser currentUser].username, @"消息通知", @"用户协议", @"退出登录"] mutableCopy];
+    [self loadDataSource];
+}
+
+- (MCPhotographyHelper *)photographyHelper {
+    if (_photographyHelper == nil) {
+        _photographyHelper = [[MCPhotographyHelper alloc] init];
+    }
+    return _photographyHelper;
+}
+
+- (void)loadDataSource {
+    [self showProgress];
+    [[CDUserManager manager] getBigAvatarimageOfUser:[AVUser currentUser] block:^(UIImage *image) {
+        [self hideProgress];
+        self.dataSource = [NSMutableArray array];
+        [self.dataSource addObject:@[@{kMutipleSectionImageKey:image,kMutipleSectionTitleKey:[AVUser currentUser].username,kMutipleSectionSelectorKey:NSStringFromSelector(@selector(pickImage))}]];
+        [self.dataSource addObject:@[@{kMutipleSectionTitleKey:@"消息通知",kMutipleSectionSelectorKey:NSStringFromSelector(@selector(goPushSetting))}, @{kMutipleSectionTitleKey:@"用户协议",kMutipleSectionSelectorKey:NSStringFromSelector(@selector(goTerms))}]];
+        [self.dataSource addObject:@[@{kMutipleSectionTitleKey:@"退出登录",
+            kMutipleSectionLogoutKey:@YES, kMutipleSectionSelectorKey:NSStringFromSelector(@selector(logout))}]];
+        [self.tableView reloadData];
+    }];
 }
 
 #pragma mark - Actions
+
+-(void)pickImage {
+    [self.photographyHelper showOnPickerViewControllerOnViewController:self completion:^(UIImage *image) {
+        if (image) {
+            UIImage *rounded = [CDUtils roundImage:image toSize:CGSizeMake(100, 100) radius:10];
+            [self showProgress];
+            [[CDUserManager manager] saveAvatar : rounded callback : ^(BOOL succeeded, NSError *error) {
+                [self hideProgress];
+                if ([self filterError:error]) {
+                    [self loadDataSource];
+                }
+            }];
+        }
+    }];
+}
 
 - (void)logout {
     [[CDChatManager manager] closeWithCallback: ^(BOOL succeeded, NSError *error) {
@@ -53,92 +91,6 @@
 - (void)goPushSetting {
     LZPushSettingViewController *controller = [[LZPushSettingViewController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
-}
-
-#pragma mark - table view
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 4;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *identifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-    }
-    cell.textLabel.text = self.dataSource[indexPath.section];
-    if (indexPath.section == 0) {
-        [[CDUserManager manager] displayBigAvatarOfUser:[AVUser currentUser] avatarView:cell.imageView];
-    }
-    else {
-        cell.imageView.image = nil;
-    }
-    if (indexPath.section == self.dataSource.count - 1) {
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        cell.textLabel.textAlignment = NSTextAlignmentCenter;
-    }
-    else {
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.textLabel.textAlignment = NSTextAlignmentLeft;
-    }
-    return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        return 88;
-    }
-    else {
-        return 44;
-    }
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSInteger section = indexPath.section;
-    switch (section) {
-        case 0:
-            [CDUtils pickImageFromPhotoLibraryAtController:self];
-            break;
-            
-        case 1:
-            [self goPushSetting];
-            break;
-            
-        case 2:
-            [self goTerms];
-            break;
-            
-        case 3:
-            [self logout];
-            break;
-    }
-}
-
-#pragma mark - image picker delegate
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    [picker dismissViewControllerAnimated:YES completion: ^{
-        UIActivityIndicatorView *indicator = [CDUtils showIndicatorAtView:self.view];
-        UIImage *image = info[UIImagePickerControllerEditedImage];
-        UIImage *rounded = [CDUtils roundImage:image toSize:CGSizeMake(100, 100) radius:10];
-        WEAKSELF
-        [[CDUserManager manager] saveAvatar : rounded callback : ^(BOOL succeeded, NSError *error) {
-            [indicator stopAnimating];
-            if ([self filterError:error]) {
-                [weakSelf.tableView reloadData];
-            }
-        }];
-    }];
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

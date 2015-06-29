@@ -91,16 +91,12 @@ static CDUserManager *userManager;
     }];
 }
 
-- (void)displayBigAvatarOfUser:(AVUser *)user avatarView:(UIImageView *)avatarView {
+- (void)getBigAvatarimageOfUser:(AVUser *)user block:(void (^)(UIImage *image))block {
     CGFloat avatarWidth = 60;
     CGSize avatarSize = CGSizeMake(avatarWidth, avatarWidth);
-    UIGraphicsBeginImageContextWithOptions(avatarSize, NO, 0.0);
-    UIImage *blank = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    avatarView.image = blank;
     [[CDUserManager manager] getAvatarImageOfUser:user block: ^(UIImage *image) {
         UIImage *resizedImage = [CDUtils resizeImage:image toSize:avatarSize];
-        avatarView.image = resizedImage;
+        block(resizedImage);
     }];
 }
 
