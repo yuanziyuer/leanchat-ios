@@ -13,6 +13,9 @@
 #import "CDWebViewVC.h"
 #import <LeanChatLib/CDChatManager.h>
 #import "MCPhotographyHelper.h"
+#import "LCUserFeedbackAgent.h"
+#import "LCUserFeedbackViewController.h"
+#import "CDBaseNavC.h"
 
 @interface CDProfileVC ()
 
@@ -46,13 +49,14 @@
 - (void)loadDataSource {
     [self showProgress];
     [[CDUserManager manager] getBigAvatarimageOfUser:[AVUser currentUser] block:^(UIImage *image) {
-        [self hideProgress];
-        self.dataSource = [NSMutableArray array];
-        [self.dataSource addObject:@[@{kMutipleSectionImageKey:image,kMutipleSectionTitleKey:[AVUser currentUser].username,kMutipleSectionSelectorKey:NSStringFromSelector(@selector(pickImage))}]];
-        [self.dataSource addObject:@[@{kMutipleSectionTitleKey:@"消息通知",kMutipleSectionSelectorKey:NSStringFromSelector(@selector(goPushSetting))}, @{kMutipleSectionTitleKey:@"用户协议",kMutipleSectionSelectorKey:NSStringFromSelector(@selector(goTerms))}]];
-        [self.dataSource addObject:@[@{kMutipleSectionTitleKey:@"退出登录",
-            kMutipleSectionLogoutKey:@YES, kMutipleSectionSelectorKey:NSStringFromSelector(@selector(logout))}]];
-        [self.tableView reloadData];
+        [[LCUserFeedbackAgent sharedInstance] countUnreadFeedbackThreadsWithContact:[AVUser currentUser].objectId block:^(NSInteger number, NSError *error) {
+            [self hideProgress];
+            self.dataSource = [NSMutableArray array];
+            [self.dataSource addObject:@[@{ kMutipleSectionImageKey:image, kMutipleSectionTitleKey:[AVUser currentUser].username, kMutipleSectionSelectorKey:NSStringFromSelector(@selector(pickImage)) }]];
+            [self.dataSource addObject:@[@{ kMutipleSectionTitleKey:@"消息通知", kMutipleSectionSelectorKey:NSStringFromSelector(@selector(goPushSetting)) }, @{ kMutipleSectionTitleKey:@"意见反馈", kMutipleSectionBadgeKey:@(number), kMutipleSectionSelectorKey:NSStringFromSelector(@selector(goFeedback)) }, @{ kMutipleSectionTitleKey:@"用户协议", kMutipleSectionSelectorKey:NSStringFromSelector(@selector(goTerms)) }]];
+            [self.dataSource addObject:@[@{ kMutipleSectionTitleKey:@"退出登录", kMutipleSectionLogoutKey:@YES, kMutipleSectionSelectorKey:NSStringFromSelector(@selector(logout)) }]];
+            [self.tableView reloadData];
+        }];
     }];
 }
 
@@ -91,6 +95,16 @@
 - (void)goPushSetting {
     LZPushSettingViewController *controller = [[LZPushSettingViewController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (void)goFeedback {
+    LCUserFeedbackViewController *feedbackViewController = [[LCUserFeedbackViewController alloc] init];
+    feedbackViewController.feedbackTitle = [AVUser currentUser].username;
+    feedbackViewController.contact = [AVUser currentUser].objectId;
+    CDBaseNavC *navigationController = [[CDBaseNavC alloc] initWithRootViewController:feedbackViewController];
+    [self presentViewController:navigationController animated:YES completion: ^{
+    }];
+    [self performSelector:@selector(loadDataSource) withObject:nil afterDelay:1];
 }
 
 @end
