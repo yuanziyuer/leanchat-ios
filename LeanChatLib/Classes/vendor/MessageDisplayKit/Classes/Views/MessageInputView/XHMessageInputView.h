@@ -43,6 +43,13 @@ typedef NS_ENUM(NSInteger, XHMessageInputViewStyle) {
  */
 - (void)didChangeSendVoiceAction:(BOOL)changed;
 
+
+/**
+ *  输入了 @ 的时候
+ *
+ */
+- (void)didInputAtSign:(XHMessageTextView *)messageInputTextView;
+
 /**
  *  发送文本消息，包括系统的表情
  *

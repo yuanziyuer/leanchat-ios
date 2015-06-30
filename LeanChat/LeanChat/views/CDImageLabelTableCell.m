@@ -23,6 +23,10 @@
     CDImageLabelTableCell *cell = [tableView dequeueReusableCellWithIdentifier:[CDImageLabelTableCell identifier]];
     if (cell == nil) {
         cell = [[CDImageLabelTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[CDImageLabelTableCell identifier]];
+        if (cell == nil) {
+            [CDImageLabelTableCell registerCellToTalbeView:tableView];
+            return [self createOrDequeueCellByTableView:tableView];
+        }
     }
     return cell;
 }

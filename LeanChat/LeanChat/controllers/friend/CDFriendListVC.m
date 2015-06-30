@@ -18,16 +18,16 @@
 #import "CDUserManager.h"
 #import "CDIMService.h"
 
+static NSString *kCellImageKey = @"image";
+static NSString *kCellBadgeKey = @"badge";
+static NSString *kCellTextKey = @"text";
+static NSString *kCellSelectorKey = @"selector";
+
 @interface CDFriendListVC () <UIAlertViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSArray *users;
-@property (weak, nonatomic) IBOutlet UIView *myNewFriendView;
-@property (weak, nonatomic) IBOutlet UIView *groupView;
 @property (nonatomic, assign) NSInteger addRequestN;
-@property (weak, nonatomic) IBOutlet UIImageView *myNewFriendIcon;
-@property (nonatomic, strong) JSBadgeView *myNewFriendBadgeView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (nonatomic, strong) NSMutableArray *headerSectionDatas;
 
 @end
 
@@ -38,7 +38,7 @@
     if ((self = [super init])) {
         self.title = @"联系人";
         self.tabBarItem.image = [UIImage imageNamed:@"tabbar_contacts_active"];
-        [self setNewAddRequestBadge];
+//        [self setNewAddRequestBadge];
     }
     return self;
 }
@@ -48,25 +48,13 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
                                               initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                               target:self action:@selector(goAddFriend:)];
-    [self setupNewFriendAndGroupView];
     [self setupTableView];
     [self refresh];
 }
 
 - (void)setupTableView {
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
+    [CDImageLabelTableCell registerCellToTalbeView:self.tableView];
     [self.tableView addSubview:self.refreshControl];
-}
-
-- (void)setupNewFriendAndGroupView {
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goNewFriend:)];
-    [self.myNewFriendView addGestureRecognizer:singleTap];
-    
-    singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goGroup:)];
-    [self.groupView addGestureRecognizer:singleTap];
-    
-    self.myNewFriendBadgeView.badgeText = nil;
 }
 
 - (UIRefreshControl *)refreshControl {
@@ -77,14 +65,6 @@
     return _refreshControl;
 }
 
-- (JSBadgeView *)myNewFriendBadgeView {
-    if (_myNewFriendBadgeView == nil) {
-        _myNewFriendBadgeView = [[JSBadgeView alloc] initWithParentView:_myNewFriendIcon alignment:JSBadgeViewAlignmentTopRight];
-        _myNewFriendBadgeView.badgeText = nil;
-    }
-    return _myNewFriendBadgeView;
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
@@ -92,10 +72,11 @@
 #pragma mark - Action
 
 - (void)goNewFriend:(id)sender {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:@(_addRequestN) forKey:@"addRequestN"];
-    [userDefaults synchronize];
-    self.myNewFriendBadgeView.badgeText = nil;
+    if (self.addRequestN > 0) {
+        [[NSUserDefaults standardUserDefaults] setObject:@(self.addRequestN) forKey:@"addRequestN"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self refreshWithFriends:self.dataSource badgeNumber:0];
+    }
     CDNewFriendVC *controller = [[CDNewFriendVC alloc] init];
     controller.friendListVC = self;
     [[self navigationController] pushViewController:controller animated:YES];
@@ -107,7 +88,7 @@
     [[self navigationController] pushViewController:controller animated:YES];
 }
 
-- (void)goAddFriend:(UIBarButtonItem *)buttonItem {
+- (void)goAddFriend:(id)sender {
     CDAddFriendVC *controller = [[CDAddFriendVC alloc] init];
     [[self navigationController] pushViewController:controller animated:YES];
 }
@@ -118,82 +99,115 @@
     [self refresh:nil];
 }
 
+- (void)refreshWithFriends:(NSArray *)friends badgeNumber:(NSInteger)number{
+    if (number > 0) {
+        self.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", number];;
+    } else {
+        self.tabBarItem.badgeValue = nil;
+    }
+    
+    self.headerSectionDatas = [NSMutableArray array];
+    [self.headerSectionDatas addObject:@{ kCellImageKey:[UIImage imageNamed:@"new_friends_icon"], kCellTextKey:@"新的朋友",kCellBadgeKey:@(number), kCellSelectorKey:NSStringFromSelector(@selector(goNewFriend:))}];
+    [self.headerSectionDatas addObject:@{ kCellImageKey:[UIImage imageNamed:@"group_icon"], kCellTextKey:@"群组" , kCellSelectorKey:NSStringFromSelector(@selector(goGroup:))}];
+    
+    self.dataSource = [friends mutableCopy];
+    [self.tableView reloadData];
+}
+
+- (void)findFriendsAndBadgeNumberWithBlock:(void (^)(NSArray *friends, NSInteger badgeNumber, NSError *error))block {
+    [[CDUserManager manager] findFriendsWithBlock : ^(NSArray *objects, NSError *error) {
+        // why kAVErrorInternalServer ?
+        if (error && error.code != kAVErrorCacheMiss && error.code == kAVErrorInternalServer) {
+            // for the first start
+            block(nil, 0, error) ;
+        } else {
+            if (objects == nil) {
+                objects = [NSMutableArray array];
+            }
+            [self countNewAddRequestBadge:^(NSInteger number, NSError *error) {
+                block (objects, number, nil);
+            }];
+        };
+    }];
+}
+
 - (void)refresh:(UIRefreshControl *)refreshControl {
     [self showProgress];
-    WEAKSELF
-    [[CDUserManager manager] findFriendsWithBlock : ^(NSArray *objects, NSError *error) {
-        if (refreshControl) {
-            [CDUtils stopRefreshControl:refreshControl];
-        }
-        [weakSelf hideProgress];
-        // why kAVErrorInternalServer ?
-        if (error && (error.code == kAVErrorCacheMiss || error.code == kAVErrorInternalServer)) {
-            // for the first start
-            weakSelf.users = [NSMutableArray array];
-            [weakSelf.tableView reloadData];
-        }
-        else {
-            if ([self filterError:error]) {
-                weakSelf.users = objects;
-                [weakSelf.tableView reloadData];
-            }
+    [self findFriendsAndBadgeNumberWithBlock:^(NSArray *friends, NSInteger badgeNumber, NSError *error) {
+        [self hideProgress];
+        [CDUtils stopRefreshControl:refreshControl];
+        if ([self filterError:error]) {
+            [self refreshWithFriends:friends badgeNumber:badgeNumber];
         }
     }];
-    [self setNewAddRequestBadge];
 }
 
-- (void)setNewAddRequestBadge {
-    WEAKSELF
+- (void)countNewAddRequestBadge:(AVIntegerResultBlock)block {
     [[CDUserManager manager] countAddRequestsWithBlock : ^(NSInteger number, NSError *error) {
-        [CDUtils logError:error callback: ^{
-            _addRequestN = number;
+        if (error) {
+            block(0, nil);
+        } else {
+            self.addRequestN = number;
             NSInteger oldN = [[NSUserDefaults standardUserDefaults] integerForKey:@"addRequestN"];
-            if (_addRequestN > oldN) {
-                NSString *badge = [NSString stringWithFormat:@"%ld", (long)(_addRequestN - oldN)];
-                if (weakSelf.isViewLoaded) {
-                    weakSelf.myNewFriendBadgeView.badgeText = badge;
-                }
-                weakSelf.tabBarItem.badgeValue = badge;
+            if (self.addRequestN > oldN) {
+                block(self.addRequestN - oldN, nil);
             }
             else {
-                weakSelf.tabBarItem.badgeValue = nil;
-                if (weakSelf.isViewLoaded) {
-                    weakSelf.myNewFriendBadgeView.badgeText = nil;
-                }
+                block(0, nil);
             }
-        }];
+        }
     }];
 }
 
-#pragma mark - Table View
+#pragma mark - Table view data delegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.users.count;
+    if (section == 0) {
+        return self.headerSectionDatas.count;
+    } else {
+        return self.dataSource.count;
+    }
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"ContactCell";
-    static BOOL isRegisterNib = NO;
-    if (isRegisterNib == NO) {
-        [tableView registerNib:[UINib nibWithNibName:@"CDImageLabelTableCell" bundle:nil]
-        forCellReuseIdentifier:cellIdentifier];
-    }
-    CDImageLabelTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    CDImageLabelTableCell *cell = [CDImageLabelTableCell createOrDequeueCellByTableView:tableView];
     [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
+    static NSInteger kBadgeViewTag = 103;
+    JSBadgeView *badgeView = (JSBadgeView *)[cell viewWithTag:kBadgeViewTag];
+    if (badgeView) {
+        [badgeView removeFromSuperview];
+    }
+    if (indexPath.section == 0) {
+        NSDictionary *cellDatas = self.headerSectionDatas[indexPath.row];
+        [cell.myImageView setImage:cellDatas[kCellImageKey]];
+        cell.myLabel.text = cellDatas[kCellTextKey];
+        NSInteger badgeNumber = [cellDatas[kCellBadgeKey] intValue];
+        if (badgeNumber > 0) {
+            badgeView = [[JSBadgeView alloc] initWithParentView:cell.myImageView alignment:JSBadgeViewAlignmentTopRight];
+            badgeView.tag = kBadgeViewTag;
+            badgeView.badgeText = [NSString stringWithFormat:@"%ld", badgeNumber];
+        }
+    } else {
+        AVUser *user = [self.dataSource objectAtIndex:indexPath.row];
+        [[CDUserManager manager] displayAvatarOfUser:user avatarView:cell.myImageView];
+        cell.myLabel.text = user.username;
+    }
     return cell;
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    CDImageLabelTableCell *tableCell = (CDImageLabelTableCell *)cell;
-    AVUser *user = [self.users objectAtIndex:indexPath.row];
-    [[CDUserManager manager] displayAvatarOfUser:user avatarView:tableCell.myImageView];
-    tableCell.myLabel.text = user.username;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    AVUser *user = [self.users objectAtIndex:indexPath.row];
-    [[CDIMService service] goWithUserId:user.objectId fromVC:self];
+    if (indexPath.section == 0) {
+        SEL selector = NSSelectorFromString(self.headerSectionDatas[indexPath.row][kCellSelectorKey]);
+        [self performSelector:selector withObject:nil afterDelay:0];
+    } else {
+        AVUser *user = [self.dataSource objectAtIndex:indexPath.row];
+        [[CDIMService service] goWithUserId:user.objectId fromVC:self];
+    }
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -211,7 +225,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
         NSInteger row = alertView.tag;
-        AVUser *user = [_users objectAtIndex:row];
+        AVUser *user = [self.dataSource objectAtIndex:row];
         [self showProgress];
         WEAKSELF
         [[CDUserManager manager] removeFriend : user callback : ^(BOOL succeeded, NSError *error) {

@@ -10,7 +10,14 @@
 #import "CDUtils.h"
 #import "CDCommon.h"
 
+typedef enum : NSInteger {
+    CDViewControllerStylePlain = 0,
+    CDViewControllerStylePresenting
+}CDViewControllerStyle;
+
 @interface CDBaseVC : UIViewController
+
+@property (nonatomic, assign) CDViewControllerStyle viewControllerStyle;
 
 - (void)showNetworkIndicator;
 

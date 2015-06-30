@@ -69,10 +69,15 @@ static NSString *cellIndentifier = @"cellIndentifier";
     [self.navigationController pushViewController:controller animated:YES];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 55;
+}
+
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [searchBar resignFirstResponder];
     NSString *content = searchBar.text;
     [self searchUser:content];
 }
+
 
 @end

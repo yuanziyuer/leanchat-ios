@@ -9,11 +9,13 @@
 #import "CDChatVC.h"
 #import "CDConvDetailVC.h"
 #import "CDUserInfoVC.h"
+#import "CDSelectMemberVC.h"
+#import "CDBaseNavC.h"
 
 #import "CDCacheManager.h"
 #import "AVIMUserInfoMessage.h"
 
-@interface CDChatVC ()
+@interface CDChatVC () <CDSelectMemberVCDelegate>
 
 @end
 
@@ -52,6 +54,32 @@
         CDUserInfoVC *userInfoVC = [[CDUserInfoVC alloc] initWithUser:[[CDCacheManager manager] lookupUser:msg.clientId]];
         [self.navigationController pushViewController:userInfoVC animated:YES];
     }
+}
+
+
+- (void)didInputAtSignOnMessageTextView:(XHMessageTextView *)messageInputTextView {
+    if (self.conv.type == CDConvTypeGroup) {
+        [self performSelector:@selector(goSelectMemberVC) withObject:nil afterDelay:0];
+        // weird , call below function not input @
+//        [self goSelectMemberVC];
+    }
+}
+
+- (void)goSelectMemberVC {
+    CDSelectMemberVC *selectMemberVC = [[CDSelectMemberVC alloc] init];
+    selectMemberVC.selectMemberVCDelegate = self;
+    selectMemberVC.conversation = self.conv;
+    CDBaseNavC *nav = [[CDBaseNavC alloc] initWithRootViewController:selectMemberVC];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)didSelectMember:(AVUser *)member {
+    self.messageInputView.inputTextView.text = [NSString stringWithFormat:@"%@%@ ", self.messageInputView.inputTextView.text, member.username];
+    [self performSelector:@selector(messageInputViewBecomeFristResponder) withObject:nil afterDelay:1];
+}
+
+- (void)messageInputViewBecomeFristResponder {
+    [self.messageInputView.inputTextView becomeFirstResponder];
 }
 
 @end

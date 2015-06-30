@@ -14,6 +14,10 @@
 		<string>github.com:lzwjava/leanchat-ios.git</string>
 		<key>8ACFE5037BBA7C3DB34C943CA65881B264CE6E1A</key>
 		<string>github.com:avoscloud/avoscloud-demo.git</string>
+		<key>C56E8E3043E23A7A175E97C5527406C7FCE68265</key>
+		<string>github.com:avoscloud/iOS-SDK-demos.git</string>
+		<key>DA5CD478A45D10A35DB1DA512F005720ADC755E7</key>
+		<string>github.com:lzwjava/LZConversationCell.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>LeanChat/LeanChat.xcworkspace</string>
@@ -23,6 +27,10 @@
 		<string>../..</string>
 		<key>8ACFE5037BBA7C3DB34C943CA65881B264CE6E1A</key>
 		<string>../../..</string>
+		<key>C56E8E3043E23A7A175E97C5527406C7FCE68265</key>
+		<string>../../../iOS</string>
+		<key>DA5CD478A45D10A35DB1DA512F005720ADC755E7</key>
+		<string>../../../ios/LZConversationCell</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>github.com:lzwjava/leanchat-ios.git</string>
@@ -44,9 +52,25 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C56E8E3043E23A7A175E97C5527406C7FCE68265</string>
+			<key>IDESourceControlWCCName</key>
+			<string>iOS</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>3FB232A6DFBF51988CE8982F113F876CD542B7BC</string>
 			<key>IDESourceControlWCCName</key>
 			<string>leanchat</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>DA5CD478A45D10A35DB1DA512F005720ADC755E7</string>
+			<key>IDESourceControlWCCName</key>
+			<string>LZConversationCell</string>
 		</dict>
 	</array>
 </dict>

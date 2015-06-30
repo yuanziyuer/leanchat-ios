@@ -15,6 +15,7 @@
 #import "AVIMConversation+Custom.h"
 #import "UIView+XHRemoteImage.h"
 #import "CDEmotionUtils.h"
+#import "CDMessageHelper.h"
 #import <DateTools/DateTools.h>
 
 @interface CDChatListVC ()
@@ -143,8 +144,8 @@ static NSString *cellIdentifier = @"ContactCell";
         [cell.avatarImageView setImage:conversation.icon];
         cell.nameLabel.text = conversation.displayName;
     }
-    cell.messageLabel.text = [self getMessageTitle:conversation.lastMessage];
     if (conversation.lastMessage) {
+        cell.messageTextLabel.attributedText = [[CDMessageHelper helper] attributedStringWithMessage:conversation.lastMessage conversationType:conversation.type];
         cell.timestampLabel.text = [[NSDate dateWithTimeIntervalSince1970:conversation.lastMessage.sendTimestamp / 1000] timeAgoSinceNow];
     }
     else {
@@ -157,7 +158,7 @@ static NSString *cellIdentifier = @"ContactCell";
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         AVIMConversation *conversations = [self.conversations objectAtIndex:indexPath.row];
-        [[CDChatManager manager] deleteUnreadByConversationId:conversations.conversationId];
+        [[CDChatManager manager] deleteConversationDataByConversationId:conversations.conversationId];
         [self refresh];
     }
 }
@@ -177,34 +178,5 @@ static NSString *cellIdentifier = @"ContactCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [LZConversationCell heightOfCell];
 }
-
-#pragma mark - message
-
-- (NSString *)getMessageTitle:(AVIMTypedMessage *)msg {
-    NSString *title;
-    AVIMLocationMessage *locationMsg;
-    switch (msg.mediaType) {
-        case kAVIMMessageMediaTypeText:
-            title = [CDEmotionUtils emojiStringFromString:msg.text];
-            break;
-            
-        case kAVIMMessageMediaTypeAudio:
-            title = @"声音";
-            break;
-            
-        case kAVIMMessageMediaTypeImage:
-            title = @"图片";
-            break;
-            
-        case kAVIMMessageMediaTypeLocation:
-            locationMsg = (AVIMLocationMessage *)msg;
-            title = locationMsg.text;
-            break;
-        default:
-            break;
-    }
-    return title;
-}
-
 
 @end

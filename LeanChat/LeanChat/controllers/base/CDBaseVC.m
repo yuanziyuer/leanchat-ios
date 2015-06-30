@@ -19,16 +19,24 @@
     self = [super init];
     if (self) {
         self.edgesForExtendedLayout=UIRectEdgeNone;
+        self.viewControllerStyle = CDViewControllerStylePlain;
     }
     return self;
 }
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    if (self.viewControllerStyle == CDViewControllerStylePresenting) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(dismissViewController:)];
+    }
 }
 
+- (void)dismissViewController:(id)sender {
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - util
 
 -(void)alert:(NSString*)msg{
     UIAlertView *alertView=[[UIAlertView alloc]

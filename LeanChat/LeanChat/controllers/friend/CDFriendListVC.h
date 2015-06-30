@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 LeanCloud. All rights reserved.
 //
 
-#import "CDBaseVC.h"
+#import "CDBaseTableVC.h"
 
-@interface CDFriendListVC : CDBaseVC <UITableViewDataSource, UITableViewDelegate>
+@interface CDFriendListVC : CDBaseTableVC
 
 - (void)refresh;
 

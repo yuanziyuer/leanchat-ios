@@ -33,6 +33,7 @@ static NSString *reuseIdentifier = @"Cell";
     if (self) {
         _selected = [NSMutableArray array];
         _potentialIds = [NSMutableArray array];
+        self.viewControllerStyle = CDViewControllerStylePresenting;
     }
     return self;
 }
@@ -40,7 +41,7 @@ static NSString *reuseIdentifier = @"Cell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([CDImageLabelTableCell class]) bundle:nil] forCellReuseIdentifier:reuseIdentifier];
+    [CDImageLabelTableCell registerCellToTalbeView:self.tableView];
     
     self.title = @"邀请好友";
     [self initBarButton];
@@ -49,7 +50,6 @@ static NSString *reuseIdentifier = @"Cell";
 
 - (void)initBarButton {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(invite)];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(backPressed:)];
 }
 
 - (void)refresh {
@@ -70,10 +70,6 @@ static NSString *reuseIdentifier = @"Cell";
     }];
 }
 
-- (void)backPressed:(id)sender {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-}
-
 - (void)invite {
     NSMutableArray *inviteIds = [[NSMutableArray alloc] init];
     for (int i = 0; i < self.selected.count; i++) {
@@ -82,7 +78,7 @@ static NSString *reuseIdentifier = @"Cell";
         }
     }
     if (inviteIds.count == 0) {
-        [self backPressed:nil];
+        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
         return;
     }
     AVIMConversation *conv = [[CDCacheManager manager] getCurConv];
@@ -108,7 +104,7 @@ static NSString *reuseIdentifier = @"Cell";
                 [[CDCacheManager manager] refreshCurConv: ^(BOOL succeeded, NSError *error) {
                     [self hideProgress];
                     if ([self filterError:error]) {
-                        [self backPressed:nil];
+                        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
                     }
                 }];
             }
@@ -132,10 +128,7 @@ static NSString *reuseIdentifier = @"Cell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CDImageLabelTableCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
-    if (cell == nil) {
-        cell = [[CDImageLabelTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
-    }
+    CDImageLabelTableCell *cell = [CDImageLabelTableCell createOrDequeueCellByTableView:tableView];
     NSString *userId = [self.potentialIds objectAtIndex:indexPath.row];
     AVUser *user = [[CDCacheManager manager] lookupUser:userId];
     [[CDUserManager manager] displayAvatarOfUser:user avatarView:cell.myImageView];

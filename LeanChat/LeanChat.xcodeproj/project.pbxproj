@@ -31,7 +31,6 @@
 		7073FCBA1B14718C006F2692 /* CDAddFriendVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC681B14718C006F2692 /* CDAddFriendVC.m */; };
 		7073FCBB1B14718C006F2692 /* CDAddFriendVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7073FC691B14718C006F2692 /* CDAddFriendVC.xib */; };
 		7073FCBC1B14718C006F2692 /* CDFriendListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC6B1B14718C006F2692 /* CDFriendListVC.m */; };
-		7073FCBD1B14718C006F2692 /* CDFriendListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7073FC6C1B14718C006F2692 /* CDFriendListVC.xib */; };
 		7073FCBE1B14718C006F2692 /* CDNewFriendVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC6E1B14718C006F2692 /* CDNewFriendVC.m */; };
 		7073FCBF1B14718C006F2692 /* CDProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC711B14718C006F2692 /* CDProfileVC.m */; };
 		7073FCC11B14718C006F2692 /* CDUserInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC751B14718C006F2692 /* CDUserInfoVC.m */; };
@@ -92,6 +91,7 @@
 		7073FD341B147458006F2692 /* tabbar_discover_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073FD0B1B147458006F2692 /* tabbar_discover_active@2x.png */; };
 		7073FD351B147458006F2692 /* tabbar_me_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073FD0C1B147458006F2692 /* tabbar_me_active@2x.png */; };
 		7073FD361B147458006F2692 /* wechat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073FD0D1B147458006F2692 /* wechat@2x.png */; };
+		708DF4711B41A9D20047C994 /* CDSelectMemberVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 708DF4701B41A9D20047C994 /* CDSelectMemberVC.m */; };
 		70B1C50B1B413A1300DCEC8D /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B1C4F31B413A1300DCEC8D /* back@2x.png */; };
 		70B1C50C1B413A1300DCEC8D /* bg_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B1C4F41B413A1300DCEC8D /* bg_1@2x.png */; };
 		70B1C50D1B413A1300DCEC8D /* bg_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B1C4F51B413A1300DCEC8D /* bg_2@2x.png */; };
@@ -160,7 +160,6 @@
 		7073FC691B14718C006F2692 /* CDAddFriendVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDAddFriendVC.xib; sourceTree = "<group>"; };
 		7073FC6A1B14718C006F2692 /* CDFriendListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDFriendListVC.h; sourceTree = "<group>"; };
 		7073FC6B1B14718C006F2692 /* CDFriendListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDFriendListVC.m; sourceTree = "<group>"; };
-		7073FC6C1B14718C006F2692 /* CDFriendListVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDFriendListVC.xib; sourceTree = "<group>"; };
 		7073FC6D1B14718C006F2692 /* CDNewFriendVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDNewFriendVC.h; sourceTree = "<group>"; };
 		7073FC6E1B14718C006F2692 /* CDNewFriendVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDNewFriendVC.m; sourceTree = "<group>"; };
 		7073FC701B14718C006F2692 /* CDProfileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDProfileVC.h; sourceTree = "<group>"; };
@@ -243,6 +242,8 @@
 		7073FD0B1B147458006F2692 /* tabbar_discover_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_discover_active@2x.png"; sourceTree = "<group>"; };
 		7073FD0C1B147458006F2692 /* tabbar_me_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_me_active@2x.png"; sourceTree = "<group>"; };
 		7073FD0D1B147458006F2692 /* wechat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wechat@2x.png"; sourceTree = "<group>"; };
+		708DF46F1B41A9D20047C994 /* CDSelectMemberVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSelectMemberVC.h; sourceTree = "<group>"; };
+		708DF4701B41A9D20047C994 /* CDSelectMemberVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSelectMemberVC.m; sourceTree = "<group>"; };
 		70B1C4F31B413A1300DCEC8D /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
 		70B1C4F41B413A1300DCEC8D /* bg_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_1@2x.png"; sourceTree = "<group>"; };
 		70B1C4F51B413A1300DCEC8D /* bg_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_2@2x.png"; sourceTree = "<group>"; };
@@ -417,6 +418,8 @@
 			children = (
 				7073FC531B14718C006F2692 /* CDAddMemberVC.h */,
 				7073FC541B14718C006F2692 /* CDAddMemberVC.m */,
+				708DF46F1B41A9D20047C994 /* CDSelectMemberVC.h */,
+				708DF4701B41A9D20047C994 /* CDSelectMemberVC.m */,
 				7073FC551B14718C006F2692 /* CDConvDetailVC.h */,
 				7073FC561B14718C006F2692 /* CDConvDetailVC.m */,
 				7073FC571B14718C006F2692 /* CDConvNameVC.h */,
@@ -451,7 +454,6 @@
 				7073FC691B14718C006F2692 /* CDAddFriendVC.xib */,
 				7073FC6A1B14718C006F2692 /* CDFriendListVC.h */,
 				7073FC6B1B14718C006F2692 /* CDFriendListVC.m */,
-				7073FC6C1B14718C006F2692 /* CDFriendListVC.xib */,
 				7073FC6D1B14718C006F2692 /* CDNewFriendVC.h */,
 				7073FC6E1B14718C006F2692 /* CDNewFriendVC.m */,
 			);
@@ -735,7 +737,6 @@
 				7073FD221B147458006F2692 /* login_disabled@2x.png in Resources */,
 				7073FD2C1B147458006F2692 /* menu_background@2x.png in Resources */,
 				7073FD2E1B147458006F2692 /* splash_screen.png in Resources */,
-				7073FCBD1B14718C006F2692 /* CDFriendListVC.xib in Resources */,
 				7073FD141B147458006F2692 /* Icon@2x.png in Resources */,
 				7073FCB31B14718C006F2692 /* CDConvNameVC.xib in Resources */,
 				7073FD351B147458006F2692 /* tabbar_me_active@2x.png in Resources */,
@@ -856,6 +857,7 @@
 				7073FCB51B14718C006F2692 /* CDGroupedConvListVC.m in Sources */,
 				7073FCB41B14718C006F2692 /* CDConvReportAbuseVC.m in Sources */,
 				7073FCAE1B14718C006F2692 /* CDChatVC.m in Sources */,
+				708DF4711B41A9D20047C994 /* CDSelectMemberVC.m in Sources */,
 				7073FCC41B14718C006F2692 /* CDAddRequest.m in Sources */,
 				7073FCC51B14718C006F2692 /* CDUser.m in Sources */,
 				7073FCAC1B14718C006F2692 /* CDBaseVC.m in Sources */,

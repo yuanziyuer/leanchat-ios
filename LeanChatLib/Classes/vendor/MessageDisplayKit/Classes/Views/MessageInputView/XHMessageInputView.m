@@ -523,6 +523,11 @@
             [self.delegate didSendTextAction:textView.text];
         }
         return NO;
+    } else if ([text isEqualToString:@"@"]) {
+        if ([self.delegate respondsToSelector:@selector(didInputAtSign:)]) {
+            [self.delegate didInputAtSign:self.inputTextView];
+        }
+        return YES;
     }
     return YES;
 }

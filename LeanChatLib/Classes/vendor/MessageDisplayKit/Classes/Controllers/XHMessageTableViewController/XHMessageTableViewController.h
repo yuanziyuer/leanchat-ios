@@ -129,6 +129,8 @@
  */
 - (void)loadMoreMessagesScrollTotop;
 
+- (void)didInputAtSignOnMessageTextView:(XHMessageTextView *)messageInputTextView;
+
 @end
 
 @protocol XHMessageTableViewControllerDataSource <NSObject>

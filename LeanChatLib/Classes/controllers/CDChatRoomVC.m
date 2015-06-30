@@ -65,6 +65,7 @@ static NSInteger const kOnePageSize = 20;
     [self.view addSubview:self.clientStatusView];
     // 设置自身用户名
     self.messageSender = [[CDChatManager manager].selfUser username];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -90,6 +91,7 @@ static NSInteger const kOnePageSize = 20;
     if (self.msgs.count > 0) {
         // implicitly insert
         [[CDChatManager manager] setZeroUnreadWithConversationId:self.conv.conversationId];
+        [[CDChatManager manager] setMention:NO conversationId:self.conv.conversationId];
     }
     [[XHAudioPlayerHelper shareInstance] stopAudio];
 }
@@ -145,7 +147,7 @@ static NSInteger const kOnePageSize = 20;
 - (void)updateStatusView {
     if ([CDChatManager manager].connect) {
         self.clientStatusView.hidden = YES;
-    }else {
+    } else {
         self.clientStatusView.hidden = NO;
     }
 }
@@ -349,6 +351,12 @@ static NSInteger const kOnePageSize = 20;
 
 - (void)didSelecteShareMenuItem:(XHShareMenuItem *)shareMenuItem atIndex:(NSInteger)index {
     [super didSelecteShareMenuItem:shareMenuItem atIndex:index];
+}
+
+#pragma mark - @ reference other
+
+- (void)didInputAtSignOnMessageTextView:(XHMessageTextView *)messageInputTextView {
+    
 }
 
 #pragma mark - alert and async utils

@@ -1,0 +1,90 @@
+//
+//  CDMessageHelper.m
+//  LeanChatLib
+//
+//  Created by lzw on 15/6/30.
+//  Copyright (c) 2015年 lzwjava@LeanCloud QQ: 651142978. All rights reserved.
+//
+
+#import "CDMessageHelper.h"
+#import "CDChatManager.h"
+#import "CDEmotionUtils.h"
+
+@interface CDMessageHelper ()
+
+@property (nonatomic, strong) NSCache *attributedStringCache;
+
+@end
+
+@implementation CDMessageHelper
+
++ (CDMessageHelper *)helper {
+    static dispatch_once_t token;
+    static CDMessageHelper *messageHelper;
+    dispatch_once(&token, ^{
+        messageHelper = [[CDMessageHelper alloc] init];
+    });
+    return messageHelper;
+}
+
+#pragma mark - message
+
+- (NSString *)getMessageTitle:(AVIMTypedMessage *)msg {
+    NSString *title;
+    AVIMLocationMessage *locationMsg;
+    switch (msg.mediaType) {
+        case kAVIMMessageMediaTypeText:
+            title = [CDEmotionUtils emojiStringFromString:msg.text];
+            break;
+            
+        case kAVIMMessageMediaTypeAudio:
+            title = @"声音";
+            break;
+            
+        case kAVIMMessageMediaTypeImage:
+            title = @"图片";
+            break;
+            
+        case kAVIMMessageMediaTypeLocation:
+            locationMsg = (AVIMLocationMessage *)msg;
+            title = locationMsg.text;
+            break;
+        default:
+            break;
+    }
+    return title;
+}
+
+- (NSAttributedString *)attributedStringWithMessage:(AVIMTypedMessage *)message conversationType:(CDConvType)conversationType {
+    NSString *title = [self getMessageTitle:message];
+    if (conversationType == CDConvTypeGroup) {
+        id<CDUserModel> user = [[CDChatManager manager].userDelegate getUserById:message.clientId];
+        title = [NSString stringWithFormat:@"%@: %@", user.username, title];
+    }
+    NSString *mentionText = @"[有人@你] ";
+    BOOL mentioned = [[CDChatManager manager] getMentionValueWithConverationId:message.conversationId];
+    NSString *finalText;
+    if (mentioned) {
+        finalText = [NSString stringWithFormat:@"%@%@", mentionText, title];
+    } else {
+        finalText = title;
+    }
+    if ([self.attributedStringCache objectForKey:finalText]) {
+        return [self.attributedStringCache objectForKey:finalText];
+    }
+    UIFont *font = [UIFont systemFontOfSize:13];
+    NSDictionary *attributes = @{NSForegroundColorAttributeName: [UIColor grayColor], (id)NSFontAttributeName:font};
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:finalText attributes:attributes];
+    
+    if (mentioned) {
+        NSRange range = [finalText rangeOfString:mentionText];
+        [attributedString setAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithRed:183/255.0 green:20/255.0 blue:20/255.0 alpha:1], NSFontAttributeName : font} range:range];
+    }
+    
+    [self.attributedStringCache setObject:attributedString forKey:finalText];
+    
+    return attributedString;
+}
+
+
+@end

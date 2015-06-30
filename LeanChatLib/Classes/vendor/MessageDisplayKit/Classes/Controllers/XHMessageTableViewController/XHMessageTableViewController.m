@@ -987,6 +987,13 @@ static CGPoint  delayOffset = {0.0};
     }
 }
 
+- (void)didInputAtSign:(XHMessageTextView *)messageInputTextView {
+    DLog(@"didInputAtSign");
+    if ([self.delegate respondsToSelector:@selector(didInputAtSignOnMessageTextView:)]) {
+        [self.delegate didInputAtSignOnMessageTextView:messageInputTextView];
+    }
+}
+
 - (void)didSendTextAction:(NSString *)text {
     DLog(@"text : %@", text);
     if ([self.delegate respondsToSelector:@selector(didSendText:fromSender:onDate:)]) {

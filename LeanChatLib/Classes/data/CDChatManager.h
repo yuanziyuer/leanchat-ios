@@ -59,8 +59,10 @@ typedef void (^CDRecentConversationsCallback)(NSArray *conversations, NSInteger 
 
 - (void)findRecentConversationsWithBlock:(CDRecentConversationsCallback)block;
 - (void)setZeroUnreadWithConversationId:(NSString *)conversationId;
-- (void)deleteUnreadByConversationId:(NSString *)conversationId;
+- (void)deleteConversationDataByConversationId:(NSString *)conversationId;
 - (void)incrementUnreadWithConversationId:(NSString *)conversationId;
+- (void)setMention:(BOOL)mention conversationId:(NSString *)conversationId;
+- (BOOL)getMentionValueWithConverationId:(NSString *)conversationId;
 
 - (NSString *)getPathByObjectId:(NSString *)objectId;
 - (NSString *)tmpPath;

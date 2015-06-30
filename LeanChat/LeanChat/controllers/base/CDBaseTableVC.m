@@ -27,6 +27,10 @@
     [self.view addSubview:self.tableView];
 }
 
+- (void)loadDataSource {
+    
+}
+
 - (CGFloat)getAdapterHeight {
     CGFloat adapterHeight = 0;
     if ([[[UIDevice currentDevice] systemVersion] integerValue] < 7.0) {
@@ -72,6 +76,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 55;
 }
 
 @end
