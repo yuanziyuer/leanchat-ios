@@ -424,7 +424,9 @@ static CDChatManager *instance;
                     }
                 }
                 conversation.unreadCount = [self.conversationDatas[conversation.conversationId][kConversationUnreadsKey] intValue];
-                totalUnreadCount += conversation.unreadCount;
+                if (conversation.muted == NO) {
+                    totalUnreadCount += conversation.unreadCount;
+                }
             }
             NSArray *sortedRooms = [recentConversations sortedArrayUsingComparator:^NSComparisonResult(AVIMConversation *conv1, AVIMConversation *conv2) {
                 return conv2.lastMessage.sendTimestamp - conv1.lastMessage.sendTimestamp;
