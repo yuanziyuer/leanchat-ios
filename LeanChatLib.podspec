@@ -14,5 +14,6 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.dependency 'AVOSCloud', '3.1.2.6'
   s.dependency 'AVOSCloudIM', '3.1.2.6'
+	s.dependency 'JSBadgeView', '1.4.1'
   s.dependency 'DateTools' , '1.5.0'
 end
