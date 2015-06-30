@@ -1,5 +1,4 @@
-![leanchat](https://cloud.githubusercontent.com/assets/5022872/7810175/5edda692-03d2-11e5-875d-d32ebfc887a6.gif)
-
+![leanchat](https://cloud.githubusercontent.com/assets/5022872/8431636/4eff0aca-1f6d-11e5-8728-f8f450dac380.gif)
 
 ## App Store  
 LeanChat 已经在 App Store 上架，可前往 https://itunes.apple.com/gb/app/leanchat/id943324553 或在 App Store 上搜 LeanChat。
@@ -9,7 +8,7 @@ LeanChat 已经在 App Store 上架，可前往 https://itunes.apple.com/gb/app/
 
 ## 宝贵意见
 
-如果有任何问题，欢迎提 [issue](https://github.com/leancloud/leanchat-ios/issues)，写上你不明白的地方，看到后会尽快给予帮助。
+如果有任何问题，欢迎提 [issue](https://github.com/leancloud/leanchat-ios/issues) (同时 @lzwjava 一下)，写上你不明白的地方，看到后会尽快给予帮助。
 
 ## 下载
 请直接点击 Github 上的`Download Zip`，如图所示，这样只下载最新版。如果是 `git clone`，则可能非常慢，因为含杂很大的提交历史。某次测试两者是1.5M:40M。
