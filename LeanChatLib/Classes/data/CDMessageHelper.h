@@ -14,6 +14,6 @@
 
 + (CDMessageHelper *)helper;
 
-- (NSAttributedString *)attributedStringWithMessage:(AVIMTypedMessage *)message conversationType:(CDConvType)conversationType;
+- (NSAttributedString *)attributedStringWithMessage:(AVIMTypedMessage *)message conversation:(AVIMConversation *)conversation;
 
 @end

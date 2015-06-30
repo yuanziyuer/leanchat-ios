@@ -75,7 +75,7 @@
 
 - (void)didSelectMember:(AVUser *)member {
     self.messageInputView.inputTextView.text = [NSString stringWithFormat:@"%@%@ ", self.messageInputView.inputTextView.text, member.username];
-    [self performSelector:@selector(messageInputViewBecomeFristResponder) withObject:nil afterDelay:1];
+    [self performSelector:@selector(messageInputViewBecomeFristResponder) withObject:nil afterDelay:0];
 }
 
 - (void)messageInputViewBecomeFristResponder {

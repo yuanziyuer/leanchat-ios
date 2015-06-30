@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <JSBadgeView/JSBadgeView.h>
 
 @interface LZConversationCell : UITableViewCell
 
@@ -19,7 +20,8 @@
 @property (nonatomic, strong) UIImageView *avatarImageView;
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UILabel  *messageTextLabel;
-@property (nonatomic, assign) NSInteger unreadCount;
+@property (nonatomic, strong) JSBadgeView *badgeView;
+@property (nonatomic, strong) UIView *litteBadgeView;
 @property (nonatomic, strong) UILabel *timestampLabel;
 
 

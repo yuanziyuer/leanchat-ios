@@ -7,7 +7,6 @@
 //
 
 #import "LZConversationCell.h"
-#import <JSBadgeView/JSBadgeView.h>
 
 static CGFloat kLZImageSize = 45;
 static CGFloat kLZVerticalSpacing = 8;
@@ -17,11 +16,10 @@ static CGFloat kLZTimestampeLabelWidth = 100;
 static CGFloat kLZNameLabelHeightProportion = 3.0 / 5;
 static CGFloat kLZNameLabelHeight;
 static CGFloat kLZMessageLabelHeight;
+static CGFloat kLZLittleBadgeSize = 10;
 
 
 @interface LZConversationCell ()
-
-@property (nonatomic, strong) JSBadgeView *badgeView;
 
 @end
 
@@ -61,6 +59,7 @@ static CGFloat kLZMessageLabelHeight;
     
     [self addSubview:self.avatarImageView];
     [self addSubview:self.timestampLabel];
+    [self addSubview:self.litteBadgeView];
     [self addSubview:self.nameLabel];
     [self addSubview:self.messageTextLabel];
 }
@@ -70,6 +69,18 @@ static CGFloat kLZMessageLabelHeight;
         _avatarImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kLZHorizontalSpacing, kLZVerticalSpacing, kLZImageSize, kLZImageSize)];
     }
     return _avatarImageView;
+}
+
+- (UIView *)litteBadgeView {
+    if (_litteBadgeView == nil) {
+        _litteBadgeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kLZLittleBadgeSize, kLZLittleBadgeSize)];
+        _litteBadgeView.backgroundColor = [UIColor redColor];
+        _litteBadgeView.layer.masksToBounds = YES;
+        _litteBadgeView.layer.cornerRadius = kLZLittleBadgeSize / 2;
+        _litteBadgeView.center = CGPointMake(CGRectGetMaxX(_avatarImageView.frame), CGRectGetMinY(_avatarImageView.frame));
+        _litteBadgeView.hidden = YES;
+    }
+    return _litteBadgeView;
 }
 
 - (UILabel *)timestampLabel {
@@ -105,20 +116,20 @@ static CGFloat kLZMessageLabelHeight;
     return _badgeView;
 }
 
-- (void)setUnreadCount:(NSInteger)unreadCount {
-    if (unreadCount > 0) {
-        self.badgeView.badgeText = [NSString stringWithFormat:@"%ld", (long)unreadCount];
-    }
-    else {
-        self.badgeView.badgeText = nil;
-    }
-}
-
 - (void)awakeFromNib {
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
+}
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    self.badgeView.badgeText = nil;
+    self.litteBadgeView.hidden = YES;
+    self.messageTextLabel.text = nil;
+    self.timestampLabel.text = nil;
+    self.nameLabel.text = nil;
 }
 
 @end

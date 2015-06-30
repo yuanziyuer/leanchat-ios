@@ -145,13 +145,16 @@ static NSString *cellIdentifier = @"ContactCell";
         cell.nameLabel.text = conversation.displayName;
     }
     if (conversation.lastMessage) {
-        cell.messageTextLabel.attributedText = [[CDMessageHelper helper] attributedStringWithMessage:conversation.lastMessage conversationType:conversation.type];
+        cell.messageTextLabel.attributedText = [[CDMessageHelper helper] attributedStringWithMessage:conversation.lastMessage conversation:conversation];
         cell.timestampLabel.text = [[NSDate dateWithTimeIntervalSince1970:conversation.lastMessage.sendTimestamp / 1000] timeAgoSinceNow];
     }
-    else {
-        cell.timestampLabel.text = @"";
+    if (conversation.unreadCount > 0) {
+        if (conversation.muted) {
+            cell.litteBadgeView.hidden = NO;
+        } else {
+            cell.badgeView.badgeText = [NSString stringWithFormat:@"%ld", conversation.unreadCount];
+        }
     }
-    cell.unreadCount = conversation.unreadCount;
     return cell;
 }
 

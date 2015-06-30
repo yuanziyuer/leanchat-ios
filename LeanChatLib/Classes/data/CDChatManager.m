@@ -382,13 +382,14 @@ static CDChatManager *instance;
 - (void)cacheConvsWithIds:(NSMutableSet *)convids callback:(AVBooleanResultBlock)callback {
     NSMutableSet *uncacheConvids = [[NSMutableSet alloc] init];
     for (NSString *convid in convids) {
-        if ([self lookupConvById:convid] == nil) {
+        AVIMConversation * conversation = [self lookupConvById:convid];
+        if (conversation == nil || conversation.members.count == 0) {
             [uncacheConvids addObject:convid];
         }
     }
     [self fetchConvsWithConvids:uncacheConvids callback: ^(NSArray *objects, NSError *error) {
         if (error) {
-            callback(nil, error);
+            callback(NO, error);
         }
         else {
             [self saveConversationsToLocal:objects];

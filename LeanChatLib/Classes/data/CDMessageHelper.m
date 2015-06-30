@@ -55,11 +55,14 @@
     return title;
 }
 
-- (NSAttributedString *)attributedStringWithMessage:(AVIMTypedMessage *)message conversationType:(CDConvType)conversationType {
+- (NSAttributedString *)attributedStringWithMessage:(AVIMTypedMessage *)message conversation:(AVIMConversation *)conversation {
     NSString *title = [self getMessageTitle:message];
-    if (conversationType == CDConvTypeGroup) {
+    if (conversation.type == CDConvTypeGroup) {
         id<CDUserModel> user = [[CDChatManager manager].userDelegate getUserById:message.clientId];
         title = [NSString stringWithFormat:@"%@: %@", user.username, title];
+    }
+    if (conversation.muted && conversation.unreadCount > 0) {
+        title = [NSString stringWithFormat:@"[%ld条] %@", conversation.unreadCount, title];
     }
     NSString *mentionText = @"[有人@你] ";
     BOOL mentioned = [[CDChatManager manager] getMentionValueWithConverationId:message.conversationId];
