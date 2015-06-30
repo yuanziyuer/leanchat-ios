@@ -1,5 +1,4 @@
-![leanchat](https://cloud.githubusercontent.com/assets/5022872/7810175/5edda692-03d2-11e5-875d-d32ebfc887a6.gif)
-
+![leanchat](https://cloud.githubusercontent.com/assets/5022872/8430988/7f7bf1a4-1f68-11e5-9c50-e6ea96bfe2f6.gif)
 
 ## App Store  
 LeanChat 已经在 App Store 上架，可前往 https://itunes.apple.com/gb/app/leanchat/id943324553 或在 App Store 上搜 LeanChat。
