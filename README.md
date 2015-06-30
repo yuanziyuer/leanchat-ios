@@ -19,7 +19,7 @@ LeanChat 已经在 App Store 上架，可前往 https://itunes.apple.com/gb/app/
 ## 运行
 ```bash
   cd LeanChat
-  pod install --verbose 
+  pod install --verbose  // 如果本地有 AVOSCloud 依赖库，可加选项 --no-repo-update 加快速度
   open LeanChat.workspace
 ```
 
