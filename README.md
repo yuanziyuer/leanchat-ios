@@ -15,7 +15,7 @@ LeanChat 已经在 App Store 上架，可前往 https://itunes.apple.com/gb/app/
 ## 运行
 ```bash
   cd LeanChat
-  pod install --verbose --no-repo-update // 拯救短暂的人生
+  pod install --verbose 
   open LeanChat.workspace
 ```
 
