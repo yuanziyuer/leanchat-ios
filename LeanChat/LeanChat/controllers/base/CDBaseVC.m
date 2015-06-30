@@ -55,7 +55,7 @@
         }
         else {
 #ifndef DEBUG
-            [CDUtils alert:[NSString stringWithFormat:@"%@", error]];
+            [self alert:[NSString stringWithFormat:@"%@", error]];
 #else
             NSString *info = error.localizedDescription;
             [self alert:info ? info : [NSString stringWithFormat:@"%@", error]];
