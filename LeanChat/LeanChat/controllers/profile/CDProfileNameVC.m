@@ -16,7 +16,7 @@
 @implementation CDNameForm
 
 - (NSArray *)fields {
-    return @[@{ FXFormFieldKey:@"name", FXFormFieldTitle:@"姓名" }];
+    return @[@{ FXFormFieldKey:@"name", FXFormFieldTitle:@"用户名" }];
 }
 
 - (NSArray *)extraFields {
@@ -36,7 +36,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.title = @"修改姓名";
+        self.title = @"修改用户名";
     }
     return self;
 }

@@ -143,7 +143,8 @@
     NSMutableDictionary *sectionDictionary = self.dataSource[indexPath.section][indexPath.row];
     UIImage *image = [sectionDictionary objectForKey:kMutipleSectionImageKey];
     if (image != nil) {
-        return image.size.height + 2 * kMutipleSectionVerticalSpacing;
+        CGFloat verticalSpacing = image.size.height / 2;
+        return MAX(image.size.height + verticalSpacing, 44);
     }
     return 44;
 }

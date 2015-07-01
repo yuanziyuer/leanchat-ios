@@ -59,7 +59,7 @@
     [[LZPushManager manager] registerForRemoteNotification];
     
 #ifdef DEBUG
-    [AVPush setProductionMode:NO];
+    [AVPush setProductionMode:NO];  // 如果要测试申请好友是否有推送，请设置为 YES
     [AVAnalytics setAnalyticsEnabled:NO];
     [AVOSCloud setAllLogsEnabled:YES];
 #endif
@@ -117,13 +117,13 @@
     WEAKSELF
     [CDChatManager manager].userDelegate = [CDIMService service];
     [[CDChatManager manager] openWithClientId:user.objectId callback: ^(BOOL succeeded, NSError *error) {
+        DLog(@"%@", error);
         CDBaseTabC *tab = [[CDBaseTabC alloc] init];
         [weakSelf addItemController:[[CDConvsVC alloc] init] toTabBarController:tab];
         [weakSelf addItemController:[[CDFriendListVC alloc] init] toTabBarController:tab];
         [weakSelf addItemController:[[CDProfileVC alloc] init] toTabBarController:tab];
         
-        tab.selectedIndex = 0;
-        DLog(@"%@", error);
+        tab.selectedIndex = 1;
         weakSelf.window.rootViewController = tab;
     }];
 }

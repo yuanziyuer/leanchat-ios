@@ -45,9 +45,7 @@ static NSString *kCellSelectorKey = @"selector";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
-                                              initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                              target:self action:@selector(goAddFriend:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"contact_IconAdd"] style:UIBarButtonItemStylePlain target:self action:@selector(goAddFriend:)];
     [self setupTableView];
     [self refresh];
 }
@@ -173,6 +171,14 @@ static NSString *kCellSelectorKey = @"selector";
     return 2;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return @[@"", @""][section];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return [@[@0, @14][section] intValue];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CDImageLabelTableCell *cell = [CDImageLabelTableCell createOrDequeueCellByTableView:tableView];
     [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
@@ -224,14 +230,12 @@ static NSString *kCellSelectorKey = @"selector";
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
-        NSInteger row = alertView.tag;
-        AVUser *user = [self.dataSource objectAtIndex:row];
+        AVUser *user = [self.dataSource objectAtIndex:alertView.tag];
         [self showProgress];
-        WEAKSELF
         [[CDUserManager manager] removeFriend : user callback : ^(BOOL succeeded, NSError *error) {
             [self hideProgress];
             if ([self filterError:error]) {
-                [weakSelf refresh];
+                [self refresh];
             }
         }];
     }

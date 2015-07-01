@@ -50,7 +50,7 @@
 - (void)loadDataSource {
     [self showProgress];
     [[CDUserManager manager] getBigAvatarImageOfUser:[AVUser currentUser] block:^(UIImage *image) {
-        [[LCUserFeedbackAgent sharedInstance] countUnreadFeedbackThreadsWithContact:[AVUser currentUser].objectId block:^(NSInteger number, NSError *error) {
+        [[LCUserFeedbackAgent sharedInstance] countUnreadFeedbackThreadsWithContact:[AVUser currentUser].objectId block: ^(NSInteger number, NSError *error) {
             [self hideProgress];
             self.dataSource = [NSMutableArray array];
             [self.dataSource addObject:@[@{ kMutipleSectionImageKey:image, kMutipleSectionTitleKey:[AVUser currentUser].username, kMutipleSectionSelectorKey:NSStringFromSelector(@selector(showEditActionSheet:)) }]];
