@@ -35,12 +35,13 @@
 }
 
 - (void)loadDataSource {
-    NSSet *userIds = [NSSet setWithArray:self.conversation.members];
+    NSMutableSet *userIds = [NSMutableSet setWithArray:self.conversation.members];
+    [userIds removeObject:[AVIMClient defaultClient].clientId];
     [self showProgress];
     [[CDCacheManager manager] cacheUsersWithIds:userIds callback:^(BOOL succeeded, NSError *error) {
         [self hideProgress];
         if ([self filterError:error]) {
-            self.dataSource  = [self.conversation.members mutableCopy];
+            self.dataSource  = [[userIds allObjects] mutableCopy];
             [self.tableView reloadData];
         }
     }];
