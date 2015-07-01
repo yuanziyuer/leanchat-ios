@@ -112,11 +112,10 @@
 
 - (void)toMain{
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
-    AVUser *user = [AVUser currentUser];
-    [[CDCacheManager manager] registerUser:user];
+    [[CDCacheManager manager] registerUsers:@[[AVUser currentUser]]];
     WEAKSELF
     [CDChatManager manager].userDelegate = [CDIMService service];
-    [[CDChatManager manager] openWithClientId:user.objectId callback: ^(BOOL succeeded, NSError *error) {
+    [[CDChatManager manager] openWithClientId:[AVUser currentUser].objectId callback: ^(BOOL succeeded, NSError *error) {
         DLog(@"%@", error);
         CDBaseTabC *tab = [[CDBaseTabC alloc] init];
         [weakSelf addItemController:[[CDConvsVC alloc] init] toTabBarController:tab];

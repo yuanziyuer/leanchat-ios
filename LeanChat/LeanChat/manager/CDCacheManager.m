@@ -16,8 +16,7 @@ static CDCacheManager *cacheManager;
 
 @interface CDCacheManager ()
 
-@property (nonatomic, strong) NSMutableDictionary *cachedConvs;
-@property (nonatomic, strong) NSMutableDictionary *cachedUsers;
+@property (nonatomic, strong) NSCache *userCache;
 @property (nonatomic, strong) NSString *currentConversationId;
 
 @end
@@ -36,8 +35,7 @@ static CDCacheManager *cacheManager;
 {
     self = [super init];
     if (self) {
-        _cachedConvs = [NSMutableDictionary dictionary];
-        _cachedUsers = [NSMutableDictionary dictionary];
+        _userCache = [[NSCache alloc] init];
     }
     return self;
 }
@@ -45,52 +43,13 @@ static CDCacheManager *cacheManager;
 #pragma mark - user cache
 
 - (void)registerUsers:(NSArray *)users {
-    for (int i = 0; i < users.count; i++) {
-        [self registerUser:[users objectAtIndex:i]];
+    for (AVUser *user in users) {
+        [self.userCache setObject:user forKey:user.objectId];
     }
-}
-
-- (void)registerUser:(AVUser *)user {
-    [self.cachedUsers setObject:user forKey:user.objectId];
 }
 
 - (AVUser *)lookupUser:(NSString *)userId {
-    return [self.cachedUsers valueForKey:userId];
-}
-
-#pragma mark - group cache
-
-- (AVIMConversation *)lookupConvById:(NSString *)convid {
-    return [self.cachedConvs valueForKey:convid];
-}
-
-- (void)registerConv:(AVIMConversation *)conv {
-    [self.cachedConvs setObject:conv forKey:conv.conversationId];
-}
-
-- (void)registerConvs:(NSArray *)convs {
-    for (AVIMConversation *conv in convs) {
-        [self registerConv:conv];
-    }
-}
-
-- (void)cacheConvsWithIds:(NSMutableSet *)convids callback:(AVArrayResultBlock)callback {
-    NSMutableSet *uncacheConvids = [[NSMutableSet alloc] init];
-    for (NSString *convid in convids) {
-        if ([self lookupConvById:convid] == nil) {
-            [uncacheConvids addObject:convid];
-        }
-    }
-    [[CDChatManager manager] fetchConvsWithConvids:uncacheConvids callback: ^(NSArray *objects, NSError *error) {
-        if (error) {
-            callback(nil, error);
-        } else {
-            for (AVIMConversation *conv in objects) {
-                [self registerConv:conv];
-            }
-            callback(objects, error);
-        }
-    }];
+    return [self.userCache objectForKey:userId];
 }
 
 - (void)cacheUsersWithIds:(NSSet *)userIds callback:(AVBooleanResultBlock)callback {
@@ -101,7 +60,7 @@ static CDCacheManager *cacheManager;
         }
     }
     if ([uncachedUserIds count] > 0) {
-        [[CDUserManager manager]findUsersByIds:[[NSMutableArray alloc] initWithArray:[uncachedUserIds allObjects]] callback: ^(NSArray *objects, NSError *error) {
+        [[CDUserManager manager] findUsersByIds:[[NSMutableArray alloc] initWithArray:[uncachedUserIds allObjects]] callback: ^(NSArray *objects, NSError *error) {
             if (objects) {
                 [[CDCacheManager manager] registerUsers:objects];
             }
@@ -113,15 +72,14 @@ static CDCacheManager *cacheManager;
     }
 }
 
-#pragma mark - current cache group
+#pragma mark - current conversation
 
 - (void)setCurConv:(AVIMConversation *)conv {
-    [self registerConv:conv];
     self.currentConversationId = conv.conversationId;
 }
 
 - (AVIMConversation *)getCurConv {
-    return [self lookupConvById:self.currentConversationId];
+    return [[CDChatManager manager] lookupConvById:self.currentConversationId];
 }
 
 - (void)refreshCurConv:(AVBooleanResultBlock)callback {
@@ -131,7 +89,6 @@ static CDCacheManager *cacheManager;
                 callback(NO, error);
             }
             else {
-                [self setCurConv:conversation];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationConversationUpdated object:nil];
                 callback(YES, nil);
             }
