@@ -22,6 +22,8 @@ LeanChat 已经在 App Store 上架，可前往 https://itunes.apple.com/gb/app/
   open LeanChat.workspace
 ```
 
+若遇到`definition of 'AVUser' must be imported from module 'LeanChatLib.CDChatListVC' before it is required` 类似的问题，可在菜单 Product 按住 Option ，点击 [Clean Build Folder](http://stackoverflow.com/questions/8087065/xcode-4-clean-vs-clean-build-folder)，清空掉所有 Build 文件，重新编译即可。此问题似乎是 Cocoapods 在进行复杂编译的时候出现的Bug。
+
 这里可以看到三个项目，介绍如下。
 
 ## 子项目介绍
