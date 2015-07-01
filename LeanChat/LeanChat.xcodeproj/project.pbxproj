@@ -112,6 +112,7 @@
 		70DC7DB31B2F531F0047B7AB /* CDIMService.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC7DAD1B2F531F0047B7AB /* CDIMService.m */; };
 		70DC7DB41B2F531F0047B7AB /* CDUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC7DAF1B2F531F0047B7AB /* CDUserManager.m */; };
 		70DC7DB51B2F531F0047B7AB /* CDUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC7DB11B2F531F0047B7AB /* CDUtils.m */; };
+		70EB81591B4399AB0010659C /* CDProfileNameVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 70EB81581B4399AB0010659C /* CDProfileNameVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -280,6 +281,8 @@
 		70DC7DAF1B2F531F0047B7AB /* CDUserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUserManager.m; sourceTree = "<group>"; };
 		70DC7DB01B2F531F0047B7AB /* CDUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUtils.h; sourceTree = "<group>"; };
 		70DC7DB11B2F531F0047B7AB /* CDUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUtils.m; sourceTree = "<group>"; };
+		70EB81571B4399AB0010659C /* CDProfileNameVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDProfileNameVC.h; sourceTree = "<group>"; };
+		70EB81581B4399AB0010659C /* CDProfileNameVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDProfileNameVC.m; sourceTree = "<group>"; };
 		91EC9DF56C410F2764E79F62 /* Pods-LeanChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LeanChat/Pods-LeanChat.debug.xcconfig"; sourceTree = "<group>"; };
 		EF79D434DB9DF2EFE3DD51B2 /* libPods-LeanChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LeanChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -465,6 +468,8 @@
 			children = (
 				7073FC701B14718C006F2692 /* CDProfileVC.h */,
 				7073FC711B14718C006F2692 /* CDProfileVC.m */,
+				70EB81571B4399AB0010659C /* CDProfileNameVC.h */,
+				70EB81581B4399AB0010659C /* CDProfileNameVC.m */,
 				7073FC741B14718C006F2692 /* CDUserInfoVC.h */,
 				7073FC751B14718C006F2692 /* CDUserInfoVC.m */,
 			);
@@ -886,6 +891,7 @@
 				70B1C5101B413A1300DCEC8D /* LCHttpClient.m in Sources */,
 				7073FCB11B14718C006F2692 /* CDConvDetailVC.m in Sources */,
 				70B1C51E1B41430500DCEC8D /* MCPhotographyHelper.m in Sources */,
+				70EB81591B4399AB0010659C /* CDProfileNameVC.m in Sources */,
 				7073FCB91B14718C006F2692 /* CDRegisterVC.m in Sources */,
 				7073FCAF1B14718C006F2692 /* CDConvsVC.m in Sources */,
 				70B1C5111B413A1300DCEC8D /* LCUserFeedbackAgent.m in Sources */,

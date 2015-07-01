@@ -91,7 +91,7 @@ static CDUserManager *userManager;
     }];
 }
 
-- (void)getBigAvatarimageOfUser:(AVUser *)user block:(void (^)(UIImage *image))block {
+- (void)getBigAvatarImageOfUser:(AVUser *)user block:(void (^)(UIImage *image))block {
     CGFloat avatarWidth = 60;
     CGSize avatarSize = CGSizeMake(avatarWidth, avatarWidth);
     [[CDUserManager manager] getAvatarImageOfUser:user block: ^(UIImage *image) {
@@ -135,6 +135,12 @@ static CDUserManager *userManager;
             [user saveInBackgroundWithBlock:callback];
         }
     }];
+}
+
+- (void)updateUsername:(NSString *)username block:(AVBooleanResultBlock)block{
+    AVUser *user = [AVUser currentUser];
+    user.username = username;
+    [user saveInBackgroundWithBlock:block];
 }
 
 - (void)addFriend:(AVUser *)user callback:(AVBooleanResultBlock)callback {

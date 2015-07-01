@@ -22,6 +22,7 @@ target 'LeanChat' do
     pod 'LZAlertViewHelper' , '0.0.2'
     pod 'JSBadgeView', '1.4.1'
     pod 'LZMembersCell', '0.0.2'
+    pod 'FXForms', '1.2.13'
 end
 
 target 'LeanChatExample' do

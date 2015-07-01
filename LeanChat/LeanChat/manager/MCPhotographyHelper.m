@@ -35,6 +35,7 @@
     }
     self.didFinishTakeMediaCompled = [compled copy];
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.navigationBar.barStyle = UIBarStyleBlack;
     imagePickerController.editing = YES;
     imagePickerController.delegate = self;
     imagePickerController.allowsEditing = allowsEditing;

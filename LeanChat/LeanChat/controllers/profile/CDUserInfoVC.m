@@ -43,7 +43,7 @@
     [[CDUserManager manager] isMyFriend : _user block : ^(BOOL isFriend, NSError *error) {
         [self hideProgress];
         if ([self filterError:error]) {
-            [[CDUserManager manager] getBigAvatarimageOfUser:_user block:^(UIImage *image) {
+            [[CDUserManager manager] getBigAvatarImageOfUser:_user block:^(UIImage *image) {
                 self.dataSource =[NSMutableArray array];
                 [self.dataSource addObject:@[@{kMutipleSectionImageKey:image, kMutipleSectionTitleKey:self.user.username}]];
                 NSString *title;
