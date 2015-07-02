@@ -21,6 +21,8 @@
 #import "CDAddRequest.h"
 #import "CDIMService.h"
 #import "LZPushManager.h"
+#import <iRate/iRate.h>
+#import <iVersion/iVersion.h>
 
 @implementation CDAppDelegate
 
@@ -111,6 +113,11 @@
 }
 
 - (void)toMain{
+    [iRate sharedInstance].applicationBundleID = @"com.avoscloud.leanchat";
+    [iRate sharedInstance].onlyPromptIfLatestVersion = NO;
+    [iRate sharedInstance].previewMode = NO;
+    [iVersion sharedInstance].applicationBundleID = @"com.avoscloud.leanchat";
+    
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     [[CDCacheManager manager] registerUsers:@[[AVUser currentUser]]];
     WEAKSELF
