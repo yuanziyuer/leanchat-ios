@@ -43,7 +43,7 @@ static NSString *cellIdentifier = @"ContactCell";
     [super viewDidLoad];
     [LZConversationCell registerCellToTableView:self.tableView];
     self.refreshControl = [self getRefreshControl];
-    // 当在联系人 Tab 的时候，收到消息，badge 增加，所以需要一直监听
+    // 当在其它 Tab 的时候，收到消息 badge 增加，所以需要一直监听
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:kCDNotificationMessageReceived object:nil];
 }
 
@@ -52,9 +52,7 @@ static NSString *cellIdentifier = @"ContactCell";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateStatusView) name:kCDNotificationConnectivityUpdated object:nil];
     [self updateStatusView];
     // 刷新 unread badge 和新增的对话
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self refresh:nil];
-    });
+    [self performSelector:@selector(refresh:) withObject:nil afterDelay:0];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {

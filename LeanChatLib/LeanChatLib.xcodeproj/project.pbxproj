@@ -314,6 +314,9 @@
 		706E0DD21B31F52600F9C891 /* weChatBubble_Sending_Cavern@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 706E0C961B31F52600F9C891 /* weChatBubble_Sending_Cavern@2x.png */; };
 		706E0DD31B31F52600F9C891 /* weChatBubble_Sending_LeanChat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 706E0C971B31F52600F9C891 /* weChatBubble_Sending_LeanChat@2x.png */; };
 		706E0DD41B31F52600F9C891 /* weChatBubble_Sending_Solid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 706E0C981B31F52600F9C891 /* weChatBubble_Sending_Solid@2x.png */; };
+		709233061B450EB800E2D1F5 /* CDSoundManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 709233041B450EB800E2D1F5 /* CDSoundManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		709233071B450EB800E2D1F5 /* CDSoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 709233051B450EB800E2D1F5 /* CDSoundManager.m */; };
+		7092330F1B4532B000E2D1F5 /* defaultSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7092330E1B4532B000E2D1F5 /* defaultSettings.plist */; };
 		70F5897C1B424B8F008C2C36 /* LZConversationCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 70F5897A1B424B8F008C2C36 /* LZConversationCell.h */; };
 		70F5897D1B424B8F008C2C36 /* LZConversationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F5897B1B424B8F008C2C36 /* LZConversationCell.m */; };
 		70F589841B425045008C2C36 /* CDMessageHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 70F589821B425045008C2C36 /* CDMessageHelper.h */; };
@@ -630,6 +633,12 @@
 		706E0C981B31F52600F9C891 /* weChatBubble_Sending_Solid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChatBubble_Sending_Solid@2x.png"; sourceTree = "<group>"; };
 		706E0C991B31F52600F9C891 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MessageDisplayKitString.strings"; sourceTree = "<group>"; };
 		7073F9461B1467F5006F2692 /* LeanChatLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LeanChatLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		709233021B44F6E600E2D1F5 /* loudReceive.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = loudReceive.caf; sourceTree = "<group>"; };
+		709233031B44F6E600E2D1F5 /* send.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = send.caf; sourceTree = "<group>"; };
+		709233041B450EB800E2D1F5 /* CDSoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSoundManager.h; sourceTree = "<group>"; };
+		709233051B450EB800E2D1F5 /* CDSoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSoundManager.m; sourceTree = "<group>"; };
+		709233081B45108200E2D1F5 /* receive.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = receive.caf; sourceTree = "<group>"; };
+		7092330E1B4532B000E2D1F5 /* defaultSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = defaultSettings.plist; sourceTree = "<group>"; };
 		70F5897A1B424B8F008C2C36 /* LZConversationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZConversationCell.h; sourceTree = "<group>"; };
 		70F5897B1B424B8F008C2C36 /* LZConversationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZConversationCell.m; sourceTree = "<group>"; };
 		70F589821B425045008C2C36 /* CDMessageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDMessageHelper.h; sourceTree = "<group>"; };
@@ -661,6 +670,8 @@
 				701AF7931B3C704F0088A43B /* CDChatManager.m */,
 				70F589821B425045008C2C36 /* CDMessageHelper.h */,
 				70F589831B425045008C2C36 /* CDMessageHelper.m */,
+				709233041B450EB800E2D1F5 /* CDSoundManager.h */,
+				709233051B450EB800E2D1F5 /* CDSoundManager.m */,
 				701AF7941B3C704F0088A43B /* CDMacros.h */,
 				701AF7951B3C704F0088A43B /* CDUserModel.h */,
 			);
@@ -1225,6 +1236,10 @@
 		706E0C391B31F52500F9C891 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				709233081B45108200E2D1F5 /* receive.caf */,
+				709233021B44F6E600E2D1F5 /* loudReceive.caf */,
+				709233031B44F6E600E2D1F5 /* send.caf */,
+				7092330E1B4532B000E2D1F5 /* defaultSettings.plist */,
 				706E0C3A1B31F52500F9C891 /* AddGroupMemberBtn@2x.png */,
 				706E0C3B1B31F52500F9C891 /* AddGroupMemberBtnHL@2x.png */,
 				706E0C3C1B31F52500F9C891 /* avator@2x.png */,
@@ -1377,6 +1392,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				709233061B450EB800E2D1F5 /* CDSoundManager.h in Headers */,
 				701AF79A1B3C704F0088A43B /* CDChatManager.h in Headers */,
 				701AF79D1B3C704F0088A43B /* CDUserModel.h in Headers */,
 				70271C3C1B3BE72E0030CD6C /* UIImage+Icon.h in Headers */,
@@ -1577,6 +1593,7 @@
 				706E0D821B31F52600F9C891 /* contacts_add_voip@2x.png in Resources */,
 				706E0D761B31F52600F9C891 /* Info.plist in Resources */,
 				706E0DC01B31F52600F9C891 /* SenderVoiceNodePlaying@2x.png in Resources */,
+				7092330F1B4532B000E2D1F5 /* defaultSettings.plist in Resources */,
 				706E0D7A1B31F52600F9C891 /* CellBlueSelected@2x.png in Resources */,
 				706E0DD21B31F52600F9C891 /* weChatBubble_Sending_Cavern@2x.png in Resources */,
 				706E0DC61B31F52600F9C891 /* sharemore_video@2x.png in Resources */,
@@ -1792,6 +1809,7 @@
 				706E0C9D1B31F52600F9C891 /* CDChatListVC.m in Sources */,
 				706E0CDF1B31F52600F9C891 /* XHVoiceRecordHelper.m in Sources */,
 				706E0D211B31F52600F9C891 /* SEConstants.m in Sources */,
+				709233071B450EB800E2D1F5 /* CDSoundManager.m in Sources */,
 				706E0CB31B31F52600F9C891 /* EmojiEmoticons.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

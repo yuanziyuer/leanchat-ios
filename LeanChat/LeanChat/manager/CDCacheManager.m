@@ -99,5 +99,4 @@ static CDCacheManager *cacheManager;
     }
 }
 
-
 @end

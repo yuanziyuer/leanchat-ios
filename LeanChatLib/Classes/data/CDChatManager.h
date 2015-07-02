@@ -21,10 +21,11 @@ typedef void (^CDRecentConversationsCallback)(NSArray *conversations, NSInteger 
 
 @required
 
-//同步方法
+//同步方法，下面的 cacheUserByIds:block 方法是为了 getUserById: 能同步返回用户信息
 - (id <CDUserModel> )getUserById:(NSString *)userId;
 
 //对于每条消息，都会调用这个方法来缓存发送者的用户信息，以便 getUserById 直接返回用户信息
+// 可全局搜索下面函数来看看作用
 - (void)cacheUserByIds:(NSSet *)userIds block:(AVBooleanResultBlock)block;
 
 @end
@@ -34,8 +35,8 @@ typedef void (^CDRecentConversationsCallback)(NSArray *conversations, NSInteger 
 @property (nonatomic, strong) id <CDUserDelegate> userDelegate;
 
 @property (nonatomic, strong, readonly) NSString *selfId;
-@property (nonatomic, strong) id <CDUserModel> selfUser;
 @property (nonatomic, assign, readonly) BOOL connect;
+@property (nonatomic, strong) NSString *chattingConversationId;
 
 + (instancetype)manager;
 
@@ -45,7 +46,6 @@ typedef void (^CDRecentConversationsCallback)(NSArray *conversations, NSInteger 
 - (void)closeWithCallback:(AVBooleanResultBlock)callback;
 
 - (void)fecthConvWithConvid:(NSString *)convid callback:(AVIMConversationResultBlock)callback;
-- (void)fetchConvsWithConvids:(NSSet *)convids callback:(AVIMArrayResultBlock)callback;
 - (void)fetchConvWithOtherId:(NSString *)otherId callback:(AVIMConversationResultBlock)callback;
 - (void)fetchConvWithMembers:(NSArray *)members callback:(AVIMConversationResultBlock)callback;
 - (void)findGroupedConvsWithBlock:(AVIMArrayResultBlock)block;

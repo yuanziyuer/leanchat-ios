@@ -20,3 +20,4 @@ FOUNDATION_EXPORT const unsigned char LeanChatLibVersionString[];
 #import <LeanChatLib/CDChatManager.h>
 #import <LeanChatLib/CDUserModel.h>
 #import <LeanChatLib/UIImage+Icon.h>
+#import <LeanChatLib/CDSoundManager.h>

@@ -16,21 +16,17 @@
 #import "LZStatusView.h"
 #import "CDEmotionUtils.h"
 #import "AVIMConversation+Custom.h"
+#import "CDSoundManager.h"
 
 static NSInteger const kOnePageSize = 20;
 
 @interface CDChatRoomVC ()
 
 @property (nonatomic, strong, readwrite) AVIMConversation *conv;
-
 @property (atomic, assign) BOOL isLoadingMsg;
-
 @property (nonatomic, strong, readwrite) NSMutableArray *msgs;
-
 @property (nonatomic, strong) XHMessageTableViewCell *currentSelectedCell;
-
 @property (nonatomic, strong) NSArray *emotionManagers;
-
 @property (nonatomic, strong) LZStatusView *clientStatusView;
 
 @end
@@ -64,7 +60,8 @@ static NSInteger const kOnePageSize = 20;
     [self initBottomMenuAndEmotionView];
     [self.view addSubview:self.clientStatusView];
     // 设置自身用户名
-    self.messageSender = [[CDChatManager manager].selfUser username];
+    id<CDUserModel> selfUser = [[CDChatManager manager].userDelegate getUserById:[CDChatManager manager].selfId];
+    self.messageSender = [selfUser username];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessage:) name:kCDNotificationMessageReceived object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMessageDelivered:) name:kCDNotificationMessageDelivered object:nil];
@@ -75,8 +72,14 @@ static NSInteger const kOnePageSize = 20;
     [self updateStatusView];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [CDChatManager manager].chattingConversationId = self.conv.conversationId;
+}
+
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    [CDChatManager manager].chattingConversationId = nil;
     if (self.msgs.count > 0) {
         // implicitly insert
         [[CDChatManager manager] setZeroUnreadWithConversationId:self.conv.conversationId];
@@ -96,8 +99,9 @@ static NSInteger const kOnePageSize = 20;
 #pragma mark - ui init
 
 - (void)initBarButton {
-    UIBarButtonItem *backBtn = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:nil action:nil];
-    [[self navigationItem] setBackBarButtonItem:backBtn];
+    UIBarButtonItem *backBtn = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
+    [self.navigationItem setBackBarButtonItem:backBtn];
+//    self.navigationItem.backBarButtonItem.title
 }
 
 - (void)initBottomMenuAndEmotionView {
@@ -437,6 +441,9 @@ static NSInteger const kOnePageSize = 20;
             [[NSFileManager defaultManager] moveItemAtPath:path toPath:newPath error:&error1];
             DLog(@"%@", newPath);
         }
+        if (!error) {
+            [[CDSoundManager manager] playSendSoundIfNeed];
+        }
         [self insertMessage:msg];
         //        [_storage insertMsg:msg];
         //        [self loadMsgsWithLoadMore:NO];
@@ -461,6 +468,9 @@ static NSInteger const kOnePageSize = 20;
 - (void)receiveMessage:(NSNotification *)notification {
     AVIMTypedMessage *message = notification.object;
     if ([message.conversationId isEqualToString:self.conv.conversationId]) {
+        if (self.conv.muted == NO) {
+            [[CDSoundManager manager] playReceiveSoundIfNeed];
+        }
         [self insertMessage:message];
     }
 }

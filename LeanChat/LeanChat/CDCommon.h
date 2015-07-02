@@ -1,13 +1,17 @@
 //
-//  CDCommonDefine.h
+//  CDCommon.h
 //  LeanChat
 //
-//  Created by Qihe Bian on 7/24/14.
+//  Created by Qihe Bian on 7/29/14.
 //  Copyright (c) 2014 LeanCloud. All rights reserved.
 //
 
-#ifndef LeanChat_CDCommonDefine_h
-#define LeanChat_CDCommonDefine_h
+#ifndef LeanChat_CDCommon_h
+#define LeanChat_CDCommon_h
+
+#import <AVOSCloud/AVOSCloud.h>
+#import <AVOSCloudIM/AVOSCloudIM.h>
+
 
 #define USE_US 0
 #if !USE_US
@@ -61,11 +65,12 @@
 #define CD_COMMON_ROW_HEIGHT 44
 
 #ifdef DEBUG
-#   define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ## __VA_ARGS__);
+#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ## __VA_ARGS__);
 #else
 #   define DLog(...)
 #endif
 
 #define WEAKSELF  typeof(self) __weak weakSelf = self;
+
 
 #endif

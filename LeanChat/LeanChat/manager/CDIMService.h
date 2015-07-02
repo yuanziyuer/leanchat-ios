@@ -9,12 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "CDCommon.h"
 #import <LeanChatLib/CDChatManager.h>
+#import "CDBaseVC.h"
 
 @interface CDIMService : NSObject <CDUserDelegate>
 
 + (instancetype)service;
 
-- (void)goWithUserId:(NSString *)userId fromVC:(UIViewController *)vc;
+- (void)goWithUserId:(NSString *)userId fromVC:(CDBaseVC *)vc;
 - (void)goWithConv:(AVIMConversation *)conv fromNav:(UINavigationController *)nav;
 
 @end

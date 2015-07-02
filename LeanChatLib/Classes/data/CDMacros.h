@@ -6,6 +6,9 @@
 //  Copyright (c) 2015年 avoscloud. All rights reserved.
 //
 
+#ifndef CD_MACROS_HEADER
+#define CD_MACROS_HEADER
+
 #ifdef DEBUG
 #   define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ## __VA_ARGS__);
 #else
@@ -13,3 +16,5 @@
 #endif
 
 #define WEAKSELF  typeof(self) __weak weakSelf = self;
+
+#endif

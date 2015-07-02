@@ -55,12 +55,9 @@
     [nav pushViewController:chatVC animated:YES];
 }
 
-- (void)goWithUserId:(NSString *)userId fromVC:(UIViewController *)vc {
+- (void)goWithUserId:(NSString *)userId fromVC:(CDBaseVC *)vc {
     [[CDChatManager manager] fetchConvWithOtherId:userId callback: ^(AVIMConversation *conversation, NSError *error) {
-        if (error) {
-            DLog(@"%@", error);
-        }
-        else {
+        if ([vc filterError:error]) {
             [self goWithConv:conversation fromNav:vc.navigationController];
         }
     }];

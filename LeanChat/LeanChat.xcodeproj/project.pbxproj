@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1FAD25EBE59E07248BD0F7D5 /* libPods-LeanChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF79D434DB9DF2EFE3DD51B2 /* libPods-LeanChat.a */; };
 		700E6A151B3D2B4E00675021 /* LZPushManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 700E6A141B3D2B4E00675021 /* LZPushManager.m */; };
-		7067800B1B2363F3002F1413 /* LZPushSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7067800A1B2363F3002F1413 /* LZPushSettingViewController.m */; };
 		7073FC1D1B147048006F2692 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC1C1B147048006F2692 /* main.m */; };
 		7073FC281B147048006F2692 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7073FC271B147048006F2692 /* Images.xcassets */; };
 		7073FCA91B14718C006F2692 /* CDBaseNavC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC431B14718C006F2692 /* CDBaseNavC.m */; };
@@ -91,6 +90,7 @@
 		7073FD351B147458006F2692 /* tabbar_me_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073FD0C1B147458006F2692 /* tabbar_me_active@2x.png */; };
 		7073FD361B147458006F2692 /* wechat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073FD0D1B147458006F2692 /* wechat@2x.png */; };
 		708DF4711B41A9D20047C994 /* CDSelectMemberVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 708DF4701B41A9D20047C994 /* CDSelectMemberVC.m */; };
+		7092330D1B45299A00E2D1F5 /* LZPushSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7092330C1B45299A00E2D1F5 /* LZPushSettingViewController.m */; };
 		70B1C50B1B413A1300DCEC8D /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B1C4F31B413A1300DCEC8D /* back@2x.png */; };
 		70B1C50C1B413A1300DCEC8D /* bg_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B1C4F41B413A1300DCEC8D /* bg_1@2x.png */; };
 		70B1C50D1B413A1300DCEC8D /* bg_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B1C4F51B413A1300DCEC8D /* bg_2@2x.png */; };
@@ -120,8 +120,6 @@
 		4A71AD2EA525F79828723CA0 /* Pods-LeanChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-LeanChat/Pods-LeanChat.release.xcconfig"; sourceTree = "<group>"; };
 		700E6A131B3D2B4E00675021 /* LZPushManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZPushManager.h; sourceTree = "<group>"; };
 		700E6A141B3D2B4E00675021 /* LZPushManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZPushManager.m; sourceTree = "<group>"; };
-		706780091B2363F3002F1413 /* LZPushSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZPushSettingViewController.h; sourceTree = "<group>"; };
-		7067800A1B2363F3002F1413 /* LZPushSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZPushSettingViewController.m; sourceTree = "<group>"; };
 		7073FC171B147048006F2692 /* LeanChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeanChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7073FC1B1B147048006F2692 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7073FC1C1B147048006F2692 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -176,8 +174,6 @@
 		7073FC7D1B14718C006F2692 /* CDAddRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAddRequest.m; sourceTree = "<group>"; };
 		7073FC7E1B14718C006F2692 /* CDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUser.h; sourceTree = "<group>"; };
 		7073FC7F1B14718C006F2692 /* CDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUser.m; sourceTree = "<group>"; };
-		7073FC8A1B14718C006F2692 /* CDCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCommon.h; sourceTree = "<group>"; };
-		7073FC8B1B14718C006F2692 /* CDCommonDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCommonDefine.h; sourceTree = "<group>"; };
 		7073FC8D1B14718C006F2692 /* CDBadgeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDBadgeLabel.h; sourceTree = "<group>"; };
 		7073FC8E1B14718C006F2692 /* CDBadgeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDBadgeLabel.m; sourceTree = "<group>"; };
 		7073FC8F1B14718C006F2692 /* CDButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDButton.h; sourceTree = "<group>"; };
@@ -245,6 +241,9 @@
 		7073FD0D1B147458006F2692 /* wechat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wechat@2x.png"; sourceTree = "<group>"; };
 		708DF46F1B41A9D20047C994 /* CDSelectMemberVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSelectMemberVC.h; sourceTree = "<group>"; };
 		708DF4701B41A9D20047C994 /* CDSelectMemberVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSelectMemberVC.m; sourceTree = "<group>"; };
+		709233091B4522B100E2D1F5 /* CDCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDCommon.h; sourceTree = "<group>"; };
+		7092330B1B45299A00E2D1F5 /* LZPushSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZPushSettingViewController.h; sourceTree = "<group>"; };
+		7092330C1B45299A00E2D1F5 /* LZPushSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZPushSettingViewController.m; sourceTree = "<group>"; };
 		70B1C4F31B413A1300DCEC8D /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
 		70B1C4F41B413A1300DCEC8D /* bg_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_1@2x.png"; sourceTree = "<group>"; };
 		70B1C4F51B413A1300DCEC8D /* bg_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_2@2x.png"; sourceTree = "<group>"; };
@@ -315,18 +314,8 @@
 			children = (
 				70B1C4F21B413A1300DCEC8D /* LeanCloudFeedback */,
 				700E6A121B3D2B4E00675021 /* LZPushManager */,
-				706780081B2363F3002F1413 /* LZPushSettingViewController */,
 			);
 			path = vendor;
-			sourceTree = "<group>";
-		};
-		706780081B2363F3002F1413 /* LZPushSettingViewController */ = {
-			isa = PBXGroup;
-			children = (
-				706780091B2363F3002F1413 /* LZPushSettingViewController.h */,
-				7067800A1B2363F3002F1413 /* LZPushSettingViewController.m */,
-			);
-			path = LZPushSettingViewController;
 			sourceTree = "<group>";
 		};
 		7073FC0E1B147048006F2692 = {
@@ -352,12 +341,12 @@
 			children = (
 				7073FCD91B1471A4006F2692 /* CDAppDelegate.h */,
 				7073FCDA1B1471A4006F2692 /* CDAppDelegate.m */,
+				709233091B4522B100E2D1F5 /* CDCommon.h */,
 				706780071B2363C5002F1413 /* vendor */,
 				7073FCDD1B147431006F2692 /* resources */,
 				7073FC401B14718C006F2692 /* controllers */,
 				7073FC761B14718C006F2692 /* models */,
 				70DC7DA91B2F531F0047B7AB /* manager */,
-				7073FC891B14718C006F2692 /* settings */,
 				7073FC8C1B14718C006F2692 /* views */,
 				7073FC271B147048006F2692 /* Images.xcassets */,
 				7073FC1A1B147048006F2692 /* Supporting Files */,
@@ -468,6 +457,8 @@
 		7073FC6F1B14718C006F2692 /* profile */ = {
 			isa = PBXGroup;
 			children = (
+				7092330B1B45299A00E2D1F5 /* LZPushSettingViewController.h */,
+				7092330C1B45299A00E2D1F5 /* LZPushSettingViewController.m */,
 				7073FC701B14718C006F2692 /* CDProfileVC.h */,
 				7073FC711B14718C006F2692 /* CDProfileVC.m */,
 				70EB81571B4399AB0010659C /* CDProfileNameVC.h */,
@@ -499,15 +490,6 @@
 				7073FC7D1B14718C006F2692 /* CDAddRequest.m */,
 			);
 			path = avobject;
-			sourceTree = "<group>";
-		};
-		7073FC891B14718C006F2692 /* settings */ = {
-			isa = PBXGroup;
-			children = (
-				7073FC8A1B14718C006F2692 /* CDCommon.h */,
-				7073FC8B1B14718C006F2692 /* CDCommonDefine.h */,
-			);
-			path = settings;
 			sourceTree = "<group>";
 		};
 		7073FC8C1B14718C006F2692 /* views */ = {
@@ -880,6 +862,7 @@
 				7073FCBF1B14718C006F2692 /* CDProfileVC.m in Sources */,
 				7073FCB51B14718C006F2692 /* CDGroupedConvListVC.m in Sources */,
 				7073FCB41B14718C006F2692 /* CDConvReportAbuseVC.m in Sources */,
+				7092330D1B45299A00E2D1F5 /* LZPushSettingViewController.m in Sources */,
 				7073FCAE1B14718C006F2692 /* CDChatVC.m in Sources */,
 				708DF4711B41A9D20047C994 /* CDSelectMemberVC.m in Sources */,
 				7073FCC41B14718C006F2692 /* CDAddRequest.m in Sources */,
@@ -888,7 +871,6 @@
 				7073FCB01B14718C006F2692 /* CDAddMemberVC.m in Sources */,
 				7073FCBC1B14718C006F2692 /* CDFriendListVC.m in Sources */,
 				70B1C5131B413A1300DCEC8D /* LCUserFeedbackReply.m in Sources */,
-				7067800B1B2363F3002F1413 /* LZPushSettingViewController.m in Sources */,
 				70B1C5151B413A1300DCEC8D /* LCUserFeedbackThread.m in Sources */,
 				7073FCD61B14718C006F2692 /* CDPopMenuItemCell.m in Sources */,
 				7073FCBA1B14718C006F2692 /* CDAddFriendVC.m in Sources */,

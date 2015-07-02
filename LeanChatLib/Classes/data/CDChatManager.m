@@ -9,6 +9,7 @@
 #import "CDChatManager.h"
 #import "CDMacros.h"
 #import "CDEmotionUtils.h"
+#import "CDSoundManager.h"
 
 static NSString *kConversationUnreadsKey = @"unreads";
 static NSString *kConversationMentionKey = @"mention";
@@ -58,7 +59,6 @@ static CDChatManager *instance;
 
 - (void)openWithClientId:(NSString *)clientId callback:(AVIMBooleanResultBlock)callback {
     _selfId = clientId;
-    _selfUser = [self.userDelegate getUserById:clientId];
     [self setupConversationDatasWithUserId:_selfId];
     [[AVIMClient defaultClient] openWithClientId:clientId callback:^(BOOL succeeded, NSError *error) {
         [self updateConnectStatus];
@@ -220,11 +220,16 @@ static CDChatManager *instance;
 }
 
 - (void)conversation:(AVIMConversation *)conversation didReceiveTypedMessage:(AVIMTypedMessage *)message {
-    DLog();
     if (message.messageId) {
+        DLog();
         [self incrementUnreadWithConversationId:conversation.conversationId];
         if ([self isMentionedByMessage:message]) {
             [self setMention:YES conversationId:message.conversationId];
+        }
+        if (self.chattingConversationId == nil) {
+            if (conversation.muted == NO) {
+                [[CDSoundManager manager] playLoudReceiveSoundIfNeed];
+            }
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationMessageReceived object:message];
     }
@@ -371,10 +376,26 @@ static CDChatManager *instance;
 
 - (AVIMConversation *)lookupConvById:(NSString *)convid {
     AVIMConversation *conversation = [[AVIMClient defaultClient] conversationForId:convid];
-    if (conversation.attributes.count == 0 ||   conversation.members.count == 0) {
-        // not memory cache, then found in file cache
-        return [self getConversationFromLocalByConvid:convid];
-    } else {
+    if (conversation.creator.length == 0 || conversation.createAt == nil) {
+//        DLog(@"client's conversation is nil");
+        if ([AVIMClient defaultClient].status == AVIMClientStatusOpened) {
+            // let nil , converation will be fetched from server
+//            DLog("connected and return nil");
+            return nil;
+        } else {
+            // not connect
+            AVIMConversation *localConversation = [self getConversationFromLocalByConvid:convid];
+            if (localConversation.creator.length == 0 || localConversation.createAt == nil) {
+//                DLog("local conversation is nil and return nil");
+                // will be fetch from server
+                return nil;
+            } else {
+//                DLog(@"local conversation is well and return");
+                return localConversation;
+            }
+        }
+    }else {
+//        DLog(@"directly return client's conversation");
         return conversation;
     }
 }
@@ -383,7 +404,7 @@ static CDChatManager *instance;
     NSMutableSet *uncacheConvids = [[NSMutableSet alloc] init];
     for (NSString *convid in convids) {
         AVIMConversation * conversation = [self lookupConvById:convid];
-        if (conversation == nil || conversation.members.count == 0) {
+        if (conversation == nil) {
             [uncacheConvids addObject:convid];
         }
     }
