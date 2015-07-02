@@ -37,6 +37,7 @@
         [self setDefaultSettings];
         self.needPlaySoundWhenChatting =  [[[NSUserDefaults standardUserDefaults] objectForKey:STR_BY_SEL(needPlaySoundWhenChatting)] boolValue];
         self.needPlaySoundWhenNotChatting  = [[[NSUserDefaults standardUserDefaults] objectForKey:STR_BY_SEL(needPlaySoundWhenNotChatting)] boolValue];
+        self.needVibrateWhenNotChatting = [[[NSUserDefaults standardUserDefaults] objectForKey:STR_BY_SEL(needVibrateWhenNotChatting)] boolValue];
         
         [self createSoundWithName:@"loudReceive" soundId:&_loudReceiveSound];
         [self createSoundWithName:@"send" soundId:&_sendSound];
@@ -71,6 +72,12 @@
     }
 }
 
+- (void)vibrateIfNeed {
+    if (self.needVibrateWhenNotChatting) {
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    }
+}
+
 #pragma mark - local data
 
 - (void)setNeedPlaySoundWhenChatting:(BOOL)needPlaySoundWhenChatting {
@@ -81,6 +88,11 @@
 - (void)setNeedPlaySoundWhenNotChatting:(BOOL)needPlaySoundWhenNotChatting {
     _needPlaySoundWhenNotChatting = needPlaySoundWhenNotChatting;
     [[NSUserDefaults standardUserDefaults] setObject:@(self.needPlaySoundWhenNotChatting) forKey:STR_BY_SEL(needPlaySoundWhenNotChatting)];
+}
+
+- (void)setNeedVibrateWhenNotChatting:(BOOL)needVibrateWhenNotChatting {
+    _needVibrateWhenNotChatting = needVibrateWhenNotChatting;
+    [[NSUserDefaults standardUserDefaults] setObject:@(self.needVibrateWhenNotChatting) forKey:STR_BY_SEL(needVibrateWhenNotChatting)];
 }
 
 

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 LeanCloud. All rights reserved.
 //
 
-#import "LZPushSettingViewController.h"
+#import "CDSettingVC.h"
 #import <LeanChatLib/CDSoundManager.h>
 
 static CGFloat kHorizontalSpacing = 40;
@@ -18,13 +18,13 @@ static NSString *kTipText = @"tipText";
 static NSString *kDetailSwitchOn = @"detailSwitchOn";
 static NSString *kDetailSwitchChangeSelector = @"detailSwitchChangeSelector";
 
-@interface LZPushSettingViewController ()
+@interface CDSettingVC ()
 
 @property (nonatomic, strong) NSArray *dataSource;
 
 @end
 
-@implementation LZPushSettingViewController
+@implementation CDSettingVC
 
 - (instancetype)init {
     self = [super initWithStyle:UITableViewStyleGrouped];
@@ -47,7 +47,11 @@ static NSString *kDetailSwitchChangeSelector = @"detailSwitchChangeSelector";
         @{kMainText:@"通知声音",
           kDetailSwitchOn:@([CDSoundManager manager].needPlaySoundWhenNotChatting),
           kDetailSwitchChangeSelector:NSStringFromSelector(@selector(notChattingSoundChanged:)),
-          kTipText:@"开启时，在其它页面接收到消息时将播放提示音"}];
+          kTipText:@"开启时，在其它页面接收到消息时将播放提示音"},
+        @{kMainText:@"通知振动",
+          kDetailSwitchOn:@([CDSoundManager manager].needVibrateWhenNotChatting),
+          kDetailSwitchChangeSelector:NSStringFromSelector(@selector(vibrateChanged:)),
+          kTipText:@"开启时，在其它页面接收到消息时将振动一下"}];
 }
 
 #pragma mark - actions or helpers
@@ -72,6 +76,10 @@ static NSString *kDetailSwitchChangeSelector = @"detailSwitchChangeSelector";
 
 - (void)notChattingSoundChanged:(UISwitch *)switchView {
     [CDSoundManager manager].needPlaySoundWhenNotChatting = switchView.on;
+}
+
+- (void)vibrateChanged:(UISwitch *)switchView {
+    [CDSoundManager manager].needVibrateWhenNotChatting = switchView.on;
 }
 
 #pragma mark - Table view data source

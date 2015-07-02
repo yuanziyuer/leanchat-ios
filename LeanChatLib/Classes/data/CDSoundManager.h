@@ -12,11 +12,14 @@
 
 + (CDSoundManager *)manager;
 
+@property (nonatomic, assign) BOOL needVibrateWhenNotChatting;
 @property (nonatomic, assign) BOOL needPlaySoundWhenNotChatting;
 @property (nonatomic, assign) BOOL needPlaySoundWhenChatting;
 
 - (void)playSendSoundIfNeed;
 - (void)playReceiveSoundIfNeed;
 - (void)playLoudReceiveSoundIfNeed;
+
+- (void)vibrateIfNeed;
 
 @end

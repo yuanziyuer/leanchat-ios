@@ -229,6 +229,7 @@ static CDChatManager *instance;
         if (self.chattingConversationId == nil) {
             if (conversation.muted == NO) {
                 [[CDSoundManager manager] playLoudReceiveSoundIfNeed];
+                [[CDSoundManager manager] vibrateIfNeed];
             }
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationMessageReceived object:message];

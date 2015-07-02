@@ -90,7 +90,7 @@
 		7073FD351B147458006F2692 /* tabbar_me_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073FD0C1B147458006F2692 /* tabbar_me_active@2x.png */; };
 		7073FD361B147458006F2692 /* wechat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073FD0D1B147458006F2692 /* wechat@2x.png */; };
 		708DF4711B41A9D20047C994 /* CDSelectMemberVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 708DF4701B41A9D20047C994 /* CDSelectMemberVC.m */; };
-		7092330D1B45299A00E2D1F5 /* LZPushSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7092330C1B45299A00E2D1F5 /* LZPushSettingViewController.m */; };
+		7092330D1B45299A00E2D1F5 /* CDSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7092330C1B45299A00E2D1F5 /* CDSettingVC.m */; };
 		70B1C50B1B413A1300DCEC8D /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B1C4F31B413A1300DCEC8D /* back@2x.png */; };
 		70B1C50C1B413A1300DCEC8D /* bg_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B1C4F41B413A1300DCEC8D /* bg_1@2x.png */; };
 		70B1C50D1B413A1300DCEC8D /* bg_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B1C4F51B413A1300DCEC8D /* bg_2@2x.png */; };
@@ -242,8 +242,8 @@
 		708DF46F1B41A9D20047C994 /* CDSelectMemberVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSelectMemberVC.h; sourceTree = "<group>"; };
 		708DF4701B41A9D20047C994 /* CDSelectMemberVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSelectMemberVC.m; sourceTree = "<group>"; };
 		709233091B4522B100E2D1F5 /* CDCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDCommon.h; sourceTree = "<group>"; };
-		7092330B1B45299A00E2D1F5 /* LZPushSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZPushSettingViewController.h; sourceTree = "<group>"; };
-		7092330C1B45299A00E2D1F5 /* LZPushSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZPushSettingViewController.m; sourceTree = "<group>"; };
+		7092330B1B45299A00E2D1F5 /* CDSettingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSettingVC.h; sourceTree = "<group>"; };
+		7092330C1B45299A00E2D1F5 /* CDSettingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSettingVC.m; sourceTree = "<group>"; };
 		70B1C4F31B413A1300DCEC8D /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
 		70B1C4F41B413A1300DCEC8D /* bg_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_1@2x.png"; sourceTree = "<group>"; };
 		70B1C4F51B413A1300DCEC8D /* bg_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_2@2x.png"; sourceTree = "<group>"; };
@@ -457,8 +457,8 @@
 		7073FC6F1B14718C006F2692 /* profile */ = {
 			isa = PBXGroup;
 			children = (
-				7092330B1B45299A00E2D1F5 /* LZPushSettingViewController.h */,
-				7092330C1B45299A00E2D1F5 /* LZPushSettingViewController.m */,
+				7092330B1B45299A00E2D1F5 /* CDSettingVC.h */,
+				7092330C1B45299A00E2D1F5 /* CDSettingVC.m */,
 				7073FC701B14718C006F2692 /* CDProfileVC.h */,
 				7073FC711B14718C006F2692 /* CDProfileVC.m */,
 				70EB81571B4399AB0010659C /* CDProfileNameVC.h */,
@@ -862,7 +862,7 @@
 				7073FCBF1B14718C006F2692 /* CDProfileVC.m in Sources */,
 				7073FCB51B14718C006F2692 /* CDGroupedConvListVC.m in Sources */,
 				7073FCB41B14718C006F2692 /* CDConvReportAbuseVC.m in Sources */,
-				7092330D1B45299A00E2D1F5 /* LZPushSettingViewController.m in Sources */,
+				7092330D1B45299A00E2D1F5 /* CDSettingVC.m in Sources */,
 				7073FCAE1B14718C006F2692 /* CDChatVC.m in Sources */,
 				708DF4711B41A9D20047C994 /* CDSelectMemberVC.m in Sources */,
 				7073FCC41B14718C006F2692 /* CDAddRequest.m in Sources */,

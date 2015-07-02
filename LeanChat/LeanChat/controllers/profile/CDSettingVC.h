@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LZPushSettingViewController : UITableViewController
+@interface CDSettingVC : UITableViewController
 
 
 @end

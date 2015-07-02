@@ -9,7 +9,7 @@
 #import "CDProfileVC.h"
 #import "CDUserManager.h"
 #import "CDAppDelegate.h"
-#import "LZPushSettingViewController.h"
+#import "CDSettingVC.h"
 #import "CDWebViewVC.h"
 #import <LeanChatLib/CDChatManager.h>
 #import "MCPhotographyHelper.h"
@@ -123,7 +123,7 @@
 }
 
 - (void)goPushSetting {
-    LZPushSettingViewController *controller = [[LZPushSettingViewController alloc] init];
+    CDSettingVC *controller = [[CDSettingVC alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
 }
 
