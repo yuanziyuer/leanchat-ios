@@ -78,7 +78,8 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    [[LZPushManager manager] cleanBadge];
+    //[[LZPushManager manager] cleanBadge];
+    [application cancelAllLocalNotifications];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
