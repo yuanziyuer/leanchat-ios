@@ -69,6 +69,12 @@
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
+    AVInstallation *currentInstallation = [AVInstallation currentInstallation];
+    [currentInstallation setBadge:[UIApplication sharedApplication].applicationIconBadgeNumber];
+    [currentInstallation saveEventually: ^(BOOL succeeded, NSError *error) {
+        DLog(@"%@", error ? error : @"succeed");
+    }];
+
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -83,6 +89,11 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+    AVInstallation *currentInstallation = [AVInstallation currentInstallation];
+    [currentInstallation setBadge:[UIApplication sharedApplication].applicationIconBadgeNumber];
+    [currentInstallation saveEventually: ^(BOOL succeeded, NSError *error) {
+        DLog(@"%@", error ? error : @"succeed");
+    }];
 }
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {

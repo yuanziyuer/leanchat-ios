@@ -42,20 +42,10 @@
     if (totalUnreadCount > 0) {
         self.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", (long)totalUnreadCount];
         [[UIApplication sharedApplication] setApplicationIconBadgeNumber:totalUnreadCount];
-        AVInstallation *currentInstallation = [AVInstallation currentInstallation];
-        [currentInstallation setBadge:totalUnreadCount];
-        [currentInstallation saveEventually: ^(BOOL succeeded, NSError *error) {
-            DLog(@"%@", error ? error : @"succeed");
-        }];
     }
     else {
         self.tabBarItem.badgeValue = nil;
         [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-        AVInstallation *currentInstallation = [AVInstallation currentInstallation];
-        [currentInstallation setBadge:0];
-        [currentInstallation saveEventually: ^(BOOL succeeded, NSError *error) {
-            DLog(@"%@", error ? error : @"succeed");
-        }];
     }
 }
 
