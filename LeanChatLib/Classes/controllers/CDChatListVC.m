@@ -24,6 +24,8 @@
 
 @property (nonatomic, strong) NSMutableArray *conversations;
 
+@property (atomic, assign) BOOL isRefreshing;
+
 @end
 
 static NSMutableArray *cacheConvs;
@@ -96,6 +98,10 @@ static NSString *cellIdentifier = @"ContactCell";
 }
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
+    if (self.isRefreshing) {
+        return;
+    }
+    self.isRefreshing = YES;
     [[CDChatManager manager] findRecentConversationsWithBlock:^(NSArray *conversations, NSInteger totalUnreadCount, NSError *error) {
         [self stopRefreshControl:refreshControl];
         if ([self filterError:error]) {
@@ -106,6 +112,7 @@ static NSString *cellIdentifier = @"ContactCell";
             }
             
         }
+        self.isRefreshing = NO;
     }];
 }
 
