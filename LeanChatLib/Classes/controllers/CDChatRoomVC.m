@@ -75,12 +75,6 @@ static NSInteger const kOnePageSize = 20;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [CDChatManager manager].chattingConversationId = self.conv.conversationId;
-    if (self.msgs.count > 0) {
-        // implicitly insert
-        [[CDChatManager manager] setZeroUnreadWithConversationId:self.conv.conversationId];
-        [[CDChatManager manager] setMention:NO conversationId:self.conv.conversationId];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationMessageReceived object:nil];
-    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -90,6 +84,7 @@ static NSInteger const kOnePageSize = 20;
         // implicitly insert
         [[CDChatManager manager] setZeroUnreadWithConversationId:self.conv.conversationId];
         [[CDChatManager manager] setMention:NO conversationId:self.conv.conversationId];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationUnreadsUpdated object:nil];
     }
     [[XHAudioPlayerHelper shareInstance] stopAudio];
 }
@@ -472,14 +467,14 @@ static NSInteger const kOnePageSize = 20;
 #pragma mark - receive and delivered
 
 - (void)receiveMessage:(NSNotification *)notification {
-    if (notification.object) {
-        AVIMTypedMessage *message = notification.object;
-        if ([message.conversationId isEqualToString:self.conv.conversationId]) {
-            [self insertMessage:message];
-            [[CDChatManager manager] setZeroUnreadWithConversationId:self.conv.conversationId];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationMessageReceived object:nil];
+    AVIMTypedMessage *message = notification.object;
+    if ([message.conversationId isEqualToString:self.conv.conversationId]) {
+        if (self.conv.muted == NO) {
+            [[CDSoundManager manager] playReceiveSoundIfNeed];
         }
-        
+        [self insertMessage:message];
+//        [[CDChatManager manager] setZeroUnreadWithConversationId:self.conv.conversationId];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationMessageReceived object:nil];
     }
 }
 
@@ -607,9 +602,16 @@ static NSInteger const kOnePageSize = 20;
             if ([self filterError:error]) {
                 NSMutableArray *xhMsgs = [self getXHMessages:msgs];
                 self.messages = xhMsgs;
-                _msgs = msgs;
+                self.msgs = msgs;
                 [self.messageTableView reloadData];
                 [self scrollToBottomAnimated:NO];
+                
+                if (self.msgs.count > 0) {
+                    // implicitly insert
+                    [[CDChatManager manager] setZeroUnreadWithConversationId:self.conv.conversationId];
+                    [[CDChatManager manager] setMention:NO conversationId:self.conv.conversationId];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationUnreadsUpdated object:nil];
+                }
             }
             self.isLoadingMsg = NO;
         }];

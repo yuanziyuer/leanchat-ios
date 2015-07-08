@@ -22,6 +22,7 @@ static CDChatManager *instance;
 @property (nonatomic, strong) NSMutableDictionary *cachedConvs;
 @property (nonatomic, strong) NSString *plistPath;
 @property (nonatomic, strong) NSMutableDictionary *conversationDatas;
+@property (nonatomic, assign) NSInteger totalUnreadCount;
 
 @end
 
@@ -222,7 +223,6 @@ static CDChatManager *instance;
 - (void)conversation:(AVIMConversation *)conversation didReceiveTypedMessage:(AVIMTypedMessage *)message {
     if (message.messageId) {
         DLog();
-        [self incrementUnreadWithConversationId:conversation.conversationId];
         if ([self isMentionedByMessage:message]) {
             [self setMention:YES conversationId:message.conversationId];
         }
@@ -231,6 +231,10 @@ static CDChatManager *instance;
                 [[CDSoundManager manager] playLoudReceiveSoundIfNeed];
                 [[CDSoundManager manager] vibrateIfNeed];
             }
+        }
+        if (self.chattingConversationId == nil || [self.chattingConversationId isEqualToString:conversation.conversationId]) {
+            [self incrementUnreadWithConversationId:conversation.conversationId];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationUnreadsUpdated object:nil];
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationMessageReceived object:message];
     }
@@ -538,7 +542,7 @@ static CDChatManager *instance;
         if([text rangeOfString:pattern].length > 0) {
             return YES;
         } else {
-            return NO;
+           return NO;
         }
     }
 }

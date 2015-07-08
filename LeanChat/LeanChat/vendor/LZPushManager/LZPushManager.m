@@ -67,11 +67,16 @@
     [application cancelAllLocalNotifications];
 }
 
-- (void)saveBadge {
+- (void)syncBadge {
     AVInstallation *currentInstallation = [AVInstallation currentInstallation];
-    [currentInstallation setBadge:[UIApplication sharedApplication].applicationIconBadgeNumber];
-    [currentInstallation saveEventually: ^(BOOL succeeded, NSError *error) {
-        NSLog(@"%@", error ? error : @"succeed");
-    }];
+    if (currentInstallation.badge != [UIApplication sharedApplication].applicationIconBadgeNumber) {
+        [currentInstallation setBadge:[UIApplication sharedApplication].applicationIconBadgeNumber];
+        [currentInstallation saveEventually: ^(BOOL succeeded, NSError *error) {
+            NSLog(@"%@", error ? error : @"succeed");
+        }];
+    } else {
+//        NSLog(@"badge not changed");
+    }
 }
+
 @end

@@ -26,6 +26,6 @@ static NSString *const kAVIMInstallationKeyUserId = @"userId";
 - (void)cleanBadge;
 
 //save the local applicationIconBadgeNumber to the server
-- (void)saveBadge;
+- (void)syncBadge;
 
 @end

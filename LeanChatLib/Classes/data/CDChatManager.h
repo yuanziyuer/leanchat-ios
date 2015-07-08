@@ -10,6 +10,7 @@
 #import "CDUserModel.h"
 #import "AVIMConversation+Custom.h"
 
+static NSString *const kCDNotificationUnreadsUpdated = @"UnreadsUpdated";
 static NSString *const kCDNotificationMessageReceived = @"MessageReceived";
 static NSString *const kCDNotificationMessageDelivered = @"MessageDelivered";
 static NSString *const kCDNotificationConversationUpdated = @"ConversationUpdated";

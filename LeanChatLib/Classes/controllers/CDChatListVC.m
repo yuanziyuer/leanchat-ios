@@ -45,23 +45,25 @@ static NSString *cellIdentifier = @"ContactCell";
     self.refreshControl = [self getRefreshControl];
     // 当在其它 Tab 的时候，收到消息 badge 增加，所以需要一直监听
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:kCDNotificationMessageReceived object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:kCDNotificationUnreadsUpdated object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateStatusView) name:kCDNotificationConnectivityUpdated object:nil];
+    [self updateStatusView];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateStatusView) name:kCDNotificationConnectivityUpdated object:nil];
-    [self updateStatusView];
     // 刷新 unread badge 和新增的对话
     [self performSelector:@selector(refresh:) withObject:nil afterDelay:0];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationConnectivityUpdated object:nil];
 }
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationConnectivityUpdated object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationMessageReceived object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationUnreadsUpdated object:nil];
 }
 
 #pragma mark - client status view
@@ -102,6 +104,7 @@ static NSString *cellIdentifier = @"ContactCell";
             if ([self.chatListDelegate respondsToSelector:@selector(setBadgeWithTotalUnreadCount:)]) {
                 [self.chatListDelegate setBadgeWithTotalUnreadCount:totalUnreadCount];
             }
+            
         }
     }];
 }

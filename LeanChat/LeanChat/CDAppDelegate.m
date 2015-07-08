@@ -69,7 +69,7 @@
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    [[LZPushManager manager] saveBadge];
+    [[LZPushManager manager] syncBadge];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -84,7 +84,7 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    [[LZPushManager manager] saveBadge];
+    [[LZPushManager manager] syncBadge];
 }
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
