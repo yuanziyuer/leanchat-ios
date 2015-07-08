@@ -69,6 +69,7 @@
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
+    [[LZPushManager manager] saveBadge];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -78,10 +79,12 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    [[LZPushManager manager] cleanBadge];
+    //[[LZPushManager manager] cleanBadge];
+    [application cancelAllLocalNotifications];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+    [[LZPushManager manager] saveBadge];
 }
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {

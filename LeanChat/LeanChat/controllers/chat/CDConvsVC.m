@@ -41,9 +41,11 @@
 - (void)setBadgeWithTotalUnreadCount:(NSInteger)totalUnreadCount {
     if (totalUnreadCount > 0) {
         self.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", (long)totalUnreadCount];
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:totalUnreadCount];
     }
     else {
         self.tabBarItem.badgeValue = nil;
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     }
 }
 

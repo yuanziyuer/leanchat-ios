@@ -75,6 +75,12 @@ static NSInteger const kOnePageSize = 20;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [CDChatManager manager].chattingConversationId = self.conv.conversationId;
+    if (self.msgs.count > 0) {
+        // implicitly insert
+        [[CDChatManager manager] setZeroUnreadWithConversationId:self.conv.conversationId];
+        [[CDChatManager manager] setMention:NO conversationId:self.conv.conversationId];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationMessageReceived object:nil];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -466,12 +472,14 @@ static NSInteger const kOnePageSize = 20;
 #pragma mark - receive and delivered
 
 - (void)receiveMessage:(NSNotification *)notification {
-    AVIMTypedMessage *message = notification.object;
-    if ([message.conversationId isEqualToString:self.conv.conversationId]) {
-        if (self.conv.muted == NO) {
-            [[CDSoundManager manager] playReceiveSoundIfNeed];
+    if (notification.object) {
+        AVIMTypedMessage *message = notification.object;
+        if ([message.conversationId isEqualToString:self.conv.conversationId]) {
+            [self insertMessage:message];
+            [[CDChatManager manager] setZeroUnreadWithConversationId:self.conv.conversationId];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationMessageReceived object:nil];
         }
-        [self insertMessage:message];
+        
     }
 }
 
