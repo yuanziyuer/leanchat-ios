@@ -40,6 +40,8 @@ LeanChat 已经在 App Store 上架，可前往 https://itunes.apple.com/gb/app/
     pod 'LeanChatLib', '0.1.8'
 ```
 
+大多数时候，你会采用拖动源代码的方式集成 LeanChatLib，这时，先需要安装 `AVOSCloud.framework` 和 `AVOSCloudIM.framework`，如果不是用 `pod install 'AVOSCloud'`、`pod install 'AVOSCloudIM'` 来安装的话，则可根据LeanCloud [Quick Start Guide](https://leancloud.cn/docs/start.html) 配置一下 SDK 所需的Framework(如果是 pod 'AVOSCloudIM')。同时安装另外两个依赖库`JSBadgeView` 与 `DateTools`。在` pod install ` 运行本 Demo 的时候，会有 Pods 目录生成，可以从中找到这两个Pods。或者网上搜索一下。还有其它 Framework缺少的话，可看[这个](https://github.com/leancloud/leanchat-ios/blob/master/LeanChatLib.podspec#L9)来配置。
+
 ## 如何三步加入IM
 1. LeanCloud 中创建应用       
 2. 加入 LeanChatLib 的 pod 依赖，或拖动 LeanChatLib 的代码文件进项目，改 UI 和调整功能方便些。
