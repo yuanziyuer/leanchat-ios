@@ -17,6 +17,7 @@
 #import "CDEmotionUtils.h"
 #import "AVIMConversation+Custom.h"
 #import "CDSoundManager.h"
+#import "CDDatabaseManager.h"
 
 static NSInteger const kOnePageSize = 20;
 
@@ -77,14 +78,18 @@ static NSInteger const kOnePageSize = 20;
     [CDChatManager manager].chattingConversationId = self.conv.conversationId;
 }
 
+- (void)updateConversation {
+    [[CDDatabaseManager manager] createConversatioRecord:self.conv];
+    [[CDDatabaseManager manager] updateUnreadCountToZeroWithConversation:self.conv];
+    [[CDDatabaseManager manager] updateConversation:self.conv mentioned:NO];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationUnreadsUpdated object:nil];
+}
+
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [CDChatManager manager].chattingConversationId = nil;
     if (self.msgs.count > 0) {
-        // implicitly insert
-        [[CDChatManager manager] setZeroUnreadWithConversationId:self.conv.conversationId];
-        [[CDChatManager manager] setMention:NO conversationId:self.conv.conversationId];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationUnreadsUpdated object:nil];
+        [self updateConversation];
     }
     [[XHAudioPlayerHelper shareInstance] stopAudio];
 }
@@ -607,10 +612,7 @@ static NSInteger const kOnePageSize = 20;
                 [self scrollToBottomAnimated:NO];
                 
                 if (self.msgs.count > 0) {
-                    // implicitly insert
-                    [[CDChatManager manager] setZeroUnreadWithConversationId:self.conv.conversationId];
-                    [[CDChatManager manager] setMention:NO conversationId:self.conv.conversationId];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationUnreadsUpdated object:nil];
+                    [self updateConversation];
                 }
             }
             self.isLoadingMsg = NO;

@@ -298,7 +298,7 @@ static NSString *const reuseIdentifier = @"Cell";
 - (void)quitConv {
     [self.conv quitWithCallback: ^(BOOL succeeded, NSError *error) {
         if ([self filterError:error]) {
-            [[CDChatManager manager] deleteConversationDataByConversationId:self.conv.conversationId];
+            [[CDChatManager manager] deleteConversation:self.conv];
             [self.navigationController popToRootViewControllerAnimated:YES];
         }
     }];

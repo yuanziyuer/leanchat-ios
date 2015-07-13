@@ -7,9 +7,10 @@
 //
 
 #import "CDChatManager.h"
-#import "CDMacros.h"
 #import "CDEmotionUtils.h"
 #import "CDSoundManager.h"
+#import "CDDatabaseManager.h"
+#import "CDMacros.h"
 
 static NSString *kConversationUnreadsKey = @"unreads";
 static NSString *kConversationMentionKey = @"mention";
@@ -60,7 +61,7 @@ static CDChatManager *instance;
 
 - (void)openWithClientId:(NSString *)clientId callback:(AVIMBooleanResultBlock)callback {
     _selfId = clientId;
-    [self setupConversationDatasWithUserId:_selfId];
+    [[CDDatabaseManager manager] setupDatabaseWithUserId:_selfId];
     [[AVIMClient defaultClient] openWithClientId:clientId callback:^(BOOL succeeded, NSError *error) {
         [self updateConnectStatus];
         if (callback) {
@@ -217,24 +218,39 @@ static CDChatManager *instance;
 #pragma mark - AVIMMessageDelegate
 
 - (void)conversation:(AVIMConversation *)conversation didReceiveCommonMessage:(AVIMMessage *)message {
-    DLog();
+}
+
+- (void)handleDatabaseWithConversation:(AVIMConversation *)conversation message:(AVIMTypedMessage *)message {
+    [[CDDatabaseManager manager] createConversatioRecord:conversation];
+    if ([self.chattingConversationId isEqualToString:conversation.conversationId] == NO) {
+        // 没有在聊天的时候才增加未读数和设置mentioned
+        [[CDDatabaseManager manager] increaseUnreadCountWithConversation:conversation];
+        if ([self isMentionedByMessage:message]) {
+            [[CDDatabaseManager manager] updateConversation:conversation mentioned:YES];
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationUnreadsUpdated object:nil];
+    }
+    if (self.chattingConversationId == nil) {
+        if (conversation.muted == NO) {
+            [[CDSoundManager manager] playLoudReceiveSoundIfNeed];
+            [[CDSoundManager manager] vibrateIfNeed];
+        }
+    }
 }
 
 - (void)conversation:(AVIMConversation *)conversation didReceiveTypedMessage:(AVIMTypedMessage *)message {
     if (message.messageId) {
         DLog();
-        if ([self isMentionedByMessage:message]) {
-            [self setMention:YES conversationId:message.conversationId];
-        }
-        if (self.chattingConversationId == nil) {
-            if (conversation.muted == NO) {
-                [[CDSoundManager manager] playLoudReceiveSoundIfNeed];
-                [[CDSoundManager manager] vibrateIfNeed];
-            }
-        }
-        if (self.chattingConversationId == nil || [self.chattingConversationId isEqualToString:conversation.conversationId]) {
-            [self incrementUnreadWithConversationId:conversation.conversationId];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationUnreadsUpdated object:nil];
+        if (conversation.creator == nil) {
+            [conversation fetchWithCallback:^(BOOL succeeded, NSError *error) {
+                if (error) {
+                    
+                } else {
+                    [self handleDatabaseWithConversation:conversation message:message];
+                }
+            }];
+        } else {
+            [self handleDatabaseWithConversation:conversation message:message];
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationMessageReceived object:message];
     }
@@ -360,49 +376,8 @@ static CDChatManager *instance;
     return [NSString stringWithFormat:@"conv_%@", convid];
 }
 
-- (AVIMConversation *)getConversationFromLocalByConvid:(NSString *)convid{
-    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:[self localKeyWithConvid:convid]];
-    if (data != nil) {
-        AVIMKeyedConversation *keyedConversation = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-        return [[AVIMClient defaultClient] conversationWithKeyedConversation:keyedConversation];
-    } else {
-        return nil;
-    }
-}
-
-- (void)saveConversationsToLocal:(NSArray *)conversations {
-    for (AVIMConversation *conversation in conversations) {
-        AVIMKeyedConversation *keydConversation = [conversation keyedConversation];
-        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:keydConversation];
-        [[NSUserDefaults standardUserDefaults] setObject:data forKey:[self localKeyWithConvid:conversation.conversationId]];
-    }
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
 - (AVIMConversation *)lookupConvById:(NSString *)convid {
-    AVIMConversation *conversation = [[AVIMClient defaultClient] conversationForId:convid];
-    if (conversation.creator.length == 0 || conversation.createAt == nil) {
-//        DLog(@"client's conversation is nil");
-        if ([AVIMClient defaultClient].status == AVIMClientStatusOpened) {
-            // let nil , converation will be fetched from server
-//            DLog("connected and return nil");
-            return nil;
-        } else {
-            // not connect
-            AVIMConversation *localConversation = [self getConversationFromLocalByConvid:convid];
-            if (localConversation.creator.length == 0 || localConversation.createAt == nil) {
-//                DLog("local conversation is nil and return nil");
-                // will be fetch from server
-                return nil;
-            } else {
-//                DLog(@"local conversation is well and return");
-                return localConversation;
-            }
-        }
-    }else {
-//        DLog(@"directly return client's conversation");
-        return conversation;
-    }
+    return [[AVIMClient defaultClient] conversationForId:convid];
 }
 
 - (void)cacheConvsWithIds:(NSMutableSet *)convids callback:(AVBooleanResultBlock)callback {
@@ -418,117 +393,42 @@ static CDChatManager *instance;
             callback(NO, error);
         }
         else {
-            [self saveConversationsToLocal:objects];
             callback(YES, nil);
         }
     }];
 }
 
 - (void)findRecentConversationsWithBlock:(CDRecentConversationsCallback)block {
-    NSMutableSet *convids = [NSMutableSet setWithArray:[self.conversationDatas allKeys]];
-    [self cacheConvsWithIds:convids callback:^(BOOL succeeded, NSError *error) {
+    NSArray *conversations = [[CDDatabaseManager manager] selectAllConversations];
+    NSMutableSet *userIds = [NSMutableSet set];
+    NSUInteger totalUnreadCount = 0;
+    for (AVIMConversation *conversation in conversations) {
+        NSArray *lastestMessages = [conversation queryMessagesFromCacheWithLimit:1];
+        if (lastestMessages.count > 0) {
+            conversation.lastMessage = lastestMessages[0];
+        }
+        if (conversation.type == CDConvTypeSingle) {
+            [userIds addObject:conversation.otherId];
+        } else {
+            if (conversation.lastMessage) {
+                [userIds addObject:conversation.lastMessage.clientId];
+            }
+        }
+        if (conversation.muted == NO) {
+            totalUnreadCount += conversation.unreadCount;
+        }
+    }
+    NSArray *sortedRooms = [conversations sortedArrayUsingComparator:^NSComparisonResult(AVIMConversation *conv1, AVIMConversation *conv2) {
+        return conv2.lastMessage.sendTimestamp - conv1.lastMessage.sendTimestamp;
+    }];
+    [self.userDelegate cacheUserByIds:userIds block: ^(BOOL succeeded, NSError *error) {
         if (error) {
             block(nil,0, error);
         }
         else {
-            NSMutableArray *recentConversations = [NSMutableArray array];
-            for (NSString *convid in convids) {
-                [recentConversations addObject:[self lookupConvById:convid]];
-            }
-            NSMutableSet *userIds = [NSMutableSet set];
-            NSUInteger totalUnreadCount = 0;
-            for (AVIMConversation *conversation in recentConversations) {
-                NSArray *lastestMessages = [conversation queryMessagesFromCacheWithLimit:1];
-                if (lastestMessages.count > 0) {
-                    conversation.lastMessage = lastestMessages[0];
-                }
-                if (conversation.type == CDConvTypeSingle) {
-                    [userIds addObject:conversation.otherId];
-                } else {
-                    if (conversation.lastMessage) {
-                        [userIds addObject:conversation.lastMessage.clientId];
-                    }
-                }
-                conversation.unreadCount = [self.conversationDatas[conversation.conversationId][kConversationUnreadsKey] intValue];
-                if (conversation.muted == NO) {
-                    totalUnreadCount += conversation.unreadCount;
-                }
-            }
-            NSArray *sortedRooms = [recentConversations sortedArrayUsingComparator:^NSComparisonResult(AVIMConversation *conv1, AVIMConversation *conv2) {
-                return conv2.lastMessage.sendTimestamp - conv1.lastMessage.sendTimestamp;
-            }];
-            [self.userDelegate cacheUserByIds:userIds block: ^(BOOL succeeded, NSError *error) {
-                if (error) {
-                    block(nil,0, error);
-                }
-                else {
-                    block(sortedRooms, totalUnreadCount, error);
-                }
-            }];
+            block(sortedRooms, totalUnreadCount, error);
         }
     }];
-}
-
-#pragma mark - conversations local data
-
-- (NSString *)plistPathWithUserId:(NSString *)userId{
-    NSString *libPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    return [libPath stringByAppendingPathComponent:[NSString stringWithFormat:@"conversation_datas_%@.plist", userId]];
-}
-
-- (void)saveData {
-    if (self.plistPath) {
-        [self.conversationDatas writeToFile:self.plistPath atomically:YES];
-    }
-}
-
-- (void)setupConversationDatasWithUserId:(NSString *)userId {
-    if (self.conversationDatas.count > 0) {
-        [self saveData];
-    }
-    self.plistPath = [self plistPathWithUserId:userId];
-    DLog(@"plistPath = %@", self.plistPath);
-    if (![[NSFileManager defaultManager] fileExistsAtPath:self.plistPath]) {
-        self.conversationDatas = [NSMutableDictionary dictionary];
-        [self saveData];
-    } else {
-        self.conversationDatas = [[NSMutableDictionary alloc] initWithContentsOfFile:self.plistPath];
-    }
-}
-
-- (void)setZeroUnreadWithConversationId:(NSString *)conversationId {
-    [self createConversationDataIfNotExist:conversationId];
-    self.conversationDatas[conversationId][kConversationUnreadsKey] = @0;
-    [self saveData];
-}
-
-- (void)deleteConversationDataByConversationId:(NSString *)conversationId {
-    [self.conversationDatas removeObjectForKey:conversationId];
-    [self saveData];
-}
-
-- (void)createConversationDataIfNotExist:(NSString *)conversationId {
-    if (!self.conversationDatas[conversationId]) {
-        self.conversationDatas[conversationId] = [@{kConversationUnreadsKey:@0, kConversationMentionKey:@NO} mutableCopy];
-    }
-}
-
-- (void)incrementUnreadWithConversationId:(NSString *)conversationId {
-    [self createConversationDataIfNotExist:conversationId];
-    self.conversationDatas[conversationId][kConversationUnreadsKey] = @([self.conversationDatas[conversationId][kConversationUnreadsKey] intValue] + 1);
-    [self saveData];
-}
-
-- (void)setMention:(BOOL)mention conversationId:(NSString *)conversationId{
-    NSMutableDictionary *dict = self.conversationDatas[conversationId];
-    if (dict) {
-        dict[kConversationMentionKey] = @(mention);
-        [self saveData];
-    }
-}
-
-- (BOOL)getMentionValueWithConverationId:(NSString *)conversationId {
-    return [self.conversationDatas[conversationId][kConversationMentionKey] boolValue];
 }
 
 #pragma mark - mention
@@ -546,5 +446,12 @@ static CDChatManager *instance;
         }
     }
 }
+
+#pragma mark - database 
+
+- (void)deleteConversation:(AVIMConversation *)conversation {
+    [[CDDatabaseManager manager] deleteConversation:conversation];
+}
+
 
 @end

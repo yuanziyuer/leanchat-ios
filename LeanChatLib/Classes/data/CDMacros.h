@@ -2,12 +2,12 @@
 //  CDMacros.h
 //  LeanChatLib
 //
-//  Created by lzw on 15/4/3.
-//  Copyright (c) 2015年 avoscloud. All rights reserved.
+//  Created by lzw on 15/7/13.
+//  Copyright (c) 2015年 lzwjava@LeanCloud QQ: 651142978. All rights reserved.
 //
 
-#ifndef CD_MACROS_HEADER
-#define CD_MACROS_HEADER
+#ifndef LeanChatLib_CDMacros_h
+#define LeanChatLib_CDMacros_h
 
 #ifdef DEBUG
 #   define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ## __VA_ARGS__);
@@ -15,6 +15,10 @@
 #   define DLog(...)
 #endif
 
+
+#ifndef WEAKSEL
 #define WEAKSELF  typeof(self) __weak weakSelf = self;
+#endif
+
 
 #endif

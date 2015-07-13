@@ -11,12 +11,12 @@
 #import "UIView+XHRemoteImage.h"
 #import "LZConversationCell.h"
 #import "CDChatManager.h"
-#import "CDMacros.h"
 #import "AVIMConversation+Custom.h"
 #import "UIView+XHRemoteImage.h"
 #import "CDEmotionUtils.h"
 #import "CDMessageHelper.h"
 #import <DateTools/DateTools.h>
+#import "CDDatabaseManager.h"
 
 @interface CDChatListVC ()
 
@@ -168,8 +168,8 @@ static NSString *cellIdentifier = @"ContactCell";
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        AVIMConversation *conversations = [self.conversations objectAtIndex:indexPath.row];
-        [[CDChatManager manager] deleteConversationDataByConversationId:conversations.conversationId];
+        AVIMConversation *conversation = [self.conversations objectAtIndex:indexPath.row];
+        [[CDDatabaseManager manager] deleteConversation:conversation];
         [self refresh];
     }
 }

@@ -65,9 +65,8 @@
         title = [NSString stringWithFormat:@"[%ld条] %@", conversation.unreadCount, title];
     }
     NSString *mentionText = @"[有人@你] ";
-    BOOL mentioned = [[CDChatManager manager] getMentionValueWithConverationId:message.conversationId];
     NSString *finalText;
-    if (mentioned) {
+    if (conversation.mentioned) {
         finalText = [NSString stringWithFormat:@"%@%@", mentionText, title];
     } else {
         finalText = title;
@@ -79,7 +78,7 @@
     NSDictionary *attributes = @{NSForegroundColorAttributeName: [UIColor grayColor], (id)NSFontAttributeName:font};
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:finalText attributes:attributes];
     
-    if (mentioned) {
+    if (conversation.mentioned) {
         NSRange range = [finalText rangeOfString:mentionText];
         [attributedString setAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithRed:183/255.0 green:20/255.0 blue:20/255.0 alpha:1], NSFontAttributeName : font} range:range];
     }
