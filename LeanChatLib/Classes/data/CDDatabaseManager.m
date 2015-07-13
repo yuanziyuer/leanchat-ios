@@ -125,7 +125,7 @@
 
 - (void)updateConversation:(AVIMConversation *)conversation mentioned:(BOOL)mentioned {
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        [db executeUpdate:kCDConversationTableUpdateMentionedSQL withArgumentsInArray:@[kCDConversationTableKeyUnreadCount, @(mentioned), conversation.conversationId]];
+        [db executeUpdate:kCDConversationTableUpdateMentionedSQL withArgumentsInArray:@[@(mentioned), conversation.conversationId]];
     }];
 }
 

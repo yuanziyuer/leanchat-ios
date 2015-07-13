@@ -222,12 +222,12 @@ static CDChatManager *instance;
 
 - (void)handleConversation:(AVIMConversation *)conversation whenReceiveMessage:(AVIMTypedMessage *)message {
     [[CDDatabaseManager manager] createConversatioRecord:conversation];
-    if (self.chattingConversationId == nil || [self.chattingConversationId isEqualToString:conversation.conversationId]) {
+    if (self.chattingConversationId == nil || [self.chattingConversationId isEqualToString:conversation.conversationId] == NO) {
         [[CDDatabaseManager manager] increaseUnreadCountWithConversation:conversation];
+        if ([self isMentionedByMessage:message]) {
+            [[CDDatabaseManager manager] updateConversation:conversation mentioned:YES];
+        }
         [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationUnreadsUpdated object:nil];
-    }
-    if ([self isMentionedByMessage:message]) {
-        [[CDDatabaseManager manager] updateConversation:conversation mentioned:YES];
     }
     if (self.chattingConversationId == nil) {
         if (conversation.muted == NO) {
