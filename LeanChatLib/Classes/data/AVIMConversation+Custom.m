@@ -29,6 +29,14 @@
     objc_setAssociatedObject(self, @selector(unreadCount), @(unreadCount), OBJC_ASSOCIATION_ASSIGN);
 }
 
+- (BOOL)mentioned {
+    return [objc_getAssociatedObject(self, @selector(mentioned)) boolValue];
+}
+
+- (void)setMentioned:(BOOL)mentioned {
+    objc_setAssociatedObject(self, @selector(mentioned), @(mentioned), OBJC_ASSOCIATION_ASSIGN);
+}
+
 - (CDConvType)type {
     return [[self.attributes objectForKey:CONV_TYPE] intValue];
 }

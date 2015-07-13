@@ -17,8 +17,9 @@ typedef enum : NSUInteger {
 
 @interface AVIMConversation (Custom)
 
-@property (nonatomic, strong) AVIMTypedMessage *lastMessage;;
+@property (nonatomic, strong) AVIMTypedMessage *lastMessage;
 @property (nonatomic, assign) NSInteger unreadCount;
+@property (nonatomic, assign) BOOL mentioned;
 
 - (CDConvType)type;
 - (NSString *)otherId;

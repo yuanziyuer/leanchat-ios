@@ -63,11 +63,8 @@ typedef void (^CDRecentConversationsCallback)(NSArray *conversations, NSInteger 
 - (void)queryTypedMessagesWithConversation:(AVIMConversation *)conversation timestamp:(int64_t)timestamp limit:(NSInteger)limit block:(AVIMArrayResultBlock)block;
 
 - (void)findRecentConversationsWithBlock:(CDRecentConversationsCallback)block;
-- (void)setZeroUnreadWithConversationId:(NSString *)conversationId;
-- (void)deleteConversationDataByConversationId:(NSString *)conversationId;
-- (void)incrementUnreadWithConversationId:(NSString *)conversationId;
-- (void)setMention:(BOOL)mention conversationId:(NSString *)conversationId;
-- (BOOL)getMentionValueWithConverationId:(NSString *)conversationId;
+
+- (void)deleteConversation:(AVIMConversation *)conversation;
 
 - (NSString *)getPathByObjectId:(NSString *)objectId;
 - (NSString *)tmpPath;
