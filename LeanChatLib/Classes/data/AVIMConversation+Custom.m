@@ -63,11 +63,11 @@
 
 - (NSString *)otherId {
     NSArray *members = self.members;
-    if (members.count != 2) {
+    if (members.count == 0) {
         [NSException raise:@"invalid conv" format:nil];
     }
-    if ([members containsObject:[CDChatManager manager].selfId] == NO) {
-        [NSException raise:@"invalid conv" format:nil];
+    if (members.count == 1) {
+        return members[0];
     }
     NSString *otherId;
     if ([members[0] isEqualToString:[CDChatManager manager].selfId]) {
