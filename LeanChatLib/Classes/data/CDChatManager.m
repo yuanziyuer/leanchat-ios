@@ -220,7 +220,7 @@ static CDChatManager *instance;
 - (void)conversation:(AVIMConversation *)conversation didReceiveCommonMessage:(AVIMMessage *)message {
 }
 
-- (void)handleConversation:(AVIMConversation *)conversation whenReceiveMessage:(AVIMTypedMessage *)message {
+- (void)handleDatabaseWithConversation:(AVIMConversation *)conversation message:(AVIMTypedMessage *)message {
     [[CDDatabaseManager manager] createConversatioRecord:conversation];
     if (self.chattingConversationId == nil || [self.chattingConversationId isEqualToString:conversation.conversationId] == NO) {
         [[CDDatabaseManager manager] increaseUnreadCountWithConversation:conversation];
@@ -245,11 +245,11 @@ static CDChatManager *instance;
                 if (error) {
                     
                 } else {
-                    [self handleConversation:conversation whenReceiveMessage:message];
+                    [self handleDatabaseWithConversation:conversation message:message];
                 }
             }];
         } else {
-            [self handleConversation:conversation whenReceiveMessage:message];
+            [self handleDatabaseWithConversation:conversation message:message];
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationMessageReceived object:message];
     }
