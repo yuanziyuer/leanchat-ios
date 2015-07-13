@@ -222,7 +222,8 @@ static CDChatManager *instance;
 
 - (void)handleDatabaseWithConversation:(AVIMConversation *)conversation message:(AVIMTypedMessage *)message {
     [[CDDatabaseManager manager] createConversatioRecord:conversation];
-    if (self.chattingConversationId == nil || [self.chattingConversationId isEqualToString:conversation.conversationId] == NO) {
+    if ([self.chattingConversationId isEqualToString:conversation.conversationId] == NO) {
+        // 没有在聊天的时候才增加未读数和设置mentioned
         [[CDDatabaseManager manager] increaseUnreadCountWithConversation:conversation];
         if ([self isMentionedByMessage:message]) {
             [[CDDatabaseManager manager] updateConversation:conversation mentioned:YES];
