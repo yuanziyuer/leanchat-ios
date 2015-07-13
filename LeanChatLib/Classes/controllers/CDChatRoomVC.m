@@ -79,7 +79,7 @@ static NSInteger const kOnePageSize = 20;
 }
 
 - (void)updateConversation {
-    [[CDDatabaseManager manager] createConversatioRecord:self.conv];
+    [[CDDatabaseManager manager] insertConversation:self.conv];
     [[CDDatabaseManager manager] updateUnreadCountToZeroWithConversation:self.conv];
     [[CDDatabaseManager manager] updateConversation:self.conv mentioned:NO];
     [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationUnreadsUpdated object:nil];

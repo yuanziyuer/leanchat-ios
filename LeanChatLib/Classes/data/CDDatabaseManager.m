@@ -106,7 +106,7 @@
     }];
 }
 
-- (void )createConversatioRecord:(AVIMConversation *)conversation {
+- (void )insertConversation:(AVIMConversation *)conversation {
     if (conversation.creator == nil) {
         return;
     }

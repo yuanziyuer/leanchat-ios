@@ -14,7 +14,7 @@
 + (CDDatabaseManager *)manager;
 - (void)setupDatabaseWithUserId:(NSString *)userId;
 
-- (void )createConversatioRecord:(AVIMConversation *)conversation;
+- (void )insertConversation:(AVIMConversation *)conversation;
 
 - (void)updateUnreadCountToZeroWithConversation:(AVIMConversation *)conversation;
 - (void)increaseUnreadCountWithConversation:(AVIMConversation *)conversation;
