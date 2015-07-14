@@ -12,16 +12,18 @@
 @interface CDDatabaseManager : NSObject
 
 + (CDDatabaseManager *)manager;
-- (void)setupDatabaseWithUserId:(NSString *)userId;
+- (void)setupManagerWithDatabasePath:(NSString *)path;
 
 - (void )insertConversation:(AVIMConversation *)conversation;
 
 - (void)updateUnreadCountToZeroWithConversation:(AVIMConversation *)conversation;
 - (void)increaseUnreadCountWithConversation:(AVIMConversation *)conversation;
 - (void)updateConversation:(AVIMConversation *)conversation mentioned:(BOOL)mentioned;
+- (void)updateConversations:(NSArray *)conversations;
 
 - (void)deleteConversation:(AVIMConversation *)conversation;
 
 - (NSArray *)selectAllConversations;
+- (BOOL)isConversationExists:(AVIMConversation *)conversation;
 
 @end

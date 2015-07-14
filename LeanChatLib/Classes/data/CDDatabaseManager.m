@@ -28,37 +28,46 @@
 
 #define kCDConversationTableInsertSQL                           \
     @"INSERT OR IGNORE INTO " kCDConversationTableName @" ("    \
-        kCDConversationTableKeyId           @", "               \
-        kCDConversationTableKeyData         @", "               \
-        kCDConversationTableKeyUnreadCount  @", "               \
+        kCDConversationTableKeyId               @", "           \
+        kCDConversationTableKeyData             @", "           \
+        kCDConversationTableKeyUnreadCount      @", "           \
         kCDConversationTableKeyMentioned                        \
     @") VALUES(?, ?, ?, ?)"
 
 #define kCDConversationTableWhereClause                         \
-    @"WHERE " kCDConversationTableKeyId @" = ?"
+    @" WHERE " kCDConversationTableKeyId         @" = ?"
 
 #define kCDConversationTableDeleteSQL                           \
-    @"DELETE FROM " kCDConversationTableName  @" "              \
+    @"DELETE FROM " kCDConversationTableName                    \
     kCDConversationTableWhereClause
 
 #define kCDConversationTableIncreaseUnreadCountSQL              \
-    @"UPDATE " kCDConversationTableName        @" "             \
-    @"SET " kCDConversationTableKeyUnreadCount @" = "           \
-            kCDConversationTableKeyUnreadCount @"+ 1 "          \
+    @"UPDATE " kCDConversationTableName         @" "            \
+    @"SET " kCDConversationTableKeyUnreadCount  @" = "          \
+            kCDConversationTableKeyUnreadCount  @" + 1 "        \
     kCDConversationTableWhereClause
 
 #define kCDConversationTableUpdateUnreadCountSQL                \
     @"UPDATE " kCDConversationTableName         @" "            \
-    @"SET  " kCDConversationTableKeyUnreadCount @" = ? "        \
+    @"SET " kCDConversationTableKeyUnreadCount  @" = ? "        \
     kCDConversationTableWhereClause
 
 #define kCDConversationTableUpdateMentionedSQL                  \
-    @"UPDATE " kCDConversationTableName  @" "                   \
-    @"SET  " kCDConversationTableKeyMentioned @" = ? "         \
+    @"UPDATE " kCDConversationTableName         @" "            \
+    @"SET " kCDConversationTableKeyMentioned    @" = ? "        \
     kCDConversationTableWhereClause
 
 #define kCDConversationTableSelectSQL                           \
     @"SELECT * FROM " kCDConversationTableName                  \
+
+#define kCDConversationTableSelectOneSQL                        \
+    @"SELECT * FROM " kCDConversationTableName                  \
+    kCDConversationTableWhereClause
+
+#define kCDConversationTableUpdateDataSQL                       \
+    @"UPDATE " kCDConversationTableName @" "                    \
+    @"SET " kCDConversationTableKeyData @" = ? "                \
+    kCDConversationTableWhereClause                             \
 
 @interface CDDatabaseManager ()
 
@@ -77,11 +86,11 @@
     return manager;
 }
 
-- (void)setupDatabaseWithUserId:(NSString *)userId {
+- (void)setupManagerWithDatabasePath:(NSString *)path {
     if (self.databaseQueue) {
         DLog(@"database queue not nil !!!!");
     }
-    self.databaseQueue = [FMDatabaseQueue databaseQueueWithPath:[self databasePathWithUserId:userId]];
+    self.databaseQueue = [FMDatabaseQueue databaseQueueWithPath:path];
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:kCDConversatoinTableCreateSQL];
     }];
@@ -89,9 +98,15 @@
 
 #pragma mark - conversations local data
 
-- (NSString *)databasePathWithUserId:(NSString *)userId{
-    NSString *libPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    return [libPath stringByAppendingPathComponent:[NSString stringWithFormat:@"com.leancloud.leanchatlib.%@.db3", userId]];
+- (NSData *)dataFromConversation:(AVIMConversation *)conversation {
+    AVIMKeyedConversation *keydConversation = [conversation keyedConversation];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:keydConversation];
+    return data;
+}
+
+- (AVIMConversation *)conversationFromData:(NSData *)data{
+    AVIMKeyedConversation *keyedConversation = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    return [[AVIMClient defaultClient] conversationWithKeyedConversation:keyedConversation];
 }
 
 - (void)updateUnreadCountToZeroWithConversation:(AVIMConversation *)conversation {
@@ -111,10 +126,21 @@
         return;
     }
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        AVIMKeyedConversation *keydConversation = [conversation keyedConversation];
-        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:keydConversation];
+        NSData *data = [self dataFromConversation:conversation];
         [db executeUpdate:kCDConversationTableInsertSQL withArgumentsInArray:@[conversation.conversationId, data, @0, @(NO)]];
     }];
+}
+
+- (BOOL)isConversationExists:(AVIMConversation *)conversation {
+    __block BOOL exists = NO;
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *resultSet = [db executeQuery:kCDConversationTableSelectOneSQL withArgumentsInArray:@[conversation.conversationId]];
+        if ([resultSet next]) {
+            exists = YES;
+        }
+        [resultSet close];
+    }];
+    return exists;
 }
 
 - (void)increaseUnreadCountWithConversation:(AVIMConversation *)conversation {
@@ -133,9 +159,7 @@
     NSData *data = [resultSet dataForColumn:kCDConversationTableKeyData];
     NSInteger unreadCount = [resultSet intForColumn:kCDConversationTableKeyUnreadCount];
     BOOL mentioned = [resultSet boolForColumn:kCDConversationTableKeyMentioned];
-    
-    AVIMKeyedConversation *keyedConversation = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    AVIMConversation *conversation = [[AVIMClient defaultClient] conversationWithKeyedConversation:keyedConversation];
+    AVIMConversation *conversation = [self conversationFromData:data];
     conversation.unreadCount = unreadCount;
     conversation.mentioned = mentioned;
     return conversation;
@@ -151,6 +175,16 @@
         [resultSet close];
     }];
     return conversations;
+}
+
+- (void)updateConversations:(NSArray *)conversations {
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        [db beginTransaction];
+        for (AVIMConversation *conversation in conversations) {
+            [db executeUpdate:kCDConversationTableUpdateDataSQL, [self dataFromConversation:conversation], conversation.conversationId];
+        }
+        [db commit];
+    }];
 }
 
 @end
