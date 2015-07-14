@@ -9,8 +9,8 @@
 #import "CDChatManager.h"
 #import "CDEmotionUtils.h"
 #import "CDSoundManager.h"
-#import "CDDatabaseManager.h"
-#import "CDFailedMessagesManager.h"
+#import "CDConversationStore.h"
+#import "CDFailedMessageStore.h"
 #import "CDMacros.h"
 
 static NSString *kConversationUnreadsKey = @"unreads";
@@ -68,8 +68,8 @@ static CDChatManager *instance;
 - (void)openWithClientId:(NSString *)clientId callback:(AVIMBooleanResultBlock)callback {
     _selfId = clientId;
     NSString *dbPath = [self databasePathWithUserId:_selfId];
-    [[CDDatabaseManager manager] setupManagerWithDatabasePath:dbPath];
-    [[CDFailedMessagesManager manager] setupManagerWithDatabasePath:dbPath];
+    [[CDConversationStore store] setupStoreWithDatabasePath:dbPath];
+    [[CDFailedMessageStore store] setupStoreWithDatabasePath:dbPath];
     [[AVIMClient defaultClient] openWithClientId:clientId callback:^(BOOL succeeded, NSError *error) {
         [self updateConnectStatus];
         if (callback) {
@@ -174,7 +174,12 @@ static CDChatManager *instance;
 
 - (void)sendMessage:(AVIMTypedMessage*)message conversation:(AVIMConversation *)conversation callback:(AVBooleanResultBlock)block {
     id<CDUserModel> selfUser = [[CDChatManager manager].userDelegate getUserById:self.selfId];
-    message.attributes = @{@"username": selfUser.username};
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
+    [attributes setObject:selfUser.username forKey:@"username"];
+    if (self.useDevPushCerticate) {
+        [attributes setObject:@YES forKey:@"dev"];
+    }
+    message.attributes = attributes;
     [conversation sendMessage:message options:AVIMMessageSendOptionRequestReceipt callback:block];
 }
 
@@ -235,12 +240,12 @@ static CDChatManager *instance;
 }
 
 - (void)receiveMessage:(AVIMTypedMessage *)message conversation:(AVIMConversation *)conversation{
-    [[CDDatabaseManager manager] insertConversation:conversation];
+    [[CDConversationStore store] insertConversation:conversation];
     if ([self.chattingConversationId isEqualToString:conversation.conversationId] == NO) {
         // 没有在聊天的时候才增加未读数和设置mentioned
-        [[CDDatabaseManager manager] increaseUnreadCountWithConversation:conversation];
+        [[CDConversationStore store] increaseUnreadCountWithConversation:conversation];
         if ([self isMentionedByMessage:message]) {
-            [[CDDatabaseManager manager] updateConversation:conversation mentioned:YES];
+            [[CDConversationStore store] updateMentioned:YES conversation:conversation];
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationUnreadsUpdated object:nil];
     }
@@ -255,7 +260,7 @@ static CDChatManager *instance;
 
 - (void)conversation:(AVIMConversation *)conversation didReceiveTypedMessage:(AVIMTypedMessage *)message {
     if (message.messageId) {
-        if (conversation.creator == nil && [[CDDatabaseManager manager] isConversationExists:conversation] == NO) {
+        if (conversation.creator == nil && [[CDConversationStore store] isConversationExists:conversation] == NO) {
             [conversation fetchWithCallback:^(BOOL succeeded, NSError *error) {
                 if (error) {
                     DLog(@"%@", error);
@@ -413,7 +418,7 @@ static CDChatManager *instance;
 
 - (void)selectOrRefreshConversationsWithBlock:(AVIMArrayResultBlock)block {
     static BOOL refreshedFromServer = NO;
-    NSArray *conversations = [[CDDatabaseManager manager] selectAllConversations];
+    NSArray *conversations = [[CDConversationStore store] selectAllConversations];
     if (refreshedFromServer == NO && self.connect) {
         refreshedFromServer = YES;
         NSMutableSet *convids = [NSMutableSet set];
@@ -424,8 +429,8 @@ static CDChatManager *instance;
             if (error) {
                 block(conversations, nil);
             } else {
-                [[CDDatabaseManager manager] updateConversations:objects];
-                block([[CDDatabaseManager manager] selectAllConversations], nil);
+                [[CDConversationStore store] updateConversations:objects];
+                block([[CDConversationStore store] selectAllConversations], nil);
             }
         }];
     } else {
@@ -486,7 +491,7 @@ static CDChatManager *instance;
 #pragma mark - database 
 
 - (void)deleteConversation:(AVIMConversation *)conversation {
-    [[CDDatabaseManager manager] deleteConversation:conversation];
+    [[CDConversationStore store] deleteConversation:conversation];
 }
 
 

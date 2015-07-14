@@ -16,7 +16,7 @@
 #import "CDEmotionUtils.h"
 #import "CDMessageHelper.h"
 #import <DateTools/DateTools.h>
-#import "CDDatabaseManager.h"
+#import "CDConversationStore.h"
 
 @interface CDChatListVC ()
 
@@ -169,7 +169,7 @@ static NSString *cellIdentifier = @"ContactCell";
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         AVIMConversation *conversation = [self.conversations objectAtIndex:indexPath.row];
-        [[CDDatabaseManager manager] deleteConversation:conversation];
+        [[CDConversationStore store] deleteConversation:conversation];
         [self refresh];
     }
 }

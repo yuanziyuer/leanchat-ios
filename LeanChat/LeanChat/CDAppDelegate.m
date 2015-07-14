@@ -125,6 +125,12 @@
     [[CDCacheManager manager] registerUsers:@[[AVUser currentUser]]];
     WEAKSELF
     [CDChatManager manager].userDelegate = [CDIMService service];
+
+#ifdef DEBUG
+#warning 使用开发证书来推送，方便调试
+    [CDChatManager manager].useDevPushCerticate = YES;
+#endif
+    
     [[CDChatManager manager] openWithClientId:[AVUser currentUser].objectId callback: ^(BOOL succeeded, NSError *error) {
         DLog(@"%@", error);
         CDBaseTabC *tab = [[CDBaseTabC alloc] init];
