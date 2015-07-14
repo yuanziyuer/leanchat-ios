@@ -230,7 +230,20 @@ static NSInteger const kOnePageSize = 20;
     XHMessage *xhMsg = (XHMessage *)message;
     xhMsg.status = XHMessageStatusSending;
     [self.messageTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    [self resendMsg:msg atIndexPath:indexPath];
+    NSString *recordId = msg.messageId;
+    [self.conv sendMessage:msg options:AVIMMessageSendOptionRequestReceipt callback: ^(BOOL succeeded, NSError *error) {
+        if (error) {
+            [self alertError:error];
+            xhMsg.status = XHMessageStatusFailed;
+        }
+        else {
+            [[CDFailedMessagesManager manager] deleteFailedMessageByRecordId:recordId];
+            self.msgs[indexPath.row] = msg;
+            XHMessage *xhMsg = [self getXHMessageByMsg:msg];
+            self.messages[indexPath.row] = xhMsg;
+        }
+        [self.messageTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }];
 }
 
 #pragma mark - XHAudioPlayerHelper Delegate
@@ -456,22 +469,6 @@ static NSInteger const kOnePageSize = 20;
     }];
 }
 
-- (void)resendMsg:(AVIMTypedMessage *)msg atIndexPath:(NSIndexPath *)indexPath{
-    NSString *recordId = msg.messageId;
-    [self.conv sendMessage:msg options:AVIMMessageSendOptionRequestReceipt callback: ^(BOOL succeeded, NSError *error) {
-        if (error) {
-            [self alertError:error];
-        }
-        else {
-            [[CDFailedMessagesManager manager] deleteFailedMessageByRecordId:recordId];
-            self.msgs[indexPath.row] = msg;
-            XHMessage *xhMsg = [self getXHMessageByMsg:msg];
-            self.messages[indexPath.row] = xhMsg;
-            [self.messageTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        }
-    }];
-}
-
 #pragma mark - receive and delivered
 
 - (void)receiveMessage:(NSNotification *)notification {
@@ -608,14 +605,26 @@ static NSInteger const kOnePageSize = 20;
         self.isLoadingMsg = YES;
         [self queryAndCacheMessagesWithTimestamp:0 block:^(NSArray *msgs, NSError *error) {
             if ([self filterError:error]) {
-                NSMutableArray *xhMsgs = [self getXHMessages:msgs];
+                // 失败消息加到末尾，因为 SDK 缓存不保存它们
+                NSArray *failedMessages = [[CDFailedMessagesManager manager] selectFailedMessagesByConversationId:self.conv.conversationId];
+                NSMutableArray *allMessages = [NSMutableArray arrayWithArray:msgs];
+                [allMessages addObjectsFromArray:failedMessages];
+                
+                NSMutableArray *xhMsgs = [self getXHMessages:allMessages];
                 self.messages = xhMsgs;
-                self.msgs = msgs;
+                self.msgs = allMessages;
                 [self.messageTableView reloadData];
                 [self scrollToBottomAnimated:NO];
                 
                 if (self.msgs.count > 0) {
                     [self updateConversationAsRead];
+                }
+                
+                // 如果连接上，则重发所有的失败消息。若夹杂在历史消息中间不好处理
+                if ([CDChatManager manager].connect) {
+                    for (NSInteger row = msgs.count;row < allMessages.count; row ++) {
+                        [self didRetrySendMessage:self.messages[row] atIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
+                    }
                 }
             }
             self.isLoadingMsg = NO;

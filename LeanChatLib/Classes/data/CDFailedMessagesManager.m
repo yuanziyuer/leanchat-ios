@@ -26,7 +26,7 @@
     @" WHERE " kCDKeyConversationId @" = ? "
 
 #define kCDSelectMessagesSQL                        \
-	@"SELECT FROM " kCDFaildMessageTable            \
+	@"SELECT * FROM " kCDFaildMessageTable          \
 	kCDWhereConversationId
 
 #define kCDInsertMessageSQL                             \
