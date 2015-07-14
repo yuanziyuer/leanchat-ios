@@ -17,6 +17,8 @@
 		701AF79D1B3C704F0088A43B /* CDUserModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 701AF7951B3C704F0088A43B /* CDUserModel.h */; };
 		70271C3C1B3BE72E0030CD6C /* UIImage+Icon.h in Headers */ = {isa = PBXBuildFile; fileRef = 70271C3A1B3BE72E0030CD6C /* UIImage+Icon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		70271C3D1B3BE72E0030CD6C /* UIImage+Icon.m in Sources */ = {isa = PBXBuildFile; fileRef = 70271C3B1B3BE72E0030CD6C /* UIImage+Icon.m */; };
+		704C0F9C1B5427AD0002B498 /* CDFailedMessagesManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 704C0F9A1B5427AD0002B498 /* CDFailedMessagesManager.h */; };
+		704C0F9D1B5427AD0002B498 /* CDFailedMessagesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 704C0F9B1B5427AD0002B498 /* CDFailedMessagesManager.m */; };
 		705409171B536FA600C3DDB8 /* CDDatabaseManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 705409151B536FA600C3DDB8 /* CDDatabaseManager.h */; };
 		705409181B536FA600C3DDB8 /* CDDatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 705409161B536FA600C3DDB8 /* CDDatabaseManager.m */; };
 		706E0C9C1B31F52600F9C891 /* CDChatListVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 706E0B321B31F52400F9C891 /* CDChatListVC.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -335,6 +337,8 @@
 		701AF7951B3C704F0088A43B /* CDUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUserModel.h; sourceTree = "<group>"; };
 		70271C3A1B3BE72E0030CD6C /* UIImage+Icon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Icon.h"; sourceTree = "<group>"; };
 		70271C3B1B3BE72E0030CD6C /* UIImage+Icon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Icon.m"; sourceTree = "<group>"; };
+		704C0F9A1B5427AD0002B498 /* CDFailedMessagesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDFailedMessagesManager.h; sourceTree = "<group>"; };
+		704C0F9B1B5427AD0002B498 /* CDFailedMessagesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDFailedMessagesManager.m; sourceTree = "<group>"; };
 		705409151B536FA600C3DDB8 /* CDDatabaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDDatabaseManager.h; sourceTree = "<group>"; };
 		705409161B536FA600C3DDB8 /* CDDatabaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDDatabaseManager.m; sourceTree = "<group>"; };
 		7054091A1B53B2D200C3DDB8 /* CDMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDMacros.h; sourceTree = "<group>"; };
@@ -673,6 +677,8 @@
 				701AF7931B3C704F0088A43B /* CDChatManager.m */,
 				705409151B536FA600C3DDB8 /* CDDatabaseManager.h */,
 				705409161B536FA600C3DDB8 /* CDDatabaseManager.m */,
+				704C0F9A1B5427AD0002B498 /* CDFailedMessagesManager.h */,
+				704C0F9B1B5427AD0002B498 /* CDFailedMessagesManager.m */,
 				70F589821B425045008C2C36 /* CDMessageHelper.h */,
 				70F589831B425045008C2C36 /* CDMessageHelper.m */,
 				709233041B450EB800E2D1F5 /* CDSoundManager.h */,
@@ -1449,6 +1455,7 @@
 				706E0CD01B31F52600F9C891 /* XHAudioPlayerHelper.h in Headers */,
 				706E0D6C1B31F52600F9C891 /* XHRefreshControl.h in Headers */,
 				706E0CE81B31F52600F9C891 /* XHDisplayEmotionViewController.h in Headers */,
+				704C0F9C1B5427AD0002B498 /* CDFailedMessagesManager.h in Headers */,
 				706E0D501B31F52600F9C891 /* XHMessageDisplayTextView.h in Headers */,
 				706E0D621B31F52600F9C891 /* XHEmotionManagerView.h in Headers */,
 				706E0D5E1B31F52600F9C891 /* XHEmotionCollectionViewCell.h in Headers */,
@@ -1721,6 +1728,7 @@
 				706E0CB71B31F52600F9C891 /* NSString+MessageInputView.m in Sources */,
 				706E0D491B31F52600F9C891 /* XHBaseCollectionViewCell.m in Sources */,
 				706E0D031B31F52600F9C891 /* XHVideoOutputSampleBufferFactory.m in Sources */,
+				704C0F9D1B5427AD0002B498 /* CDFailedMessagesManager.m in Sources */,
 				706E0CE31B31F52600F9C891 /* XHBaseTableViewController.m in Sources */,
 				706E0CD11B31F52600F9C891 /* XHAudioPlayerHelper.m in Sources */,
 				706E0CED1B31F52600F9C891 /* XHDisplayMediaViewController.m in Sources */,

@@ -18,6 +18,7 @@
 #import "AVIMConversation+Custom.h"
 #import "CDSoundManager.h"
 #import "CDDatabaseManager.h"
+#import "CDFailedMessagesManager.h"
 
 static NSInteger const kOnePageSize = 20;
 
@@ -78,7 +79,7 @@ static NSInteger const kOnePageSize = 20;
     [CDChatManager manager].chattingConversationId = self.conv.conversationId;
 }
 
-- (void)updateConversation {
+- (void)updateConversationAsRead {
     [[CDDatabaseManager manager] insertConversation:self.conv];
     [[CDDatabaseManager manager] updateUnreadCountToZeroWithConversation:self.conv];
     [[CDDatabaseManager manager] updateConversation:self.conv mentioned:NO];
@@ -89,7 +90,7 @@ static NSInteger const kOnePageSize = 20;
     [super viewDidDisappear:animated];
     [CDChatManager manager].chattingConversationId = nil;
     if (self.msgs.count > 0) {
-        [self updateConversation];
+        [self updateConversationAsRead];
     }
     [[XHAudioPlayerHelper shareInstance] stopAudio];
 }
@@ -228,8 +229,8 @@ static NSInteger const kOnePageSize = 20;
     AVIMTypedMessage *msg = [_msgs objectAtIndex:indexPath.row];
     XHMessage *xhMsg = (XHMessage *)message;
     xhMsg.status = XHMessageStatusSending;
-    [self.messageTableView reloadData];
-    [self resendMsg:msg];
+    [self.messageTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self resendMsg:msg atIndexPath:indexPath];
 }
 
 #pragma mark - XHAudioPlayerHelper Delegate
@@ -436,36 +437,37 @@ static NSInteger const kOnePageSize = 20;
 - (void)sendMsg:(AVIMTypedMessage *)msg originFilePath:(NSString *)path {
     [self.conv sendMessage:msg options:AVIMMessageSendOptionRequestReceipt callback: ^(BOOL succeeded, NSError *error) {
         if (error) {
-            // 赋值一个临时的messageId，因为发送失败，messageId，sendTimestamp不能从服务端获取
-            // resend 成功的时候再改过来
             msg.messageId = [[CDChatManager manager] uuid];
             msg.sendTimestamp = [[NSDate date] timeIntervalSince1970] * 1000;
-        }
-        if (path && error == nil) {
-            NSString *newPath = [[CDChatManager manager] getPathByObjectId:msg.messageId];
-            NSError *error1;
-            [[NSFileManager defaultManager] moveItemAtPath:path toPath:newPath error:&error1];
-            DLog(@"%@", newPath);
-        }
-        if (!error) {
+            [[CDFailedMessagesManager manager] insertFailedMessage:msg];
+            [self insertMessage:msg];
+        } else {
+            if (path) {
+                // 移动文件，好根据 messageId 找到本地文件缓存
+                NSString *newPath = [[CDChatManager manager] getPathByObjectId:msg.messageId];
+                NSError *error1;
+                [[NSFileManager defaultManager] moveItemAtPath:path toPath:newPath error:&error1];
+                DLog(@"%@", newPath);
+            }
             [[CDSoundManager manager] playSendSoundIfNeed];
+            [self insertMessage:msg];
         }
-        [self insertMessage:msg];
-        //        [_storage insertMsg:msg];
-        //        [self loadMsgsWithLoadMore:NO];
     }];
 }
 
-- (void)resendMsg:(AVIMTypedMessage *)msg {
-    NSString *tmpId = msg.messageId;
+- (void)resendMsg:(AVIMTypedMessage *)msg atIndexPath:(NSIndexPath *)indexPath{
+    NSString *recordId = msg.messageId;
     [self.conv sendMessage:msg options:AVIMMessageSendOptionRequestReceipt callback: ^(BOOL succeeded, NSError *error) {
         if (error) {
             [self alertError:error];
         }
         else {
-            //            [_storage updateFailedMsg:msg byTmpId:tmpId];
+            [[CDFailedMessagesManager manager] deleteFailedMessageByRecordId:recordId];
+            self.msgs[indexPath.row] = msg;
+            XHMessage *xhMsg = [self getXHMessageByMsg:msg];
+            self.messages[indexPath.row] = xhMsg;
+            [self.messageTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
-        //        [self loadMsgsWithLoadMore:NO];
     }];
 }
 
@@ -612,7 +614,7 @@ static NSInteger const kOnePageSize = 20;
                 [self scrollToBottomAnimated:NO];
                 
                 if (self.msgs.count > 0) {
-                    [self updateConversation];
+                    [self updateConversationAsRead];
                 }
             }
             self.isLoadingMsg = NO;
