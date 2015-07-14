@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 lzwjava@LeanCloud QQ: 651142978. All rights reserved.
 //
 
-#import "CDDatabaseManager.h"
+#import "CDRecentConversationsManager.h"
 #import <FMDB/FMDB.h>
 #import "AVIMConversation+Custom.h"
 #import "CDMacros.h"
@@ -69,19 +69,19 @@
     @"SET " kCDConversationTableKeyData @" = ? "                \
     kCDConversationTableWhereClause                             \
 
-@interface CDDatabaseManager ()
+@interface CDRecentConversationsManager ()
 
 @property (nonatomic, strong) FMDatabaseQueue *databaseQueue;
 
 @end
 
-@implementation CDDatabaseManager
+@implementation CDRecentConversationsManager
 
-+ (CDDatabaseManager *)manager {
-    static CDDatabaseManager *manager;
++ (CDRecentConversationsManager *)manager {
+    static CDRecentConversationsManager *manager;
     static dispatch_once_t token;
     dispatch_once(&token, ^{
-        manager = [[CDDatabaseManager alloc] init];
+        manager = [[CDRecentConversationsManager alloc] init];
     });
     return manager;
 }
@@ -149,7 +149,7 @@
     }];
 }
 
-- (void)updateConversation:(AVIMConversation *)conversation mentioned:(BOOL)mentioned {
+- (void)updateMentioned:(BOOL)mentioned conversation:(AVIMConversation *)conversation {
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:kCDConversationTableUpdateMentionedSQL withArgumentsInArray:@[@(mentioned), conversation.conversationId]];
     }];

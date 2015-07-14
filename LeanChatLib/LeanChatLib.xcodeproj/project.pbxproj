@@ -19,8 +19,8 @@
 		70271C3D1B3BE72E0030CD6C /* UIImage+Icon.m in Sources */ = {isa = PBXBuildFile; fileRef = 70271C3B1B3BE72E0030CD6C /* UIImage+Icon.m */; };
 		704C0F9C1B5427AD0002B498 /* CDFailedMessagesManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 704C0F9A1B5427AD0002B498 /* CDFailedMessagesManager.h */; };
 		704C0F9D1B5427AD0002B498 /* CDFailedMessagesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 704C0F9B1B5427AD0002B498 /* CDFailedMessagesManager.m */; };
-		705409171B536FA600C3DDB8 /* CDDatabaseManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 705409151B536FA600C3DDB8 /* CDDatabaseManager.h */; };
-		705409181B536FA600C3DDB8 /* CDDatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 705409161B536FA600C3DDB8 /* CDDatabaseManager.m */; };
+		705409171B536FA600C3DDB8 /* CDRecentConversationsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 705409151B536FA600C3DDB8 /* CDRecentConversationsManager.h */; };
+		705409181B536FA600C3DDB8 /* CDRecentConversationsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 705409161B536FA600C3DDB8 /* CDRecentConversationsManager.m */; };
 		706E0C9C1B31F52600F9C891 /* CDChatListVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 706E0B321B31F52400F9C891 /* CDChatListVC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		706E0C9D1B31F52600F9C891 /* CDChatListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 706E0B331B31F52400F9C891 /* CDChatListVC.m */; };
 		706E0C9E1B31F52600F9C891 /* CDChatRoomVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 706E0B341B31F52400F9C891 /* CDChatRoomVC.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -339,8 +339,8 @@
 		70271C3B1B3BE72E0030CD6C /* UIImage+Icon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Icon.m"; sourceTree = "<group>"; };
 		704C0F9A1B5427AD0002B498 /* CDFailedMessagesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDFailedMessagesManager.h; sourceTree = "<group>"; };
 		704C0F9B1B5427AD0002B498 /* CDFailedMessagesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDFailedMessagesManager.m; sourceTree = "<group>"; };
-		705409151B536FA600C3DDB8 /* CDDatabaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDDatabaseManager.h; sourceTree = "<group>"; };
-		705409161B536FA600C3DDB8 /* CDDatabaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDDatabaseManager.m; sourceTree = "<group>"; };
+		705409151B536FA600C3DDB8 /* CDRecentConversationsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDRecentConversationsManager.h; sourceTree = "<group>"; };
+		705409161B536FA600C3DDB8 /* CDRecentConversationsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDRecentConversationsManager.m; sourceTree = "<group>"; };
 		7054091A1B53B2D200C3DDB8 /* CDMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDMacros.h; sourceTree = "<group>"; };
 		706E0B321B31F52400F9C891 /* CDChatListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDChatListVC.h; sourceTree = "<group>"; };
 		706E0B331B31F52400F9C891 /* CDChatListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDChatListVC.m; sourceTree = "<group>"; };
@@ -675,8 +675,8 @@
 				701AF7911B3C704F0088A43B /* CDEmotionUtils.m */,
 				701AF7921B3C704F0088A43B /* CDChatManager.h */,
 				701AF7931B3C704F0088A43B /* CDChatManager.m */,
-				705409151B536FA600C3DDB8 /* CDDatabaseManager.h */,
-				705409161B536FA600C3DDB8 /* CDDatabaseManager.m */,
+				705409151B536FA600C3DDB8 /* CDRecentConversationsManager.h */,
+				705409161B536FA600C3DDB8 /* CDRecentConversationsManager.m */,
 				704C0F9A1B5427AD0002B498 /* CDFailedMessagesManager.h */,
 				704C0F9B1B5427AD0002B498 /* CDFailedMessagesManager.m */,
 				70F589821B425045008C2C36 /* CDMessageHelper.h */,
@@ -1495,7 +1495,7 @@
 				706E0D181B31F52600F9C891 /* FLAnimatedImage.h in Headers */,
 				706E0D0B1B31F52600F9C891 /* XHContact.h in Headers */,
 				706E0CD21B31F52600F9C891 /* XHCaptureHelper.h in Headers */,
-				705409171B536FA600C3DDB8 /* CDDatabaseManager.h in Headers */,
+				705409171B536FA600C3DDB8 /* CDRecentConversationsManager.h in Headers */,
 				706E0CB01B31F52600F9C891 /* Emoji.h in Headers */,
 				706E0D5A1B31F52600F9C891 /* XHMessageTextView.h in Headers */,
 				706E0D071B31F52600F9C891 /* XHAlbum.h in Headers */,
@@ -1800,7 +1800,7 @@
 				706E0D1F1B31F52600F9C891 /* SECompatibility.m in Sources */,
 				706E0CF51B31F52600F9C891 /* XHFileAttribute.m in Sources */,
 				706E0D5F1B31F52600F9C891 /* XHEmotionCollectionViewCell.m in Sources */,
-				705409181B536FA600C3DDB8 /* CDDatabaseManager.m in Sources */,
+				705409181B536FA600C3DDB8 /* CDRecentConversationsManager.m in Sources */,
 				706E0D511B31F52600F9C891 /* XHMessageDisplayTextView.m in Sources */,
 				706E0CEB1B31F52600F9C891 /* XHDisplayLocationViewController.m in Sources */,
 				706E0D371B31F52600F9C891 /* SETextSelection.m in Sources */,

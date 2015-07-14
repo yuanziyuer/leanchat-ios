@@ -17,7 +17,7 @@
 #import "CDEmotionUtils.h"
 #import "AVIMConversation+Custom.h"
 #import "CDSoundManager.h"
-#import "CDDatabaseManager.h"
+#import "CDRecentConversationsManager.h"
 #import "CDFailedMessagesManager.h"
 
 static NSInteger const kOnePageSize = 20;
@@ -80,9 +80,9 @@ static NSInteger const kOnePageSize = 20;
 }
 
 - (void)updateConversationAsRead {
-    [[CDDatabaseManager manager] insertConversation:self.conv];
-    [[CDDatabaseManager manager] updateUnreadCountToZeroWithConversation:self.conv];
-    [[CDDatabaseManager manager] updateConversation:self.conv mentioned:NO];
+    [[CDRecentConversationsManager manager] insertConversation:self.conv];
+    [[CDRecentConversationsManager manager] updateUnreadCountToZeroWithConversation:self.conv];
+    [[CDRecentConversationsManager manager] updateMentioned:NO conversation:self.conv];
     [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationUnreadsUpdated object:nil];
 }
 

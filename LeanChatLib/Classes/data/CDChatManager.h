@@ -39,6 +39,10 @@ typedef void (^CDRecentConversationsCallback)(NSArray *conversations, NSInteger 
 @property (nonatomic, assign, readonly) BOOL connect;
 @property (nonatomic, strong) NSString *chattingConversationId;
 
+// 是否使用开发证书去推送，默认为 NO。YES 的话每条消息会带上这个参数，云代码利用 Hook 设置证书
+// 参考 https://github.com/leancloud/leanchat-cloudcode/blob/master/cloud/mchat.js
+@property (nonatomic, assign) BOOL useDevPushCerticate;
+
 + (instancetype)manager;
 
 - (AVIMClient *)imClient;
