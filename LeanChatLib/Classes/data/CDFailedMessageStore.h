@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <AVOSCloudIM/AVOSCloudIM.h>
 
-@interface CDFailedMessagesManager : NSObject
+@interface CDFailedMessageStore : NSObject
 
-+ (CDFailedMessagesManager *)manager;
++ (CDFailedMessageStore *)store;
 
-- (void)setupManagerWithDatabasePath:(NSString *)path;
+- (void)setupStoreWithDatabasePath:(NSString *)path;
 
 - (void)insertFailedMessage:(AVIMTypedMessage *)message;
 - (BOOL)deleteFailedMessageByRecordId:(NSString *)recordId;

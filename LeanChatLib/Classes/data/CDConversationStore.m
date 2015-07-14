@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 lzwjava@LeanCloud QQ: 651142978. All rights reserved.
 //
 
-#import "CDRecentConversationsManager.h"
+#import "CDConversationStore.h"
 #import <FMDB/FMDB.h>
 #import "AVIMConversation+Custom.h"
 #import "CDMacros.h"
@@ -69,24 +69,24 @@
     @"SET " kCDConversationTableKeyData @" = ? "                \
     kCDConversationTableWhereClause                             \
 
-@interface CDRecentConversationsManager ()
+@interface CDConversationStore ()
 
 @property (nonatomic, strong) FMDatabaseQueue *databaseQueue;
 
 @end
 
-@implementation CDRecentConversationsManager
+@implementation CDConversationStore
 
-+ (CDRecentConversationsManager *)manager {
-    static CDRecentConversationsManager *manager;
++ (CDConversationStore *)store {
+    static CDConversationStore *manager;
     static dispatch_once_t token;
     dispatch_once(&token, ^{
-        manager = [[CDRecentConversationsManager alloc] init];
+        manager = [[CDConversationStore alloc] init];
     });
     return manager;
 }
 
-- (void)setupManagerWithDatabasePath:(NSString *)path {
+- (void)setupStoreWithDatabasePath:(NSString *)path {
     if (self.databaseQueue) {
         DLog(@"database queue not nil !!!!");
     }

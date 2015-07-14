@@ -17,8 +17,8 @@
 #import "CDEmotionUtils.h"
 #import "AVIMConversation+Custom.h"
 #import "CDSoundManager.h"
-#import "CDRecentConversationsManager.h"
-#import "CDFailedMessagesManager.h"
+#import "CDConversationStore.h"
+#import "CDFailedMessageStore.h"
 
 static NSInteger const kOnePageSize = 20;
 
@@ -80,9 +80,9 @@ static NSInteger const kOnePageSize = 20;
 }
 
 - (void)updateConversationAsRead {
-    [[CDRecentConversationsManager manager] insertConversation:self.conv];
-    [[CDRecentConversationsManager manager] updateUnreadCountToZeroWithConversation:self.conv];
-    [[CDRecentConversationsManager manager] updateMentioned:NO conversation:self.conv];
+    [[CDConversationStore store] insertConversation:self.conv];
+    [[CDConversationStore store] updateUnreadCountToZeroWithConversation:self.conv];
+    [[CDConversationStore store] updateMentioned:NO conversation:self.conv];
     [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationUnreadsUpdated object:nil];
 }
 
@@ -237,7 +237,7 @@ static NSInteger const kOnePageSize = 20;
             xhMsg.status = XHMessageStatusFailed;
         }
         else {
-            [[CDFailedMessagesManager manager] deleteFailedMessageByRecordId:recordId];
+            [[CDFailedMessageStore store] deleteFailedMessageByRecordId:recordId];
             self.msgs[indexPath.row] = msg;
             XHMessage *xhMsg = [self getXHMessageByMsg:msg];
             self.messages[indexPath.row] = xhMsg;
@@ -452,7 +452,7 @@ static NSInteger const kOnePageSize = 20;
         if (error) {
             msg.messageId = [[CDChatManager manager] uuid];
             msg.sendTimestamp = [[NSDate date] timeIntervalSince1970] * 1000;
-            [[CDFailedMessagesManager manager] insertFailedMessage:msg];
+            [[CDFailedMessageStore store] insertFailedMessage:msg];
             [[CDSoundManager manager] playSendSoundIfNeed];
             [self insertMessage:msg];
         } else {
@@ -606,7 +606,7 @@ static NSInteger const kOnePageSize = 20;
         [self queryAndCacheMessagesWithTimestamp:0 block:^(NSArray *msgs, NSError *error) {
             if ([self filterError:error]) {
                 // 失败消息加到末尾，因为 SDK 缓存不保存它们
-                NSArray *failedMessages = [[CDFailedMessagesManager manager] selectFailedMessagesByConversationId:self.conv.conversationId];
+                NSArray *failedMessages = [[CDFailedMessageStore store] selectFailedMessagesByConversationId:self.conv.conversationId];
                 NSMutableArray *allMessages = [NSMutableArray arrayWithArray:msgs];
                 [allMessages addObjectsFromArray:failedMessages];
                 

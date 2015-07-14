@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <AVOSCloudIM/AVOSCloudIM.h>
 
-@interface CDRecentConversationsManager : NSObject
+@interface CDConversationStore : NSObject
 
-+ (CDRecentConversationsManager *)manager;
-- (void)setupManagerWithDatabasePath:(NSString *)path;
++ (CDConversationStore *)store;
+- (void)setupStoreWithDatabasePath:(NSString *)path;
 
 - (void )insertConversation:(AVIMConversation *)conversation;
 

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 lzwjava@LeanCloud QQ: 651142978. All rights reserved.
 //
 
-#import "CDFailedMessagesManager.h"
+#import "CDFailedMessageStore.h"
 #import <FMDB/FMDB.h>
 #import "CDMacros.h"
 
@@ -40,24 +40,24 @@
     @"DELETE FROM " kCDFaildMessageTable @" "           \
     @"WHERE " kCDKeyId " = ? "                          \
 
-@interface CDFailedMessagesManager ()
+@interface CDFailedMessageStore ()
 
 @property (nonatomic, strong) FMDatabaseQueue *databaseQueue;
 
 @end
 
-@implementation CDFailedMessagesManager
+@implementation CDFailedMessageStore
 
-+ (CDFailedMessagesManager *)manager {
-    static CDFailedMessagesManager *manager;
++ (CDFailedMessageStore *)store {
+    static CDFailedMessageStore *manager;
     static dispatch_once_t token;
     dispatch_once(&token, ^{
-        manager = [[CDFailedMessagesManager alloc] init];
+        manager = [[CDFailedMessageStore alloc] init];
     });
     return manager;
 }
 
-- (void)setupManagerWithDatabasePath:(NSString *)path {
+- (void)setupStoreWithDatabasePath:(NSString *)path {
     if (self.databaseQueue) {
         DLog(@"database queue not nil !!!!");
     }
