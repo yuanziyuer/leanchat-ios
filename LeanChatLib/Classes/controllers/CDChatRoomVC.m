@@ -440,6 +440,7 @@ static NSInteger const kOnePageSize = 20;
             msg.messageId = [[CDChatManager manager] uuid];
             msg.sendTimestamp = [[NSDate date] timeIntervalSince1970] * 1000;
             [[CDFailedMessagesManager manager] insertFailedMessage:msg];
+            [[CDSoundManager manager] playSendSoundIfNeed];
             [self insertMessage:msg];
         } else {
             if (path) {

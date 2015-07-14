@@ -16,7 +16,7 @@
 #define kCDKeyMessage @"message"
 
 #define kCDCreateTableSQL                                       \
-    @"CREATE TABLE IF NOT EXISTS" kCDFaildMessageTable @"("     \
+    @"CREATE TABLE IF NOT EXISTS " kCDFaildMessageTable @"("    \
         kCDKeyId @" VARCHAR(63) PRIMARY KEY, "                  \
         kCDKeyConversationId @" VARCHAR(63) NOT NULL,"          \
         kCDKeyMessage @" BLOB NOT NULL"                         \
@@ -30,7 +30,7 @@
 	kCDWhereConversationId
 
 #define kCDInsertMessageSQL                             \
-    @"INSERT OR IGNORE INTO" kCDFaildMessageTable @"("  \
+    @"INSERT OR IGNORE INTO " kCDFaildMessageTable @"(" \
         kCDKeyId @","                                   \
         kCDKeyConversationId @","                       \
         kCDKeyMessage                                   \
