@@ -172,13 +172,19 @@ static CDChatManager *instance;
 
 #pragma mark - utils
 
+- (void)sendMessage:(AVIMTypedMessage*)message conversation:(AVIMConversation *)conversation callback:(AVBooleanResultBlock)block {
+    id<CDUserModel> selfUser = [[CDChatManager manager].userDelegate getUserById:self.selfId];
+    message.attributes = @{@"username": selfUser.username};
+    [conversation sendMessage:message options:AVIMMessageSendOptionRequestReceipt callback:block];
+}
+
 - (void)sendWelcomeMessageToOther:(NSString *)other text:(NSString *)text block:(AVBooleanResultBlock)block {
     [self fetchConvWithOtherId:other callback:^(AVIMConversation *conversation, NSError *error) {
         if (error) {
             block(NO, error);
         } else {
             AVIMTextMessage *textMessage = [AVIMTextMessage messageWithText:text attributes:nil];
-            [conversation sendMessage:textMessage callback:block];
+            [self sendMessage:textMessage conversation:conversation callback:block];
         }
     }];
 }

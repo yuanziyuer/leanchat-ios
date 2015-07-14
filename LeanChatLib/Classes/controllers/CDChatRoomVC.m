@@ -231,7 +231,7 @@ static NSInteger const kOnePageSize = 20;
     xhMsg.status = XHMessageStatusSending;
     [self.messageTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     NSString *recordId = msg.messageId;
-    [self.conv sendMessage:msg options:AVIMMessageSendOptionRequestReceipt callback: ^(BOOL succeeded, NSError *error) {
+    [[CDChatManager manager] sendMessage:msg conversation:self.conv callback:^(BOOL succeeded, NSError *error) {
         if (error) {
             [self alertError:error];
             xhMsg.status = XHMessageStatusFailed;
@@ -448,7 +448,7 @@ static NSInteger const kOnePageSize = 20;
 }
 
 - (void)sendMsg:(AVIMTypedMessage *)msg originFilePath:(NSString *)path {
-    [self.conv sendMessage:msg options:AVIMMessageSendOptionRequestReceipt callback: ^(BOOL succeeded, NSError *error) {
+    [[CDChatManager manager] sendMessage:msg conversation:self.conv callback:^(BOOL succeeded, NSError *error) {
         if (error) {
             msg.messageId = [[CDChatManager manager] uuid];
             msg.sendTimestamp = [[NSDate date] timeIntervalSince1970] * 1000;
