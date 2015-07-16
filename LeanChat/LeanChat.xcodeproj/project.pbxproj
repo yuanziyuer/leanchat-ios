@@ -33,7 +33,7 @@
 		7073FCBE1B14718C006F2692 /* CDNewFriendVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC6E1B14718C006F2692 /* CDNewFriendVC.m */; };
 		7073FCBF1B14718C006F2692 /* CDProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC711B14718C006F2692 /* CDProfileVC.m */; };
 		7073FCC11B14718C006F2692 /* CDUserInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC751B14718C006F2692 /* CDUserInfoVC.m */; };
-		7073FCC21B14718C006F2692 /* AVIMUserInfoMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC781B14718C006F2692 /* AVIMUserInfoMessage.m */; };
+		7073FCC21B14718C006F2692 /* AVIMCustomMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC781B14718C006F2692 /* AVIMCustomMessage.m */; };
 		7073FCC31B14718C006F2692 /* CDAbuseReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC7B1B14718C006F2692 /* CDAbuseReport.m */; };
 		7073FCC41B14718C006F2692 /* CDAddRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC7D1B14718C006F2692 /* CDAddRequest.m */; };
 		7073FCC51B14718C006F2692 /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC7F1B14718C006F2692 /* CDUser.m */; };
@@ -166,8 +166,8 @@
 		7073FC711B14718C006F2692 /* CDProfileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDProfileVC.m; sourceTree = "<group>"; };
 		7073FC741B14718C006F2692 /* CDUserInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUserInfoVC.h; sourceTree = "<group>"; };
 		7073FC751B14718C006F2692 /* CDUserInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUserInfoVC.m; sourceTree = "<group>"; };
-		7073FC771B14718C006F2692 /* AVIMUserInfoMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVIMUserInfoMessage.h; sourceTree = "<group>"; };
-		7073FC781B14718C006F2692 /* AVIMUserInfoMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVIMUserInfoMessage.m; sourceTree = "<group>"; };
+		7073FC771B14718C006F2692 /* AVIMCustomMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVIMCustomMessage.h; sourceTree = "<group>"; };
+		7073FC781B14718C006F2692 /* AVIMCustomMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVIMCustomMessage.m; sourceTree = "<group>"; };
 		7073FC7A1B14718C006F2692 /* CDAbuseReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAbuseReport.h; sourceTree = "<group>"; };
 		7073FC7B1B14718C006F2692 /* CDAbuseReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAbuseReport.m; sourceTree = "<group>"; };
 		7073FC7C1B14718C006F2692 /* CDAddRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAddRequest.h; sourceTree = "<group>"; };
@@ -473,8 +473,8 @@
 			isa = PBXGroup;
 			children = (
 				7073FC791B14718C006F2692 /* avobject */,
-				7073FC771B14718C006F2692 /* AVIMUserInfoMessage.h */,
-				7073FC781B14718C006F2692 /* AVIMUserInfoMessage.m */,
+				7073FC771B14718C006F2692 /* AVIMCustomMessage.h */,
+				7073FC781B14718C006F2692 /* AVIMCustomMessage.m */,
 				7073FC7E1B14718C006F2692 /* CDUser.h */,
 				7073FC7F1B14718C006F2692 /* CDUser.m */,
 			);
@@ -851,7 +851,7 @@
 				7073FCC11B14718C006F2692 /* CDUserInfoVC.m in Sources */,
 				7073FCD41B14718C006F2692 /* CDPopMenu.m in Sources */,
 				70DC7DB51B2F531F0047B7AB /* CDUtils.m in Sources */,
-				7073FCC21B14718C006F2692 /* AVIMUserInfoMessage.m in Sources */,
+				7073FCC21B14718C006F2692 /* AVIMCustomMessage.m in Sources */,
 				7073FCA91B14718C006F2692 /* CDBaseNavC.m in Sources */,
 				7073FCB21B14718C006F2692 /* CDConvNameVC.m in Sources */,
 				7073FCBE1B14718C006F2692 /* CDNewFriendVC.m in Sources */,
