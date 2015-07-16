@@ -13,9 +13,6 @@
 #import "CDFailedMessageStore.h"
 #import "CDMacros.h"
 
-static NSString *kConversationUnreadsKey = @"unreads";
-static NSString *kConversationMentionKey = @"mention";
-
 static CDChatManager *instance;
 
 @interface CDChatManager () <AVIMClientDelegate, AVIMSignatureDataSource>
@@ -51,10 +48,6 @@ static CDChatManager *instance;
         _cachedConvs = [NSMutableDictionary dictionary];
     }
     return self;
-}
-
-- (AVIMClient *)imClient {
-    return [AVIMClient defaultClient];
 }
 
 - (void)dealloc {
@@ -101,6 +94,7 @@ static CDChatManager *instance;
     AVIMConversationQuery *q = [[AVIMClient defaultClient] conversationQuery];
     [q whereKey:AVIMAttr(CONV_TYPE) equalTo:@(type)];
     [q whereKey:kAVIMKeyMember containsAllObjectsInArray:members];
+    // 如果没有数组size限制，传[2,3]，可能取回 [1,2,3]
     [q whereKey:kAVIMKeyMember sizeEqualTo:members.count];
     [q orderByDescending:@"createdAt"];
     q.limit = 1;
@@ -134,6 +128,7 @@ static CDChatManager *instance;
 - (void)createConvWithMembers:(NSArray *)members type:(CDConvType)type callback:(AVIMConversationResultBlock)callback {
     NSString *name = nil;
     if (type == CDConvTypeGroup) {
+        // 群聊默认名字， 老王、小李
         name = [AVIMConversation nameOfUserIds:members];
     }
     [[AVIMClient defaultClient] createConversationWithName:name clientIds:members attributes:@{ CONV_TYPE:@(type) } options:AVIMConversationOptionNone callback:callback];
@@ -143,6 +138,7 @@ static CDChatManager *instance;
     AVIMConversationQuery *q = [[AVIMClient defaultClient] conversationQuery];
     [q whereKey:AVIMAttr(CONV_TYPE) equalTo:@(CDConvTypeGroup)];
     [q whereKey:kAVIMKeyMember containedIn:@[self.selfId]];
+    // 默认 limit 为10
     q.limit = 1000;
     [q findConversationsWithCallback:block];
 }
@@ -175,6 +171,7 @@ static CDChatManager *instance;
 - (void)sendMessage:(AVIMTypedMessage*)message conversation:(AVIMConversation *)conversation callback:(AVBooleanResultBlock)block {
     id<CDUserModel> selfUser = [[CDChatManager manager].userDelegate getUserById:self.selfId];
     NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
+    // 云代码中获取到用户名，来设置推送消息, 老王:今晚约吗？
     [attributes setObject:selfUser.username forKey:@"username"];
     if (self.useDevPushCerticate) {
         [attributes setObject:@YES forKey:@"dev"];
@@ -198,6 +195,7 @@ static CDChatManager *instance;
 
 - (void)queryTypedMessagesWithConversation:(AVIMConversation *)conversation timestamp:(int64_t)timestamp limit:(NSInteger)limit block:(AVIMArrayResultBlock)block {
     AVIMArrayResultBlock callback = ^(NSArray *messages, NSError *error) {
+        //以下过滤为了避免非法的消息，引起崩溃
         NSMutableArray *typedMessages = [NSMutableArray array];
         for (AVIMTypedMessage *message in messages) {
             if ([message isKindOfClass:[AVIMTypedMessage class]]) {
@@ -207,6 +205,7 @@ static CDChatManager *instance;
         block(typedMessages, error);
     };
     if(timestamp == 0) {
+        // sdk 会设置好 timestamp
         [conversation queryMessagesWithLimit:limit callback:callback];
     } else {
         [conversation queryMessagesBeforeId:nil timestamp:timestamp limit:limit callback:callback];
@@ -228,16 +227,13 @@ static CDChatManager *instance;
 }
 
 #pragma mark - status
-
+// 除了 sdk 的上面三个回调调用了，还在 open client 的时候调用了，好统一处理
 - (void)updateConnectStatus {
     self.connect = [AVIMClient defaultClient].status == AVIMClientStatusOpened;
     [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationConnectivityUpdated object:@(self.connect)];
 }
 
-#pragma mark - AVIMMessageDelegate
-
-- (void)conversation:(AVIMConversation *)conversation didReceiveCommonMessage:(AVIMMessage *)message {
-}
+#pragma mark - receive message handle
 
 - (void)receiveMessage:(AVIMTypedMessage *)message conversation:(AVIMConversation *)conversation{
     [[CDConversationStore store] insertConversation:conversation];
@@ -258,6 +254,16 @@ static CDChatManager *instance;
     [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationMessageReceived object:message];
 }
 
+#pragma mark - AVIMMessageDelegate
+
+// content : "this is message"
+- (void)conversation:(AVIMConversation *)conversation didReceiveCommonMessage:(AVIMMessage *)message {
+    // 不做处理，此应用没有用到
+    // 可以看做跟 AVIMTypedMessage 两个频道。构造消息和收消息的接口都不一样，互不干扰。
+    // 其实一般不用，有特殊的需求时可以考虑优先用 自定义 AVIMTypedMessage 来实现。见 AVIMCustomMessage 类
+}
+
+// content : "{\"_lctype\":-1,\"_lctext\":\"sdfdf\"}"  sdk 会解析好
 - (void)conversation:(AVIMConversation *)conversation didReceiveTypedMessage:(AVIMTypedMessage *)message {
     if (message.messageId) {
         if (conversation.creator == nil && [[CDConversationStore store] isConversationExists:conversation] == NO) {
@@ -284,6 +290,8 @@ static CDChatManager *instance;
     }
 }
 
+#pragma mark - AVIMClientDelegate
+
 - (void)conversation:(AVIMConversation *)conversation membersAdded:(NSArray *)clientIds byClientId:(NSString *)clientId {
     DLog();
 }
@@ -300,6 +308,8 @@ static CDChatManager *instance;
     DLog();
 }
 
+#pragma mark - signature
+
 - (id)convSignWithSelfId:(NSString *)selfId convid:(NSString *)convid targetIds:(NSArray *)targetIds action:(NSString *)action {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:selfId forKey:@"self_id"];
@@ -312,6 +322,7 @@ static CDChatManager *instance;
     if (action) {
         [dict setObject:action forKey:@"action"];
     }
+    //这里是从云代码获取签名，也可以从你的服务器获取
     return [AVCloud callFunction:@"conv_sign" withParameters:dict];
 }
 

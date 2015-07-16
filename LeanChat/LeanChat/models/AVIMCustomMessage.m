@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 LeanCloud. All rights reserved.
 //
 
-#import "AVIMUserInfoMessage.h"
+#import "AVIMCustomMessage.h"
 
-@implementation AVIMUserInfoMessage
+@implementation AVIMCustomMessage
 
 + (void)load {
     [self registerSubclass];
@@ -22,11 +22,11 @@
 }
 
 + (AVIMMessageMediaType)classMediaType {
-    return kAVIMMessageMediaTypeUserInfo;
+    return kAVIMMessageMediaTypeCustom;
 }
 
 + (instancetype)messageWithAttributes:(NSDictionary *)attributes {
-    AVIMUserInfoMessage *message = [[self alloc] init];
+    AVIMCustomMessage *message = [[self alloc] init];
     message.attributes = attributes;
     return message;
 }

@@ -13,7 +13,7 @@
 #import "CDBaseNavC.h"
 
 #import "CDCacheManager.h"
-#import "AVIMUserInfoMessage.h"
+#import "AVIMCustomMessage.h"
 
 @interface CDChatVC () <CDSelectMemberVCDelegate>
 
@@ -34,7 +34,7 @@
 }
 
 - (void)testSendCustomeMessage {
-    AVIMUserInfoMessage *userInfoMessage = [AVIMUserInfoMessage messageWithAttributes:@{ @"nickname":@"lzw" }];
+    AVIMCustomMessage *userInfoMessage = [AVIMCustomMessage messageWithAttributes:@{ @"nickname":@"lzw" }];
     [self.conv sendMessage:userInfoMessage callback: ^(BOOL succeeded, NSError *error) {
         DLog(@"%@", error);
     }];

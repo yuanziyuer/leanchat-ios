@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <LeanChatLib/CDChatManager.h>
 
+/**
+ *  简单的实现 CDUserModel 协议的类。可以直接在你的 User 类里实现该协议。
+ */
 @interface CDUser : NSObject <CDUserModel>
 
 @property (nonatomic, strong) NSString *userId;
