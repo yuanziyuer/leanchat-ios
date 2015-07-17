@@ -79,13 +79,6 @@ static NSInteger const kOnePageSize = 20;
     [CDChatManager manager].chattingConversationId = self.conv.conversationId;
 }
 
-- (void)updateConversationAsRead {
-    [[CDConversationStore store] insertConversation:self.conv];
-    [[CDConversationStore store] updateUnreadCountToZeroWithConversation:self.conv];
-    [[CDConversationStore store] updateMentioned:NO conversation:self.conv];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationUnreadsUpdated object:nil];
-}
-
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [CDChatManager manager].chattingConversationId = nil;
@@ -139,13 +132,6 @@ static NSInteger const kOnePageSize = 20;
         _clientStatusView.hidden = YES;
     }
     return _clientStatusView;
-}
-
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (object == [CDChatManager manager] && [keyPath isEqualToString:@"connect"]) {
-        [self updateStatusView];
-    }
 }
 
 - (void)updateStatusView {
@@ -415,6 +401,15 @@ static NSInteger const kOnePageSize = 20;
 }
 
 #pragma mark - LeanCloud 
+
+#pragma mark - conversations store
+
+- (void)updateConversationAsRead {
+    [[CDConversationStore store] insertConversation:self.conv];
+    [[CDConversationStore store] updateUnreadCountToZeroWithConversation:self.conv];
+    [[CDConversationStore store] updateMentioned:NO conversation:self.conv];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationUnreadsUpdated object:nil];
+}
 
 #pragma mark - send message
 
