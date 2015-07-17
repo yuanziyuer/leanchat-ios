@@ -22,7 +22,7 @@
 - (void)setBadgeWithTotalUnreadCount:(NSInteger)totalUnreadCount;
 
 /**
- *  点击了某对话。可跳转到聊天页面
+ *  点击了某对话。此时可跳转到聊天页面
  *  @param viewController 最近对话 controller
  *  @param conv           点击的对话
  */
