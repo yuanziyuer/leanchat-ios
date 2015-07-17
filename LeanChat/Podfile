@@ -24,6 +24,8 @@ target 'LeanChat' do
     pod 'FXForms', '1.2.13'
     pod 'iVersion', '1.11.4'
     pod 'iRate', '1.11.4'
+    pod 'LeanCloudFeedback', '0.0.1'
+#    pod 'LeanCloudFeedback', :path => '/Users/lzw/ios/leancloud-feedback-ios/'
 end
 
 target 'LeanChatExample' do

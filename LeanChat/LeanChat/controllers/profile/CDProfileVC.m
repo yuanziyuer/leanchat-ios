@@ -13,10 +13,11 @@
 #import "CDWebViewVC.h"
 #import <LeanChatLib/CDChatManager.h>
 #import "MCPhotographyHelper.h"
-#import "LCUserFeedbackAgent.h"
 #import "LCUserFeedbackViewController.h"
 #import "CDBaseNavC.h"
 #import "CDProfileNameVC.h"
+#import <LeanCloudFeedback/LeanCloudFeedback.h>
+
 
 @interface CDProfileVC ()<UIActionSheetDelegate, CDProfileNameVCDelegate>
 
@@ -50,7 +51,7 @@
 - (void)loadDataSource {
     [self showProgress];
     [[CDUserManager manager] getBigAvatarImageOfUser:[AVUser currentUser] block:^(UIImage *image) {
-        [[LCUserFeedbackAgent sharedInstance] countUnreadFeedbackThreadsWithContact:[AVUser currentUser].objectId block: ^(NSInteger number, NSError *error) {
+        [[LCUserFeedbackAgent sharedInstance] countUnreadFeedbackThreadsWithBlock:^(NSInteger number, NSError *error) {
             [self hideProgress];
             self.dataSource = [NSMutableArray array];
             [self.dataSource addObject:@[@{ kMutipleSectionImageKey:image, kMutipleSectionTitleKey:[AVUser currentUser].username, kMutipleSectionSelectorKey:NSStringFromSelector(@selector(showEditActionSheet:)) }]];
@@ -129,8 +130,9 @@
 
 - (void)goFeedback {
     LCUserFeedbackViewController *feedbackViewController = [[LCUserFeedbackViewController alloc] init];
-    feedbackViewController.feedbackTitle = [AVUser currentUser].username;
-    feedbackViewController.contact = [AVUser currentUser].objectId;
+//    feedbackViewController.navigationBarStyle = LCUserFeedbackNavigationBarStyleNone;
+//    feedbackViewController.contactHeaderHidden = YES;
+//    feedbackViewController.feedbackTitle = [AVUser currentUser].username;
     CDBaseNavC *navigationController = [[CDBaseNavC alloc] initWithRootViewController:feedbackViewController];
     [self presentViewController:navigationController animated:YES completion: ^{
     }];
