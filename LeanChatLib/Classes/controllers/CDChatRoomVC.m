@@ -45,6 +45,7 @@ static NSInteger const kOnePageSize = 20;
         //self.allowsSendFace = NO;
         //self.allowsSendMultiMedia = NO;
         _isLoadingMsg = NO;
+        self.msgs = [NSMutableArray array];
     }
     return self;
 }
@@ -77,13 +78,6 @@ static NSInteger const kOnePageSize = 20;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [CDChatManager manager].chattingConversationId = self.conv.conversationId;
-}
-
-- (void)updateConversationAsRead {
-    [[CDConversationStore store] insertConversation:self.conv];
-    [[CDConversationStore store] updateUnreadCountToZeroWithConversation:self.conv];
-    [[CDConversationStore store] updateMentioned:NO conversation:self.conv];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationUnreadsUpdated object:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -139,13 +133,6 @@ static NSInteger const kOnePageSize = 20;
         _clientStatusView.hidden = YES;
     }
     return _clientStatusView;
-}
-
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (object == [CDChatManager manager] && [keyPath isEqualToString:@"connect"]) {
-        [self updateStatusView];
-    }
 }
 
 - (void)updateStatusView {
@@ -226,24 +213,7 @@ static NSInteger const kOnePageSize = 20;
 }
 
 - (void)didRetrySendMessage:(id <XHMessageModel> )message atIndexPath:(NSIndexPath *)indexPath {
-    AVIMTypedMessage *msg = [_msgs objectAtIndex:indexPath.row];
-    XHMessage *xhMsg = (XHMessage *)message;
-    xhMsg.status = XHMessageStatusSending;
-    [self.messageTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    NSString *recordId = msg.messageId;
-    [[CDChatManager manager] sendMessage:msg conversation:self.conv callback:^(BOOL succeeded, NSError *error) {
-        if (error) {
-            [self alertError:error];
-            xhMsg.status = XHMessageStatusFailed;
-        }
-        else {
-            [[CDFailedMessageStore store] deleteFailedMessageByRecordId:recordId];
-            self.msgs[indexPath.row] = msg;
-            XHMessage *xhMsg = [self getXHMessageByMsg:msg];
-            self.messages[indexPath.row] = xhMsg;
-        }
-        [self.messageTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    }];
+    [self resendMessageAtIndexPath:indexPath];
 }
 
 #pragma mark - XHAudioPlayerHelper Delegate
@@ -416,6 +386,15 @@ static NSInteger const kOnePageSize = 20;
 
 #pragma mark - LeanCloud 
 
+#pragma mark - conversations store
+
+- (void)updateConversationAsRead {
+    [[CDConversationStore store] insertConversation:self.conv];
+    [[CDConversationStore store] updateUnreadCountToZeroWithConversation:self.conv];
+    [[CDConversationStore store] updateMentioned:NO conversation:self.conv];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationUnreadsUpdated object:nil];
+}
+
 #pragma mark - send message
 
 - (void)sendFileMsgWithPath:(NSString *)path type:(AVIMMessageMediaType)type {
@@ -450,6 +429,7 @@ static NSInteger const kOnePageSize = 20;
 - (void)sendMsg:(AVIMTypedMessage *)msg originFilePath:(NSString *)path {
     [[CDChatManager manager] sendMessage:msg conversation:self.conv callback:^(BOOL succeeded, NSError *error) {
         if (error) {
+            // 伪造一个 messageId，重发的成功的时候，根据这个伪造的id把数据库中的改过来
             msg.messageId = [[CDChatManager manager] uuid];
             msg.sendTimestamp = [[NSDate date] timeIntervalSince1970] * 1000;
             [[CDFailedMessageStore store] insertFailedMessage:msg];
@@ -465,6 +445,30 @@ static NSInteger const kOnePageSize = 20;
             }
             [[CDSoundManager manager] playSendSoundIfNeed];
             [self insertMessage:msg];
+        }
+    }];
+}
+
+- (void)replaceMesssage:(AVIMTypedMessage *)message atIndexPath:(NSIndexPath *)indexPath {
+    self.msgs[indexPath.row] = message;
+    XHMessage *xhMessage = [self getXHMessageByMsg:message];
+    self.messages[indexPath.row] = xhMessage;
+    [self.messageTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (void)resendMessageAtIndexPath:(NSIndexPath *)indexPath {
+    AVIMTypedMessage *msg = self.msgs[indexPath.row];
+    msg.status = AVIMMessageStatusSending;
+    [self replaceMesssage:msg atIndexPath:indexPath];
+    NSString *recordId = msg.messageId;
+    [[CDChatManager manager] sendMessage:msg conversation:self.conv callback:^(BOOL succeeded, NSError *error) {
+        if (error) {
+            [self alertError:error];
+            [self replaceMesssage:msg atIndexPath:indexPath];
+        }
+        else {
+            [[CDFailedMessageStore store] deleteFailedMessageByRecordId:recordId];
+            [self replaceMesssage:msg atIndexPath:indexPath];
         }
     }];
 }
