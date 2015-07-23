@@ -429,11 +429,11 @@ static NSInteger const kOnePageSize = 20;
 - (void)sendMsg:(AVIMTypedMessage *)msg originFilePath:(NSString *)path {
     [[CDChatManager manager] sendMessage:msg conversation:self.conv callback:^(BOOL succeeded, NSError *error) {
         if (error) {
-            //文件没有保存上会导致 conversationId 为空
             // 伪造一个 messageId，重发的成功的时候，根据这个伪造的id把数据库中的改过来
             msg.messageId = [[CDChatManager manager] uuid];
             msg.sendTimestamp = [[NSDate date] timeIntervalSince1970] * 1000;
             if (msg.conversationId == nil) {
+                //文件没有保存上会导致 conversationId 为空
                 msg.clientId = [CDChatManager manager].selfId;
                 msg.conversationId = self.conv.conversationId;
             }
