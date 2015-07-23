@@ -472,14 +472,20 @@ static CDChatManager *instance;
         NSArray *sortedRooms = [conversations sortedArrayUsingComparator:^NSComparisonResult(AVIMConversation *conv1, AVIMConversation *conv2) {
             return conv2.lastMessage.sendTimestamp - conv1.lastMessage.sendTimestamp;
         }];
-        [self.userDelegate cacheUserByIds:userIds block: ^(BOOL succeeded, NSError *error) {
-            if (error) {
-                block(nil,0, error);
-            }
-            else {
-                block(sortedRooms, totalUnreadCount, error);
-            }
-        }];
+        
+        if ([self.userDelegate respondsToSelector:@selector(cacheUserByIds:block:)]) {
+            [self.userDelegate cacheUserByIds:userIds block: ^(BOOL succeeded, NSError *error) {
+                if (error) {
+                    block(nil,0, error);
+                }
+                else {
+                    block(sortedRooms, totalUnreadCount, error);
+                }
+            }];
+        } else {
+            DLog(@"self.userDelegate not reponds to cacheUserByIds:block:, may have problem");
+            block([NSArray array], 0 , nil);
+        }
     }];
 }
 

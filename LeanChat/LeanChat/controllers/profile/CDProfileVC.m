@@ -130,9 +130,9 @@
 
 - (void)goFeedback {
     LCUserFeedbackViewController *feedbackViewController = [[LCUserFeedbackViewController alloc] init];
-//    feedbackViewController.navigationBarStyle = LCUserFeedbackNavigationBarStyleNone;
-//    feedbackViewController.contactHeaderHidden = YES;
-//    feedbackViewController.feedbackTitle = [AVUser currentUser].username;
+    feedbackViewController.navigationBarStyle = LCUserFeedbackNavigationBarStyleNone;
+    feedbackViewController.contactHeaderHidden = YES;
+    feedbackViewController.feedbackTitle = [AVUser currentUser].username;
     CDBaseNavC *navigationController = [[CDBaseNavC alloc] initWithRootViewController:feedbackViewController];
     [self presentViewController:navigationController animated:YES completion: ^{
     }];
