@@ -7,6 +7,7 @@
 //
 
 #import "AVIMConversation+Custom.h"
+#import "LZConversationCell.h"
 
 @class CDChatListVC;
 
@@ -14,6 +15,8 @@
  *  最近对话页面的协议
  */
 @protocol CDChatListVCDelegate <NSObject>
+
+@optional
 
 /**
  *  来设置 tabbar 的 badge。
@@ -27,6 +30,14 @@
  *  @param conv           点击的对话
  */
 - (void)viewController:(UIViewController *)viewController didSelectConv:(AVIMConversation *)conv;
+
+/**
+ *  额外配置 Cell。将在 tableView:cellForRowAtIndexPath 最后调用
+ *  @param cell
+ *  @param indexPath
+ *  @param conversation 相应的对话
+ */
+- (void)configureCell:(LZConversationCell *)cell atIndexPath:(NSIndexPath *)indexPath withConversation:(AVIMConversation *)conversation;
 
 @end
 

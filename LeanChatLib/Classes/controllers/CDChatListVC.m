@@ -9,7 +9,6 @@
 #import "CDChatListVC.h"
 #import "LZStatusView.h"
 #import "UIView+XHRemoteImage.h"
-#import "LZConversationCell.h"
 #import "CDChatManager.h"
 #import "AVIMConversation+Custom.h"
 #import "UIView+XHRemoteImage.h"
@@ -162,6 +161,9 @@ static NSString *cellIdentifier = @"ContactCell";
         } else {
             cell.badgeView.badgeText = [NSString stringWithFormat:@"%ld", conversation.unreadCount];
         }
+    }
+    if ([self.chatListDelegate respondsToSelector:@selector(configureCell:atIndexPath:withConversation:)]) {
+        [self.chatListDelegate configureCell:cell atIndexPath:indexPath withConversation:conversation];
     }
     return cell;
 }
