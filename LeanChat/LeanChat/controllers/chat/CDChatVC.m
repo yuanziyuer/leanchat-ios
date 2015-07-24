@@ -56,7 +56,6 @@
     }
 }
 
-
 - (void)didInputAtSignOnMessageTextView:(XHMessageTextView *)messageInputTextView {
     if (self.conv.type == CDConvTypeGroup) {
         [self performSelector:@selector(goSelectMemberVC) withObject:nil afterDelay:0];
@@ -72,6 +71,9 @@
     CDBaseNavC *nav = [[CDBaseNavC alloc] initWithRootViewController:selectMemberVC];
     [self presentViewController:nav animated:YES completion:nil];
 }
+
+
+#pragma mark - CDSelectMemberVCDelegate
 
 - (void)didSelectMember:(AVUser *)member {
     self.messageInputView.inputTextView.text = [NSString stringWithFormat:@"%@%@ ", self.messageInputView.inputTextView.text, member.username];

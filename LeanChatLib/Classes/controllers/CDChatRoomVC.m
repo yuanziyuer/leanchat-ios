@@ -213,7 +213,7 @@ static NSInteger const kOnePageSize = 20;
 }
 
 - (void)didRetrySendMessage:(id <XHMessageModel> )message atIndexPath:(NSIndexPath *)indexPath {
-    [self resendMessageAtIndexPath:indexPath];
+    [self resendMessageAtIndexPath:indexPath discardIfFailed:false];
 }
 
 #pragma mark - XHAudioPlayerHelper Delegate
@@ -442,11 +442,13 @@ static NSInteger const kOnePageSize = 20;
             [self insertMessage:msg];
         } else {
             if (path) {
-                // 移动文件，好根据 messageId 找到本地文件缓存
-                NSString *newPath = [[CDChatManager manager] getPathByObjectId:msg.messageId];
-                NSError *error1;
-                [[NSFileManager defaultManager] moveItemAtPath:path toPath:newPath error:&error1];
-                DLog(@"%@", newPath);
+                if (msg.mediaType == kAVIMMessageMediaTypeAudio) {
+                    // 移动文件，好根据 messageId 找到本地文件缓存
+                    NSString *newPath = [[CDChatManager manager] getPathByObjectId:msg.messageId];
+                    NSError *error1;
+                    [[NSFileManager defaultManager] moveItemAtPath:path toPath:newPath error:&error1];
+                    DLog(@"%@", newPath);
+                }
             }
             [[CDSoundManager manager] playSendSoundIfNeed];
             [self insertMessage:msg];
@@ -461,15 +463,22 @@ static NSInteger const kOnePageSize = 20;
     [self.messageTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
-- (void)resendMessageAtIndexPath:(NSIndexPath *)indexPath {
+- (void)resendMessageAtIndexPath:(NSIndexPath *)indexPath discardIfFailed:(BOOL)discardIfFailed {
     AVIMTypedMessage *msg = self.msgs[indexPath.row];
     msg.status = AVIMMessageStatusSending;
     [self replaceMesssage:msg atIndexPath:indexPath];
     NSString *recordId = msg.messageId;
     [[CDChatManager manager] sendMessage:msg conversation:self.conv callback:^(BOOL succeeded, NSError *error) {
         if (error) {
-            [self alertError:error];
-            [self replaceMesssage:msg atIndexPath:indexPath];
+            if (discardIfFailed) {
+                // 服务器连通的情况下重发依然失败，说明消息有问题，如音频文件不存在，删掉这条消息
+                [[CDFailedMessageStore store] deleteFailedMessageByRecordId:recordId];
+                // 显示失败状态。列表里就让它存在吧，反正也重发不出去
+                [self replaceMesssage:msg atIndexPath:indexPath];
+            } else {
+                [self alertError:error];
+                [self replaceMesssage:msg atIndexPath:indexPath];
+            }
         }
         else {
             [[CDFailedMessageStore store] deleteFailedMessageByRecordId:recordId];
@@ -541,8 +550,15 @@ static NSInteger const kOnePageSize = 20;
     }
     else if (msg.mediaType == kAVIMMessageMediaTypeImage) {
         AVIMImageMessage *imageMsg = (AVIMImageMessage *)msg;
-        DLog(@"%@", imageMsg);
-        xhMessage = [[XHMessage alloc] initWithPhoto:nil thumbnailUrl:imageMsg.file.url originPhotoUrl:imageMsg.file.url sender:fromUser.username timestamp:time];
+        UIImage *image;
+        NSError *error;
+        NSData *data = [imageMsg.file getData:&error];
+        if (error) {
+            DLog(@"get Data error: %@", error);
+        } else {
+            image = [UIImage imageWithData:data];
+        }
+        xhMessage = [[XHMessage alloc] initWithPhoto:image thumbnailUrl:nil originPhotoUrl:nil sender:fromUser.username timestamp:time];
     }
     else {
         xhMessage = [[XHMessage alloc] initWithText:@"未知消息" sender:fromUser.username timestamp:time];
@@ -632,7 +648,7 @@ static NSInteger const kOnePageSize = 20;
                 // 如果连接上，则重发所有的失败消息。若夹杂在历史消息中间不好处理
                 if ([CDChatManager manager].connect) {
                     for (NSInteger row = msgs.count;row < allMessages.count; row ++) {
-                        [self didRetrySendMessage:self.messages[row] atIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
+                        [self resendMessageAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] discardIfFailed:YES];
                     }
                 }
             }
@@ -675,6 +691,16 @@ static NSInteger const kOnePageSize = 20;
                 if ([fileMan fileExistsAtPath:path] == NO) {
                     NSData *data = [msg.file getData];
                     [data writeToFile:path atomically:YES];
+                }
+            } else if (msg.mediaType == kAVIMMessageMediaTypeImage) {
+                AVFile *file = msg.file;
+                if (file.isDataAvailable == NO) {
+                    NSError *error;
+                    // 下载到本地
+                    NSData *data = [file getData:&error];
+                    if (error || data == nil) {
+                        DLog(@"download file error : %@", error);
+                    }
                 }
             }
         }
