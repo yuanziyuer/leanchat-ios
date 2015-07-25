@@ -5,8 +5,8 @@ workspace 'LeanChat.xcworkspace'
 
 target 'LeanChatLib' do
     xcodeproj '../LeanChatLib/LeanChatLib.xcodeproj'
-    pod 'AVOSCloud', '3.1.2.6'
-    pod 'AVOSCloudIM', '3.1.2.6'
+    pod 'AVOSCloud', '3.1.2.8'
+    pod 'AVOSCloudIM', '3.1.2.8'
     pod 'JSBadgeView' , '1.4.1'
     pod 'DateTools' , '1.5.0'
     pod 'FMDB', '2.5'
@@ -14,8 +14,8 @@ end
 
 target 'LeanChat' do
     xcodeproj 'LeanChat.xcodeproj'
-    pod 'AVOSCloud', '3.1.2.6'
-    pod 'AVOSCloudIM', '3.1.2.6'
+    pod 'AVOSCloud', '3.1.2.8'
+    pod 'AVOSCloudIM', '3.1.2.8'
     pod 'LeanChatLib' , :path => '../'
     pod 'MBProgressHUD', '0.9.1'
     pod 'LZAlertViewHelper' , '0.0.2'
@@ -24,7 +24,7 @@ target 'LeanChat' do
     pod 'FXForms', '1.2.13'
     pod 'iVersion', '1.11.4'
     pod 'iRate', '1.11.4'
-    pod 'LeanCloudFeedback', '0.0.3'
+    pod 'LeanCloudFeedback', '0.0.4'
 #    pod 'LeanCloudFeedback', :path => '~/ios/leancloud-feedback-ios/'
 end
 
