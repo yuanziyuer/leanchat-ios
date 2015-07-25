@@ -156,6 +156,11 @@ CDUserModel，
 
 ## LeanChatLib ChangeLog	
 
+0.2.1	
+ChatListDelegate 增加 configureCell: 与 prepareConversaion: 接口，以便实现更复杂的对话定制。
+
+对于图像消息，使用 AVFile 来缓存图像，使得自己发送的照片不用重新下载。
+
 0.2.0	
 补充注释、支持重发消息、显示失败的消息、增加音效和振动
 
