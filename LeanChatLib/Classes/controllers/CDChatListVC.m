@@ -102,16 +102,30 @@ static NSString *cellIdentifier = @"ContactCell";
     }
     self.isRefreshing = YES;
     [[CDChatManager manager] findRecentConversationsWithBlock:^(NSArray *conversations, NSInteger totalUnreadCount, NSError *error) {
-        [self stopRefreshControl:refreshControl];
-        if ([self filterError:error]) {
-            self.conversations = conversations;
-            [self.tableView reloadData];
-            if ([self.chatListDelegate respondsToSelector:@selector(setBadgeWithTotalUnreadCount:)]) {
-                [self.chatListDelegate setBadgeWithTotalUnreadCount:totalUnreadCount];
+        dispatch_block_t finishBlock = ^{
+            [self stopRefreshControl:refreshControl];
+            if ([self filterError:error]) {
+                self.conversations = conversations;
+                [self.tableView reloadData];
+                if ([self.chatListDelegate respondsToSelector:@selector(setBadgeWithTotalUnreadCount:)]) {
+                    [self.chatListDelegate setBadgeWithTotalUnreadCount:totalUnreadCount];
+                }
+                
             }
-            
+            self.isRefreshing = NO;
+        };
+        if ([self.chatListDelegate respondsToSelector:@selector(prepareConversationsWhenLoad:completion:)]) {
+            [self.chatListDelegate prepareConversationsWhenLoad:conversations completion:^(BOOL succeeded, NSError *error) {
+                if ([self filterError:error]) {
+                    finishBlock();
+                } else {
+                    [self stopRefreshControl:refreshControl];
+                    self.isRefreshing = NO;
+                }
+            }];
+        } else {
+            finishBlock();
         }
-        self.isRefreshing = NO;
     }];
 }
 
