@@ -39,7 +39,7 @@ LeanChat 也有相应的 [Android版](https://github.com/leancloud/leanchat-andr
 
 封装了最近对话页面和聊天页面，LeanChat 和 LeanChatExample 项目都依赖于它。可通过以下方式安装，
 ```
-    pod 'LeanChatLib', '0.1.8'
+    pod 'LeanChatLib'
 ```
 
 大多数时候，你会采用拖动源代码的方式集成 LeanChatLib，这时，先需要安装 `AVOSCloud.framework` 和 `AVOSCloudIM.framework`，如果不是用 `pod install 'AVOSCloud'`、`pod install 'AVOSCloudIM'` 来安装的话，则可根据LeanCloud [Quick Start Guide](https://leancloud.cn/docs/start.html) 配置一下 SDK 所需的Framework。同时安装另外两个依赖库`JSBadgeView` 与 `DateTools`。在` pod install ` 运行本 Demo 的时候，会有 Pods 目录生成，可以从中找到这两个Pods。或者网上搜索一下。另外可以通过 [.podspec 文件](https://github.com/leancloud/leanchat-ios/blob/master/LeanChatLib.podspec#L9)来配置，podspec 描述了需要集成哪些源文件、引入哪些系统 framework 等等。或请参考这个[工单](https://ticket.leancloud.cn/tickets/7666)。
