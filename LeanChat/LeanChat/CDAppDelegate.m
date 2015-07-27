@@ -37,6 +37,7 @@
     [AVOSCloud setApplicationId:AVOSAppID clientKey:AVOSAppKey];
     //    [AVOSCloud setApplicationId:CloudAppId clientKey:CloudAppKey];
     //    [AVOSCloud setApplicationId:PublicAppId clientKey:PublicAppKey];
+    
     [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     if (SYSTEM_VERSION >= 7.0) {
