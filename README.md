@@ -156,7 +156,7 @@ CDUserModel，
 
 ## LeanChatLib ChangeLog	
 
-0.2.2
+0.2.2	
 AVOSCloud 库升级至 3.1.2.8
 
 0.2.1	
