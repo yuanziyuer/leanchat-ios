@@ -18,6 +18,7 @@ target 'LeanChat' do
     pod 'AVOSCloudIM', '3.1.2.8'
     pod 'LeanChatLib' , :path => '../'
     pod 'MBProgressHUD', '0.9.1'
+    pod 'AFNetworking', '2.5.4'
     pod 'LZAlertViewHelper' , '0.0.2'
     pod 'JSBadgeView', '1.4.1'
     pod 'LZMembersCell', '0.0.2'
@@ -25,6 +26,8 @@ target 'LeanChat' do
     pod 'iVersion', '1.11.4'
     pod 'iRate', '1.11.4'
     pod 'LeanCloudFeedback', '0.0.4'
+#    pod 'LeanCloudSocial', '0.0.3'
+    pod 'LeanCloudSocial', :path => '~/ios/leancloud-social-ios'
 #    pod 'LeanCloudFeedback', :path => '~/ios/leancloud-feedback-ios/'
 end
 

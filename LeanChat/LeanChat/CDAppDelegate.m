@@ -23,6 +23,14 @@
 #import "LZPushManager.h"
 #import <iRate/iRate.h>
 #import <iVersion/iVersion.h>
+#import "WXApi.h"
+#import <LeanCloudSocial/AVOSCloudSNS.h>
+
+@interface CDAppDelegate()
+
+@property (nonatomic, strong) CDLoginVC *loginVC;
+
+@end
 
 @implementation CDAppDelegate
 
@@ -107,8 +115,8 @@
 }
 
 - (void)toLogin {
-    CDLoginVC *controller = [[CDLoginVC alloc] init];
-    self.window.rootViewController = controller;
+    self.loginVC = [[CDLoginVC alloc] init];
+    self.window.rootViewController = self.loginVC;
 }
 
 - (void)addItemController:(UIViewController *)itemController toTabBarController:(CDBaseTabC *)tab {
@@ -121,6 +129,7 @@
     [iRate sharedInstance].onlyPromptIfLatestVersion = NO;
     [iRate sharedInstance].previewMode = NO;
     [iVersion sharedInstance].applicationBundleID = @"com.avoscloud.leanchat";
+    [iVersion sharedInstance].previewMode = NO;
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     [[CDCacheManager manager] registerUsers:@[[AVUser currentUser]]];
@@ -142,6 +151,17 @@
         tab.selectedIndex = 0;
         weakSelf.window.rootViewController = tab;
     }];
+}
+
+#pragma mark - 
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    if ([AVOSCloudSNS handleOpenURL:url]) {
+        return YES;
+    } else {
+        return  [WXApi handleOpenURL:url delegate:self.loginVC];
+    }
 }
 
 @end
