@@ -21,7 +21,7 @@
 #define QQAppId @"1104788666"
 #define QQAppKey @"dOVWmsD7bW0zlyTV"
 
-static CGFloat const kCDSNSButtonSize = 35;
+static CGFloat const kCDSNSButtonSize = 40;
 static CGFloat const kCDSNSButtonMargin = 15;
 
 @interface CDLoginVC () <CDEntryVCDelegate>
