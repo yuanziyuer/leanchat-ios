@@ -7,8 +7,7 @@
 //
 
 #import "CDEntryVC.h"
-#import "WXApi.h"
 
-@interface CDLoginVC : CDEntryVC<WXApiDelegate>
+@interface CDLoginVC : CDEntryVC
 
 @end

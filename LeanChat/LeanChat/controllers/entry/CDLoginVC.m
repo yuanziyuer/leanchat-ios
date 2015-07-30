@@ -43,9 +43,9 @@ static CGFloat const kCDSNSButtonMargin = 15;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [WXApi registerApp:WeChatAppId withDescription:@"LeanChat"];
     [AVOSCloudSNS setupPlatform:AVOSCloudSNSQQ withAppKey:QQAppId andAppSecret:QQAppKey andRedirectURI:nil];
     [AVOSCloudSNS setupPlatform:AVOSCloudSNSSinaWeibo withAppKey:@"2548122881" andAppSecret:@"ba37a6eb3018590b0d75da733c4998f8" andRedirectURI:@"http://wanpaiapp.com/oauth/callback/sina"];
+    [AVOSCloudSNS setupPlatform:AVOSCloudSNSWeiXin withAppKey:WeChatAppId andAppSecret:WeChatSecretKey andRedirectURI:nil];
     
     [self.view addSubview:self.loginButton];
     [self.view addSubview:self.registerButton];
@@ -175,85 +175,89 @@ static CGFloat const kCDSNSButtonMargin = 15;
     [self changeButtonState];
 }
 
-#pragma mark - wechat 
-- (void)wechatButtonClicked:(id)sender {
-    SendAuthReq* req = [[SendAuthReq alloc] init];
-    req.scope = @"snsapi_userinfo"; // @"post_timeline,sns"
-    req.state = @"leanchat_state";
-    req.openID = WeChatAppId;
-    [WXApi sendAuthReq:req viewController:self delegate:self];
-}
+#pragma mark - sso util
 
--(void) onReq:(BaseReq*)req {
-    DLog();
-}
 
--(void) onResp:(BaseResp*)resp {
-    DLog(@"%@", resp);
-    if (resp.errCode == WXSuccess) {
-        if ([resp isKindOfClass:[SendAuthResp class]]) {
-            SendAuthResp *authResp = (SendAuthResp *)resp;
-            NSDictionary *params = @{@"appid":WeChatAppId, @"secret": WeChatSecretKey, @"code":authResp.code, @"grant_type":@"authorization_code"};
-            AFHTTPRequestOperationManager *manager=                          [AFHTTPRequestOperationManager manager];
-            manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/plain"];
-            [manager GET:@"https://api.weixin.qq.com/sns/oauth2/access_token" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                if ([responseObject objectForKey:@"access_token"]) {
-                    NSMutableDictionary *authData = [NSMutableDictionary dictionary];
-                    [authData setObject:[responseObject objectForKey:@"openid"] forKey:@"openid"];
-                    [authData setObject:[responseObject objectForKey:@"expires_in"] forKey:@"expires_in"];
-                    [authData setObject:[responseObject objectForKey:@"access_token"] forKey:@"access_token"];
-                    [self loginWithAuthData:authData platform:AVOSCloudSNSPlatformWeiXin];
-                } else {
-                    [self alert:[responseObject objectForKey:@"errmsg"]];
-                }
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                DLog();
-            }];
-        }
-    } else {
-        DLog(@"failed");
-    }
-}
-
-- (void)loginWithAuthData:(NSDictionary *)authData platform:(NSString *)platform{
+- (void)loginWithAuthData:(NSDictionary *)authData platform:(NSString *)platform {
+    __block NSString *username = authData[@"username"];
+    __block NSString *avatar = authData[@"avatar"];
     [AVUser loginWithAuthData:authData platform:platform block:^(AVUser *user, NSError *error) {
         if ([self filterError:error]) {
             if (user.updatedAt) {
-                // 之前已经登录过了
+                // 之前已经登录过、设置好用户名和头像了
                 CDAppDelegate *delegate = (CDAppDelegate *)[UIApplication sharedApplication].delegate;
                 [delegate toMain];
             } else {
-                [self.alertViewHelper showInputAlertViewWithMessage:@"只差一步啦，请输入一个用户名" block:^(BOOL confirm, NSString *text) {
-                    if (confirm) {
-                        [self changeToUsername:text user:user];
-                    }
-                }];
+                if (username) {
+                    [self countUserByUsername:username block:^(NSInteger number, NSError *error) {
+                        if ([self filterError:error]) {
+                            if (number > 0) {
+                                // 用户名重复了，只更改头像
+                                [self changeToUsername:nil avatar:avatar user:user];
+                            } else {
+                                [self changeToUsername:username avatar:avatar user:user];
+                            }
+                        }
+                    }];
+                } else {
+                    // 应该不可能出现这种情况
+                    // 没有名字，只改头像
+                    [self changeToUsername:nil avatar:avatar user:user];
+                }
             }
         }
     }];
 }
 
-- (void)changeToUsername:(NSString *)username user:(AVUser *)user {
-    user.username = username;
-    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (error.code == kAVErrorUsernameTaken) {
-            [self askToInputAnotherUsenameWithUser:user];
-        } else if ([self filterError:error]){
-            CDAppDelegate *delegate = (CDAppDelegate *)[UIApplication sharedApplication].delegate;
-            [delegate toMain];
+- (void)countUserByUsername:(NSString *)username block:(AVIntegerResultBlock)block {
+    AVQuery *q = [AVUser query];
+    [q whereKey:@"username" equalTo:username];
+    [q countObjectsInBackgroundWithBlock:block];
+}
+
+- (void)saveAvatar:(NSString *)url block:(AVFileResultBlock)block {
+    if (!url) {
+        block(nil, nil);
+    } else {
+        AVFile *file = [AVFile fileWithURL:url];
+        [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (error) {
+                block(nil, error);
+            } else {
+                block(file, nil);
+            }
+        }];
+    }
+}
+
+- (void)changeToUsername:(NSString *)username avatar:(NSString *)avatar user:(AVUser *)user {
+    [self saveAvatar:avatar block:^(AVFile *file, NSError *error) {
+        if (file) {
+            [user setObject:file forKey:@"avatar"];
         }
+        if (username) {
+            user.username = username;
+        }
+        [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if ([self filterError:error]){
+                CDAppDelegate *delegate = (CDAppDelegate *)[UIApplication sharedApplication].delegate;
+                [delegate toMain];
+            }
+        }];
     }];
 }
 
-- (void)askToInputAnotherUsenameWithUser:(AVUser *)user {
-    [self.alertViewHelper showInputAlertViewWithMessage:@"对不起，用户名重复了，请重新输入" block:^(BOOL confirm, NSString *text) {
-        if (confirm) {
-            [self changeToUsername:text user:user];
+#pragma mark - wechat 
+- (void)wechatButtonClicked:(id)sender {
+    [AVOSCloudSNS loginWithCallback:^(id object, NSError *error) {
+        if ([self filterError:error]) {
+            [self loginWithAuthData:object platform:AVOSCloudSNSPlatformWeiXin];
         }
-    }];
+    } toPlatform:AVOSCloudSNSWeiXin];
 }
 
 #pragma mark - qq login
+
 - (void)qqButtonClicked:(id)sender {
     [AVOSCloudSNS loginWithCallback:^(id object, NSError *error) {
         if ([self filterError:error]) {

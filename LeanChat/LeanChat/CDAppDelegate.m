@@ -23,7 +23,6 @@
 #import "LZPushManager.h"
 #import <iRate/iRate.h>
 #import <iVersion/iVersion.h>
-#import "WXApi.h"
 #import <LeanCloudSocial/AVOSCloudSNS.h>
 
 @interface CDAppDelegate()
@@ -157,11 +156,7 @@
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-    if ([AVOSCloudSNS handleOpenURL:url]) {
-        return YES;
-    } else {
-        return  [WXApi handleOpenURL:url delegate:self.loginVC];
-    }
+    return [AVOSCloudSNS handleOpenURL:url];
 }
 
 @end

@@ -100,7 +100,6 @@
 		70EB81591B4399AB0010659C /* CDProfileNameVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 70EB81581B4399AB0010659C /* CDProfileNameVC.m */; };
 		70EB815B1B43CC6A0010659C /* contact_face_group_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70EB815A1B43CC6A0010659C /* contact_face_group_icon@2x.png */; };
 		70EB815D1B43CEBD0010659C /* contact_IconAdd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70EB815C1B43CEBD0010659C /* contact_IconAdd@2x.png */; };
-		70FA59AD1B68B3CC000286D5 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 70FA59AA1B68B3CC000286D5 /* libWeChatSDK.a */; };
 		70FA59AF1B695600000286D5 /* sns_wechat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70FA59AE1B695600000286D5 /* sns_wechat@2x.png */; };
 		70FA59B11B695A51000286D5 /* sns_qq@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70FA59B01B695A51000286D5 /* sns_qq@2x.png */; };
 		70FA59B51B696173000286D5 /* sns_weibo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70FA59B41B696173000286D5 /* sns_weibo@2x.png */; };
@@ -250,9 +249,6 @@
 		70EB81581B4399AB0010659C /* CDProfileNameVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDProfileNameVC.m; sourceTree = "<group>"; };
 		70EB815A1B43CC6A0010659C /* contact_face_group_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact_face_group_icon@2x.png"; sourceTree = "<group>"; };
 		70EB815C1B43CEBD0010659C /* contact_IconAdd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact_IconAdd@2x.png"; sourceTree = "<group>"; };
-		70FA59AA1B68B3CC000286D5 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
-		70FA59AB1B68B3CC000286D5 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
-		70FA59AC1B68B3CC000286D5 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		70FA59AE1B695600000286D5 /* sns_wechat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sns_wechat@2x.png"; sourceTree = "<group>"; };
 		70FA59B01B695A51000286D5 /* sns_qq@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sns_qq@2x.png"; sourceTree = "<group>"; };
 		70FA59B41B696173000286D5 /* sns_weibo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sns_weibo@2x.png"; sourceTree = "<group>"; };
@@ -265,7 +261,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70FA59AD1B68B3CC000286D5 /* libWeChatSDK.a in Frameworks */,
 				1FAD25EBE59E07248BD0F7D5 /* libPods-LeanChat.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,7 +280,6 @@
 		706780071B2363C5002F1413 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
-				70FA59A91B68B3CC000286D5 /* WeChatSDK */,
 				700E6A121B3D2B4E00675021 /* LZPushManager */,
 			);
 			path = vendor;
@@ -585,16 +579,6 @@
 				70B1C51D1B41430500DCEC8D /* MCPhotographyHelper.m */,
 			);
 			path = manager;
-			sourceTree = "<group>";
-		};
-		70FA59A91B68B3CC000286D5 /* WeChatSDK */ = {
-			isa = PBXGroup;
-			children = (
-				70FA59AA1B68B3CC000286D5 /* libWeChatSDK.a */,
-				70FA59AB1B68B3CC000286D5 /* WXApi.h */,
-				70FA59AC1B68B3CC000286D5 /* WXApiObject.h */,
-			);
-			path = WeChatSDK;
 			sourceTree = "<group>";
 		};
 		B215B044676D1B59F414465D /* Frameworks */ = {
