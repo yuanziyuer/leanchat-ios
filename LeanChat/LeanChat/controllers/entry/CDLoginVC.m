@@ -192,7 +192,7 @@ static CGFloat const kCDSNSButtonMargin = 15;
                     [self countUserByUsername:username block:^(NSInteger number, NSError *error) {
                         if ([self filterError:error]) {
                             if (number > 0) {
-                                // 用户名重复了，给一个随机的用户名
+                                // 用户名重复了，给一个随机的后缀
                                 username = [NSString stringWithFormat:@"%@%@",username, [[CDUtils uuid] substringToIndex:3]];
                                 [self changeToUsername:username avatar:avatar user:user];
                             } else {
@@ -249,8 +249,9 @@ static CGFloat const kCDSNSButtonMargin = 15;
 }
 
 #pragma mark - sns login button clicked
+
 - (void)wechatButtonClicked:(id)sender {
-    if ([AVOSCloudSNS isAppInstalledWithType:AVOSCloudSNSWeiXin]) {
+    if ([AVOSCloudSNS isAppInstalledForType:AVOSCloudSNSWeiXin]) {
         [AVOSCloudSNS loginWithCallback:^(id object, NSError *error) {
             if ([self filterError:error]) {
                 [self loginWithAuthData:object platform:AVOSCloudSNSPlatformWeiXin];
