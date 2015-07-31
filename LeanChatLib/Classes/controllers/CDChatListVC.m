@@ -16,6 +16,8 @@
 #import "CDMessageHelper.h"
 #import <DateTools/DateTools.h>
 #import "CDConversationStore.h"
+#import "CDChatManager_Internal.h"
+#import "CDMacros.h"
 
 @interface CDChatListVC ()
 
@@ -110,10 +112,11 @@ static NSString *cellIdentifier = @"ContactCell";
                 if ([self.chatListDelegate respondsToSelector:@selector(setBadgeWithTotalUnreadCount:)]) {
                     [self.chatListDelegate setBadgeWithTotalUnreadCount:totalUnreadCount];
                 }
-                
+                [self selectConversationIfHasRemoteNotificatoinConvid];
             }
             self.isRefreshing = NO;
         };
+        
         if ([self.chatListDelegate respondsToSelector:@selector(prepareConversationsWhenLoad:completion:)]) {
             [self.chatListDelegate prepareConversationsWhenLoad:conversations completion:^(BOOL succeeded, NSError *error) {
                 if ([self filterError:error]) {
@@ -127,6 +130,25 @@ static NSString *cellIdentifier = @"ContactCell";
             finishBlock();
         }
     }];
+}
+
+- (void)selectConversationIfHasRemoteNotificatoinConvid {
+    if ([CDChatManager manager].remoteNotificationConvid) {
+        // 进入之前推送弹框点击的对话
+        BOOL found = NO;
+        for (AVIMConversation *conversation in self.conversations) {
+            if ([conversation.conversationId isEqualToString:[CDChatManager manager].remoteNotificationConvid]) {
+                if ([self.chatListDelegate respondsToSelector:@selector(viewController:didSelectConv:)]) {
+                    [self.chatListDelegate viewController:self didSelectConv:conversation];
+                    found = YES;
+                }
+            }
+        }
+        if (!found) {
+            DLog(@"not found remoteNofitciaonID");
+        }
+        [CDChatManager manager].remoteNotificationConvid = nil;
+    }
 }
 
 #pragma mark - utils

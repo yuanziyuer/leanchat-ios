@@ -38,8 +38,8 @@
 - (id <CDUserModel> )getUserById:(NSString *)userId {
     CDUser *user = [[CDUser alloc] init];
     AVUser *avUser = [[CDCacheManager manager] lookupUser:userId];
-    if (user == nil) {
-        [NSException raise:@"user is nil" format:nil];
+    if (avUser == nil) {
+        DLog(@"avUser is nil!!!");
     }
     user.userId = userId;
     user.username = avUser.username;
