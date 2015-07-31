@@ -108,6 +108,16 @@
         // 应用在前台时收到推送，只能来自于普通的推送，而非离线消息推送
     }
     else {
+//  当使用 https://github.com/leancloud/leanchat-cloudcode 云代码更改推送内容的时候
+//        {
+//            aps =     {
+//                alert = "lzwios : sdfsdf";
+//                badge = 4;
+//                sound = default;
+//            };
+//            convid = 55bae86300b0efdcbe3e742e;
+//        }
+        [[CDChatManager manager] didReceiveRemoteNotification:userInfo];
         [AVAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
     }
     DLog(@"receiveRemoteNotification");

@@ -646,6 +646,7 @@
 		709233051B450EB800E2D1F5 /* CDSoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSoundManager.m; sourceTree = "<group>"; };
 		709233081B45108200E2D1F5 /* receive.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = receive.caf; sourceTree = "<group>"; };
 		7092330E1B4532B000E2D1F5 /* defaultSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = defaultSettings.plist; sourceTree = "<group>"; };
+		70A290B71B6B24C50083998A /* CDChatManager_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDChatManager_Internal.h; sourceTree = "<group>"; };
 		70F5897A1B424B8F008C2C36 /* LZConversationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZConversationCell.h; sourceTree = "<group>"; };
 		70F5897B1B424B8F008C2C36 /* LZConversationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZConversationCell.m; sourceTree = "<group>"; };
 		70F589821B425045008C2C36 /* CDMessageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDMessageHelper.h; sourceTree = "<group>"; };
@@ -673,6 +674,7 @@
 				701AF78F1B3C704F0088A43B /* AVIMConversation+Custom.m */,
 				701AF7901B3C704F0088A43B /* CDEmotionUtils.h */,
 				701AF7911B3C704F0088A43B /* CDEmotionUtils.m */,
+				70A290B71B6B24C50083998A /* CDChatManager_Internal.h */,
 				701AF7921B3C704F0088A43B /* CDChatManager.h */,
 				701AF7931B3C704F0088A43B /* CDChatManager.m */,
 				705409151B536FA600C3DDB8 /* CDConversationStore.h */,

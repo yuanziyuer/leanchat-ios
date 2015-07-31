@@ -12,6 +12,7 @@
 #import "CDConversationStore.h"
 #import "CDFailedMessageStore.h"
 #import "CDMacros.h"
+#import "CDChatManager_Internal.h"
 
 static CDChatManager *instance;
 
@@ -172,7 +173,10 @@ static CDChatManager *instance;
     id<CDUserModel> selfUser = [[CDChatManager manager].userDelegate getUserById:self.selfId];
     NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
     // 云代码中获取到用户名，来设置推送消息, 老王:今晚约吗？
-    [attributes setObject:selfUser.username forKey:@"username"];
+    if (selfUser.username) {
+        // 避免为空造成崩溃
+        [attributes setObject:selfUser.username forKey:@"username"];
+    }
     if (self.useDevPushCerticate) {
         [attributes setObject:@YES forKey:@"dev"];
     }
@@ -210,6 +214,16 @@ static CDChatManager *instance;
     } else {
         [conversation queryMessagesBeforeId:nil timestamp:timestamp limit:limit callback:callback];
     }
+}
+
+#pragma mark - remote notification
+
+- (BOOL)didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    if (userInfo[@"convid"]) {
+        self.remoteNotificationConvid = userInfo[@"convid"];
+        return YES;
+    }
+    return NO;
 }
 
 #pragma mark - AVIMClientDelegate

@@ -91,7 +91,7 @@ typedef void (^CDRecentConversationsCallback)(NSArray *conversations, NSInteger 
  */
 - (void)openWithClientId:(NSString *)clientId callback:(AVIMBooleanResultBlock)callback;
 /**
- *  关闭一个聊天终端
+ *  关闭一个聊天终端，注销的时候使用
  */
 - (void)closeWithCallback:(AVBooleanResultBlock)callback;
 
@@ -187,6 +187,13 @@ typedef void (^CDRecentConversationsCallback)(NSArray *conversations, NSInteger 
  *  @param conversation 要删除的对话
  */
 - (void)deleteConversation:(AVIMConversation *)conversation;
+
+/**
+ *  在 ApplicationDelegate 中的 application:didRemoteNotification 调用，来记录推送时的 convid，这样点击弹框打开后进入相应的对话
+ *  @param userInfo
+ *  @return 是否检测到 convid 做了处理
+ */
+- (BOOL)didReceiveRemoteNotification:(NSDictionary *)userInfo;
 
 /**
  *  根据消息的 id 获取声音文件的路径
