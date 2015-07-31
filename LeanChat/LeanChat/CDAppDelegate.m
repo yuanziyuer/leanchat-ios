@@ -24,6 +24,7 @@
 #import <iRate/iRate.h>
 #import <iVersion/iVersion.h>
 #import <LeanCloudSocial/AVOSCloudSNS.h>
+#import <OpenShare/OpenShareHeader.h>
 
 @interface CDAppDelegate()
 
@@ -166,7 +167,9 @@
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-    return [AVOSCloudSNS handleOpenURL:url];
+    [AVOSCloudSNS handleOpenURL:url];
+    [OpenShare handleOpenURL:url];
+    return YES;
 }
 
 @end

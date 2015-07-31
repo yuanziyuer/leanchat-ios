@@ -18,7 +18,8 @@
 #import "CDProfileNameVC.h"
 #import <LeanCloudSocial/AVOSCloudSNS.h>
 #import <LeanCloudFeedback/LeanCloudFeedback.h>
-
+#import <OpenShare/OpenShareHeader.h>
+#import <PopMenu/PopMenu.h>
 
 @interface CDProfileVC ()<UIActionSheetDelegate, CDProfileNameVCDelegate>
 
@@ -40,6 +41,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadDataSource];
+    
+    [OpenShare connectQQWithAppId:QQAppId];
+    [OpenShare connectWeixinWithAppId:WeChatAppId];
+    [OpenShare connectWeiboWithAppKey:WeiboAppId];
 }
 
 - (MCPhotographyHelper *)photographyHelper {
@@ -56,7 +61,7 @@
             [self hideProgress];
             self.dataSource = [NSMutableArray array];
             [self.dataSource addObject:@[@{ kMutipleSectionImageKey:image, kMutipleSectionTitleKey:[AVUser currentUser].username, kMutipleSectionSelectorKey:NSStringFromSelector(@selector(showEditActionSheet:)) }]];
-            [self.dataSource addObject:@[@{ kMutipleSectionTitleKey:@"消息通知", kMutipleSectionSelectorKey:NSStringFromSelector(@selector(goPushSetting)) }, @{ kMutipleSectionTitleKey:@"意见反馈", kMutipleSectionBadgeKey:@(number), kMutipleSectionSelectorKey:NSStringFromSelector(@selector(goFeedback)) }, @{ kMutipleSectionTitleKey:@"用户协议", kMutipleSectionSelectorKey:NSStringFromSelector(@selector(goTerms)) }]];
+            [self.dataSource addObject:@[@{ kMutipleSectionTitleKey:@"消息通知", kMutipleSectionSelectorKey:NSStringFromSelector(@selector(goPushSetting)) }, @{ kMutipleSectionTitleKey:@"意见反馈", kMutipleSectionBadgeKey:@(number), kMutipleSectionSelectorKey:NSStringFromSelector(@selector(goFeedback)) }, @{ kMutipleSectionTitleKey:@"用户协议", kMutipleSectionSelectorKey:NSStringFromSelector(@selector(goTerms)) }, @{kMutipleSectionTitleKey:@"分享应用", kMutipleSectionSelectorKey:SELECTOR_TO_STRING(shareApp:)}]];
             [self.dataSource addObject:@[@{ kMutipleSectionTitleKey:@"退出登录", kMutipleSectionLogoutKey:@YES, kMutipleSectionSelectorKey:NSStringFromSelector(@selector(logout)) }]];
             [self.tableView reloadData];
         }];
@@ -146,6 +151,93 @@
     [self presentViewController:navigationController animated:YES completion: ^{
     }];
     [self performSelector:@selector(loadDataSource) withObject:nil afterDelay:1];
+}
+
+#pragma mark - share App
+
+- (void)shareApp:(id)sender {
+    NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:3];
+    MenuItem *menuItem = [[MenuItem alloc] initWithTitle:@"QQ" iconName:@"sns_qq" glowColor:RGBCOLOR(104, 165, 225) index:0];
+    [items addObject:menuItem];
+    
+    menuItem = [MenuItem initWithTitle:@"QQ空间" iconName:@"sns_qzone" glowColor:RGBCOLOR(246, 191, 45) index:1];
+    [items addObject:menuItem];
+    
+    menuItem = [[MenuItem alloc] initWithTitle:@"微信" iconName:@"sns_wechat" glowColor:RGBCOLOR(139, 202, 0) index:2];
+    [items addObject:menuItem];
+    
+    menuItem = [[MenuItem alloc] initWithTitle:@"微博" iconName:@"sns_weibo" glowColor:RGBCOLOR(247, 99, 100) index:3];
+    [items addObject:menuItem];
+    
+    PopMenu *popMenu = [[PopMenu alloc] initWithFrame:self.view.bounds items:items];
+    popMenu.menuAnimationType = kPopMenuAnimationTypeNetEase; // kPopMenuAnimationTypeSina
+    popMenu.perRowItemCount = 3; // or 2
+    // 请真机测试
+    popMenu.didSelectedItemCompletion = ^(MenuItem *selectedItem) {
+        [self shareAppAtIndex:selectedItem.index];
+    };
+    [popMenu showMenuAtView:self.view.window];
+}
+
+- (void)shareAppAtIndex:(NSInteger)index {
+    NSString *title = @"分享一个用 LeanCloud 实时通信组件做的社交应用 LeanChat，还挺好用的";
+    NSString *link = @"https://itunes.apple.com/gb/app/leanchat/id943324553";
+    NSData *imageData = UIImageJPEGRepresentation([UIImage imageNamed:@"AppIcon60x60"], 0.8);
+    NSString *titleAndLink = [NSString stringWithFormat:@"%@ %@", title, link];
+    shareFail failBlock = ^(OSMessage *message, NSError *error) {
+        [self showHUDText:error.localizedDescription];
+    };
+    shareSuccess successBlock = ^(OSMessage *message) {
+        [self showHUDText:@"分享成功"];
+    };
+    
+    // 对话 Msg
+    OSMessage *sessionMsg = [[OSMessage alloc] init];
+    sessionMsg.image = imageData;
+    //    sessionMsg.thumbnail = imageData;
+    sessionMsg.title = @"分享应用";
+    sessionMsg.desc = title;
+    sessionMsg.link = link;
+    
+    // 时间线 Msg
+    OSMessage *timelineMsg = [[OSMessage alloc] init];
+    timelineMsg.image = imageData;
+    timelineMsg.title = titleAndLink;
+    switch (index) {
+        case 0: {
+            if ([OpenShare isQQInstalled] == NO) {
+                [self showHUDText:@"QQ 未安装，无法分享"];
+            } else {
+                [OpenShare shareToQQFriends:sessionMsg Success:successBlock Fail:failBlock];
+            }
+            break;
+        }
+        case 1: {
+            if ([OpenShare isQQInstalled] == NO) {
+                [self showHUDText:@"QQ 未安装，无法分享"];
+            } else {
+                timelineMsg.image = nil;
+                [OpenShare shareToQQZone:timelineMsg Success:successBlock Fail:failBlock];
+            }
+            break;
+        }
+        case 2: {
+            if ([OpenShare isWeixinInstalled] == NO) {
+                [self showHUDText:@"微信未安装，无法分享"];
+            } else {
+                [OpenShare shareToWeixinSession:sessionMsg Success:successBlock Fail:failBlock];
+            }
+            break;
+        }
+        case 3: {
+            if ([OpenShare isWeiboInstalled] == NO) {
+                [self showHUDText:@"微博未安装，无法分享"];
+            } else {
+                [OpenShare shareToWeibo:timelineMsg Success:successBlock Fail:failBlock];
+            }
+            break;
+        }
+    }
 }
 
 @end

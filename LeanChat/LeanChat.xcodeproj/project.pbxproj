@@ -91,6 +91,7 @@
 		7073FD361B147458006F2692 /* wechat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073FD0D1B147458006F2692 /* wechat@2x.png */; };
 		708DF4711B41A9D20047C994 /* CDSelectMemberVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 708DF4701B41A9D20047C994 /* CDSelectMemberVC.m */; };
 		7092330D1B45299A00E2D1F5 /* CDSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7092330C1B45299A00E2D1F5 /* CDSettingVC.m */; };
+		70A290B91B6B59AC0083998A /* sns_qzone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A290B81B6B59AC0083998A /* sns_qzone@2x.png */; };
 		70B1C51B1B413E1500DCEC8D /* MCMutipleSectionTC.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B1C5191B413E1500DCEC8D /* MCMutipleSectionTC.m */; };
 		70B1C51E1B41430500DCEC8D /* MCPhotographyHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B1C51D1B41430500DCEC8D /* MCPhotographyHelper.m */; };
 		70DC7DB21B2F531F0047B7AB /* CDCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC7DAB1B2F531F0047B7AB /* CDCacheManager.m */; };
@@ -233,6 +234,7 @@
 		709233091B4522B100E2D1F5 /* CDCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDCommon.h; sourceTree = "<group>"; };
 		7092330B1B45299A00E2D1F5 /* CDSettingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSettingVC.h; sourceTree = "<group>"; };
 		7092330C1B45299A00E2D1F5 /* CDSettingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSettingVC.m; sourceTree = "<group>"; };
+		70A290B81B6B59AC0083998A /* sns_qzone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sns_qzone@2x.png"; sourceTree = "<group>"; };
 		70B1C5191B413E1500DCEC8D /* MCMutipleSectionTC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCMutipleSectionTC.m; sourceTree = "<group>"; };
 		70B1C51A1B413E1500DCEC8D /* MCMutipleSectionTC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCMutipleSectionTC.h; sourceTree = "<group>"; };
 		70B1C51C1B41430500DCEC8D /* MCPhotographyHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPhotographyHelper.h; sourceTree = "<group>"; };
@@ -514,6 +516,7 @@
 		7073FCEC1B147458006F2692 /* login */ = {
 			isa = PBXGroup;
 			children = (
+				70A290B81B6B59AC0083998A /* sns_qzone@2x.png */,
 				70FA59B41B696173000286D5 /* sns_weibo@2x.png */,
 				70FA59AE1B695600000286D5 /* sns_wechat@2x.png */,
 				70FA59B01B695A51000286D5 /* sns_qq@2x.png */,
@@ -668,6 +671,7 @@
 				70FA59B11B695A51000286D5 /* sns_qq@2x.png in Resources */,
 				7073FD141B147458006F2692 /* Icon@2x.png in Resources */,
 				7073FCB31B14718C006F2692 /* CDConvNameVC.xib in Resources */,
+				70A290B91B6B59AC0083998A /* sns_qzone@2x.png in Resources */,
 				7073FD351B147458006F2692 /* tabbar_me_active@2x.png in Resources */,
 				7073FD2A1B147458006F2692 /* menu_add_scan@2x.png in Resources */,
 				7073FD271B147458006F2692 /* menu_add_friend@2x.png in Resources */,
