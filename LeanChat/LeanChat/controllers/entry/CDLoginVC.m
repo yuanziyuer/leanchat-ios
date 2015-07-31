@@ -16,11 +16,6 @@
 #import <LeanCloudSocial/AVOSCloudSNS.h>
 #import <LZAlertViewHelper/LZAlertViewHelper.h>
 
-#define WeChatAppId @"wxa3eacc1c86a717bc"
-#define WeChatSecretKey @"b5bf245970b2a451fb8cebf8a6dff0c1"
-#define QQAppId @"1104788666"
-#define QQAppKey @"dOVWmsD7bW0zlyTV"
-
 static CGFloat const kCDSNSButtonSize = 40;
 static CGFloat const kCDSNSButtonMargin = 15;
 
@@ -44,7 +39,7 @@ static CGFloat const kCDSNSButtonMargin = 15;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [AVOSCloudSNS setupPlatform:AVOSCloudSNSQQ withAppKey:QQAppId andAppSecret:QQAppKey andRedirectURI:nil];
-    [AVOSCloudSNS setupPlatform:AVOSCloudSNSSinaWeibo withAppKey:@"2548122881" andAppSecret:@"ba37a6eb3018590b0d75da733c4998f8" andRedirectURI:@"http://wanpaiapp.com/oauth/callback/sina"];
+    [AVOSCloudSNS setupPlatform:AVOSCloudSNSSinaWeibo withAppKey:WeiboAppId andAppSecret:WeiboAppKey andRedirectURI:@"http://wanpaiapp.com/oauth/callback/sina"];
     [AVOSCloudSNS setupPlatform:AVOSCloudSNSWeiXin withAppKey:WeChatAppId andAppSecret:WeChatSecretKey andRedirectURI:nil];
     
     [self.view addSubview:self.loginButton];
@@ -258,7 +253,7 @@ static CGFloat const kCDSNSButtonMargin = 15;
             }
         } toPlatform:AVOSCloudSNSWeiXin];
     } else {
-        [self alert:@"此设备没有装微信，暂不支持"];
+        [self toast:@"此设备没有装微信，暂不支持"];
     }
 }
 

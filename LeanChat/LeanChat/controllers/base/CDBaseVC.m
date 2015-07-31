@@ -89,6 +89,10 @@
 }
 
 
+- (void)toast:(NSString *)text {
+    [self showHUDText:text];
+}
+
 -(void)showHUDText:(NSString*)text{
     MBProgressHUD* hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText=text;

@@ -41,4 +41,6 @@ typedef enum : NSInteger {
 
 - (void)showHUDText:(NSString *)text;
 
+- (void)toast:(NSString *)text;
+
 @end
