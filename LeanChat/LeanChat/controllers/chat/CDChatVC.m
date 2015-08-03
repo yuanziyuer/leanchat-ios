@@ -31,6 +31,7 @@
     [super viewDidLoad];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"contact_face_group_icon"] style:UIBarButtonItemStyleDone target:self action:@selector(goChatGroupDetail:)];
     self.navigationItem.rightBarButtonItem = item;
+//    [self testSendCustomeMessage];
 }
 
 - (void)testSendCustomeMessage {

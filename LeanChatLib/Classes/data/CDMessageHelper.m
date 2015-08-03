@@ -71,6 +71,9 @@
     } else {
         finalText = title;
     }
+    if (finalText == nil) {
+        finalText = @"";
+    }
     if ([self.attributedStringCache objectForKey:finalText]) {
         return [self.attributedStringCache objectForKey:finalText];
     }
