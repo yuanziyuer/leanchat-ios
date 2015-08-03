@@ -7,6 +7,7 @@
 //
 
 #import "CDBaseVC.h"
+#import <LeanChatLib/LeanChatLib.h>
 
 @interface UIViewController ()
 

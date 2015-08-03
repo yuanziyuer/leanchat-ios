@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CDCommon.h"
+#import <LeanChatLib/AVIMConversation+Custom.h>
 
 @interface CDCacheManager : NSObject
 
