@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CDBaseTableVC.h"
 #import "CDConvDetailVC.h"
+#import <LeanChatLib/CDChatManager.h>
 
 @interface CDConvNameVC : CDBaseTableVC
 

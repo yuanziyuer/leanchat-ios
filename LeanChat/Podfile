@@ -15,7 +15,6 @@ end
 target 'LeanChat' do
     xcodeproj 'LeanChat.xcodeproj'
     pod 'AVOSCloud', '3.1.2.8'
-    pod 'AVOSCloudIM', '3.1.2.8'
     pod 'LeanChatLib' , :path => '../'
     pod 'MBProgressHUD', '0.9.1'
     pod 'AFNetworking', '2.5.4'

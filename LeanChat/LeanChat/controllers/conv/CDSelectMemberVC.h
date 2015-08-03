@@ -7,6 +7,7 @@
 //
 
 #import "CDBaseTableVC.h"
+#import <LeanChatLib/AVIMConversation+Custom.h>
 
 @protocol CDSelectMemberVCDelegate <NSObject>
 

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 LeanCloud. All rights reserved.
 //
 
-#import <AVOSCloudIM/AVOSCloudIM.h>
+#import <LeanChatLib/LeanChatLib.h>
 
 /**
  *  自定义消息的类型，需要 > 0
