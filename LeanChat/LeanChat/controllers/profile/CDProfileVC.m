@@ -116,6 +116,7 @@
     }];
 }
 
+/** 调用这个，下次 SNS 登录的时候会重新去第三方应用请求，而不会用本地缓存 */
 - (void)deleteAuthDataCache {
     NSDictionary *authData = [[AVUser currentUser] objectForKey:@"authData"];
     if (authData) {
@@ -132,6 +133,7 @@
 - (void)logout {
     [[CDChatManager manager] closeWithCallback: ^(BOOL succeeded, NSError *error) {
         DLog(@"%@", error);
+        [self deleteAuthDataCache];
         [AVUser logOut];
         CDAppDelegate *delegate = (CDAppDelegate *)[UIApplication sharedApplication].delegate;
         [delegate toLogin];
