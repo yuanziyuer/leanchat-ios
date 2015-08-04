@@ -116,17 +116,22 @@
     }];
 }
 
+- (void)deleteAuthDataCache {
+    NSDictionary *authData = [[AVUser currentUser] objectForKey:@"authData"];
+    if (authData) {
+        if ([authData objectForKey:AVOSCloudSNSPlatformQQ]) {
+            [AVOSCloudSNS logout:AVOSCloudSNSQQ];
+        } else if ([authData objectForKey:AVOSCloudSNSPlatformWeiXin]) {
+            [AVOSCloudSNS logout:AVOSCloudSNSWeiXin];
+        } else if ([authData objectForKey:AVOSCloudSNSPlatformWeiBo]) {
+            [AVOSCloudSNS logout:AVOSCloudSNSSinaWeibo];
+        }
+    }
+}
+
 - (void)logout {
     [[CDChatManager manager] closeWithCallback: ^(BOOL succeeded, NSError *error) {
         DLog(@"%@", error);
-//        NSDictionary *authData = [[AVUser currentUser] objectForKey:@"authData"];
-//        if (authData) {
-//            if ([authData objectForKey:AVOSCloudSNSPlatformQQ]) {
-//                [AVOSCloudSNS logout:AVOSCloudSNSQQ];
-//            } else if ([authData objectForKey:AVOSCloudSNSPlatformWeiXin]) {
-//                [AVOSCloudSNS logout:AVOSCloudSNSSinaWeibo];
-//            }
-//        }
         [AVUser logOut];
         CDAppDelegate *delegate = (CDAppDelegate *)[UIApplication sharedApplication].delegate;
         [delegate toLogin];
