@@ -38,17 +38,22 @@
 - (void)saveInstallationWithDeviceToken:(NSData *)deviceToken {
     AVInstallation *currentInstallation = [AVInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];
-    [currentInstallation setObject:[AVUser currentUser].objectId forKey:kAVIMInstallationKeyUserId];
+    // openClient 的时候也会将 clientId 注册到 channels，这里多余了？
+    [currentInstallation addUniqueObject:[AVUser currentUser].objectId forKey:kAVIMInstallationKeyChannels];
     [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         NSLog(@"%@", error);
     }];
 }
 
+- (void)unsubscribeCurrentUserChannelWithBlock:(AVBooleanResultBlock)block {
+    if ([AVUser currentUser].objectId) {
+        [AVPush unsubscribeFromChannelInBackground:[AVUser currentUser].objectId block:block];
+    }
+}
+
 - (void)pushMessage:(NSString *)message userIds:(NSArray *)userIds block:(AVBooleanResultBlock)block {
-    AVQuery *query = [AVInstallation query];
-    [query whereKey:kAVIMInstallationKeyUserId containedIn:userIds];
     AVPush *push = [[AVPush alloc] init];
-    [push setQuery:query];
+    [push setChannels:userIds];
     [push setMessage:message];
     [push sendPushInBackgroundWithBlock:block];
 }

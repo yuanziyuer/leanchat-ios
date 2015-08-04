@@ -20,7 +20,7 @@
 #import "CDConversationStore.h"
 #import "CDFailedMessageStore.h"
 
-static NSInteger const kOnePageSize = 20;
+static NSInteger const kOnePageSize = 10;
 
 @interface CDChatRoomVC ()
 

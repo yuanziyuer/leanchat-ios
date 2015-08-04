@@ -14,7 +14,7 @@
 
 static CDCacheManager *cacheManager;
 
-@interface CDCacheManager ()
+@interface CDCacheManager ()<NSCacheDelegate>
 
 @property (nonatomic, strong) NSCache *userCache;
 @property (nonatomic, strong) NSString *currentConversationId;
@@ -36,8 +36,15 @@ static CDCacheManager *cacheManager;
     self = [super init];
     if (self) {
         _userCache = [[NSCache alloc] init];
+        _userCache.delegate = self;
+        _userCache.evictsObjectsWithDiscardedContent = NO;
     }
     return self;
+}
+
+#pragma mark - cache delegate
+- (void)cache:(NSCache *)cache willEvictObject:(id)obj {
+    DLog(@"will evict object");
 }
 
 #pragma mark - user cache

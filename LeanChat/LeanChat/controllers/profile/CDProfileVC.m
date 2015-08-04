@@ -6,20 +6,22 @@
 //  Copyright (c) 2014 LeanCloud. All rights reserved.
 //
 
+#import <LeanChatLib/CDChatManager.h>
+#import <LeanCloudSocial/AVOSCloudSNS.h>
+#import <LeanCloudFeedback/LeanCloudFeedback.h>
+#import <OpenShare/OpenShareHeader.h>
+#import <PopMenu/PopMenu.h>
+
 #import "CDProfileVC.h"
 #import "CDUserManager.h"
 #import "CDAppDelegate.h"
 #import "CDSettingVC.h"
 #import "CDWebViewVC.h"
-#import <LeanChatLib/CDChatManager.h>
 #import "MCPhotographyHelper.h"
 #import "LCUserFeedbackViewController.h"
 #import "CDBaseNavC.h"
 #import "CDProfileNameVC.h"
-#import <LeanCloudSocial/AVOSCloudSNS.h>
-#import <LeanCloudFeedback/LeanCloudFeedback.h>
-#import <OpenShare/OpenShareHeader.h>
-#import <PopMenu/PopMenu.h>
+#import "LZPushManager.h"
 
 @interface CDProfileVC ()<UIActionSheetDelegate, CDProfileNameVCDelegate>
 
