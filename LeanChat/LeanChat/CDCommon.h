@@ -61,9 +61,6 @@
 
 #define SYSTEM_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
 
-#define FROM_USER @"fromUser"
-#define TO_USER @"toUser"
-#define STATUS @"status"
 #define INSTALLATION @"installation"
 #define SETTING @"setting"
 

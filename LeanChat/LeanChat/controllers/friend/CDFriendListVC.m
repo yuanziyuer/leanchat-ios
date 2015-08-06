@@ -25,7 +25,6 @@ static NSString *kCellSelectorKey = @"selector";
 
 @interface CDFriendListVC () <UIAlertViewDelegate>
 
-@property (nonatomic, assign) NSInteger addRequestN;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) NSMutableArray *headerSectionDatas;
 
@@ -70,11 +69,6 @@ static NSString *kCellSelectorKey = @"selector";
 #pragma mark - Action
 
 - (void)goNewFriend:(id)sender {
-    if (self.addRequestN > 0) {
-        [[NSUserDefaults standardUserDefaults] setObject:@(self.addRequestN) forKey:@"addRequestN"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        [self refreshWithFriends:self.dataSource badgeNumber:0];
-    }
     CDNewFriendVC *controller = [[CDNewFriendVC alloc] init];
     controller.friendListVC = self;
     [[self navigationController] pushViewController:controller animated:YES];
@@ -141,18 +135,11 @@ static NSString *kCellSelectorKey = @"selector";
 }
 
 - (void)countNewAddRequestBadge:(AVIntegerResultBlock)block {
-    [[CDUserManager manager] countAddRequestsWithBlock : ^(NSInteger number, NSError *error) {
+    [[CDUserManager manager] countUnreadAddRequestsWithBlock : ^(NSInteger number, NSError *error) {
         if (error) {
             block(0, nil);
         } else {
-            self.addRequestN = number;
-            NSInteger oldN = [[NSUserDefaults standardUserDefaults] integerForKey:@"addRequestN"];
-            if (self.addRequestN > oldN) {
-                block(self.addRequestN - oldN, nil);
-            }
-            else {
-                block(0, nil);
-            }
+            block(number, nil);
         }
     }];
 }

@@ -16,11 +16,13 @@ typedef enum : NSUInteger {
 #define kAddRequestFromUser @"fromUser"
 #define kAddRequestToUser @"toUser"
 #define kAddRequestStatus @"status"
+#define kAddRequestIsRead @"isRead"
 
 @interface CDAddRequest : AVObject <AVSubclassing>
 
-@property AVUser *fromUser;
-@property AVUser *toUser;
-@property int status;
+@property (nonatomic) AVUser *fromUser;
+@property (nonatomic) AVUser *toUser;
+@property (nonatomic, assign) CDAddRequestStatus status;
+@property (nonatomic, assign) BOOL isRead; /**< 是否已读*/
 
 @end

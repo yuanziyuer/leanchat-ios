@@ -16,6 +16,10 @@ static UIImage *defaultAvatar;
 
 static CDUserManager *userManager;
 
+@interface CDUserManager()
+
+@end
+
 @implementation CDUserManager
 
 + (instancetype)manager {
@@ -164,10 +168,11 @@ static CDUserManager *userManager;
     [q findObjectsInBackgroundWithBlock:block];
 }
 
-- (void)countAddRequestsWithBlock:(AVIntegerResultBlock)block {
+- (void)countUnreadAddRequestsWithBlock:(AVIntegerResultBlock)block {
     AVQuery *q = [CDAddRequest query];
     AVUser *user = [AVUser currentUser];
-    [q whereKey:TO_USER equalTo:user];
+    [q whereKey:kAddRequestToUser equalTo:user];
+    [q whereKey:kAddRequestIsRead equalTo:@NO];
     [q setCachePolicy:kAVCachePolicyNetworkElseCache];
     [q countObjectsInBackgroundWithBlock:block];
 }
@@ -216,6 +221,20 @@ static CDUserManager *userManager;
     }];
 }
 
+- (void)markAddRequestsRead:(NSArray *)addRequests block:(AVBooleanResultBlock)block {
+    [CDUtils runInMainQueue:^{
+        for (CDAddRequest *addReqeust in addRequests) {
+            if (addReqeust.isRead == NO) {
+                addReqeust.isRead = YES;
+                [addReqeust save];
+            }
+        }
+        [CDUtils runInMainQueue:^{
+            block(YES, nil);
+        }];
+    }];
+}
+
 - (void)tryCreateAddRequestWithToUser:(AVUser *)user callback:(AVBooleanResultBlock)callback {
     [self haveWaitAddRequestWithToUser:user callback: ^(BOOL succeeded, NSError *error) {
         if (error) {
@@ -230,6 +249,7 @@ static CDUserManager *userManager;
                 CDAddRequest *addRequest = [[CDAddRequest alloc] init];
                 addRequest.fromUser = curUser;
                 addRequest.toUser = user;
+                addRequest.isRead = NO;
                 addRequest.status = CDAddRequestStatusWait;
                 [addRequest saveInBackgroundWithBlock:callback];
             }
@@ -238,6 +258,7 @@ static CDUserManager *userManager;
 }
 
 #pragma mark - report abuse
+
 - (void)reportAbuseWithReason:(NSString *)reason convid:(NSString *)convid block:(AVBooleanResultBlock)block {
     CDAbuseReport *report = [[CDAbuseReport alloc] init];
     report.reason = reason;

@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong) NSArray *addRequests;
 
+@property (nonatomic, assign) BOOL needRefreshFriendListVC;
+
 @end
 
 @implementation CDNewFriendVC
@@ -33,6 +35,13 @@
     [self refresh:nil];
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    if (self.needRefreshFriendListVC) {
+        [self.friendListVC refresh];
+    }
+}
+
 - (void)refresh:(UIRefreshControl *)refreshControl {
     [self showProgress];
     WEAKSELF
@@ -45,8 +54,16 @@
         }
         else {
             if ([self filterError:error]) {
-                _addRequests = objects;
-                [weakSelf.tableView reloadData];
+                [self showProgress];
+                [[CDUserManager manager] markAddRequestsRead:objects block:^(BOOL succeeded, NSError *error) {
+                    [self hideProgress];
+                    if (!error && objects.count > 0) {
+                        self.needRefreshFriendListVC = YES;
+                    }
+                    
+                    _addRequests = objects;
+                    [weakSelf.tableView reloadData];
+                }];
             }
         }
     }];
@@ -98,7 +115,6 @@
                 [self hideProgress];
                 [self showHUDText:@"添加成功"];
                 [self refresh:nil];
-                [self.friendListVC refresh];
             }];
         }
     }];

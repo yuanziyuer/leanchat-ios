@@ -13,6 +13,7 @@
 @dynamic fromUser;
 @dynamic toUser;
 @dynamic status;
+@dynamic isRead;
 
 + (NSString *)parseClassName {
     return @"AddRequest";
