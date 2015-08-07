@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1FAD25EBE59E07248BD0F7D5 /* libPods-LeanChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF79D434DB9DF2EFE3DD51B2 /* libPods-LeanChat.a */; };
 		700E6A151B3D2B4E00675021 /* LZPushManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 700E6A141B3D2B4E00675021 /* LZPushManager.m */; };
+		703B392E1B74890100E649DC /* CDSNSView.m in Sources */ = {isa = PBXBuildFile; fileRef = 703B392D1B74890100E649DC /* CDSNSView.m */; };
 		7073FC1D1B147048006F2692 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC1C1B147048006F2692 /* main.m */; };
 		7073FC281B147048006F2692 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7073FC271B147048006F2692 /* Images.xcassets */; };
 		7073FCA91B14718C006F2692 /* CDBaseNavC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC431B14718C006F2692 /* CDBaseNavC.m */; };
@@ -110,6 +111,8 @@
 		4A71AD2EA525F79828723CA0 /* Pods-LeanChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-LeanChat/Pods-LeanChat.release.xcconfig"; sourceTree = "<group>"; };
 		700E6A131B3D2B4E00675021 /* LZPushManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZPushManager.h; sourceTree = "<group>"; };
 		700E6A141B3D2B4E00675021 /* LZPushManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZPushManager.m; sourceTree = "<group>"; };
+		703B392C1B74890100E649DC /* CDSNSView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSNSView.h; sourceTree = "<group>"; };
+		703B392D1B74890100E649DC /* CDSNSView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSNSView.m; sourceTree = "<group>"; };
 		7073FC171B147048006F2692 /* LeanChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeanChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7073FC1B1B147048006F2692 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7073FC1C1B147048006F2692 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -472,6 +475,8 @@
 				7073FC961B14718C006F2692 /* CDEntryActionButton.m */,
 				7073FC971B14718C006F2692 /* CDEntryBottomButton.h */,
 				7073FC981B14718C006F2692 /* CDEntryBottomButton.m */,
+				703B392C1B74890100E649DC /* CDSNSView.h */,
+				703B392D1B74890100E649DC /* CDSNSView.m */,
 				7073FC991B14718C006F2692 /* CDImageLabelTableCell.h */,
 				7073FC9A1B14718C006F2692 /* CDImageLabelTableCell.m */,
 				7073FC9B1B14718C006F2692 /* CDImageLabelTableCell.xib */,
@@ -770,6 +775,7 @@
 				70DC7DB31B2F531F0047B7AB /* CDIMService.m in Sources */,
 				70DC7DB21B2F531F0047B7AB /* CDCacheManager.m in Sources */,
 				7073FCB71B14718C006F2692 /* CDEntryVC.m in Sources */,
+				703B392E1B74890100E649DC /* CDSNSView.m in Sources */,
 				7073FCD71B14718C006F2692 /* CDResizableButton.m in Sources */,
 				7073FC1D1B147048006F2692 /* main.m in Sources */,
 				7073FCAD1B14718C006F2692 /* CDWebViewVC.m in Sources */,

@@ -6,29 +6,26 @@
 //  Copyright (c) 2014 LeanCloud. All rights reserved.
 //
 
+#import <AFNetworking/AFNetworking.h>
+#import <LeanCloudSocial/AVOSCloudSNS.h>
+#import <LZAlertViewHelper/LZAlertViewHelper.h>
+
 #import "CDLoginVC.h"
 #import "CDRegisterVC.h"
 #import "CDAppDelegate.h"
 #import "CDEntryBottomButton.h"
 #import "CDEntryActionButton.h"
 #import "CDBaseNavC.h"
-#import <AFNetworking/AFNetworking.h>
-#import <LeanCloudSocial/AVOSCloudSNS.h>
-#import <LZAlertViewHelper/LZAlertViewHelper.h>
+#import "CDSNSView.h"
 
-static CGFloat const kCDSNSButtonSize = 40;
-static CGFloat const kCDSNSButtonMargin = 15;
-
-@interface CDLoginVC () <CDEntryVCDelegate>
+@interface CDLoginVC () <CDEntryVCDelegate, CDSNSViewDelegate>
 
 @property (nonatomic, strong) LZAlertViewHelper *alertViewHelper;
 
 @property (nonatomic, strong) CDEntryActionButton *loginButton;
-@property (nonatomic, strong) CDResizableButton *wechatLoginButton;
-@property (nonatomic, strong) CDResizableButton *qqButton;
-@property (nonatomic, strong) CDResizableButton *weiboButton;
 @property (nonatomic, strong) CDEntryBottomButton *registerButton;
 @property (nonatomic, strong) CDEntryBottomButton *forgotPasswordButton;
+@property (nonatomic, strong) CDSNSView *snsView;
 
 @end
 
@@ -45,9 +42,7 @@ static CGFloat const kCDSNSButtonMargin = 15;
     [self.view addSubview:self.loginButton];
     [self.view addSubview:self.registerButton];
     [self.view addSubview:self.forgotPasswordButton];
-    [self.view addSubview:self.wechatLoginButton];
-    [self.view addSubview:self.qqButton];
-    [self.view addSubview:self.weiboButton];
+    [self.view addSubview:self.snsView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -91,32 +86,19 @@ static CGFloat const kCDSNSButtonMargin = 15;
     return _forgotPasswordButton;
 }
 
-
-- (CDResizableButton *)wechatLoginButton {
-    if (_wechatLoginButton == nil) {
-        _wechatLoginButton = [[CDResizableButton alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.usernameField.frame) - kCDSNSButtonSize / 2, CGRectGetMinY(self.registerButton.frame) - kCDSNSButtonMargin - kCDSNSButtonSize, kCDSNSButtonSize, kCDSNSButtonSize)];
-        [_wechatLoginButton setImage:[UIImage imageNamed:@"sns_wechat"] forState:UIControlStateNormal];
-        [_wechatLoginButton addTarget:self action:@selector(wechatButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+- (CDSNSView *)snsView {
+    if (_snsView == nil) {
+        NSMutableArray *displayTypes = [NSMutableArray arrayWithObjects:@(CDSNSTypeQQ), @(CDSNSTypeWeibo), nil];
+        if ([AVOSCloudSNS isAppInstalledForType:AVOSCloudSNSWeiXin]) {
+            [displayTypes addObject:@(CDSNSTypeWeiXin)];
+        }
+        CGSize size = [CDSNSView sizeForDisplayTypes:displayTypes];
+        _snsView = [[CDSNSView alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.view.frame) - size.width / 2, CGRectGetMinY(self.registerButton.frame) - kEntryVCVerticalSpacing - size.height , size.width, size.height)];
+        _snsView.displayTypes = displayTypes;
+        _snsView.delegate = self;
+        [_snsView reloadData];
     }
-    return _wechatLoginButton;
-}
-
-- (CDResizableButton *)qqButton {
-    if (_qqButton == nil) {
-        _qqButton = [[CDResizableButton alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.wechatLoginButton.frame) - kCDSNSButtonMargin -kCDSNSButtonSize, CGRectGetMinY(self.wechatLoginButton.frame), kCDSNSButtonSize, kCDSNSButtonSize)];
-        [_qqButton setImage:[UIImage imageNamed:@"sns_qq"] forState:UIControlStateNormal];
-        [_qqButton addTarget:self action:@selector(qqButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _qqButton;
-}
-
-- (CDResizableButton *)weiboButton {
-    if (_weiboButton == nil) {
-        _weiboButton = [[CDResizableButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.wechatLoginButton.frame) + kCDSNSButtonMargin, CGRectGetMinY(self.wechatLoginButton.frame), kCDSNSButtonSize, kCDSNSButtonSize)];
-        [_weiboButton setImage:[UIImage imageNamed:@"sns_weibo"] forState:UIControlStateNormal];
-        [_weiboButton addTarget:self action:@selector(weiboButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _weiboButton;
+    return _snsView;
 }
 
 - (LZAlertViewHelper *)alertViewHelper {
@@ -245,33 +227,39 @@ static CGFloat const kCDSNSButtonMargin = 15;
 
 #pragma mark - sns login button clicked
 
-- (void)wechatButtonClicked:(id)sender {
-    if ([AVOSCloudSNS isAppInstalledForType:AVOSCloudSNSWeiXin]) {
-        [AVOSCloudSNS loginWithCallback:^(id object, NSError *error) {
-            if ([self filterError:error]) {
-                [self loginWithAuthData:object platform:AVOSCloudSNSPlatformWeiXin];
-            }
-        } toPlatform:AVOSCloudSNSWeiXin];
-    } else {
-        [self toast:@"此设备没有装微信，暂不支持"];
+- (BOOL)filterError:(NSError *)error {
+    if (error.code == AVOSCloudSNSErrorUserCancel) {
+        [self showHUDText:@"取消了登录"];
+        return NO;
     }
+    return [super filterError:error];
 }
 
-- (void)qqButtonClicked:(id)sender {
+- (void)snsView:(CDSNSView *)snsView buttonClickedForType:(CDSNSType)type {
+    NSString *platform;
+    AVOSCloudSNSType snsType;
+    switch (type) {
+        case CDSNSTypeQQ: {
+            snsType = AVOSCloudSNSQQ;
+            platform = AVOSCloudSNSPlatformQQ;
+            break;
+        }
+        case CDSNSTypeWeiXin: {
+            snsType = AVOSCloudSNSWeiXin;
+            platform = AVOSCloudSNSPlatformWeiXin;
+            break;
+        }
+        case CDSNSTypeWeibo: {
+            snsType = AVOSCloudSNSSinaWeibo;
+            platform = AVOSCloudSNSPlatformWeiBo;
+            break;
+        }
+    }
     [AVOSCloudSNS loginWithCallback:^(id object, NSError *error) {
         if ([self filterError:error]) {
-            [self loginWithAuthData:object platform:AVOSCloudSNSPlatformQQ];
+            [self loginWithAuthData:object platform:platform];
         }
-    } toPlatform:AVOSCloudSNSQQ];
+    } toPlatform:snsType];
 }
-
-- (void)weiboButtonClicked:(id)sender {
-    [AVOSCloudSNS loginWithCallback:^(id object, NSError *error) {
-        if ([self filterError:error]) {
-            [self loginWithAuthData:object platform:AVOSCloudSNSPlatformWeiBo];
-        }
-    } toPlatform:AVOSCloudSNSSinaWeibo];
-}
-
 
 @end
