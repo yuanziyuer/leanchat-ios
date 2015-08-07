@@ -39,7 +39,9 @@
     AVInstallation *currentInstallation = [AVInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];
     // openClient 的时候也会将 clientId 注册到 channels，这里多余了？
-    [currentInstallation addUniqueObject:[AVUser currentUser].objectId forKey:kAVIMInstallationKeyChannels];
+    if ([AVUser currentUser].objectId) {
+        [currentInstallation addUniqueObject:[AVUser currentUser].objectId forKey:kAVIMInstallationKeyChannels];
+    }
     [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         NSLog(@"%@", error);
     }];
