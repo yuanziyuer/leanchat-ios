@@ -64,6 +64,10 @@
 #define INSTALLATION @"installation"
 #define SETTING @"setting"
 
+#define KEY_USERNAME @"KEY_USERNAME"
+#define USERNAME_MIN_LENGTH 3
+#define PASSWORD_MIN_LENGTH 3
+
 #define CD_COMMON_ROW_HEIGHT 44
 
 #ifdef DEBUG

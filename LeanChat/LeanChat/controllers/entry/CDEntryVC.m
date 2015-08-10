@@ -9,7 +9,7 @@
 #import "CDEntryVC.h"
 #import "CDTextField.h"
 
-@interface CDEntryVC () <UITextFieldDelegate, CDEntryVCDelegate>
+@interface CDEntryVC () <UITextFieldDelegate>
 
 @property (nonatomic, assign) CGPoint originOffset;
 
@@ -29,7 +29,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -38,7 +37,6 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -95,18 +93,7 @@
     if (textField == self.usernameField) {
         [self.passwordField becomeFirstResponder];
     }
-    else if (textField == self.passwordField) {
-        [self didPasswordTextFieldReturn:(CDTextField *)textField];
-    }
     return YES;
-}
-
-- (void)didPasswordTextFieldReturn:(CDTextField *)passwordField {
-    // subclass
-}
-
-- (void)textFieldDidChange:(UITextField *)textField {
-    //subclass
 }
 
 - (void)closeKeyboard:(id)sender {

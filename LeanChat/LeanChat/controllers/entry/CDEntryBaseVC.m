@@ -24,11 +24,25 @@
     [self.view addSubview:self.backgroundImageView];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (UIBarButtonItem *)cancelBarButtonItem {
+    if (_cancelBarButtonItem == nil) {
+        UIImage *image = [UIImage imageNamed:@"cancel"];
+        UIImage *selectedImage = [UIImage imageNamed:@"cancel_selected"];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.frame = CGRectMake(0, 0, image.size.width, image.size.height);
+        [button setImage:image forState:UIControlStateNormal];
+        [button setImage:selectedImage forState:UIControlStateHighlighted];
+        [button addTarget:self action:@selector(cancel:) forControlEvents:UIControlEventTouchUpInside];
+        _cancelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    }
+    return _cancelBarButtonItem;
 }
 
+- (void)cancel:(id)sender {
+    [self dismissViewControllerAnimated:YES completion: ^{
+        [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    }];
+}
 
 - (UIImageView *)backgroundImageView {
     if (_backgroundImageView == nil) {
@@ -41,5 +55,12 @@
 - (void)closeKeyboard:(id)sender {
     
 }
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
 
 @end

@@ -16,6 +16,7 @@ static CGFloat kEntryVCTextFieldHeight = 40;
 @interface CDEntryBaseVC : CDBaseVC
 
 @property (nonatomic, strong) UIImageView *backgroundImageView;
+@property (nonatomic, strong) UIBarButtonItem *cancelBarButtonItem;
 
 - (void)closeKeyboard:(id)sender;
 

@@ -106,7 +106,7 @@
         if (image) {
             UIImage *rounded = [CDUtils roundImage:image toSize:CGSizeMake(100, 100) radius:10];
             [self showProgress];
-            [[CDUserManager manager] saveAvatar : rounded callback : ^(BOOL succeeded, NSError *error) {
+            [[CDUserManager manager] updateAvatarWithImage : rounded callback : ^(BOOL succeeded, NSError *error) {
                 [self hideProgress];
                 if ([self filterError:error]) {
                     [self loadDataSource];
