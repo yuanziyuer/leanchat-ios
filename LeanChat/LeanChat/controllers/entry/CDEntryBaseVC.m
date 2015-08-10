@@ -21,7 +21,9 @@
     tap.numberOfTouchesRequired = 1;
     [self.view addGestureRecognizer:tap];
     
+    self.view.backgroundColor = RGBCOLOR(247, 248, 248);
     [self.view addSubview:self.backgroundImageView];
+    [self.backgroundImageView addMotionEffect:[self motionEffectWithX:60 y:40]];
 }
 
 - (UIBarButtonItem *)cancelBarButtonItem {
@@ -50,6 +52,22 @@
         _backgroundImageView.image = [UIImage imageNamed:@"login_background"];
     }
     return _backgroundImageView;
+}
+
+#pragma mark - MotionEffect
+
+- (UIMotionEffectGroup *)motionEffectWithX:(CGFloat)x y:(CGFloat)y {
+    UIInterpolatingMotionEffect *xAxis = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x" type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+    xAxis.minimumRelativeValue = @(-x);
+    xAxis.maximumRelativeValue = @(x);
+    
+    UIInterpolatingMotionEffect *yAxis = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y" type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+    yAxis.minimumRelativeValue = @(-y);
+    yAxis.maximumRelativeValue = @(y);
+    
+    UIMotionEffectGroup *group = [[UIMotionEffectGroup alloc] init];
+    group.motionEffects = @[xAxis, yAxis];
+    return group;
 }
 
 - (void)closeKeyboard:(id)sender {
