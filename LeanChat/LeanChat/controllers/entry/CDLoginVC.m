@@ -43,6 +43,8 @@
     [self.view addSubview:self.registerButton];
     [self.view addSubview:self.forgotPasswordButton];
     [self.view addSubview:self.snsView];
+    
+    [self performSelector:@selector(toRegister:) withObject:nil afterDelay:0];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -9,11 +9,15 @@
 #import "CDRegisterVC.h"
 #import "CDAppDelegate.h"
 #import "CDEntryActionButton.h"
+#import "CDPhoneRegisterVC.h"
+
+static CGFloat const phoneButtonSize = 40;
 
 @interface CDRegisterVC () <CDEntryVCDelegate>
 
 @property (nonatomic, strong) UIBarButtonItem *cancelBarButtonItem;
 @property (nonatomic, strong) CDEntryActionButton *registerButton;
+@property (nonatomic, strong) UIButton *phoneButton;
 
 @end
 
@@ -24,6 +28,9 @@
     self.title = @"注册";
     self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
     [self.view addSubview:self.registerButton];
+    [self.view addSubview:self.phoneButton];
+    
+    [self phoneButtonClicked:nil];
 }
 
 - (UIBarButtonItem *)cancelBarButtonItem {
@@ -50,6 +57,18 @@
     return _registerButton;
 }
 
+- (UIButton *)phoneButton {
+    if (_phoneButton == nil) {
+        _phoneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, phoneButtonSize, phoneButtonSize)];
+        _phoneButton.center = CGPointMake(CGRectGetMidX(self.registerButton.frame), CGRectGetHeight(self.view.frame) - CGRectGetHeight(self.navigationController.navigationBar.frame) - kEntryVCVerticalSpacing * 3  - phoneButtonSize / 2);
+        [_phoneButton setImage:[UIImage imageNamed:@"register_phone"] forState:UIControlStateNormal];
+        _phoneButton.contentVerticalAlignment = UIControlContentVerticalAlignmentFill;
+        _phoneButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
+        [_phoneButton addTarget:self action:@selector(phoneButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _phoneButton;
+}
+
 #pragma mark - Actions
 
 - (void)cancel:(id)sender {
@@ -73,6 +92,11 @@
             }];
         }
     }];
+}
+
+- (void)phoneButtonClicked:(id)sender {
+    CDPhoneRegisterVC *vc = [[CDPhoneRegisterVC alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)changeButtonState {

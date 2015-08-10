@@ -10,19 +10,16 @@
 #import "CDTextField.h"
 #import "CDResizableButton.h"
 #import <AVOSCloud/AVOSCloud.h>
+#import "CDEntryBaseVC.h"
 
 #define KEY_USERNAME @"KEY_USERNAME"
 #define USERNAME_MIN_LENGTH 3
 #define PASSWORD_MIN_LENGTH 3
 #define RGBCOLOR(r, g, b) [UIColor colorWithRed : (r) / 255.0 green : (g) / 255.0 blue : (b) / 255.0 alpha : 1]
 
-static CGFloat kEntryVCIconImageViewMarginTop = 80;
+static CGFloat kEntryVCIconImageViewMarginTop = 100;
 static CGFloat kEntryVCIconImageViewSize = 80;
-static CGFloat kEntryVCHorizontalSpacing = 30;
-static CGFloat kEntryVCVerticalSpacing = 10;
 static CGFloat kEntryVCUsernameFieldMarginTop = 30;
-static CGFloat kEntryVCTextFieldPadding = 10;
-static CGFloat kEntryVCTextFieldHeight = 40;
 
 @protocol CDEntryVCDelegate <NSObject>
 
@@ -32,9 +29,8 @@ static CGFloat kEntryVCTextFieldHeight = 40;
 
 @end
 
-@interface CDEntryVC : CDBaseVC
+@interface CDEntryVC : CDEntryBaseVC
 
-@property (nonatomic, strong) UIImageView *backgroundImageView;
 @property (nonatomic, strong) UIImageView *iconImageView;
 @property (nonatomic, strong) CDTextField *usernameField;
 @property (nonatomic, strong) CDTextField *passwordField;

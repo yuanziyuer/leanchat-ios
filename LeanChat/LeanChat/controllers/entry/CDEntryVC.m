@@ -19,15 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.frame = CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight([UIScreen mainScreen].bounds));
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeKeyboard:)];
-    tap.numberOfTapsRequired = 1;
-    tap.numberOfTouchesRequired = 1;
-    [self.view addGestureRecognizer:tap];
     
     //[self.view setBackgroundColor:RGBCOLOR(222, 223, 225)];
-    [self.view addSubview:self.backgroundImageView];
     [self.view addSubview:self.iconImageView];
     [self.view addSubview:self.usernameField];
     [self.view addSubview:self.passwordField];
@@ -41,7 +34,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    _originOffset = self.view.frame.origin;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -55,14 +47,6 @@
 
 #pragma mark - Propertys
 
-- (UIImageView *)backgroundImageView {
-    if (_backgroundImageView == nil) {
-        _backgroundImageView = [[UIImageView alloc] initWithFrame:self.view.frame];
-        _backgroundImageView.image = [UIImage imageNamed:@"login_background"];
-    }
-    return _backgroundImageView;
-}
-
 - (UIImageView *)iconImageView {
     if (_iconImageView == nil) {
         _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.view.frame) - kEntryVCIconImageViewSize / 2, kEntryVCIconImageViewMarginTop, kEntryVCIconImageViewSize, kEntryVCIconImageViewSize)];
@@ -73,10 +57,9 @@
 
 - (CDTextField *)usernameField {
     if (_usernameField == nil) {
-        _usernameField = [[CDTextField alloc] initWithFrame:CGRectMake(kEntryVCHorizontalSpacing, CGRectGetMaxY(_iconImageView.frame) + kEntryVCUsernameFieldMarginTop, CGRectGetWidth(self.view.frame) - kEntryVCHorizontalSpacing * 2, kEntryVCTextFieldHeight)];
+        _usernameField = [CDTextField textFieldWithPadding:kEntryVCTextFieldPadding];
+        _usernameField.frame = CGRectMake(kEntryVCHorizontalSpacing, CGRectGetMaxY(_iconImageView.frame) + kEntryVCUsernameFieldMarginTop, CGRectGetWidth(self.view.frame) - kEntryVCHorizontalSpacing * 2, kEntryVCTextFieldHeight);
         _usernameField.background = [UIImage imageNamed:@"input_bg_top"];
-        _usernameField.horizontalPadding = kEntryVCTextFieldPadding;
-        _usernameField.verticalPadding = kEntryVCTextFieldPadding;
         _usernameField.placeholder = @"用户名";
         _usernameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         _usernameField.delegate = self;
