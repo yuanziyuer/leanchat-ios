@@ -103,8 +103,7 @@ static CDUserManager *userManager;
 }
 
 - (void)loginWithInput:(NSString *)input password:(NSString *)password block:(AVUserResultBlock)block {
-    NSTextCheckingResult *checking = [NSTextCheckingResult phoneNumberCheckingResultWithRange:NSMakeRange(0, input.length) phoneNumber:input];
-    if (checking.resultType == NSTextCheckingTypePhoneNumber) {
+    if ([CDUtils isPhoneNumber:input]) {
         [AVUser logInWithMobilePhoneNumberInBackground:input password:password block:block];
     } else {
         [AVUser logInWithUsernameInBackground:input password:password block:block];

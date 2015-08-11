@@ -111,6 +111,10 @@ static CGFloat const kTextFieldMarginTop = 30;
 - (void)smsCodeButtonClicked:(id)sender {
     NSString *phone = self.phoneTextField.text;
     if (phone.length > 0) {
+        if ([CDUtils isPhoneNumber:phone] == NO) {
+            [self toast:@"非法电话号码，请检查"];
+            return;
+        }
         self.smsCodeButton.enabled = NO;
         // 服务端会检查
         [AVOSCloud requestSmsCodeWithPhoneNumber:phone appName:@"LeanChat" operation:@"注册" timeToLive:10 callback: ^(BOOL succeeded, NSError *error) {
