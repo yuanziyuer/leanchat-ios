@@ -208,4 +208,26 @@
     [defaults setObject:curVersion forKey:CD_VERSION];
 }
 
+#pragma mark -
+
++ (BOOL)isPhoneNumber:(NSString *)text {
+    NSError *error;
+    NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypePhoneNumber error:&error];
+    if (error) {
+        DLog(@"error : %@",error);
+        return NO;
+    }
+    NSRange inputRange = NSMakeRange(0, text.length);
+    NSArray *matches = [detector matchesInString:text options:0 range:inputRange];
+    if (matches.count == 0) {
+        return NO;
+    }
+    NSTextCheckingResult *result = matches[0];
+    if ([result resultType] == NSTextCheckingTypePhoneNumber && result.range.location == inputRange.location && result.range.length == inputRange.length) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 @end

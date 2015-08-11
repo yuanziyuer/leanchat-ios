@@ -81,4 +81,6 @@ typedef void (^CDUpgradeBlock)(BOOL upgrade, NSString *oldVersion, NSString *new
 
 + (void)upgradeWithBlock:(CDUpgradeBlock)callback;
 
++ (BOOL)isPhoneNumber:(NSString *)text;
+
 @end

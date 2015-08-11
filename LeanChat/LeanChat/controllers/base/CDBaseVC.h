@@ -43,4 +43,6 @@ typedef enum : NSInteger {
 
 - (void)toast:(NSString *)text;
 
+- (void)toast:(NSString *)text duration:(NSTimeInterval)duration;
+
 @end

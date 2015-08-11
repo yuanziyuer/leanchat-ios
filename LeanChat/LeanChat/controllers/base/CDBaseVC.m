@@ -91,16 +91,22 @@
 
 
 - (void)toast:(NSString *)text {
-    [self showHUDText:text];
+    [self toast:text duration:2];
 }
 
--(void)showHUDText:(NSString*)text{
+- (void)toast:(NSString *)text duration:(NSTimeInterval)duration {
     MBProgressHUD* hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText=text;
+    //    hud.labelText=text;
+    hud.detailsLabelFont = [UIFont systemFontOfSize:14];
+    hud.detailsLabelText = text;
     hud.margin=10.f;
     hud.removeFromSuperViewOnHide=YES;
     hud.mode=MBProgressHUDModeText;
-    [hud hide:YES afterDelay:2];
+    [hud hide:YES afterDelay:duration];
+}
+
+-(void)showHUDText:(NSString*)text{
+    [self toast:text];
 }
 
 -(void)runInMainQueue:(void (^)())queue{

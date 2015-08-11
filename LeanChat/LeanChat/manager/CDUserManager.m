@@ -11,6 +11,7 @@
 #import "CDCacheManager.h"
 #import "CDAbuseReport.h"
 #import "UIImage+Icon.h"
+#import <AVUser+SNS.h>
 
 static UIImage *defaultAvatar;
 
@@ -30,6 +31,108 @@ static CDUserManager *userManager;
     return userManager;
 }
 
+#pragma mark - login
+
+- (void)loginByAuthData:(NSDictionary *)authData platform:(NSString *)platform block:(AVBooleanResultBlock)block {
+    __block NSString *username = authData[@"username"];
+    __block NSString *avatar = authData[@"avatar"];
+    [AVUser loginWithAuthData:authData platform:platform block:^(AVUser *user, NSError *error) {
+        if (error) {
+            block(NO, error);
+        } else {
+            if (user.updatedAt) {
+                // 之前已经登录过、设置好用户名和头像了
+                block(YES, nil);
+            } else {
+                if (username) {
+                    [self countUserByUsername:username block:^(NSInteger number, NSError *error) {
+                        if (error) {
+                            block(NO, error);
+                        } else {
+                            if (number > 0) {
+                                // 用户名重复了，给一个随机的后缀
+                                username = [NSString stringWithFormat:@"%@%@",username, [[CDUtils uuid] substringToIndex:3]];
+                                [self changeToUsername:username avatar:avatar user:user block:block];
+                            } else {
+                                [self changeToUsername:username avatar:avatar user:user block:block];
+                            }
+                        }
+                    }];
+                } else {
+                    // 应该不可能出现这种情况
+                    // 没有名字，只改头像
+                    [self changeToUsername:nil avatar:avatar user:user block:block];
+                }
+            }
+        }
+    }];
+}
+
+- (void)changeToUsername:(NSString *)username avatar:(NSString *)avatar user:(AVUser *)user block:(AVBooleanResultBlock)block{
+    [self uploadAvatarWithUrl:avatar block:^(AVFile *file, NSError *error) {
+        if (file) {
+            [user setObject:file forKey:@"avatar"];
+        }
+        if (username) {
+            user.username = username;
+        }
+        [user saveInBackgroundWithBlock:block];
+    }];
+}
+
+
+- (void)uploadAvatarWithUrl:(NSString *)url block:(AVFileResultBlock)block {
+    if (!url) {
+        block(nil, nil);
+    } else {
+        AVFile *file = [AVFile fileWithURL:url];
+        [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (error) {
+                block(nil, error);
+            } else {
+                block(file, nil);
+            }
+        }];
+    }
+}
+
+- (void)countUserByUsername:(NSString *)username block:(AVIntegerResultBlock)block {
+    AVQuery *q = [AVUser query];
+    [q whereKey:@"username" equalTo:username];
+    [q countObjectsInBackgroundWithBlock:block];
+}
+
+- (void)loginWithInput:(NSString *)input password:(NSString *)password block:(AVUserResultBlock)block {
+    if ([CDUtils isPhoneNumber:input]) {
+        [AVUser logInWithMobilePhoneNumberInBackground:input password:password block:block];
+    } else {
+        [AVUser logInWithUsernameInBackground:input password:password block:block];
+    }
+}
+
+- (void)registerWithUsername:(NSString *)username phone:(NSString *)phone password:(NSString *)password block:(AVBooleanResultBlock)block {
+    AVUser *user = [AVUser user];
+    user.username = username;
+    user.password = password;
+    if (phone) {
+        user.mobilePhoneNumber = phone;
+    }
+    [user setFetchWhenSave:YES];
+    [user signUpInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
+        if (error) {
+            block(NO, error);
+        } else {
+            if (phone) {
+                [[NSUserDefaults standardUserDefaults] setObject:phone forKey:KEY_USERNAME];
+            } else {
+                [[NSUserDefaults standardUserDefaults] setObject:username forKey:KEY_USERNAME];
+            }
+            block(YES, nil);
+        }
+    }];
+}
+
+#pragma mark -
 
 - (void)findFriendsWithBlock:(AVArrayResultBlock)block {
     AVUser *user = [AVUser currentUser];
@@ -62,11 +165,6 @@ static CDUserManager *userManager;
     }];
 }
 
-- (NSString *)getPeerIdOfUser:(AVUser *)user {
-    return user.objectId;
-}
-
-// should exclude friends
 - (void)findUsersByPartname:(NSString *)partName withBlock:(AVArrayResultBlock)block {
     AVQuery *q = [AVUser query];
     [q setCachePolicy:kAVCachePolicyNetworkElseCache];
@@ -125,7 +223,7 @@ static CDUserManager *userManager;
     return [UIImage imageWithHashString:user.objectId displayString:[[user.username substringWithRange:NSMakeRange(0, 1)] capitalizedString]];
 }
 
-- (void)saveAvatar:(UIImage *)image callback:(AVBooleanResultBlock)callback {
+- (void)updateAvatarWithImage:(UIImage *)image callback:(AVBooleanResultBlock)callback {
     NSData *data = UIImagePNGRepresentation(image);
     AVFile *file = [AVFile fileWithData:data];
     [file saveInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
@@ -135,7 +233,6 @@ static CDUserManager *userManager;
         else {
             AVUser *user = [AVUser currentUser];
             [user setObject:file forKey:@"avatar"];
-            [user setFetchWhenSave:YES];
             [user saveInBackgroundWithBlock:callback];
         }
     }];

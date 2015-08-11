@@ -9,7 +9,7 @@
 #import "CDEntryVC.h"
 #import "CDTextField.h"
 
-@interface CDEntryVC () <UITextFieldDelegate, CDEntryVCDelegate>
+@interface CDEntryVC () <UITextFieldDelegate>
 
 @property (nonatomic, assign) CGPoint originOffset;
 
@@ -19,15 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.frame = CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight([UIScreen mainScreen].bounds));
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeKeyboard:)];
-    tap.numberOfTapsRequired = 1;
-    tap.numberOfTouchesRequired = 1;
-    [self.view addGestureRecognizer:tap];
     
     //[self.view setBackgroundColor:RGBCOLOR(222, 223, 225)];
-    [self.view addSubview:self.backgroundImageView];
     [self.view addSubview:self.iconImageView];
     [self.view addSubview:self.usernameField];
     [self.view addSubview:self.passwordField];
@@ -36,17 +29,14 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    _originOffset = self.view.frame.origin;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -54,14 +44,6 @@
 }
 
 #pragma mark - Propertys
-
-- (UIImageView *)backgroundImageView {
-    if (_backgroundImageView == nil) {
-        _backgroundImageView = [[UIImageView alloc] initWithFrame:self.view.frame];
-        _backgroundImageView.image = [UIImage imageNamed:@"login_background"];
-    }
-    return _backgroundImageView;
-}
 
 - (UIImageView *)iconImageView {
     if (_iconImageView == nil) {
@@ -73,10 +55,9 @@
 
 - (CDTextField *)usernameField {
     if (_usernameField == nil) {
-        _usernameField = [[CDTextField alloc] initWithFrame:CGRectMake(kEntryVCHorizontalSpacing, CGRectGetMaxY(_iconImageView.frame) + kEntryVCUsernameFieldMarginTop, CGRectGetWidth(self.view.frame) - kEntryVCHorizontalSpacing * 2, kEntryVCTextFieldHeight)];
+        _usernameField = [CDTextField textFieldWithPadding:kEntryVCTextFieldPadding];
+        _usernameField.frame = CGRectMake(kEntryVCHorizontalSpacing, CGRectGetMaxY(_iconImageView.frame) + kEntryVCUsernameFieldMarginTop, CGRectGetWidth(self.view.frame) - kEntryVCHorizontalSpacing * 2, kEntryVCTextFieldHeight);
         _usernameField.background = [UIImage imageNamed:@"input_bg_top"];
-        _usernameField.horizontalPadding = kEntryVCTextFieldPadding;
-        _usernameField.verticalPadding = kEntryVCTextFieldPadding;
         _usernameField.placeholder = @"用户名";
         _usernameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         _usernameField.delegate = self;
@@ -112,18 +93,7 @@
     if (textField == self.usernameField) {
         [self.passwordField becomeFirstResponder];
     }
-    else if (textField == self.passwordField) {
-        [self didPasswordTextFieldReturn:(CDTextField *)textField];
-    }
     return YES;
-}
-
-- (void)didPasswordTextFieldReturn:(CDTextField *)passwordField {
-    // subclass
-}
-
-- (void)textFieldDidChange:(UITextField *)textField {
-    //subclass
 }
 
 - (void)closeKeyboard:(id)sender {

@@ -21,7 +21,7 @@
 - (void) setup {
     [self setBackgroundImage:[UIImage imageNamed:@"blue_expand_normal"] forState:UIControlStateNormal];
     [self setBackgroundImage:[UIImage imageNamed:@"blue_expand_highlight"] forState:UIControlStateHighlighted];
-    [self setBackgroundImage:[UIImage imageNamed:@"blue_expand_normal"] forState:UIControlStateDisabled];
+    [self setBackgroundImage:[UIImage imageNamed:@"blue_expand_highlight"] forState:UIControlStateDisabled];
     [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
 

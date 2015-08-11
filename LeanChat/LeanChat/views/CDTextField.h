@@ -16,4 +16,6 @@ static CGFloat kCDTextFieldCommonHorizontalPadding = 10;
 @property (nonatomic, assign) CGFloat verticalPadding;
 @property (nonatomic, assign) CGFloat horizontalPadding;
 
++ (instancetype)textFieldWithPadding:(CGFloat)padding;
+
 @end
