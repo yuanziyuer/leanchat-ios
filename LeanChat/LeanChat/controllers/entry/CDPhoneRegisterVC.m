@@ -114,7 +114,10 @@ static CGFloat const kTextFieldMarginTop = 30;
         self.smsCodeButton.enabled = NO;
         // 服务端会检查
         [AVOSCloud requestSmsCodeWithPhoneNumber:phone appName:@"LeanChat" operation:@"注册" timeToLive:10 callback: ^(BOOL succeeded, NSError *error) {
-            if ([self filterError:error]) {
+            if (error.code == 601) {
+                [self toast:@"每个号码最多一分钟一条，每天每个号码限制10条，请检查操作是否过于频繁。" duration:5];
+                self.smsCodeButton.enabled = YES;
+            } else if ([self filterError:error]) {
                 [self sendCodeSucceedWithPhone:phone];
             } else {
                 self.smsCodeButton.enabled = YES;
