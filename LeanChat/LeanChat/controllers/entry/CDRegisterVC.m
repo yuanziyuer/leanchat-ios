@@ -40,7 +40,7 @@
 #pragma mark - Actions
 
 - (void)registerButtonClicked:(id)sender {
-    if (self.usernameField.text.length < 3 || self.passwordField.text.length < 3) {
+    if (self.usernameField.text.length < USERNAME_MIN_LENGTH || self.passwordField.text.length < PASSWORD_MIN_LENGTH) {
         [self toast:@"用户名或密码至少三位"];
         return;
     }
