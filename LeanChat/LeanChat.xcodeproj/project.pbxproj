@@ -91,7 +91,6 @@
 		7073FD351B147458006F2692 /* tabbar_me_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073FD0C1B147458006F2692 /* tabbar_me_active@2x.png */; };
 		7073FD361B147458006F2692 /* wechat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7073FD0D1B147458006F2692 /* wechat@2x.png */; };
 		7087E7771B78B39A003641E2 /* CDPhoneRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7087E7761B78B39A003641E2 /* CDPhoneRegisterVC.m */; };
-		7087E77B1B78B57D003641E2 /* register_phone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7087E77A1B78B57D003641E2 /* register_phone@2x.png */; };
 		7087E77E1B78BF34003641E2 /* CDEntryBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7087E77D1B78BF34003641E2 /* CDEntryBaseVC.m */; };
 		7087E7801B78CF53003641E2 /* phone_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7087E77F1B78CF53003641E2 /* phone_back@2x.png */; };
 		708DF4711B41A9D20047C994 /* CDSelectMemberVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 708DF4701B41A9D20047C994 /* CDSelectMemberVC.m */; };
@@ -238,7 +237,6 @@
 		7073FD0D1B147458006F2692 /* wechat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wechat@2x.png"; sourceTree = "<group>"; };
 		7087E7751B78B39A003641E2 /* CDPhoneRegisterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDPhoneRegisterVC.h; sourceTree = "<group>"; };
 		7087E7761B78B39A003641E2 /* CDPhoneRegisterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDPhoneRegisterVC.m; sourceTree = "<group>"; };
-		7087E77A1B78B57D003641E2 /* register_phone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "register_phone@2x.png"; sourceTree = "<group>"; };
 		7087E77C1B78BF34003641E2 /* CDEntryBaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEntryBaseVC.h; sourceTree = "<group>"; };
 		7087E77D1B78BF34003641E2 /* CDEntryBaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEntryBaseVC.m; sourceTree = "<group>"; };
 		7087E77F1B78CF53003641E2 /* phone_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "phone_back@2x.png"; sourceTree = "<group>"; };
@@ -536,7 +534,6 @@
 			isa = PBXGroup;
 			children = (
 				7087E77F1B78CF53003641E2 /* phone_back@2x.png */,
-				7087E77A1B78B57D003641E2 /* register_phone@2x.png */,
 				70A290B81B6B59AC0083998A /* sns_qzone@2x.png */,
 				70FA59B41B696173000286D5 /* sns_weibo@2x.png */,
 				70FA59AE1B695600000286D5 /* sns_wechat@2x.png */,
@@ -713,7 +710,6 @@
 				7073FCD11B14718C006F2692 /* CDImageLabelTableCell.xib in Resources */,
 				7073FD2F1B147458006F2692 /* contact@2x.png in Resources */,
 				7073FD361B147458006F2692 /* wechat@2x.png in Resources */,
-				7087E77B1B78B57D003641E2 /* register_phone@2x.png in Resources */,
 				70EB815D1B43CEBD0010659C /* contact_IconAdd@2x.png in Resources */,
 				7073FD261B147458006F2692 /* rounded_icon.png in Resources */,
 				7073FD1A1B147458006F2692 /* blue_expand_normal@2x.png in Resources */,
