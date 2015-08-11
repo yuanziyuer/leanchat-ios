@@ -165,7 +165,7 @@ static CGFloat const kTextFieldMarginTop = 30;
     if (code.length > 0 && self.phone.length > 0) {
         [self.phoneTextField resignFirstResponder];
         [self.codeTextField resignFirstResponder];
-        // 需要在控制台设置选项开启权限。为防止垃圾短信，一天最多能发10条。管理台填写测试手机号，可发100条。
+        // 需要在控制台设置选项开启权限。为防止垃圾短信，一天最多能发10条。
         [AVOSCloud verifySmsCode:code mobilePhoneNumber:self.phone callback:^(BOOL succeeded, NSError *error) {
             if ([self filterError:error]) {
                 [self cancelTimer];
