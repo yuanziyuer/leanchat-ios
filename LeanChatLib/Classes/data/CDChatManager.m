@@ -69,6 +69,7 @@ static CDChatManager *instance;
         if (callback) {
             callback(succeeded, error);
         }
+//        [CDEmotionUtils saveEmotions];
     }];
 }
 

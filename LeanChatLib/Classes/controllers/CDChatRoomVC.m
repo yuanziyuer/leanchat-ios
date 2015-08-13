@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 LeanCloud. All rights reserved.
 //
 
+#import <CommonCrypto/CommonCrypto.h>
+
 #import "CDChatRoomVC.h"
 
 #import "XHDisplayTextViewController.h"
@@ -19,6 +21,7 @@
 #import "CDSoundManager.h"
 #import "CDConversationStore.h"
 #import "CDFailedMessageStore.h"
+#import "AVIMEmotionMessage.h"
 
 static NSInteger const kOnePageSize = 10;
 
@@ -189,7 +192,6 @@ static NSInteger const kOnePageSize = 10;
             disPlayViewController = displayLocationViewController;
             break;
         }
-            
         default:
             break;
     }
@@ -278,14 +280,25 @@ static NSInteger const kOnePageSize = 10;
 
 // 发送表情消息的回调方法
 - (void)didSendEmotion:(NSString *)emotion fromSender:(NSString *)sender onDate:(NSDate *)date {
-    UITextView *textView = self.messageInputView.inputTextView;
-    NSRange range = [textView selectedRange];
-    NSMutableString *str = [[NSMutableString alloc] initWithString:textView.text];
-    [str deleteCharactersInRange:range];
-    [str insertString:emotion atIndex:range.location];
-    textView.text = [CDEmotionUtils emojiStringFromString:str];
-    textView.selectedRange = NSMakeRange(range.location + emotion.length, 0);
-    [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeEmotion];
+    if ([emotion hasPrefix:@":"]) {
+        // 普通表情
+        UITextView *textView = self.messageInputView.inputTextView;
+        NSRange range = [textView selectedRange];
+        NSMutableString *str = [[NSMutableString alloc] initWithString:textView.text];
+        [str deleteCharactersInRange:range];
+        [str insertString:emotion atIndex:range.location];
+        textView.text = [CDEmotionUtils emojiStringFromString:str];
+        textView.selectedRange = NSMakeRange(range.location + emotion.length, 0);
+        [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeEmotion];
+    } else {
+        [CDEmotionUtils findEmotionWithName:emotion block:^(AVFile *file, NSError *error) {
+            if ([self filterError:error]) {
+                AVIMEmotionMessage *msg = [AVIMEmotionMessage messageWithText:nil file:file attributes:nil];
+                [self sendMsg:msg originFilePath:nil];
+                [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeEmotion];
+            }
+        }];
+    }
 }
 
 - (void)didSendGeoLocationsPhoto:(UIImage *)geoLocationsPhoto geolocations:(NSString *)geolocations location:(CLLocation *)location fromSender:(NSString *)sender onDate:(NSDate *)date {
@@ -530,6 +543,45 @@ static NSInteger const kOnePageSize = 10;
     return [NSDate dateWithTimeIntervalSince1970:timestamp / 1000];
 }
 
+// ~/Library/Caches/AVPaasFiles
+- (NSString *)avFileDirectory {
+    
+    NSString *ret = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"AVPaasFiles"];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:ret]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:ret
+                                  withIntermediateDirectories:YES
+                                                   attributes:nil
+                                                        error:NULL];
+    }
+    
+    return ret;
+}
+
+- (NSString *)AVMD5String:(NSString *)string{
+    const char *cstr = [string UTF8String];
+    unsigned char result[16];
+    CC_MD5(cstr, (CC_LONG)strlen(cstr), result);
+    
+    //???: 为什么要返回大写MD5 一般都是小写
+    return [NSString stringWithFormat:
+            @"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
+            result[0], result[1], result[2], result[3],
+            result[4], result[5], result[6], result[7],
+            result[8], result[9], result[10], result[11],
+            result[12], result[13], result[14], result[15]
+            ];
+}
+
+
+- (NSString *)localPathOfFile:(AVFile *)file {
+    if (file.url) {
+        return [[self avFileDirectory] stringByAppendingPathComponent:[self AVMD5String:file.url]];
+    } else {
+        return nil;
+    }
+}
+
 - (XHMessage *)getXHMessageByMsg:(AVIMTypedMessage *)msg {
     id <CDUserModel> fromUser = [[CDChatManager manager].userDelegate getUserById:msg.clientId];
     XHMessage *xhMessage;
@@ -560,10 +612,14 @@ static NSInteger const kOnePageSize = 10;
         }
         xhMessage = [[XHMessage alloc] initWithPhoto:image thumbnailUrl:nil originPhotoUrl:nil sender:fromUser.username timestamp:time];
     }
+    else if (msg.mediaType == kAVIMMessageMediaTypeEmotion) {
+        xhMessage = [[XHMessage alloc] initWithEmotionPath:[self localPathOfFile:msg.file] sender:fromUser.username timestamp:time];
+    }
     else {
         xhMessage = [[XHMessage alloc] initWithText:@"未知消息" sender:fromUser.username timestamp:time];
         DLog("unkonwMessage");
     }
+    
     xhMessage.avator = nil;
     xhMessage.avatorUrl = [fromUser avatarUrl];
     
@@ -692,9 +748,10 @@ static NSInteger const kOnePageSize = 10;
                     NSData *data = [msg.file getData];
                     [data writeToFile:path atomically:YES];
                 }
-            } else if (msg.mediaType == kAVIMMessageMediaTypeImage) {
+            } else if (msg.mediaType == kAVIMMessageMediaTypeImage
+                       || msg.mediaType == kAVIMMessageMediaTypeEmotion) {
                 AVFile *file = msg.file;
-                if (file.isDataAvailable == NO) {
+                if (file && file.isDataAvailable == NO) {
                     NSError *error;
                     // 下载到本地
                     NSData *data = [file getData:&error];

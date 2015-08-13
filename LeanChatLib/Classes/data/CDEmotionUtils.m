@@ -10,6 +10,7 @@
 #import "XHEmotionManager.h"
 #import "Emoji.h"
 #import "NSString+Emojize.h"
+#import "CDChatManager.h"
 
 #define CDSupportEmojis \
 @[@":smile:", \
@@ -90,20 +91,41 @@
     NSDictionary *codeToEmoji = [NSString emojiAliases];
     NSArray *emotionCodes = CDSupportEmojis;
     NSMutableArray *emotionManagers = [NSMutableArray array];
-    for (NSInteger i = 0; i < 1; i++) {
-        XHEmotionManager *emotionManager = [[XHEmotionManager alloc] init];
-        emotionManager.emotionName = nil;
-        NSMutableArray *emotions = [NSMutableArray array];
-        for (NSInteger j = 0; j < emotionCodes.count; j++) {
-            XHEmotion *xhEmotion = [[XHEmotion alloc] init];
-            NSString *code = emotionCodes[j];
-            CGFloat emojiSize = 30;
-            xhEmotion.emotionConverPhoto = [self imageFromString:codeToEmoji[code] attributes:@{ NSFontAttributeName:[UIFont systemFontOfSize:25] } size:CGSizeMake(emojiSize, emojiSize)];
-            xhEmotion.emotionPath = code;
-            [emotions addObject:xhEmotion];
+    for (NSInteger i = 0; i < 2; i++) {
+        if (i == 0) {
+            XHEmotionManager *emotionManager = [[XHEmotionManager alloc] init];
+            CGFloat width = 30;
+            emotionManager.estimatedPages = 2;
+            emotionManager.emotionSize = CGSizeMake(width, width);
+            emotionManager.emotionName = @"普通";
+            NSMutableArray *emotions = [NSMutableArray array];
+            for (NSInteger j = 0; j < emotionCodes.count; j++) {
+                XHEmotion *xhEmotion = [[XHEmotion alloc] init];
+                NSString *code = emotionCodes[j];
+                CGFloat emojiSize = 30;
+                xhEmotion.emotionConverPhoto = [self imageFromString:codeToEmoji[code] attributes:@{ NSFontAttributeName:[UIFont systemFontOfSize:25] } size:CGSizeMake(emojiSize, emojiSize)];
+                xhEmotion.emotionPath = code;
+                [emotions addObject:xhEmotion];
+            }
+            emotionManager.emotions = emotions;
+            [emotionManagers addObject:emotionManager];
+        } else {
+            XHEmotionManager *emotionManager = [[XHEmotionManager alloc] init];
+            CGFloat width = 55;
+            emotionManager.emotionSize = CGSizeMake(width, width);
+            emotionManager.estimatedPages = 1;
+            emotionManager.emotionName = @"Gif";
+            NSMutableArray *emotions = [NSMutableArray array];
+            for (NSInteger j = 0; j < 16; j ++) {
+                XHEmotion *emotion = [[XHEmotion alloc] init];
+                NSString *imageName = [NSString stringWithFormat:@"section%ld_emotion%ld", (long)0 , (long)j];
+                emotion.emotionPath = imageName;
+                emotion.emotionConverPhoto = [UIImage imageNamed:imageName];
+                [emotions addObject:emotion];
+            }
+            emotionManager.emotions = emotions;
+            [emotionManagers addObject:emotionManager];
         }
-        emotionManager.emotions = emotions;
-        [emotionManagers addObject:emotionManager];
     }
     return emotionManagers;
 }
@@ -128,6 +150,43 @@
         }
     }
     return emojiText;
+}
+
++ (void)saveEmotions {
+    NSMutableArray *emotions = [NSMutableArray array];
+    for (NSInteger j = 0; j < 16; j ++) {
+        NSString *imageName = [NSString stringWithFormat:@"section%ld_emotion%ld", (long)0 , (long)j];
+        NSString *path = [[NSBundle bundleForClass:[CDChatManager class]] pathForResource:[NSString stringWithFormat:@"emotion%ld",(long)j] ofType:@"gif"];
+        if (path == nil) {
+            [NSException raise:@"LeanChatLib" format:@"emotion path is nil"];
+        }
+        AVFile *file = [AVFile fileWithName:imageName contentsAtPath:path];
+        AVObject *emotion = [AVObject objectWithClassName:@"Emotion"];
+        [emotion setObject:imageName forKey:@"name"];
+        [emotion setObject:file forKey:@"file"];
+        [emotions addObject:emotion];
+    }
+    [AVObject saveAllInBackground:emotions block:^(BOOL succeeded, NSError *error) {
+        NSLog(@"save emotions, error : %@", error);
+    }];
+}
+
++ (void)findEmotionWithName:(NSString *)name block:(AVFileResultBlock)block {
+    AVQuery *query = [AVQuery queryWithClassName:@"Emotion"];
+    query.cachePolicy = kAVCachePolicyCacheElseNetwork;
+    [query findObjectsInBackgroundWithBlock:^(NSArray *emotions, NSError *error) {
+        if (error) {
+            block(nil, error);
+        } else {
+            for (AVObject *emotion in emotions) {
+                if ([emotion[@"name"] isEqualToString:name]) {
+                    block(emotion[@"file"], nil);
+                    return;
+                }
+            }
+            block(nil, [NSError errorWithDomain:@"LeanChatLib" code:0 userInfo:@{NSLocalizedDescriptionKey:@"emotion of that name not found"}]);
+        }
+    }];
 }
 
 @end

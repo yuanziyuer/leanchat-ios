@@ -17,6 +17,25 @@
 		701AF79D1B3C704F0088A43B /* CDUserModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 701AF7951B3C704F0088A43B /* CDUserModel.h */; };
 		70271C3C1B3BE72E0030CD6C /* UIImage+Icon.h in Headers */ = {isa = PBXBuildFile; fileRef = 70271C3A1B3BE72E0030CD6C /* UIImage+Icon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		70271C3D1B3BE72E0030CD6C /* UIImage+Icon.m in Sources */ = {isa = PBXBuildFile; fileRef = 70271C3B1B3BE72E0030CD6C /* UIImage+Icon.m */; };
+		703601201B7B1D270044C81A /* AVIMEmotionMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 7036011E1B7B1D270044C81A /* AVIMEmotionMessage.h */; };
+		703601211B7B1D270044C81A /* AVIMEmotionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7036011F1B7B1D270044C81A /* AVIMEmotionMessage.m */; };
+		7036013F1B7B8F8E0044C81A /* emotion0.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7036012E1B7B8F8E0044C81A /* emotion0.gif */; };
+		703601401B7B8F8E0044C81A /* emotion1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7036012F1B7B8F8E0044C81A /* emotion1.gif */; };
+		703601411B7B8F8E0044C81A /* emotion10.gif in Resources */ = {isa = PBXBuildFile; fileRef = 703601301B7B8F8E0044C81A /* emotion10.gif */; };
+		703601421B7B8F8E0044C81A /* emotion11.gif in Resources */ = {isa = PBXBuildFile; fileRef = 703601311B7B8F8E0044C81A /* emotion11.gif */; };
+		703601431B7B8F8E0044C81A /* emotion12.gif in Resources */ = {isa = PBXBuildFile; fileRef = 703601321B7B8F8E0044C81A /* emotion12.gif */; };
+		703601441B7B8F8E0044C81A /* emotion13.gif in Resources */ = {isa = PBXBuildFile; fileRef = 703601331B7B8F8E0044C81A /* emotion13.gif */; };
+		703601451B7B8F8E0044C81A /* emotion14.gif in Resources */ = {isa = PBXBuildFile; fileRef = 703601341B7B8F8E0044C81A /* emotion14.gif */; };
+		703601461B7B8F8E0044C81A /* emotion15.gif in Resources */ = {isa = PBXBuildFile; fileRef = 703601351B7B8F8E0044C81A /* emotion15.gif */; };
+		703601471B7B8F8E0044C81A /* emotion16.gif in Resources */ = {isa = PBXBuildFile; fileRef = 703601361B7B8F8E0044C81A /* emotion16.gif */; };
+		703601481B7B8F8E0044C81A /* emotion2.gif in Resources */ = {isa = PBXBuildFile; fileRef = 703601371B7B8F8E0044C81A /* emotion2.gif */; };
+		703601491B7B8F8E0044C81A /* emotion3.gif in Resources */ = {isa = PBXBuildFile; fileRef = 703601381B7B8F8E0044C81A /* emotion3.gif */; };
+		7036014A1B7B8F8E0044C81A /* emotion4.gif in Resources */ = {isa = PBXBuildFile; fileRef = 703601391B7B8F8E0044C81A /* emotion4.gif */; };
+		7036014B1B7B8F8E0044C81A /* emotion5.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7036013A1B7B8F8E0044C81A /* emotion5.gif */; };
+		7036014C1B7B8F8E0044C81A /* emotion6.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7036013B1B7B8F8E0044C81A /* emotion6.gif */; };
+		7036014D1B7B8F8E0044C81A /* emotion7.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7036013C1B7B8F8E0044C81A /* emotion7.gif */; };
+		7036014E1B7B8F8E0044C81A /* emotion8.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7036013D1B7B8F8E0044C81A /* emotion8.gif */; };
+		7036014F1B7B8F8E0044C81A /* emotion9.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7036013E1B7B8F8E0044C81A /* emotion9.gif */; };
 		704C0F9C1B5427AD0002B498 /* CDFailedMessageStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 704C0F9A1B5427AD0002B498 /* CDFailedMessageStore.h */; };
 		704C0F9D1B5427AD0002B498 /* CDFailedMessageStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 704C0F9B1B5427AD0002B498 /* CDFailedMessageStore.m */; };
 		705409171B536FA600C3DDB8 /* CDConversationStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 705409151B536FA600C3DDB8 /* CDConversationStore.h */; };
@@ -337,6 +356,25 @@
 		701AF7951B3C704F0088A43B /* CDUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUserModel.h; sourceTree = "<group>"; };
 		70271C3A1B3BE72E0030CD6C /* UIImage+Icon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Icon.h"; sourceTree = "<group>"; };
 		70271C3B1B3BE72E0030CD6C /* UIImage+Icon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Icon.m"; sourceTree = "<group>"; };
+		7036011E1B7B1D270044C81A /* AVIMEmotionMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVIMEmotionMessage.h; sourceTree = "<group>"; };
+		7036011F1B7B1D270044C81A /* AVIMEmotionMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVIMEmotionMessage.m; sourceTree = "<group>"; };
+		7036012E1B7B8F8E0044C81A /* emotion0.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emotion0.gif; sourceTree = "<group>"; };
+		7036012F1B7B8F8E0044C81A /* emotion1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emotion1.gif; sourceTree = "<group>"; };
+		703601301B7B8F8E0044C81A /* emotion10.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emotion10.gif; sourceTree = "<group>"; };
+		703601311B7B8F8E0044C81A /* emotion11.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emotion11.gif; sourceTree = "<group>"; };
+		703601321B7B8F8E0044C81A /* emotion12.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emotion12.gif; sourceTree = "<group>"; };
+		703601331B7B8F8E0044C81A /* emotion13.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emotion13.gif; sourceTree = "<group>"; };
+		703601341B7B8F8E0044C81A /* emotion14.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emotion14.gif; sourceTree = "<group>"; };
+		703601351B7B8F8E0044C81A /* emotion15.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emotion15.gif; sourceTree = "<group>"; };
+		703601361B7B8F8E0044C81A /* emotion16.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emotion16.gif; sourceTree = "<group>"; };
+		703601371B7B8F8E0044C81A /* emotion2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emotion2.gif; sourceTree = "<group>"; };
+		703601381B7B8F8E0044C81A /* emotion3.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emotion3.gif; sourceTree = "<group>"; };
+		703601391B7B8F8E0044C81A /* emotion4.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emotion4.gif; sourceTree = "<group>"; };
+		7036013A1B7B8F8E0044C81A /* emotion5.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emotion5.gif; sourceTree = "<group>"; };
+		7036013B1B7B8F8E0044C81A /* emotion6.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emotion6.gif; sourceTree = "<group>"; };
+		7036013C1B7B8F8E0044C81A /* emotion7.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emotion7.gif; sourceTree = "<group>"; };
+		7036013D1B7B8F8E0044C81A /* emotion8.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emotion8.gif; sourceTree = "<group>"; };
+		7036013E1B7B8F8E0044C81A /* emotion9.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emotion9.gif; sourceTree = "<group>"; };
 		704C0F9A1B5427AD0002B498 /* CDFailedMessageStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDFailedMessageStore.h; sourceTree = "<group>"; };
 		704C0F9B1B5427AD0002B498 /* CDFailedMessageStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDFailedMessageStore.m; sourceTree = "<group>"; };
 		705409151B536FA600C3DDB8 /* CDConversationStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConversationStore.h; sourceTree = "<group>"; };
@@ -670,6 +708,8 @@
 		701AF78D1B3C704F0088A43B /* data */ = {
 			isa = PBXGroup;
 			children = (
+				7036011E1B7B1D270044C81A /* AVIMEmotionMessage.h */,
+				7036011F1B7B1D270044C81A /* AVIMEmotionMessage.m */,
 				701AF78E1B3C704F0088A43B /* AVIMConversation+Custom.h */,
 				701AF78F1B3C704F0088A43B /* AVIMConversation+Custom.m */,
 				701AF7901B3C704F0088A43B /* CDEmotionUtils.h */,
@@ -698,6 +738,30 @@
 				70271C3B1B3BE72E0030CD6C /* UIImage+Icon.m */,
 			);
 			path = UIImageCategories;
+			sourceTree = "<group>";
+		};
+		7036012D1B7B8F8E0044C81A /* emoticons */ = {
+			isa = PBXGroup;
+			children = (
+				7036012E1B7B8F8E0044C81A /* emotion0.gif */,
+				7036012F1B7B8F8E0044C81A /* emotion1.gif */,
+				703601301B7B8F8E0044C81A /* emotion10.gif */,
+				703601311B7B8F8E0044C81A /* emotion11.gif */,
+				703601321B7B8F8E0044C81A /* emotion12.gif */,
+				703601331B7B8F8E0044C81A /* emotion13.gif */,
+				703601341B7B8F8E0044C81A /* emotion14.gif */,
+				703601351B7B8F8E0044C81A /* emotion15.gif */,
+				703601361B7B8F8E0044C81A /* emotion16.gif */,
+				703601371B7B8F8E0044C81A /* emotion2.gif */,
+				703601381B7B8F8E0044C81A /* emotion3.gif */,
+				703601391B7B8F8E0044C81A /* emotion4.gif */,
+				7036013A1B7B8F8E0044C81A /* emotion5.gif */,
+				7036013B1B7B8F8E0044C81A /* emotion6.gif */,
+				7036013C1B7B8F8E0044C81A /* emotion7.gif */,
+				7036013D1B7B8F8E0044C81A /* emotion8.gif */,
+				7036013E1B7B8F8E0044C81A /* emotion9.gif */,
+			);
+			path = emoticons;
 			sourceTree = "<group>";
 		};
 		706E0B2D1B31F52400F9C891 /* Classes */ = {
@@ -1249,6 +1313,7 @@
 		706E0C391B31F52500F9C891 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7036012D1B7B8F8E0044C81A /* emoticons */,
 				709233081B45108200E2D1F5 /* receive.caf */,
 				709233021B44F6E600E2D1F5 /* loudReceive.caf */,
 				709233031B44F6E600E2D1F5 /* send.caf */,
@@ -1493,6 +1558,7 @@
 				706E0D1E1B31F52600F9C891 /* SECompatibility.h in Headers */,
 				706E0CCA1B31F52600F9C891 /* UIScrollView+XHkeyboardControl.h in Headers */,
 				706E0D221B31F52600F9C891 /* SELineLayout.h in Headers */,
+				703601201B7B1D270044C81A /* AVIMEmotionMessage.h in Headers */,
 				706E0CEC1B31F52600F9C891 /* XHDisplayMediaViewController.h in Headers */,
 				706E0D181B31F52600F9C891 /* FLAnimatedImage.h in Headers */,
 				706E0D0B1B31F52600F9C891 /* XHContact.h in Headers */,
@@ -1586,12 +1652,15 @@
 				706E0DD11B31F52600F9C891 /* weChatBubble_Receiving_Solid@2x.png in Resources */,
 				706E0DBB1B31F52600F9C891 /* section0_emotion9@2x.png in Resources */,
 				706E0D801B31F52600F9C891 /* contacts_add_photo@2x.png in Resources */,
+				703601401B7B8F8E0044C81A /* emotion1.gif in Resources */,
+				7036014F1B7B8F8E0044C81A /* emotion9.gif in Resources */,
 				706E0DC81B31F52600F9C891 /* sharemore_voiceinput@2x.png in Resources */,
 				706E0D8F1B31F52600F9C891 /* keyborad@2x.png in Resources */,
 				706E0D941B31F52600F9C891 /* msg_chat_voice_unread.png in Resources */,
 				706E0D7B1B31F52600F9C891 /* CellGraySelected@2x.png in Resources */,
 				706E0D781B31F52600F9C891 /* AddGroupMemberBtnHL@2x.png in Resources */,
 				706E0DA41B31F52600F9C891 /* RecordingSignal003@2x.png in Resources */,
+				703601451B7B8F8E0044C81A /* emotion14.gif in Resources */,
 				706E0DB61B31F52600F9C891 /* section0_emotion4@2x.png in Resources */,
 				706E0DCF1B31F52600F9C891 /* weChatBubble_Receiving_Cavern@2x.png in Resources */,
 				706E0DBE1B31F52600F9C891 /* SenderVoiceNodePlaying002@2x.png in Resources */,
@@ -1603,17 +1672,23 @@
 				706E0D7C1B31F52600F9C891 /* CellNotSelected@2x.png in Resources */,
 				706E0DC11B31F52600F9C891 /* sharemore_friendcard@2x.png in Resources */,
 				706E0D961B31F52600F9C891 /* multiMedia@2x.png in Resources */,
+				7036014C1B7B8F8E0044C81A /* emotion6.gif in Resources */,
 				706E0D8C1B31F52600F9C891 /* input-bar-flat@2x.png in Resources */,
 				706E0D821B31F52600F9C891 /* contacts_add_voip@2x.png in Resources */,
 				706E0D761B31F52600F9C891 /* Info.plist in Resources */,
+				703601461B7B8F8E0044C81A /* emotion15.gif in Resources */,
 				706E0DC01B31F52600F9C891 /* SenderVoiceNodePlaying@2x.png in Resources */,
+				7036014B1B7B8F8E0044C81A /* emotion5.gif in Resources */,
 				7092330F1B4532B000E2D1F5 /* defaultSettings.plist in Resources */,
 				706E0D7A1B31F52600F9C891 /* CellBlueSelected@2x.png in Resources */,
 				706E0DD21B31F52600F9C891 /* weChatBubble_Sending_Cavern@2x.png in Resources */,
 				706E0DC61B31F52600F9C891 /* sharemore_video@2x.png in Resources */,
 				706E0DBF1B31F52600F9C891 /* SenderVoiceNodePlaying003@2x.png in Resources */,
+				703601481B7B8F8E0044C81A /* emotion2.gif in Resources */,
 				706E0D911B31F52600F9C891 /* messageSendFail@2x.png in Resources */,
 				706E0DBA1B31F52600F9C891 /* section0_emotion8@2x.png in Resources */,
+				703601411B7B8F8E0044C81A /* emotion10.gif in Resources */,
+				703601431B7B8F8E0044C81A /* emotion12.gif in Resources */,
 				706E0DB41B31F52600F9C891 /* section0_emotion2@2x.png in Resources */,
 				706E0DC91B31F52600F9C891 /* sharemore_voipvoice@2x.png in Resources */,
 				706E0D971B31F52600F9C891 /* multiMedia_HL@2x.png in Resources */,
@@ -1639,13 +1714,17 @@
 				706E0D9E1B31F52600F9C891 /* ReceiverVoiceNodePlaying003@2x.png in Resources */,
 				706E0DB01B31F52600F9C891 /* section0_emotion13@2x.png in Resources */,
 				706E0DAD1B31F52600F9C891 /* section0_emotion10@2x.png in Resources */,
+				7036014A1B7B8F8E0044C81A /* emotion4.gif in Resources */,
 				706E0DB31B31F52600F9C891 /* section0_emotion1@2x.png in Resources */,
+				7036014E1B7B8F8E0044C81A /* emotion8.gif in Resources */,
 				706E0DA81B31F52600F9C891 /* RecordingSignal007@2x.png in Resources */,
 				706E0D9D1B31F52600F9C891 /* ReceiverVoiceNodePlaying002@2x.png in Resources */,
 				706E0DBC1B31F52600F9C891 /* SenderVoiceNodePlaying000@2x.png in Resources */,
 				706E0D9A1B31F52600F9C891 /* placeholderImage@2x.png in Resources */,
 				706E0DCD1B31F52600F9C891 /* VoiceBtn_Black@2x.png in Resources */,
 				706E0D9F1B31F52600F9C891 /* ReceiverVoiceNodePlaying@2x.png in Resources */,
+				703601471B7B8F8E0044C81A /* emotion16.gif in Resources */,
+				7036013F1B7B8F8E0044C81A /* emotion0.gif in Resources */,
 				706E0DD31B31F52600F9C891 /* weChatBubble_Sending_LeanChat@2x.png in Resources */,
 				706E0DD41B31F52600F9C891 /* weChatBubble_Sending_Solid@2x.png in Resources */,
 				706E0DB51B31F52600F9C891 /* section0_emotion3@2x.png in Resources */,
@@ -1658,6 +1737,7 @@
 				706E0D8E1B31F52600F9C891 /* input-field-cover@2x.png in Resources */,
 				706E0D981B31F52600F9C891 /* MultiSelectedPanelBkg@2x.png in Resources */,
 				706E0DB71B31F52600F9C891 /* section0_emotion5@2x.png in Resources */,
+				703601491B7B8F8E0044C81A /* emotion3.gif in Resources */,
 				706E0D8D1B31F52600F9C891 /* input-field-cover.png in Resources */,
 				706E0D8A1B31F52600F9C891 /* input-bar-background@2x.png in Resources */,
 				706E0DA51B31F52600F9C891 /* RecordingSignal004@2x.png in Resources */,
@@ -1672,7 +1752,10 @@
 				706E0DB21B31F52600F9C891 /* section0_emotion15@2x.png in Resources */,
 				706E0D7D1B31F52600F9C891 /* CellRedSelected@2x.png in Resources */,
 				706E0DA61B31F52600F9C891 /* RecordingSignal005@2x.png in Resources */,
+				7036014D1B7B8F8E0044C81A /* emotion7.gif in Resources */,
 				706E0DAF1B31F52600F9C891 /* section0_emotion12@2x.png in Resources */,
+				703601421B7B8F8E0044C81A /* emotion11.gif in Resources */,
+				703601441B7B8F8E0044C81A /* emotion13.gif in Resources */,
 				706E0DCC1B31F52600F9C891 /* voice_HL@2x.png in Resources */,
 				706E0D841B31F52600F9C891 /* MessageDisplayKitString.strings in Resources */,
 				706E0D7E1B31F52600F9C891 /* contacts_add_friend@2x.png in Resources */,
@@ -1721,6 +1804,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				703601211B7B1D270044C81A /* AVIMEmotionMessage.m in Sources */,
 				706E0D231B31F52600F9C891 /* SELineLayout.m in Sources */,
 				706E0CE51B31F52600F9C891 /* XHPullRefreshTableViewController.m in Sources */,
 				706E0D0A1B31F52600F9C891 /* XHAnnotation.m in Sources */,
