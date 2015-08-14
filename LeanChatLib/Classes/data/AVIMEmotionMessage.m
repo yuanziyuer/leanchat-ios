@@ -8,7 +8,7 @@
 
 #import "AVIMEmotionMessage.h"
 
-AVIMMessageMediaType kAVIMMessageMediaTypeEmotion = 1;
+static NSString *kAVIMEmotionPath = @"emotionPath";
 
 @implementation AVIMEmotionMessage
 
@@ -18,6 +18,14 @@ AVIMMessageMediaType kAVIMMessageMediaTypeEmotion = 1;
 
 + (AVIMMessageMediaType)classMediaType {
     return kAVIMMessageMediaTypeEmotion;
+}
+
++ (instancetype)messageWithEmotionPath:(NSString *)emotionPath {
+    return [super messageWithText:nil file:nil attributes:@{kAVIMEmotionPath: emotionPath}];
+}
+
+- (NSString *)emotionPath {
+    return [self.attributes objectForKey:kAVIMEmotionPath];
 }
 
 @end

@@ -8,8 +8,13 @@
 
 #import "AVIMTypedMessage.h"
 
-extern AVIMMessageMediaType kAVIMMessageMediaTypeEmotion;
+static AVIMMessageMediaType const kAVIMMessageMediaTypeEmotion = 1;
 
 @interface AVIMEmotionMessage : AVIMTypedMessage<AVIMTypedMessageSubclassing>
 
++ (instancetype)messageWithEmotionPath:(NSString *)emotionPath;
+
+- (NSString *)emotionPath;
+
 @end
+

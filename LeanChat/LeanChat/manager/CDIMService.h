@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CDCommon.h"
 #import <LeanChatLib/CDChatManager.h>
+
+#import "CDCommon.h"
 #import "CDBaseVC.h"
 
 @interface CDIMService : NSObject <CDUserDelegate>

@@ -9,6 +9,7 @@
 #import "CDMessageHelper.h"
 #import "CDChatManager.h"
 #import "CDEmotionUtils.h"
+#import "AVIMEmotionMessage.h"
 
 @interface CDMessageHelper ()
 
@@ -48,6 +49,9 @@
         case kAVIMMessageMediaTypeLocation:
             locationMsg = (AVIMLocationMessage *)msg;
             title = locationMsg.text;
+            break;
+        case kAVIMMessageMediaTypeEmotion:
+            title = @"表情";
             break;
         default:
             break;

@@ -10,6 +10,7 @@
 #import "XHEmotionManager.h"
 #import "Emoji.h"
 #import "NSString+Emojize.h"
+
 #import "CDChatManager.h"
 
 #define CDSupportEmojis \
@@ -91,43 +92,51 @@
     NSDictionary *codeToEmoji = [NSString emojiAliases];
     NSArray *emotionCodes = CDSupportEmojis;
     NSMutableArray *emotionManagers = [NSMutableArray array];
-    for (NSInteger i = 0; i < 2; i++) {
-        if (i == 0) {
-            XHEmotionManager *emotionManager = [[XHEmotionManager alloc] init];
-            CGFloat width = 30;
-            emotionManager.estimatedPages = 2;
-            emotionManager.emotionSize = CGSizeMake(width, width);
-            emotionManager.emotionName = @"普通";
-            NSMutableArray *emotions = [NSMutableArray array];
-            for (NSInteger j = 0; j < emotionCodes.count; j++) {
-                XHEmotion *xhEmotion = [[XHEmotion alloc] init];
-                NSString *code = emotionCodes[j];
-                CGFloat emojiSize = 30;
-                xhEmotion.emotionConverPhoto = [self imageFromString:codeToEmoji[code] attributes:@{ NSFontAttributeName:[UIFont systemFontOfSize:25] } size:CGSizeMake(emojiSize, emojiSize)];
-                xhEmotion.emotionPath = code;
-                [emotions addObject:xhEmotion];
-            }
-            emotionManager.emotions = emotions;
-            [emotionManagers addObject:emotionManager];
-        } else {
-            XHEmotionManager *emotionManager = [[XHEmotionManager alloc] init];
-            CGFloat width = 55;
-            emotionManager.emotionSize = CGSizeMake(width, width);
-            emotionManager.estimatedPages = 1;
-            emotionManager.emotionName = @"Gif";
-            NSMutableArray *emotions = [NSMutableArray array];
-            for (NSInteger j = 0; j < 16; j ++) {
-                XHEmotion *emotion = [[XHEmotion alloc] init];
-                NSString *imageName = [NSString stringWithFormat:@"section%ld_emotion%ld", (long)0 , (long)j];
-                emotion.emotionPath = imageName;
-                emotion.emotionConverPhoto = [UIImage imageNamed:imageName];
-                [emotions addObject:emotion];
-            }
-            emotionManager.emotions = emotions;
-            [emotionManagers addObject:emotionManager];
+    {
+        XHEmotionManager *emotionManager = [[XHEmotionManager alloc] init];
+        CGFloat width = 35;
+        emotionManager.estimatedPages = 2;
+        emotionManager.emotionSize = CGSizeMake(width, width);
+        emotionManager.emotionName = @"普通";
+        NSMutableArray *emotions = [NSMutableArray array];
+        for (NSInteger j = 0; j < emotionCodes.count; j++) {
+            XHEmotion *xhEmotion = [[XHEmotion alloc] init];
+            NSString *code = emotionCodes[j];
+            CGFloat emojiSize = 30;
+            xhEmotion.emotionConverPhoto = [self imageFromString:codeToEmoji[code] attributes:@{ NSFontAttributeName:[UIFont systemFontOfSize:25] } size:CGSizeMake(emojiSize, emojiSize)];
+            xhEmotion.emotionPath = code;
+            [emotions addObject:xhEmotion];
         }
+        emotionManager.emotions = emotions;
+        [emotionManagers addObject:emotionManager];
+    }
+    {
+        XHEmotionManager *emotionManager = [self emotionManagerWithSize:55 pages:1 name:@"兔斯基" maxIndex:15 prefix:@"tusiji"];
+        [emotionManagers addObject:emotionManager];
+    }
+    {
+        XHEmotionManager *emotionManager = [self emotionManagerWithSize:55 pages:2 name:@"玉兔" maxIndex:22 prefix:@"rabbit"];
+        [emotionManagers addObject:emotionManager];
     }
     return emotionManagers;
+}
+
++ (XHEmotionManager *)emotionManagerWithSize:(CGFloat)size pages:(NSInteger)pages name:(NSString *)name maxIndex:(NSInteger)maxIndex prefix:(NSString *)prefix {
+    XHEmotionManager *emotionManager = [[XHEmotionManager alloc] init];
+    emotionManager.emotionSize = CGSizeMake(size, size);
+    emotionManager.estimatedPages = pages;
+    emotionManager.emotionName = name;
+    NSMutableArray *emotions = [NSMutableArray array];
+    for (NSInteger j = 0; j <= maxIndex; j ++) {
+        XHEmotion *emotion = [[XHEmotion alloc] init];
+        NSString *imageName = [self coverPathOfIndex:j prefix:prefix];
+        NSString *gifPath = [self gifPathOfIndex:j prefix:prefix];
+        emotion.emotionPath = gifPath;
+        emotion.emotionConverPhoto = [UIImage imageNamed:imageName];
+        [emotions addObject:emotion];
+    }
+    emotionManager.emotions = emotions;
+    return emotionManager;
 }
 
 + (NSString *)emojiStringFromString:(NSString *)text {
@@ -152,41 +161,72 @@
     return emojiText;
 }
 
-+ (void)saveEmotions {
-    NSMutableArray *emotions = [NSMutableArray array];
-    for (NSInteger j = 0; j < 16; j ++) {
-        NSString *imageName = [NSString stringWithFormat:@"section%ld_emotion%ld", (long)0 , (long)j];
-        NSString *path = [[NSBundle bundleForClass:[CDChatManager class]] pathForResource:[NSString stringWithFormat:@"emotion%ld",(long)j] ofType:@"gif"];
-        if (path == nil) {
-            [NSException raise:@"LeanChatLib" format:@"emotion path is nil"];
-        }
-        AVFile *file = [AVFile fileWithName:imageName contentsAtPath:path];
-        AVObject *emotion = [AVObject objectWithClassName:@"Emotion"];
-        [emotion setObject:imageName forKey:@"name"];
-        [emotion setObject:file forKey:@"file"];
-        [emotions addObject:emotion];
-    }
-    [AVObject saveAllInBackground:emotions block:^(BOOL succeeded, NSError *error) {
-        NSLog(@"save emotions, error : %@", error);
-    }];
++ (NSString *)emotionOfIndex:(NSInteger)index prefix:(NSString *)prefix {
+    return [NSString stringWithFormat:@"%@_%ld", prefix, index];
+}
+
++ (NSString *)coverPathOfIndex:(NSInteger)index prefix:(NSString *)prefix {
+    return [NSString stringWithFormat:@"emoticons/%@_%ld_cover", prefix, (long)index];
+}
+
++ (NSString *)gifPathOfIndex:(NSInteger)index prefix:(NSString *)prefix {
+    return [NSString stringWithFormat:@"emoticons/%@_%ld", prefix, index];
 }
 
 + (void)findEmotionWithName:(NSString *)name block:(AVFileResultBlock)block {
     AVQuery *query = [AVQuery queryWithClassName:@"Emotion"];
     query.cachePolicy = kAVCachePolicyCacheElseNetwork;
+    [query whereKey:@"name" equalTo:name];
     [query findObjectsInBackgroundWithBlock:^(NSArray *emotions, NSError *error) {
         if (error) {
             block(nil, error);
         } else {
-            for (AVObject *emotion in emotions) {
-                if ([emotion[@"name"] isEqualToString:name]) {
-                    block(emotion[@"file"], nil);
-                    return;
-                }
+            if (emotions.count > 0) {
+                block(emotions[0][@"file"], nil);
+            } else {
+                block(nil, nil);
             }
-            block(nil, [NSError errorWithDomain:@"LeanChatLib" code:0 userInfo:@{NSLocalizedDescriptionKey:@"emotion of that name not found"}]);
         }
     }];
+}
+
++ (BOOL)saveEmotionFromResource:(NSString *)resource savedName:(NSString *)name error:(NSError *__autoreleasing *)error{
+    __block BOOL result;
+    NSString *path = [[NSBundle mainBundle] pathForResource:resource ofType:@"gif"];
+    if (path == nil)  {
+        *error = [NSError errorWithDomain:@"LeanChatLib" code:1 userInfo:@{NSLocalizedDescriptionKey:@"path is nil"}];
+        return NO;
+    }
+    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+    
+    [self findEmotionWithName:name block:^(AVFile *file, NSError *_error) {
+        if (error) {
+            result = NO;
+            *error = _error;
+            dispatch_semaphore_signal(sema);
+        } else {
+            if (file == nil) {
+                AVFile *file = [AVFile fileWithName:name contentsAtPath:path];
+                AVObject *emoticon = [AVObject objectWithClassName:@"Emotion"];
+                [emoticon setObject:name forKey:@"name"];
+                [emoticon setObject:file forKey:@"file"];
+                [emoticon saveInBackgroundWithBlock:^(BOOL succeeded, NSError *theError) {
+                    if (theError) {
+                        result = NO;
+                        *error = theError;
+                    } else {
+                        result = YES;
+                    }
+                    dispatch_semaphore_signal(sema);
+                }];
+            } else {
+                result = YES;
+                dispatch_semaphore_signal(sema);
+            }
+        }
+    }];
+    dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+    return result;
 }
 
 @end

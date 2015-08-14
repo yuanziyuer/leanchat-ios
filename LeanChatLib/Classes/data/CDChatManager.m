@@ -192,7 +192,12 @@ static CDChatManager *instance;
     if (self.useDevPushCerticate) {
         [attributes setObject:@YES forKey:@"dev"];
     }
-    message.attributes = attributes;
+    if (message.attributes == nil) {
+        message.attributes = attributes;
+    } else {
+        [attributes addEntriesFromDictionary:message.attributes];
+        message.attributes = attributes;
+    }
     [conversation sendMessage:message options:AVIMMessageSendOptionRequestReceipt callback:block];
 }
 
