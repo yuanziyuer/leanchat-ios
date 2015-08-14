@@ -156,6 +156,9 @@ CDUserModel，
 
 ## LeanChatLib ChangeLog	
 
+0.2.4
+增加兔斯基表情
+
 0.2.3
 增加 fetchConvWithMembers: 接口的参数检查、修复对话列表当是单聊对话但只有一个成员时可能出现的崩溃、
 
