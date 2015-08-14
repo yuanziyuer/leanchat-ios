@@ -10,6 +10,7 @@
 #define LeanChat_CDCommon_h
 
 #import <AVOSCloud/AVOSCloud.h>
+#import <MBProgressHUD/MBProgressHUD.h>
 
 #define USE_US 0
 #if !USE_US
