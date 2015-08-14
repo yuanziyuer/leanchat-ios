@@ -55,7 +55,7 @@
         else {
             if ([self filterError:error]) {
                 [self showProgress];
-                [[CDUserManager manager] markAddRequestsRead:objects block:^(BOOL succeeded, NSError *error) {
+                [[CDUserManager manager] markAddRequestsAsRead:objects block:^(BOOL succeeded, NSError *error) {
                     [self hideProgress];
                     if (!error && objects.count > 0) {
                         self.needRefreshFriendListVC = YES;

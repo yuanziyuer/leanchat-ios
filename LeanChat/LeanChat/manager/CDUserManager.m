@@ -318,18 +318,13 @@ static CDUserManager *userManager;
     }];
 }
 
-- (void)markAddRequestsRead:(NSArray *)addRequests block:(AVBooleanResultBlock)block {
-    [CDUtils runInMainQueue:^{
-        for (CDAddRequest *addReqeust in addRequests) {
-            if (addReqeust.isRead == NO) {
-                addReqeust.isRead = YES;
-                [addReqeust save];
-            }
+- (void)markAddRequestsAsRead:(NSArray *)addRequests block:(AVBooleanResultBlock)block {
+    for (CDAddRequest *addReqeust in addRequests) {
+        if (addReqeust.isRead == NO) {
+            addReqeust.isRead = YES;
         }
-        [CDUtils runInMainQueue:^{
-            block(YES, nil);
-        }];
-    }];
+    }
+    [AVObject saveAllInBackground:addRequests block:block];
 }
 
 - (void)tryCreateAddRequestWithToUser:(AVUser *)user callback:(AVBooleanResultBlock)callback {

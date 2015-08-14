@@ -38,7 +38,7 @@
 - (void)findAddRequestsWithBlock:(AVArrayResultBlock)block;
 - (void)agreeAddRequest:(CDAddRequest *)addRequest callback:(AVBooleanResultBlock)callback;
 - (void)tryCreateAddRequestWithToUser:(AVUser *)user callback:(AVBooleanResultBlock)callback;
-- (void)markAddRequestsRead:(NSArray *)addRequests block:(AVBooleanResultBlock)block;
+- (void)markAddRequestsAsRead:(NSArray *)addRequests block:(AVBooleanResultBlock)block;
 
 - (void)reportAbuseWithReason:(NSString *)reason convid:(NSString *)convid block:(AVBooleanResultBlock)block;
 
