@@ -64,6 +64,8 @@
     }];
 }
 
+# pragma mark - emotion upload
+
 + (BOOL)saveEmotionFromResource:(NSString *)resource savedName:(NSString *)name error:(NSError *__autoreleasing *)error{
     __block BOOL result;
     NSString *path = [[NSBundle mainBundle] pathForResource:resource ofType:@"gif"];
