@@ -18,7 +18,6 @@
 #import "CDSettingVC.h"
 #import "CDWebViewVC.h"
 #import "MCPhotographyHelper.h"
-#import "LCUserFeedbackViewController.h"
 #import "CDBaseNavC.h"
 #import "CDProfileNameVC.h"
 #import "LZPushManager.h"
