@@ -23,10 +23,7 @@
     
 #ifdef DEBUG
     [AVAnalytics setAnalyticsEnabled:NO];
-    [AVOSCloud setVerbosePolicy:kAVVerboseShow];
-    [AVLogger addLoggerDomain:AVLoggerDomainIM];
-    [AVLogger addLoggerDomain:AVLoggerDomainCURL];
-    [AVLogger setLoggerLevelMask:AVLoggerLevelAll];
+    [AVOSCloud setAllLogsEnabled:YES];
 #endif
     return YES;
 }
