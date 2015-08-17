@@ -19,9 +19,20 @@ LeanChat 也有相应的 [Android版](https://github.com/leancloud/leanchat-andr
 
 ## 运行
 ```bash
+  // LeanChat (复杂例子)
   cd LeanChat
   pod install --verbose  // 如果本地有 AVOSCloud 依赖库，可加选项 --no-repo-update 加快速度
   open LeanChat.workspace
+  
+  // LeanChatExample (简单例子)
+  cd LeanChatExample
+  pod install --verbose --no-repo-update
+  open LeanChatExample.xcworkspace
+  
+  // LeanChatLib (封装了 LeanCloud 通信组件 和 UI 的库)
+  cd LeanChatLib
+  pod install --verbose --no-repo-update
+  open LeanChatLib.xcworkspace
 ```
 
 若遇到`definition of 'AVUser' must be imported from module 'LeanChatLib.CDChatListVC' before it is required` 类似的问题，可在菜单 Product 按住 Option ，点击 [Clean Build Folder](http://stackoverflow.com/questions/8087065/xcode-4-clean-vs-clean-build-folder)，清空掉所有 Build 文件，重新编译即可。此问题似乎是 Cocoapods 在进行复杂编译的时候出现的Bug。具体可以看这个 [Gif](https://cloud.githubusercontent.com/assets/5022872/9230256/cf822fe4-4153-11e5-876d-ed819babad89.gif)。
