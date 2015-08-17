@@ -166,11 +166,24 @@
 }
 
 + (NSString *)coverPathOfIndex:(NSInteger)index prefix:(NSString *)prefix {
-    return [NSString stringWithFormat:@"emoticons/%@_%ld_cover", prefix, (long)index];
+    // 如果是源代码引入的话，可能不需要 emoticons/
+    NSString *basicPath = [NSString stringWithFormat:@"%@_%ld_cover", prefix, (long)index];
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:basicPath ofType:@"png"];
+    if (bundlePath == nil) {
+        return [NSString stringWithFormat:@"emoticons/%@", basicPath];
+    } else {
+        return basicPath;
+    }
 }
 
 + (NSString *)gifPathOfIndex:(NSInteger)index prefix:(NSString *)prefix {
-    return [NSString stringWithFormat:@"emoticons/%@_%ld", prefix, index];
+    NSString *basicPath = [NSString stringWithFormat:@"%@_%ld", prefix, (long)index];
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:basicPath ofType:@"gif"];
+    if (bundlePath == nil) {
+        return [NSString stringWithFormat:@"emoticons/%@", basicPath];
+    } else {
+        return basicPath;
+    }
 }
 
 + (void)findEmotionWithName:(NSString *)name block:(AVFileResultBlock)block {
