@@ -391,7 +391,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		14029BC841D3D9C4DA01CF23 /* Pods-LeanChatLib.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChatLib.debug.xcconfig"; path = "../LeanChat/Pods/Target Support Files/Pods-LeanChatLib/Pods-LeanChatLib.debug.xcconfig"; sourceTree = "<group>"; };
+		17399E3F0CF64CDBC4F04433 /* Pods-LeanChatLib.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChatLib.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LeanChatLib/Pods-LeanChatLib.debug.xcconfig"; sourceTree = "<group>"; };
 		701AF78E1B3C704F0088A43B /* AVIMConversation+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVIMConversation+Custom.h"; sourceTree = "<group>"; };
 		701AF78F1B3C704F0088A43B /* AVIMConversation+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVIMConversation+Custom.m"; sourceTree = "<group>"; };
 		701AF7901B3C704F0088A43B /* CDEmotionUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEmotionUtils.h; sourceTree = "<group>"; };
@@ -779,7 +779,7 @@
 		70F5897B1B424B8F008C2C36 /* LZConversationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZConversationCell.m; sourceTree = "<group>"; };
 		70F589821B425045008C2C36 /* CDMessageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDMessageHelper.h; sourceTree = "<group>"; };
 		70F589831B425045008C2C36 /* CDMessageHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDMessageHelper.m; sourceTree = "<group>"; };
-		AF3B153861628DF9233DA0E1 /* Pods-LeanChatLib.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChatLib.release.xcconfig"; path = "../LeanChat/Pods/Target Support Files/Pods-LeanChatLib/Pods-LeanChatLib.release.xcconfig"; sourceTree = "<group>"; };
+		75B439E10F3C0CBFA1066753 /* Pods-LeanChatLib.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChatLib.release.xcconfig"; path = "Pods/Target Support Files/Pods-LeanChatLib/Pods-LeanChatLib.release.xcconfig"; sourceTree = "<group>"; };
 		D436797F4699DACEE94063D4 /* libPods-LeanChatLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LeanChatLib.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -795,6 +795,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6EF9A37CEC7DD78221B3C789 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				17399E3F0CF64CDBC4F04433 /* Pods-LeanChatLib.debug.xcconfig */,
+				75B439E10F3C0CBFA1066753 /* Pods-LeanChatLib.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		701AF78D1B3C704F0088A43B /* data */ = {
 			isa = PBXGroup;
 			children = (
@@ -1559,8 +1568,8 @@
 				706E0B2D1B31F52400F9C891 /* Classes */,
 				706E0C391B31F52500F9C891 /* Resources */,
 				7073F9471B1467F5006F2692 /* Products */,
-				71DFC3752E2A51F108329BC6 /* Pods */,
 				B764437AF47C3DEE6D36E05F /* Frameworks */,
+				6EF9A37CEC7DD78221B3C789 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1579,15 +1588,6 @@
 				70F5897B1B424B8F008C2C36 /* LZConversationCell.m */,
 			);
 			path = LZConversationCell;
-			sourceTree = "<group>";
-		};
-		71DFC3752E2A51F108329BC6 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				14029BC841D3D9C4DA01CF23 /* Pods-LeanChatLib.debug.xcconfig */,
-				AF3B153861628DF9233DA0E1 /* Pods-LeanChatLib.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		B764437AF47C3DEE6D36E05F /* Frameworks */ = {
@@ -1974,7 +1974,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../LeanChat/Pods/Target Support Files/Pods-LeanChatLib/Pods-LeanChatLib-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LeanChatLib/Pods-LeanChatLib-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2199,7 +2199,7 @@
 		};
 		7073F95D1B1467F6006F2692 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 14029BC841D3D9C4DA01CF23 /* Pods-LeanChatLib.debug.xcconfig */;
+			baseConfigurationReference = 17399E3F0CF64CDBC4F04433 /* Pods-LeanChatLib.debug.xcconfig */;
 			buildSettings = {
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2216,7 +2216,7 @@
 		};
 		7073F95E1B1467F6006F2692 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AF3B153861628DF9233DA0E1 /* Pods-LeanChatLib.release.xcconfig */;
+			baseConfigurationReference = 75B439E10F3C0CBFA1066753 /* Pods-LeanChatLib.release.xcconfig */;
 			buildSettings = {
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;

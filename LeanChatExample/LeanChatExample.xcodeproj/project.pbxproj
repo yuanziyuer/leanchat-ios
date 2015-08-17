@@ -220,7 +220,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../LeanChat/Pods/Target Support Files/Pods-LeanChatExample/Pods-LeanChatExample-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LeanChatExample/Pods-LeanChatExample-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F7848B19082D002003942795 /* Check Pods Manifest.lock */ = {
