@@ -10,7 +10,7 @@ LeanChat 也有相应的 [Android版](https://github.com/leancloud/leanchat-andr
 
 ## 宝贵意见
 
-如果有任何问题，欢迎提 [issue](https://github.com/leancloud/leanchat-ios/issues) (同时 @lzwjava 一下)，写上你不明白的地方，看到后会尽快给予帮助。
+如果有任何问题，欢迎提 [issue](https://github.com/leancloud/leanchat-ios/issues)，写上你不明白的地方，看到后会尽快给予帮助。
 
 ## 下载
 请直接点击 Github 上的`Download Zip`，如图所示，这样只下载最新版。如果是 `git clone`，则可能非常慢，因为含杂很大的提交历史。某次测试两者是1.5M:40M。
