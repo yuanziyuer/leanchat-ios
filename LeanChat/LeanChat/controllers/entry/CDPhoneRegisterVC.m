@@ -171,7 +171,7 @@ static CGFloat const kTextFieldMarginTop = 30;
                 [self cancelTimer];
                 [self.alertViewHelper showInputAlertViewWithMessage:@"验证成功！只差一步了，请设置一个密码，以便下次能以手机号和密码登录" block:^(BOOL confirm, NSString *text) {
                     if (confirm) {
-                        [[CDUserManager manager] registerWithUsername:self.phone phone:text password:self.phone block:^(BOOL succeeded, NSError *error) {
+                        [[CDUserManager manager] registerWithUsername:self.phone phone:self.phone password:text block:^(BOOL succeeded, NSError *error) {
                             if([self filterError:error]) {
                                 [self dismissViewControllerAnimated:NO completion: ^{
                                     CDAppDelegate *delegate = (CDAppDelegate *)[UIApplication sharedApplication].delegate;
