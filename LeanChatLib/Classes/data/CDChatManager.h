@@ -214,4 +214,6 @@ typedef void (^CDRecentConversationsCallback)(NSArray *conversations, NSInteger 
  */
 - (NSString *)uuid;
 
++ (NSError *)errorWithText:(NSString *)text;
+
 @end

@@ -87,7 +87,11 @@ static CDChatManager *instance;
             callback(nil, error);
         }
         else {
-            callback([objects objectAtIndex:0], error);
+            if (objects.count == 0) {
+                callback(nil, [CDChatManager errorWithText:[NSString stringWithFormat:@"conversation of %@ not exists", convid]]);
+            } else {
+                callback([objects objectAtIndex:0], error);
+            }
         }
     }];
 }
@@ -428,6 +432,10 @@ static CDChatManager *instance;
         [result appendString:[chars substringWithRange:range]];
     }
     return result;
+}
+
++ (NSError *)errorWithText:(NSString *)text {
+    return [NSError errorWithDomain:@"LeanChatLib" code:0 userInfo:@{NSLocalizedDescriptionKey:text}];
 }
 
 #pragma mark - conv cache
