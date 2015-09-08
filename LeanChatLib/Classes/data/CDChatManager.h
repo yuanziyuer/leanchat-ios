@@ -117,10 +117,17 @@ typedef void (^CDRecentConversationsCallback)(NSArray *conversations, NSInteger 
 - (void)fetchConvWithMembers:(NSArray *)members callback:(AVIMConversationResultBlock)callback;
 
 /**
- *  获取我在其中的群聊对话
+ *  获取我在其中的群聊对话，优先从缓存中获取
  *  @param block 对话数组回调
  */
 - (void)findGroupedConvsWithBlock:(AVIMArrayResultBlock)block;
+
+/*!
+ *  获取我在其中的群聊对话
+ *  @param networkFirst 是否网络优先
+ *  @param block        对话数组回调
+ */
+- (void)findGroupedConvsWithNetworkFirst:(BOOL)networkFirst block:(AVIMArrayResultBlock)block;
 
 /**
  *  创建对话

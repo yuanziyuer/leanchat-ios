@@ -81,6 +81,7 @@ static CDChatManager *instance;
 
 - (void)fecthConvWithConvid:(NSString *)convid callback:(AVIMConversationResultBlock)callback {
     AVIMConversationQuery *q = [[AVIMClient defaultClient] conversationQuery];
+    q.cachePolicy = kAVCachePolicyNetworkElseCache;
     [q whereKey:@"objectId" equalTo:convid];
     [q findConversationsWithCallback: ^(NSArray *objects, NSError *error) {
         if (error) {
@@ -114,6 +115,7 @@ static CDChatManager *instance;
     // 如果没有数组size限制，传[2,3]，可能取回 [1,2,3]
     [q whereKey:kAVIMKeyMember sizeEqualTo:members.count];
     [q orderByDescending:@"createdAt"];
+    q.cachePolicy = kAVCachePolicyNetworkElseCache;
     q.limit = 1;
     [q findConversationsWithCallback: ^(NSArray *objects, NSError *error) {
         if (error) {
@@ -152,9 +154,19 @@ static CDChatManager *instance;
 }
 
 - (void)findGroupedConvsWithBlock:(AVIMArrayResultBlock)block {
+    [self findGroupedConvsWithNetworkFirst:NO block:block];
+}
+
+- (void)findGroupedConvsWithNetworkFirst:(BOOL)networkFirst block:(AVIMArrayResultBlock)block {
     AVIMConversationQuery *q = [[AVIMClient defaultClient] conversationQuery];
     [q whereKey:AVIMAttr(CONV_TYPE) equalTo:@(CDConvTypeGroup)];
     [q whereKey:kAVIMKeyMember containedIn:@[self.selfId]];
+    if (networkFirst) {
+        q.cachePolicy = kAVCachePolicyNetworkElseCache;
+    } else {
+        q.cachePolicy = kAVCachePolicyCacheElseNetwork;
+        q.cacheMaxAge = 60 * 30; // 半小时
+    }
     // 默认 limit 为10
     q.limit = 1000;
     [q findConversationsWithCallback:block];
@@ -175,10 +187,10 @@ static CDChatManager *instance;
     if (convids.count > 0) {
         AVIMConversationQuery *q = [[AVIMClient defaultClient] conversationQuery];
         [q whereKey:@"objectId" containedIn:[convids allObjects]];
+        q.cachePolicy = kAVCachePolicyNetworkElseCache;
         q.limit = 1000;  // default limit:10
         [q findConversationsWithCallback:callback];
-    }
-    else {
+    } else {
         callback([NSMutableArray array], nil);
     }
 }
@@ -470,7 +482,6 @@ static CDChatManager *instance;
     static BOOL refreshedFromServer = NO;
     NSArray *conversations = [[CDConversationStore store] selectAllConversations];
     if (refreshedFromServer == NO && self.connect) {
-        refreshedFromServer = YES;
         NSMutableSet *convids = [NSMutableSet set];
         for (AVIMConversation *conversation in conversations) {
             [convids addObject:conversation.conversationId];
@@ -479,6 +490,7 @@ static CDChatManager *instance;
             if (error) {
                 block(conversations, nil);
             } else {
+                refreshedFromServer = YES;
                 [[CDConversationStore store] updateConversations:objects];
                 block([[CDConversationStore store] selectAllConversations], nil);
             }

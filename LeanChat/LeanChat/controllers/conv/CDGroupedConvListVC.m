@@ -24,18 +24,31 @@
     [self.tableView addSubview:refreshControl];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh:) name:kCDNotificationConversationUpdated object:nil];
-    [self refresh:nil];
+    [self loadConversationsWhenInit];
 }
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kCDNotificationConversationUpdated object:nil];
 }
 
+- (void)loadConversationsWhenInit {
+    [self showProgress];
+    [[CDChatManager manager] findGroupedConvsWithBlock:^(NSArray *objects, NSError *error) {
+        [self hideProgress];
+        if ([self filterError:error]) {
+            self.dataSource = [objects mutableCopy];
+            [self.tableView reloadData];
+        }
+    }];
+}
+
 - (void)refresh:(UIRefreshControl *)refreshControl {
-    [[CDChatManager manager] findGroupedConvsWithBlock: ^(NSArray *objects, NSError *error) {
+    [[CDChatManager manager] findGroupedConvsWithNetworkFirst:YES block:^(NSArray *objects, NSError *error) {
         [CDUtils stopRefreshControl:refreshControl];
-        self.dataSource = objects;
-        [self.tableView reloadData];
+        if ([self filterError:error]) {
+            self.dataSource = [objects mutableCopy];
+            [self.tableView reloadData];
+        }
     }];
 }
 

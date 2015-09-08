@@ -44,7 +44,7 @@ static CDCacheManager *cacheManager;
 
 #pragma mark - cache delegate
 - (void)cache:(NSCache *)cache willEvictObject:(id)obj {
-    DLog(@"will evict object");
+//    DLog(@"will evict object");
 }
 
 #pragma mark - user cache
