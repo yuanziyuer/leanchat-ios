@@ -19,10 +19,10 @@ static NSString *const kAVIMInstallationKeyChannels = @"channels";
 /**
  *  注销的时候使用，不再注册此用户的频道。-[AVIMClient closeWithCallback:]也会取消注册。同时用的时候，会发送请求 remove [clientId, clientId]，服务器没有返回
  */
-- (void)unsubscribeCurrentUserChannelWithBlock:(AVBooleanResultBlock)block;
+- (void)unsubscribeUserChannelWithBlock:(AVBooleanResultBlock)block userId:(NSString *)userId;
 
 // please call in application:didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
-- (void)saveInstallationWithDeviceToken:(NSData *)deviceToken;
+- (void)saveInstallationWithDeviceToken:(NSData *)deviceToken userId:(NSString *)userId;
 
 // push message
 - (void)pushMessage:(NSString *)message userIds:(NSArray *)userIds block:(AVBooleanResultBlock)block;

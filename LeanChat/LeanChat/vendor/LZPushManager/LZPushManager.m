@@ -19,37 +19,24 @@
 }
 
 - (void)registerForRemoteNotification {
-    UIApplication *application = [UIApplication sharedApplication];
-    if ([application respondsToSelector:@selector(registerForRemoteNotifications)]) {
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert |
-                                                UIUserNotificationTypeBadge |
-                                                UIUserNotificationTypeSound
-                                                                                 categories:nil];
-        [application registerUserNotificationSettings:settings];
-        [application registerForRemoteNotifications];
-    } else {
-        [application registerForRemoteNotificationTypes:
-         UIRemoteNotificationTypeBadge |
-         UIRemoteNotificationTypeAlert |
-         UIRemoteNotificationTypeSound];
-    }
+    [AVOSCloud registerForRemoteNotification];
 }
 
-- (void)saveInstallationWithDeviceToken:(NSData *)deviceToken {
+- (void)saveInstallationWithDeviceToken:(NSData *)deviceToken userId:(NSString *)userId {
     AVInstallation *currentInstallation = [AVInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];
     // openClient 的时候也会将 clientId 注册到 channels，这里多余了？
-    if ([AVUser currentUser].objectId) {
-        [currentInstallation addUniqueObject:[AVUser currentUser].objectId forKey:kAVIMInstallationKeyChannels];
+    if (userId) {
+        [currentInstallation addUniqueObject:userId forKey:kAVIMInstallationKeyChannels];
     }
     [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         NSLog(@"%@", error);
     }];
 }
 
-- (void)unsubscribeCurrentUserChannelWithBlock:(AVBooleanResultBlock)block {
-    if ([AVUser currentUser].objectId) {
-        [AVPush unsubscribeFromChannelInBackground:[AVUser currentUser].objectId block:block];
+- (void)unsubscribeUserChannelWithBlock:(AVBooleanResultBlock)block userId:(NSString *)userId {
+    if (userId) {
+        [AVPush unsubscribeFromChannelInBackground:userId block:block];
     }
 }
 
