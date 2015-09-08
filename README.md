@@ -167,6 +167,10 @@ CDUserModel，
 
 ## LeanChatLib ChangeLog	
 
+0.2.5
+使用 AVIMConversationQuery 里的 cachePolicy，节省流量更好支持离线
+修复当对话不存在调用 fetchConvWithConvid  可能崩溃的 Bug
+
 0.2.4	
 增加兔斯基表情
 
