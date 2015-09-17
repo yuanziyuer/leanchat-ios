@@ -53,6 +53,8 @@
         case kAVIMMessageMediaTypeEmotion:
             title = @"表情";
             break;
+        case kAVIMMessageMediaTypeVideo:
+            title = @"视频";
         default:
             break;
     }

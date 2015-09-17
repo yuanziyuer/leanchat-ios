@@ -258,7 +258,7 @@ static NSInteger const kOnePageSize = 10;
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date {
     if ([text length] > 0) {
         AVIMTextMessage *msg = [AVIMTextMessage messageWithText:[CDEmotionUtils plainStringFromEmojiString:text] attributes:nil];
-        [self sendMsg:msg originFilePath:nil];
+        [self sendMsg:msg];
         [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
     }
 }
@@ -271,11 +271,14 @@ static NSInteger const kOnePageSize = 10;
 
 // 发送视频消息的回调方法
 - (void)didSendVideoConverPhoto:(UIImage *)videoConverPhoto videoPath:(NSString *)videoPath fromSender:(NSString *)sender onDate:(NSDate *)date {
+    AVIMVideoMessage* sendVideoMessage = [AVIMVideoMessage messageWithText:nil attachedFilePath:videoPath attributes:nil];
+    [self sendMsg:sendVideoMessage];
 }
 
 // 发送语音消息的回调方法
 - (void)didSendVoice:(NSString *)voicePath voiceDuration:(NSString *)voiceDuration fromSender:(NSString *)sender onDate:(NSDate *)date {
-    [self sendFileMsgWithPath:voicePath type:kAVIMMessageMediaTypeAudio];
+    AVIMTypedMessage *msg = [AVIMAudioMessage messageWithText:nil attachedFilePath:voicePath attributes:nil];
+    [self sendMsg:msg];
 }
 
 // 发送表情消息的回调方法
@@ -292,7 +295,7 @@ static NSInteger const kOnePageSize = 10;
         [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeEmotion];
     } else {
         AVIMEmotionMessage *msg = [AVIMEmotionMessage messageWithEmotionPath:emotion];
-        [self sendMsg:msg originFilePath:nil];
+        [self sendMsg:msg];
         [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeEmotion];
     }
 }
@@ -406,24 +409,14 @@ static NSInteger const kOnePageSize = 10;
 
 #pragma mark - send message
 
-- (void)sendFileMsgWithPath:(NSString *)path type:(AVIMMessageMediaType)type {
-    AVIMTypedMessage *msg;
-    if (type == kAVIMMessageMediaTypeImage) {
-        msg = [AVIMImageMessage messageWithText:nil attachedFilePath:path attributes:nil];
-    }
-    else {
-        msg = [AVIMAudioMessage messageWithText:nil attachedFilePath:path attributes:nil];
-    }
-    [self sendMsg:msg originFilePath:path];
-}
-
 - (void)sendImage:(UIImage *)image {
     NSData *imageData = UIImageJPEGRepresentation(image, 0.6);
     NSString *path = [[CDChatManager manager] tmpPath];
     NSError *error;
     [imageData writeToFile:path options:NSDataWritingAtomic error:&error];
     if (error == nil) {
-        [self sendFileMsgWithPath:path type:kAVIMMessageMediaTypeImage];
+        AVIMImageMessage *msg = [AVIMImageMessage messageWithText:nil attachedFilePath:path attributes:nil];
+        [self sendMsg:msg];
     }
     else {
         [self alert:@"write image to file error"];
@@ -432,10 +425,10 @@ static NSInteger const kOnePageSize = 10;
 
 - (void)sendLocationWithLatitude:(double)latitude longitude:(double)longitude address:(NSString *)address {
     AVIMLocationMessage *locMsg = [AVIMLocationMessage messageWithText:nil latitude:latitude longitude:longitude attributes:nil];
-    [self sendMsg:locMsg originFilePath:nil];
+    [self sendMsg:locMsg];
 }
 
-- (void)sendMsg:(AVIMTypedMessage *)msg originFilePath:(NSString *)path {
+- (void)sendMsg:(AVIMTypedMessage *)msg {
     [[CDChatManager manager] sendMessage:msg conversation:self.conv callback:^(BOOL succeeded, NSError *error) {
         if (error) {
             // 伪造一个 messageId，重发的成功的时候，根据这个伪造的id把数据库中的改过来
@@ -450,15 +443,6 @@ static NSInteger const kOnePageSize = 10;
             [[CDSoundManager manager] playSendSoundIfNeed];
             [self insertMessage:msg];
         } else {
-            if (path) {
-                if (msg.mediaType == kAVIMMessageMediaTypeAudio) {
-                    // 移动文件，好根据 messageId 找到本地文件缓存
-                    NSString *newPath = [[CDChatManager manager] getPathByObjectId:msg.messageId];
-                    NSError *error1;
-                    [[NSFileManager defaultManager] moveItemAtPath:path toPath:newPath error:&error1];
-                    DLog(@"%@", newPath);
-                }
-            }
             [[CDSoundManager manager] playSendSoundIfNeed];
             [self insertMessage:msg];
         }
@@ -550,8 +534,7 @@ static NSInteger const kOnePageSize = 10;
     else if (msg.mediaType == kAVIMMessageMediaTypeAudio) {
         AVIMAudioMessage *audioMsg = (AVIMAudioMessage *)msg;
         NSString *duration = [NSString stringWithFormat:@"%.0f", audioMsg.duration];
-        NSString *voicePath = [[CDChatManager manager] getPathByObjectId:audioMsg.messageId];
-        xhMessage = [[XHMessage alloc] initWithVoicePath:voicePath voiceUrl:nil voiceDuration:duration sender:fromUser.username timestamp:time];
+        xhMessage = [[XHMessage alloc] initWithVoicePath:audioMsg.file.localPath voiceUrl:nil voiceDuration:duration sender:fromUser.username timestamp:time];
     }
     else if (msg.mediaType == kAVIMMessageMediaTypeLocation) {
         AVIMLocationMessage *locationMsg = (AVIMLocationMessage *)msg;
@@ -574,7 +557,11 @@ static NSInteger const kOnePageSize = 10;
         NSString *path = [[NSBundle mainBundle] pathForResource:emotionMsg.emotionPath ofType:@"gif"];
         xhMessage = [[XHMessage alloc] initWithEmotionPath:path sender:fromUser.username timestamp:time];
     }
-    else {
+    else if (msg.mediaType == kAVIMMessageMediaTypeVideo) {
+        AVIMVideoMessage *videoMsg = (AVIMVideoMessage *)msg;
+        NSString *path = [[CDChatManager manager] videoPathOfMessag:videoMsg];
+        xhMessage = [[XHMessage alloc] initWithVideoConverPhoto:[XHMessageVideoConverPhotoFactory videoConverPhotoWithVideoPath:path] videoPath:path videoUrl:nil sender:fromUser.username timestamp:time];
+    } else {
         xhMessage = [[XHMessage alloc] initWithText:@"未知消息" sender:fromUser.username timestamp:time];
         DLog("unkonwMessage");
     }
@@ -697,17 +684,10 @@ static NSInteger const kOnePageSize = 10;
 
 - (void)cacheMsgs:(NSArray *)msgs callback:(AVBooleanResultBlock)callback {
     [self runInGlobalQueue:^{
-        __block NSMutableSet *userIds = [[NSMutableSet alloc] init];
+        NSMutableSet *userIds = [[NSMutableSet alloc] init];
         for (AVIMTypedMessage *msg in msgs) {
             [userIds addObject:msg.clientId];
-            if (msg.mediaType == kAVIMMessageMediaTypeAudio) {
-                NSString *path = [[CDChatManager manager] getPathByObjectId:msg.messageId];
-                NSFileManager *fileMan = [NSFileManager defaultManager];
-                if ([fileMan fileExistsAtPath:path] == NO) {
-                    NSData *data = [msg.file getData];
-                    [data writeToFile:path atomically:YES];
-                }
-            } else if (msg.mediaType == kAVIMMessageMediaTypeImage) {
+            if (msg.mediaType == kAVIMMessageMediaTypeImage || msg.mediaType == kAVIMMessageMediaTypeAudio) {
                 AVFile *file = msg.file;
                 if (file && file.isDataAvailable == NO) {
                     NSError *error;
@@ -715,6 +695,17 @@ static NSInteger const kOnePageSize = 10;
                     NSData *data = [file getData:&error];
                     if (error || data == nil) {
                         DLog(@"download file error : %@", error);
+                    }
+                }
+            } else if (msg.mediaType == kAVIMMessageMediaTypeVideo) {
+                NSString *path = [[CDChatManager manager] videoPathOfMessag:(AVIMVideoMessage *)msg];
+                if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+                    NSError *error;
+                    NSData *data = [msg.file getData:&error];
+                    if (error) {
+                        DLog(@"download file error : %@", error);
+                    } else {
+                        [data writeToFile:path atomically:YES];
                     }
                 }
             }

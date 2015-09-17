@@ -439,6 +439,11 @@ static CDChatManager *instance;
     return [[self getFilesPath] stringByAppendingFormat:@"%@", objectId];
 }
 
+- (NSString *)videoPathOfMessag:(AVIMVideoMessage *)message {
+    // 视频播放会根据文件扩展名来识别格式
+    return [[self getFilesPath] stringByAppendingFormat:@"%@.%@", message.messageId, message.format];
+}
+
 - (NSString *)tmpPath {
     return [[self getFilesPath] stringByAppendingFormat:@"tmp"];
 }

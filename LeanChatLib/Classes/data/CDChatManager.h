@@ -209,6 +209,11 @@ typedef void (^CDRecentConversationsCallback)(NSArray *conversations, NSInteger 
  */
 - (NSString *)getPathByObjectId:(NSString *)objectId;
 
+/*!
+ *  根据消息来获取视频文件的路径。
+ */
+- (NSString *)videoPathOfMessag:(AVIMVideoMessage *)message;
+
 /**
  *  图片消息，临时的压缩图片路径
  *  @return
