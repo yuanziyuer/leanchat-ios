@@ -167,37 +167,51 @@ CDUserModel，
 
 ## LeanChatLib ChangeLog	
 
+0.2.6
+
+升级 SDK 至 3.1.4，适配 iOS 9
+
 0.2.5
+
 使用 AVIMConversationQuery 里的 cachePolicy，节省流量更好支持离线
 修复当对话不存在调用 fetchConvWithConvid  可能崩溃的 Bug
 
 0.2.4	
+
 增加兔斯基表情
 
-0.2.3	
+0.2.3
+
 增加 fetchConvWithMembers: 接口的参数检查、修复对话列表当是单聊对话但只有一个成员时可能出现的崩溃、
 
-0.2.2	
+0.2.2
+
 AVOSCloud 库升级至 3.1.2.8
 
-0.2.1	
+0.2.1
+
 ChatListDelegate 增加 configureCell: 与 prepareConversaion: 接口，以便实现更复杂的对话定制。
 
 对于图像消息，使用 AVFile 来缓存图像，使得自己发送的照片不用重新下载。
 
-0.2.0	
+0.2.0
+
 补充注释、支持重发消息、显示失败的消息、增加音效和振动
 
-0.1.3	
+0.1.3
+
 修复了快速下拉加载历史消息时崩溃的Bug
 
-0.1.2	
+0.1.2
+
 用了 SDK 的聊天缓存，去掉了 FMDB 依赖。可以看到服务器上的历史消息，重装后也可以看到历史聊天记录。去掉了 CDNotify 类。
 
-0.1.1	
+0.1.1
+
 重构
 
-0.1.0	
+0.1.0
+
 发布
 
 

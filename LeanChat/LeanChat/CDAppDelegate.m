@@ -62,6 +62,8 @@
     [self.window makeKeyAndVisible];
     
     if ([AVUser currentUser]) {
+        // Applications are expected to have a root view controller at the end of application launch
+        self.window.rootViewController = [[UIViewController alloc] init];
         [self toMain];
     }
     else {
