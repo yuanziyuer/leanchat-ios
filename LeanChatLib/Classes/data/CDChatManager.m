@@ -113,28 +113,7 @@ static CDChatManager *instance;
         [NSException raise:NSInvalidArgumentException format:@"members should contain myself"];
     }
     [self checkDuplicateValueOfArray:members];
-    AVIMConversationQuery *q = [[AVIMClient defaultClient] conversationQuery];
-    [q whereKey:AVIMAttr(CONV_TYPE) equalTo:@(type)];
-    [q whereKey:kAVIMKeyMember containsAllObjectsInArray:members];
-    // 如果没有数组size限制，传[2,3]，可能取回 [1,2,3]
-    [q whereKey:kAVIMKeyMember sizeEqualTo:members.count];
-    [q orderByDescending:@"createdAt"];
-    q.cachePolicy = kAVCachePolicyNetworkElseCache;
-    q.limit = 1;
-    [q findConversationsWithCallback: ^(NSArray *objects, NSError *error) {
-        if (error) {
-            callback(nil, error);
-        }
-        else {
-            if (objects.count > 0) {
-                AVIMConversation *conv = [objects objectAtIndex:0];
-                callback(conv, nil);
-            }
-            else {
-                [self createConvWithMembers:members type:type callback:callback];
-            }
-        }
-    }];
+    [self createConvWithMembers:members type:type unique:YES callback:callback];
 }
 
 - (void)fetchConvWithMembers:(NSArray *)members callback:(AVIMConversationResultBlock)callback {
@@ -148,13 +127,25 @@ static CDChatManager *instance;
     [self fetchConvWithMembers:array type:CDConvTypeSingle callback:callback];
 }
 
-- (void)createConvWithMembers:(NSArray *)members type:(CDConvType)type callback:(AVIMConversationResultBlock)callback {
+- (void)createConvWithMembers:(NSArray *)members type:(CDConvType)type unique:(BOOL)unique callback:(AVIMConversationResultBlock)callback {
     NSString *name = nil;
     if (type == CDConvTypeGroup) {
         // 群聊默认名字， 老王、小李
         name = [AVIMConversation nameOfUserIds:members];
     }
-    [[AVIMClient defaultClient] createConversationWithName:name clientIds:members attributes:@{ CONV_TYPE:@(type) } options:AVIMConversationOptionNone callback:callback];
+    AVIMConversationOption options;
+    if (unique) {
+        // 如果相同 members 的对话已经存在，将返回原来的对话
+        options = AVIMConversationOptionUnique;
+    } else {
+        // 创建一个新对话
+        options = AVIMConversationOptionNone;
+    }
+    [[AVIMClient defaultClient] createConversationWithName:name clientIds:members attributes:@{ CONV_TYPE:@(type) } options:options callback:callback];
+}
+
+- (void)createConvWithMembers:(NSArray *)members type:(CDConvType)type callback:(AVIMConversationResultBlock)callback {
+    [self createConvWithMembers:members type:type unique:NO callback:callback];
 }
 
 - (void)findGroupedConvsWithBlock:(AVIMArrayResultBlock)block {

@@ -83,10 +83,11 @@ static NSString *reuseIdentifier = @"Cell";
     }
     AVIMConversation *conv = [[CDCacheManager manager] getCurConv];
     if ([[CDCacheManager manager] getCurConv].type == CDConvTypeSingle) {
+        // 单聊对话加入，直接创建一个群聊对话
         NSMutableArray *members = [conv.members mutableCopy];
         [members addObjectsFromArray:inviteIds];
         [self showProgress];
-        [[CDChatManager manager] createConvWithMembers:members type:CDConvTypeGroup callback: ^(AVIMConversation *conversation, NSError *error) {
+        [[CDChatManager manager] createConvWithMembers:members type:CDConvTypeGroup unique:NO callback:^(AVIMConversation *conversation, NSError *error) {
             [self hideProgress];
             if ([self filterError:error]) {
                 [self.presentingViewController dismissViewControllerAnimated:YES completion: ^{
@@ -96,6 +97,7 @@ static NSString *reuseIdentifier = @"Cell";
         }];
     }
     else {
+        // 本来就是群聊对话，直接拉人
         [self showProgress];
         [conv addMembersWithClientIds:inviteIds callback: ^(BOOL succeeded, NSError *error) {
             [self hideProgress];

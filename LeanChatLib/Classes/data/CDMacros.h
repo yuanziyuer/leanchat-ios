@@ -20,5 +20,6 @@
 #define WEAKSELF  typeof(self) __weak weakSelf = self;
 #endif
 
+#define LeanChatLibDeprecated(explain) __attribute__((deprecated(explain)))
 
 #endif

@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "CDUserModel.h"
 #import "AVIMConversation+Custom.h"
+#import "CDMacros.h"
+
 /**
  *  未读数改变了。通知去服务器同步 installation 的badge
  */
@@ -135,7 +137,16 @@ typedef void (^CDRecentConversationsCallback)(NSArray *conversations, NSInteger 
  *  @param type     单聊/群聊
  *  @param callback 对话回调
  */
-- (void)createConvWithMembers:(NSArray *)members type:(CDConvType)type callback:(AVIMConversationResultBlock)callback;
+- (void)createConvWithMembers:(NSArray *)members type:(CDConvType)type callback:(AVIMConversationResultBlock)callback LeanChatLibDeprecated("Use createConvWithMembers:type:unique:callback: instead. Always consider unique params.");
+
+/**
+ *  创建对话
+ *  @param members  初始成员
+ *  @param type     单聊或群聊
+ *  @param unique   是否唯一，如果有相同 members 的成员且要求唯一的话，将不创建返回原来的对话
+ *  @param callback 对话回调
+ */
+- (void)createConvWithMembers:(NSArray *)members type:(CDConvType)type unique:(BOOL)unique callback:(AVIMConversationResultBlock)callback;
 
 /**
  *  更新对话 name 或 attrs
