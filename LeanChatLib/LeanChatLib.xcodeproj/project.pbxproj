@@ -302,7 +302,6 @@
 		706E0D711B31F52600F9C891 /* NSString+Emojize.h in Headers */ = {isa = PBXBuildFile; fileRef = 706E0C321B31F52500F9C891 /* NSString+Emojize.h */; };
 		706E0D721B31F52600F9C891 /* NSString+Emojize.m in Sources */ = {isa = PBXBuildFile; fileRef = 706E0C331B31F52500F9C891 /* NSString+Emojize.m */; };
 		706E0D751B31F52600F9C891 /* LeanChatLib-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 706E0C371B31F52500F9C891 /* LeanChatLib-Prefix.pch */; };
-		706E0D761B31F52600F9C891 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 706E0C381B31F52500F9C891 /* Info.plist */; };
 		706E0D771B31F52600F9C891 /* AddGroupMemberBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 706E0C3A1B31F52500F9C891 /* AddGroupMemberBtn@2x.png */; };
 		706E0D781B31F52600F9C891 /* AddGroupMemberBtnHL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 706E0C3B1B31F52500F9C891 /* AddGroupMemberBtnHL@2x.png */; };
 		706E0D791B31F52600F9C891 /* avator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 706E0C3C1B31F52500F9C891 /* avator@2x.png */; };
@@ -1752,7 +1751,7 @@
 		7073F93D1B1467F5006F2692 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "lzwjava@LeanCloud QQ: 651142978";
 				TargetAttributes = {
 					7073F9451B1467F5006F2692 = {
@@ -1820,7 +1819,6 @@
 				706E0D961B31F52600F9C891 /* multiMedia@2x.png in Resources */,
 				706E0D8C1B31F52600F9C891 /* input-bar-flat@2x.png in Resources */,
 				706E0D821B31F52600F9C891 /* contacts_add_voip@2x.png in Resources */,
-				706E0D761B31F52600F9C891 /* Info.plist in Resources */,
 				706E0DC01B31F52600F9C891 /* SenderVoiceNodePlaying@2x.png in Resources */,
 				703607271B7DD2320044C81A /* tusiji_14_cover@2x.png in Resources */,
 				7092330F1B4532B000E2D1F5 /* defaultSettings.plist in Resources */,
@@ -2131,6 +2129,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -2209,6 +2208,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.leancloud.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -2226,6 +2226,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.leancloud.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
