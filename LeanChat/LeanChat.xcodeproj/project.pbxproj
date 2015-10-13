@@ -765,6 +765,7 @@
 				7073FC151B147048006F2692 /* Resources */,
 				1CFC146C67C803FF77A8A386 /* Copy Pods Resources */,
 				706C81B01B4296F90069E52E /* Build Number */,
+				18111F517D6015622C73B46E /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -920,6 +921,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		18111F517D6015622C73B46E /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LeanChat/Pods-LeanChat-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		1CFC146C67C803FF77A8A386 /* Copy Pods Resources */ = {
