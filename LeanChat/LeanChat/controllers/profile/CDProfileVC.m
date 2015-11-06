@@ -117,8 +117,8 @@
 
 /** 调用这个，下次 SNS 登录的时候会重新去第三方应用请求，而不会用本地缓存 */
 - (void)deleteAuthDataCache {
-    NSDictionary *authData = [[AVUser currentUser] objectForKey:@"authData"];
-    if (authData) {
+    id authData = [[AVUser currentUser] objectForKey:@"authData"];
+    if (authData != nil && authData != [NSNull null]) {
         if ([authData objectForKey:AVOSCloudSNSPlatformQQ]) {
             [AVOSCloudSNS logout:AVOSCloudSNSQQ];
         } else if ([authData objectForKey:AVOSCloudSNSPlatformWeiXin]) {

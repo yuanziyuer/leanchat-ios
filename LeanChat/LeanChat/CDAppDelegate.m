@@ -72,12 +72,25 @@
     
     [[LZPushManager manager] registerForRemoteNotification];
     
+    [self initAnalytics];
+    
 #ifdef DEBUG
     [AVPush setProductionMode:NO];  // 如果要测试申请好友是否有推送，请设置为 YES
-    [AVAnalytics setAnalyticsEnabled:NO];
     [AVOSCloud setAllLogsEnabled:YES];
 #endif
     return YES;
+}
+
+- (void)initAnalytics {
+    [AVAnalytics setAnalyticsEnabled:YES];
+#ifdef DEBUG
+    [AVAnalytics setChannel:@"Debug"];
+#else
+    [AVAnalytics setChannel:@"App Store"];
+#endif
+    // 应用每次启动都会去获取在线参数，这里同步获取即可。可能是上一次启动获取得到的在线参数。不过没关系。
+    NSDictionary *configParams = [AVAnalytics getConfigParams];
+    DLog(@"configParams: %@", configParams);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

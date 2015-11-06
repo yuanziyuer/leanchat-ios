@@ -102,7 +102,7 @@ static CDCacheManager *cacheManager;
         }];
     }
     else {
-        callback(NO, [NSError errorWithDomain:nil code:0 userInfo:@{ NSLocalizedDescriptionKey:@"current conv is nil" }]);
+        callback(NO, [NSError errorWithDomain:@"" code:0 userInfo:@{ NSLocalizedDescriptionKey:@"current conv is nil" }]);
     }
 }
 

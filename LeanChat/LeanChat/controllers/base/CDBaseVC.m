@@ -33,6 +33,16 @@
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [AVAnalytics beginLogPageView:NSStringFromClass([self class])];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [AVAnalytics endLogPageView:NSStringFromClass([self class])];
+}
+
 - (void)dismissViewController:(id)sender {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
@@ -47,6 +57,9 @@
 }
 
 - (BOOL)alertError:(NSError *)error {
+    if (error) {
+        [AVAnalytics event:@"Alert Error" attributes:@{@"desc": error.description}];
+    }
     if (error) {
         if (error.code == kAVIMErrorConnectionLost) {
             [self alert:@"未能连接聊天服务"];
@@ -81,11 +94,11 @@
     app.networkActivityIndicatorVisible=NO;
 }
 
--(void)showProgress{
+-(void)showProgress {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
--(void)hideProgress{
+-(void)hideProgress {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
@@ -95,6 +108,8 @@
 }
 
 - (void)toast:(NSString *)text duration:(NSTimeInterval)duration {
+    [AVAnalytics event:@"toast" attributes:@{@"text": text}];
+    
     MBProgressHUD* hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
     //    hud.labelText=text;
     hud.detailsLabelFont = [UIFont systemFontOfSize:14];
