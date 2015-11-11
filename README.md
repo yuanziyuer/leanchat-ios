@@ -6,7 +6,12 @@ LeanChat 已经在 App Store 上架，可前往 https://itunes.apple.com/gb/app/
 ## 介绍
 这个示例项目全面展示了 LeanCloud 实时通讯功能的应用，但含杂着许多 UI 代码和其它功能，并不适合快速上手学习，如果你第一次接触 LeanMessage，更推荐 [LeanMessage-Demo](https://github.com/leancloud/LeanMessage-Demo) 项目。等熟悉了之后，可前往 [LeanCloud-Demos](https://github.com/leancloud/leancloud-demos) 挑选你喜欢的 IM 皮肤进行集成。集成的过程中，若遇到疑难问题，不妨再来参考 LeanChat 项目。
 
-LeanChat 也有相应的 [Android版](https://github.com/leancloud/leanchat-android)，[Web版](https://github.com/leancloud/leanchat-cloudcode)。Web 网址是 http://leanchat.avosapps.com/ 。
+## LeanChat 项目构成
+
+* [leanchat-android](https://github.com/leancloud/leanchat-android)，Android 客户端
+* [leanchat-ios](https://github.com/leancloud/leanchat-ios)，iOS 客户端
+* [leanchat-webapp](https://github.com/leancloud/leanchat-webapp)，Web 客户端
+* [leanchat-cloud-code](https://github.com/leancloud/leanchat-cloudcode)，服务端
 
 ## 宝贵意见
 
