@@ -87,6 +87,11 @@ typedef void (^CDRecentConversationsCallback)(NSArray *conversations, NSInteger 
 + (instancetype)manager;
 
 /**
+ *  获取单例，专门提供给 Swift 调用。与 manager 的实现没有区别
+ */
++ (instancetype)sharedManager;
+
+/**
  *  打开一个聊天终端，登录服务器
  *  @param clientId 可以是任何的字符串。可以是 "123"，也可以是 uuid。应用内需唯一，不推荐 name，因为 name 会改变。固定不变的 id 是最好的。
  *  @param callback 回调。当网络错误或签名错误会发生 error 回调。

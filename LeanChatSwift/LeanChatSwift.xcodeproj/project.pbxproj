@@ -1,0 +1,400 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0DB8ECEB793C74AC805001E1 /* libPods-LeanChatSwift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4870211BAC683A5C03A931B3 /* libPods-LeanChatSwift.a */; };
+		70D0FB551BFB1C4D00233665 /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D0FB541BFB1C4D00233665 /* ChatListViewController.swift */; };
+		70D0FB571BFB1D8500233665 /* ChatRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D0FB561BFB1D8500233665 /* ChatRoomViewController.swift */; };
+		70D0FB591BFB210200233665 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D0FB581BFB210200233665 /* AddViewController.swift */; };
+		70EB66C41BFADEC200ACCFC7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EB66C31BFADEC200ACCFC7 /* AppDelegate.swift */; };
+		70EB66C61BFADEC200ACCFC7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EB66C51BFADEC200ACCFC7 /* ViewController.swift */; };
+		70EB66C91BFADEC200ACCFC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70EB66C71BFADEC200ACCFC7 /* Main.storyboard */; };
+		70EB66CB1BFADEC200ACCFC7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70EB66CA1BFADEC200ACCFC7 /* Assets.xcassets */; };
+		70EB66CE1BFADEC200ACCFC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70EB66CC1BFADEC200ACCFC7 /* LaunchScreen.storyboard */; };
+		70EB66D61BFADF5E00ACCFC7 /* UserFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EB66D51BFADF5E00ACCFC7 /* UserFactory.swift */; };
+		70EB66D91BFAE06F00ACCFC7 /* Dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 70EB66D81BFAE06F00ACCFC7 /* Dummy.m */; };
+		70EB66DB1BFAE11200ACCFC7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EB66DA1BFAE11200ACCFC7 /* User.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0E39921EE4A6560115C0274D /* Pods-LeanChatSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChatSwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-LeanChatSwift/Pods-LeanChatSwift.release.xcconfig"; sourceTree = "<group>"; };
+		35B0120ECEE8BE55C799EE71 /* Pods-LeanChatSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChatSwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LeanChatSwift/Pods-LeanChatSwift.debug.xcconfig"; sourceTree = "<group>"; };
+		4870211BAC683A5C03A931B3 /* libPods-LeanChatSwift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LeanChatSwift.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		70D0FB541BFB1C4D00233665 /* ChatListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
+		70D0FB561BFB1D8500233665 /* ChatRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomViewController.swift; sourceTree = "<group>"; };
+		70D0FB581BFB210200233665 /* AddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		70EB66C01BFADEC200ACCFC7 /* LeanChatSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeanChatSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		70EB66C31BFADEC200ACCFC7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		70EB66C51BFADEC200ACCFC7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		70EB66C81BFADEC200ACCFC7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		70EB66CA1BFADEC200ACCFC7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		70EB66CD1BFADEC200ACCFC7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		70EB66CF1BFADEC200ACCFC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		70EB66D51BFADF5E00ACCFC7 /* UserFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFactory.swift; sourceTree = "<group>"; };
+		70EB66D71BFAE06E00ACCFC7 /* LeanChatSwift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LeanChatSwift-Bridging-Header.h"; sourceTree = "<group>"; };
+		70EB66D81BFAE06F00ACCFC7 /* Dummy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dummy.m; sourceTree = "<group>"; };
+		70EB66DA1BFAE11200ACCFC7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		70EB66BD1BFADEC200ACCFC7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0DB8ECEB793C74AC805001E1 /* libPods-LeanChatSwift.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		59CFDC38CE5F8B15EF5EC03E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				35B0120ECEE8BE55C799EE71 /* Pods-LeanChatSwift.debug.xcconfig */,
+				0E39921EE4A6560115C0274D /* Pods-LeanChatSwift.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		70EB66B71BFADEC200ACCFC7 = {
+			isa = PBXGroup;
+			children = (
+				70EB66C21BFADEC200ACCFC7 /* LeanChatSwift */,
+				70EB66C11BFADEC200ACCFC7 /* Products */,
+				59CFDC38CE5F8B15EF5EC03E /* Pods */,
+				E98F9B3A2D4201087982475E /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		70EB66C11BFADEC200ACCFC7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				70EB66C01BFADEC200ACCFC7 /* LeanChatSwift.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		70EB66C21BFADEC200ACCFC7 /* LeanChatSwift */ = {
+			isa = PBXGroup;
+			children = (
+				70EB66DA1BFAE11200ACCFC7 /* User.swift */,
+				70EB66D51BFADF5E00ACCFC7 /* UserFactory.swift */,
+				70EB66C31BFADEC200ACCFC7 /* AppDelegate.swift */,
+				70EB66C51BFADEC200ACCFC7 /* ViewController.swift */,
+				70D0FB541BFB1C4D00233665 /* ChatListViewController.swift */,
+				70D0FB561BFB1D8500233665 /* ChatRoomViewController.swift */,
+				70D0FB581BFB210200233665 /* AddViewController.swift */,
+				70EB66C71BFADEC200ACCFC7 /* Main.storyboard */,
+				70EB66CA1BFADEC200ACCFC7 /* Assets.xcassets */,
+				70EB66CC1BFADEC200ACCFC7 /* LaunchScreen.storyboard */,
+				70EB66CF1BFADEC200ACCFC7 /* Info.plist */,
+				70EB66D81BFAE06F00ACCFC7 /* Dummy.m */,
+				70EB66D71BFAE06E00ACCFC7 /* LeanChatSwift-Bridging-Header.h */,
+			);
+			path = LeanChatSwift;
+			sourceTree = "<group>";
+		};
+		E98F9B3A2D4201087982475E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4870211BAC683A5C03A931B3 /* libPods-LeanChatSwift.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		70EB66BF1BFADEC200ACCFC7 /* LeanChatSwift */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 70EB66D21BFADEC200ACCFC7 /* Build configuration list for PBXNativeTarget "LeanChatSwift" */;
+			buildPhases = (
+				953EF90E5EC1AD8CCFAD8843 /* Check Pods Manifest.lock */,
+				70EB66BC1BFADEC200ACCFC7 /* Sources */,
+				70EB66BD1BFADEC200ACCFC7 /* Frameworks */,
+				70EB66BE1BFADEC200ACCFC7 /* Resources */,
+				BCDB3B4B8CA7AF3D3B28F0D6 /* Embed Pods Frameworks */,
+				E4ED535E38C28C00D747F3DC /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LeanChatSwift;
+			productName = LeanChatSwift;
+			productReference = 70EB66C01BFADEC200ACCFC7 /* LeanChatSwift.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		70EB66B81BFADEC200ACCFC7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = LeanCloud;
+				TargetAttributes = {
+					70EB66BF1BFADEC200ACCFC7 = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
+				};
+			};
+			buildConfigurationList = 70EB66BB1BFADEC200ACCFC7 /* Build configuration list for PBXProject "LeanChatSwift" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 70EB66B71BFADEC200ACCFC7;
+			productRefGroup = 70EB66C11BFADEC200ACCFC7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				70EB66BF1BFADEC200ACCFC7 /* LeanChatSwift */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		70EB66BE1BFADEC200ACCFC7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				70EB66CE1BFADEC200ACCFC7 /* LaunchScreen.storyboard in Resources */,
+				70EB66CB1BFADEC200ACCFC7 /* Assets.xcassets in Resources */,
+				70EB66C91BFADEC200ACCFC7 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		953EF90E5EC1AD8CCFAD8843 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		BCDB3B4B8CA7AF3D3B28F0D6 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LeanChatSwift/Pods-LeanChatSwift-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E4ED535E38C28C00D747F3DC /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LeanChatSwift/Pods-LeanChatSwift-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		70EB66BC1BFADEC200ACCFC7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				70D0FB571BFB1D8500233665 /* ChatRoomViewController.swift in Sources */,
+				70EB66C61BFADEC200ACCFC7 /* ViewController.swift in Sources */,
+				70D0FB591BFB210200233665 /* AddViewController.swift in Sources */,
+				70D0FB551BFB1C4D00233665 /* ChatListViewController.swift in Sources */,
+				70EB66D61BFADF5E00ACCFC7 /* UserFactory.swift in Sources */,
+				70EB66D91BFAE06F00ACCFC7 /* Dummy.m in Sources */,
+				70EB66DB1BFAE11200ACCFC7 /* User.swift in Sources */,
+				70EB66C41BFADEC200ACCFC7 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		70EB66C71BFADEC200ACCFC7 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				70EB66C81BFADEC200ACCFC7 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		70EB66CC1BFADEC200ACCFC7 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				70EB66CD1BFADEC200ACCFC7 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		70EB66D01BFADEC200ACCFC7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		70EB66D11BFADEC200ACCFC7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		70EB66D31BFADEC200ACCFC7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 35B0120ECEE8BE55C799EE71 /* Pods-LeanChatSwift.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				INFOPLIST_FILE = LeanChatSwift/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.leancloud.LeanChatSwift;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "LeanChatSwift/LeanChatSwift-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		70EB66D41BFADEC200ACCFC7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0E39921EE4A6560115C0274D /* Pods-LeanChatSwift.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				INFOPLIST_FILE = LeanChatSwift/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.leancloud.LeanChatSwift;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "LeanChatSwift/LeanChatSwift-Bridging-Header.h";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		70EB66BB1BFADEC200ACCFC7 /* Build configuration list for PBXProject "LeanChatSwift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				70EB66D01BFADEC200ACCFC7 /* Debug */,
+				70EB66D11BFADEC200ACCFC7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		70EB66D21BFADEC200ACCFC7 /* Build configuration list for PBXNativeTarget "LeanChatSwift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				70EB66D31BFADEC200ACCFC7 /* Debug */,
+				70EB66D41BFADEC200ACCFC7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 70EB66B81BFADEC200ACCFC7 /* Project object */;
+}

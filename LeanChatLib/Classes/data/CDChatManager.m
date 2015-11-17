@@ -38,6 +38,10 @@ static CDChatManager *instance;
     return instance;
 }
 
++ (instancetype)sharedManager {
+    return [self manager];
+}
+
 - (instancetype)init {
     self = [super init];
     if (self) {
