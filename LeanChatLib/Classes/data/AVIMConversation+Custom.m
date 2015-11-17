@@ -89,7 +89,11 @@
 }
 
 - (UIImage *)icon {
-    return [UIImage imageWithHashString:self.conversationId displayString:[[self.name substringWithRange:NSMakeRange(0, 1)] capitalizedString]];
+    NSString *name = self.name;
+    if (name.length == 0) {
+        name = @"Conversation";
+    }
+    return [UIImage imageWithHashString:self.conversationId displayString:[[name substringWithRange:NSMakeRange(0, 1)] capitalizedString]];
 }
 
 @end
