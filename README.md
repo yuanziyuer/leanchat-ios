@@ -33,6 +33,11 @@ LeanChat 已经在 App Store 上架，可前往 https://itunes.apple.com/gb/app/
   cd LeanChatExample
   pod install --verbose --no-repo-update
   open LeanChatExample.xcworkspace
+
+  // LeanChatSwift (Swift 例子)
+  cd LeanChatSwift
+  pod install --verbose --no-repo-update
+  open LeanChatSwift.xcworkspace
   
   // LeanChatLib (封装了 LeanCloud 通信组件 和 UI 的库)
   cd LeanChatLib
