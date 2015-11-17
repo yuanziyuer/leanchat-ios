@@ -10,7 +10,7 @@
 		0DB8ECEB793C74AC805001E1 /* libPods-LeanChatSwift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4870211BAC683A5C03A931B3 /* libPods-LeanChatSwift.a */; };
 		70D0FB551BFB1C4D00233665 /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D0FB541BFB1C4D00233665 /* ChatListViewController.swift */; };
 		70D0FB571BFB1D8500233665 /* ChatRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D0FB561BFB1D8500233665 /* ChatRoomViewController.swift */; };
-		70D0FB591BFB210200233665 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D0FB581BFB210200233665 /* AddViewController.swift */; };
+		70D0FB591BFB210200233665 /* AddChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D0FB581BFB210200233665 /* AddChatViewController.swift */; };
 		70EB66C41BFADEC200ACCFC7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EB66C31BFADEC200ACCFC7 /* AppDelegate.swift */; };
 		70EB66C61BFADEC200ACCFC7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EB66C51BFADEC200ACCFC7 /* ViewController.swift */; };
 		70EB66C91BFADEC200ACCFC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70EB66C71BFADEC200ACCFC7 /* Main.storyboard */; };
@@ -27,7 +27,7 @@
 		4870211BAC683A5C03A931B3 /* libPods-LeanChatSwift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LeanChatSwift.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		70D0FB541BFB1C4D00233665 /* ChatListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
 		70D0FB561BFB1D8500233665 /* ChatRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomViewController.swift; sourceTree = "<group>"; };
-		70D0FB581BFB210200233665 /* AddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		70D0FB581BFB210200233665 /* AddChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddChatViewController.swift; sourceTree = "<group>"; };
 		70EB66C01BFADEC200ACCFC7 /* LeanChatSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeanChatSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70EB66C31BFADEC200ACCFC7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70EB66C51BFADEC200ACCFC7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -89,7 +89,7 @@
 				70EB66C51BFADEC200ACCFC7 /* ViewController.swift */,
 				70D0FB541BFB1C4D00233665 /* ChatListViewController.swift */,
 				70D0FB561BFB1D8500233665 /* ChatRoomViewController.swift */,
-				70D0FB581BFB210200233665 /* AddViewController.swift */,
+				70D0FB581BFB210200233665 /* AddChatViewController.swift */,
 				70EB66C71BFADEC200ACCFC7 /* Main.storyboard */,
 				70EB66CA1BFADEC200ACCFC7 /* Assets.xcassets */,
 				70EB66CC1BFADEC200ACCFC7 /* LaunchScreen.storyboard */,
@@ -232,7 +232,7 @@
 			files = (
 				70D0FB571BFB1D8500233665 /* ChatRoomViewController.swift in Sources */,
 				70EB66C61BFADEC200ACCFC7 /* ViewController.swift in Sources */,
-				70D0FB591BFB210200233665 /* AddViewController.swift in Sources */,
+				70D0FB591BFB210200233665 /* AddChatViewController.swift in Sources */,
 				70D0FB551BFB1C4D00233665 /* ChatListViewController.swift in Sources */,
 				70EB66D61BFADF5E00ACCFC7 /* UserFactory.swift in Sources */,
 				70EB66D91BFAE06F00ACCFC7 /* Dummy.m in Sources */,

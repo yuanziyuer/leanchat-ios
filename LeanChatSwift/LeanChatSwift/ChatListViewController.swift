@@ -24,7 +24,7 @@ class ChatListViewController: CDChatListVC, CDChatListVCDelegate {
     
     func addButtonClicked() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let addVC = storyboard.instantiateViewControllerWithIdentifier("main")
+        let addVC = storyboard.instantiateViewControllerWithIdentifier("AddChat")
         addVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(addVC, animated: true)
     }

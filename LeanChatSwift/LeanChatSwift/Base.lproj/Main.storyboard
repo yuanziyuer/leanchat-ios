@@ -50,10 +50,10 @@
             </objects>
             <point key="canvasLocation" x="340" y="305"/>
         </scene>
-        <!--Add View Controller-->
+        <!--Add Chat View Controller-->
         <scene sceneID="K57-YP-mkC">
             <objects>
-                <viewController storyboardIdentifier="main" id="pqK-i3-z7m" customClass="AddViewController" customModule="LeanChatSwift" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddChat" id="pqK-i3-z7m" customClass="AddChatViewController" customModule="LeanChatSwift" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="e97-D6-fUn"/>
                         <viewControllerLayoutGuide type="bottom" id="id5-bq-Uhw"/>

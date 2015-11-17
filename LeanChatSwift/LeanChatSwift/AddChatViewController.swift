@@ -1,5 +1,5 @@
 //
-//  AddViewController.swift
+//  AddChatViewController.swift
 //  LeanChatSwift
 //
 //  Created by lzw on 15/11/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AddViewController: UIViewController {
+class AddChatViewController: UIViewController {
     
     @IBOutlet weak var otherIdTextField: UITextField!
     
