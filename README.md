@@ -1,4 +1,4 @@
-![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)]&nbsp;
+![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)&nbsp;
 [![CocoaPods](http://img.shields.io/cocoapods/v/LeanChatLib.svg?style=flat)](http://cocoapods.org/?q=LeanChatLib)&nbsp;
 [![CocoaPods](http://img.shields.io/cocoapods/p/LeanChatLib.svg?style=flat)](http://cocoapods.org/?q=LeanChatLib)&nbsp;
 [![Support](https://img.shields.io/badge/support-iOS%207%2B%20-blue.svg?style=flat)](https://www.apple.com/nl/ios/)
