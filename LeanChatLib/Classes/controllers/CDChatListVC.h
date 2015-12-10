@@ -39,7 +39,7 @@
  */
 - (void)configureCell:(LZConversationCell *)cell atIndexPath:(NSIndexPath *)indexPath withConversation:(AVIMConversation *)conversation;
 
-- (void)prepareConversationsWhenLoad:(NSArray *)conversations completion:(AVBooleanResultBlock)completion;
+- (void)prepareConversationsWhenLoad:(NSArray *)conversations completion:(AVIMBooleanResultBlock)completion;
 
 @end
 

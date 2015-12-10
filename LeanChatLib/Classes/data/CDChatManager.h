@@ -50,7 +50,7 @@ typedef void (^CDRecentConversationsCallback)(NSArray *conversations, NSInteger 
 /**
  *  对于每条消息，都会调用这个方法来缓存发送者的用户信息，以便 getUserById 直接返回用户信息
  */
-- (void)cacheUserByIds:(NSSet *)userIds block:(AVBooleanResultBlock)block;
+- (void)cacheUserByIds:(NSSet *)userIds block:(AVIMBooleanResultBlock)block;
 
 @end
 
@@ -100,7 +100,7 @@ typedef void (^CDRecentConversationsCallback)(NSArray *conversations, NSInteger 
 /**
  *  关闭一个聊天终端，注销的时候使用
  */
-- (void)closeWithCallback:(AVBooleanResultBlock)callback;
+- (void)closeWithCallback:(AVIMBooleanResultBlock)callback;
 
 /**
  *  根据 conversationId 获取对话
@@ -166,7 +166,7 @@ typedef void (^CDRecentConversationsCallback)(NSArray *conversations, NSInteger 
  *  @param convids  需要缓存的对话 ids
  *  @param callback
  */
-- (void)cacheConvsWithIds:(NSMutableSet *)convids callback:(AVBooleanResultBlock)callback;
+- (void)cacheConvsWithIds:(NSMutableSet *)convids callback:(AVIMBooleanResultBlock)callback;
 
 /**
  *  根据对话 id 查找内存中的对话
@@ -181,7 +181,7 @@ typedef void (^CDRecentConversationsCallback)(NSArray *conversations, NSInteger 
  *  @param conversation 对话
  *  @param block
  */
-- (void)sendMessage:(AVIMTypedMessage*)message conversation:(AVIMConversation *)conversation callback:(AVBooleanResultBlock)block;
+- (void)sendMessage:(AVIMTypedMessage*)message conversation:(AVIMConversation *)conversation callback:(AVIMBooleanResultBlock)block;
 
 /**
  *  发送 "已经是好友了，我们来聊天吧" 之类的消息
@@ -189,7 +189,7 @@ typedef void (^CDRecentConversationsCallback)(NSArray *conversations, NSInteger 
  *  @param text  消息文本
  *  @param block
  */
-- (void)sendWelcomeMessageToOther:(NSString *)other text:(NSString *)text block:(AVBooleanResultBlock)block;
+- (void)sendWelcomeMessageToOther:(NSString *)other text:(NSString *)text block:(AVIMBooleanResultBlock)block;
 
 /**
  *  查询时间戳之前的历史消息
