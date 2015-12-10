@@ -48,7 +48,7 @@ static NSInteger const kOnePageSize = 10;
         //self.allowsSendFace = NO;
         //self.allowsSendMultiMedia = NO;
         _isLoadingMsg = NO;
-        self.msgs = [NSMutableArray array];
+        _msgs = [NSMutableArray array];
     }
     return self;
 }
