@@ -33,14 +33,13 @@
 - (instancetype)init {
     if ((self = [super init])) {
         self.title = @"我";
-        self.tabBarItem.image = [UIImage imageNamed:@"tabbar_me_active"];
-        self.tableViewStyle = UITableViewStyleGrouped;
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableViewStyle = UITableViewStyleGrouped;
     [self loadDataSource];
     
     [OpenShare connectQQWithAppId:QQAppId];

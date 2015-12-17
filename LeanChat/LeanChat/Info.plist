@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.avoscloud.leanchat</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -80,6 +80,20 @@
 				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 			</dict>
+			<key>gtimg.cn</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+			<key>idqqimg.com</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
 			<key>qq.com</key>
 			<dict>
 				<key>NSIncludesSubdomains</key>
@@ -89,20 +103,6 @@
 				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
 				<false/>
 			</dict>
-            <key>idqqimg.com</key>
-            <dict>
-                <key>NSIncludesSubdomains</key>
-                <true/>
-                <key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
-                <true/>
-            </dict>
-            <key>gtimg.cn</key>
-            <dict>
-                <key>NSIncludesSubdomains</key>
-                <true/>
-                <key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
-                <true/>
-            </dict>
 			<key>weibo.cn</key>
 			<dict>
 				<key>NSIncludesSubdomains</key>

@@ -33,11 +33,10 @@ static NSString *kCellSelectorKey = @"selector";
 @implementation CDFriendListVC
 
 #pragma mark - Life Cycle
+
 - (instancetype)init {
     if ((self = [super init])) {
         self.title = @"联系人";
-        self.tabBarItem.image = [UIImage imageNamed:@"tabbar_contacts_active"];
-//        [self setNewAddRequestBadge];
     }
     return self;
 }
