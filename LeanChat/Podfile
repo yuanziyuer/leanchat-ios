@@ -22,6 +22,8 @@ target 'LeanChat' do
     pod 'PopMenu', '2.4'
 #    pod 'LeanCloudSocial', :path => '~/ios/leancloud-social-ios'
 #    pod 'LeanCloudFeedback', :path => '~/ios/leancloud-feedback-ios/'
+    pod ‘CYLTabBarController’
+
 end
 
 # ENV["COCOAPODS_DISABLE_STATS"] = "true"
