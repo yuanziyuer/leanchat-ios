@@ -20,14 +20,13 @@
     self = [super init];
     if (self) {
         self.title = @"消息";
-        self.tabBarItem.image = [UIImage imageNamed:@"tabbar_chat_active"];
-        self.chatListDelegate = self;
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.chatListDelegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
