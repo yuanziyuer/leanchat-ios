@@ -9,14 +9,9 @@
 #import "CDAppDelegate.h"
 #import "CDCommon.h"
 #import "CDLoginVC.h"
-#import "CDBaseTabC.h"
-#import "CDBaseNavC.h"
-#import "CDConvsVC.h"
-#import "CDFriendListVC.h"
-#import "CDProfileVC.h"
 #import "CDAbuseReport.h"
 #import "CDCacheManager.h"
-
+#import "CYLTabBarControllerConfig.h"
 #import "CDUtils.h"
 #import "CDAddRequest.h"
 #import "CDIMService.h"
@@ -145,11 +140,6 @@
     self.window.rootViewController = self.loginVC;
 }
 
-- (void)addItemController:(UIViewController *)itemController toTabBarController:(CDBaseTabC *)tab {
-    CDBaseNavC *nav = [[CDBaseNavC alloc] initWithRootViewController:itemController];
-    [tab addChildViewController:nav];
-}
-
 - (void)toMain{
     [iRate sharedInstance].applicationBundleID = @"com.avoscloud.leanchat";
     [iRate sharedInstance].onlyPromptIfLatestVersion = NO;
@@ -169,13 +159,8 @@
     
     [[CDChatManager manager] openWithClientId:[AVUser currentUser].objectId callback: ^(BOOL succeeded, NSError *error) {
         DLog(@"%@", error);
-        CDBaseTabC *tab = [[CDBaseTabC alloc] init];
-        [weakSelf addItemController:[[CDConvsVC alloc] init] toTabBarController:tab];
-        [weakSelf addItemController:[[CDFriendListVC alloc] init] toTabBarController:tab];
-        [weakSelf addItemController:[[CDProfileVC alloc] init] toTabBarController:tab];
-        
-        tab.selectedIndex = 0;
-        weakSelf.window.rootViewController = tab;
+        CYLTabBarControllerConfig *tabBarControllerConfig = [[CYLTabBarControllerConfig alloc] init];
+        weakSelf.window.rootViewController = tabBarControllerConfig.tabBarController;
     }];
 }
 

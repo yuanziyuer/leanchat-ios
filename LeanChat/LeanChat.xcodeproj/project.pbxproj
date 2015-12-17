@@ -52,7 +52,6 @@
 		7073FC1D1B147048006F2692 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC1C1B147048006F2692 /* main.m */; };
 		7073FC281B147048006F2692 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7073FC271B147048006F2692 /* Images.xcassets */; };
 		7073FCA91B14718C006F2692 /* CDBaseNavC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC431B14718C006F2692 /* CDBaseNavC.m */; };
-		7073FCAA1B14718C006F2692 /* CDBaseTabC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC451B14718C006F2692 /* CDBaseTabC.m */; };
 		7073FCAB1B14718C006F2692 /* CDBaseTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC471B14718C006F2692 /* CDBaseTableVC.m */; };
 		7073FCAC1B14718C006F2692 /* CDBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC491B14718C006F2692 /* CDBaseVC.m */; };
 		7073FCAD1B14718C006F2692 /* CDWebViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7073FC4B1B14718C006F2692 /* CDWebViewVC.m */; };
@@ -147,6 +146,11 @@
 		70FA59AF1B695600000286D5 /* sns_wechat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70FA59AE1B695600000286D5 /* sns_wechat@2x.png */; };
 		70FA59B11B695A51000286D5 /* sns_qq@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70FA59B01B695A51000286D5 /* sns_qq@2x.png */; };
 		70FA59B51B696173000286D5 /* sns_weibo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70FA59B41B696173000286D5 /* sns_weibo@2x.png */; };
+		9AD85BB91C21666B006A35C1 /* CYLTabBarControllerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD85BB81C21666B006A35C1 /* CYLTabBarControllerConfig.m */; };
+		9AD85BBE1C216F83006A35C1 /* tabbar_chat_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9AD85BBA1C216F83006A35C1 /* tabbar_chat_normal@2x.png */; };
+		9AD85BBF1C216F83006A35C1 /* tabbar_contacts_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9AD85BBB1C216F83006A35C1 /* tabbar_contacts_normal@2x.png */; };
+		9AD85BC01C216F83006A35C1 /* tabbar_discover_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9AD85BBC1C216F83006A35C1 /* tabbar_discover_normal@2x.png */; };
+		9AD85BC11C216F83006A35C1 /* tabbar_me_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9AD85BBD1C216F83006A35C1 /* tabbar_me_normal@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -200,8 +204,6 @@
 		7073FC271B147048006F2692 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7073FC421B14718C006F2692 /* CDBaseNavC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDBaseNavC.h; sourceTree = "<group>"; };
 		7073FC431B14718C006F2692 /* CDBaseNavC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDBaseNavC.m; sourceTree = "<group>"; };
-		7073FC441B14718C006F2692 /* CDBaseTabC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDBaseTabC.h; sourceTree = "<group>"; };
-		7073FC451B14718C006F2692 /* CDBaseTabC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDBaseTabC.m; sourceTree = "<group>"; };
 		7073FC461B14718C006F2692 /* CDBaseTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDBaseTableVC.h; sourceTree = "<group>"; };
 		7073FC471B14718C006F2692 /* CDBaseTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDBaseTableVC.m; sourceTree = "<group>"; };
 		7073FC481B14718C006F2692 /* CDBaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDBaseVC.h; sourceTree = "<group>"; };
@@ -344,6 +346,12 @@
 		70FA59B01B695A51000286D5 /* sns_qq@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sns_qq@2x.png"; sourceTree = "<group>"; };
 		70FA59B41B696173000286D5 /* sns_weibo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sns_weibo@2x.png"; sourceTree = "<group>"; };
 		91EC9DF56C410F2764E79F62 /* Pods-LeanChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LeanChat/Pods-LeanChat.debug.xcconfig"; sourceTree = "<group>"; };
+		9AD85BB71C21666B006A35C1 /* CYLTabBarControllerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYLTabBarControllerConfig.h; sourceTree = "<group>"; };
+		9AD85BB81C21666B006A35C1 /* CYLTabBarControllerConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYLTabBarControllerConfig.m; sourceTree = "<group>"; };
+		9AD85BBA1C216F83006A35C1 /* tabbar_chat_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_chat_normal@2x.png"; sourceTree = "<group>"; };
+		9AD85BBB1C216F83006A35C1 /* tabbar_contacts_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_contacts_normal@2x.png"; sourceTree = "<group>"; };
+		9AD85BBC1C216F83006A35C1 /* tabbar_discover_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_discover_normal@2x.png"; sourceTree = "<group>"; };
+		9AD85BBD1C216F83006A35C1 /* tabbar_me_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_me_normal@2x.png"; sourceTree = "<group>"; };
 		EF79D434DB9DF2EFE3DD51B2 /* libPods-LeanChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LeanChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -491,10 +499,10 @@
 		7073FC411B14718C006F2692 /* base */ = {
 			isa = PBXGroup;
 			children = (
+				9AD85BB71C21666B006A35C1 /* CYLTabBarControllerConfig.h */,
+				9AD85BB81C21666B006A35C1 /* CYLTabBarControllerConfig.m */,
 				7073FC421B14718C006F2692 /* CDBaseNavC.h */,
 				7073FC431B14718C006F2692 /* CDBaseNavC.m */,
-				7073FC441B14718C006F2692 /* CDBaseTabC.h */,
-				7073FC451B14718C006F2692 /* CDBaseTabC.m */,
 				7073FC461B14718C006F2692 /* CDBaseTableVC.h */,
 				7073FC471B14718C006F2692 /* CDBaseTableVC.m */,
 				7073FC481B14718C006F2692 /* CDBaseVC.h */,
@@ -709,6 +717,10 @@
 				7073FD061B147458006F2692 /* contact@2x.png */,
 				7073FD071B147458006F2692 /* profile@2x.png */,
 				7073FD081B147458006F2692 /* sns@2x.png */,
+				9AD85BBA1C216F83006A35C1 /* tabbar_chat_normal@2x.png */,
+				9AD85BBB1C216F83006A35C1 /* tabbar_contacts_normal@2x.png */,
+				9AD85BBC1C216F83006A35C1 /* tabbar_discover_normal@2x.png */,
+				9AD85BBD1C216F83006A35C1 /* tabbar_me_normal@2x.png */,
 				7073FD091B147458006F2692 /* tabbar_chat_active@2x.png */,
 				7073FD0A1B147458006F2692 /* tabbar_contacts_active@2x.png */,
 				7073FD0B1B147458006F2692 /* tabbar_discover_active@2x.png */,
@@ -782,7 +794,7 @@
 		7073FC0F1B147048006F2692 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "lzwjava@LeanCloud QQ: 651142978";
 				TargetAttributes = {
 					7073FC161B147048006F2692 = {
@@ -839,12 +851,14 @@
 				703604991B7DB84D0044C81A /* rabbit_4.gif in Resources */,
 				70FA59B11B695A51000286D5 /* sns_qq@2x.png in Resources */,
 				7073FD141B147458006F2692 /* Icon@2x.png in Resources */,
+				9AD85BC11C216F83006A35C1 /* tabbar_me_normal@2x.png in Resources */,
 				7073FCB31B14718C006F2692 /* CDConvNameVC.xib in Resources */,
 				70A290B91B6B59AC0083998A /* sns_qzone@2x.png in Resources */,
 				7087E7801B78CF53003641E2 /* phone_back@2x.png in Resources */,
 				703604981B7DB84D0044C81A /* rabbit_3.gif in Resources */,
 				7073FD351B147458006F2692 /* tabbar_me_active@2x.png in Resources */,
 				7036049B1B7DB84D0044C81A /* rabbit_6.gif in Resources */,
+				9AD85BC01C216F83006A35C1 /* tabbar_discover_normal@2x.png in Resources */,
 				7073FD2A1B147458006F2692 /* menu_add_scan@2x.png in Resources */,
 				703604AB1B7DB84D0044C81A /* tusijia6.gif in Resources */,
 				7073FD271B147458006F2692 /* menu_add_friend@2x.png in Resources */,
@@ -880,6 +894,7 @@
 				7073FD1A1B147458006F2692 /* blue_expand_normal@2x.png in Resources */,
 				7073FD161B147458006F2692 /* input_bg_bottom@2x.png in Resources */,
 				703604A81B7DB84D0044C81A /* tusijia3.gif in Resources */,
+				9AD85BBE1C216F83006A35C1 /* tabbar_chat_normal@2x.png in Resources */,
 				7073FD2D1B147458006F2692 /* new_friends_icon@2x.png in Resources */,
 				7073FD311B147458006F2692 /* sns@2x.png in Resources */,
 				7073FD341B147458006F2692 /* tabbar_discover_active@2x.png in Resources */,
@@ -887,6 +902,7 @@
 				7073FD2B1B147458006F2692 /* menu_add_voip@2x.png in Resources */,
 				7073FD1D1B147458006F2692 /* bottom_bar_separator@2x.png in Resources */,
 				7073FCD31B14718C006F2692 /* CDLabelButtonTableCell.xib in Resources */,
+				9AD85BBF1C216F83006A35C1 /* tabbar_contacts_normal@2x.png in Resources */,
 				7073FD1B1B147458006F2692 /* bottom_bar_normal@2x.png in Resources */,
 				703604961B7DB84D0044C81A /* rabbit_21.gif in Resources */,
 				7073FD1E1B147458006F2692 /* cancel@2x.png in Resources */,
@@ -992,7 +1008,6 @@
 				7073FCC31B14718C006F2692 /* CDAbuseReport.m in Sources */,
 				7073FCCB1B14718C006F2692 /* CDButton.m in Sources */,
 				7073FCDB1B1471A4006F2692 /* CDAppDelegate.m in Sources */,
-				7073FCAA1B14718C006F2692 /* CDBaseTabC.m in Sources */,
 				7073FCC11B14718C006F2692 /* CDUserInfoVC.m in Sources */,
 				7087E7771B78B39A003641E2 /* CDPhoneRegisterVC.m in Sources */,
 				7073FCD41B14718C006F2692 /* CDPopMenu.m in Sources */,
@@ -1019,6 +1034,7 @@
 				7073FCD61B14718C006F2692 /* CDPopMenuItemCell.m in Sources */,
 				7073FCBA1B14718C006F2692 /* CDAddFriendVC.m in Sources */,
 				7073FCB11B14718C006F2692 /* CDConvDetailVC.m in Sources */,
+				9AD85BB91C21666B006A35C1 /* CYLTabBarControllerConfig.m in Sources */,
 				70B1C51E1B41430500DCEC8D /* MCPhotographyHelper.m in Sources */,
 				70EB81591B4399AB0010659C /* CDProfileNameVC.m in Sources */,
 				7073FCB91B14718C006F2692 /* CDRegisterVC.m in Sources */,
@@ -1194,6 +1210,7 @@
 					"-framework",
 					"\"UIKit\"",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.avoscloud.leanchat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1278,6 +1295,7 @@
 					"-framework",
 					"\"UIKit\"",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.avoscloud.leanchat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
