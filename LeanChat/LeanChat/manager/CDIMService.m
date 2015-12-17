@@ -14,6 +14,7 @@
 #import "CDUser.h"
 #import "CDChatVC.h"
 #import <LeanChatLib/CDEmotionUtils.h>
+#import "CDAppDelegate.h"
 
 @interface CDIMService ()
 
@@ -50,10 +51,28 @@
 }
 
 - (void)goWithConv:(AVIMConversation *)conv fromNav:(UINavigationController *)nav {
-    [nav popToRootViewControllerAnimated:NO];
+    
+    //如果从聊天界面跳转到当前页面，那么则直接 pop 回聊天界面
+    for (UIViewController *viewController in nav.viewControllers) {
+        if ([viewController isKindOfClass:[CDChatVC class]] ) {
+            AVIMConversation * conversation = [(CDChatVC *)viewController conv];
+            if (conversation.members.count == 2) {
+                [nav popToViewController:viewController animated:YES];
+                return;
+            }
+        }
+    }
+    
+    //如果是从类似朋友圈的地方跳转来，则重新 push 到一个新创建的聊天界面
+    CDAppDelegate *delegate = ((CDAppDelegate *)[[UIApplication sharedApplication] delegate]);
+    UIWindow *window = delegate.window;
+    UITabBarController *tabbarController = (UITabBarController *)window.rootViewController;
+    tabbarController.selectedViewController = tabbarController.viewControllers[0];
     CDChatVC *chatVC = [[CDChatVC alloc] initWithConv:conv];
     chatVC.hidesBottomBarWhenPushed = YES;
-    [nav pushViewController:chatVC animated:YES];
+    [nav popToRootViewControllerAnimated:NO];
+    [tabbarController.selectedViewController pushViewController:chatVC animated:YES];
+    
 }
 
 - (void)goWithUserId:(NSString *)userId fromVC:(CDBaseVC *)vc {
