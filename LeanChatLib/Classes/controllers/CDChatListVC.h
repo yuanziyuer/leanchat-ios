@@ -41,6 +41,10 @@
 
 - (void)prepareConversationsWhenLoad:(NSArray *)conversations completion:(AVIMBooleanResultBlock)completion;
 
+- (UIImage *)defaultAvatarImageView;
+
+- (CGFloat)avatarImageViewCornerRadius;
+
 @end
 
 /**

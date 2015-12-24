@@ -62,6 +62,16 @@
 		70DC7DB41B2F531F0047B7AB /* CDUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC7DAF1B2F531F0047B7AB /* CDUserManager.m */; };
 		70DC7DB51B2F531F0047B7AB /* CDUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC7DB11B2F531F0047B7AB /* CDUtils.m */; };
 		70EB81591B4399AB0010659C /* CDProfileNameVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 70EB81581B4399AB0010659C /* CDProfileNameVC.m */; };
+		9A2AFA6D1C2AADB200F451BE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A2AFA6C1C2AADB200F451BE /* SystemConfiguration.framework */; };
+		9A2AFA6F1C2AADBB00F451BE /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A2AFA6E1C2AADBB00F451BE /* MobileCoreServices.framework */; };
+		9A2AFA711C2AADC200F451BE /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A2AFA701C2AADC200F451BE /* CoreTelephony.framework */; };
+		9A2AFA731C2AADCB00F451BE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A2AFA721C2AADCB00F451BE /* CoreLocation.framework */; };
+		9A2AFA751C2AB1CE00F451BE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A2AFA741C2AB1CE00F451BE /* AVFoundation.framework */; };
+		9A2AFA771C2AB1EA00F451BE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A2AFA761C2AB1EA00F451BE /* MediaPlayer.framework */; };
+		9A2AFA791C2AB21100F451BE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A2AFA781C2AB21100F451BE /* QuartzCore.framework */; };
+		9A2AFA7B1C2AB21E00F451BE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A2AFA7A1C2AB21E00F451BE /* Security.framework */; };
+		9A2AFA7D1C2AB22500F451BE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A2AFA7C1C2AB22500F451BE /* StoreKit.framework */; };
+		9A2AFA7F1C2AB23400F451BE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A2AFA7E1C2AB23400F451BE /* UIKit.framework */; };
 		9AD85BB91C21666B006A35C1 /* CYLTabBarControllerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD85BB81C21666B006A35C1 /* CYLTabBarControllerConfig.m */; };
 /* End PBXBuildFile section */
 
@@ -174,6 +184,16 @@
 		70EB81571B4399AB0010659C /* CDProfileNameVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDProfileNameVC.h; sourceTree = "<group>"; };
 		70EB81581B4399AB0010659C /* CDProfileNameVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDProfileNameVC.m; sourceTree = "<group>"; };
 		91EC9DF56C410F2764E79F62 /* Pods-LeanChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeanChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LeanChat/Pods-LeanChat.debug.xcconfig"; sourceTree = "<group>"; };
+		9A2AFA6C1C2AADB200F451BE /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		9A2AFA6E1C2AADBB00F451BE /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		9A2AFA701C2AADC200F451BE /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		9A2AFA721C2AADCB00F451BE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		9A2AFA741C2AB1CE00F451BE /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		9A2AFA761C2AB1EA00F451BE /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		9A2AFA781C2AB21100F451BE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		9A2AFA7A1C2AB21E00F451BE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		9A2AFA7C1C2AB22500F451BE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		9A2AFA7E1C2AB23400F451BE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9AD85BB71C21666B006A35C1 /* CYLTabBarControllerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYLTabBarControllerConfig.h; sourceTree = "<group>"; };
 		9AD85BB81C21666B006A35C1 /* CYLTabBarControllerConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYLTabBarControllerConfig.m; sourceTree = "<group>"; };
 		EF79D434DB9DF2EFE3DD51B2 /* libPods-LeanChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LeanChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -184,6 +204,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A2AFA7F1C2AB23400F451BE /* UIKit.framework in Frameworks */,
+				9A2AFA6D1C2AADB200F451BE /* SystemConfiguration.framework in Frameworks */,
+				9A2AFA7D1C2AB22500F451BE /* StoreKit.framework in Frameworks */,
+				9A2AFA7B1C2AB21E00F451BE /* Security.framework in Frameworks */,
+				9A2AFA791C2AB21100F451BE /* QuartzCore.framework in Frameworks */,
+				9A2AFA6F1C2AADBB00F451BE /* MobileCoreServices.framework in Frameworks */,
+				9A2AFA771C2AB1EA00F451BE /* MediaPlayer.framework in Frameworks */,
+				9A2AFA751C2AB1CE00F451BE /* AVFoundation.framework in Frameworks */,
+				9A2AFA731C2AADCB00F451BE /* CoreLocation.framework in Frameworks */,
+				9A2AFA711C2AADC200F451BE /* CoreTelephony.framework in Frameworks */,
 				1FAD25EBE59E07248BD0F7D5 /* libPods-LeanChat.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -438,6 +468,16 @@
 		B215B044676D1B59F414465D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9A2AFA7E1C2AB23400F451BE /* UIKit.framework */,
+				9A2AFA7C1C2AB22500F451BE /* StoreKit.framework */,
+				9A2AFA7A1C2AB21E00F451BE /* Security.framework */,
+				9A2AFA781C2AB21100F451BE /* QuartzCore.framework */,
+				9A2AFA761C2AB1EA00F451BE /* MediaPlayer.framework */,
+				9A2AFA741C2AB1CE00F451BE /* AVFoundation.framework */,
+				9A2AFA721C2AADCB00F451BE /* CoreLocation.framework */,
+				9A2AFA701C2AADC200F451BE /* CoreTelephony.framework */,
+				9A2AFA6E1C2AADBB00F451BE /* MobileCoreServices.framework */,
+				9A2AFA6C1C2AADB200F451BE /* SystemConfiguration.framework */,
 				EF79D434DB9DF2EFE3DD51B2 /* libPods-LeanChat.a */,
 			);
 			name = Frameworks;

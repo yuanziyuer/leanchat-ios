@@ -43,6 +43,8 @@ static NSString *const reuseIdentifier = @"Cell";
 
 @property (nonatomic, strong) LZAlertViewHelper *alertViewHelper;
 
+@property (nonatomic, strong, readwrite) AVIMConversation *conv;
+
 @end
 
 @implementation CDConvDetailVC
@@ -64,8 +66,8 @@ static NSString *const reuseIdentifier = @"Cell";
 }
 
 - (void)setupDatasource {
-//    NSDictionary *dict1 = @{ kCDConvDetailVCTitleKey:@"清空聊天记录",
-//                             kCDConvDetailVCSelectorKey:NSStringFromSelector(@selector(deleteMsgs)) };
+    //    NSDictionary *dict1 = @{ kCDConvDetailVCTitleKey:@"清空聊天记录",
+    //                             kCDConvDetailVCSelectorKey:NSStringFromSelector(@selector(deleteMsgs)) };
     NSDictionary *dict2 = @{ kCDConvDetailVCTitleKey:@"举报",
                              kCDConvDetailVCDisclosureKey:@YES,
                              kCDConvDetailVCSelectorKey:NSStringFromSelector(@selector(goReportAbuse)) };
@@ -116,6 +118,18 @@ static NSString *const reuseIdentifier = @"Cell";
 }
 
 - (void)refresh {
+    if (!self.conv.members) {
+        [[CDCacheManager manager] fetchConversation:^(AVObject *object, NSError *error) {
+            self.conv = (AVIMConversation *)object;
+            [self safeRefresh];
+        }];
+    } else {
+        [self safeRefresh];
+    }
+}
+
+- (void)safeRefresh {
+    NSAssert(self.conv, @"the conv is nil in the method of `refresh`");
     NSSet *userIds = [NSSet setWithArray:self.conv.members];
     self.own = [self.conv.creator isEqualToString:[AVUser currentUser].objectId];
     self.title = [NSString stringWithFormat:@"详情(%ld人)", (long)self.conv.members.count];
@@ -131,8 +145,8 @@ static NSString *const reuseIdentifier = @"Cell";
             [self.tableView reloadData];
         }
     }];
-}
 
+}
 - (void)setupBarButton {
     UIBarButtonItem *addMember = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addMember)];
     self.navigationItem.rightBarButtonItem = addMember;
@@ -236,6 +250,7 @@ static NSString *const reuseIdentifier = @"Cell";
 
 - (void)didLongPressMember:(LZMember *)user {
     AVUser *member = [[CDCacheManager manager] lookupUser:user.memberId];
+    NSAssert(member, @"member in `didLongPressMember` is nil");
     if ([member.objectId isEqualToString:self.conv.creator] == NO) {
         [self.alertViewHelper showConfirmAlertViewWithMessage:@"确定要踢走该成员吗？" block:^(BOOL confirm, NSString *text) {
             if (confirm) {
@@ -276,7 +291,7 @@ static NSString *const reuseIdentifier = @"Cell";
 }
 
 - (void)deleteMsgs {
-//    [_storage deleteMsgsByConvid:self.conv.conversationId];
+    //    [_storage deleteMsgsByConvid:self.conv.conversationId];
     [self alert:@"已清空"];
 }
 

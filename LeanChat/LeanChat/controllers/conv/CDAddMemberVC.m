@@ -82,6 +82,19 @@ static NSString *reuseIdentifier = @"Cell";
         return;
     }
     AVIMConversation *conv = [[CDCacheManager manager] getCurConv];
+    
+    if (!conv) {
+        __block AVIMConversation *conversation;
+        [[CDCacheManager manager] fetchConversation:^(AVObject *object, NSError *error) {
+            conversation = (AVIMConversation *)object;
+            [self safeInviteWithConversation:conversation inviteIds:inviteIds];
+        }];
+    } else {
+        [self safeInviteWithConversation:conv inviteIds:inviteIds];
+    }
+}
+
+- (void)safeInviteWithConversation:(AVIMConversation *)conv inviteIds:(NSMutableArray *)inviteIds {
     if ([[CDCacheManager manager] getCurConv].type == CDConvTypeSingle) {
         // 单聊对话加入，直接创建一个群聊对话
         NSMutableArray *members = [conv.members mutableCopy];
