@@ -72,7 +72,6 @@
     chatVC.hidesBottomBarWhenPushed = YES;
     [nav popToRootViewControllerAnimated:NO];
     [tabbarController.selectedViewController pushViewController:chatVC animated:YES];
-    
 }
 
 - (void)goWithUserId:(NSString *)userId fromVC:(CDBaseVC *)vc {

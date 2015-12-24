@@ -77,7 +77,7 @@ static CDChatManager *instance;
         if (callback) {
             callback(succeeded, error);
         }
-//        [CDEmotionUtils saveEmotions];
+        //        [CDEmotionUtils saveEmotions];
     }];
 }
 
@@ -88,6 +88,7 @@ static CDChatManager *instance;
 #pragma mark - conversation
 
 - (void)fecthConvWithConvid:(NSString *)convid callback:(AVIMConversationResultBlock)callback {
+    NSAssert(convid.length > 0, @"convid is nil");
     AVIMConversationQuery *q = [[AVIMClient defaultClient] conversationQuery];
     q.cachePolicy = kAVCachePolicyNetworkElseCache;
     [q whereKey:@"objectId" equalTo:convid];
@@ -467,7 +468,9 @@ static CDChatManager *instance;
 }
 
 - (AVIMConversation *)lookupConvById:(NSString *)convid {
-    return [[AVIMClient defaultClient] conversationForId:convid];
+    //FIXME:the convid is not exist in the table when log out
+    AVIMConversation *conversation = [[AVIMClient defaultClient] conversationForId:convid];
+    return conversation;
 }
 
 - (void)cacheConvsWithIds:(NSMutableSet *)convids callback:(AVBooleanResultBlock)callback {
@@ -561,12 +564,12 @@ static CDChatManager *instance;
         if([text rangeOfString:pattern].length > 0) {
             return YES;
         } else {
-           return NO;
+            return NO;
         }
     }
 }
 
-#pragma mark - database 
+#pragma mark - database
 
 - (void)deleteConversation:(AVIMConversation *)conversation {
     [[CDConversationStore store] deleteConversation:conversation];
