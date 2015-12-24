@@ -10,7 +10,7 @@
 #import "CDUtils.h"
 #import "CDIMService.h"
 
-@interface CDConvsVC () <CDChatListVCDelegate>
+@interface CDConvsVC ()<CDChatListVCDelegate>
 
 @end
 
@@ -29,10 +29,6 @@
     self.chatListDelegate = self;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
 - (void)viewController:(UIViewController *)viewController didSelectConv:(AVIMConversation *)conv {
     [[CDIMService service] goWithConv:conv fromNav:viewController.navigationController];
 }
@@ -46,6 +42,15 @@
         self.tabBarItem.badgeValue = nil;
         [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     }
+}
+
+- (UIImage *)defaultAvatarImageView {
+    UIImage *defaultAvatarImageView = [UIImage imageNamed:@"image_placeholder"];
+    return defaultAvatarImageView;
+}
+
+- (CGFloat)avatarImageViewCornerRadius {
+    return 3;
 }
 
 @end

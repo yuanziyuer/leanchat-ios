@@ -18,6 +18,7 @@
 #import "CDConversationStore.h"
 #import "CDChatManager_Internal.h"
 #import "CDMacros.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface CDChatListVC ()
 
@@ -35,11 +36,17 @@ static NSMutableArray *cacheConvs;
 
 static NSString *cellIdentifier = @"ContactCell";
 
-- (instancetype)init {
-    if ((self = [super init])) {
+/**
+ *  lazy load conversations
+ *
+ *  @return NSMutableArray
+ */
+- (NSMutableArray *)conversations
+{
+    if (_conversations == nil) {
         _conversations = [[NSMutableArray alloc] init];
     }
-    return self;
+    return _conversations;
 }
 
 - (void)viewDidLoad {
@@ -51,16 +58,13 @@ static NSString *cellIdentifier = @"ContactCell";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:kCDNotificationUnreadsUpdated object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateStatusView) name:kCDNotificationConnectivityUpdated object:nil];
     [self updateStatusView];
+    self.tableView.tableFooterView = [[UIView alloc] init];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     // 刷新 unread badge 和新增的对话
     [self performSelector:@selector(refresh:) withObject:nil afterDelay:0];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
 }
 
 - (void)dealloc {
@@ -107,7 +111,7 @@ static NSString *cellIdentifier = @"ContactCell";
         dispatch_block_t finishBlock = ^{
             [self stopRefreshControl:refreshControl];
             if ([self filterError:error]) {
-                self.conversations = conversations;
+                self.conversations = [NSMutableArray arrayWithArray:conversations];
                 [self.tableView reloadData];
                 if ([self.chatListDelegate respondsToSelector:@selector(setBadgeWithTotalUnreadCount:)]) {
                     [self.chatListDelegate setBadgeWithTotalUnreadCount:totalUnreadCount];
@@ -181,11 +185,18 @@ static NSString *cellIdentifier = @"ContactCell";
     if (conversation.type == CDConvTypeSingle) {
         id <CDUserModel> user = [[CDChatManager manager].userDelegate getUserById:conversation.otherId];
         cell.nameLabel.text = user.username;
-        [cell.avatarImageView setImageWithURL:[NSURL URLWithString:user.avatarUrl]];
-    }
-    else {
+        if ([self.chatListDelegate respondsToSelector:@selector(defaultAvatarImageView)]) {
+            [cell.avatarImageView sd_setImageWithURL:[NSURL URLWithString:user.avatarUrl] placeholderImage:[self.chatListDelegate defaultAvatarImageView]];
+        } else {
+            [cell.avatarImageView sd_setImageWithURL:[NSURL URLWithString:user.avatarUrl] placeholderImage:[UIImage imageNamed:@"avator"]];
+        }
+    } else {
         [cell.avatarImageView setImage:conversation.icon];
         cell.nameLabel.text = conversation.displayName;
+    }
+    if ([self.chatListDelegate respondsToSelector:@selector(avatarImageViewCornerRadius)]) {
+        cell.avatarImageView.layer.masksToBounds = YES;
+        cell.avatarImageView.layer.cornerRadius = [self.chatListDelegate avatarImageViewCornerRadius];
     }
     if (conversation.lastMessage) {
         cell.messageTextLabel.attributedText = [[CDMessageHelper helper] attributedStringWithMessage:conversation.lastMessage conversation:conversation];
@@ -195,7 +206,7 @@ static NSString *cellIdentifier = @"ContactCell";
         if (conversation.muted) {
             cell.litteBadgeView.hidden = NO;
         } else {
-            cell.badgeView.badgeText = [NSString stringWithFormat:@"%ld", conversation.unreadCount];
+            cell.badgeView.badgeText = [NSString stringWithFormat:@"%@", @(conversation.unreadCount)];
         }
     }
     if ([self.chatListDelegate respondsToSelector:@selector(configureCell:atIndexPath:withConversation:)]) {
