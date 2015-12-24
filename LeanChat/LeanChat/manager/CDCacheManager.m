@@ -17,7 +17,7 @@ static CDCacheManager *cacheManager;
 @interface CDCacheManager ()<NSCacheDelegate>
 
 @property (nonatomic, strong) NSCache *userCache;
-@property (nonatomic, strong) NSString *currentConversationId;
+@property (nonatomic, copy) NSString *currentConversationId;
 
 @end
 
@@ -86,6 +86,7 @@ static CDCacheManager *cacheManager;
 }
 
 - (AVIMConversation *)getCurConv {
+    NSAssert(self.currentConversationId.length > 0, @"currentConversationId is NULL");
     return [[CDChatManager manager] lookupConvById:self.currentConversationId];
 }
 
@@ -103,6 +104,24 @@ static CDCacheManager *cacheManager;
     }
     else {
         callback(NO, [NSError errorWithDomain:@"" code:0 userInfo:@{ NSLocalizedDescriptionKey:@"current conv is nil" }]);
+    }
+}
+
+- (void)fetchConversation:(AVObjectResultBlock)callback {
+    if ([self getCurConv] == nil) {
+        [[CDChatManager manager] fecthConvWithConvid:self.currentConversationId callback: ^(AVIMConversation *conversation, NSError *error) {
+            if (error) {
+                callback(nil, error);
+            }
+            else {
+                [self setCurConv:conversation];
+//                [[NSNotificationCenter defaultCenter] postNotificationName:kCDNotificationConversationUpdated object:nil];
+                callback((AVObject *)conversation, nil);
+            }
+        }];
+    }
+    else {
+        callback(nil, [NSError errorWithDomain:@"" code:0 userInfo:@{ NSLocalizedDescriptionKey:@"current conv is nil" }]);
     }
 }
 

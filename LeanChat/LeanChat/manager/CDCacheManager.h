@@ -21,5 +21,5 @@
 - (void)setCurConv:(AVIMConversation *)conv;
 - (AVIMConversation *)getCurConv;
 - (void)refreshCurConv:(AVBooleanResultBlock)callback;
-
+- (void)fetchConversation:(AVObjectResultBlock)callback;
 @end
