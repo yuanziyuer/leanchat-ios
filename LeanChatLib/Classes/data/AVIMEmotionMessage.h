@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 lzwjava@LeanCloud QQ: 651142978. All rights reserved.
 //
 
-@import AVOSCloudIM;
+#import <AVOSCloudIM/AVIMTypedMessage.h>
 
 static AVIMMessageMediaType const kAVIMMessageMediaTypeEmotion = 1;
 
