@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/leancloud/leanchat-ios"
   s.license      = "MIT"
   s.authors      = { "LeanCloud" => "support@leancloud.cn" }
-  s.source       = { :git => "https://github.com/leancloud/leanchat-ios.git", :tag => s.version.to_s }
+  s.source       = { :git => "https://github.com/yuanziyuer/leanchat-ios.git", :tag => s.version.to_s }
   s.frameworks   = 'Foundation', 'CoreGraphics', 'UIKit', 'MobileCoreServices', 'AVFoundation', 'CoreLocation', 'MediaPlayer', 'CoreMedia', 'CoreText', 'AudioToolbox','MapKit','ImageIO','SystemConfiguration','CFNetwork','QuartzCore','Security','CoreTelephony'
   s.platform     = :ios, '7.0'
   s.source_files = 'LeanChatLib/Classes/**/*.{h,m}'
